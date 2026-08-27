@@ -1,0 +1,3 @@
+# Cache do Power BI (arquivos grandes gerados automaticamente)
+**/.pbi/cache.abf
+**/.pbi/*.abf
