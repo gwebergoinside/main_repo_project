@@ -1,0 +1,376 @@
+cultureInfo pt-PT
+	translations
+		model Model
+			table ~Medidas
+				caption: Medidas
+				measure avg_position
+					caption: Posição Média
+				measure mom_insertions_growth_pct
+					caption: Crescimento Mensal Inserções %
+				measure mom_billing_growth_pct
+					caption: Crescimento Mensal Líquido %
+				measure CPS
+					caption: CPS
+				measure mt_max_gross_per_neg
+					caption: Máximo Bruto por Negociação
+				measure nr_airing_days
+					caption: Dias com Exibição
+				measure nr_campaigns
+					caption: Campanhas
+				measure nr_channels
+					caption: Canais
+				measure nr_first_position
+					caption: Primeiras Posições
+				measure nr_insertions
+					caption: Inserções
+				measure nr_insertions_active
+					caption: Inserções Ativas
+				measure nr_insertions_booked
+					caption: Inserções Agendadas
+				measure nr_insertions_prev_month
+					caption: Inserções no Mês Anterior
+				measure nr_insertions_ytd
+					caption: Inserções no Ano
+				measure nr_register
+					caption: Registros
+				measure nr_negotiations_total
+					caption: Total Negociações
+				measure nr_negotiations_with_insertions
+					caption: Negociações com Inserções
+				measure nr_programs
+					caption: Programas
+				measure pc_active_rate
+					caption: Taxa Ativa %
+				measure pc_contracted_realised
+					caption: Contratado Realizado %
+				measure pc_discount_avg
+					caption: Desconto
+				measure pc_first_position
+					caption: Primeira Posição %
+				measure total_contracted_gross
+					caption: Bruto Contratado Total
+				measure total_gross
+					caption: Receita Bruta
+				measure total_hours
+					caption: Horas Totais
+				measure total_minutes
+					caption: Minutos Totais
+				measure total_billing
+					caption: Receita Líquida
+				measure total_billing_prev_month
+					caption: Receita Líquida no Mês Anterior
+				measure total_billing_ytd
+					caption: Receita Líquida no Ano
+				measure total_seconds
+					caption: Segundos Totais
+				measure CPR
+					caption: CPR
+				measure total_billing_mtd
+					caption: Receita Líquida no Mês
+				measure CPR_XT
+					caption: CPR Simulado
+				measure GRP
+					caption: GRP
+				measure GRP_XT
+					caption: GRP Simulado
+				measure total_budget
+					caption: Receita Prevista
+				measure GRP_EQ
+					caption: GRP Equivalente
+				measure GRP_EQ_XT
+					caption: GRP Equivalente Simulado
+				measure CPR_EQ
+					caption: CPR Equivalente
+				measure CPR_EQ_XT
+					caption: CPR Equivalente Simulado
+				measure total_net
+					caption: Receita Líquida Total
+				measure total_dif_minimal_billing
+					caption: Diferença Mínima
+				measure vl_table_investment
+					caption: Valor do Investimento de Tabela
+				measure share_channel
+					caption: Share Canal
+				measure rk_nm_field_investment
+					caption: Ranking
+				measure share_media_investment
+					caption: Share Media Investimentos
+				measure share_media_investment_all
+					caption: Share Media Investmentos Todos
+			table dim_tempo
+				caption: Tempo
+				column cd_tempo
+					caption: Código Tempo
+				column data
+					caption: Data
+				column nr_year
+					caption: Ano
+				column nr_month
+					caption: Mês
+				column nm_month
+					caption: Mês
+				column nm_month_abrev
+					caption: Mês
+				column nr_day
+					caption: Dia
+				column nr_trimester
+					caption: Trimestre
+				column nr_semester
+					caption: Semestre
+				column nr_weekday
+					caption: Dia Semana
+				column nr_week_year
+					caption: Semana Ano
+				column nr_week_month
+					caption: Semana Mês
+				column nm_weekday
+					caption: Dia Semana
+				column nm_weekday_abrev
+					caption: Abreviação Dia Semana
+				column flag_is_weekend
+					caption: É Fim Semana
+				column ds_mes_ano
+					caption: Mês/Ano
+				column nr_year_month
+					caption: Ano-Mês
+				column ds_atual_month
+					caption: Mês Atual
+				column ds_atual_week
+					caption: Semana Atual
+				column ds_atual_date
+					caption: Data Atual
+			table dim_daypart
+				caption: Daypart
+				column nr_seconds
+					caption: Segundos
+				column nr_hora
+					caption: Hora
+				column nr_minutos
+					caption: Minutos
+				column nr_horas
+					caption: Horas
+				column ds_daypart
+					caption: Daypart
+				column nr_ordem
+					caption: Ordem
+				column tp_time
+					caption: Tipo Hora
+			table pbi_vw_negotiations
+				caption: Negociações
+				column cd_negotiation
+					caption: Código Negociação
+				column nm_negotiation
+					caption: Negociação
+				column dt_negotiation_start
+					caption: Data Inicial Negociação
+				column dt_negotiation_end
+					caption: Data Final Negociação
+				column st_valuation
+					caption: Valoração
+				column st_sales_modality
+					caption: Modalidade Venda
+				column nr_negotiated_index
+					caption: Índice Negociado
+				column nm_media_type
+					caption: Tipo Mídia
+				column vl_negotiation_gross_contracted
+					caption: Valor Bruto Contratado
+				column pc_negotiation_general_discount
+					caption: Desconto Geral %
+				column nr_insertions_total
+					caption: Total Inserções
+				column vl_gross_total
+					caption: Receita Bruta
+				column vl_net_total
+					caption: Receita Líquida
+				column dt_first_air
+					caption: Data Primeira Exibição
+				column dt_last_air
+					caption: Data Última Exibição
+				column st_status
+					caption: Status
+				column cd_package
+					caption: Código Pacote
+			table pbi_vw_ad_insertion
+				caption: Inserções Publicitárias
+				column cd_ad_insertion
+					caption: Código Inserção
+				column dt_air
+					caption: Data Exibição
+				column st_status
+					caption: Status
+				column vl_duration_fitting
+					caption: Valor Ajuste Duração
+				column vl_gross
+					caption: Valor Bruto
+				column vl_net
+					caption: Valor Líquido
+				column nr_position
+					caption: Posição
+				column cd_buy_unit
+					caption: Código Unidade Compra
+				column cd_commercial_format
+					caption: Código Formato Comercial
+				column cd_material_type
+					caption: Código Tipo Material
+				column cd_financial_classifier
+					caption: Bônus (Classificador Financeiro)
+				column nm_buy_unit
+					caption: Categoria (Unidade Compra)
+			table pbi_dim_accounts_client
+				caption: Contas Anunciantes
+				column cd_account
+					caption: Código Anunciante
+				column nm_account
+					caption: Anunciante
+			table pbi_dim_campaigns
+				caption: Campanhas
+				column cd_campaign
+					caption: Código Campanha
+				column nm_campaign
+					caption: Campanha
+				column dt_init
+					caption: Data Inicial
+				column dt_end
+					caption: Data Final
+				column vl_budget
+					caption: Valor Orçamento
+				column pc_discount
+					caption: Desconto %
+				column cd_account_client
+					caption: Código Anunciante
+				column cd_account_agency
+					caption: Código Agência
+				column cd_negotiation
+					caption: Código Negociação
+				column cd_target
+					caption: Código Alvo
+				column cd_ad_type
+					caption: Tipo Publicidade
+				column cd_payment_type
+					caption: Tipo Pagamento
+			table pbi_dim_channels
+				caption: Canais
+				column cd_channel
+					caption: Código Canal
+				column nm_channel
+					caption: Canal
+				column ds_channel
+					caption: Descrição Canal
+				column nr_standard_duration_sec
+					caption: Duração Padrão (seg.)
+			table pbi_dim_programs
+				caption: Programas
+				column cd_program
+					caption: Código Programa
+				column nm_program
+					caption: Programa
+			table pbi_dim_accounts_agency
+				caption: Contas Agências
+				column cd_account
+					caption: Código Agência
+				column nm_account
+					caption: Agência
+			table pbi_dim_packages
+				caption: Pacotes
+				column cd_package
+					caption: Código Pacote
+				column nm_package
+					caption: Pacote
+				column st_package_type
+					caption: Tipo Pacote
+				column st_status
+					caption: Status
+				column ds_package
+					caption: Pacote Comercial
+			table pbi_vw_targets
+				caption: Alvos
+				column cd_variant
+					caption: Código Variação
+				column ds_variant
+					caption: Alvo Negociado
+			table pbi_vw_targets_simulado
+				caption: Alvos Simulados
+				column cd_variant
+					caption: Código Variação
+				column ds_variant
+					caption: Alvo Simulado
+			table pmt_parameters_column
+				caption: Parâmetros Coluna
+				column pmt_parameters_column
+					caption: Parâmetro Coluna
+				column 'pmt_parameters_column Campos'
+					caption: Campos
+				column 'pmt_parameters_column Pedido'
+					caption: Ordem
+			table pbi_dim_materials
+				caption: Materiais
+				column cd_main_material
+					caption: Cód. Material Principal
+				column cd_product
+					caption: Cód. Produto
+				column nm_material
+					caption: Material
+				column nm_product
+					caption: Produto
+			table pbi_dim_products_sectors
+				caption: Produtos e Setores
+				column cd_product
+					caption: Cód. Produto
+				column nm_product
+					caption: Produto
+				column nm_category
+					caption: Categoria
+				column nm_sector
+					caption: Setor
+				column st_status
+					caption: Status
+			table pmt_types_targets_calc
+				caption: Parâmetros dos alvos
+				column pmt_types_targets_calc
+					caption: Cálculo do alvo
+				column fields
+					caption: Campos
+				column grouped
+					caption: Agrupado
+				column metrics
+					caption: Métricas
+				column nm_column_2
+					caption: Ordem
+			table pbi_vw_media_investment
+				caption: Investimento em Media
+				column cd_media_investment
+					caption: ID Investimento em Media
+				column dt_broadcast
+					caption: Data de Emissão
+				column hr_start
+					caption: Hora de Início
+				column nm_channel
+					caption: Canal
+				column nm_program
+					caption: Programa
+				column st_typology
+					caption: Tipologia
+				column nm_agency
+					caption: Agência
+				column nm_client_advertiser
+					caption: Cliente / Anunciante
+				column nm_sector
+					caption: Setor
+				column nm_product_advertiser
+					caption: Produto Anunciante
+				column vl_investment
+					caption: Valor do Investimento
+				column vl_duration
+					caption: Duração
+			table pmt_discount_investment
+				caption: Investimento com Desconto PMT
+				column pmt_discount_investment
+					caption: Desconto do Investimento
+				measure vl_pmt_discount_investment
+					caption: Valor do Investimento com Desconto
+			table is_MediaLivre_advertiser
+				caption: É Anunciante MediaLivre?
+				column fl_MediaLivre_advertiser
+					caption: Considera Anunciantes MediaLivre?
+

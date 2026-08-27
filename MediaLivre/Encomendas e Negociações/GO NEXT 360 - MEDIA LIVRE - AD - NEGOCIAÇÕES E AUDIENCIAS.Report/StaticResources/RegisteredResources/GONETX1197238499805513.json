@@ -1,0 +1,19 @@
+{
+  "name": "GONETX",
+  "dataColors": [
+    "#6667AB",
+    "#86A293",
+    "#884C5E",
+    "#9D848E",
+    "#C4AEB1",
+    "#D29381",
+    "#DD915F",
+    "#CCB97E"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#070f25",
+  "tableAccent": "#0F1934",
+  "bad": "#CD404C",
+  "neutral": "#E4C22D",
+  "good": "#48996B"
+}

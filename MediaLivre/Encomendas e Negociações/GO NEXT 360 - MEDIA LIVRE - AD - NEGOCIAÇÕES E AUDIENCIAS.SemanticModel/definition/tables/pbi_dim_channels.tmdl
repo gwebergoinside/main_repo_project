@@ -1,0 +1,53 @@
+table pbi_dim_channels
+	lineageTag: 'tbl-dim-channels'
+
+	column cd_channel
+		dataType: string
+		isKey
+		isNullable: false
+		lineageTag: 'col-cha-key'
+		summarizeBy: none
+		sourceColumn: cd_channel
+
+		changedProperty = IsHidden
+
+	column nm_channel
+		dataType: string
+		lineageTag: 'col-cha-name'
+		summarizeBy: none
+		sourceColumn: nm_channel
+
+		changedProperty = IsHidden
+
+	column ds_channel
+		dataType: string
+		lineageTag: 'col-cha-desc'
+		summarizeBy: none
+		sourceColumn: ds_channel
+
+		changedProperty = IsHidden
+
+	column nr_standard_duration_sec
+		dataType: int64
+		lineageTag: 'col-cha-dur'
+		summarizeBy: sum
+		sourceColumn: nr_standard_duration_sec
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_dim_channels-partition = m
+		mode: import
+		source =
+				let
+				    pbi_dim_channels = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_dim_channels")
+				in
+				    pbi_dim_channels
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

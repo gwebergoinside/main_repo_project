@@ -1,0 +1,34 @@
+table pmt_duration_equivancy
+	isHidden
+	lineageTag: a7fb147f-e9f1-4aed-bc1d-440d401b708e
+
+	column ds_duration_equivancy
+		isHidden
+		lineageTag: 9285010d-7c5f-4925-8b3a-8f3f0c52c541
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ds_duration_equivancy]
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_duration_equivancy
+		isHidden
+		formatString: 0
+		lineageTag: fd667f6d-84a2-45c8-8413-3b850152a5db
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [nm_duration_equivancy]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_duration_equivancy = calculated
+		mode: import
+		source =
+				DATATABLE( "ds_duration_equivancy", STRING, "nm_duration_equivancy", INTEGER,
+				{
+				    {"20'", 20},
+				    {"30'", 30}
+				})
+
+	annotation PBI_Id = 74f521ad6539439884b22e0ed7c7c3ba
+

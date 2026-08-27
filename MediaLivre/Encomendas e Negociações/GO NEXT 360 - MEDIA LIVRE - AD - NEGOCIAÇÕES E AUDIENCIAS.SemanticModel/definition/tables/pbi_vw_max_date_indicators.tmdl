@@ -1,0 +1,22 @@
+table pbi_vw_max_date_indicators
+	lineageTag: 6bf613ef-27d7-460d-8a94-fafef71b7eae
+
+	column max_dt_air
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 76b20ee7-2560-4463-948f-2b45f9f7577f
+		summarizeBy: none
+		sourceColumn: max_dt_air
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition pbi_vw_max_date_indicators = m
+		mode: import
+		source = fx_dbricks("select * from medialivre.pbi_out.pb_vw_max_date_indicators")
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

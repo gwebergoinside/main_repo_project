@@ -1,0 +1,190 @@
+table pbi_vw_ad_units
+	lineageTag: ac0fde43-2c95-498f-9022-11db3cf218ab
+
+	column cd_ad_unit
+		dataType: string
+		isHidden
+		lineageTag: 339a1801-d9ec-4ff9-8739-cdf2d89a2fe1
+		summarizeBy: none
+		sourceColumn: cd_ad_unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_processo
+		dataType: string
+		isHidden
+		lineageTag: e097a07c-c45e-4186-849f-664e9a27b60d
+		summarizeBy: none
+		sourceColumn: cd_processo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_tip_ecra_id
+		dataType: string
+		lineageTag: 010fa55d-629b-414b-9ccf-5647a7e735a3
+		summarizeBy: none
+		sourceColumn: cd_tip_ecra_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_preco
+		dataType: string
+		isHidden
+		lineageTag: 74f97770-aa5d-4649-8023-4c0419488680
+		summarizeBy: none
+		sourceColumn: cd_preco
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_episodio
+		dataType: string
+		isHidden
+		lineageTag: 389266ee-e9e4-49fa-b409-2fe67a45c2de
+		summarizeBy: none
+		sourceColumn: cd_episodio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_buy_unit
+		dataType: string
+		isHidden
+		lineageTag: dea498ed-7298-4b6e-80ee-7ab5cbe23eeb
+		summarizeBy: none
+		sourceColumn: cd_buy_unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_break
+		dataType: string
+		lineageTag: 85b3ac9c-4544-4064-ba77-ee914a1e0ba8
+		summarizeBy: none
+		sourceColumn: nm_break
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_air
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 95f56b4f-c6f4-44e0-9ff1-827f265b32ba
+		summarizeBy: none
+		sourceColumn: dt_air
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hr_air
+		dataType: int64
+		formatString: 0
+		lineageTag: 6009dbe5-e26c-489e-9a15-3fa6ef248daa
+		summarizeBy: sum
+		sourceColumn: hr_air
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_kind
+		dataType: string
+		lineageTag: b0785ef4-4e92-4c0a-9c04-362342c7c7c9
+		summarizeBy: none
+		sourceColumn: st_kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_position
+		dataType: string
+		lineageTag: 08962e07-c209-487b-bcba-a2c09e874b6c
+		summarizeBy: none
+		sourceColumn: st_position
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_type
+		dataType: string
+		lineageTag: f2dd8224-52e0-4a4c-b6ec-4bf99525d584
+		summarizeBy: none
+		sourceColumn: st_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_placement
+		dataType: string
+		lineageTag: b22d8d3c-d91d-4da5-95e7-865e99a371d9
+		summarizeBy: none
+		sourceColumn: st_placement
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_status
+		dataType: string
+		lineageTag: 0bd5a9ae-87e4-4f0b-9314-5021df988220
+		summarizeBy: none
+		sourceColumn: st_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column vl_gross_tab
+		dataType: double
+		lineageTag: 038ede07-cd88-436e-b06f-e35e897456ed
+		summarizeBy: sum
+		sourceColumn: vl_gross_tab
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vl_pub
+		dataType: double
+		lineageTag: 590790c5-7b7f-4e5e-a3b9-c79bdb4da199
+		summarizeBy: sum
+		sourceColumn: vl_pub
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pc_discount
+		dataType: double
+		lineageTag: 7503ba82-b59e-47b8-823b-451d526f7187
+		summarizeBy: sum
+		sourceColumn: pc_discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vl_duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 133f960c-b3a0-45e6-89a1-1596bce47865
+		summarizeBy: sum
+		sourceColumn: vl_duration
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_vw_ad_units = m
+		mode: import
+		source = ```
+				let
+				    SQL = "SELECT * 
+				            FROM medialivre.pbi_out.pbi_vw_ad_units
+				            WHERE YEAR(dt_air) >= YEAR(GETDATE()) - " & AnoUpdate,
+				    Source = fx_dbricks(SQL),
+				    Ranges = Table.SelectRows(Source, each [dt_air] >= RangeStart and [dt_air] <= RangeEnd)
+				in
+				    Ranges
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

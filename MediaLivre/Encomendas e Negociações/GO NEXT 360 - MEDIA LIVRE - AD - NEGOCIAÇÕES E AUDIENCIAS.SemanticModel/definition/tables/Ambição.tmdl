@@ -1,0 +1,62 @@
+table Ambição
+	lineageTag: a6fecd9e-a4ed-4001-aad5-3f4759bf40db
+
+	column Agência
+		dataType: string
+		lineageTag: 101a3aa9-efbc-4319-a10a-c2da0e2bb4d0
+		summarizeBy: none
+		sourceColumn: Agência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ambição TTV'
+		dataType: decimal
+		formatString: "R$"\ #,0.###############;-"R$"\ #,0.###############;"R$"\ #,0.###############
+		lineageTag: b11bf278-690b-48d9-8122-fe7915367621
+		summarizeBy: sum
+		sourceColumn: Ambição TTV
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: c2e73e59-43dc-4e8d-90e5-f1cd496fab80
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Código
+		dataType: int64
+		formatString: 0
+		lineageTag: 1632dfdd-f3e8-4d2a-897c-8d6533813b5c
+		summarizeBy: none
+		sourceColumn: Código
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		dataType: string
+		lineageTag: a0fc148f-bbd2-43d1-a94e-22f8c20d0aed
+		summarizeBy: none
+		sourceColumn: Grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Ambição = m
+		mode: import
+		source =
+				let
+				  Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("bZHBboJAEIZfhXA2k12WWZYjEaIeEGJrTWM8bHGTkio2rJq+Tx+lL9ZhaajYXth/hm+H/2e2W5/7E3+2WpeFN0+ekgeqklW2TOgMAGMBjDF/N9n6AXWm2pzt5VbIEAdCUJ2apn8xCAGBjABF5JiQOpuy9HKzrzXpzFroi+p0pJoDIkIUB47GP97cOdzmEAW/35fUKfLlYlrkpBZNfa71ub6aPgrGIIRyYESdPH0engEyELwforpuli6SWfKY3WkUITAeOi6+C5LXzd6+6tY4W0pKUAIdSYMn/vJ01V728d4aa78+T/92FGOgfmxwPgpT5KlLwbkCFckeCUZIOe8QIRWg6i3ybiHl5eVQV7UdS1or0mIY78FwNGnd0E9rrT54edWt+JbEu9gbfTVH/WZaZy9Gii7I3u4b", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Código = _t, Grupo = _t, Agência = _t, #"Ambição TTV" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Origem,{{"Agência", type text}, {"Ambição TTV", Currency.Type}, {"Código", Int64.Type}}),
+				    Ano = Table.AddColumn(#"Tipo Alterado", "Ano", each 2026, Int64.Type)
+				in
+				    Ano
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,71 @@
+table pmt_slicer_investment
+	isHidden
+	lineageTag: 8751cc51-4ad0-4438-bf77-b10bd0f482a8
+
+	column ds_parameter
+		isHidden
+		lineageTag: e207d556-84c8-4d16-bdb8-15f121e0a26b
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: st_field
+
+		relatedColumnDetails
+			groupByColumn: ds_field
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_field
+		isHidden
+		lineageTag: 8442337d-f4d8-46c1-8e78-50387a311894
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: st_field
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_field
+		isHidden
+		lineageTag: 8ed10cf0-3aec-4540-b21c-97dd2e30d1fb
+		summarizeBy: none
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_name
+		isHidden
+		lineageTag: 41685176-6b21-4a34-afdb-469d9397d267
+		summarizeBy: none
+		sourceColumn: [Value4]
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_order
+		isHidden
+		formatString: 0
+		lineageTag: 7a5280e0-b868-480e-af6a-fc598a240678
+		summarizeBy: sum
+		sourceColumn: [Value5]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_slicer_investment = calculated
+		mode: import
+		source =
+				{
+				    ("nm_agency", NAMEOF( pbi_vw_media_investment[nm_agency] ), "agency", "Agência", 0),
+				    ("ds_year_broadcast", NAMEOF( pbi_vw_media_investment[ds_year_broadcast] ), "year_broadcast", "Ano", 1),
+				    ("nm_client_advertiser", NAMEOF( pbi_vw_media_investment[nm_client_advertiser] ), "advertiser", "Anunciante", 2),
+				    ("nm_channel", NAMEOF( pbi_dim_channels[nm_channel] ), "nm_channel", "Canais", 3),
+				    ("ds_daypart", NAMEOF( pbi_vw_media_investment[nm_daypart] ), "daypartt", "Daypart", 4),
+				    ("ds_year_month", NAMEOF( dim_tempo[ds_mes_ano] ), "ds_year_month", "Mês/Ano", 5),
+				    ("nm_sector", NAMEOF( pbi_vw_media_investment[nm_sector] ), "nm_sector", "Setor", 6)
+				}
+
+	annotation PBI_Id = 1f148d6fabdb44e99744ef364c3c08fd
+

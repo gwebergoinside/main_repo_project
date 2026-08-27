@@ -1,0 +1,162 @@
+relationship programs_→_ad_insertion
+	fromColumn: pbi_vw_ad_insertion.cd_program
+	toColumn: pbi_dim_programs.cd_program
+
+relationship campaigns_→_ad_insertion
+	fromColumn: pbi_vw_ad_insertion.cd_campaign
+	toColumn: pbi_dim_campaigns.cd_campaign
+
+relationship 10e93c42-ad40-fc1e-1fb3-375c854b216f
+	fromColumn: pbi_vw_ad_insertion.hr_air
+	toColumn: dim_daypart.nr_seconds
+
+relationship AutoDetected_96bc8b46-1210-4a2e-8af7-3f2bc8776e38
+	crossFilteringBehavior: bothDirections
+	fromColumn: pbi_dim_campaigns.cd_negotiation
+	toColumn: pbi_vw_negotiations.cd_negotiation
+
+relationship 8eeb7fa9-6d8b-8e97-0a0f-81a4c80c21bb
+	fromColumn: pbi_dim_campaigns.cd_target
+	toColumn: pbi_vw_targets.cd_variant
+
+relationship 8050e55c-a199-ec55-79d3-737fed420b9a
+	fromColumn: pbi_vw_negotiations.cd_package
+	toColumn: pbi_dim_packages.cd_package
+
+relationship AutoDetected_25b8a96f-d0c9-40ea-b508-51fb8ac98eae
+	fromColumn: pbi_dim_materials.cd_product
+	toColumn: pbi_dim_products_sectors.cd_product
+
+relationship 0b444783-e80c-dc5f-99c9-e05aec48c39f
+	fromColumn: pbi_dim_campaigns.cd_list_channel
+	toColumn: pbi_dim_channels.cd_channel
+
+relationship 4abae8b9-6d01-7d21-4684-c2014dfc5855
+	fromColumn: pbi_vw_ad_insertion.cd_material
+	toColumn: pbi_dim_materials.cd_material
+
+relationship fad9dfc7-848c-2ab1-3d82-2a642126a635
+	isActive: false
+	fromColumn: pbi_dim_accounts_client.cd_account_agency
+	toColumn: pbi_dim_accounts_agency.cd_account
+
+relationship 7b32cf37-50db-1ed5-49d2-bcd3a8f8357f
+	isActive: false
+	fromColumn: pbi_vw_negotiations.cd_account_client
+	toColumn: pbi_dim_accounts_client.cd_account
+
+relationship 8969322e-cc14-7f43-ed1f-fcfdb0dda22e
+	isActive: false
+	fromColumn: pbi_vw_negotiations.cd_account_agency
+	toColumn: pbi_dim_accounts_agency.cd_account
+
+relationship 9a067310-eb1f-68b5-4dcb-793eeb68255f
+	fromColumn: pbi_vw_projected_revenue.cd_account_client
+	toColumn: pbi_dim_accounts_client.cd_account
+
+relationship AutoDetected_48cb39b5-6465-43f5-8ade-b027d1bb44c4
+	isActive: false
+	fromColumn: pbi_vw_projected_revenue.cd_negotiation
+	toColumn: pbi_vw_negotiations.cd_negotiation
+
+relationship AutoDetected_4ac6862c-c00c-425b-bb9b-9131ac5d9e02
+	fromColumn: pbi_vw_media_investment.nm_channel
+	toColumn: pbi_dim_channels.nm_channel
+
+relationship 52b63eb5-fa02-320c-0db8-5fa40114b503
+	fromColumn: pbi_vw_media_investment.dt_broadcast
+	toColumn: dim_tempo.data
+
+relationship d3bab345-4ff6-1846-7070-9c4d0677ee96
+	fromColumn: pbi_vw_media_investment.hr_start
+	toColumn: dim_daypart.nr_seconds
+
+relationship 8ca91f0e-7484-c04c-5530-9b76927c0ec1
+	fromColumn: pbi_vw_projected_revenue.dt_negotiation_projected
+	toColumn: dim_tempo.data
+
+relationship 8249a458-8da9-1971-db0d-4388c6a8e2de
+	fromColumn: pbi_dim_campaigns.cd_account_agency
+	toColumn: pbi_dim_accounts_agency.cd_account
+
+relationship AutoDetected_175ee26f-daee-49d0-9c1f-c099121ea418
+	fromColumn: pbi_vw_invoices.cd_campaign
+	toColumn: pbi_dim_campaigns.cd_campaign
+
+relationship dd116672-e138-5390-50b8-ad8d49414634
+	fromColumn: pbi_vw_ad_insertion.cd_buy_unit
+	toColumn: pbi_vw_ad_units.cd_ad_unit
+
+relationship b6dc78cf-35d4-8d8f-193d-83e79a8e8397
+	isActive: false
+	fromColumn: pbi_vw_negotiations.dt_first_air
+	toColumn: dim_tempo.data
+
+relationship 786829ee-5204-c1e9-26d2-7dfd478803f6
+	fromColumn: pbi_vw_invoices.dt_init
+	toColumn: dim_tempo.data
+
+relationship 76d45334-4067-4d6e-7246-ae04b3b21d9a
+	fromColumn: pmt_types_targets_calc.nm_column
+	toColumn: pmt_types_targets_calc_dimention.pmt_types_targets_calc_nm_column
+
+relationship AutoDetected_d2b2d7f6-325a-470c-a047-e64a099f9a90
+	isActive: false
+	fromColumn: pbi_vw_negotiations.cd_channel
+	toColumn: pbi_dim_channels.cd_channel
+
+relationship AutoDetected_aa5f74bc-bb1e-4745-9b30-a683fb839682
+	fromColumn: 'Ficheiros Negociações'.cd_account
+	toColumn: pbi_dim_accounts_client.cd_account
+
+relationship 35294295-0745-da07-86af-91cc6eafeece
+	fromColumn: 'Ficheiros Negociações'.Canal
+	toColumn: pbi_dim_channels.cd_channel
+
+relationship 72d98de7-0ed9-a932-6118-8df0116e425c
+	toCardinality: many
+	fromColumn: 'Ficheiros Negociações'.Ano
+	toColumn: dim_tempo.nr_year
+
+relationship c3c290f0-358a-1e32-a0fa-b7b1bc4413c5
+	toCardinality: many
+	fromColumn: Ambição.Ano
+	toColumn: dim_tempo.nr_year
+
+relationship 2386189c-3642-3e0b-1a83-bbe3ba14a030
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'Relação Ambição'.cd_ambicao
+	toColumn: Ambição.Código
+
+relationship 88917366-6d12-902f-5c0a-37ebfef31ef6
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: pbi_dim_accounts_agency.cd_account
+	toColumn: 'Relação Ambição'.cd_account_agency
+
+relationship 79560f08-964b-2fde-fd7d-689a4279de6b
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: pbi_dim_accounts_client.cd_account_agency
+	toColumn: 'Relação Ambição'.cd_account_agency
+
+relationship 55efcb11-5cf1-dd3e-8958-d4f1f853a2d9
+	fromColumn: pbi_vw_ad_insertion.dt_emission
+	toColumn: dim_tempo.data
+
+relationship AutoDetected_dfecd7d3-1dc2-42c2-b44e-c5cc17343b05
+	fromColumn: pbi_vw_indicators.cd_ad_insertion
+	toColumn: pbi_vw_ad_insertion.cd_ad_insertion
+
+relationship AutoDetected_987be5fc-f1b9-422b-b129-6355f904738d
+	fromColumn: pbi_vw_media_investment_GRP.cd_media_investment
+	toColumn: pbi_vw_media_investment.cd_media_investment
+
+relationship 7882a036-05ee-b139-1238-0cfd18a2fd1f
+	fromColumn: pbi_dim_campaigns.cd_account_client
+	toColumn: pbi_dim_accounts_client.cd_account
+
+relationship b4b6919e-66f2-a7fb-ba50-2520b85abc11
+	fromColumn: pbi_vw_ad_break_units.cd_ad_unit
+	toColumn: pbi_vw_ad_units.cd_ad_unit
+

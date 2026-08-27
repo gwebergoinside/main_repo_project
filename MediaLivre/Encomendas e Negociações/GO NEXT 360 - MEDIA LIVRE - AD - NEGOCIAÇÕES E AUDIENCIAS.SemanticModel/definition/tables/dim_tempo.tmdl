@@ -1,0 +1,280 @@
+table dim_tempo
+	lineageTag: 4b4e55cf-5aff-4e63-9598-5ed72d965311
+	dataCategory: Time
+
+	column cd_tempo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 98e9f97b-1110-4d9e-9344-1a9c92d3da3c
+		summarizeBy: sum
+		sourceColumn: cd_tempo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column data
+		dataType: dateTime
+		isKey
+		isNullable: false
+		formatString: Short Date
+		lineageTag: cf4c629b-aa03-4fb7-9ebb-b0423e8933eb
+		summarizeBy: none
+		sourceColumn: data
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column nr_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e51e770-c7da-441c-8f31-43356c7f9c28
+		summarizeBy: none
+		sourceColumn: nr_year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 21ce1070-f63e-4a85-a8bf-c7a693a283ae
+		summarizeBy: sum
+		sourceColumn: nr_month
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_month
+		dataType: string
+		lineageTag: 4f5ffa66-23d6-43c2-b9a4-12ec87d39b38
+		summarizeBy: none
+		sourceColumn: nm_month
+		sortByColumn: nr_month
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_month_abrev
+		dataType: string
+		lineageTag: b11f0f8a-a1ee-4801-9622-18ac39fe14f6
+		summarizeBy: none
+		sourceColumn: nm_month_abrev
+		sortByColumn: nr_month
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_day
+		dataType: int64
+		formatString: 0
+		lineageTag: d896484f-6776-4d97-8065-9886e1615d6e
+		summarizeBy: sum
+		sourceColumn: nr_day
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_trimester
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e25da54-f0a3-46f9-8859-d58ff3cbf6a0
+		summarizeBy: sum
+		sourceColumn: nr_trimester
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_semester
+		dataType: int64
+		formatString: 0
+		lineageTag: b97f3c6a-d90b-44ec-bcb1-3975a8135eb9
+		summarizeBy: sum
+		sourceColumn: nr_semester
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_weekday
+		dataType: int64
+		formatString: 0
+		lineageTag: 6caabfd3-b6e9-44a1-acfc-a20e254e0d7d
+		summarizeBy: sum
+		sourceColumn: nr_weekday
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_week_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 80f24682-ffac-4e07-95b3-99a88790efbf
+		summarizeBy: sum
+		sourceColumn: nr_week_year
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_week_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 6811b12f-4918-4f6f-8a13-b2bb82511a2d
+		summarizeBy: sum
+		sourceColumn: nr_week_month
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_weekday
+		dataType: string
+		lineageTag: 87eeae25-c67c-43f5-a85e-96adcd0f2046
+		summarizeBy: none
+		sourceColumn: nm_weekday
+		sortByColumn: nr_weekday
+
+		changedProperty = IsHidden
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_weekday_abrev
+		dataType: string
+		lineageTag: 6cefcbc7-2008-49b2-863e-1743d8a05ce2
+		summarizeBy: none
+		sourceColumn: nm_weekday_abrev
+		sortByColumn: nr_weekday
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_is_weekend
+		dataType: string
+		lineageTag: 598d68bd-1cdc-4b60-8dd2-7aec1851e459
+		summarizeBy: none
+		sourceColumn: flag_is_weekend
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_mes_ano
+		dataType: string
+		lineageTag: a2cb464d-39a0-476b-a02a-c4b404feadca
+		summarizeBy: none
+		sourceColumn: ds_mes_ano
+		sortByColumn: nr_year_month
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_year_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 86c52a48-de29-4f81-b8bb-32e7648ce304
+		summarizeBy: sum
+		sourceColumn: nr_year_month
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_atual_month
+		dataType: string
+		lineageTag: c5c9ca5d-ee7e-4b03-a050-988c9686429f
+		summarizeBy: none
+		sourceColumn: ds_atual_month
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_atual_week
+		dataType: string
+		lineageTag: 3dce0698-1746-4309-b557-a98f04439b26
+		summarizeBy: none
+		sourceColumn: ds_atual_week
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_atual_date
+		dataType: string
+		lineageTag: 60ff3832-ad4f-4ba4-8ddf-c8fb2388f172
+		summarizeBy: none
+		sourceColumn: ds_atual_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_tempo
+		dataType: string
+		lineageTag: 51824980-b6d5-4671-bf15-1f0692ebefc7
+		summarizeBy: none
+		sourceColumn: ds_tempo
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_month_weekday
+		dataType: int64
+		formatString: 0
+		lineageTag: b4e5c388-8f47-4b7c-9e29-a59264b7246a
+		summarizeBy: sum
+		sourceColumn: nr_month_weekday
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_weekday_month
+		dataType: int64
+		formatString: 0
+		lineageTag: fcc71236-93c7-4db1-baed-590d1b5ea77b
+		summarizeBy: sum
+		sourceColumn: nr_weekday_month
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_tempo = m
+		mode: import
+		source =
+				let
+				    SQL = "SELECT *, CAST(cd_tempo AS STRING) AS ds_tempo
+				        FROM medialivre.pbi_out.dim_tempo
+				        WHERE 1 = 1
+				            AND nr_year >= YEAR(GETDATE()) - " & AnoUpdate & "
+				            AND nr_year <= YEAR(GETDATE()) + 5",
+				    Source = fx_dbricks(SQL)
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

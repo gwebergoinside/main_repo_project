@@ -1,0 +1,55 @@
+table pmt_parameters_column
+	isHidden
+	lineageTag: 119873b2-5350-48f2-b800-b857c5ccc986
+
+	column pmt_parameters_column
+		isHidden
+		lineageTag: 52983ff4-a9bb-4489-8a1e-f9299857a037
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'pmt_parameters_column Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'pmt_parameters_column Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'pmt_parameters_column Campos'
+		isHidden
+		lineageTag: 320afcc3-022c-48fe-b76c-f31da4f14fac
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'pmt_parameters_column Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'pmt_parameters_column Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: 9b971808-7ac2-4bec-b499-28d379fa411e
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_parameters_column = calculated
+		mode: import
+		source =
+				{
+				    ("Day Part", NAMEOF('dim_daypart'[ds_daypart]), 0),
+				    ("Mês Ano", NAMEOF('dim_tempo'[ds_mes_ano]), 1),
+				    ("Conta", NAMEOF('pbi_dim_accounts_client'[nm_account]), 2),
+				    ("Alvo", NAMEOF(pbi_vw_targets[ds_variant]), 3),
+				    ("Canal", NAMEOF('pbi_dim_channels'[nm_channel]), 4),
+				    ("Pacote", NAMEOF('pbi_dim_packages'[nm_package]), 5)
+				    // ("Buy Unit", NAMEOF('pbi_dim_buy_units'[nm_buy_unit]), 6)
+				}
+
+	annotation PBI_Id = 2c4e834e4be948ce988d951c589c74a3
+

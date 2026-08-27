@@ -1,0 +1,38 @@
+table pbi_dim_accounts_agency
+	lineageTag: ca42a891-1749-4872-a62c-9890aec82ba8
+
+	column cd_account
+		dataType: string
+		isHidden
+		lineageTag: 0934e436-c650-42fd-9966-832e1770b62a
+		summarizeBy: none
+		sourceColumn: cd_account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_account
+		dataType: string
+		lineageTag: 7e2afc37-1182-41cf-ab4a-ade9559e1aad
+		summarizeBy: none
+		sourceColumn: nm_account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_dim_accounts_agency = m
+		mode: import
+		source =
+				let
+				    pbi_dim_accounts_agency = fx_dbricks("SELECT nm_account, cd_account FROM medialivre.pbi_out.pbi_dim_accounts_agency")
+				in
+				    pbi_dim_accounts_agency
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

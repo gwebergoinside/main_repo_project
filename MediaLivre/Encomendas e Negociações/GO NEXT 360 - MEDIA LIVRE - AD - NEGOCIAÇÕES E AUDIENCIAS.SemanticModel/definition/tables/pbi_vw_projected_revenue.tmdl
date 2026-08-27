@@ -1,0 +1,68 @@
+table pbi_vw_projected_revenue
+	lineageTag: b42a2772-59b7-42d9-ba0f-b8ee5a733783
+
+	column cd_account_client
+		dataType: string
+		lineageTag: a3434629-883c-4dca-b58a-4c81ff1fd09d
+		summarizeBy: none
+		sourceColumn: cd_account_client
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_negotiation
+		dataType: string
+		lineageTag: a6584743-39b5-4269-923d-771013dec0f4
+		summarizeBy: none
+		sourceColumn: cd_negotiation
+
+		annotation SummarizationSetBy = Automatic
+
+	column vl_negotiation_projected_revenue
+		dataType: double
+		lineageTag: 136b5983-ba7c-4488-b263-f7142b1dae8a
+		summarizeBy: sum
+		sourceColumn: vl_negotiation_projected_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dt_negotiation_projected
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 464fc9f7-70c1-483b-94ba-91d7e208ea68
+		summarizeBy: none
+		sourceColumn: dt_negotiation_projected
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column nr_month_weekday = MONTH(pbi_vw_projected_revenue[dt_negotiation_projected] ) * 100 + WEEKDAY( pbi_vw_projected_revenue[dt_negotiation_projected], 1 )
+		formatString: 0
+		lineageTag: 1c3cead1-a322-4f19-a3b0-413152f95489
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_vw_projected_revenue = m
+		mode: import
+		source =
+				let
+				    SQL = "SELECT
+				            cd_negotiation,
+				            cd_account_client,
+				            dt_negotiation_projected,
+				            vl_negotiation_projected_revenue
+				        FROM medialivre.pbi_out.pbi_vw_projected_revenue
+				        WHERE 1 = 1
+				            AND ( ABS(vl_negotiation_gross) > 0 OR ABS(vl_negotiation_projected_revenue) > 0 )
+				            AND YEAR(dt_negotiation_projected) >= YEAR(GETDATE()) -" & AnoUpdate,
+				    Source = fx_dbricks(SQL)
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

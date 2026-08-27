@@ -1,0 +1,130 @@
+table dim_daypart
+	lineageTag: e3aab360-6e14-41d9-99da-29d852fad810
+
+	column nr_seconds
+		dataType: int64
+		formatString: 0
+		lineageTag: b51ef856-9e87-4df8-a40d-f0e48e056734
+		summarizeBy: none
+		sourceColumn: nr_seconds
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_hora
+		dataType: string
+		lineageTag: ba60051d-aa0e-48a8-9c5c-de636139d161
+		summarizeBy: none
+		sourceColumn: nr_hora
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_minutos
+		dataType: int64
+		formatString: 0
+		lineageTag: a1c31f6d-24b3-40a2-ade8-be5714252e3c
+		summarizeBy: sum
+		sourceColumn: nr_minutos
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_horas
+		dataType: int64
+		formatString: 0
+		lineageTag: b45933b2-0841-4786-80af-94c383bb2f27
+		summarizeBy: sum
+		sourceColumn: nr_horas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_daypart
+		dataType: string
+		lineageTag: 16f06da9-db1e-40ae-9502-64e668e23964
+		summarizeBy: none
+		sourceColumn: ds_daypart
+		sortByColumn: nr_ordem
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: ed7faa2d-2b9f-49d1-ba36-dc839561a4d0
+		summarizeBy: sum
+		sourceColumn: nr_ordem
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tp_time
+		dataType: string
+		lineageTag: 65f9e6c3-02aa-4499-b9aa-0def005aaf30
+		summarizeBy: none
+		sourceColumn: tp_time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ts_time
+		dataType: string
+		lineageTag: 30058bf7-d6da-4619-8ca0-01607cd57e32
+		summarizeBy: none
+		sourceColumn: ts_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_hora
+		dataType: string
+		lineageTag: 598da32e-d022-4e69-a980-d593abcba683
+		summarizeBy: none
+		sourceColumn: ds_hora
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_minute
+		dataType: string
+		lineageTag: 8df007cb-0455-49d9-adb9-d6703dd56ca8
+		summarizeBy: none
+		sourceColumn: ds_minute
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_ten_minutes
+		dataType: string
+		lineageTag: 9b7cea1b-3c59-48c2-914b-d16c7a77ee02
+		summarizeBy: none
+		sourceColumn: ds_ten_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_half_hour
+		dataType: string
+		lineageTag: 90ae6a2f-54bd-4ed6-b6ea-e349e889c575
+		summarizeBy: none
+		sourceColumn: ds_half_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_daypart = m
+		mode: import
+		source = fx_dbricks("SELECT * FROM medialivre.pbi_out.dim_daypart")
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

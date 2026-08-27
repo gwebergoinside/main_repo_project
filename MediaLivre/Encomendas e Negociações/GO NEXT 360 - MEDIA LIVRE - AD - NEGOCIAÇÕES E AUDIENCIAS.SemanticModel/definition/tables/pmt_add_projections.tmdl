@@ -1,0 +1,34 @@
+table pmt_add_projections
+	isHidden
+	lineageTag: 6877fca0-b412-480e-aff7-bd39d0939b26
+
+	column ds_description
+		isHidden
+		lineageTag: 6b4b7c35-6b27-47b6-88ea-4f22a34c16ef
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ds_description]
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_validate
+		isHidden
+		formatString: 0
+		lineageTag: 37a8999c-b096-458a-956d-c818bf26c8dd
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [fl_validate]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_add_projections = calculated
+		mode: import
+		source =
+				DATATABLE( "ds_description", STRING, "fl_validate", INTEGER,
+				{
+				    {"off", 0},
+				    {"on", 1}
+				})
+
+	annotation PBI_Id = 89640b518f7f426dac42601157ffb9b8
+

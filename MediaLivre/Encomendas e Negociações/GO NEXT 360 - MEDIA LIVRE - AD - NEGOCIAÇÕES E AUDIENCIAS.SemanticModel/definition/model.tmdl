@@ -1,0 +1,71 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["Host","Path","RangeStart","RangeEnd","~Medidas","fx_dbricks (old)","fx_dbricks","Server","BD","AnoUpdate","dim_tempo","dim_daypart","pbi_vw_yummi","pbi_vw_invoices","pbi_vw_indicators","pbi_vw_ad_insertion","pbi_dim_campaigns","pbi_vw_negotiations","pbi_vw_projected_revenue","pbi_dim_accounts_client","pbi_dim_accounts_agency","pbi_dim_packages","pbi_dim_materials","pbi_dim_channels","pbi_dim_programs","pbi_dim_buy_units","pbi_dim_products_sectors","pbi_last_data_updated","pbi_vw_targets","pbi_vw_max_date_indicators","pbi_vw_audit_transactions_native_json","pbi_vw_media_investment","pbi_vw_max_media_investment","pbi_vw_ad_units","pbi_vw_ad_break_units","pbi_vw_media_investment_GRP","Ficheiros Negociações","Ambição","Relação Ambição"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","CalcGroup","TMDLView_Desktop","DevMode"]
+
+annotation TranslationsBuilder = Version:2.2-Updated:2026-03-13
+
+annotation __TEdtr = 1
+
+ref table ~Medidas
+ref table dim_tempo
+ref table dim_daypart
+ref table pbi_vw_negotiations
+ref table pbi_vw_ad_insertion
+ref table pbi_dim_accounts_client
+ref table pbi_dim_campaigns
+ref table pbi_dim_channels
+ref table pbi_dim_programs
+ref table pbi_dim_accounts_agency
+ref table pbi_dim_packages
+ref table pbi_vw_targets
+ref table pbi_vw_targets_simulado
+ref table pmt_parameters_column
+ref table pbi_vw_targets_var
+ref table pbi_dim_materials
+ref table pbi_dim_products_sectors
+ref table pmt_adults_GRP
+ref table pmt_types_targets_calc
+ref table pbi_last_data_updated
+ref table until_last_updated
+ref table pbi_vw_max_date_indicators
+ref table pmt_duration_equivancy
+ref table pmt_types_targets_calc_dimention
+ref table tp_agencies
+ref table pbi_vw_projected_revenue
+ref table pbi_vw_media_investment
+ref table pmt_discount_investment
+ref table pbi_vw_max_media_investment
+ref table pmt_slicer_investment
+ref table is_MediaLivre_advertiser
+ref table pmt_exclude_position_tax
+ref table pmt_types_targets_calc_media_investment
+ref table pmt_exclude_multiproduct_tax
+ref table pbi_vw_invoices
+ref table pmt_values_KPI
+ref table pbi_vw_ad_units
+ref table 'Ficheiros Negociações'
+ref table Ambição
+ref table 'Relação Ambição'
+ref table pmt_add_projections
+ref table pbi_vw_indicators
+ref table pbi_vw_media_investment_GRP
+ref table pbi_vw_ad_break_units
+
+ref cultureInfo en-US
+ref cultureInfo es-ES
+ref cultureInfo pt-BR
+ref cultureInfo pt-PT
+ref cultureInfo en-GB
+

@@ -1,0 +1,66 @@
+table pbi_dim_packages
+	lineageTag: b7a63f7f-90bd-4f30-8c3f-3e2c14bf12ce
+
+	column cd_package
+		dataType: string
+		isHidden
+		lineageTag: dd25f153-1f40-4857-bcdb-bae148b63266
+		summarizeBy: none
+		sourceColumn: cd_package
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_package
+		dataType: string
+		lineageTag: 018456bf-1748-477c-8985-7d0488117acf
+		summarizeBy: none
+		sourceColumn: nm_package
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_package_type
+		dataType: string
+		lineageTag: 363301b6-a9b6-4200-97dc-bb95f3ad6852
+		summarizeBy: none
+		sourceColumn: st_package_type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_status
+		dataType: string
+		lineageTag: 07c68231-9fb7-4606-a365-a4f963784494
+		summarizeBy: none
+		sourceColumn: st_status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_package
+		dataType: string
+		lineageTag: a17172b8-68d5-4f21-862e-0a4d4bd75a02
+		summarizeBy: none
+		sourceColumn: ds_package
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_dim_packages = m
+		mode: import
+		source =
+				let
+				    pbi_dim_packages = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_vw_packages")
+				in
+				    pbi_dim_packages
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+

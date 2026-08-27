@@ -1,0 +1,35 @@
+table pbi_dim_programs
+	lineageTag: 'tbl-dim-programs'
+
+	column cd_program
+		dataType: string
+		isKey
+		isNullable: false
+		lineageTag: 'col-pro-key'
+		summarizeBy: none
+		sourceColumn: cd_program
+
+		changedProperty = IsHidden
+
+	column nm_program
+		dataType: string
+		lineageTag: 'col-pro-name'
+		summarizeBy: none
+		sourceColumn: nm_program
+
+		changedProperty = IsHidden
+
+	partition pbi_dim_programs-partition = m
+		mode: import
+		source =
+				let
+				    pbi_dim_programs = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_dim_programs")
+				in
+				    pbi_dim_programs
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

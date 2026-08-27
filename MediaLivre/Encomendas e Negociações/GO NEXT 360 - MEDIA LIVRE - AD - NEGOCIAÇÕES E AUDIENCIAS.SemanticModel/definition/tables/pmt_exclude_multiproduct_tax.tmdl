@@ -1,0 +1,34 @@
+table pmt_exclude_multiproduct_tax
+	isHidden
+	lineageTag: 36bbeb0f-a453-4331-872f-8b73f98f73d8
+
+	column ds_description
+		isHidden
+		lineageTag: e3e19c82-16e7-4730-aefd-0b10356eac1a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ds_description]
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_validate
+		isHidden
+		formatString: 0
+		lineageTag: 3fbd0211-4897-4d46-aa1c-ad34caf8515c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [fl_validate]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_exclude_multiproduct_tax = calculated
+		mode: import
+		source =
+				DATATABLE( "ds_description", STRING, "fl_validate", INTEGER,
+				{
+				    {"off", 0},
+				    {"on", 1}
+				})
+
+	annotation PBI_Id = 893c9515d5084b3e88c093db03d9672a
+

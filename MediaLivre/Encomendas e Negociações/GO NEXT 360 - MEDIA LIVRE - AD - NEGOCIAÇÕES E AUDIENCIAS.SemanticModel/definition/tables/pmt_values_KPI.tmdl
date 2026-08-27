@@ -1,0 +1,39 @@
+table pmt_values_KPI
+	lineageTag: 493fb0cd-a4a6-48ec-8e50-55afe8de421c
+
+	column ds_metrics
+		lineageTag: 42aa4cc8-3802-48d3-b7b4-291544d8778d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ds_metrics]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_label
+		lineageTag: 7940772a-1bb5-49df-988e-ff84c192281b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ds_label]
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_order
+		formatString: 0
+		lineageTag: a8441206-18d5-474e-a20c-acbc7e50aa5a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [nr_order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_values_KPI = calculated
+		mode: import
+		source =
+				DATATABLE( "ds_metrics", STRING, "ds_label", STRING, "nr_order", INTEGER,
+				{
+				    {"vl_biiling", "Encomendas", 0},
+				    {"vl_invoice_billing", "Facturação", 1}
+				})
+
+	annotation PBI_Id = ed5e9a7f13994859ac30ab733137d64f
+

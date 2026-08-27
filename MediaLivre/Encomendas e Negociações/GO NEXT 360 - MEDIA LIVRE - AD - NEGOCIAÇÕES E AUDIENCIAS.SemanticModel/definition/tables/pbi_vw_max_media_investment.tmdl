@@ -1,0 +1,20 @@
+table pbi_vw_max_media_investment
+	lineageTag: a158a9c3-2278-4ab7-bf8d-7d2cc3e1fd36
+
+	column max_dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5452d659-6606-4e2c-86b0-160217adca4a
+		summarizeBy: none
+		sourceColumn: max_dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_vw_max_media_investment = m
+		mode: import
+		source = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_vw_max_media_investment")
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

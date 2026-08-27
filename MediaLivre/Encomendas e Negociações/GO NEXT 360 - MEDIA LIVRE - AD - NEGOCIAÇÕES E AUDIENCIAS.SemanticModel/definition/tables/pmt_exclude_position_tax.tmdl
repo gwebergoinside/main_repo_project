@@ -1,0 +1,34 @@
+table pmt_exclude_position_tax
+	isHidden
+	lineageTag: 11f08b91-9f7d-4ff7-9cb9-dadf7351d973
+
+	column ds_description
+		isHidden
+		lineageTag: 1973de9b-a91c-4362-a031-6d897f6d25a9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ds_description]
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_validate
+		isHidden
+		formatString: 0
+		lineageTag: 151890dd-9e37-4c47-a1f8-e8c3aae3a8cd
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [fl_validate]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_exclude_position_tax = calculated
+		mode: import
+		source =
+				DATATABLE( "ds_description", STRING, "fl_validate", INTEGER,
+				{
+				    {"off", 0},
+				    {"on", 1}
+				})
+
+	annotation PBI_Id = f5bdbf3d49c94d44a084f8835dfd3c8a
+

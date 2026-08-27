@@ -1,0 +1,393 @@
+table pbi_vw_ad_insertion
+	lineageTag: 'tbl-ad-insertion'
+
+	column cd_ad_insertion
+		dataType: string
+		isNullable: false
+		lineageTag: 'col-ai-key'
+		summarizeBy: none
+		sourceColumn: cd_ad_insertion
+
+		changedProperty = IsHidden
+
+	column cd_campaign
+		dataType: string
+		isHidden
+		lineageTag: 'col-ai-campaign'
+		summarizeBy: none
+		sourceColumn: cd_campaign
+
+		changedProperty = IsHidden
+
+	column cd_channel
+		dataType: string
+		isHidden
+		lineageTag: 'col-ai-channel'
+		summarizeBy: none
+		sourceColumn: cd_channel
+
+		changedProperty = IsHidden
+
+	column cd_program
+		dataType: string
+		isHidden
+		lineageTag: 'col-ai-program'
+		summarizeBy: none
+		sourceColumn: cd_program
+
+		changedProperty = IsHidden
+
+	column cd_material
+		dataType: string
+		isHidden
+		lineageTag: 'col-ai-material'
+		summarizeBy: none
+		sourceColumn: cd_material
+
+		changedProperty = IsHidden
+
+	/// ── Datas e Hora ──────────────────────────────────────────────
+	column dt_air
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 'col-ai-dtair'
+		dataCategory: Date
+		summarizeBy: none
+		sourceColumn: dt_air
+
+		changedProperty = IsHidden
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hr_air
+		dataType: int64
+		formatString: 0
+		lineageTag: 'col-ai-hrair'
+		summarizeBy: none
+		sourceColumn: hr_air
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ── Status ────────────────────────────────────────────────────
+	column st_status
+		dataType: string
+		lineageTag: 'col-ai-status'
+		summarizeBy: none
+		sourceColumn: st_status
+
+		changedProperty = IsHidden
+
+	/// ── Duração e Equivalência ────────────────────────────────────
+	column vl_duration_fitting
+		dataType: int64
+		formatString: #,0
+		sourceProviderType: int
+		lineageTag: 'col-ai-duration'
+		summarizeBy: sum
+		sourceColumn: vl_duration_fitting
+
+		changedProperty = IsHidden
+
+	/// ── Valores Financeiros ───────────────────────────────────────
+	column vl_gross
+		dataType: double
+		formatString: #,0
+		lineageTag: 'col-ai-gross'
+		summarizeBy: sum
+		sourceColumn: vl_gross
+
+		changedProperty = IsHidden
+
+	column vl_net
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 'col-ai-net'
+		summarizeBy: sum
+		sourceColumn: vl_net
+
+		changedProperty = IsHidden
+
+	column pc_discount
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 'col-ai-discount'
+		summarizeBy: sum
+		sourceColumn: pc_discount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column mt_cost_per_second
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 'col-ai-cps'
+		summarizeBy: sum
+		sourceColumn: mt_cost_per_second
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// ── Posição no Break ───────────────────────────────────────────
+	column nr_position
+		dataType: int64
+		formatString: #,0
+		lineageTag: 'col-ai-position'
+		summarizeBy: sum
+		sourceColumn: nr_position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_first_position
+		dataType: int64
+		formatString: 0
+		lineageTag: 'col-ai-first-pos'
+		summarizeBy: sum
+		sourceColumn: fl_first_position
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_buy_unit
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(65535)
+		lineageTag: 647a9bcc-6544-424a-bf0b-06782c1383a9
+		summarizeBy: none
+		sourceColumn: cd_buy_unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_commercial_format
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(65535)
+		lineageTag: 5eb53902-ecc7-4738-93d3-d256a9f9b857
+		summarizeBy: none
+		sourceColumn: cd_commercial_format
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_material_type
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(65535)
+		lineageTag: 63860f51-0993-4096-8746-65e82231630a
+		summarizeBy: none
+		sourceColumn: cd_material_type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_main_material
+		dataType: string
+		isHidden
+		lineageTag: 466a4419-1863-48f1-b828-2f3c42cdd683
+		summarizeBy: none
+		sourceColumn: cd_main_material
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_financial_classifier
+		dataType: string
+		lineageTag: 75ee259c-eed9-49b6-9242-5a3da110cae7
+		summarizeBy: none
+		sourceColumn: cd_financial_classifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vl_billing
+		dataType: double
+		lineageTag: bc95a76f-a6db-4f93-b52c-fb63747142f2
+		summarizeBy: sum
+		sourceColumn: vl_billing
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dt_emission
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 13784952-7b53-41e9-89d3-bdd37a00eade
+		summarizeBy: none
+		sourceColumn: dt_emission
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column nm_buy_unit
+		dataType: string
+		lineageTag: c71e4950-150d-4f9d-995e-aff51614c774
+		summarizeBy: none
+		sourceColumn: nm_buy_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column vl_dif_minimal_billing
+		dataType: double
+		lineageTag: 983102f9-3a7e-40dc-abab-9e4611171837
+		summarizeBy: sum
+		sourceColumn: vl_dif_minimal_billing
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cd_ad_insertion_emission
+		dataType: string
+		isHidden
+		lineageTag: 30421c13-206d-43ab-b9bd-52fd70930d5e
+		summarizeBy: none
+		sourceColumn: cd_ad_insertion_emission
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_negotiation
+		dataType: string
+		isHidden
+		lineageTag: f55364a6-51f4-40a7-8bfb-89cb76729925
+		summarizeBy: none
+		sourceColumn: cd_negotiation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pc_position_tax
+		dataType: double
+		lineageTag: 80411ae1-e3a1-48f4-8b89-1552e3bad3a2
+		summarizeBy: sum
+		sourceColumn: pc_position_tax
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cd_ad_unit
+		dataType: string
+		isHidden
+		lineageTag: 15a534ba-5248-46a4-ac1d-01fabb83251a
+		summarizeBy: none
+		sourceColumn: cd_ad_unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora_unit = RELATED( dim_daypart[nr_horas])
+		formatString: 0
+		lineageTag: 28e025e5-3af5-45b5-bfb8-85e0ba7c9b99
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column pc_multiproduct_tax
+		dataType: double
+		lineageTag: 565393c2-e6c4-45c6-8538-32c5cf38d874
+		summarizeBy: sum
+		sourceColumn: pc_multiproduct_tax
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vl_net_position
+		dataType: double
+		lineageTag: 428d09ec-d257-4d86-bde1-4792299ce786
+		summarizeBy: sum
+		sourceColumn: vl_net_position
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vl_net_multiproduct
+		dataType: double
+		lineageTag: 5a91f224-4d86-4ef2-b226-f08518335de7
+		summarizeBy: sum
+		sourceColumn: vl_net_multiproduct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vl_billing_position
+		dataType: double
+		lineageTag: 4ea02af5-8043-454a-8c01-de8bfe03165c
+		summarizeBy: sum
+		sourceColumn: vl_billing_position
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vl_billing_multiproduct
+		dataType: double
+		lineageTag: 643d4009-fb5d-4843-92eb-54d759dc9aa7
+		summarizeBy: sum
+		sourceColumn: vl_billing_multiproduct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vl_bonus
+		dataType: double
+		lineageTag: 6201d57f-ba2d-4ef7-9cfd-7730b37f5863
+		summarizeBy: sum
+		sourceColumn: vl_bonus
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ts_time_break
+		dataType: string
+		lineageTag: 21f4a2a1-5860-4afc-bf30-38aad527ce4f
+		summarizeBy: none
+		sourceColumn: ts_time_break
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_vw_ad_insertion-partition = m
+		mode: import
+		source = ```
+				let
+				    SQL = "SELECT * FROM medialivre.pbi_out.pbi_vw_ad_insertion
+				        WHERE YEAR(dt_air) >= YEAR(GETDATE()) - 2 
+				            AND dt_air BETWEEN '" 
+				        & Date.ToText(DateTime.Date(RangeStart), "yyyy-MM-dd") 
+				        & "' AND '" 
+				        & Date.ToText(DateTime.Date(RangeEnd), "yyyy-MM-dd") 
+				        & "'",
+				    Source = fx_dbricks(SQL)
+				in
+				    Source
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+

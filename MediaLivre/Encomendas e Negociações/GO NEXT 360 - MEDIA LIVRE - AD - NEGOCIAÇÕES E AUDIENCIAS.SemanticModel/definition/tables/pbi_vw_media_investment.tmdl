@@ -1,0 +1,147 @@
+table pbi_vw_media_investment
+	lineageTag: 605487e1-5393-4657-b7c9-ae8986616303
+
+	column cd_media_investment
+		dataType: string
+		lineageTag: 8775e9a7-76d6-4b79-bd0b-ad2c4d35fd71
+		summarizeBy: none
+		sourceColumn: cd_media_investment
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_broadcast
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fd9dac67-dba5-421e-a21f-a10feafc284c
+		summarizeBy: none
+		sourceColumn: dt_broadcast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hr_start
+		dataType: int64
+		formatString: 0
+		lineageTag: f2d93604-35cd-454c-8e65-73e1581cbdad
+		summarizeBy: none
+		sourceColumn: hr_start
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_channel
+		dataType: string
+		lineageTag: 1ea4b108-9a49-451d-9847-e538e90cc0d6
+		summarizeBy: none
+		sourceColumn: nm_channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_program
+		dataType: string
+		lineageTag: b88c5494-b548-4b91-bb00-41de704c7dc3
+		summarizeBy: none
+		sourceColumn: nm_program
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_typology
+		dataType: string
+		lineageTag: 584f9e60-389b-4da6-8264-af8a3c214704
+		summarizeBy: none
+		sourceColumn: st_typology
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_agency
+		dataType: string
+		lineageTag: ed28dee5-267b-46c6-bd1e-cd47461fa84a
+		summarizeBy: none
+		sourceColumn: nm_agency
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_client_advertiser
+		dataType: string
+		lineageTag: 1c09d793-bcb3-400e-80ba-c45eca705716
+		summarizeBy: none
+		sourceColumn: nm_client_advertiser
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_sector
+		dataType: string
+		lineageTag: e5f78495-6f97-4e40-9781-287557475b0d
+		summarizeBy: none
+		sourceColumn: nm_sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_product_advertiser
+		dataType: string
+		lineageTag: 45fc8e9f-77e5-43bc-9e41-e4011f687498
+		summarizeBy: none
+		sourceColumn: nm_product_advertiser
+
+		annotation SummarizationSetBy = Automatic
+
+	column vl_investment
+		dataType: double
+		lineageTag: f7a4fdb2-e336-434f-9950-ec8f0c9b2b4f
+		summarizeBy: sum
+		sourceColumn: vl_investment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vl_duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 5391ed26-1bb1-40b9-acc0-381a83fde868
+		summarizeBy: sum
+		sourceColumn: vl_duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_ordem_daypart
+		dataType: int64
+		formatString: 0
+		lineageTag: 949dbf89-687c-40b5-9d7d-4084feeda8e1
+		summarizeBy: sum
+		sourceColumn: nr_ordem_daypart
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_daypart
+		dataType: string
+		lineageTag: bf29d59b-9290-4b3b-8eb2-99484946c3f5
+		summarizeBy: none
+		sourceColumn: nm_daypart
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_year_broadcast
+		dataType: string
+		lineageTag: 74883777-7c91-42d6-93e0-5b22a92e4a48
+		summarizeBy: none
+		sourceColumn: ds_year_broadcast
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_client_advertiser_cmtv
+		dataType: string
+		lineageTag: 35a6ea3d-71ac-4ec7-96af-9ad4208a528b
+		summarizeBy: none
+		sourceColumn: fl_client_advertiser_cmtv
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_vw_media_investment = m
+		mode: import
+		source = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_vw_media_investment")
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

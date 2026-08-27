@@ -1,0 +1,106 @@
+table pmt_types_targets_calc
+	isHidden
+	lineageTag: e5f23030-7f7a-47d4-8bcd-26e23e3e5ffd
+
+	column pmt_types_targets_calc
+		isHidden
+		lineageTag: c612d648-7edd-4dc9-b189-00b23d497ba9
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: grouped
+
+		relatedColumnDetails
+			groupByColumn: fields
+
+		annotation SummarizationSetBy = Automatic
+
+	column fields
+		isHidden
+		lineageTag: 4cf618a0-d718-4661-81ef-b282ec42acbf
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: grouped
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column grouped
+		isHidden
+		lineageTag: 0c164ae7-0171-442b-bfcd-315b2673eddb
+		summarizeBy: none
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	column metrics
+		isHidden
+		lineageTag: 1d82a019-7c1c-47f7-8aeb-c3f335827fee
+		summarizeBy: none
+		sourceColumn: [Value4]
+		sortByColumn: order
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_column
+		isHidden
+		lineageTag: aeba6525-beb5-43ea-85a3-99c457adc4df
+		summarizeBy: none
+		sourceColumn: [Value5]
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_column_2
+		isHidden
+		lineageTag: cbf45f24-28e8-4127-8337-fa42c995d9d4
+		summarizeBy: none
+		sourceColumn: [Value6]
+		sortByColumn: order
+
+		annotation SummarizationSetBy = Automatic
+
+	column order
+		isHidden
+		formatString: 0
+		lineageTag: 6a3d7a6f-44e4-4d23-9f63-0ce45b9eb66e
+		summarizeBy: sum
+		sourceColumn: [Value7]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_types_targets_calc = calculated
+		mode: import
+		source = ```
+				{
+				    ("CPR_EQ", NAMEOF('~Medidas'[CPR_EQ]), "Equivalent", "CPR_EQ", "CPR", "CPR", 0),
+				    ("CPR_EQ_LY", NAMEOF('~Medidas'[CPR_EQ_LY]), "Equivalent", "CPR_EQ_LY", "LY", "CPR LY", 1),
+				    ("yoy_CPR_EQ_growth_pct", NAMEOF('~Medidas'[yoy_CPR_EQ_growth_pct]), "Equivalent", "yoy_CPR_EQ_growth_pct", "YoY Δ", "Δ CPR", 2),
+				    ("GRP_EQ", NAMEOF('~Medidas'[GRP_EQ]), "Equivalent", "GRP_EQ", "GRP", "GRP", 3),
+				    ("GRP_EQ_LY", NAMEOF('~Medidas'[GRP_EQ_LY]), "Equivalent", "GRP_EQ_LY", "LY", "GRP LY", 4),
+				    ("yoy_GRP_EQ_growth_pct", NAMEOF('~Medidas'[yoy_GRP_EQ_growth_pct]), "Equivalent", "yoy_GRP_EQ_growth_pct", "YoY Δ", "Δ GRP", 5), 
+				    ("vl_projected_revenue_negotiated", NAMEOF('~Medidas'[vl_projected_revenue_negotiated]), "Equivalent", "vl_projected_revenue_negotiated", "Proj. Neg.", "Proj. Neg.", 6),
+				    ("total_gross", NAMEOF('~Medidas'[total_gross]), "Equivalent", "total_gross", "V. Tabela", "V. Tabela", 7),
+				    ("total_billing", NAMEOF('~Medidas'[total_billing]), "Equivalent", "total_billing", "VBN", "VBN", 8),
+				    ("total_billing_LY", NAMEOF('~Medidas'[total_billing_LY]), "Equivalent", "total_billing_LY", "LY", "VBN LY", 9), 
+				    ("total_bonus", NAMEOF('~Medidas'[total_bonus]), "Equivalent", "total_bonus", "V. Bonus", "V. Bonus", 10), 
+				    // ("total_invoice_gross", NAMEOF('~Medidas'[total_invoice_gross]), "Equivalent", "total_invoice_gross", "Facturação", "Facturação", 11),
+				    // ("total_invoice_gross_LY", NAMEOF('~Medidas'[total_invoice_gross_LY]), "Equivalent", "total_invoice_gross_LY", "Facturação LY", "Facturação LY", 12),
+				    ("yoy_billing_growth_pct", NAMEOF('~Medidas'[yoy_billing_growth_pct]), "Equivalent", "yoy_billing_growth_pct", "YoY Δ", "Δ VBN", 13),
+				    ("pc_dif_project_negotiated_vs_billing", NAMEOF('~Medidas'[pc_dif_project_negotiated_vs_billing]), "Equivalent", "pc_dif_project_negotiated_vs_billing", "Δ Projetada", "Δ Projetada", 14),
+				    ("total_dif_minimal_billing", NAMEOF('~Medidas'[total_dif_minimal_billing]), "Equivalent", "total_dif_minimal_billing", "Δ Mínima", "Δ Mínima", 15),
+				    ("pc_discount_avg", NAMEOF('~Medidas'[pc_discount_avg]), "Equivalent", "pc_discount_avg", "Desconto", "Desconto", 16),
+				    ("CPS", NAMEOF('~Medidas'[CPS]), "Equivalent", "CPS", "CPS", "CPS", 17),
+				    ("CPS_LY", NAMEOF('~Medidas'[CPS_LY]), "Equivalent", "CPS_LY", "LY", "CPS LY", 18),
+				    ("yoy_CPS_growth_pct", NAMEOF('~Medidas'[yoy_CPS_growth_pct]), "Equivalent", "yoy_CPS_growth_pct", "YoY Δ", "Δ CPS", 19),
+				    ("total_seconds", NAMEOF('~Medidas'[total_seconds]), "Equivalent", "total_seconds", "Segundos", "Segundos", 20),
+				    ("CPR_EQ_XT", NAMEOF('~Medidas'[CPR_EQ_XT]), "Simulated", "CPR_EQ_XT", "CPR", "CPR.", 21),
+				    ("GRP_EQ_XT", NAMEOF('~Medidas'[GRP_EQ_XT]), "Simulated", "GRP_EQ_XT", "GRP", "GRP.", 22)
+				}
+				```
+
+	annotation PBI_Id = 1df476b758dd482f98c0fd5bba4f7e33
+

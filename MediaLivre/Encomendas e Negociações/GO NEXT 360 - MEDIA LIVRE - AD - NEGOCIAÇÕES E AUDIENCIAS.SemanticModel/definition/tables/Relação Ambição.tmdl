@@ -1,0 +1,34 @@
+table 'Relação Ambição'
+	lineageTag: 6facb0b8-97af-446e-baa2-5055f082d915
+
+	column cd_account_agency
+		dataType: int64
+		formatString: 0
+		lineageTag: 60f032e0-3e34-4726-b601-401a933a520d
+		summarizeBy: none
+		sourceColumn: cd_account_agency
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_ambicao
+		dataType: int64
+		formatString: 0
+		lineageTag: 2151241e-5da8-45d9-99c6-ff5054ecc585
+		summarizeBy: none
+		sourceColumn: cd_ambicao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Relação Ambição' = m
+		mode: import
+		source =
+				let
+				  Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("TY6xDQAhDAN3oabAJBCYBbH/Gp9g9KK7i2XwWgkqKSeknZ2lNJd6REoEwqCpvdJd9EiVaAyyU2PX7GfEM53nOZ2NZzhO9gJR7tmO3UEjmHugwZzQ9QT8YLwJYg64DXUWjtsf", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [cd_account_agency = _t, cd_ambicao = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Origem,{{"cd_account_agency", Int64.Type}, {"cd_ambicao", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

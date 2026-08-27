@@ -1,0 +1,20 @@
+table pbi_last_data_updated
+	lineageTag: aa1d8380-14f7-4c2b-b7f6-ab86b9825d68
+
+	column last_update
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 517216fa-f874-4b80-b2f6-a7aa4e3d6807
+		summarizeBy: none
+		sourceColumn: last_update
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_last_data_updated = m
+		mode: import
+		source = fx_dbricks("select * from medialivre.pbi_out.pbi_last_data_updated")
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

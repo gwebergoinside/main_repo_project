@@ -1,0 +1,125 @@
+table pbi_vw_indicators
+	lineageTag: aa0757a3-2d5f-47d0-bc0a-42032a5a08eb
+
+	column st_part
+		dataType: string
+		lineageTag: f46999f6-cba1-4f54-a61d-d1bd88eb4b6c
+		summarizeBy: none
+		sourceColumn: st_part
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_ad_insertion
+		dataType: string
+		isHidden
+		lineageTag: 9485eb9c-9c76-4c4e-ad9d-2c6833201ea5
+		summarizeBy: none
+		sourceColumn: cd_ad_insertion
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_target
+		dataType: string
+		isHidden
+		lineageTag: 94a7c8aa-f9c3-4c77-be2e-ada7daae0ef0
+		summarizeBy: none
+		sourceColumn: cd_target
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRP
+		dataType: double
+		lineageTag: 9c826290-83a7-47ff-859e-443e972a2517
+		summarizeBy: sum
+		sourceColumn: TRP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GRP_EQ_XT
+		dataType: double
+		lineageTag: 802f59e0-ed50-4fbb-a837-756f8402cd83
+		summarizeBy: sum
+		sourceColumn: GRP_EQ_XT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GRP_EQ30_XT
+		dataType: double
+		lineageTag: 2c06d0b5-da44-428e-9267-d3a9de7f48af
+		summarizeBy: sum
+		sourceColumn: GRP_EQ30_XT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GRP_EQ
+		dataType: double
+		lineageTag: d8cd90d9-a83b-4d3b-bc61-b0fb68b7d059
+		summarizeBy: sum
+		sourceColumn: GRP_EQ
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CPR_XT
+		dataType: double
+		lineageTag: 4b053a4e-b8d3-4598-9f8a-e66bf17488f0
+		summarizeBy: sum
+		sourceColumn: CPR_XT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GRP_EQ30
+		dataType: double
+		lineageTag: 2bb31f41-051b-43d6-b95b-30f8bf58d98f
+		summarizeBy: sum
+		sourceColumn: GRP_EQ30
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition pbi_vw_indicators = m
+		mode: import
+		source = ```
+				let
+				    SQL = "SELECT A.st_part
+				            , A.cd_ad_insertion
+				            , A.cd_target
+				            , A.TRP
+				            , A.GRP_EQ_XT
+				            , A.GRP_EQ30_XT
+				            , A.GRP_EQ
+				            , A.CPR_XT
+				            , A.GRP_EQ30
+				        FROM medialivre.pbi_out.pbi_vw_indicators AS A
+				        JOIN medialivre.pbi_out.pbi_vw_ad_insertion AS B
+				            ON A.cd_ad_insertion = B.cd_ad_insertion
+				            AND YEAR(B.dt_air) >= YEAR(GETDATE()) - 2
+				            AND B.dt_air BETWEEN '" 
+				        & Date.ToText(DateTime.Date(RangeStart), "yyyy-MM-dd") 
+				        & "' AND '" 
+				        & Date.ToText(DateTime.Date(RangeEnd), "yyyy-MM-dd") 
+				        & "'
+				        ",
+				    Source = fx_dbricks(SQL)
+				in
+				    Source
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

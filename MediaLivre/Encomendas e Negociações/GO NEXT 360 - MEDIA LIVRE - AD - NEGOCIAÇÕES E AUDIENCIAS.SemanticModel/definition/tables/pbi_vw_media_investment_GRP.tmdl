@@ -1,0 +1,54 @@
+table pbi_vw_media_investment_GRP
+	lineageTag: e16adb2b-0605-4576-9fbb-9bca532abf1a
+
+	column cd_media_investment
+		dataType: string
+		lineageTag: bb43441e-6224-48b6-a2c8-414d93b6d6da
+		summarizeBy: none
+		sourceColumn: cd_media_investment
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_target
+		dataType: string
+		lineageTag: f672380e-7c21-46fe-be30-2a0757093b9a
+		summarizeBy: none
+		sourceColumn: cd_target
+
+		annotation SummarizationSetBy = Automatic
+
+	column GRP
+		dataType: double
+		lineageTag: edbdf368-cc3b-430d-8c3c-b5f91a0b426b
+		summarizeBy: sum
+		sourceColumn: GRP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition pbi_vw_media_investment_GRP = m
+		mode: import
+		source = ```
+				let
+				    SQL = "SELECT
+				              cd_media_investment
+				        --  , dt_broadcast
+				            , cd_target
+				            , GRP
+				        --    GRP_EQ 
+				            FROM medialivre.pbi_out.pbi_vw_media_investment_GRP
+				        WHERE YEAR(dt_broadcast) >= YEAR(GETDATE()) - " & AnoUpdate & "
+				            AND dt_broadcast BETWEEN '" & Date.ToText(DateTime.Date(RangeStart), "yyyy-MM-dd") 
+				        & "' AND '" 
+				        & Date.ToText(DateTime.Date(RangeEnd), "yyyy-MM-dd") 
+				        & "'",
+				    Source = fx_dbricks(SQL)
+				in
+				    Source
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+

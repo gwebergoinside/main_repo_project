@@ -1,0 +1,29 @@
+table pmt_discount_investment
+	isHidden
+	lineageTag: e7fb7601-10ab-4584-88b9-ceed2e6b4de1
+
+	measure vl_pmt_discount_investment = DIVIDE( SELECTEDVALUE('pmt_discount_investment'[pmt_discount_investment], 995), 100)
+		formatString: 0.00%;-0.00%;0.00%
+		isHidden
+		lineageTag: 1a3e0fa1-bfee-474f-9093-2402b0d78556
+
+	column pmt_discount_investment
+		isHidden
+		formatString: 0
+		lineageTag: 6110b83f-d8cb-49bf-b0fe-f7528fe5358e
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition pmt_discount_investment = calculated
+		mode: import
+		source = GENERATESERIES(80.0, 99.5, 0.5)
+
+	annotation PBI_Id = 8c98f804db554e23bf0ae97ffd21e393
+

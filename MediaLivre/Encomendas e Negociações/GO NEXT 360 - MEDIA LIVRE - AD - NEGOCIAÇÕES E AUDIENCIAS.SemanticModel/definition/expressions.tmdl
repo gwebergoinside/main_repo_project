@@ -1,0 +1,97 @@
+expression BD = "GMediaAD" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 7ef836ac-eeeb-4db0-a191-22008c154987
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+
+/// Período de atualização
+expression AnoUpdate = "2" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 0c2849d1-6d95-44d9-af26-cb6498ea53bd
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression Server = "SrvGMediaProd" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 43c7cdc9-1197-4d7d-8be5-cb8ccf45edd4
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression fx_dbricks =
+		let
+		    Host = Host,
+		    Path = Path,
+		    Base = Databricks.Query(Host, Path)
+		in
+		    Base
+	lineageTag: f7f37409-1759-4c89-9fe8-bbf5f698c6b8
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Function
+
+expression pbi_vw_yummi = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_vw_yummi")
+	lineageTag: cbae25f7-4a81-4cc1-8fb4-b796c768431b
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+
+expression pbi_vw_audit_transactions_native_json = fx_dbricks("select * from medialivre.pbi_out.pbi_vw_audit_transactions_native_json")
+	lineageTag: 7e68bb14-958e-4ead-b8e5-7b7d37f8b514
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression pbi_dim_buy_units = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_dim_buy_units")
+	lineageTag: 4c44907c-d563-4924-87ce-0e6a90f85fa9
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression 'fx_dbricks (old)' =
+		let
+		    Host = "adb-2785966857078032.12.azuredatabricks.net",
+		    Path = "/sql/1.0/warehouses/46354e2811119b6c",
+		    Base = Databricks.Query(Host, Path)
+		in
+		    Base
+	lineageTag: 8df1888d-03d2-4b7a-bade-1d1483179e70
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Function
+
+expression Host = "adb-7405615480453934.14.azuredatabricks.net" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b68df4a1-62a8-435b-88f0-ee49eb9953db
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+
+expression Path = "sql/protocolv1/o/7405615480453934/0805-161954-wu14hkte" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: bbf5ba06-0043-44b3-b9c8-097e86c021a0
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+
+expression RangeStart = #date(2020, 1, 1) meta [IsParameterQuery=true, Type="Date", IsParameterQueryRequired=true]
+	lineageTag: 37256daa-4d99-49e6-9211-4cc9fed0ef96
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Date
+
+expression RangeEnd = #date(2029, 12, 31) meta [IsParameterQuery=true, Type="Date", IsParameterQueryRequired=true]
+	lineageTag: e2cfd53b-164c-4aa9-8261-5dfe2e930e99
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Date
+

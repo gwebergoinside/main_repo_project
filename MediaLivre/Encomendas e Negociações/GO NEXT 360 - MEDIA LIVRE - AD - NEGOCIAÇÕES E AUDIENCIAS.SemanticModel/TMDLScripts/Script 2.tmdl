@@ -1,0 +1,2506 @@
+createOrReplace
+
+	ref table ~Medidas
+
+		/// Definição: Duração média por inserção ativa (segundos).
+		/// Fórmula: total_seconds / nr_insertions_active.
+		/// Observações: depende do critério de “ativa” (status incluídos em nr_insertions_active); DIVIDE trata divisão por zero.
+		measure avg_duration =
+				
+				DIVIDE ( [total_seconds], [nr_insertions_active] )
+			formatString: #,##0.0
+			displayFolder: '02 Duration'
+			lineageTag: 'meas-avg-duration'
+
+			changedProperty = IsHidden
+
+		/// Definição: Posição média no break (ordem média da inserção).
+		/// Fórmula: AVERAGE(nr_position) onde nr_position > 0.
+		/// Observações: ignora zeros/negativos (nr_position <= 0); sensível ao contexto de filtros (programa, dia, campanha, etc.).
+		measure avg_position =
+				
+				AVERAGEX (
+				    FILTER ( pbi_vw_ad_insertion, pbi_vw_ad_insertion[nr_position] > 0 ),
+				    pbi_vw_ad_insertion[nr_position]
+				)
+			formatString: #,##0.0
+			displayFolder: '06 Breaks'
+			lineageTag: 'meas-avg-position'
+
+			changedProperty = IsHidden
+
+		/// Definição: CPR médio (Custo por Rating Equivalente).
+		/// Fórmula: SUM(audience[vl_net]) / mt_grp_equiv_total.
+		/// Observações: se mt_grp_equiv_total = 0, DIVIDE retorna BLANK/0; usa líquido da audiência (não necessariamente o mesmo líquido de inserções).
+		measure CPR =
+				
+				DIVIDE ( [total_billing], [GRP] )
+			formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+			displayFolder: '08 Audience'
+			lineageTag: 'meas-aud-cpr'
+
+			changedProperty = IsHidden
+
+		measure CPR_EQ =
+				
+				DIVIDE ( [total_billing], [GRP_EQ] )
+			formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+			displayFolder: '08 Audience'
+			lineageTag: 0de9af32-f143-4b10-aef8-4128374669ec
+
+		measure CPR_EQ_LY =
+				
+				CALCULATE ( [CPR_EQ], SAMEPERIODLASTYEAR( dim_tempo[data] ))
+			formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 6da700bd-c08b-4d68-8711-48282cfbb8bb
+
+		measure CPR_EQ_XT =
+				
+				DIVIDE (
+				    CALCULATE ( [total_billing], REMOVEFILTERS ( pbi_vw_targets_var ) ),
+				    [GRP_EQ_XT]
+				)
+			formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+			displayFolder: '08 Audience'
+			lineageTag: 8eb9e3ce-d394-4017-b51e-952f23aba64c
+
+		measure CPR_XT =
+				
+				VAR _Selecionados =
+				    VALUES ( pbi_vw_targets_simulado[ds_variant] )
+				VAR _TemSelecao =
+				    COUNTROWS ( _Selecionados ) > 0
+				VAR _VariantLinha =
+				    SELECTEDVALUE ( pbi_vw_targets_var[ds_variant] )
+				VAR _LinhaSelecionada =
+				    CONTAINS ( _Selecionados, pbi_vw_targets_simulado[ds_variant], _VariantLinha )
+				RETURN
+				    IF (
+				        NOT ISFILTERED ( pbi_vw_targets_simulado[ds_variant] ),
+				        BLANK (),
+				        IF (
+				            ISINSCOPE ( pbi_vw_targets_var[ds_variant] ),
+				            IF (
+				                NOT _LinhaSelecionada,
+				                BLANK (),
+				                CALCULATE (
+				                    AVERAGE ( pbi_vw_indicators[CPR_XT] ),
+				                    TREATAS ( { _VariantLinha }, pbi_vw_targets_simulado[ds_variant] )
+				                )
+				            ),
+				            CALCULATE (
+				                AVERAGE ( pbi_vw_indicators[CPR_XT] ),
+				                TREATAS ( _Selecionados, pbi_vw_targets_simulado[ds_variant] )
+				            )
+				        )
+				    )
+			formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+			displayFolder: '08 Audience'
+			lineageTag: a21c1fce-512b-47ca-ac54-8f5d14f50781
+
+			changedProperty = IsHidden
+
+		measure CPR_XT_extra =
+				
+				SUM ( pbi_vw_indicators[CPR_XT] )
+			formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+			displayFolder: '08 Audience'
+			lineageTag: ca2c2141-e12a-444c-93fb-b483eea6de08
+
+		/// Definição: CPT médio (Custo por TRP).
+		/// Fórmula: SUM(audience[vl_net]) / SUM(audience[vl_trp]).
+		/// Observações: se SUM(vl_trp)=0, DIVIDE retorna BLANK/0; consistente para comparação entre períodos quando TRP é calculado na mesma base.
+		measure CPS =
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            DIVIDE ( [total_billing], [total_seconds] ),
+				            REMOVEFILTERS ( pbi_vw_targets_simulado ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            DIVIDE ( [total_billing], [total_seconds] ),
+				            REMOVEFILTERS ( pbi_vw_targets_simulado ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( [total_billing] ) > 0, _CALC, BLANK () )
+			formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+			displayFolder: '08 Audience'
+			lineageTag: 'meas-aud-cpt'
+
+			changedProperty = IsHidden
+
+		measure CPS_LY =
+				
+				CALCULATE ( [CPS], SAMEPERIODLASTYEAR( dim_tempo[data] ))
+			formatString: #,0
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 28b190cb-7feb-489f-9c11-f21d4808b77f
+
+		measure dt_first_air_ =
+				
+				CALCULATE(
+				    MIN( pbi_vw_negotiations[dt_first_air] )
+				    , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] )
+				)
+			formatString: Short Date
+			displayFolder: '09 Negotiations'
+			lineageTag: af6976b1-947f-41d8-b7cc-097243881103
+
+		measure dt_last_air_ =
+				
+				CALCULATE(
+				    MAX( pbi_vw_negotiations[dt_last_air] )
+				    , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] )
+				)
+			formatString: Short Date
+			displayFolder: '09 Negotiations'
+			lineageTag: 08b1d600-c601-4cfa-a53a-589fecded9dc
+
+		measure filter_register_ambicao_ficheiro = [vl_ambicao] + [vl_negociado_ficheiro]
+			displayFolder: '11 Ficheiro'
+			lineageTag: 89fa79b0-9b52-4854-bd15-ee623e1cce20
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure filter_simulated_ds_variant = ```
+				
+				    CALCULATE (
+				        COUNT( pbi_vw_media_investment_GRP[cd_target] ),
+				        TREATAS (
+				            VALUES ( pbi_vw_targets_simulado[cd_variant] ),
+				            pbi_vw_media_investment_GRP[cd_target]
+				        )
+				    )
+				```
+			formatString: 0
+			lineageTag: ed978957-0bb1-472b-9bea-64e4e634c309
+
+		measure GRP = ```
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _fl_duration =
+				    SELECTEDVALUE ( pmt_duration_equivancy[nm_duration_equivancy] )
+				RETURN
+				    IF ( _fl_adults,
+				        CALCULATE ( SUMX (
+				                FILTER ( pbi_vw_indicators,
+				                    CONTAINSSTRING ( pbi_vw_indicators[st_part], "adults" )
+				                ), 
+				                IF( _fl_duration = 30, [GRP_EQ30], [GRP_EQ])
+				            ),
+				            REMOVEFILTERS ( pbi_vw_targets_simulado ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE ( SUMX (
+				                FILTER ( pbi_vw_indicators,
+				                    CONTAINSSTRING ( pbi_vw_indicators[st_part], "original" )
+				                ), 
+				                IF( _fl_duration = 30, [GRP_EQ30], [GRP_EQ])
+				            ),
+				            REMOVEFILTERS ( pbi_vw_targets_simulado ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant]
+				            )
+				        )
+				    )
+				```
+			formatString: #,0.00
+			displayFolder: '08 Audience'
+			lineageTag: c01cfc25-1872-4076-9f6d-7c294bd1e894
+
+			changedProperty = IsHidden
+
+		measure GRP_EQ =
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _fl_duration =
+				    SELECTEDVALUE ( pmt_duration_equivancy[nm_duration_equivancy] )
+				RETURN
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SUMX (
+				                FILTER (
+				                    pbi_vw_indicators,
+				                    CONTAINSSTRING ( pbi_vw_indicators[st_part], "adults" )
+				                ),
+				                IF( _fl_duration = 30, [GRP_EQ30], [GRP_EQ])
+				            ),
+				            REMOVEFILTERS ( pbi_vw_targets_simulado ),
+				            KEEPFILTERS (
+				                TREATAS (
+				                    VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                    pbi_vw_targets[ds_variant_adults]
+				                )
+				            )
+				        ),
+				        CALCULATE (
+				            SUMX (
+				                FILTER (
+				                    pbi_vw_indicators,
+				                    CONTAINSSTRING ( pbi_vw_indicators[st_part], "original" )
+				                ),
+				                IF( _fl_duration = 30, [GRP_EQ30], [GRP_EQ])
+				            ),
+				            REMOVEFILTERS ( pbi_vw_targets_simulado ),
+				            KEEPFILTERS (
+				                TREATAS (
+				                    VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                    pbi_vw_targets[ds_variant]
+				                )
+				            )
+				        )
+				    )
+			formatString: #,0.00
+			displayFolder: '08 Audience'
+			lineageTag: edb7ce75-3223-4b69-a7a6-4de76353dee8
+
+		measure GRP_EQ_LY =
+				
+				CALCULATE ( [GRP_EQ], SAMEPERIODLASTYEAR( dim_tempo[data] ))
+			formatString: #,0.00
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 13b5855a-f562-4cec-bc40-8cc4c0604b10
+
+		measure GRP_EQ_XT =
+				
+				VAR _Selecionados =
+				    VALUES ( pbi_vw_targets_simulado[ds_variant] )
+				VAR _fl_duration =
+				    SELECTEDVALUE ( pmt_duration_equivancy[nm_duration_equivancy] )
+				VAR _TemSelecao =
+				    COUNTROWS ( _Selecionados ) > 0
+				VAR _VariantLinha =
+				    SELECTEDVALUE ( pbi_vw_targets_var[ds_variant] )
+				VAR _LinhaSelecionada =
+				    CONTAINS ( _Selecionados, pbi_vw_targets_simulado[ds_variant], _VariantLinha )
+				RETURN
+				    IF (
+				        NOT ISFILTERED ( pbi_vw_targets_simulado[ds_variant] ),
+				        BLANK (),
+				        IF (
+				            ISINSCOPE ( pbi_vw_targets_var[ds_variant] ),
+				            IF (
+				                NOT _LinhaSelecionada,
+				                BLANK (),
+				                CALCULATE (
+				                    // SUM ( pbi_vw_indicators[GRP_EQ_XT] ),
+				                    IF( _fl_duration = 30,
+				                        SUM( pbi_vw_indicators[GRP_EQ30_XT] ),
+				                        SUM( pbi_vw_indicators[GRP_EQ_XT] )
+				                    ),
+				                    TREATAS ( { _VariantLinha }, pbi_vw_targets_simulado[ds_variant] )
+				                )
+				            ),
+				            CALCULATE (
+				                // SUM ( pbi_vw_indicators[GRP_EQ_XT] ),
+				                IF( _fl_duration = 30,
+				                    SUM( pbi_vw_indicators[GRP_EQ30_XT] ),
+				                    SUM( pbi_vw_indicators[GRP_EQ_XT] )
+				                ),
+				                TREATAS ( _Selecionados, pbi_vw_targets_simulado[ds_variant] )
+				            )
+				        )
+				    )
+			formatString: #,0.00
+			displayFolder: '08 Audience'
+			lineageTag: 1e5a989c-4204-4d02-a755-01f578da7836
+
+		measure GRP_media_investment = ```
+				
+				VAR _adults = {"adult", "adults", "adulto", "adultos"}
+				VAR _type =
+				    SELECTEDVALUE ( pmt_types_targets_calc_media_investment[grouped] )
+				VAR _calc =
+				    SWITCH( _type, "Equivalent",
+				        CALCULATE (
+				            SUM( pbi_vw_media_investment_GRP[GRP] ),
+				            KEEPFILTERS( pbi_vw_media_investment_GRP[cd_target] IN _adults ),
+				            REMOVEFILTERS( pbi_vw_targets_simulado[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[cd_variant] ),
+				                pbi_vw_media_investment_GRP[cd_target]
+				            )
+				        ),
+				        IF( ISFILTERED( pbi_vw_targets_simulado[cd_variant] ),
+				            CALCULATE (
+				                SUM( pbi_vw_media_investment_GRP[GRP] ),
+				                TREATAS (
+				                    VALUES ( pbi_vw_targets_var[cd_variant] ),
+				                    pbi_vw_media_investment_GRP[cd_target] 
+				                )
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+				```
+			displayFolder: '08 Audience'
+			lineageTag: df5f463b-d746-447c-84d0-cc004a108e3d
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure GRP_media_investment_XT =
+				
+				VAR _Selecionados =
+				    VALUES ( pbi_vw_targets_simulado[ds_variant] )
+				VAR _TemSelecao =
+				    COUNTROWS ( _Selecionados ) > 0
+				VAR _VariantLinha =
+				    SELECTEDVALUE ( pbi_vw_targets_var[ds_variant] )
+				VAR _LinhaSelecionada =
+				    CONTAINS ( _Selecionados, pbi_vw_targets_simulado[ds_variant], _VariantLinha )
+				RETURN
+				    IF (
+				        NOT ISFILTERED ( pbi_vw_targets_simulado[ds_variant] ),
+				        BLANK (),
+				        IF (
+				            ISINSCOPE ( pbi_vw_targets_var[ds_variant] ),
+				            IF (
+				                NOT _LinhaSelecionada,
+				                BLANK (),
+				                CALCULATE ( CALCULATE(
+				                    SUM( pbi_vw_media_investment_GRP[GRP] ),
+				                    TREATAS (
+				                        VALUES ( pbi_vw_targets_var[cd_variant] ),
+				                        pbi_vw_media_investment_GRP[cd_target]
+				                    )),
+				                    TREATAS ( { _VariantLinha }, pbi_vw_targets_simulado[ds_variant] )
+				                )
+				            ),
+				            CALCULATE ( CALCULATE(
+				                    SUM( pbi_vw_media_investment_GRP[GRP] ),
+				                    TREATAS (
+				                        VALUES ( pbi_vw_targets_var[cd_variant] ),
+				                        pbi_vw_media_investment_GRP[cd_target]
+				                    )),
+				                TREATAS ( _Selecionados, pbi_vw_targets_simulado[ds_variant] )
+				            )
+				        )
+				    )
+			displayFolder: '08 Audience'
+			lineageTag: b57148e5-6a3e-4469-8aae-767bf0b19330
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure GRP_XT =
+				
+				VAR _Selecionados =
+				    VALUES ( pbi_vw_targets_simulado[ds_variant] )
+				VAR _fl_duration =
+				    SELECTEDVALUE ( pmt_duration_equivancy[nm_duration_equivancy] )
+				VAR _TemSelecao =
+				    COUNTROWS ( _Selecionados ) > 0
+				VAR _VariantLinha =
+				    SELECTEDVALUE ( pbi_vw_targets_var[ds_variant] )
+				VAR _LinhaSelecionada =
+				    CONTAINS ( _Selecionados, pbi_vw_targets_simulado[ds_variant], _VariantLinha )
+				RETURN
+				    IF (
+				        NOT ISFILTERED ( pbi_vw_targets_simulado[ds_variant] ),
+				        BLANK (),
+				        IF (
+				            ISINSCOPE ( pbi_vw_targets_var[ds_variant] ),
+				            IF (
+				                NOT _LinhaSelecionada,
+				                BLANK (),
+				                CALCULATE (
+				                    // SUM ( pbi_vw_indicators[GRP_XT] ),
+				                    IF( _fl_duration = 30,
+				                        SUM( pbi_vw_indicators[GRP_EQ30_XT] ),
+				                        SUM( pbi_vw_indicators[GRP_EQ_XT] )
+				                    ),
+				                    TREATAS ( { _VariantLinha }, pbi_vw_targets_simulado[ds_variant] )
+				                )
+				            ),
+				            CALCULATE (
+				                // SUM ( pbi_vw_indicators[GRP_XT] ),
+				                IF( _fl_duration = 30,
+				                    SUM( pbi_vw_indicators[GRP_EQ30_XT] ),
+				                    SUM( pbi_vw_indicators[GRP_EQ_XT] )
+				                ),
+				                TREATAS ( _Selecionados, pbi_vw_targets_simulado[ds_variant] )
+				            )
+				        )
+				    )
+			formatString: #,0.00
+			displayFolder: '08 Audience'
+			lineageTag: f737d5d3-44cc-4d1b-9e07-14fe063b5b1c
+
+			changedProperty = IsHidden
+
+		/// Definição: Crescimento MoM (%) do total líquido.
+		/// Fórmula: (total_net - total_net_prev_month) / total_net_prev_month.
+		/// Observações: se total_net_prev_month = 0, DIVIDE retorna BLANK/0 conforme padrão; depende de dim_tempo[data] relacionada.
+		measure mom_billing_growth_pct =
+				
+				DIVIDE ( [total_billing] - [total_billing_prev_month], [total_billing_prev_month] )
+			formatString: +0.0%;-0.0%;0.0%
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 'meas-mom-net-growth'
+
+			changedProperty = IsHidden
+
+		/// Definição: Crescimento MoM (%) das inserções ativas.
+		/// Fórmula: (nr_insertions_active - nr_insertions_prev_month) / nr_insertions_prev_month.
+		/// Observações: se nr_insertions_prev_month = 0, DIVIDE retorna BLANK/0 conforme padrão; comparar meses depende de dim_tempo[data] contínua e relacionada.
+		measure mom_insertions_growth_pct =
+				
+				DIVIDE (
+				    [nr_insertions_active] - [nr_insertions_prev_month],
+				    [nr_insertions_prev_month]
+				)
+			formatString: +0.0%;-0.0%;0.0%
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 'meas-mom-insertions-growth'
+
+			changedProperty = IsHidden
+
+		/// Definição: Máximo bruto total por negociação.
+		/// Fórmula: MAX(negotiations[vl_gross_total]) no contexto.
+		/// Observações: retorna o maior contrato no recorte atual; sensível a filtros (cliente, período, canal).
+		measure mt_max_gross_per_neg =
+				
+				MAXX ( pbi_vw_negotiations, pbi_vw_negotiations[vl_gross_total] )
+			formatString: #,0.00
+			displayFolder: '09 Negotiations'
+			lineageTag: 'meas-neg-max-gross'
+
+			changedProperty = IsHidden
+
+		measure nr_accounts_agency = ```
+				
+				    CALCULATE( DISTINCTCOUNT ( pbi_dim_accounts_agency[cd_account] ), VALUES( pbi_dim_accounts_client ) )
+				```
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 2f6bbfe8-46d9-4fae-ba76-f50d1ec221ae
+
+		measure nr_accounts_client = ```
+				
+				    DISTINCTCOUNT ( pbi_dim_accounts_client[cd_account] )
+				```
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 1060392b-9168-46f6-8792-b9ce19308f25
+
+		measure nr_agencies = DISTINCTCOUNT( pbi_dim_campaigns[cd_account_agency] )
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 3497bdde-1204-4daa-97ce-dfd62cdf8bcb
+
+		/// Definição: Nº de dias de exibição distintos (airing days).
+		/// Fórmula: DISTINCTCOUNT(ad_insertion[dt_air]).
+		/// Observações: conta dias únicos no contexto; sensível a filtros de canal/campanha/programa.
+		measure nr_airing_days =
+				
+				DISTINCTCOUNT ( pbi_vw_ad_insertion[dt_air] )
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-nr-airing-days'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº de campanhas distintas.
+		/// Fórmula: DISTINCTCOUNT(ad_insertion[cd_campaign]).
+		/// Observações: depende da granularidade/codificação de campanha na fonte.
+		measure nr_campaigns =
+				
+				DISTINCTCOUNT ( pbi_dim_campaigns[cd_campaign] )
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-nr-campaigns'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº de canais distintos.
+		/// Fórmula: DISTINCTCOUNT(ad_insertion[cd_channel]).
+		/// Observações: considera apenas canais presentes no recorte filtrado (período, cliente, etc.).
+		measure nr_channels =
+				
+				DISTINCTCOUNT ( pbi_dim_channels[cd_channel] )
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-nr-channels'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº de inserções em 1ª posição no break.
+		/// Fórmula: COUNTROWS(ad_insertion) onde nr_position = 1.
+		/// Observações: depende do preenchimento de nr_position; se houver posições inválidas, elas não entram (exceto as =1).
+		measure nr_first_position =
+				
+				CALCULATE (
+				    COUNTROWS ( pbi_vw_ad_insertion ),
+				    pbi_vw_ad_insertion[nr_position] = 1
+				)
+			formatString: #,0
+			displayFolder: '06 Breaks'
+			lineageTag: 'meas-first-position'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº total de inserções (todas).
+		/// Fórmula: COUNTROWS(ad_insertion).
+		/// Observações: inclui qualquer status; é base para taxas como pc_active_rate.
+		measure nr_insertions =
+				
+				COUNTROWS ( pbi_vw_ad_insertion )
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-nr-insertions'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº de inserções ativas (entregues/em execução).
+		/// Fórmula: COUNTROWS(ad_insertion) filtrando st_status ∈ {Broadcasted, Delivered, In Playlist}.
+		/// Observações: status incluídos definem “ativa”; qualquer mudança nos status altera todas as métricas derivadas (ex.: avg_duration_seconds, pc_active_rate).
+		measure nr_insertions_active =
+				
+				CALCULATE (
+				    [nr_insertions],
+				    pbi_vw_ad_insertion[st_status] IN { "Broadcasted", "Delivered", "In Playlist" }
+				)
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-nr-insertions-active'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº de inserções booked (reservadas).
+		/// Fórmula: COUNTROWS(ad_insertion) onde st_status = "Booked".
+		/// Observações: não inclui entregues; útil para pipeline/futuro inventário.
+		measure nr_insertions_booked =
+				
+				CALCULATE (
+				    COUNTROWS ( pbi_vw_ad_insertion ),
+				    pbi_vw_ad_insertion[st_status] = "Booked"
+				)
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-nr-insertions-booked'
+
+			changedProperty = IsHidden
+
+		/// Definição: Inserções ativas no mês anterior.
+		/// Fórmula: CALCULATE(nr_insertions_active, PREVIOUSMONTH(dim_tempo[data])).
+		/// Observações: exige relação correta com dim_tempo[data]; PREVIOUSMONTH depende de calendário contínuo.
+		measure nr_insertions_prev_month =
+				
+				CALCULATE ( [nr_insertions_active], PREVIOUSMONTH ( dim_tempo[data] ) )
+			formatString: #,0
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 'meas-nr-prev-month'
+
+			changedProperty = IsHidden
+
+		/// Definição: Inserções ativas YTD (acumulado no ano).
+		/// Fórmula: CALCULATE(nr_insertions_active, DATESYTD(dim_tempo[data])).
+		/// Observações: depende do “ano fiscal” implícito do calendário; se ano fiscal ≠ ano civil, precisa ajuste.
+		measure nr_insertions_ytd =
+				
+				CALCULATE ( [nr_insertions_active], DATESYTD ( dim_tempo[data] ) )
+			formatString: #,0
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 'meas-nr-ytd'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº total de negotiações (tabela de negotiações).
+		/// Fórmula: COUNTROWS(negotiations).
+		/// Observações: inclui negotiações sem inserções; comparar com nr_negotiations (derivado) para identificar “negotiações vazias”.
+		measure nr_negotiations_total =
+				
+				COUNTROWS ( pbi_vw_negotiations )
+			formatString: #,0
+			displayFolder: '09 Negotiations'
+			lineageTag: 'meas-neg-total'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº de negotiações com inserções (>0).
+		/// Fórmula: COUNTROWS(FILTER(negotiations, nr_insertions_total > 0)).
+		/// Observações: remove negotiações sem veiculação; base para mt_avg_net_per_neg.
+		measure nr_negotiations_with_insertions =
+				
+				COUNTROWS (
+				    FILTER ( pbi_vw_negotiations, pbi_vw_negotiations[nr_insertions_total] > 0 )
+				)
+			formatString: #,0
+			displayFolder: '09 Negotiations'
+			lineageTag: 'meas-neg-with-ins'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº de programas distintos.
+		/// Fórmula: DISTINCTCOUNT(ad_insertion[cd_program]).
+		/// Observações: depende do cadastro de programas e da estabilidade do identificador cd_program.
+		measure nr_programs =
+				
+				DISTINCTCOUNT ( pbi_vw_ad_insertion[cd_program] )
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-nr-programs'
+
+			changedProperty = IsHidden
+
+		/// Definição: Nº de negotiações distintas (derivado das inserções).
+		/// Fórmula: DISTINCTCOUNT(ad_insertion[cd_negotiation]).
+		/// Observações: conta negotiações que aparecem em inserções; pode divergir de nr_negotiations_total (tabela de negotiações).
+		measure nr_register =
+				
+				[nr_campaigns] + [nr_insertions]
+			formatString: #,0
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-nr-negotiations'
+
+			changedProperty = IsHidden
+
+		/// Definição: Taxa de inserções ativas.
+		/// Fórmula: nr_insertions_active / nr_insertions.
+		/// Observações: numerador usa status incluídos (ativa); se nr_insertions = 0, DIVIDE retorna BLANK/0.
+		measure pc_active_rate =
+				
+				DIVIDE ( [nr_insertions_active], [nr_insertions] )
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '01 Volume'
+			lineageTag: 'meas-pc-active-rate'
+
+			changedProperty = IsHidden
+
+		measure pc_contracted_efective_realised =
+				
+				DIVIDE( [total_billing], [total_contracted_gross] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '09 Negotiations'
+			lineageTag: e085eeae-e6d2-42b0-851a-7a496b7ebe13
+
+		measure pc_contracted_efective_realised_ambicao =
+				
+				VAR _OFF = DIVIDE( [total_billing], [vl_ambicao] )
+				VAR _ON = DIVIDE( [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro], [vl_ambicao] )
+				RETURN SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '11 Ficheiro'
+			lineageTag: 5301982c-207e-4c26-9132-66842ed8f02f
+
+		measure pc_contracted_efective_realised_billing_ly =
+				
+				VAR _OFF = DIVIDE( [total_billing] - [total_billing_LY], [total_billing_LY] )
+				VAR _ON = DIVIDE( [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro] - [total_billing_LY], [total_billing_LY] )
+				RETURN SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '11 Ficheiro'
+			lineageTag: 542d8f98-ae06-426e-ae56-3f9acaab9d10
+
+		measure pc_contracted_efective_realised_ficheiro =
+				
+				VAR _OFF = DIVIDE( [total_billing], [vl_fechado_ficheiro] )
+				VAR _ON = DIVIDE( [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro], [vl_fechado_ficheiro] )
+				RETURN SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '11 Ficheiro'
+			lineageTag: 735bb993-74dd-48d2-80f2-d9059bb36c12
+
+		/// Definição: % realizado vs contratado (financeiro).
+		/// Fórmula: SUM(negotiations[vl_net_total]) / SUM(negotiations[vl_negotiation_gross_contracted]).
+		/// Observações: se contratado = 0, DIVIDE retorna BLANK/0; garante consistência se ambas as colunas vêm da mesma base de negociação.
+		measure pc_contracted_realised =
+				
+				DIVIDE (
+				    SUM ( pbi_vw_negotiations[vl_net_total] ),
+				    SUM ( pbi_vw_negotiations[vl_negotiation_gross_contracted] )
+				)
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '09 Negotiations'
+			lineageTag: 'meas-neg-pc-realised'
+
+			changedProperty = IsHidden
+
+		measure pc_contracted_shouldBe_realised = ```
+				
+				VAR _total = SUMX( pbi_vw_negotiations, CALCULATE( DATEDIFF( MIN( pbi_vw_negotiations[dt_first_air] ), MAX( pbi_vw_negotiations[dt_last_air] ), DAY ) 
+				    , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] ))
+				)
+				VAR _actual = SUMX( pbi_vw_negotiations, CALCULATE( DATEDIFF( MIN( pbi_vw_negotiations[dt_first_air] ), MIN( MAX( pbi_vw_negotiations[dt_last_air] ), MAX ( pbi_last_data_updated[last_update] ) ) , DAY )
+				    , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] ))
+				)
+				VAR _divide = DIVIDE( _actual, _total )
+				RETURN _divide
+				    // SWITCH( TRUE()
+				    // , _divide > 1, 1
+				    // , _divide < 0, 0
+				    // , _divide )
+				```
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '09 Negotiations'
+			lineageTag: 96a13b41-c494-433c-b638-471d29177e7b
+
+		measure pc_contracted_shouldBe_realised_ambicao =
+				
+				VAR _total = DATEDIFF(DATE(SELECTEDVALUE( 'Ambição'[Ano] ), 1, 1 ), DATE(SELECTEDVALUE( 'Ambição'[Ano] ), 12, 31 ), DAY )
+				VAR _actual = DATEDIFF(DATE(SELECTEDVALUE( 'Ambição'[Ano] ), 1, 1 ), MAX ( pbi_last_data_updated[last_update] ), DAY )
+				VAR _divide = DIVIDE( _actual, _total )
+				RETURN IF( ABS( [vl_ambicao] ) > 0, _divide, BLANK() )
+			displayFolder: '11 Ficheiro'
+			lineageTag: 2be30a71-d82e-496d-a8ca-d0b75b696b66
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure pc_contracted_shouldBe_realised_ficheiro =
+				
+				VAR _total = DATEDIFF(DATE(SELECTEDVALUE( 'Ficheiros Negociações'[Ano] ), 1, 1 ), DATE(SELECTEDVALUE( 'Ficheiros Negociações'[Ano] ), 12, 31 ), DAY )
+				VAR _actual = DATEDIFF(DATE(SELECTEDVALUE( 'Ficheiros Negociações'[Ano] ), 1, 1 ), MAX ( pbi_last_data_updated[last_update] ), DAY )
+				VAR _divide = DIVIDE( _actual, _total )
+				RETURN IF( ABS( [vl_fechado_ficheiro] ) > 0, _divide, BLANK() )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '11 Ficheiro'
+			lineageTag: eac4563c-d9b8-46fc-bfeb-8ac07107264f
+
+		measure pc_dif_project_negotiated_vs_billing = ```
+				
+				    VAR _calc = DIVIDE( [total_billing] - [vl_projected_revenue_negotiated], [vl_projected_revenue_negotiated] )
+				    RETURN IF( ABS( [vl_projected_revenue_negotiated] ) > 0, _calc , BLANK())
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '03 Financial'
+			lineageTag: 061ba58a-5340-4fcf-86c6-bfb2cd4b73a6
+
+		/// Definição: Desconto médio (%).
+		/// Fórmula: (total_gross - total_net) / total_gross.
+		/// Observações: se total_gross = 0, DIVIDE retorna BLANK/0; desconto reflete diferença agregada (não média linha a linha).
+		measure pc_discount_avg =
+				
+				var _calc = DIVIDE ( [total_gross] - [total_billing], [total_gross] )
+				return
+				    SWITCH( TRUE()
+				        , ISBLANK( [total_gross] ) || NOT( ABS( [total_gross] ) > 0 ), BLANK()
+				        , ISBLANK( [total_billing] ) || NOT( ABS( [total_billing] ) > 0 ), BLANK()
+				        , _calc )
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '03 Financial'
+			lineageTag: 'meas-pc-discount-avg'
+
+			changedProperty = IsHidden
+
+		measure pc_discount_invoice =
+				
+				DIVIDE ( [total_net] - [total_invoice_net], [total_net], BLANK() )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '03 Financial'
+			lineageTag: d06e422d-a76d-4ddd-bcd1-7a59db43a3a2
+
+		measure pc_duration = DIVIDE( [vl_duration_fitting], [vl_daypart_seconds] )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '02 Duration'
+			lineageTag: b16e9165-1aa3-40cd-aa5e-f52c30e0212d
+
+		/// Definição: % de inserções em 1ª posição (sobre ativas).
+		/// Fórmula: nr_first_position / nr_insertions_active.
+		/// Observações: depende do preenchimento de nr_position; se nr_insertions_active = 0, DIVIDE retorna BLANK/0.
+		measure pc_first_position =
+				
+				DIVIDE ( [nr_first_position], [nr_insertions_active] )
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '06 Breaks'
+			lineageTag: 'meas-pc-first-position'
+
+			changedProperty = IsHidden
+
+		measure pc_projected_all_dim_tempo =
+				
+				VAR _ALL =
+				    CALCULATE( [vl_projected],
+				        REMOVEFILTERS( dim_tempo[nm_month_abrev] )
+				    )
+				RETURN
+				    DIVIDE( [vl_projected], _ALL )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '09 Negotiations'
+			lineageTag: 78e05fe5-27f3-45f3-b3bd-740913435c8b
+
+		measure rk_nm_field_investment = ```
+				
+				    VAR _selected_field = SELECTEDVALUE( pmt_slicer_investment[st_field] )
+				    RETURN 
+				        SWITCH( _selected_field,
+				        "agency", RANKX( ALLSELECTED( pbi_vw_media_investment[nm_agency] ), [vl_table_investment], , DESC, Skip),
+				        "advertiser", RANKX( ALLSELECTED( pbi_vw_media_investment[nm_client_advertiser] ), [vl_table_investment], , DESC, Skip),
+				        "daypartt", RANKX( ALLSELECTED( pbi_vw_media_investment[nm_daypart] ), [vl_table_investment], , DESC, Skip),
+				        "year_broadcast", RANKX( ALLSELECTED( pbi_vw_media_investment[ds_year_broadcast] ), [vl_table_investment], , DESC, Skip),
+				    BLANK())
+				
+				```
+			formatString: #,0
+			displayFolder: '04 Investment'
+			lineageTag: ac28af7d-d492-4c02-9ee7-8d90b8db784e
+
+		measure share_channel = ```
+				
+				    var _val_investment = SUM( pbi_vw_media_investment[vl_investment] )
+				    var _denom = CALCULATE(_val_investment, ALLSELECTED( pbi_dim_channels ) )
+				    return DIVIDE( _val_investment, _denom )
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '10 Share'
+			lineageTag: 5bf80ad2-2473-42f1-888e-b640c3119c68
+
+		measure share_channel_all = ```
+				
+				    var _denom = CALCULATE( [vl_table_investment], ALL( pbi_dim_channels ))
+				    return DIVIDE( [vl_table_investment], _denom )
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '10 Share'
+			lineageTag: a01f042c-9694-492e-8060-4f09eb25b3d7
+
+		measure share_media_GRP = ```
+				
+				    var _denom = CALCULATE( [GRP_media_investment], ALLSELECTED( pbi_vw_media_investment_GRP ) )
+				    return DIVIDE( [GRP_media_investment], _denom )
+				```
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '10 Share'
+			lineageTag: 2b1c6326-222c-4020-b449-74dc242ff0e3
+
+		measure share_media_GRP_all = ```
+				
+				    VAR _selected_field = SELECTEDVALUE( pmt_slicer_investment[st_field] )
+				    VAR _denom =
+				        SWITCH( _selected_field,
+				            "agency", CALCULATE( [GRP_media_investment], ALL( pbi_vw_media_investment[nm_agency] )),
+				            "advertiser", CALCULATE( [GRP_media_investment], ALL( pbi_vw_media_investment[nm_client_advertiser] )),
+				            "daypartt", CALCULATE( [GRP_media_investment], ALL( pbi_vw_media_investment[nm_daypart] )),
+				            "year_broadcast", CALCULATE( [GRP_media_investment], ALL( pbi_vw_media_investment[ds_year_broadcast] )),
+				        BLANK())
+				    RETURN DIVIDE( [GRP_media_investment], _denom )
+				```
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '10 Share'
+			lineageTag: cbee17a4-e8dc-4d49-b6e7-6d109a02489d
+
+		measure share_media_GRP_ly = ```
+				    var _calc = [share_media_GRP]
+				    return CALCULATE( _calc, SAMEPERIODLASTYEAR( dim_tempo[data] ))
+				```
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '10 Share'
+			lineageTag: 65429c2c-14ff-4e55-b79a-5be751cedd6f
+
+		measure share_media_GRP_XT = ```
+				
+				    var _denom = CALCULATE( [GRP_media_investment_XT], ALLSELECTED( pbi_vw_media_investment_GRP ) )
+				    return DIVIDE( [GRP_media_investment_XT], _denom )
+				```
+			displayFolder: '10 Share'
+			lineageTag: 2ef49fcc-9a17-4a96-9942-747ca6f0ed89
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure share_media_GRP_XT_all = ```
+				
+				    VAR _selected_field = SELECTEDVALUE( pmt_slicer_investment[st_field] )
+				    VAR _denom =
+				        SWITCH( _selected_field,
+				            "agency", CALCULATE( [GRP_media_investment_XT], ALL( pbi_vw_media_investment[nm_agency] )),
+				            "advertiser", CALCULATE( [GRP_media_investment_XT], ALL( pbi_vw_media_investment[nm_client_advertiser] )),
+				            "daypartt", CALCULATE( [GRP_media_investment_XT], ALL( pbi_vw_media_investment[nm_daypart] )),
+				            "year_broadcast", CALCULATE( [GRP_media_investment_XT], ALL( pbi_vw_media_investment[ds_year_broadcast] )),
+				        BLANK())
+				    RETURN DIVIDE( [GRP_media_investment_XT], _denom )
+				```
+			displayFolder: '10 Share'
+			lineageTag: 51c4b96d-8946-4d54-b29b-46712a24adf8
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure share_media_GRP_XT_ly = ```
+				    var _calc = [share_media_GRP_XT]
+				    return CALCULATE( _calc, SAMEPERIODLASTYEAR( dim_tempo[data] ))
+				```
+			displayFolder: '10 Share'
+			lineageTag: e4fd9ca8-bfa3-46a1-a464-af86b21920e8
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure share_media_investment = ```
+				
+				    var _denom = CALCULATE( [vl_table_investment], ALLSELECTED( pbi_vw_media_investment_GRP ))
+				    return DIVIDE( [vl_table_investment], _denom )
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '10 Share'
+			lineageTag: 770b4fca-16d2-4e7b-9988-803eda4230d1
+
+		measure share_media_investment_all = ```
+				
+				    VAR _selected_field = SELECTEDVALUE( pmt_slicer_investment[st_field] )
+				    VAR _denom =
+				        SWITCH( _selected_field,
+				            "agency", CALCULATE( [vl_table_investment], ALL( pbi_vw_media_investment[nm_agency] )),
+				            "advertiser", CALCULATE( [vl_table_investment], ALL( pbi_vw_media_investment[nm_client_advertiser] )),
+				            "daypartt", CALCULATE( [vl_table_investment], ALL( pbi_vw_media_investment[nm_daypart] )),
+				            "year_broadcast", CALCULATE( [vl_table_investment], ALL( pbi_vw_media_investment[ds_year_broadcast] )),
+				        BLANK())
+				    RETURN DIVIDE( [vl_table_investment], _denom )
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '10 Share'
+			lineageTag: 64ccdb2c-f23b-4cc7-a1d3-a2b09d65647e
+
+		measure share_media_investment_ly = ```
+				    var _calc = [share_media_investment]
+				    return CALCULATE( _calc, SAMEPERIODLASTYEAR( dim_tempo[data] ))
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '10 Share'
+			lineageTag: 895d6ca9-6a92-449d-91e2-8f159de9f17f
+
+		measure share_media_ocupation = ```
+				
+				    var _denom = CALCULATE( [vl_duration_invest], ALLSELECTED( pbi_vw_media_investment_GRP ))
+				    return DIVIDE( [vl_duration_invest], _denom )   
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '10 Share'
+			lineageTag: 49068586-2b69-4ce0-87bb-a75883367b3c
+
+		measure share_media_ocupation_all = ```
+				
+				    VAR _selected_field = SELECTEDVALUE( pmt_slicer_investment[st_field] )
+				    VAR _denom =
+				        SWITCH( _selected_field,
+				            "agency", CALCULATE( [vl_duration_invest], ALL( pbi_vw_media_investment[nm_agency] )),
+				            "advertiser", CALCULATE( [vl_duration_invest], ALL( pbi_vw_media_investment[nm_client_advertiser] )),
+				            "daypartt", CALCULATE( [vl_duration_invest], ALL( pbi_vw_media_investment[nm_daypart] )),
+				            "year_broadcast", CALCULATE( [vl_duration_invest], ALL( pbi_vw_media_investment[ds_year_broadcast] )),
+				        BLANK())
+				    RETURN DIVIDE( [vl_duration_invest], _denom )
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '10 Share'
+			lineageTag: a85783be-4634-4e21-8dea-f674aee38880
+
+		measure share_media_ocupation_ly = ```
+				    var _calc = [share_media_ocupation]
+				    return CALCULATE( _calc, SAMEPERIODLASTYEAR( dim_tempo[data] ))
+				```
+			formatString: #,0.00%;-#,0.00%;#,0.00%
+			displayFolder: '10 Share'
+			lineageTag: f44327b3-5c08-4133-b501-9e52dd2a4fc0
+
+		/// Definição: Total líquido (inserções).
+		/// Fórmula: SUM(ad_insertion[vl_net]).
+		/// Observações: líquido agregado por inserções; pode divergir do líquido na audiência/faturas (bases diferentes).
+		measure total_billing = ```
+				
+				// VAR _valor = SUM( pbi_vw_ad_insertion[vl_billing] )
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _postion_tax =
+				    SELECTEDVALUE ( pmt_exclude_position_tax[fl_validate] )
+				VAR _multiproduct_tax =
+				    SELECTEDVALUE ( pmt_exclude_multiproduct_tax[fl_validate] )
+				VAR _fl_VBN_consider =
+				    SELECTEDVALUE( pmt_values_KPI[ds_metrics] ) 
+				        // {"vl_biiling", "Encomendas", 0},
+				        // {"vl_invoice_billing", "Facturação", 1}
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE ( IF( _fl_VBN_consider = "vl_invoice_billing"
+				            , SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_gross] )
+				            , SWITCH( TRUE()
+				                , AND( _postion_tax <> 0, _multiproduct_tax <> 0 ), SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_position] - pbi_vw_ad_insertion[vl_billing_multiproduct] )
+				                , _postion_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_position] )
+				                , _multiproduct_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_multiproduct] )
+				                , SUM( pbi_vw_ad_insertion[vl_billing] )
+				            )),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE ( IF( _fl_VBN_consider = "vl_invoice_billing"
+				            , SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_gross] )
+				            , SWITCH( TRUE()
+				                , AND( _postion_tax <> 0, _multiproduct_tax <> 0 ), SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_position] - pbi_vw_ad_insertion[vl_billing_multiproduct] )
+				                , _postion_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_position] )
+				                , _multiproduct_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_multiproduct] )
+				                , SUM( pbi_vw_ad_insertion[vl_billing] )
+				            )),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '03 Financial'
+			lineageTag: 'meas-total-net'
+
+			changedProperty = IsHidden
+
+		measure total_billing_LY =
+				
+				CALCULATE ( [total_billing], SAMEPERIODLASTYEAR( dim_tempo[data] ))
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '05 Time Intelligence'
+			lineageTag: d66f630c-b44e-4164-9f24-f403a4c7ae4c
+
+		/// Definição: Total líquido MTD (mês até a data).
+		/// Fórmula: CALCULATE(total_net, DATESMTD(dim_tempo[data])).
+		/// Observações: depende de dim_tempo[data] contínua e relacionada; recorta do 1º dia do mês até a data corrente no contexto.
+		measure total_billing_mtd =
+				
+				CALCULATE ( [total_billing], DATESMTD ( dim_tempo[data] ) )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 'meas-net-mtd'
+
+			changedProperty = IsHidden
+
+		/// Definição: Total líquido no mês anterior.
+		/// Fórmula: CALCULATE(total_net, PREVIOUSMONTH(dim_tempo[data])).
+		/// Observações: exige calendário contínuo; útil para MoM (total_net_prev_month é denominador do mom_net_growth_pct).
+		measure total_billing_prev_month =
+				
+				CALCULATE ( [total_billing], PREVIOUSMONTH ( dim_tempo[data] ) )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 'meas-net-prev-month'
+
+			changedProperty = IsHidden
+
+		/// Definição: Total líquido YTD (acumulado no ano).
+		/// Fórmula: CALCULATE(total_net, DATESYTD(dim_tempo[data])).
+		/// Observações: ano civil por padrão; se calendário fiscal for diferente, precisa ajuste; depende de dim_tempo[data] relacionada.
+		measure total_billing_ytd =
+				
+				CALCULATE ( [total_billing], DATESYTD ( dim_tempo[data] ) )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 'meas-net-ytd'
+
+			changedProperty = IsHidden
+
+		measure total_bonus = ```
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE ( 
+				            SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_bonus] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_bonus] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '03 Financial'
+			lineageTag: 7410e5b0-1cbb-4091-8feb-00bc7331c747
+
+		measure total_budget =
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SUM ( pbi_dim_campaigns[vl_budget] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            CROSSFILTER( pbi_dim_campaigns[cd_campaign], pbi_vw_ad_insertion[cd_campaign], Both ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            SUM ( pbi_dim_campaigns[vl_budget] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            CROSSFILTER( pbi_dim_campaigns[cd_campaign], pbi_vw_ad_insertion[cd_campaign], Both ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( [total_seconds] ) > 0, IF ( ABS ( _CALC ) > 0, _CALC ), BLANK () )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '03 Financial'
+			lineageTag: 2bb4d4ae-3810-4247-879d-415b3944861e
+
+		/// Definição: Total bruto contratado (negotiações).
+		/// Fórmula: SUM(negotiations[vl_negotiation_gross_contracted]).
+		/// Observações: montante contratado, independentemente de entrega; sensível ao recorte de negotiações.
+		measure total_contracted_gross = ```
+				
+				    CALCULATE(
+				        SUM ( pbi_vw_negotiations[vl_negotiation_gross_contracted] )
+				        , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] )
+				    )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '09 Negotiations'
+			lineageTag: 'meas-neg-contracted'
+
+			changedProperty = IsHidden
+
+		measure total_dif_minimal_billing =
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SUM ( pbi_vw_ad_insertion[vl_dif_minimal_billing] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            SUM ( pbi_vw_ad_insertion[vl_dif_minimal_billing] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '03 Financial'
+			lineageTag: 8e2b39ce-a2a9-495e-9455-22e79ea4a571
+
+		/// Definição: Total bruto (inserções).
+		/// Fórmula: SUM(ad_insertion[vl_gross]).
+		/// Observações: bruto agregado; se houver estornos/ajustes na fonte, refletirá aqui.
+		measure total_gross =
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SUM ( pbi_vw_ad_insertion[vl_gross] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            SUM ( pbi_vw_ad_insertion[vl_gross] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '03 Financial'
+			lineageTag: 'meas-total-gross'
+
+			changedProperty = IsHidden
+
+		measure total_gross_negotiations =
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SUM ( pbi_vw_negotiations[vl_gross_total] ),
+				            // USERELATIONSHIP( negot
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            SUM ( pbi_vw_negotiations[vl_gross_total] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+			displayFolder: '03 Financial'
+			lineageTag: 8c14cee4-dd97-4efe-8f66-6ad80f120942
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		/// Definição: Duração total em horas.
+		/// Fórmula: total_seconds / 3600.
+		/// Observações: conversão direta; depende de total_seconds (vl_duration_fitting) estar em segundos.
+		measure total_hours =
+				
+				DIVIDE ( [total_seconds], 3600 )
+			formatString: #,0
+			displayFolder: '02 Duration'
+			lineageTag: 'meas-total-hours'
+
+			changedProperty = IsHidden
+
+		measure total_invoice_gross = ```
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_gross] ),
+				            // SUM ( pbi_vw_invoices[vl_invoice_gross] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_gross] ),
+				            // SUM ( pbi_vw_invoices[vl_invoice_gross] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				// VAR _CALC = 
+				//     CALCULATE (
+				//         SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_gross] ),
+				//         REMOVEFILTERS( pbi_vw_targets ) )
+				RETURN
+				    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+				```
+			displayFolder: '03 Financial'
+			lineageTag: 187eb9a9-d3df-443c-a3d1-6841f742c7da
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure total_invoice_gross_LY =
+				
+				CALCULATE ( [total_invoice_gross], SAMEPERIODLASTYEAR( dim_tempo[data] ))
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 239a4dc6-7e54-4b0a-9677-3548b1e852e3
+
+		measure total_invoice_net =
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_net] ),
+				            // SUM ( pbi_vw_invoices[vl_invoice_net] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            CROSSFILTER( pbi_dim_campaigns[cd_campaign], pbi_vw_ad_insertion[cd_campaign], Both ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_net] ),
+				            // SUM ( pbi_vw_invoices[vl_invoice_net] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            CROSSFILTER( pbi_dim_campaigns[cd_campaign], pbi_vw_ad_insertion[cd_campaign], Both ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( [total_seconds] ) > 0, IF ( ABS ( _CALC ) > 0, _CALC ), BLANK () )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '03 Financial'
+			lineageTag: 0987926d-e2ec-4fa9-813a-0152ae5c3e18
+
+		/// Definição: Duração total em minutos.
+		/// Fórmula: total_seconds / 60.
+		/// Observações: conversão direta; depende de total_seconds estar em segundos.
+		measure total_minutes =
+				
+				DIVIDE ( [total_seconds], 60 )
+			formatString: #,0
+			displayFolder: '02 Duration'
+			lineageTag: 'meas-total-minutes'
+
+			changedProperty = IsHidden
+
+		measure total_net =
+				
+				// VAR _valor = SUM( pbi_vw_ad_insertion[vl_net] )
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				VAR _postion_tax =
+				    SELECTEDVALUE ( pmt_exclude_position_tax[fl_validate] )
+				// VAR _multiproduct_tax =
+				//     SELECTEDVALUE ( pmt_exclude_multiproduct_tax[fl_validate] )
+				VAR _CALC =
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SWITCH( TRUE()
+				                // , AND( _postion_tax <> 0, _multiproduct_tax <> 0 ), SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_net] * ( 1 - MAX( pbi_vw_ad_insertion[pc_position_tax], pbi_vw_ad_insertion[pc_multiproduct_tax] ) ) )
+				                , _postion_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_net] * ( 1 - MAX( pbi_vw_ad_insertion[pc_position_tax] ) ) )
+				                // , _multiproduct_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_net] * ( 1 - MAX( pbi_vw_ad_insertion[pc_multiproduct_tax] ) ) )
+				                , SUM( pbi_vw_ad_insertion[vl_net] )
+				            ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            )
+				        ),
+				        CALCULATE (
+				            SWITCH( TRUE()
+				                // , AND( _postion_tax <> 0, _multiproduct_tax <> 0 ), SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_net] * ( 1 - MAX( pbi_vw_ad_insertion[pc_position_tax], pbi_vw_ad_insertion[pc_multiproduct_tax] ) ) )
+				                , _postion_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_net] * ( 1 - MAX( pbi_vw_ad_insertion[pc_position_tax] ) ) )
+				                // , _multiproduct_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_net] * ( 1 - MAX( pbi_vw_ad_insertion[pc_multiproduct_tax] ) ) )
+				                , SUM( pbi_vw_ad_insertion[vl_net] )
+				            ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets_simulado[ds_variant]
+				            )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '03 Financial'
+			lineageTag: ac02e12c-df79-4b67-a2a0-595b8d80668c
+
+		/// Definição: Duração total (segundos) ajustada/fitting.
+		/// Fórmula: SUM(ad_insertion[vl_duration_fitting]).
+		/// Observações: base de todas as conversões (minutos/horas) e do custo por segundo; se a coluna já vier “ajustada”, o conceito de duração real pode diferir.
+		measure total_seconds =
+				
+				VAR _fl_adults =
+				    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+				RETURN
+				    IF (
+				        _fl_adults,
+				        CALCULATE (
+				            SUM ( pbi_vw_ad_insertion[vl_duration_fitting] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant_adults]
+				            ),
+				            TREATAS ( VALUES ( dim_tempo[data] ), pbi_dim_campaigns[dt_init] )
+				        ),
+				        CALCULATE (
+				            SUM ( pbi_vw_ad_insertion[vl_duration_fitting] ),
+				            VALUES ( pbi_vw_targets[ds_variant] ),
+				            TREATAS (
+				                VALUES ( pbi_vw_targets_var[ds_variant] ),
+				                pbi_vw_targets[ds_variant]
+				            ),
+				            TREATAS ( VALUES ( dim_tempo[data] ), pbi_dim_campaigns[dt_init] )
+				        )
+				    )
+			formatString: #,0
+			displayFolder: '02 Duration'
+			lineageTag: 'meas-total-seconds'
+
+			changedProperty = IsHidden
+
+		measure TRP =
+				
+				CALCULATE (
+				    AVERAGE ( pbi_vw_indicators[TRP] ),
+				    REMOVEFILTERS ( pbi_vw_targets_simulado )
+				)
+			displayFolder: '08 Audience'
+			lineageTag: cef3bb39-3185-4265-bde8-a04059453936
+
+			changedProperty = IsHidden
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure ts_time_break = MIN( pbi_vw_ad_insertion[ts_time_break] )
+			displayFolder: '02 Duration'
+			lineageTag: bd216659-08cc-4b90-afcc-a11cb820f782
+
+		measure tx_add_projected =
+				
+				VAR _behavior = "scroll" // Controls the marquee animation behavior.
+				VAR _direction = "left" // Sets the direction of the scrolling text.
+				VAR _text_align = "right" // Sets the aligning text.
+				VAR _scrollamount = "5" // Sets the scrolling speed.
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Add the Projections to the Expectation Percentages?",
+				        "en-US", "Add the Projections to the Expectation Percentages?",
+				        "es-ES", "¿Añadir las Proyecciones a los Porcentajes de Expectativa?",
+				        "pt-PT", "Adicionar as Projeções nas Percentagens de Expectativa?",
+				        "pt-BR", "Adicionar as Projeções nos Percentuais de Expectativa?",
+				        "Add the Projections to the Expectation Percentages?"
+				    )
+				RETURN
+				    "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+				    // "<span style='text-align:" & _text_align & "; display:block;'>" & _text & "</span>"
+			displayFolder: '07 Texts'
+			lineageTag: bad22cf4-087f-4aba-b58c-92fa2f43ca15
+
+		measure tx_almbicao_ficheiro = [vl_ambicao] & UNICHAR(13) & [vl_fechado_ficheiro]
+			displayFolder: '11 Ficheiro'
+			lineageTag: e6d141dd-e042-4641-83e9-68c09bda963a
+
+		measure tx_answer_ds_adults =
+				
+				VAR _behavior = "scroll"
+				VAR _direction = "left"
+				VAR _scrollamount = "0"
+				VAR _isAdultsEqOn = // Checks whether the Adults Equivalent toggle is enabled.
+				    SELECTEDVALUE(pmt_adults_GRP[ds_adults_eq]) = "on"
+				VAR _textOn = // Returns the translated text when the toggle is on.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "Yes",
+				        "en-US", "Yes",
+				        "es-ES", "Sí",
+				        "pt-PT", "Sim",
+				        "pt-BR", "Sim",
+				        "Yes"
+				    )
+				VAR _textOff = // Returns the translated text when the toggle is off.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "No",
+				        "en-US", "No",
+				        "es-ES", "No",
+				        "pt-PT", "Não",
+				        "pt-BR", "Não",
+				        "No"
+				    )
+				
+				VAR _finalText = // Chooses which translated text should be displayed.
+				    IF(_isAdultsEqOn, _textOn, _textOff)
+				
+				RETURN
+				        "<marquee behavior='" & _behavior &
+				        "' direction='" & _direction &
+				        "' scrollamount='" & _scrollamount &
+				        "'>" & _finalText & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: 0830127a-c5d3-4f68-a23b-99bdcb927ac7
+
+		measure tx_answer_duration_equivancy =
+				
+				VAR _behavior = "scroll"
+				VAR _direction = "left"
+				VAR _scrollamount = "0"
+				VAR _answer = // Checks whether the Adults Equivalent toggle is enabled.
+				    SELECTEDVALUE( pmt_duration_equivancy[nm_duration_equivancy]) = 20
+				// VAR _textOn = // Returns the translated text when the toggle is on.
+				//     SWITCH(
+				//         USERCULTURE(),
+				//         "en-GB", "Yes",
+				//         "en-US", "Yes",
+				//         "es-ES", "Sí",
+				//         "pt-PT", "Sim",
+				//         "pt-BR", "Sim",
+				//         "Yes"
+				//     )
+				// VAR _textOff = // Returns the translated text when the toggle is off.
+				//     SWITCH(
+				//         USERCULTURE(),
+				//         "en-GB", "No",
+				//         "en-US", "No",
+				//         "es-ES", "No",
+				//         "pt-PT", "Não",
+				//         "pt-BR", "Não",
+				//         "No"
+				//     )
+				
+				VAR _finalText = // Chooses which translated text should be displayed.
+				    IF(_answer, "20'", "30'")
+				
+				RETURN
+				        "<marquee behavior='" & _behavior &
+				        "' direction='" & _direction &
+				        "' scrollamount='" & _scrollamount &
+				        "'>" & _finalText & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: fa90bdc5-b73d-43f8-8c9c-aaabd97b97cc
+
+		measure tx_answer_exclude_multiproduct_tax =
+				
+				VAR _behavior = "scroll"
+				VAR _direction = "left"
+				VAR _scrollamount = "0"
+				VAR _answer = // Checks whether the Adults Equivalent toggle is enabled.
+				    SELECTEDVALUE( pmt_exclude_multiproduct_tax[ds_description] ) = "on"
+				VAR _textOn = // Returns the translated text when the toggle is on.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "Yes",
+				        "en-US", "Yes",
+				        "es-ES", "Sí",
+				        "pt-PT", "Sim",
+				        "pt-BR", "Sim",
+				        "Yes"
+				    )
+				VAR _textOff = // Returns the translated text when the toggle is off.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "No",
+				        "en-US", "No",
+				        "es-ES", "No",
+				        "pt-PT", "Não",
+				        "pt-BR", "Não",
+				        "No"
+				    )
+				
+				VAR _finalText = // Chooses which translated text should be displayed.
+				    IF(_answer, _textOn, _textOff)
+				
+				RETURN
+				        "<marquee behavior='" & _behavior &
+				        "' direction='" & _direction &
+				        "' scrollamount='" & _scrollamount &
+				        "'>" & _finalText & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: ddc273ed-1951-4ad9-b5e3-fe3aaf0849ef
+
+		measure tx_answer_exclude_position_tax =
+				
+				VAR _behavior = "scroll"
+				VAR _direction = "left"
+				VAR _scrollamount = "0"
+				VAR _answer = // Checks whether the Adults Equivalent toggle is enabled.
+				    SELECTEDVALUE( pmt_exclude_position_tax[ds_description]) = "on"
+				VAR _textOn = // Returns the translated text when the toggle is on.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "Yes",
+				        "en-US", "Yes",
+				        "es-ES", "Sí",
+				        "pt-PT", "Sim",
+				        "pt-BR", "Sim",
+				        "Yes"
+				    )
+				VAR _textOff = // Returns the translated text when the toggle is off.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "No",
+				        "en-US", "No",
+				        "es-ES", "No",
+				        "pt-PT", "Não",
+				        "pt-BR", "Não",
+				        "No"
+				    )
+				
+				VAR _finalText = // Chooses which translated text should be displayed.
+				    IF(_answer, _textOn, _textOff)
+				
+				RETURN
+				        "<marquee behavior='" & _behavior &
+				        "' direction='" & _direction &
+				        "' scrollamount='" & _scrollamount &
+				        "'>" & _finalText & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: dc3c7918-8ede-4f0a-82f5-70d6b4187e0f
+
+		measure tx_answer_is_medialivre_advertiser = ```
+				
+				VAR _behavior = "scroll" // Defines the marquee animation behavior.
+				VAR _direction = "left" // Defines the scrolling direction of the marquee text.
+				VAR _scrollamount = "0" // Defines the scrolling speed of the marquee.
+				
+				VAR _answer = // Checks whether the Adults Equivalent toggle is enabled.
+				    SELECTEDVALUE( pbi_vw_media_investment[fl_client_advertiser_cmtv] ) = "Y"
+				    
+				VAR _textOn = // Returns the translated text when the toggle is on.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "Yes",
+				        "en-US", "Yes",
+				        "es-ES", "Sí",
+				        "pt-PT", "Sim",
+				        "pt-BR", "Sim",
+				        "Yes"
+				    )
+				VAR _textOff = // Returns the translated text when the toggle is off.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "No",
+				        "en-US", "No",
+				        "es-ES", "No",
+				        "pt-PT", "Não",
+				        "pt-BR", "Não",
+				        "No"
+				    )
+				
+				VAR _finalText = // Chooses which translated text should be displayed.
+				    IF(_answer, _textOn, _textOff)
+				
+				RETURN
+				        "<marquee behavior='" & _behavior &
+				        "' direction='" & _direction &
+				        "' scrollamount='" & _scrollamount &
+				        "'>" & _finalText & "</marquee>"
+				```
+			displayFolder: '07 Texts'
+			lineageTag: 20d225e3-beee-4543-989b-f0a99d0f4335
+
+		measure tx_answer_pmt_add_projected =
+				
+				VAR _behavior = "scroll"
+				VAR _direction = "left"
+				VAR _scrollamount = "0"
+				VAR _answer = // Checks whether the Adults Equivalent toggle is enabled.
+				    SELECTEDVALUE( pmt_add_projections[ds_description]) = "on"
+				VAR _textOn = // Returns the translated text when the toggle is on.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "Yes",
+				        "en-US", "Yes",
+				        "es-ES", "Sí",
+				        "pt-PT", "Sim",
+				        "pt-BR", "Sim",
+				        "Yes"
+				    )
+				VAR _textOff = // Returns the translated text when the toggle is off.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "No",
+				        "en-US", "No",
+				        "es-ES", "No",
+				        "pt-PT", "Não",
+				        "pt-BR", "Não",
+				        "No"
+				    )
+				
+				VAR _finalText = // Chooses which translated text should be displayed.
+				    IF(_answer, _textOn, _textOff)
+				
+				RETURN
+				        "<marquee behavior='" & _behavior &
+				        "' direction='" & _direction &
+				        "' scrollamount='" & _scrollamount &
+				        "'>" & _finalText & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: e33c207b-cc0c-4829-b5a6-5b303bec9edf
+
+		measure tx_answer_register_until_last_update =
+				
+				VAR _behavior = "scroll"
+				VAR _direction = "left"
+				VAR _scrollamount = "0"
+				VAR _answer = // Checks whether the Adults Equivalent toggle is enabled.
+				    SELECTEDVALUE(until_last_updated[until_last_updated]) = "yes"
+				VAR _textOn = // Returns the translated text when the toggle is on.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "Yes",
+				        "en-US", "Yes",
+				        "es-ES", "Sí",
+				        "pt-PT", "Sim",
+				        "pt-BR", "Sim",
+				        "Yes"
+				    )
+				VAR _textOff = // Returns the translated text when the toggle is off.
+				    SWITCH(
+				        USERCULTURE(),
+				        "en-GB", "No",
+				        "en-US", "No",
+				        "es-ES", "No",
+				        "pt-PT", "Não",
+				        "pt-BR", "Não",
+				        "No"
+				    )
+				
+				VAR _finalText = // Chooses which translated text should be displayed.
+				    IF(_answer, _textOn, _textOff)
+				
+				RETURN
+				        "<marquee behavior='" & _behavior &
+				        "' direction='" & _direction &
+				        "' scrollamount='" & _scrollamount &
+				        "'>" & _finalText & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: 99dba640-66ad-4be4-8922-b5dea0dda687
+
+		measure tx_card_share_channel = ```
+				
+				    VAR _text = 
+				        SWITCH( USERCULTURE (),
+				                "en-GB", "Share Channel",
+				                "en-US", "Share Channel",
+				                "es-ES", "Share Canais",
+				                "pt-PT", "Share Canais",
+				                "pt-BR", "Share Canais",
+				                "Share Channel" -- (en-US)
+				        )
+				    RETURN _text
+				```
+			displayFolder: '07 Texts'
+			lineageTag: f53d803c-81e7-4e5c-9b24-062297bef664
+
+		measure tx_card_share_media_investment = ```
+				
+				    VAR _selected_field = SELECTEDVALUE( pmt_slicer_investment[st_field] )
+				    VAR _text = 
+				        SWITCH( _selected_field,
+				        "agency", SWITCH ( USERCULTURE (),
+				                "en-GB", "Investment Share - Agency",
+				                "en-US", "Investment Share - Agency",
+				                "es-ES", "Share Inversión - Agencia",
+				                "pt-PT", "Share Investimento - Agência",
+				                "pt-BR", "Share Investimento - Agência",
+				                "Investment Share - Agency" -- (en-US)
+				            ),
+				        "advertiser", SWITCH ( USERCULTURE (),
+				                "en-GB", "Investment Share - Advertiser",
+				                "en-US", "Investment Share - Advertiser",
+				                "es-ES", "Share Inversión - Anunciante",
+				                "pt-PT", "Share Investimento - Anunciante",
+				                "pt-BR", "Share Investimento - Anunciante",
+				                "Investment Share - Advertiser" -- (en-US)
+				            ),
+				        "year_broadcast", SWITCH ( USERCULTURE (),
+				                "en-GB", "Investment Share - Year", 
+				                "en-US", "Investment Share - Year",
+				                "es-ES", "Share Inversión - Año",
+				                "pt-PT", "Share Investimento - Ano",
+				                "pt-BR", "Share Investimento - Ano",
+				                "Investment Share - Year" -- (en-US)
+				            ),
+				        "daypartt", SWITCH ( USERCULTURE (),
+				                "en-GB", "Investment Share - Daypart",
+				                "en-US", "Investment Share - Daypart",
+				                "es-ES", "Share Inversión - Daypart",
+				                "pt-PT", "Share Investimento - Daypart",
+				                "pt-BR", "Share Investimento - Daypart",
+				                "Investment Share - Daypart" -- (en-US)
+				            ),
+				        SWITCH ( USERCULTURE (),
+				                "en-GB", "Investment Share",
+				                "en-US", "Investment Share",
+				                "es-ES", "Share Inversión",
+				                "pt-PT", "Share Investimento",
+				                "pt-BR", "Share Investimento",
+				                "Investment Share" -- (en-US)
+				            )
+				        )
+				    RETURN _text
+				```
+			displayFolder: '07 Texts'
+			lineageTag: d10d3ea8-ef75-4614-9924-a4a00f45769d
+
+		measure tx_equivalent_duration =
+				
+				VAR _behavior = "scroll" // Controls the marquee animation behavior.
+				VAR _direction = "left" // Sets the direction of the scrolling text.
+				VAR _text_align = "right" // Sets the aligning text.
+				VAR _scrollamount = "0" // Sets the scrolling speed.
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Equivalent Duration",
+				        "en-US", "Equivalent Duration",
+				        "es-ES", "Duración Equivalente",
+				        "pt-PT", "Duração Equivalente",
+				        "pt-BR", "Duração Equivalente",
+				        "Equivalent Duration"
+				    ) // Returns the localized text based on the user culture.
+				RETURN
+				    // "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+				    "<span style='text-align:" & _text_align & "; display:block;'>" & _text & "</span>"
+			displayFolder: '07 Texts'
+			lineageTag: cee7b2d1-ff55-439e-ba34-b62dc7fb9509
+
+		measure tx_funnel = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><polygon points='3,4 21,4 14,13 14,19 10,17 10,13' fill='#404040'/></svg>"
+			displayFolder: '07 Texts'
+			lineageTag: 8d68ea30-5d55-4d32-b5c2-c33bec00b372
+
+		measure tx_last_update_grp = ```
+				
+				VAR _lastUpdateData =
+				    MAX ( pbi_last_data_updated[last_update] ) // Gets the most recent update date/time from the source table.
+				   
+				VAR _lastUpdateGRPs =
+				    MAX ( pbi_vw_max_date_indicators[max_dt_air] ) // Gets the most recent update date/time from the source table.
+				
+				VAR _behavior = "scroll" // Controls the marquee animation behavior.
+				VAR _direction = "left" // Sets the direction of the scrolling text.
+				VAR _text_align = "right" // Sets the aligning text.
+				VAR _scrollamount = "5" // Sets the scrolling speed.
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Updates: Data at " & FORMAT ( _lastUpdateData, "dd/MM/yyyy HH:mm" ) & " - UTC (0h); GRPs at " & FORMAT ( _lastUpdateGRPs, "dd/MM/yyyy" ) & ".",
+				        "en-US", "Updates: Data at " & FORMAT ( _lastUpdateData, "MM/dd/yyyy hh:mm" ) & " " & FORMAT ( _lastUpdateData, "AM/PM" ) & " - UTC (0h); GRPs at " & FORMAT ( _lastUpdateGRPs, "MM/dd/yyyy" ) & ".",
+				        "es-ES", "Actualizaciones: Datos a las " & FORMAT ( _lastUpdateData, "dd/MM/yyyy HH:mm" ) & " - UTC (0h); GRPs a las " & FORMAT ( _lastUpdateGRPs, "dd/MM/yyyy" ) & ".",
+				        "pt-PT", "Atualizações: Dados em " & FORMAT ( _lastUpdateData, "dd/MM/yyyy HH:mm" ) & " - UTC (0h); GRPs em " & FORMAT ( _lastUpdateGRPs, "dd/MM/yyyy" ) & ".",
+				        "pt-BR", "Atualizações: Dados em " & FORMAT ( _lastUpdateData, "dd/MM/yyyy HH:mm" ) & " - UTC (0h); GRPs em " & FORMAT ( _lastUpdateGRPs, "dd/MM/yyyy" ) & ".",
+				        "Updates: Data at " & FORMAT ( _lastUpdateData, "dd/MM/yyyy HH:mm" ) & " - UTC (0h); GRPs at " & FORMAT ( _lastUpdateGRPs, "dd/MM/yyyy" ) & "."
+				    ) // Returns the localized text based on the user culture.
+				RETURN
+				    "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+				    // "<span style='text-align:" & _text_align & "; display:block;'>" & _text & "</span>"
+				```
+			displayFolder: '07 Texts'
+			lineageTag: 43981eab-bc2a-4d85-81dd-eaf9586f61c3
+
+		measure tx_last_update_media_investment =
+				
+				VAR _lastUpdateMediaInvestments =
+				    MAX ( pbi_vw_max_media_investment[max_dt_modified_on] ) // Gets the most recent update date/time from the source table.
+				
+				VAR _behavior = "scroll" // Controls the marquee animation behavior.
+				VAR _direction = "left" // Sets the direction of the scrolling text.
+				VAR _text_align = "right" // Sets the aligning text.
+				VAR _scrollamount = "5" // Sets the scrolling speed.
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Updates: Yumi Data at " & FORMAT ( _lastUpdateMediaInvestments, "dd/MM/yyyy" ) & ".",
+				        "en-US", "Updates: Yumi Data at " & FORMAT ( _lastUpdateMediaInvestments, "MM/dd/yyyy" ) & ".",
+				        "es-ES", "Actualizaciones: Datos de Yumi a las " & FORMAT ( _lastUpdateMediaInvestments, "dd/MM/yyyy" ) & ".",
+				        "pt-PT", "Atualizações: Dados do Yumi em " & FORMAT ( _lastUpdateMediaInvestments, "dd/MM/yyyy" ) & ".",
+				        "pt-BR", "Atualizações: Dados do Yumi em " & FORMAT ( _lastUpdateMediaInvestments, "dd/MM/yyyy" ) & ".",
+				        "Updates: Yumi Data at " & FORMAT ( _lastUpdateMediaInvestments, "dd/MM/yyyy" ) & "."
+				    ) // Returns the localized text based on the user culture.
+				RETURN
+				    "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+				    // "<span style='text-align:" & _text_align & "; display:block;'>" & _text & "</span>"
+			displayFolder: '07 Texts'
+			lineageTag: 0ac42733-609e-4787-920a-ab3b9478a496
+
+		measure tx_mensage_alert =
+				
+				VAR _behavior = "scroll" // Defines the marquee animation mode.
+				VAR _direction = "left" // Defines the scrolling direction.
+				VAR _scrollamount = "5" // Defines the scrolling speed.
+				VAR _textAlign = "right" // Defines the horizontal text alignment.
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "For this visual, only 'Adults' should be applied in the Equivalent grouping, allowing simulation for the other targets.",
+				        "en-US", "For this visual, only 'Adults' should be applied in the Equivalent grouping, allowing simulation for the other targets.",
+				        "es-ES", "Para este visual, solo se aplicará 'Adultos' en la agrupación Equivalente, permitiendo la simulación para los demás objetivos.",
+				        "pt-PT", "Para este visual, apenas será aplicado 'Adultos' no agrupamento Equivalente, permitindo a simulação para os demais alvos.",
+				        "pt-BR", "Para este visual, apenas será aplicado 'Adultos' no agrupamento Equivalente, permitindo a simulação para os demais alvos.",
+				        "For this visual, only 'Adults' should be applied in the Equivalent grouping, allowing simulation for the other targets."
+				    ) // Returns the translated text based on the user culture.
+				RETURN
+				    // "<span style='text-align:" & _textAlign & "; display:block;'>" & _text & "</span>"
+				    "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: db5e7848-0832-41e9-8392-31f6062ceca7
+
+		measure tx_others_filters =
+				
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Other Filters ▷",
+				        "en-US", "Other Filters ▷",
+				        "es-ES", "Otros filtros ▷",
+				        "pt-PT", "Outros Filtros ▷",
+				        "pt-BR", "Outros Filtros ▷",
+				        "Other Filters ▷"
+				    )
+				RETURN _text
+			displayFolder: '07 Texts'
+			lineageTag: 77847dc5-2e0c-4d60-a4fc-d7ac7846afe8
+
+		measure tx_others_filters_back = ```
+				
+				VAR _text = 
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Back ◁",
+				        "en-US", "Back ◁",
+				        "es-ES", "Volver ◁",
+				        "pt-PT", "Voltar ◁",
+				        "pt-BR", "Voltar ◁",
+				        "Back ◁"
+				    )
+				RETURN _text
+				```
+			displayFolder: '07 Texts'
+			lineageTag: aa253a81-1636-4e4d-9934-55ae1422f222
+
+		measure tx_relationship_agency =
+				
+				VAR _marqueeBehavior = "scroll" // Controls the marquee animation behavior.
+				VAR _marqueeDirection = "left" // Sets the direction of the scrolling text.
+				VAR _textAlign = "center" // Sets the text alignment.
+				VAR _scrollAmount = "5" // Sets the scrolling speed.
+				VAR _localizedText =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Agency relationship",
+				        "en-US", "Agency relationship",
+				        "pt-PT", "Relacionamento da agência",
+				        "pt-BR", "Relacionamento da agência",
+				        "es-ES", "Relación de la agencia",
+				        "Agency relationship"
+				    ) // Returns the localized text based on the user culture.
+				
+				RETURN
+				    // "<marquee behavior='" & _marqueeBehavior & "' direction='" & _marqueeDirection & "' scrollamount='" & _scrollAmount & "'>" & _localizedText & "</marquee>"
+				    "<span style='text-align:" & _textAlign & "; display:block;'>" & _localizedText & "</span>"
+			displayFolder: '07 Texts'
+			lineageTag: 1a74373d-4710-4761-b29e-b82e13787f5a
+
+		measure tx_title_exclude_multiproduct_tax =
+				
+				VAR _behavior = "scroll" // Defines the marquee animation behavior.
+				VAR _direction = "left" // Defines the scrolling direction of the marquee text.
+				VAR _text_align = "right" // Sets the aligning text.
+				VAR _scrollamount = "5" // Defines the scrolling speed of the marquee.
+				VAR _text =
+					SWITCH (
+						USERCULTURE (),
+						"en-GB", "Exclude Multiproduct Fees?",
+						"en-US", "Exclude Multiproduct Fees?",
+						"es-ES", "¿Excluir tarifas multiproducto?",
+						"pt-PT", "Excluir Taxas de Multiproduto?",
+						"pt-BR", "Excluir Taxas de Multiproduto?",
+						"Exclude Multiproduct Fees?"
+				    )
+				RETURN
+				    "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+				    // "<span style='text-align:" & _text_align & "; display:block;'>" & _text & "</span>"
+			displayFolder: '07 Texts'
+			lineageTag: efdad492-ae2c-4531-84f7-ae4b5661cf3e
+
+		measure tx_title_exclude_position_tax =
+				
+				VAR _behavior = "scroll" // Defines the marquee animation behavior.
+				VAR _direction = "left" // Defines the scrolling direction of the marquee text.
+				VAR _text_align = "right" // Sets the aligning text.
+				VAR _scrollamount = "0" // Defines the scrolling speed of the marquee.
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Exclude Position Fees?",
+				        "en-US", "Exclude Position Fees?",
+				        "es-ES", "¿Excluir Tasas de Posición?",
+				        "pt-PT", "Excluir Taxas de Posição?",
+				        "pt-BR", "Excluir Taxas de Posição?",
+				        "Exclude Position Fees?"
+				    )
+				RETURN
+				    // "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+				    "<span style='text-align:" & _text_align & "; display:block;'>" & _text & "</span>"
+			displayFolder: '07 Texts'
+			lineageTag: 4ed16478-c31e-44f2-aa11-e5593ec635ae
+
+		measure tx_title_is_medialivre_advertiser =
+				
+				VAR _behavior = "scroll" // Defines the marquee animation behavior.
+				VAR _direction = "left" // Defines the scrolling direction of the marquee text.
+				VAR _scrollamount = "0" // Defines the scrolling speed of the marquee.
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Is MediaLivre advertiser?",
+				        "en-US", "Is MediaLivre advertiser?",
+				        "es-ES", "¿Es anunciante de MediaLivre?",
+				        "pt-PT", "É anunciante MediaLivre?",
+				        "pt-BR", "É anunciante MediaLivre?",
+				        "Is MediaLivre advertiser?"  -- (en-US)
+				    )
+				RETURN
+				    "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: 2172d735-0ae7-4c64-be91-0e3c66b3cc1b
+
+		measure tx_title_register_until_last_update =
+				
+				VAR _behavior = "scroll" // Defines the marquee animation behavior.
+				VAR _direction = "left" // Defines the scrolling direction of the marquee text.
+				VAR _scrollamount = "5" // Defines the scrolling speed of the marquee.
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Records until the last GRP update?",
+				        "en-US", "Records until the last GRP update?",
+				        "es-ES", "¿Registros hasta la última actualización de GRP?",
+				        "pt-PT", "Registos até à última atualização de GRP?",
+				        "pt-BR", "Registros até a última atualização de GRP?",
+				        "Records until the last GRP update?"
+				    )
+				RETURN
+				    "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+			displayFolder: '07 Texts'
+			lineageTag: 9568a8a6-863e-4b70-8b53-5b5670b3fc70
+
+		measure tx_title_toggle_adults_eq =
+				
+				VAR _behavior = "scroll"
+				VAR _direction = "left"
+				VAR _scrollamount = "0"
+				VAR _text_align = "right"
+				VAR _text =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "Adults equivalent?",
+				        "en-US", "Adults equivalent?",
+				        "es-ES", "¿Equivalente a adultos?",
+				        "pt-PT", "Equivalente a adultos?",
+				        "pt-BR", "Equivalente a adultos?",
+				        "Adults equivalent?"
+				    )
+				RETURN
+				    // "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
+				    "<span style='text-align:" & _text_align & "; display:block;'>" & _text & "</span>"
+			displayFolder: '07 Texts'
+			lineageTag: bbe50802-2f18-4033-9279-d9f3618fc0e1
+
+		measure tx_VBN_consider =
+				
+				VAR _marqueeBehavior = "scroll" // Controls the marquee animation behavior.
+				VAR _marqueeDirection = "left" // Sets the direction of the scrolling text.
+				VAR _textAlign = "center" // Sets the text alignment.
+				VAR _scrollAmount = "5" // Sets the scrolling speed.
+				VAR _localizedText =
+				    SWITCH (
+				        USERCULTURE (),
+				        "en-GB", "VBN considers values from ...",
+				        "en-US", "VBN considers values from ...",
+				        "pt-PT", "A VBN considera valores de ...",
+				        "pt-BR", "VBN considera valores de ...",
+				        "es-ES", "VBN considera valores de ...",
+				        "VBN considers values from ..."
+				    )
+				
+				RETURN
+				    // "<marquee behavior='" & _marqueeBehavior & "' direction='" & _marqueeDirection & "' scrollamount='" & _scrollAmount & "'>" & _localizedText & "</marquee>"
+				    "<span style='text-align:" & _textAlign & "; display:block;'>" & _localizedText & "</span>"
+			displayFolder: '07 Texts'
+			lineageTag: 2764cd73-9f36-4ba4-95c8-2753b2c66fbb
+
+		measure vl_ambicao = CALCULATE( SUM( 'Ambição'[Ambição TTV] ), USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], 'Relação Ambição'[cd_account_agency] ) )
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '11 Ficheiro'
+			lineageTag: 0fac4d5f-8ec9-4ae8-ae55-6bd316e0d028
+
+		measure vl_calculated = ```
+				
+				    SWITCH( SELECTEDVALUE( pmt_types_targets_calc[metrics]),
+				        "CPR_EQ", [CPR_EQ],
+				        "CPR_EQ_LY", IF( "CPR" IN VALUES ( pmt_types_targets_calc_dimention[pmt_types_targets_calc_nm_column] ), [CPR_EQ_LY]),
+				        "yoy_CPR_EQ_growth_pct", IF( "CPR" IN VALUES ( pmt_types_targets_calc_dimention[pmt_types_targets_calc_nm_column] ), [yoy_CPR_EQ_growth_pct] ),
+				        "GRP_EQ", [GRP_EQ],
+				        "GRP_EQ_LY", IF( "GRP" IN VALUES ( pmt_types_targets_calc_dimention[pmt_types_targets_calc_nm_column] ), [GRP_EQ_LY] ),
+				        "yoy_GRP_EQ_growth_pct", IF( "GRP" IN VALUES ( pmt_types_targets_calc_dimention[pmt_types_targets_calc_nm_column] ), [yoy_GRP_EQ_growth_pct] ),
+				        "vl_projected_revenue_negotiated", [vl_projected_revenue_negotiated],
+				        "total_gross", [total_gross],
+				        "total_billing", [total_billing],
+				        "total_billing_LY", IF( "VBN" IN VALUES ( pmt_types_targets_calc_dimention[pmt_types_targets_calc_nm_column] ), [total_billing_LY] ),
+				        "total_bonus", [total_bonus],
+				        // "total_invoice_gross", [total_invoice_gross], 
+				        // "total_invoice_gross_LY", [total_invoice_gross_LY],
+				        "yoy_billing_growth_pct", IF( "VBN" IN VALUES ( pmt_types_targets_calc_dimention[pmt_types_targets_calc_nm_column] ), [yoy_billing_growth_pct] ),
+				        // "total_budget", [total_budget],
+				        "total_dif_minimal_billing", [total_dif_minimal_billing],
+				        "CPS", [CPS],
+				        "CPS_LY", IF( "CPS" IN VALUES ( pmt_types_targets_calc_dimention[pmt_types_targets_calc_nm_column] ), [CPS_LY] ),
+				        "yoy_CPS_growth_pct", IF( "CPS" IN VALUES ( pmt_types_targets_calc_dimention[pmt_types_targets_calc_nm_column] ), [yoy_CPS_growth_pct] ),
+				        "total_seconds", [total_seconds],
+				        "pc_dif_project_negotiated_vs_billing", [pc_dif_project_negotiated_vs_billing],
+				        "pc_discount_avg", [pc_discount_avg],
+				        "CPR_EQ_XT", [CPR_EQ_XT], 
+				        "GRP_EQ_XT", [GRP_EQ_XT],
+				        BLANK()
+				    )
+				```
+			lineageTag: 836ab9f7-f64b-4f61-bf63-fac2003a2f94
+
+			formatStringDefinition =
+					SWITCH(
+					    SELECTEDVALUE(pmt_types_targets_calc[metrics]),
+					    "CPR_EQ", "#,##0.00 €",
+					    "CPR_EQ_LY", "#,##0.00 €",
+					    "yoy_CPR_EQ_growth_pct", "#,##0.0%",
+					    "GRP_EQ", "#,##0.00",
+					    "GRP_EQ_LY", "#,##0.00",
+					    "yoy_GRP_EQ_growth_pct", "#,##0.0%",
+					    "vl_projected_revenue_negotiated", "#,##0 €",
+					    "total_gross", "#,##0 €",
+					    "total_billing", "#,##0 €",
+					    "total_billing_LY", "#,##0 €",
+					    "total_bonus", "#,##0 €",
+					    // "total_invoice_gross", "#,##0 €",
+					    // "total_invoice_gross_LY", "#,##0 €",
+					    "yoy_billing_growth_pct", "#,##0.0%",
+					   // "total_budget", "#,##0.00 €",
+					    "total_dif_minimal_billing", "#,##0 €",
+					    "CPS", "#,##0.00 €",
+					    "CPS_LY", "#,##0.00 €",
+					    "yoy_CPS_growth_pct", "#,##0.0%",
+					    "total_seconds", "#,##0",
+					    "pc_dif_project_negotiated_vs_billing", "#,##0.0%",
+					    "pc_discount_avg", "#,##0.0%",
+					    "CPR_EQ_XT", "#,##0.00 €",
+					    "GRP_EQ_XT", "#,##0.00",
+					    "#,##0.00"
+					)
+
+		measure vl_contracted_shouldBe_ambicao =
+				
+				[pc_projected_all_dim_tempo] * [vl_ambicao]
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '11 Ficheiro'
+			lineageTag: 710b7111-ad88-43b0-852a-2a9c05f95938
+
+		measure vl_contracted_shouldBe_ficheiro =
+				
+				[pc_projected_all_dim_tempo] * [vl_fechado_ficheiro]
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '11 Ficheiro'
+			lineageTag: f6501181-31db-4097-b6f0-8fdf20923cf7
+
+		measure vl_contracted_shouldBe_realised =
+				
+				[pc_projected_all_dim_tempo] * [total_contracted_gross]
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '09 Negotiations'
+			lineageTag: 182ecbb9-e11b-4587-93e2-c61a5361a32f
+
+		measure vl_daypart_seconds = ```
+				
+				    VAR _scds = COUNT( dim_daypart[nr_seconds] )
+				    VAR _dys = COUNT( dim_tempo[data] )
+				    RETURN _scds * _dys
+				```
+			formatString: #,0
+			displayFolder: '02 Duration'
+			lineageTag: b6ed04af-6b40-4e9f-976c-e693f38ceb23
+
+		measure vl_dif_project_negotiated_vs_billing = ```
+				
+				    VAR _calc = [total_billing] - [vl_projected_revenue_negotiated]
+				    RETURN IF( ABS( [vl_projected_revenue_negotiated] ) > 0, _calc, BLANK() )
+				```
+			displayFolder: '03 Financial'
+			lineageTag: edd0b6e3-13df-4599-98cb-38bffabaefce
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure vl_duration_fitting = SUM ( pbi_vw_ad_insertion[vl_duration_fitting] )
+			formatString: #,0
+			displayFolder: '02 Duration'
+			lineageTag: f576e9cc-a89f-419e-b0d9-5ddaeef34a58
+
+		measure vl_duration_invest =
+				
+				VAR _adults = {"adults", "adult", "adultos", "adulto" }
+				VAR _type =
+				    SELECTEDVALUE ( pmt_types_targets_calc_media_investment[grouped] )
+				VAR _calc =
+				    SWITCH( _type, "Equivalent", IF( SELECTEDVALUE( pbi_vw_targets_var[ds_variant] ) in _adults,
+				        CALCULATE (
+				            SUM( pbi_vw_media_investment[vl_duration] ),
+				            KEEPFILTERS( pbi_vw_media_investment_GRP[cd_target] IN _adults ),
+				            REMOVEFILTERS( pbi_vw_targets_simulado[ds_variant] ),
+				            TREATAS ( _adults, pbi_vw_targets_var[cd_variant] ),
+				            TREATAS ( _adults, pbi_vw_media_investment_GRP[cd_target] )
+				        )),
+				        CALCULATE (
+				            SUM( pbi_vw_media_investment[vl_duration] ),
+				            KEEPFILTERS( NOT( pbi_vw_media_investment_GRP[cd_target] IN _adults )),
+				            TREATAS ( VALUES ( pbi_vw_targets_var[cd_variant] ), pbi_vw_targets_simulado[cd_variant] ),
+				            TREATAS ( VALUES ( pbi_vw_targets_var[cd_variant] ), pbi_vw_media_investment_GRP[cd_target] )
+				        )
+				    )
+				RETURN
+				    IF ( ABS ( _calc ) > 0, _calc, BLANK () )
+			formatString: #,0
+			displayFolder: '04 Investment'
+			lineageTag: 80e990b9-b07d-45c5-a7a6-20fdff9cdcaa
+
+		measure vl_fechado_ficheiro = ```
+				
+				    CALCULATE(
+				        SUM( 'Ficheiros Negociações'[Valor Fechado] ),
+				        USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] )
+				    )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '11 Ficheiro'
+			lineageTag: a9bf9f4d-103e-44e5-a787-b3321d93db3d
+
+		measure vl_negociado_ficheiro = ```
+				
+				    CALCULATE(
+				        SUM( 'Ficheiros Negociações'[Valor Negociado] ),
+				        USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] )
+				    )
+				```
+			displayFolder: '11 Ficheiro'
+			lineageTag: 3537f3cd-270f-4210-b963-f73d58ae50a0
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure vl_projected = ```
+				
+				    CALCULATE(
+				        SUM( pbi_vw_projected_revenue[vl_negotiation_projected_revenue] ),
+				        CROSSFILTER( pbi_vw_projected_revenue[dt_negotiation_projected], dim_tempo[data], NONE ),
+				        TREATAS( VALUES( dim_tempo[nr_month_weekday] ), pbi_vw_projected_revenue[nr_month_weekday] )
+				    )
+				```
+			displayFolder: '09 Negotiations'
+			lineageTag: 75d16a71-8e4b-4a8c-9f48-0deb0a411741
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure vl_projected_nextyear = CALCULATE( [vl_projected], DATEADD( dim_tempo[data], -1, YEAR ) )
+			displayFolder: '09 Negotiations'
+			lineageTag: 56c94fb1-5089-4ed2-8784-f0b84daf3501
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure vl_projected_revenue_left = ```
+				
+				    VAR _revenue_left = [total_contracted_gross] - [total_billing]
+				    RETURN IF( _revenue_left > 0, _revenue_left )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '09 Negotiations'
+			lineageTag: a15f5cff-7692-4037-938c-9b7b312d9665
+
+		measure vl_projected_revenue_left_ficheiro = ```
+				
+				    VAR _revenue_left = [vl_fechado_ficheiro] - [total_billing]
+				    RETURN IF( _revenue_left > 0, _revenue_left )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '11 Ficheiro'
+			lineageTag: 046875c8-dad4-420d-b205-066f413e8c9e
+
+		measure vl_projected_revenue_negotiated = ```
+				
+				    VAR _CALC = 
+				        CALCULATE( SUM( pbi_vw_projected_revenue[vl_negotiation_projected_revenue] )
+				            , TREATAS( VALUES( pbi_dim_campaigns[cd_negotiation] ), pbi_vw_projected_revenue[cd_negotiation] )
+				        )
+				    RETURN
+				        SWITCH( SELECTEDVALUE( pbi_vw_targets_var[ds_variant] ),
+				            "Adultos",  IF( ABS( _CALC ) > 0, _CALC, BLANK() ), BLANK()
+				            )
+				```
+			displayFolder: '09 Negotiations'
+			lineageTag: a07e1941-ba31-4251-9f82-4f9424622bfa
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure vl_projected_revenue_negotiated_pessimist = ```
+				
+				    SUMX( pbi_vw_negotiations, MIN( [vl_projected_revenue_negotiated_simple], [vl_projected_revenue_left] ) )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '09 Negotiations'
+			lineageTag: 8a1d1333-8559-432a-b15b-e93e4837d471
+
+		measure vl_projected_revenue_negotiated_pessimist_ficheiro = ```
+				
+				    SUMX( 'Ficheiros Negociações', MIN( [vl_projected_revenue_negotiated_simple], [vl_projected_revenue_left_ficheiro] ) )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '11 Ficheiro'
+			lineageTag: 48654bce-56fc-4683-af72-c44c5049b1de
+
+		measure vl_projected_revenue_negotiated_simple = ```
+				
+				    CALCULATE( SUM( pbi_vw_projected_revenue[vl_negotiation_projected_revenue] )
+				        , KEEPFILTERS( pbi_vw_projected_revenue[dt_negotiation_projected] > MAX( pbi_last_data_updated[last_update] ) )
+				        , TREATAS( VALUES( pbi_dim_campaigns[cd_negotiation] ), pbi_vw_projected_revenue[cd_negotiation] )
+				    )
+				```
+			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+			displayFolder: '09 Negotiations'
+			lineageTag: 13fe620d-bbb7-48fb-8ac3-9c9748480d9b
+
+		measure vl_shared_calculated_media_investment = ```
+				
+				    SWITCH( SELECTEDVALUE( pmt_types_targets_calc_media_investment[pmt_types_targets_calc_media_investment] ),
+				        "vl_duration", [vl_duration_invest],
+				        "vl_table_investment", [vl_table_investment],
+				        "share_media_investment", [share_media_investment],
+				        "share_media_investment_ly", CALCULATE( [share_media_investment], SAMEPERIODLASTYEAR( dim_tempo[data])),
+				        "share_media_ocupation", [share_media_ocupation],
+				        "share_media_ocupation_ly", CALCULATE( [share_media_ocupation], SAMEPERIODLASTYEAR( dim_tempo[data])),
+				        "share_media_GRP", [share_media_GRP],
+				        "share_media_GRP_ly", CALCULATE( [share_media_GRP], SAMEPERIODLASTYEAR( dim_tempo[data])),
+				        "GRP_media_investment", [GRP_media_investment],
+				        // "GRP_media_investment_XT", [GRP_media_investment_XT],
+				        "share_media_GRP_XT", [share_media_GRP_XT],
+				        "share_media_GRP_XT_ly", CALCULATE( [share_media_GRP_XT], SAMEPERIODLASTYEAR( dim_tempo[data])),
+				        BLANK()
+				    ) -- "0.00%;-0.00%;0.00%" -- "#,0.00 "€";-#,0.00 "€";#,0.00 "€""
+				```
+			lineageTag: 6c1229ed-729f-4bae-bbc5-6cd6ef25dea9
+
+			formatStringDefinition =
+					SWITCH(
+					    SELECTEDVALUE( pmt_types_targets_calc_media_investment[pmt_types_targets_calc_media_investment] ),
+					    "vl_duration",               "0,0",
+					    "vl_table_investment",       "#,##0 €",
+					    "share_media_investment",    "0.00%;-0.00%;0.00%",
+					    "share_media_ocupation",     "0.00%;-0.00%;0.00%",
+					    "share_media_GRP",           "0.00%;-0.00%;0.00%",
+					    "GRP_media_investment",      "#,##0",
+					    "GRP_media_investment_XT",   "#,##0",
+					    "share_media_GRP_XT",        "0.00%;-0.00%;0.00%",
+					    BLANK()
+					)
+
+		measure vl_table_investment =
+				
+				VAR _adults = {"adults", "adult", "adultos", "adulto" }
+				VAR _type =
+				    SELECTEDVALUE ( pmt_types_targets_calc_media_investment[grouped] )
+				VAR _calc =
+				    SWITCH( _type, "Equivalent", IF( SELECTEDVALUE( pbi_vw_targets_var[ds_variant] ) in _adults,
+				        CALCULATE (
+				            SUM( pbi_vw_media_investment[vl_investment] ),
+				            KEEPFILTERS( pbi_vw_media_investment_GRP[cd_target] IN _adults ),
+				            REMOVEFILTERS( pbi_vw_targets_simulado[ds_variant] ),
+				            TREATAS ( _adults, pbi_vw_targets_var[cd_variant] ),
+				            TREATAS ( _adults, pbi_vw_media_investment_GRP[cd_target] )
+				        )), BLANK()
+				    )
+				RETURN
+				    IF ( ABS ( _calc ) > 0, _calc, BLANK () )
+			displayFolder: '04 Investment'
+			lineageTag: 1032ae21-ef4a-4720-932e-b7d09793b1f9
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		measure yoy_billing_growth_pct =
+				
+				var _calc = DIVIDE ( [total_billing] - [total_billing_LY], [total_billing_LY] )
+				return
+				    SWITCH( TRUE()
+				        , AND( ISBLANK( [total_billing] ) || [total_billing] = 0, ISBLANK( [total_billing_LY] ) || [total_billing_LY] = 0 ), BLANK()
+				        , AND( OR( ISBLANK( [total_billing] ) || [total_billing] = 0, ISBLANK( [total_billing_LY] ) || [total_billing_LY] = 0 ), CONTAINSSTRING( SELECTEDVALUE( dim_tempo[ds_atual_date] ), "Future" )), BLANK()
+				        , ISBLANK( [total_billing] ) || [total_billing] = 0, -1
+				        , ISBLANK( [total_billing_LY] ) || [total_billing_LY] = 0, 1
+				        , _calc )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '05 Time Intelligence'
+			lineageTag: ba785fd7-3d0e-4010-a307-1964de88821f
+
+		measure yoy_CPR_EQ_growth_pct =
+				
+				var _calc = DIVIDE ( [CPR_EQ] - [CPR_EQ_LY], [CPR_EQ_LY] )
+				return
+				    SWITCH( TRUE()
+				        , AND( ISBLANK( [CPR_EQ] ) || [CPR_EQ] = 0, ISBLANK( [CPR_EQ_LY] ) || [CPR_EQ_LY] = 0 ), BLANK()
+				        , AND( OR( ISBLANK( [CPR_EQ] ) || [CPR_EQ] = 0, ISBLANK( [CPR_EQ_LY] ) || [CPR_EQ_LY] = 0 ), CONTAINSSTRING( SELECTEDVALUE( dim_tempo[ds_atual_date] ), "Future" )), BLANK()
+				        , ISBLANK( [CPR_EQ] ) || [CPR_EQ] = 0, -1
+				        , ISBLANK( [CPR_EQ_LY] ) || [CPR_EQ_LY] = 0, 1
+				        , _calc )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '05 Time Intelligence'
+			lineageTag: 60144e7c-285a-4c4b-b38c-eaa3e4e16b42
+
+		measure yoy_CPS_growth_pct = ```
+				
+				var _calc = DIVIDE ( [CPS] - [CPS_LY], [CPS_LY] ) 
+				return
+				    SWITCH( TRUE()
+				        , AND( ISBLANK( [CPS] ) || [CPS] = 0, ISBLANK( [CPS_LY] ) || [CPS_LY] = 0 ), BLANK()
+				        , AND( OR( ISBLANK( [CPS] ) || [CPS] = 0, ISBLANK( [CPS_LY] ) || [CPS_LY] = 0 ), CONTAINSSTRING( SELECTEDVALUE( dim_tempo[ds_atual_date] ), "Future" )), BLANK()
+				        , ISBLANK( [CPS] ) || [CPS] = 0, -1
+				        , ISBLANK( [CPS_LY] ) || [CPS_LY] = 0, 1
+				        , _calc )
+				```
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '05 Time Intelligence'
+			lineageTag: b7cf8819-7458-4357-9bc1-2af858e9de62
+
+		measure yoy_GRP_EQ_growth_pct =
+				
+				var _calc = DIVIDE ( [GRP_EQ] - [GRP_EQ_LY], [GRP_EQ_LY] )
+				return
+				    SWITCH( TRUE()
+				        , AND( ISBLANK( [GRP_EQ] ) || [GRP_EQ] = 0, ISBLANK( [GRP_EQ_LY] ) || [GRP_EQ_LY] = 0 ), BLANK()
+				        , AND( OR( ISBLANK( [GRP_EQ] ) || [GRP_EQ] = 0, ISBLANK( [GRP_EQ_LY] ) || [GRP_EQ_LY] = 0 ), CONTAINSSTRING( SELECTEDVALUE( dim_tempo[ds_atual_date] ), "Future" )), BLANK()
+				        , ISBLANK( [GRP_EQ] ) || [GRP_EQ] = 0, -1
+				        , ISBLANK( [GRP_EQ_LY] ) || [GRP_EQ_LY] = 0, 1
+				        , _calc )
+			formatString: 0.00%;-0.00%;0.00%
+			displayFolder: '05 Time Intelligence'
+			lineageTag: d1175677-4c68-4876-9dac-68a0c9be3e5f
+
+	ref table pmt_discount_investment
+
+		measure vl_pmt_discount_investment = DIVIDE( SELECTEDVALUE('pmt_discount_investment'[pmt_discount_investment], 995), 100)
+			formatString: 0.00%;-0.00%;0.00%
+			isHidden
+			lineageTag: 1a3e0fa1-bfee-474f-9093-2402b0d78556
+

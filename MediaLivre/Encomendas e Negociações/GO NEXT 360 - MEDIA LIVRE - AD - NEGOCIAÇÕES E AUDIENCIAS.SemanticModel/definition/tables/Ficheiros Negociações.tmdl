@@ -1,0 +1,229 @@
+table 'Ficheiros Negociações'
+	lineageTag: f39923d3-57bc-4bfa-96a7-badec859d25c
+
+	column DC
+		dataType: string
+		lineageTag: 0c687154-0bcc-4702-a629-120b841fcdc9
+		summarizeBy: none
+		sourceColumn: DC
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: f379b5f9-c576-4908-ba34-493d6af6a5dc
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendedor
+		dataType: string
+		lineageTag: a485ff1f-d4ba-414a-9630-09b7c4704490
+		summarizeBy: none
+		sourceColumn: Vendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Anunciante
+		dataType: string
+		lineageTag: e233c750-c756-4208-b241-32a6174bf1d9
+		summarizeBy: none
+		sourceColumn: Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agência
+		dataType: string
+		lineageTag: 9f54e56a-e516-45c7-95a2-1b5c748ce8cf
+		summarizeBy: none
+		sourceColumn: Agência
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c453be5-1303-45f5-982b-b4a3ff65035f
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alvo
+		dataType: string
+		lineageTag: 8776b57d-e928-49df-8891-98d0aad15804
+		summarizeBy: none
+		sourceColumn: Alvo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nº de Casos'
+		dataType: int64
+		formatString: 0
+		lineageTag: c81d1b8a-a4b0-463f-a6f2-3e194a4c5875
+		summarizeBy: sum
+		sourceColumn: Nº de Casos
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Negociado'
+		dataType: double
+		lineageTag: 54ca13a0-dff0-4a64-8a67-8eb88735dbbc
+		summarizeBy: sum
+		sourceColumn: Valor Negociado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Fechado'
+		dataType: double
+		lineageTag: bff04873-407d-4be2-b0e0-42ba54e59550
+		summarizeBy: sum
+		sourceColumn: Valor Fechado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Desconto
+		dataType: double
+		lineageTag: 32f12dab-6970-4538-97c6-f1dada0b9297
+		summarizeBy: sum
+		sourceColumn: Desconto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Tipo de Desconto'
+		dataType: string
+		lineageTag: 4d4b56ba-69f8-4579-b06d-d9ff4a128d21
+		summarizeBy: none
+		sourceColumn: Tipo de Desconto
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Período Negociado'
+		dataType: string
+		lineageTag: 715c13ef-20a5-46b6-9956-33193b1b37aa
+		summarizeBy: none
+		sourceColumn: Período Negociado
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Desc. Sazonalidade'
+		dataType: string
+		lineageTag: 5eeb52f6-749e-4608-af87-fd67f1934a8d
+		summarizeBy: none
+		sourceColumn: Desc. Sazonalidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'News Business'
+		dataType: string
+		lineageTag: 65ea67f0-bb56-4383-857f-100d2c58788e
+		summarizeBy: none
+		sourceColumn: News Business
+
+		annotation SummarizationSetBy = Automatic
+
+	column Patrocínio
+		dataType: string
+		lineageTag: c05711b4-2ad0-4e59-9c8a-bbe718a5fe32
+		summarizeBy: none
+		sourceColumn: Patrocínio
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPR Eq20 Alvo'
+		dataType: double
+		lineageTag: 800a975b-aaa3-4a9f-a02e-dca5b7e1e401
+		summarizeBy: sum
+		sourceColumn: CPR Eq20 Alvo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'CPR Eq20 ADULTO'
+		dataType: double
+		lineageTag: 82488a6a-ad8a-41b0-bb5a-d1751c3cae88
+		summarizeBy: sum
+		sourceColumn: CPR Eq20 ADULTO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'CPR Seg.'
+		dataType: double
+		lineageTag: cb12e623-92c7-490b-a38b-072955698c77
+		summarizeBy: sum
+		sourceColumn: CPR Seg.
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Observações
+		dataType: string
+		lineageTag: c8b0c597-2b66-4ede-80df-97d8914e48e8
+		summarizeBy: none
+		sourceColumn: Observações
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: afffbfb3-2565-42ec-83f2-a52060c41f3c
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column cd_account
+		dataType: string
+		isHidden
+		lineageTag: 8e9887d1-796b-400d-8b15-6a34fcf8bac2
+		summarizeBy: none
+		sourceColumn: cd_account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Ficheiros Negociações' = m
+		mode: import
+		source =
+				let
+				  Origem = AzureStorage.Blobs("https://stgmedialivrecontainer.blob.core.windows.net/uploads"),
+				  #"Filtrar Ficheiros" = Table.SelectRows(Origem, each [Extension] = ".xlsx" and Text.Contains([Name], "Ficheiro Sumario Executivo", Comparer.OrdinalIgnoreCase)),
+				    #"Content List" = #"Filtrar Ficheiros"[Content],
+				    Count = List.Count(#"Content List"),
+				    #"Listar Tabelas" = List.Generate(() => Count - 1, each _ >= 0, each _ - 1, each Excel.Workbook(#"Content List"{_}){[Kind="Table"]}[Data]),
+				    Combinar = Table.Combine(#"Listar Tabelas"),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Combinar,{{"Ano", type date}, {"Nº de Casos", Int64.Type}, {"CPR Seg.", type number}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [Ano] <> null),
+				    #"Fuzzy Nested Join" = Table.FuzzyNestedJoin(#"Linhas Filtradas", {"Anunciante"}, pbi_dim_accounts_client, {"nm_account"}, "pbi_dim_accounts_client", JoinKind.LeftOuter),
+				    Expand = Table.ExpandTableColumn(#"Fuzzy Nested Join", "pbi_dim_accounts_client", {"cd_account"}),
+				    #"Colunas Removidas" = Table.RemoveColumns(Expand,{"Column1"}),
+				    #"Substituir Canal" = let
+				      Replace = Table.ReplaceValue(#"Colunas Removidas", each [Canal],
+				      each if Text.Contains([Canal], "CMTV", Comparer.OrdinalIgnoreCase) then "1"
+				      else if Text.Contains([Canal], "NOW", Comparer.OrdinalIgnoreCase) then "3"
+				      else if Text.Contains([Canal], "RÁDIO", Comparer.OrdinalIgnoreCase) then "4" else null, Replacer.ReplaceText, {"Canal"})
+				      in Table.TransformColumnTypes(Replace, {"Canal", Int64.Type}),
+				    #"Ano Extraído" = Table.TransformColumns(#"Substituir Canal",{{"Ano", Date.Year, Int64.Type}}),
+				    #"Substituir GML" = let
+				      Substituir = Table.ReplaceValue(#"Ano Extraído", each [cd_account], each if Text.Contains([Anunciante], "GML INTERACTIVE", Comparer.OrdinalIgnoreCase) then "840" else [cd_account], Replacer.ReplaceValue,{"cd_account"})
+				      in Table.TransformColumnTypes(Substituir,{{"cd_account", type text}})
+				in
+				    #"Substituir GML"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

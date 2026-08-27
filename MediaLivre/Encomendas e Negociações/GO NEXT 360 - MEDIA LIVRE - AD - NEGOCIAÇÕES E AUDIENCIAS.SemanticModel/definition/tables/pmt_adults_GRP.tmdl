@@ -1,0 +1,34 @@
+table pmt_adults_GRP
+	isHidden
+	lineageTag: f26df220-1a9c-498b-ac9d-df4973d6c5db
+
+	column ds_adults_eq
+		isHidden
+		lineageTag: 7372dde5-6b55-4ccc-b9af-797296e865fd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ds_adults_eq]
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_adults_eq
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d827c512-3307-4598-b813-65dc3d09c05e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [fl_adults_eq]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_adults_GRP = calculated
+		mode: import
+		source =
+				DATATABLE( "ds_adults_eq", STRING, "fl_adults_eq", BOOLEAN,
+				{
+				    {"off", 0},
+				    {"on", 1}
+				})
+
+	annotation PBI_Id = c7317a282dcd41c083092bd27c06cd23
+

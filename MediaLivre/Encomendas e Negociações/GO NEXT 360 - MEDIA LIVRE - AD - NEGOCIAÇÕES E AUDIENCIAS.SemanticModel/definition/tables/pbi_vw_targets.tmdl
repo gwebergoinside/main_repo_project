@@ -1,0 +1,52 @@
+table pbi_vw_targets
+	lineageTag: 4452db66-2b4b-436d-b377-4a63788f7d14
+
+	column cd_variant
+		dataType: string
+		isHidden
+		lineageTag: 89b9afc5-6d6c-474d-b4cb-d111734d1bf8
+		summarizeBy: none
+		sourceColumn: cd_variant
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_variant
+		dataType: string
+		lineageTag: 58ade990-a080-4261-b47f-85d1270526b6
+		summarizeBy: none
+		sourceColumn: ds_variant
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_variant_adults = "Adultos"
+		lineageTag: dadfde5b-9b03-47dc-a1b5-395f38cafbc1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_is_adult
+		dataType: string
+		lineageTag: be52428c-2ba0-4e2d-8a42-1349a6171a63
+		summarizeBy: none
+		sourceColumn: fl_is_adult
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_vw_targets = m
+		mode: import
+		source =
+				let
+				    pbi_vw_targets = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_vw_targets")
+				in
+				    pbi_vw_targets
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

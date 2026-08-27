@@ -1,0 +1,81 @@
+table pmt_types_targets_calc_media_investment
+	isHidden
+	lineageTag: 32fb9148-b3c8-4200-807b-1b9cf819b8f7
+
+	column pmt_types_targets_calc_media_investment
+		isHidden
+		lineageTag: 775aa506-1898-456f-b924-5108d983df05
+		summarizeBy: none
+		sourceColumn: [Value1]
+
+		annotation SummarizationSetBy = Automatic
+
+	column fields
+		isHidden
+		lineageTag: 8ee37a09-a286-4d77-be49-10437dd5ec09
+		summarizeBy: none
+		sourceColumn: [Value2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column grouped
+		isHidden
+		lineageTag: 2badd157-578c-4cfa-b119-ae172fc69270
+		summarizeBy: none
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	column metrics
+		isHidden
+		lineageTag: d386019c-8197-4bb5-a5c5-ef6cc8ebcf1e
+		summarizeBy: none
+		sourceColumn: [Value4]
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_column
+		isHidden
+		lineageTag: d66a5b08-5b50-4c6d-9d8e-bad58d34a7a7
+		summarizeBy: none
+		sourceColumn: [Value5]
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_column_2
+		isHidden
+		lineageTag: 6e2ea5fb-6c1f-4101-9d40-84fdf8f7ee35
+		summarizeBy: none
+		sourceColumn: [Value6]
+
+		annotation SummarizationSetBy = Automatic
+
+	column order
+		isHidden
+		formatString: 0
+		lineageTag: a198cf59-dc05-4c84-a699-fcb6cd573baf
+		summarizeBy: sum
+		sourceColumn: [Value7]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_types_targets_calc_media_investment = calculated
+		mode: import
+		source =
+				{
+				    ("vl_table_investment", NAMEOF('~Medidas'[vl_table_investment]), "Equivalent", "vl_table_investment", "Invest. Tabela", "Invest. Tabela", 0),
+				    ("vl_duration", NAMEOF('~Medidas'[vl_duration_invest]), "Equivalent", "vl_duration", "Ocupação", "Ocupação", 1),
+				    ("share_media_investment", NAMEOF('~Medidas'[share_media_investment]), "Equivalent", "share_media_investment", "Share Invest.", "Share Invest.", 2),
+				    ("share_media_investment_ly", NAMEOF('~Medidas'[share_media_investment_ly]), "Equivalent", "share_media_investment_ly", "YoY Share Invest.", "YoY Share Invest.", 3),
+				    ("share_media_ocupation", NAMEOF('~Medidas'[share_media_ocupation]), "Equivalent", "share_media_ocupation", "Share Ocupação", "Share Ocupação", 4),
+				    ("share_media_ocupation_ly", NAMEOF('~Medidas'[share_media_ocupation_ly]), "Equivalent", "share_media_ocupation_ly", "YoY Share Ocupação", "YoY Share Ocupação", 5),
+				    ("share_media_GRP", NAMEOF('~Medidas'[share_media_ocupation]), "Equivalent", "share_media_GRP", "Share GRP", "Share GRP", 6),
+				    ("share_media_GRP_ly", NAMEOF('~Medidas'[share_media_ocupation_ly]), "Equivalent", "share_media_GRP_ly", "YoY Share GRP", "YoY Share GRP", 7),
+				    ("GRP_media_investment", NAMEOF('~Medidas'[GRP_media_investment]), "Equivalent", "GRP_media_investment", "GRP", "GRP", 8),
+				    ("GRP_media_investment_XT", NAMEOF('~Medidas'[GRP_media_investment_XT]), "Simulated", "GRP_media_investment_XT", "GRP", "GRP", 9),
+				    ("share_media_GRP_XT", NAMEOF('~Medidas'[share_media_ocupation]), "Simulated", "share_media_GRP_XT", "Share GRP", "Share GRP", 10),
+				    ("share_media_GRP_XT_ly", NAMEOF('~Medidas'[share_media_ocupation_ly]), "Simulated", "share_media_GRP_XT", "YoY Share GRP", "YoY Share GRP", 11)
+				}
+
+	annotation PBI_Id = d8110d0c9ae44bdc85056ed053f6e031
+

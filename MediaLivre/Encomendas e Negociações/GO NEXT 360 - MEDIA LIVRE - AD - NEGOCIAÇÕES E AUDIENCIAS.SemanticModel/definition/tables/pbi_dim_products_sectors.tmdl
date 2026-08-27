@@ -1,0 +1,54 @@
+table pbi_dim_products_sectors
+	lineageTag: b6d4c92f-a773-4b74-a75e-bcd9c43acdf7
+
+	column cd_product
+		dataType: string
+		isHidden
+		lineageTag: 10f8b0aa-bd51-4e03-9063-b94304a25f2d
+		summarizeBy: none
+		sourceColumn: cd_product
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_product
+		dataType: string
+		lineageTag: 622f867b-59dd-4209-9683-8c1499d697f5
+		summarizeBy: none
+		sourceColumn: nm_product
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_category
+		dataType: string
+		lineageTag: c6896363-f1a1-4df0-a62c-116ed01f443a
+		summarizeBy: none
+		sourceColumn: nm_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_sector
+		dataType: string
+		lineageTag: 56c26c94-722a-46d3-b1ff-a185f283d7f5
+		summarizeBy: none
+		sourceColumn: nm_sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column st_status
+		dataType: string
+		lineageTag: 51782ab0-e189-4fbb-b826-6cbfcd0fd464
+		summarizeBy: none
+		sourceColumn: st_status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_dim_products_sectors = m
+		mode: import
+		source = fx_dbricks("select * from medialivre.pbi_out.pbi_dim_products_sectors")
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

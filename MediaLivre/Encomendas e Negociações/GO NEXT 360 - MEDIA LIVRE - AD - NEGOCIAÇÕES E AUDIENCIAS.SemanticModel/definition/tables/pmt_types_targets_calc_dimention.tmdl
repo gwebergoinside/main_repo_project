@@ -1,0 +1,38 @@
+table pmt_types_targets_calc_dimention
+	isHidden
+	lineageTag: 93908e76-25f0-468b-8015-0e1a03494dba
+
+	column pmt_types_targets_calc_nm_column
+		isHidden
+		lineageTag: 3fc5db29-b2f9-4f56-b526-5c21f9c753c6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pmt_types_targets_calc[nm_column]
+		sortByColumn: order
+
+		annotation SummarizationSetBy = Automatic
+
+	column order
+		isHidden
+		formatString: 0
+		lineageTag: 4e9977d0-e5e4-45da-a316-c6f56b77aa71
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pmt_types_targets_calc_dimention = calculated
+		mode: import
+		source = ```
+				
+				    GROUPBY(
+				        pmt_types_targets_calc
+				        , pmt_types_targets_calc[nm_column]
+				        , "order"
+				        , MINX( CURRENTGROUP(), pmt_types_targets_calc[order] )
+				    )
+				```
+
+	annotation PBI_Id = 19efe12e07864aafb933562f0664d128
+

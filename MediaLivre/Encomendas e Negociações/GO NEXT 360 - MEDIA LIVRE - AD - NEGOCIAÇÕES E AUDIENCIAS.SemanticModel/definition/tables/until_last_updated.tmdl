@@ -1,0 +1,33 @@
+table until_last_updated
+	lineageTag: 65642776-0262-456b-8e62-074d20173df5
+
+	calculationGroup
+
+		calculationItem no = SELECTEDMEASURE()
+
+		calculationItem yes = ```
+				
+				    CALCULATE( 
+				        SELECTEDMEASURE()
+				        , KEEPFILTERS( dim_tempo[data] <= MAX( pbi_vw_max_date_indicators[max_dt_air] ) )
+				    )
+				```
+
+	column until_last_updated
+		dataType: string
+		lineageTag: 979bb0d8-0126-4e9a-8850-7bb6160bf468
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 615f1adf-78cf-4d25-82fa-fa83e5e8010d
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

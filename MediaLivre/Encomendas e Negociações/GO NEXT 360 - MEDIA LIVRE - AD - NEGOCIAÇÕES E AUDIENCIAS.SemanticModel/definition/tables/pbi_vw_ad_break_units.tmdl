@@ -1,0 +1,75 @@
+table pbi_vw_ad_break_units
+	lineageTag: 9e285fd8-1134-4c0e-97d9-fd86df6e057a
+
+	column cd_ad_unit
+		dataType: int64
+		formatString: 0
+		lineageTag: bb8396af-22eb-42f6-9632-f8571eadc5bd
+		summarizeBy: none
+		sourceColumn: cd_ad_unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_air
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b193c356-812f-44a8-a593-f41e4581605b
+		summarizeBy: none
+		sourceColumn: dt_air
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hr_air
+		dataType: int64
+		formatString: 0
+		lineageTag: 323d72a6-6e0d-4452-8a38-93a248b193bd
+		summarizeBy: sum
+		sourceColumn: hr_air
+
+		annotation SummarizationSetBy = Automatic
+
+	column tp_value
+		dataType: string
+		lineageTag: 0300300c-a49b-408e-86c1-513598307a91
+		summarizeBy: none
+		sourceColumn: tp_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column vl_duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 5892c90b-fb91-4dac-9928-0e06b08d2c5e
+		summarizeBy: sum
+		sourceColumn: vl_duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column nr_spots
+		dataType: int64
+		formatString: 0
+		lineageTag: 44711098-f347-45b2-bac1-2368a7de4d61
+		summarizeBy: sum
+		sourceColumn: nr_spots
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_vw_ad_break_units = m
+		mode: import
+		source = ```
+				let
+				    SQL = "SELECT * 
+				            FROM medialivre.pbi_out.pbi_vw_ad_break_units
+				            WHERE YEAR(dt_air) >= YEAR(GETDATE()) - " & AnoUpdate,
+				    Source = fx_dbricks(SQL),
+				    Ranges = Table.SelectRows(Source, each [dt_air] >= RangeStart and [dt_air] <= RangeEnd)
+				in
+				    Ranges
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

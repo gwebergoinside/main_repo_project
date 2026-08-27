@@ -1,0 +1,42 @@
+table pbi_vw_targets_var
+	lineageTag: 81dd1f22-4544-4428-932a-5947ce121216
+
+	column cd_variant
+		isHidden
+		lineageTag: ae914326-ef16-493a-90d9-e4e58e4e26c7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pbi_vw_targets[cd_variant]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_variant
+		lineageTag: 16b380a9-243a-4d14-8afb-95ab2da0e07b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pbi_vw_targets[ds_variant]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_variant_adults
+		lineageTag: e7990361-5aa4-4f7b-8e97-b0ecd93a5cde
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pbi_vw_targets[ds_variant_adults]
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_is_adult
+		lineageTag: 6ea8a561-fed8-40b9-b46a-707a88ae272e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pbi_vw_targets[fl_is_adult]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_vw_targets_var = calculated
+		mode: import
+		source = pbi_vw_targets
+
+	annotation PBI_Id = 9686991267e542c3b38d1398c8527cef
+

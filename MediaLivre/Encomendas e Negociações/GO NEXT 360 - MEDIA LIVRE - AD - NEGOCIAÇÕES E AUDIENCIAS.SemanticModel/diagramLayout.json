@@ -1,0 +1,1194 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 220.69869052402908,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 3599.4129259606161,
+            "y": 614.5263247629523
+          },
+          "nodeIndex": "~Medidas",
+          "nodeLineageTag": "990b436c-ad8f-404f-b743-871182f2fd81",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 1401.87602028358,
+            "y": 824.23231934611078
+          },
+          "nodeIndex": "dim_tempo",
+          "nodeLineageTag": "4b4e55cf-5aff-4e63-9598-5ed72d965311",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 1110.4593417708106,
+            "y": 606.19093100632858
+          },
+          "nodeIndex": "dim_daypart",
+          "nodeLineageTag": "e3aab360-6e14-41d9-99da-29d852fad810",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 2504.462720808976,
+            "y": 399.15966557193713
+          },
+          "nodeIndex": "pbi_vw_negotiations",
+          "nodeLineageTag": "'tbl-negotiations'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 818.49323710320141,
+            "y": 573.71300759996132
+          },
+          "nodeIndex": "pbi_vw_ad_insertion",
+          "nodeLineageTag": "'tbl-ad-insertion'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 1403.2893939000271,
+            "y": 408.67919458642086
+          },
+          "nodeIndex": "pbi_dim_campaigns",
+          "nodeLineageTag": "'tbl-dim-campaigns'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 973.40560758833976,
+            "y": 338.70449485390907
+          },
+          "nodeIndex": "pbi_dim_channels",
+          "nodeLineageTag": "'tbl-dim-channels'",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 629.61716011629551,
+            "y": 387.46602804585893
+          },
+          "nodeIndex": "pbi_dim_programs",
+          "nodeLineageTag": "'tbl-dim-programs'",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 2262.77566565746,
+            "y": 757.26607093682378
+          },
+          "nodeIndex": "pbi_dim_accounts_agency",
+          "nodeLineageTag": "ca42a891-1749-4872-a62c-9890aec82ba8",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 27
+        },
+        {
+          "location": {
+            "x": 2536.4216890567004,
+            "y": 941.1784965320179
+          },
+          "nodeIndex": "pbi_dim_accounts_client",
+          "nodeLineageTag": "'tbl-dim-accounts'",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 2797.4129259606161,
+            "y": 339.05708887338005
+          },
+          "nodeIndex": "pbi_dim_packages",
+          "nodeLineageTag": "b7a63f7f-90bd-4f30-8c3f-3e2c14bf12ce",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 2061.657259024586,
+            "y": -50
+          },
+          "nodeIndex": "pbi_vw_targets",
+          "nodeLineageTag": "4452db66-2b4b-436d-b377-4a63788f7d14",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 525.31853918633988
+          },
+          "nodeIndex": "pbi_vw_targets_simulado",
+          "nodeLineageTag": "f7d2f1e5-e772-44bf-acef-4c432dceb80a",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 3883.4129259606161,
+            "y": 688.5263247629523
+          },
+          "nodeIndex": "pmt_parameters_column",
+          "nodeLineageTag": "119873b2-5350-48f2-b800-b857c5ccc986",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 4167.4129259606161,
+            "y": 676.5263247629523
+          },
+          "nodeIndex": "pbi_vw_targets_var",
+          "nodeLineageTag": "81dd1f22-4544-4428-932a-5947ce121216",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 654.81636702376727,
+            "y": 972.5852057854446
+          },
+          "nodeIndex": "pbi_dim_materials",
+          "nodeLineageTag": "27ad997c-79d7-441d-9739-8049b49a3d48",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 653.54206114346164,
+            "y": 1279.0526495259044
+          },
+          "nodeIndex": "pbi_dim_products_sectors",
+          "nodeLineageTag": "b6d4c92f-a773-4b74-a75e-bcd9c43acdf7",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 4451.4129259606161,
+            "y": 700.5263247629523
+          },
+          "nodeIndex": "pmt_adults_GRP",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 3365.4129259606161,
+            "y": 590.5263247629523
+          },
+          "nodeIndex": "pmt_types_targets_calc",
+          "nodeLineageTag": "e5f23030-7f7a-47d4-8bcd-26e23e3e5ffd",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 4735.4129259606161,
+            "y": 712.5263247629523
+          },
+          "nodeIndex": "pbi_last_data_updated",
+          "nodeLineageTag": "aa1d8380-14f7-4c2b-b7f6-ab86b9825d68",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 5019.4129259606161,
+            "y": 700.5263247629523
+          },
+          "nodeIndex": "until_last_updated",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 5303.4129259606161,
+            "y": 712.5263247629523
+          },
+          "nodeIndex": "pbi_vw_max_date_indicators",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 5587.4129259606161,
+            "y": 700.5263247629523
+          },
+          "nodeIndex": "pmt_duration_equivancy",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 3081.4129259606161,
+            "y": 650.5263247629523
+          },
+          "nodeIndex": "pmt_types_targets_calc_dimention",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 5871.4129259606161,
+            "y": 700.5263247629523
+          },
+          "nodeIndex": "tp_agencies",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 1971.4062485692784,
+            "y": 896.38129598720013
+          },
+          "nodeIndex": "pbi_vw_projected_revenue",
+          "nodeLineageTag": "b42a2772-59b7-42d9-ba0f-b8ee5a733783",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 1784.2473872305147,
+            "y": 185.01344292903877
+          },
+          "nodeIndex": "pbi_vw_media_investment",
+          "nodeLineageTag": "605487e1-5393-4657-b7c9-ae8986616303",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 6155.4129259606161,
+            "y": 652.5263247629523
+          },
+          "nodeIndex": "pmt_discount_investment",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 6439.4129259606161,
+            "y": 712.5263247629523
+          },
+          "nodeIndex": "pbi_vw_max_media_investment",
+          "nodeLineageTag": "a158a9c3-2278-4ab7-bf8d-7d2cc3e1fd36",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 6723.4129259606161,
+            "y": 664.5263247629523
+          },
+          "nodeIndex": "pmt_slicer_investment",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 7007.4129259606161,
+            "y": 700.5263247629523
+          },
+          "nodeIndex": "is_MediaLivre_advertiser",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 7291.4129259606161,
+            "y": 700.5263247629523
+          },
+          "nodeIndex": "pmt_exclude_position_tax",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 7575.4129259606161,
+            "y": 640.5263247629523
+          },
+          "nodeIndex": "pmt_types_targets_calc_media_investment",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 7859.4129259606161,
+            "y": 700.5263247629523
+          },
+          "nodeIndex": "pmt_exclude_multiproduct_tax",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1694.705672937966,
+            "y": 542.73265896117209
+          },
+          "nodeIndex": "pbi_vw_invoices",
+          "nodeLineageTag": "4ea9d796-10df-4258-85a9-835739a19724",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 8143.4129259606161,
+            "y": 688.5263247629523
+          },
+          "nodeIndex": "pmt_values_KPI",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 946.55927120349133,
+            "y": 995.65187597202657
+          },
+          "nodeIndex": "pbi_vw_ad_units",
+          "nodeLineageTag": "ac0fde43-2c95-498f-9022-11db3cf218ab",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 39
+        },
+        {
+          "location": {
+            "x": 8377.4129259606161,
+            "y": 652.52632476295219
+          },
+          "nodeIndex": "Ficheiros Negociações",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8945.4129259606161,
+            "y": 638.52632476295219
+          },
+          "nodeIndex": "Ambição",
+          "nodeLineageTag": "a6fecd9e-a4ed-4001-aad5-3f4759bf40db",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8661.4129259606161,
+            "y": 650.52632476295219
+          },
+          "nodeIndex": "Relação Ambição",
+          "nodeLineageTag": "6facb0b8-97af-446e-baa2-5055f082d915",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "pmt_add_projections",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "pbi_vw_indicators",
+          "nodeLineageTag": "aa0757a3-2d5f-47d0-bc0a-42032a5a08eb",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "pbi_vw_media_investment_GRP",
+          "nodeLineageTag": "e16adb2b-0605-4576-9fbb-9bca532abf1a",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "pbi_vw_ad_break_units",
+          "nodeLineageTag": "9e285fd8-1134-4c0e-97d9-fd86df6e057a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 49.539639594989318,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 868.562903441176,
+            "y": 0
+          },
+          "nodeIndex": "pbi_dim_accounts_agency",
+          "nodeLineageTag": "ca42a891-1749-4872-a62c-9890aec82ba8",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 404.90960400511489,
+            "y": 491.47186317322235
+          },
+          "nodeIndex": "pbi_dim_accounts_client",
+          "nodeLineageTag": "'tbl-dim-accounts'",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 344.17893277758628,
+            "y": 0
+          },
+          "nodeIndex": "pbi_dim_campaigns",
+          "nodeLineageTag": "'tbl-dim-campaigns'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 225.36249176878539
+          },
+          "nodeIndex": "pbi_vw_negotiations",
+          "nodeLineageTag": "'tbl-negotiations'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Clients",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 0,
+        "y": 1.3887693739819627
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 6.7747235441105431,
+            "y": 16.665232487783555
+          },
+          "nodeIndex": "pbi_vw_ad_insertion",
+          "nodeLineageTag": "'tbl-ad-insertion'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 444.47927799786873,
+            "y": 19.442771235747479
+          },
+          "nodeIndex": "dim_daypart",
+          "nodeLineageTag": "e3aab360-6e14-41d9-99da-29d852fad810",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 223.59617174774536,
+            "y": 585.56689199466041
+          },
+          "nodeIndex": "pbi_vw_ad_units",
+          "nodeLineageTag": "ac0fde43-2c95-498f-9022-11db3cf218ab",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 669.618803205328,
+            "y": 586.021952990544
+          },
+          "nodeIndex": "dim_tempo",
+          "nodeLineageTag": "4b4e55cf-5aff-4e63-9598-5ed72d965311",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Units",
+      "zoomValue": 72.0061961859614,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 3,
+      "scrollPosition": {
+        "x": 0,
+        "y": 166
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 994.37343115430679,
+            "y": 0
+          },
+          "nodeIndex": "pbi_vw_invoices",
+          "nodeLineageTag": "4ea9d796-10df-4258-85a9-835739a19724",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2,
+            "y": 417.67422187004911
+          },
+          "nodeIndex": "pbi_vw_negotiations",
+          "nodeLineageTag": "'tbl-negotiations'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 299.77664618364707,
+            "y": -50
+          },
+          "nodeIndex": "pbi_dim_campaigns",
+          "nodeLineageTag": "'tbl-dim-campaigns'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 544.70439104626462,
+            "y": 458.78553555479562
+          },
+          "nodeIndex": "dim_tempo",
+          "nodeLineageTag": "4b4e55cf-5aff-4e63-9598-5ed72d965311",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Invoice",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 4,
+      "scrollPosition": {
+        "x": 0,
+        "y": 400
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 536.01795286399727,
+            "y": 823.78608712745825
+          },
+          "nodeIndex": "pbi_vw_projected_revenue",
+          "nodeLineageTag": "b42a2772-59b7-42d9-ba0f-b8ee5a733783",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1242.0490273044152,
+            "y": 827.33856302514539
+          },
+          "nodeIndex": "Ambição",
+          "nodeLineageTag": "a6fecd9e-a4ed-4001-aad5-3f4759bf40db",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1099.0623117811601,
+            "y": 123.44313699320253
+          },
+          "nodeIndex": "Relação Ambição",
+          "nodeLineageTag": "6facb0b8-97af-446e-baa2-5055f082d915",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 100.04221936137179,
+            "y": 690.4870623296905
+          },
+          "nodeIndex": "Ficheiros Negociações",
+          "nodeLineageTag": "f39923d3-57bc-4bfa-96a7-badec859d25c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 560.75535505503478,
+            "y": 294
+          },
+          "nodeIndex": "pbi_dim_accounts_client",
+          "nodeLineageTag": "'tbl-dim-accounts'",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 74,
+            "y": 396.75086123376263
+          },
+          "nodeIndex": "pbi_dim_channels",
+          "nodeLineageTag": "'tbl-dim-channels'",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 961.97117128450293,
+            "y": 375.78914273730516
+          },
+          "nodeIndex": "dim_tempo",
+          "nodeLineageTag": "4b4e55cf-5aff-4e63-9598-5ed72d965311",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 83.756423594276043,
+            "y": 17
+          },
+          "nodeIndex": "pbi_vw_negotiations",
+          "nodeLineageTag": "'tbl-negotiations'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Negotiations",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 5,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 245.33333206176758,
+            "y": 156
+          },
+          "nodeIndex": "pbi_vw_ad_insertion",
+          "nodeLineageTag": "'tbl-ad-insertion'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 787.33333206176758,
+            "y": 137
+          },
+          "nodeIndex": "dim_tempo",
+          "nodeLineageTag": "4b4e55cf-5aff-4e63-9598-5ed72d965311",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "AD",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 6,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 721.84066053529023,
+            "y": 0
+          },
+          "nodeIndex": "pbi_vw_ad_units",
+          "nodeLineageTag": "ac0fde43-2c95-498f-9022-11db3cf218ab",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 23.333332061767578,
+            "y": 318
+          },
+          "nodeIndex": "pbi_vw_ad_insertion",
+          "nodeLineageTag": "'tbl-ad-insertion'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 342.33333206176758,
+            "y": -19
+          },
+          "nodeIndex": "dim_tempo",
+          "nodeLineageTag": "4b4e55cf-5aff-4e63-9598-5ed72d965311",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 500.40032450105446,
+            "y": 649.227640968042
+          },
+          "nodeIndex": "dim_daypart",
+          "nodeLineageTag": "e3aab360-6e14-41d9-99da-29d852fad810",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1123.2627025854424,
+            "y": 272.05005698153309
+          },
+          "nodeIndex": "pbi_vw_ad_break_units",
+          "nodeLineageTag": "9e285fd8-1134-4c0e-97d9-fd86df6e057a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 79.553182037699827,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 7,
+      "scrollPosition": {
+        "x": 0,
+        "y": 150.60099047935239
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 901.094657051714,
+            "y": 533.74260919200947
+          },
+          "nodeIndex": "pbi_dim_accounts_client",
+          "nodeLineageTag": "'tbl-dim-accounts'",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 57.9339685077868,
+            "y": 926.06894573835939
+          },
+          "nodeIndex": "pbi_dim_accounts_agency",
+          "nodeLineageTag": "ca42a891-1749-4872-a62c-9890aec82ba8",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 116.64345612249406
+          },
+          "nodeIndex": "pbi_dim_campaigns",
+          "nodeLineageTag": "'tbl-dim-campaigns'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 413.93791511218222,
+            "y": 416.34401084191325
+          },
+          "nodeIndex": "pbi_vw_negotiations",
+          "nodeLineageTag": "'tbl-negotiations'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 337.17340638858946,
+            "y": -50
+          },
+          "nodeIndex": "pbi_vw_projected_revenue",
+          "nodeLineageTag": "b42a2772-59b7-42d9-ba0f-b8ee5a733783",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 786.178879660817,
+            "y": 85.94427344058181
+          },
+          "nodeIndex": "Ficheiros Negociações",
+          "nodeLineageTag": "f39923d3-57bc-4bfa-96a7-badec859d25c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 447.94238607216266,
+            "y": 782.15539117187745
+          },
+          "nodeIndex": "Relação Ambição",
+          "nodeLineageTag": "6facb0b8-97af-446e-baa2-5055f082d915",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        }
+      ],
+      "name": "Layout 2",
+      "zoomValue": 72.598019128867946,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 8,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 511,
+            "y": 5
+          },
+          "nodeIndex": "pbi_vw_indicators",
+          "nodeLineageTag": "aa0757a3-2d5f-47d0-bc0a-42032a5a08eb",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 295,
+            "y": 467
+          },
+          "nodeIndex": "pbi_vw_targets",
+          "nodeLineageTag": "4452db66-2b4b-436d-b377-4a63788f7d14",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 841,
+            "y": 414
+          },
+          "nodeIndex": "pbi_vw_targets_simulado",
+          "nodeLineageTag": "f7d2f1e5-e772-44bf-acef-4c432dceb80a",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1146,
+            "y": 412
+          },
+          "nodeIndex": "pbi_vw_targets_var",
+          "nodeLineageTag": "81dd1f22-4544-4428-932a-5947ce121216",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": -27
+          },
+          "nodeIndex": "pbi_dim_campaigns",
+          "nodeLineageTag": "'tbl-dim-campaigns'",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        }
+      ],
+      "name": "Layout 3",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 3",
+  "defaultDiagram": "Todas as tabelas"
+}
