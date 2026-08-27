@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "GO NEXT 360 - Bauer - Order  Projections"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "41ba9d28-70e6-4db0-a648-fcc651327491"
+  }
+}

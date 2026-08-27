@@ -1,0 +1,24 @@
+table 'GRP Simulador'
+	lineageTag: 1d7fe140-ae4d-4d4a-8991-a720de404fd0
+
+	measure 'GRP Selected' = SELECTEDVALUE( 'GRP Simulador'[GRP Simulador] )
+		formatString: 0
+		lineageTag: 20e95fb3-4270-4443-9cf9-0a5b596c8217
+
+	column 'GRP Simulador'
+		formatString: 0
+		lineageTag: 1e478807-9aaa-46cb-9f47-d8aba0e7bbb9
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'GRP Simulador-d1256094-df33-4f28-b5aa-3f4b309a5261' = calculated
+		mode: import
+		source = GENERATESERIES(0, 10000, 50)
+

@@ -1,0 +1,48 @@
+/// Servidor do AD
+expression Server = "gmedia-bauer.chwk3oqgzb7x.eu-west-1.rds.amazonaws.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 2a8f5972-e529-47a3-a0c7-78932cd5f68a
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+/// BD do AD
+expression BD = "GMediaAD" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 7ef836ac-eeeb-4db0-a191-22008c154987
+	queryGroup: BD
+
+	annotation PBI_ResultType = Exception
+
+expression 'lista de imagem' =
+		let
+		    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Logo", "Cliente "}),
+		    Nome = #"Removed Columns"[Nome]
+		in
+		    Nome
+	lineageTag: 9b0e5ddd-0ff8-4496-8c94-ba6c1660d643
+	queryGroup: BD
+
+/// BD do AD
+expression BD_MCR = "GMedia_MCR" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 530308b8-afca-4d6e-bc9c-805851603a14
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+expression AgrupadorCanais =
+		let
+		    Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("fZTPjtowEMZfJcqZA45N/hx3kbYXslpBxWXFwRBv6jaJpZCgvkIfo6eqz8GL1R6Dxy5uDwlD/BvP+PtGfn9PsyJdpM/iPG3V6VvyUof/ko08HxXXHxnVrzI9LHRK9d+UNzVOymQwl2Fy17LhjfAD2IdaoHwkkqeu5ePFfKBLJCN7JU8XIUdTkxIHFhHueeStOQzNHEaWEW6tZH8cgaSOzCPg9cdFWY5hh7HKn0Y+6B8nJ105PoudCMEcW42JtFFzd/1tmAI7YBHwVdsCWpZYOcbd7aPoDiERbiuPfBJfwWnPniqCfr5haA4Y8De2l2cxG85zx8hUl0v3BrsyWKv8JRwBaNYSbBkg4P5w/WVkJZmjMhJQ6D2hyOQB88I/TN+EIZAFwEY3I2GPFXbDAqTmwyRky8+GypEKN6pVyxs125MVjqKBLs5bmBBLlAHwJgbeXaChyiEkVPBufIYSZ6GAW6Fd2s2dWfdUpgG048e55cCgxjTU77YH6stCD/a8U0MLzaDEJFRmLzuuO7KVUGXwpJbf7b0EQZ+88pMBTBO5rWcS1mpSgwDhvJAZqrLHh5VejCcJZbbXn41Uif+JwAOFdbTrlZq+uMD2ADcss4zZezfx0a7cIv+60U9ha5dRFO9jJFdR0p+vlYPj7E0fR8GkPWL3CckdCBfzI4gzUCBK/oEOOhJ9uoCRtaw53F41/EOb4oU2s4IDHQ5/AA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [canCodigo = _t, Canal_Agrupador = _t, Canal = _t, Ordem = _t, ORDEM_AGRUPADOS = _t]),
+		    #"Tipo Alterado" = Table.TransformColumnTypes(Origem,{{"canCodigo", Int64.Type}, {"Canal_Agrupador", type text}, {"Canal", type text}, {"Ordem", Int64.Type}, {"ORDEM_AGRUPADOS", Int64.Type}})
+		in
+		    #"Tipo Alterado"
+	lineageTag: 996518f0-6461-4fbd-8b50-f0d89744fe13
+	queryGroup: Encomendas
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

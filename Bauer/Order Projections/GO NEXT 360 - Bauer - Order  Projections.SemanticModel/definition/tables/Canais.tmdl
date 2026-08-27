@@ -1,0 +1,71 @@
+table Canais
+	lineageTag: c55745c7-4e33-4134-92fe-f6e59eee06d2
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 16534e1a-c47a-4567-b680-f6af887abe69
+		summarizeBy: none
+		sourceColumn: canCodigo
+		sortByColumn: Ordem
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: 63311cdc-a092-427a-9cac-504339175090
+		summarizeBy: none
+		sourceColumn: Canal
+		sortByColumn: Ordem
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d63b37f-4769-4de5-99d0-8f6ab567951b
+		summarizeBy: sum
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marca
+		dataType: string
+		lineageTag: a7a06954-5228-42f4-b9ff-29b09963714a
+		summarizeBy: none
+		sourceColumn: Marca
+		sortByColumn: ORDEM_AGRUPADOS
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORDEM_AGRUPADOS
+		dataType: int64
+		formatString: 0
+		lineageTag: 6acf4f4b-e149-4757-964f-a7db2bf321b9
+		summarizeBy: sum
+		sourceColumn: ORDEM_AGRUPADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Canais-8e69a97c-f717-4cb5-985a-3d249ae7f22d = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(Server, BD_MCR, [Query="Select#(lf)    Canais.Canal,#(lf)    Canais.canCodigo,#(lf)    Canais.Ordem#(lf)From#(lf)    Canais"]),
+				    #"Consultas Intercaladas" = Table.NestedJoin(Source, {"canCodigo"}, AgrupadorCanais, {"canCodigo"}, "AgrupadorCanais", JoinKind.LeftOuter),
+				    #"AgrupadorCanais Expandida" = Table.ExpandTableColumn(#"Consultas Intercaladas", "AgrupadorCanais", {"Canal_Agrupador", "ORDEM_AGRUPADOS"}, {"Canal_Agrupador", "ORDEM_AGRUPADOS"}),
+				    #"Colunas com Nome Mudado" = Table.RenameColumns(#"AgrupadorCanais Expandida",{{"Canal_Agrupador", "Marca"}})
+				in
+				    #"Colunas com Nome Mudado"
+
+	annotation PBI_QueryRelationships = {"columnCount":8,"keyColumnNames":[],"queryRelationships":[{"keyColumnCount":1,"keyColumn":1,"otherKeyColumnIdentity":"Section1/Classificação de Canais/Changed Type.{CanCodigo,3}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":4,"otherKeyColumnIdentity":"Section1/Ordenação Agrupador/Uppercased Text.{Agrupador,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":3,"otherKeyColumnIdentity":"Section1/Ordenação Tipo/Changed Type.{Tipo,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":2,"otherKeyColumnIdentity":"Section1/Ordenação Meio/Changed Type.{Meio,0}","KeyColumnCount":1}],"columnIdentities":["Section1/Canais/Source.{canDescricao,0}","Section1/Canais/Source.{canCodigo,1}","Section1/Classificação de Canais/Changed Type.{Meio,0}","Section1/Classificação de Canais/Changed Type.{Tipo,1}","Section1/Canais/Uppercased Text.{Agrupador,4}","Section1/Ordenação Agrupador/Changed Type.{Ord Agrupador,1}","Section1/Ordenação Tipo/Changed Type.{Ord Tipo,1}","Section1/Ordenação Meio/Changed Type.{Ord Meio,1}"],"ColumnCount":8,"KeyColumnNames":[],"ColumnIdentities":["Section1/Canais/Source.{canDescricao,0}","Section1/Canais/Source.{canCodigo,1}","Section1/Classificação de Canais/Changed Type.{Meio,0}","Section1/Classificação de Canais/Changed Type.{Tipo,1}","Section1/Canais/Uppercased Text.{Agrupador,4}","Section1/Ordenação Agrupador/Changed Type.{Ord Agrupador,1}","Section1/Ordenação Tipo/Changed Type.{Ord Tipo,1}","Section1/Ordenação Meio/Changed Type.{Ord Meio,1}"],"RelationshipInfo":[{"keyColumnCount":1,"keyColumn":1,"otherKeyColumnIdentity":"Section1/Classificação de Canais/Changed Type.{CanCodigo,3}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":4,"otherKeyColumnIdentity":"Section1/Ordenação Agrupador/Uppercased Text.{Agrupador,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":3,"otherKeyColumnIdentity":"Section1/Ordenação Tipo/Changed Type.{Tipo,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":2,"otherKeyColumnIdentity":"Section1/Ordenação Meio/Changed Type.{Meio,0}","KeyColumnCount":1}]}
+
+	annotation PBI_ResultType = Table
+

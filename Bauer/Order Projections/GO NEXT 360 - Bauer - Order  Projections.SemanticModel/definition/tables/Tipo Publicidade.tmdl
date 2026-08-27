@@ -1,0 +1,40 @@
+table 'Tipo Publicidade'
+	lineageTag: eebba879-7c8e-4680-a927-4dacd1bdd358
+
+	column tipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9af403c1-df0e-4f4c-af18-3734f96ab544
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubDescricao
+		dataType: string
+		lineageTag: ab552ccb-3530-4a04-8cce-4f459ba0d147
+		summarizeBy: none
+		sourceColumn: tipPubDescricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoPublicidade
+		dataType: string
+		lineageTag: 451e7c79-484c-4286-8b08-ff077b7274d0
+		summarizeBy: none
+		sourceColumn: TipoPublicidade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Tipo Publicidade-912ea09b-6d9b-4579-946b-39723dcee53c' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				Source = Sql.Database(Server, BD, [Query="Select#(lf)tipPubId,#(lf)tipPubDescricao#(lf)From#(lf)TipoPublicidade"]),
+				    Custom1 = Table.AddColumn(Source, "TipoPublicidade", each if [tipPubDescricao] = "ESPECIAL       " then "INSTITUCIONAL" else if [tipPubDescricao] = "NORMAL         " then "NORMAL" else if [tipPubDescricao] = "PATROCINIOS    " then "PATROCINIOS" else if [tipPubDescricao] = "CARTOES PUB    " then "CARTÕES DE ADEREÇO" else if [tipPubDescricao] = "RTP SPONSOR/COL.PRODUTO" then "SOFTSPONSORING" else if [tipPubDescricao] = "BLOCO DE TELEVENDA (TELEVENDA FORA EMISSÃO)" then "TELEVENDAS" else if [tipPubDescricao] = "PROMO SPONSORIZADAS" then "SOFTSPONSORING" else if [tipPubDescricao] = "ECRÃ FRACCIONADO/SPLIT-SCREEN" then "NORMAL" else if [tipPubDescricao] = "TELEPROMOÇÃO" then "SOFTSPONSORING" else if [tipPubDescricao] = "TELEVENDAS" then "NORMAL" else if [tipPubDescricao] = "Morphing Promocao" then "SOFTSPONSORING" else if [tipPubDescricao] = "Morphing" then "SOFTSPONSORING" else if [tipPubDescricao] = "Morphing Especial" then "SOFTSPONSORING" else [tipPubDescricao], type text)
+				in
+				Custom1
+
+	annotation PBI_ResultType = Table
+

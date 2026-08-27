@@ -1,0 +1,346 @@
+table Encomendas
+	lineageTag: 8a034de5-801d-47a8-a276-f482799fb539
+
+	column Origem
+		dataType: string
+		lineageTag: 33ef9b69-d3e4-4ad0-8825-97464baa7bb2
+		summarizeBy: none
+		sourceColumn: Origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IPC Valor'
+		dataType: double
+		lineageTag: e9e778bd-b286-43ca-ba8f-93b9ecfefbab
+		summarizeBy: sum
+		sourceColumn: IPC Valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Bónus'
+		dataType: double
+		lineageTag: 7c26f4f9-c86c-40d5-9bbd-1f7a724276e1
+		summarizeBy: sum
+		sourceColumn: Valor Bónus
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Rappel'
+		dataType: double
+		lineageTag: d4ee0fa4-91f6-44ab-b2ac-7acc043de3d1
+		summarizeBy: sum
+		sourceColumn: Valor Rappel
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ID Entidade a Facturar'
+		dataType: int64
+		formatString: 0
+		lineageTag: 20d7cb95-ad9b-4c9d-93aa-93b65178eaf3
+		summarizeBy: sum
+		sourceColumn: ID Entidade a Facturar
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Entidade a Facturar'
+		dataType: string
+		lineageTag: 7d43d980-7ac0-41bf-b764-f88a2c44f8d5
+		summarizeBy: none
+		sourceColumn: Nome Entidade a Facturar
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Central'
+		dataType: int64
+		formatString: 0
+		lineageTag: 115672fd-3a5e-4f08-b335-e84b163f6b20
+		summarizeBy: none
+		sourceColumn: ID Central
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Central'
+		dataType: string
+		lineageTag: 533d456b-4097-4717-af8d-d1555c6d7a13
+		summarizeBy: none
+		sourceColumn: Nome Central
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Agência de Meios'
+		dataType: int64
+		formatString: 0
+		lineageTag: e8ea8eac-d35f-4fcd-8d1b-7431734b4a03
+		summarizeBy: sum
+		sourceColumn: ID Agência de Meios
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Agência de Meios'
+		dataType: string
+		lineageTag: 241242cd-90aa-467d-8f5f-28235342dec4
+		summarizeBy: none
+		sourceColumn: Nome Agência de Meios
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Agência'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d7a3791-922f-4b7f-b9c5-532e63700034
+		summarizeBy: sum
+		sourceColumn: ID Agência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Agência'
+		dataType: string
+		lineageTag: 06a3a35e-1667-4c2f-a754-9ec2ccbaad00
+		summarizeBy: none
+		sourceColumn: Nome Agência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Anunciante'
+		dataType: int64
+		formatString: 0
+		lineageTag: 91f0b3eb-d50a-4566-821a-0a0c43e04e86
+		summarizeBy: none
+		sourceColumn: ID Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Anunciante'
+		dataType: string
+		lineageTag: f6cc569f-3b91-493a-9efe-4a785b45c163
+		summarizeBy: none
+		sourceColumn: Nome Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Agrupador Anunciante'
+		dataType: int64
+		formatString: 0
+		lineageTag: 894e0e5b-5cac-473e-9e61-30e908fd13dd
+		summarizeBy: sum
+		sourceColumn: ID Agrupador Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agrupador Anunciante'
+		dataType: string
+		lineageTag: af5fa797-4704-462f-a3aa-f92416412093
+		summarizeBy: none
+		sourceColumn: Agrupador Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		dataType: int64
+		formatString: 0
+		lineageTag: f52a9796-c988-4caa-bca6-c5d3264f9956
+		summarizeBy: sum
+		sourceColumn: Grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Grupo'
+		dataType: string
+		lineageTag: 0b04bc75-d8ef-4e37-b15b-8401d4f56ca5
+		summarizeBy: none
+		sourceColumn: Nome Grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendedor
+		dataType: string
+		lineageTag: bc5a4ef5-236f-4418-a399-e0d82a778cc3
+		summarizeBy: none
+		sourceColumn: Vendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: ba47057f-687f-47e5-846b-299d516113c0
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marca
+		dataType: string
+		lineageTag: c3b0a6e6-2441-4202-b5f5-89df0b03bf02
+		summarizeBy: none
+		sourceColumn: Marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 809ed119-710c-429a-911a-3da021b75191
+		summarizeBy: sum
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		dataType: int64
+		formatString: 0
+		lineageTag: 796cde28-f648-412e-858d-2f86d80f92ee
+		summarizeBy: sum
+		sourceColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordem - Valor Publicidade'
+		dataType: double
+		lineageTag: 0211d2b5-8748-40df-a817-0feb898417fe
+		summarizeBy: sum
+		sourceColumn: Ordem - Valor Publicidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Tipo de Publicidade'
+		dataType: string
+		lineageTag: 96d4e69c-bd27-4851-8b98-00478666e938
+		summarizeBy: none
+		sourceColumn: Tipo de Publicidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Tipo de Publicidade'
+		dataType: int64
+		formatString: 0
+		lineageTag: ba28c469-93b0-457e-9c15-89a7117ea602
+		summarizeBy: none
+		sourceColumn: ID Tipo de Publicidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column IPC
+		dataType: double
+		lineageTag: 3a6c75fe-fd5e-4961-aa1e-4e0bbcdcd3e2
+		summarizeBy: sum
+		sourceColumn: IPC
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Bruto Vendas'
+		dataType: int64
+		formatString: 0
+		lineageTag: e5eaf87b-f389-4f2b-8b60-cc14c896cd14
+		summarizeBy: sum
+		sourceColumn: Bruto Vendas
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Liquido Vendas'
+		dataType: int64
+		formatString: 0
+		lineageTag: 654472c1-d916-48bc-9129-37049a53ef9f
+		summarizeBy: sum
+		sourceColumn: Liquido Vendas
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Pedido'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 58f00622-5c80-49f2-9db7-c52803e9ad35
+		summarizeBy: none
+		sourceColumn: Data Pedido
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Publicidade'
+		dataType: double
+		lineageTag: 2fca8448-bdc8-4bd9-84d9-c89bb2a99d30
+		summarizeBy: sum
+		sourceColumn: Valor Publicidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Net 1'
+		dataType: double
+		lineageTag: 196f5840-d4b5-4b0c-bcc6-8863c268ad29
+		summarizeBy: sum
+		sourceColumn: Valor Net 1
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Net 2'
+		dataType: double
+		lineageTag: 86f8d1fc-0151-4e3f-b87e-4cb7b7e383ac
+		summarizeBy: sum
+		sourceColumn: Valor Net 2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column distribuidorId
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e8ee5e6-577d-4d53-b4ca-de7dc2f7de9b
+		summarizeBy: count
+		sourceColumn: distribuidorId
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Comissao'
+		dataType: double
+		lineageTag: 31771fd7-f8a4-4dae-8c5f-90ef9c497a95
+		summarizeBy: sum
+		sourceColumn: Valor Comissao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pedidoid
+		dataType: int64
+		formatString: 0
+		lineageTag: ad117fe6-874c-4697-ac51-cc7fc8b9d627
+		summarizeBy: sum
+		sourceColumn: pedidoid
+
+		annotation SummarizationSetBy = Automatic
+
+	column cancodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 58aee864-6946-4eb0-b1a0-a7c8f2e482bf
+		summarizeBy: none
+		sourceColumn: cancodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Encomendas-04e831a7-4853-434e-bed0-a8eeb98624ab = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(Server, BD, [Query="select#(lf)      'PEDIDOS' as [Origem],#(lf)sum(Round(isnull(pedidoreceitas.pub,0)*(IsNull(pedidos.IPC,0)/100),2)) as [IPC Valor],#(lf)sum(isnull(pedidoreceitas.bonus,0)) as [Valor Bónus],#(lf)sum(Round(isnull(pedidoreceitas.pub,0)*(isnull(campanhas.camdescontoAgencia,0)/100),2)) as [Valor Comissao],#(lf)sum(Round((isnull(pedidoreceitas.pub,0) - Round(isnull(pedidoreceitas.pub,0)*(isnull(campanhas.camdescontoAgencia,0)/100),2))*(isnull(rappel.rapTaxaNegociada,0)),2)) as [Valor Rappel],#(lf)      pedidoreceitas.pedidoid as pedidoid,#(lf)      entidadefacturar.entid as [ID Entidade a Facturar],#(lf)      entidadefacturar.entnome as [Nome Entidade a Facturar],#(lf)      centralcompras.entid as [ID Central],#(lf)      centralcompras.entnome as[Nome Central],#(lf)      agenciameios.entid as [ID Agência de Meios],#(lf)      agenciameios.entnome as [Nome Agência de Meios],#(lf)      agenciacriativa.entid as [ID Agência],#(lf)      agenciacriativa.entnome as [Nome Agência],#(lf)      anunciante.entid as [ID Anunciante],#(lf)      anunciante.entnome as [Nome Anunciante],#(lf)      tiposClientes.tipCliId as [ID Agrupador Anunciante],#(lf)      tiposClientes.tipCliDescricao as [Agrupador Anunciante],#(lf)      grupos.gruId as [Grupo],#(lf)      grupos.gruDescricao as [Nome Grupo],#(lf)      executivo.utinome as [Vendedor],#(lf)      canais.candescricao as [Canal],#(lf)#(tab)  canais.cancodigo,#(lf)      canais.canFolder as [Marca],#(lf)      pedidos.ordpubano as [Ano],#(lf)      pedidos.ordpubmes as [Mês],#(lf)#(tab)  pedidos.distribuidorId,#(lf)      SUM(IsNull(pedidos.ordpubvalor,0)) as  [Ordem - Valor Publicidade],#(lf)      tipopublicidade.tippubdescricao as [Tipo de Publicidade],#(lf)      tipopublicidade.TipPubId as [ID Tipo de Publicidade],#(lf)      IsNull(pedidos.IPC,0) as [IPC],#(lf)      IsNull(ordempub.ordpubflagvalorbrutovendas,0) as [Bruto Vendas],#(lf)      IsNull(ordempub.ordpubflagvalorliquidovendas,0) as [Liquido Vendas],#(lf)      pedidos.datafact as [Data Pedido],#(lf)      --NULL as [Data Exibição],#(lf)      SUM(isnull(pedidoreceitas.pub,0)) as [Valor Publicidade],#(lf)      SUM(isnull(pedidoreceitas.pub,0) - Round(isnull(pedidoreceitas.pub,0)*(isnull(campanhas.camdescontoAgencia,0)/100),2)) as [Valor Net 1],#(lf)      SUM(isnull(pedidoreceitas.pub,0) - Round(isnull(pedidoreceitas.pub,0)*(isnull(campanhas.camdescontoAgencia,0)/100),2) - Round((isnull(pedidoreceitas.pub,0) - Round(isnull(pedidoreceitas.pub,0)*(isnull(campanhas.camdescontoAgencia,0)/100),2))*(isnull(rappel.rapTaxaNegociada,0)),2)) as [Valor Net 2]#(lf)from#(lf)pedidoreceitas with(nolock)#(lf)join pedidos with(nolock) on pedidos.pedidoid=pedidoreceitas.pedidoid#(lf)join ordempub with(nolock) on ordempub.ordpubcodigo=pedidos.ordpubcodigo#(lf)join campanhas with(nolock) on campanhas.camid=pedidos.camid#(lf)join entidades entidadefacturar with(nolock) on entidadefacturar.entid=pedidos.entFactId#(lf)join entidades centralcompras with(nolock) on centralcompras.entid=pedidos.centralId#(lf)join entidades agenciameios with(nolock) on agenciameios.entid=pedidos.distribuidorId#(lf)join entidades agenciacriativa with(nolock) on agenciacriativa.entId=campanhas.camagencia#(lf)join entidades anunciante with(nolock) on anunciante.entid=pedidos.anuncianteId#(lf)join grupos grupos with(nolock) on grupos.gruid=pedidos.gruid#(lf)join utilizadores executivo with(nolock) on executivo.utiid=pedidos.vendedorId#(lf)join canais with(nolock) on canais.cancodigo=pedidos.cancodigo#(lf)join tipopublicidade with(nolock) on tipopublicidade.tippubid=pedidos.tippubid#(lf)left outer join rappel with(nolock) on pedidos.flgrappel=1 and pedidos.dataFact between rappel.rapDataInicio and rappel.rapDataFim and (rappel.entIdCliente=campanhas.camEntidadeFacturar or (rappel.entIdCliente=campanhas.camCentralCompras and rappel.flgCentral=1))#(lf)left outer join tiposClientes with(nolock) on tiposClientes.tipCliId=anunciante.tipCliId#(lf)where#(lf)      --pedidoreceitas.pedrecid not in (select isnull(pedrecid,0) from pedidoencomendas where pedidoencomendas.pedrecid=pedidoreceitas.pedrecid) and#(lf)year(pedidos.datafact) >= year(getdate())-5#(lf)--and month(pedidos.datafact) = 1#(lf)--and pedidoreceitas.pedidoid in (78146, 78147)#(lf)Group by#(lf)entidadefacturar.entid,#(lf)      entidadefacturar.entnome,#(lf)      centralcompras.entid,#(lf)      centralcompras.entnome,#(lf)      agenciameios.entid,#(lf)      agenciameios.entnome,#(lf)      agenciacriativa.entid,#(lf)      agenciacriativa.entnome,#(lf)      anunciante.entid,#(lf)      anunciante.entnome,#(lf)      tiposClientes.tipCliId,#(lf)      tiposClientes.tipCliDescricao,#(lf)      grupos.gruId,#(lf)      grupos.gruDescricao,#(lf)      executivo.utinome,#(lf)      canais.candescricao,#(lf)#(tab)  canais.cancodigo,#(lf)      canais.canFolder,#(lf)      pedidos.ordpubano,#(lf)      pedidos.ordpubmes,#(lf)#(tab)  pedidos.distribuidorId,#(lf)      tipopublicidade.tippubdescricao,#(lf)      tipopublicidade.TipPubId,#(lf)      IsNull(pedidos.IPC,0),#(lf)      pedidos.datafact,#(lf)ordempub.ordpubflagvalorbrutovendas,#(lf)ordempub.ordpubflagvalorliquidovendas,#(lf)pedidoreceitas.pedidoid"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

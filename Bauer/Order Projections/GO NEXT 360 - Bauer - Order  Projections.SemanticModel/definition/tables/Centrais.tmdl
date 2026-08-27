@@ -1,0 +1,37 @@
+table Centrais
+	lineageTag: b6988411-b1ad-448f-a167-edcd1157e206
+
+	column Central
+		dataType: string
+		lineageTag: 6a7c78c6-42ee-45b0-8a12-1576cb7d8c34
+		summarizeBy: none
+		sourceColumn: Central
+
+		annotation SummarizationSetBy = Automatic
+
+	column Distribuidor
+		dataType: int64
+		formatString: 0
+		lineageTag: d7f51139-23d0-46cb-aafb-e18e3cbe85ef
+		summarizeBy: sum
+		sourceColumn: Distribuidor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Centrais-556efb58-73ca-44e7-bf8d-0f5bf493f2a6 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(Server, BD, [Query="select distinct campanhas.camcentralcompras,#(lf)entidades.entNome#(lf), campanhas.camdistribuidor#(lf) --,camanunciante#(lf) from campanhas #(lf)left join entidades on entidades.entid = campanhas.camdistribuidor#(lf) order by campanhas.camdistribuidor"]),
+				    #"Linhas Filtradas2" = Table.SelectRows(Source, each ([entNome] <> "NÃO EXISTENTE")),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Linhas Filtradas2", each ([camcentralcompras] <> 0)),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Linhas Filtradas",{"camcentralcompras"}),
+				    #"Duplicados Removidos" = Table.Distinct(#"Colunas Removidas", {"camdistribuidor"}),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Duplicados Removidos", each ([camdistribuidor] <> 0)),
+				    #"Colunas com Nome Mudado" = Table.RenameColumns(#"Linhas Filtradas1",{{"entNome", "Central"}, {"camdistribuidor", "Distribuidor"}})
+				in
+				    #"Colunas com Nome Mudado"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,85 @@
+table Objetivos
+	lineageTag: 155385dc-42ec-42f0-a0bd-52c4a0905d09
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: eda4024b-e283-44c8-a75a-6683a91e6d04
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column budgetID
+		dataType: int64
+		formatString: 0
+		lineageTag: 59cd4ea4-517c-4f21-9110-4f158568aee7
+		summarizeBy: count
+		sourceColumn: budgetID
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		formatString: 0
+		lineageTag: 4673597c-e36f-4db7-8d86-2af73a0112b4
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 13caf42d-b996-489c-905e-b49bb63595ac
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column valor
+		dataType: double
+		lineageTag: e589e734-3618-4b8d-af91-3f2fe682bf28
+		summarizeBy: sum
+		sourceColumn: valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column centroCusto
+		dataType: string
+		lineageTag: b0d71a43-3d46-4378-a0bd-1c81652da746
+		summarizeBy: none
+		sourceColumn: centroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 0d192c25-ce38-410d-a81d-13c046d666cb
+		summarizeBy: none
+		sourceColumn: Data
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Objetivos-d443ff34-4878-41a1-9612-6b4afea6d1f3 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(Server, BD_MCR, [Query="Select * from budget #(lf)#(lf)Where#(lf)    Ano >= Year(GetDate()) -5"]),
+				    #"Coluna Intercalada Inserida" = Table.AddColumn(Source, "Data", each Text.Combine({"1-", Text.From([mes], "pt-PT"), "-", Text.From([ano], "pt-PT")}), type text),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Coluna Intercalada Inserida",{{"Data", type date}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_QueryRelationships = {"columnCount":10,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/negociacaoObjectivos/Source.{utiId,0}","Section1/negociacaoObjectivos/Source.{tipPubId,1}","Section1/negociacaoObjectivos/Source.{canCodigo,2}","Section1/negociacaoObjectivos/Source.{negObjTipo,3}","Section1/negociacaoObjectivos/Source.{negObjValor,4}","Section1/negociacaoObjectivos/Source.{negObjValorBruto,5}","Section1/negociacaoObjectivos/Source.{negObjMes,6}","Section1/negociacaoObjectivos/Source.{negObjAno,7}","Section1/negociacaoObjectivos/Source.{perId,8}","Section1/negociacaoObjectivos/Source.{negObjId,9}"],"ColumnCount":10,"KeyColumnNames":[],"ColumnIdentities":["Section1/negociacaoObjectivos/Source.{utiId,0}","Section1/negociacaoObjectivos/Source.{tipPubId,1}","Section1/negociacaoObjectivos/Source.{canCodigo,2}","Section1/negociacaoObjectivos/Source.{negObjTipo,3}","Section1/negociacaoObjectivos/Source.{negObjValor,4}","Section1/negociacaoObjectivos/Source.{negObjValorBruto,5}","Section1/negociacaoObjectivos/Source.{negObjMes,6}","Section1/negociacaoObjectivos/Source.{negObjAno,7}","Section1/negociacaoObjectivos/Source.{perId,8}","Section1/negociacaoObjectivos/Source.{negObjId,9}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

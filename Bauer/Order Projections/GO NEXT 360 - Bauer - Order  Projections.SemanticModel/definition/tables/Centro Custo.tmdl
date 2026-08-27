@@ -1,0 +1,46 @@
+table 'Centro Custo'
+	lineageTag: 5d5c2e0e-fdce-4713-9c18-fb1d139510c4
+
+	column NomeCentroCusto
+		dataType: string
+		lineageTag: 2d1d51ac-8dc3-48fa-baf0-f687be7c6dc7
+		summarizeBy: none
+		sourceColumn: NomeCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column numero
+		dataType: string
+		lineageTag: e8965ffe-0ec4-4091-898d-f80a3d50d590
+		summarizeBy: none
+		sourceColumn: numero
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agrupador
+		dataType: string
+		lineageTag: d75def50-716c-4fad-bdb0-0ad6407900f2
+		summarizeBy: none
+		sourceColumn: Agrupador
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Centro Custo' = [numero] &" " & 'Centro Custo'[NomeCentroCusto]
+		lineageTag: 59aba096-00d9-40a6-9070-5a34eccdc3ff
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Centro Custo-f5d09162-fdfc-46df-9098-53b72d54c44e' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(Server, BD_MCR, [Query="  SELECT --[centroCustoID]#(lf)      [NomeCentroCusto]#(lf)      --,[agrupadorID]#(lf)      --,[centroCustoIdPai]#(lf)      ,[numero]#(lf)      --,[grupo]#(lf)      --,[ordenacao]#(lf)      --,[nivel]#(lf)      --,[canCodigo]#(lf)  FROM [GMedia_MCR].[dbo].[CentroCusto]#(lf)  GROUP BY#(lf)  --[centroCustoID]#(lf)      [NomeCentroCusto]#(lf)      ,[numero]"]),
+				    #"Linhas Ordenadas" = Table.Sort(Source,{{"numero", Order.Ascending}}),
+				    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Linhas Ordenadas", "Agrupador", each if [numero] = "5.0" then "Other Revenues" else if [numero] = "6.0" then "Other Revenues" else "Advertising", type text)
+				in
+				    #"Coluna Condicional Adicionada"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,29 @@
+relationship 7bbaefd4-b6bd-4478-bbf9-d3991658b42b
+	fromColumn: Objetivos.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship 29215026-1116-42c1-9124-8a0858fc47ea
+	fromColumn: Encomendas.'ID Tipo de Publicidade'
+	toColumn: 'Tipo Publicidade'.tipPubId
+
+relationship 02ffd5c8-73e9-443a-8ff0-5770a77e0dd5
+	fromColumn: Encomendas.'ID Anunciante'
+	toColumn: Anunciante.entId
+
+relationship bf9b7a3d-d29b-4448-b904-f97dd2caa265
+	crossFilteringBehavior: bothDirections
+	fromColumn: Encomendas.cancodigo
+	toColumn: Canais.canCodigo
+
+relationship 55a23a29-cb96-4fc8-919b-702e527ddcb1
+	fromColumn: Encomendas.'ID Central'
+	toColumn: Central.IdDistribuidor
+
+relationship f3c0cca4-491d-46d0-8147-d4ded94392ff
+	fromColumn: Encomendas.'Data Pedido'
+	toColumn: Calendario.Date
+
+relationship 4c875625-3e58-4b24-a23a-458eb894bf95
+	fromColumn: Objetivos.Data
+	toColumn: Calendario.Date
+

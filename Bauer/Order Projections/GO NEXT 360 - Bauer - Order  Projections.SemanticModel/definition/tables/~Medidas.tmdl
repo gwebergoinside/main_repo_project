@@ -1,0 +1,370 @@
+table ~Medidas
+	lineageTag: 990b436c-ad8f-404f-b743-871182f2fd81
+
+	measure 'Title Gauge Receita' =
+			
+			"Receita vs Objetivo | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Gauge
+		lineageTag: 27393f5d-d9ba-48e0-9deb-f82a5556948f
+
+	measure 'Title Receita YTD' = "Receita YTD | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Receita
+		lineageTag: a48232cb-68f5-4a8d-b59f-9ff050abe889
+
+	measure 'Title Anunciante YTD' = "Receita por Anunciante | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Receita
+		lineageTag: 2131c3f9-d11b-4e8a-9472-980c10041bf1
+
+	measure 'Title Receita Anunciante' = "Receita Anunciante | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Receita
+		lineageTag: f8c4965d-9fa8-458e-834d-a999688f06e1
+
+	measure 'Title Var' = "Evolução comparativa com Dia Anterior | " & FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT")
+		displayFolder: Outros
+		lineageTag: 5badf5ca-3668-418b-87ab-c73bf11a83f9
+
+	measure 'Receita CC' = ```
+			
+			VAR _3 = CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[Grupo] =3)
+			VAR _1 =
+			 CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1) + CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =2) + CALCULATE(SUM(Encomendas[IPC Valor])) +  ((CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1)*0.03)*-1) +  CALCULATE(SUM(Encomendas[Valor Rappel]))*-1
+			VAR _2 = CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[Grupo] =5)
+			VAR _5 = CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] = 13)
+			VAR _6 = CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {12,10})
+			VAR _total = _1+_2+_3+_5+_6
+			
+			RETURN
+			IF( 
+			   ISINSCOPE( 'Centro Custo'[Centro Custo] ) ,
+			      SUMX( VALUES( 'Centro Custo'[Centro Custo]),CALCULATE([Receita CentroCusto]     )     ) ,
+			    IF (ISINSCOPE( 'Centro Custo'[Agrupador] ) && SELECTEDVALUE( 'Centro Custo'[Agrupador] ) = "Other Revenues"
+			      , SUMX( VALUES( 'Centro Custo'[Centro Custo]),CALCULATE([Receita CentroCusto]     )     ) 
+			      ,
+			        IF (ISINSCOPE( 'Centro Custo'[Agrupador] ) && SELECTEDVALUE( 'Centro Custo'[Agrupador] ) = "Advertising"
+			        , _1 + _2 + _3, _total
+			 )))
+			```
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 6310e77a-cdc6-4cf2-9859-42624a798d8e
+
+		changedProperty = FormatString
+
+	measure 'Titulo_Ganhos Perdidos' = ```
+			
+			vAR _1 = concatenatex(SUMMARIZE('Calendario','Calendario'[Mes]), 'Calendario'[Mes],", " )
+			vAR _12 = MIN('Calendario'[Mês])
+			VAR _11 = MONTH(now())
+			--VAR _2 =  IF.EAGER(ISFILTERED('Calendario Carteira'[Mes]),  MONTH(CALEND), BLANK())
+			--Var _3 = Titulos[ID]
+			// IF.EAGER(
+			//     ISFILTERED('Calendario Carteira'[Mes]) && Titulos[Selected TituloParameter] = 10, [Titulo] & " " & ,
+			//     )
+			RETURN 
+			 --_1
+			IF.EAGER( ISFILTERED('Calendario'[Mes])
+			    ,"Ganhos e Perdidos (" & _1 & ")"
+			    ,CALCULATE( [Titulo], Titulos[ID] = 10 ) & " (" & SWITCH(
+			    _12
+			    ,1,"Jan",2,"Fev",3,"Mar",4,"Abr"
+			    ,5,"Mai",6,"Jun",7,"Jul",8,"Ago"
+			    ,9,"Set",10,"Out",11,"Nov",12,"Dez") & " - " & SWITCH(
+			    _11
+			    ,1,"Jan",2,"Fev",3,"Mar",4,"Abr"
+			    ,5,"Mai",6,"Jun",7,"Jul",8,"Ago"
+			    ,9,"Set",10,"Out",11,"Nov",12,"Dez") & ")"
+			) 
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 215a8f71-1ab6-4763-a55b-4a5495f32b34
+
+	measure 'Qtd Cliente_v2' = CALCULATE(DISTINCTCOUNT(Vendedores[UtiId]))
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: e5e4edc8-0363-448d-8c06-ad4ac45dcfd5
+
+	measure 'Qtd Cliente_v2Ano Anterior' = CALCULATE([Qtd Cliente_v2], SAMEPERIODLASTYEAR('Calendario'[Date]))
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 4a12f971-8a34-4ee6-a53f-1f31560f43e5
+
+	measure Titulo =
+			
+			SWITCH (
+			    [Selected TituloParameter],
+			    10, SELECTEDVALUE(Titulos[Parameter])
+			    , "GESTOR DE CONTA"
+			)
+		displayFolder: Ganhos e Perdidos
+		lineageTag: bf5cd137-988c-483d-9610-ff04e3409e07
+
+	measure 'Budget CentroCusto' = ```
+			SWITCH(TRUE(),
+			    SELECTEDVALUE('Centro Custo'[numero]) = "3.0", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "3.0")
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.2", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] IN  {"1.2.1","1.2.2"} )
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.2.2", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.2.2")
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.2.1", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.2.1")
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.0", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] IN  {"1.2.1","1.2.2","1.3","1.4","1.5"})
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "2.0", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "2.0")
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "5.0", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "5.0")
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.4", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.4") 
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "6.0", CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "6.0")
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.3",CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.3")
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.5",CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.5")
+			    )
+			```
+		lineageTag: 4e1969e2-1761-4c60-bc0c-c917cb71eee1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Budget = CALCULATE( SUM(Objetivos[valor]), Objetivos[centroCusto] in {"1.2.1", "1.2.2", "1.5", "1.4"} )
+		displayFolder: Objetivo
+		lineageTag: bfa89fd3-2492-4bf4-8d76-934a65ea4ef7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liquido Gauge' =
+			
+			IF( ISFILTERED(Calendario[Mes]) , calculate([Budget] , FILTER(Calendario, Calendario[Mês] = MAX(Calendario[Mês]) && Calendario[Ano] = MAX(Calendario[Ano]) ) ) ,
+			 calculate([Budget],FILTER(Calendario,Month(Calendario[Date])=month(now())&&Year(Calendario[Date])=year(NOW()))) )
+		displayFolder: Objetivo
+		lineageTag: fd22326d-7fc9-4793-9b40-44f741320744
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liquido YTD' = ```
+			CALCULATE([Budget],FILTER(ALL(Calendario[Date]),Calendario[Date]<=MAX(Calendario[Date])&&YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])))) 
+			```
+		displayFolder: Objetivo
+		lineageTag: 78b696ad-115a-49ee-b89b-41bae031f6e5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liq YTD Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), CALCULATE([Budget], DATESYTD(Calendario[Date])), CALCULATE( [Budget], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		displayFolder: Objetivo
+		lineageTag: a3a10ae3-33ba-4c6d-9ebb-6efe595dec92
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Objetivo liq YTD Resumo Tooltip' =
+			
+			CALCULATE([Budget], FILTER(Calendario, Calendario[Date] < TODAY()))
+		displayFolder: Objetivo
+		lineageTag: 8c47cebf-03aa-49b6-980f-ac94b5d7fdff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liq Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), [Budget], calculate([Budget], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		displayFolder: Objetivo
+		lineageTag: a7daa477-72b2-48b8-ad18-5cc732cd1902
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Title Gauge Faturado' =
+			
+			"Faturação vs Objetivo | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Gauge
+		lineageTag: 34847c89-a6d9-4127-b3c7-8c40e92c22bb
+
+	measure Measure
+		lineageTag: 1019bdc3-5936-4c91-a824-7df25c6c666a
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'Subtitulo ValBruto' = "* Valor Bruto"
+		lineageTag: 6632cf8f-724c-4d2b-b537-dde0a9e11578
+
+	measure 'Subtitulo ValFatu' = "* Valor Faturado"-- "Valor Líquido" "Valor Bruto"
+		lineageTag: 0928bbe9-986f-47c3-ac17-6c99c919ed44
+
+	measure 'Subtitulo ValLiqu' = "* Valor Líquido"-- "Valor Bruto"
+		lineageTag: ed692e84-1274-4099-95a3-47f8dc7cfa55
+
+	measure 'Budget LY' = CALCULATE( [Budget], SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: a9279f61-3ed9-405f-9804-98bfdb0643a1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Δ vs Bud %' = ```
+			DIVIDE([External Cash Net 2] - [External Cash Net 2 Budget] ,[External Cash Net 2 Budget], 0) 
+			--Δ vs LY = DIVIDE([Receita CC] - [Receita CC LY], [Receita CC LY],0) 
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: a3d48318-43a7-4545-bd61-c10f01c5571f
+
+		changedProperty = FormatString
+
+	measure 'Budget var %' = ```
+			DIVIDE([Budget], [Budget LY], 1) 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b62bb10a-f353-4dbf-bce0-136122a80c74
+
+		changedProperty = FormatString
+
+	measure 'Δ vs Budget%' = ```
+			DIVIDE([Receita CC] - [Budget CC], [Budget CC],0) 
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 0ee91cb9-66fd-41e6-8d10-a488fca02027
+
+		changedProperty = FormatString
+
+	measure 'Receita NET1' = SUM(Encomendas[Valor Net 1])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 644ff8ac-9298-4867-b5aa-ed8fb789a209
+
+		changedProperty = FormatString
+
+	measure 'Receita NET1 LY' = CALCULATE([Receita NET1], SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 82cf7361-4f71-460c-a4a6-8af1f03696fc
+
+		changedProperty = FormatString
+
+	measure 'Receita CentroCusto' =
+			SWITCH(TRUE(),
+			    SELECTEDVALUE('Centro Custo'[numero]) = "3.0", CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[Grupo] =3)
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.2.2", CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =2)
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.2.1", CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1)
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.2",  CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1) + CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =2)
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.0", CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1) + CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =2) + CALCULATE(SUM(Encomendas[IPC Valor])) +  ((CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1)*0.03)*-1) +  CALCULATE(SUM(Encomendas[Valor Rappel]))*-1
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "2.0", CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[Grupo] =5)+0
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "5.0", CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] = 13)
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.4", (CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1)*0.03)*-1
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "6.0", CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {12,10})
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.3",CALCULATE(SUM(Encomendas[IPC Valor]))
+			    ,SELECTEDVALUE('Centro Custo'[numero]) = "1.5",CALCULATE(SUM(Encomendas[Valor Rappel]))*-1
+			    )
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 23318edf-d253-408f-805f-5d8a1229d2fc
+
+		changedProperty = FormatString
+
+	measure 'External Cash Net 2' = CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1) + CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =2) + CALCULATE(SUM(Encomendas[IPC Valor])) +  ((CALCULATE(SUM(Encomendas[Valor Net 1]), Encomendas[ID Tipo de Publicidade] in {9,3,1,11,2,7,6,8,15,16,17}, Encomendas[Grupo] =1)*0.03)*-1) +  CALCULATE(SUM(Encomendas[Valor Rappel]))*-1
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 746e271a-92b3-4968-9c72-27856333297f
+
+		changedProperty = FormatString
+
+	measure 'External Cash Net 2 LY' = CALCULATE([External Cash Net 2], SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 58a90c97-28ae-4e76-91d8-d9cc3f2c5866
+
+		changedProperty = FormatString
+
+	measure 'Budget CC' = ```
+			
+			VAR _3 =  CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "3.0")
+			VAR _1 =  CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.0")  + CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.2.1") +  CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.2.2") +  CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.3") +  CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.4") + CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "1.5")
+			VAR _2 = CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "2.0")
+			VAR _5 = CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "5.0")
+			VAR _6 = CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] = "6.0")
+			VAR _total = _1+_2+_3+_5+_6
+			
+			RETURN
+			IF( 
+			   ISINSCOPE( 'Centro Custo'[Centro Custo] ) ,
+			      SUMX( VALUES( 'Centro Custo'[Centro Custo]),CALCULATE([Budget CentroCusto]     )     ) ,
+			    IF (ISINSCOPE( 'Centro Custo'[Agrupador] ) && SELECTEDVALUE( 'Centro Custo'[Agrupador] ) = "Other Revenues"
+			      , SUMX( VALUES( 'Centro Custo'[Centro Custo]),CALCULATE([Budget CentroCusto]     )     ) 
+			      ,
+			        IF (ISINSCOPE( 'Centro Custo'[Agrupador] ) && SELECTEDVALUE( 'Centro Custo'[Agrupador] ) = "Advertising"
+			        , _1 + _2 + _3, _total
+			 )))
+			```
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 1d6141e5-d3ab-408d-8d3d-cfe6b85af57d
+
+		changedProperty = FormatString
+
+	measure 'External Cash Net 2 Budget' =
+			
+			CALCULATE(SUM(Objetivos[Valor]), Objetivos[centroCusto] IN  {"1.2.1","1.2.2","1.3","1.4","1.5"})
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 50caa44a-7aca-437e-93d8-27834155b7ac
+
+		changedProperty = FormatString
+
+	measure 'Objetivo Net 1' =
+			
+			BLANK()
+			
+			--CALCULATE(SUM(Objetivos[Valor]))
+		lineageTag: 7ed5f054-0f9b-4054-96fa-b0ed5123fd4d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Real Pre. Year' = CALCULATE( [Receita CC], SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: f357d62e-b7d0-4550-9547-bd46214c6081
+
+		changedProperty = FormatString
+
+	measure 'Receita CC LY' = CALCULATE( [Receita CC] , SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 7576e587-187d-4299-9ea6-6fce1bce5f61
+
+		changedProperty = FormatString
+
+	measure 'Δ vs LY' = ```
+			DIVIDE([Receita CC] - [Receita CC LY], [Receita CC LY],0) 
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: da8b7bce-db9b-4530-bc6b-cca93cce7cdb
+
+		changedProperty = FormatString
+
+	measure 'Δ vs P. Y.' = CALCULATE( [External Cash Net 2], SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: af906699-5fc2-40d1-9786-4b491c578c62
+
+		changedProperty = FormatString
+
+	measure 'Δ Real vs Bud' = DIVIDE([Receita NET1]- [Objetivo Net 1], [Objetivo Net 1],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 6f176b9b-84d5-4553-8cd2-ae8e757faff9
+
+		changedProperty = FormatString
+
+	measure 'Real vs Real Ly' = ```
+			DIVIDE([Receita NET1] - [Receita NET1 LY], [Receita NET1 LY], 0 ) 
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 58cfbf3c-4991-420b-9f15-7bfe20e22de7
+
+		changedProperty = FormatString
+
+	column Column1
+		dataType: int64
+		formatString: 0
+		lineageTag: 2718a873-2566-4df4-9cd4-a580c578b435
+		summarizeBy: sum
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Empty = " "
+		lineageTag: c967c743-8b2d-40fd-adc7-0efc3d3f5909
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ~Medidas-03cfb19b-8e90-40a6-ad56-a16a373ec871 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

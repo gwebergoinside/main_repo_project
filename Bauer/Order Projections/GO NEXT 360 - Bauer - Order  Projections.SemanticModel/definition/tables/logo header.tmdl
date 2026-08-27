@@ -1,0 +1,18 @@
+table 'logo header'
+	lineageTag: 5e311d02-0f62-41a2-a040-04b5e2ab2ca5
+
+	column 'logo header'
+		dataType: string
+		lineageTag: 14a3a13c-9183-449c-a9c5-62f8b309d3a3
+		summarizeBy: none
+		sourceColumn: logo header
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'logo header-83005821-9aab-42da-a277-a9a0fe547190' = m
+		mode: import
+		queryGroup: BD
+		source = "Bauer_White" meta [IsParameterQuery=true, ExpressionIdentifier=#"lista de imagem", Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_ResultType = Text
+
