@@ -93,7 +93,7 @@ table pbi_vw_indicators
 
 	partition pbi_vw_indicators = m
 		mode: import
-		source = ```
+		source =
 				let
 				    SQL = "SELECT A.st_part
 				            , A.cd_ad_insertion
@@ -108,18 +108,15 @@ table pbi_vw_indicators
 				        JOIN medialivre.pbi_out.pbi_vw_ad_insertion AS B
 				            ON A.cd_ad_insertion = B.cd_ad_insertion
 				            AND YEAR(B.dt_air) >= YEAR(GETDATE()) - 2
-				            AND B.dt_air BETWEEN '" 
-				        & Date.ToText(DateTime.Date(RangeStart), "yyyy-MM-dd") 
-				        & "' AND '" 
-				        & Date.ToText(DateTime.Date(RangeEnd), "yyyy-MM-dd") 
-				        & "'
-				        ",
+				            AND B.dt_air BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
 				    Source = fx_dbricks(SQL)
 				in
 				    Source
-				```
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_IsMQueryFoldable = True
 

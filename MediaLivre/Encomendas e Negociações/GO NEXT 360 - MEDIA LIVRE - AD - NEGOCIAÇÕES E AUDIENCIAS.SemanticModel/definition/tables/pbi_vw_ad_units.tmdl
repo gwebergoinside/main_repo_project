@@ -177,14 +177,17 @@ table pbi_vw_ad_units
 				let
 				    SQL = "SELECT * 
 				            FROM medialivre.pbi_out.pbi_vw_ad_units
-				            WHERE YEAR(dt_air) >= YEAR(GETDATE()) - " & AnoUpdate,
-				    Source = fx_dbricks(SQL),
-				    Ranges = Table.SelectRows(Source, each [dt_air] >= RangeStart and [dt_air] <= RangeEnd)
+				            WHERE YEAR(dt_air) >= YEAR(GETDATE()) - " & AnoUpdate & "
+				            AND dt_air BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+				    Source = fx_dbricks(SQL)
 				in
-				    Ranges
+				    Source
 				```
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_IsMQueryFoldable = True
 

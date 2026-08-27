@@ -375,11 +375,8 @@ table pbi_vw_ad_insertion
 				let
 				    SQL = "SELECT * FROM medialivre.pbi_out.pbi_vw_ad_insertion
 				        WHERE YEAR(dt_air) >= YEAR(GETDATE()) - 2 
-				            AND dt_air BETWEEN '" 
-				        & Date.ToText(DateTime.Date(RangeStart), "yyyy-MM-dd") 
-				        & "' AND '" 
-				        & Date.ToText(DateTime.Date(RangeEnd), "yyyy-MM-dd") 
-				        & "'",
+				            AND dt_air BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
 				    Source = fx_dbricks(SQL)
 				in
 				    Source
@@ -390,4 +387,6 @@ table pbi_vw_ad_insertion
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Exception
+
+	annotation PBI_IsMQueryFoldable = True
 

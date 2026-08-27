@@ -81,17 +81,17 @@ expression Path = "sql/protocolv1/o/7405615480453934/0805-161954-wu14hkte" meta 
 
 	annotation PBI_ResultType = Text
 
-expression RangeStart = #date(2020, 1, 1) meta [IsParameterQuery=true, Type="Date", IsParameterQueryRequired=true]
+expression RangeStart = #datetime(2020, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
 	lineageTag: 37256daa-4d99-49e6-9211-4cc9fed0ef96
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Date
+	annotation PBI_ResultType = DateTime
 
-expression RangeEnd = #date(2029, 12, 31) meta [IsParameterQuery=true, Type="Date", IsParameterQueryRequired=true]
+expression RangeEnd = #datetime(2029, 12, 31, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
 	lineageTag: e2cfd53b-164c-4aa9-8261-5dfe2e930e99
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Date
+	annotation PBI_ResultType = DateTime
 

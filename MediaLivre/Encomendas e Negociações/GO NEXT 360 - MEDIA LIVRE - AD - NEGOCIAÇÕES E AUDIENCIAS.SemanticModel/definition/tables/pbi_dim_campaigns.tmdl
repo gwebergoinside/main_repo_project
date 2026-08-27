@@ -147,15 +147,18 @@ table pbi_dim_campaigns
 		mode: import
 		source =
 				let
-				    SQL = "SELECT * FROM medialivre.pbi_out.pbi_dim_campaigns",
+				    SQL = "SELECT * FROM medialivre.pbi_out.pbi_dim_campaigns
+				        WHERE dt_init between '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            and '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
 				    pbi_dim_campaigns = fx_dbricks(SQL),
-				    #"JSON Channel" = Table.TransformColumns(pbi_dim_campaigns, {"cd_list_channel", each Json.Document(_){0}, type text})
+				    #"JSON Channel" = Table.TransformColumns(pbi_dim_campaigns, {"cd_list_channel", each Json.Document(_){0}, type text}),
+				    #"Ajuste Pontual" = Table.ReplaceValue(#"JSON Channel", each [cd_ad_type], each if Text.Contains([cd_ad_type], "boost", Comparer.OrdinalIgnoreCase) and [cd_account_client] = "36" and Text.StartsWith([cd_campaign], "25") then "NORMAL" else [cd_ad_type], Replacer.ReplaceText, {"cd_ad_type"})
 				in
-				    #"JSON Channel"
+				    #"Ajuste Pontual"
 
 	changedProperty = IsHidden
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
 
 	annotation PBI_NavigationStepName = Navegação
 

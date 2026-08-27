@@ -515,7 +515,10 @@
           "zIndex": 0
         },
         {
-          "location": {},
+          "location": {
+            "x": 9179.4129259606161,
+            "y": 664.52632476295219
+          },
           "nodeIndex": "pmt_add_projections",
           "size": {
             "height": 200,
@@ -524,7 +527,10 @@
           "zIndex": 0
         },
         {
-          "location": {},
+          "location": {
+            "x": 9463.4129259606161,
+            "y": 616.52632476295219
+          },
           "nodeIndex": "pbi_vw_indicators",
           "nodeLineageTag": "aa0757a3-2d5f-47d0-bc0a-42032a5a08eb",
           "size": {
@@ -534,7 +540,10 @@
           "zIndex": 0
         },
         {
-          "location": {},
+          "location": {
+            "x": 9747.4129259606161,
+            "y": 688.52632476295219
+          },
           "nodeIndex": "pbi_vw_media_investment_GRP",
           "nodeLineageTag": "e16adb2b-0605-4576-9fbb-9bca532abf1a",
           "size": {
@@ -544,7 +553,10 @@
           "zIndex": 0
         },
         {
-          "location": {},
+          "location": {
+            "x": 10031.412925960616,
+            "y": 652.52632476295219
+          },
           "nodeIndex": "pbi_vw_ad_break_units",
           "nodeLineageTag": "9e285fd8-1134-4c0e-97d9-fd86df6e057a",
           "size": {
@@ -1001,194 +1013,8 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
-    },
-    {
-      "ordinal": 7,
-      "scrollPosition": {
-        "x": 0,
-        "y": 150.60099047935239
-      },
-      "nodes": [
-        {
-          "location": {
-            "x": 901.094657051714,
-            "y": 533.74260919200947
-          },
-          "nodeIndex": "pbi_dim_accounts_client",
-          "nodeLineageTag": "'tbl-dim-accounts'",
-          "size": {
-            "height": 152,
-            "width": 234
-          },
-          "zIndex": 1
-        },
-        {
-          "location": {
-            "x": 57.9339685077868,
-            "y": 926.06894573835939
-          },
-          "nodeIndex": "pbi_dim_accounts_agency",
-          "nodeLineageTag": "ca42a891-1749-4872-a62c-9890aec82ba8",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 2
-        },
-        {
-          "location": {
-            "x": 50,
-            "y": 116.64345612249406
-          },
-          "nodeIndex": "pbi_dim_campaigns",
-          "nodeLineageTag": "'tbl-dim-campaigns'",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 3
-        },
-        {
-          "location": {
-            "x": 413.93791511218222,
-            "y": 416.34401084191325
-          },
-          "nodeIndex": "pbi_vw_negotiations",
-          "nodeLineageTag": "'tbl-negotiations'",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 4
-        },
-        {
-          "location": {
-            "x": 337.17340638858946,
-            "y": -50
-          },
-          "nodeIndex": "pbi_vw_projected_revenue",
-          "nodeLineageTag": "b42a2772-59b7-42d9-ba0f-b8ee5a733783",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 7
-        },
-        {
-          "location": {
-            "x": 786.178879660817,
-            "y": 85.94427344058181
-          },
-          "nodeIndex": "Ficheiros Negociações",
-          "nodeLineageTag": "f39923d3-57bc-4bfa-96a7-badec859d25c",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 5
-        },
-        {
-          "location": {
-            "x": 447.94238607216266,
-            "y": 782.15539117187745
-          },
-          "nodeIndex": "Relação Ambição",
-          "nodeLineageTag": "6facb0b8-97af-446e-baa2-5055f082d915",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 6
-        }
-      ],
-      "name": "Layout 2",
-      "zoomValue": 72.598019128867946,
-      "pinKeyFieldsToTop": false,
-      "showExtraHeaderInfo": false,
-      "hideKeyFieldsWhenCollapsed": false,
-      "tablesLocked": false
-    },
-    {
-      "ordinal": 8,
-      "scrollPosition": {
-        "x": 0,
-        "y": 0
-      },
-      "nodes": [
-        {
-          "location": {
-            "x": 511,
-            "y": 5
-          },
-          "nodeIndex": "pbi_vw_indicators",
-          "nodeLineageTag": "aa0757a3-2d5f-47d0-bc0a-42032a5a08eb",
-          "size": {
-            "height": 296,
-            "width": 234
-          },
-          "zIndex": 1
-        },
-        {
-          "location": {
-            "x": 295,
-            "y": 467
-          },
-          "nodeIndex": "pbi_vw_targets",
-          "nodeLineageTag": "4452db66-2b4b-436d-b377-4a63788f7d14",
-          "size": {
-            "height": 176,
-            "width": 234
-          },
-          "zIndex": 2
-        },
-        {
-          "location": {
-            "x": 841,
-            "y": 414
-          },
-          "nodeIndex": "pbi_vw_targets_simulado",
-          "nodeLineageTag": "f7d2f1e5-e772-44bf-acef-4c432dceb80a",
-          "size": {
-            "height": 176,
-            "width": 234
-          },
-          "zIndex": 3
-        },
-        {
-          "location": {
-            "x": 1146,
-            "y": 412
-          },
-          "nodeIndex": "pbi_vw_targets_var",
-          "nodeLineageTag": "81dd1f22-4544-4428-932a-5947ce121216",
-          "size": {
-            "height": 176,
-            "width": 234
-          },
-          "zIndex": 5
-        },
-        {
-          "location": {
-            "x": 50,
-            "y": -27
-          },
-          "nodeIndex": "pbi_dim_campaigns",
-          "nodeLineageTag": "'tbl-dim-campaigns'",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 4
-        }
-      ],
-      "name": "Layout 3",
-      "zoomValue": 100,
-      "pinKeyFieldsToTop": false,
-      "showExtraHeaderInfo": false,
-      "hideKeyFieldsWhenCollapsed": false,
-      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 3",
+  "selectedDiagram": "Todas as tabelas",
   "defaultDiagram": "Todas as tabelas"
 }

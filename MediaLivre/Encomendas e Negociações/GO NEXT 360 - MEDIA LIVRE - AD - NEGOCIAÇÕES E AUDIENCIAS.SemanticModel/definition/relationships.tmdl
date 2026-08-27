@@ -145,6 +145,7 @@ relationship 55efcb11-5cf1-dd3e-8958-d4f1f853a2d9
 	toColumn: dim_tempo.data
 
 relationship AutoDetected_dfecd7d3-1dc2-42c2-b44e-c5cc17343b05
+	toCardinality: many
 	fromColumn: pbi_vw_indicators.cd_ad_insertion
 	toColumn: pbi_vw_ad_insertion.cd_ad_insertion
 
