@@ -1,0 +1,30 @@
+{
+  "_comment": "Dados FICTÍCIOS para desenvolvimento sem backend. Substituir pela resposta da API (api/).",
+  "meta": {
+    "last_data_updated": "2026-08-27",
+    "source": "mock"
+  },
+  "filters": {
+    "ano": [2024, 2025, 2026],
+    "canal": ["Canal A", "Canal B", "Canal C"],
+    "daypart": ["Manhã", "Tarde", "Prime Time", "Madrugada"]
+  },
+  "kpis": [
+    { "id": "total_billing",          "label": "Faturamento",        "value": 12845300,  "format": "currency", "delta": 0.083 },
+    { "id": "total_gross",            "label": "Bruto",              "value": 31220100,  "format": "currency", "delta": 0.041 },
+    { "id": "nr_insertions",          "label": "Inserções",          "value": 48213,     "format": "integer",  "delta": -0.017 },
+    { "id": "nr_negotiations_total",  "label": "Negociações",        "value": 512,       "format": "integer",  "delta": 0.12 },
+    { "id": "GRP",                    "label": "GRP",                "value": 8421.55,   "format": "decimal",  "delta": 0.026 },
+    { "id": "CPR",                    "label": "CPR",                "value": 1524.9,    "format": "currency", "delta": -0.034 },
+    { "id": "pc_discount_avg",        "label": "Desconto médio",     "value": 0.372,     "format": "percent",  "delta": 0.008 },
+    { "id": "avg_duration",           "label": "Duração média (s)",  "value": 23.4,      "format": "decimal",  "delta": 0.0 }
+  ],
+  "rows": [
+    { "canal": "Canal A", "daypart": "Prime Time", "insercoes": 12045, "grp": 3210.4, "faturamento": 5120400, "desconto": 0.31 },
+    { "canal": "Canal A", "daypart": "Tarde",      "insercoes": 8210,  "grp": 1120.9, "faturamento": 1830200, "desconto": 0.44 },
+    { "canal": "Canal B", "daypart": "Prime Time", "insercoes": 9822,  "grp": 2540.1, "faturamento": 3410800, "desconto": 0.35 },
+    { "canal": "Canal B", "daypart": "Manhã",      "insercoes": 6104,  "grp": 720.3,  "faturamento": 980500,  "desconto": 0.49 },
+    { "canal": "Canal C", "daypart": "Prime Time", "insercoes": 7411,  "grp": 640.2,  "faturamento": 1210900, "desconto": 0.28 },
+    { "canal": "Canal C", "daypart": "Madrugada",  "insercoes": 4621,  "grp": 189.6,  "faturamento": 292500,  "desconto": 0.58 }
+  ]
+}

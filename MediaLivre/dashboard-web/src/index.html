@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MediaLivre — Negociações e Audiências</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">ML</span>
+      <div>
+        <h1>Negociações e Audiências</h1>
+        <p class="sub">GO NEXT 360 · Media Livre</p>
+      </div>
+    </div>
+    <p class="updated">Atualizado em <span id="lastUpdate">—</span></p>
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="Páginas do relatório">
+    <button class="tab is-active" data-page="main">Main</button>
+    <button class="tab" data-page="negociacoes">Negociações 2026</button>
+    <button class="tab" data-page="agencies">Agencies</button>
+    <button class="tab" data-page="duration">Duration</button>
+  </nav>
+
+  <section class="filters" id="filters" aria-label="Filtros">
+    <!-- slicers renderizados por app.js -->
+  </section>
+
+  <main>
+    <section class="kpi-grid" id="kpis" aria-label="Indicadores"></section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Detalhe por canal e daypart</h2>
+        <span class="hint" id="rowCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="detail">
+          <thead>
+            <tr>
+              <th data-sort="canal">Canal</th>
+              <th data-sort="daypart">Daypart</th>
+              <th class="num" data-sort="insercoes">Inserções</th>
+              <th class="num" data-sort="grp">GRP</th>
+              <th class="num" data-sort="faturamento">Faturamento</th>
+              <th class="num" data-sort="desconto">Desconto</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      Esqueleto de desenvolvimento — dados de <code>data/mock/dashboard.json</code>.
+      Ainda não conectado ao Databricks.
+    </p>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
