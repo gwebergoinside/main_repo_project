@@ -1,44 +1,42 @@
-import { fetchDashboard, applyFilters } from './data.js';
+import { fetchDashboard, applyFilters, sourceLabel } from './data.js';
 import { formatValue, formatDelta } from './format.js';
-import { sparkline, bullet, ring } from './charts.js';
-import { PAGES, getPage } from './pages.js';
+import {
+  sparkline, bullet, ring, monthlyCombo, funnel, rankBars, stacked100, heatmap, scatter,
+  waterfall, dumbbell, divergingBars, histogram, markerBars, targetBars, riskList, yoyRows
+} from './charts.js';
 
 // Estado central — é o que substitui o cross-filter nativo do Power BI.
 const state = {
-  page: 'main',
   filters: { canal: '', daypart: '', setor: '' },
   sort: { key: 'faturamento', dir: 'desc' },
   data: null
 };
 
 const $ = sel => document.querySelector(sel);
+const set = (sel, html) => { const el = $(sel); if (el) el.innerHTML = html; };
 
 async function init() {
   state.data = await fetchDashboard(state);
   const { meta } = state.data;
   $('#lastUpdate').textContent = meta.last_data_updated;
   $('#periodo').textContent = meta.periodo;
+  $('#fonte').textContent = sourceLabel(meta);
+  $('#disclaimer').innerHTML = meta.source === 'mock'
+    ? `Dados fictícios de <code>data/mock/dashboard.json</code> — a API ainda não respondeu.
+       Cada indicador mapeia uma medida real do modelo (ver <code>docs/04-catalogo-indicadores.md</code>).`
+    : `Dados servidos pela API (<code>${meta.source}</code>).
+       Ver <code>docs/04-catalogo-indicadores.md</code> para a equivalência indicador ↔ medida DAX.`;
 
-  renderTabs();
   renderFilters();
   render();
 
-  $('#tabs').addEventListener('click', e => {
-    const tab = e.target.closest('.tab');
-    if (!tab) return;
-    state.page = tab.dataset.page;
-    renderTabs();
-    render();
-    window.scrollTo({ top: 0 });
-  });
-
-  // Delegação no contentor da página: sobrevive a cada re-render.
-  $('#view').addEventListener('click', e => {
+  // Delegação num contentor estável: sobrevive aos re-renders da tabela.
+  $('main').addEventListener('click', e => {
     const th = e.target.closest('#detail thead th');
     if (th && th.dataset.sort) {
       const key = th.dataset.sort;
       state.sort = { key, dir: state.sort.key === key && state.sort.dir === 'desc' ? 'asc' : 'desc' };
-      return render();
+      return renderTable();
     }
     // Cross-filter: clicar numa linha da tabela filtra o canal.
     const tr = e.target.closest('#detail tbody tr');
@@ -49,14 +47,38 @@ async function init() {
       render();
     }
   });
-}
 
-/* ---------------- navegação ---------------- */
+  // Realce da aba conforme a secção visível: o último título que já passou
+  // a linha de 120px a contar do topo é a secção "atual".
+  const links = [...document.querySelectorAll('.tabs .tab')];
+  const titles = [...document.querySelectorAll('.section-title')];
+  let queued = false;
 
-function renderTabs() {
-  $('#tabs').innerHTML = PAGES.map(p =>
-    `<button class="tab ${p.id === state.page ? 'is-active' : ''}" data-page="${p.id}">${p.label}</button>`
-  ).join('');
+  const activate = id => links.forEach(a =>
+    a.classList.toggle('is-active', a.getAttribute('href') === `#${id}`));
+
+  const syncTabs = () => {
+    queued = false;
+    const current = titles.filter(t => t.getBoundingClientRect().top <= 120).pop() || titles[0];
+    if (current) activate(current.id);
+  };
+
+  // Clique e hashchange marcam a aba de imediato; o scroll só refina quando o
+  // utilizador navega à mão. (Um clique não pode depender do evento de scroll:
+  // em separadores em segundo plano o browser não o entrega.)
+  $('#tabs').addEventListener('click', e => {
+    const a = e.target.closest('.tab');
+    if (a) activate(a.getAttribute('href').slice(1));
+  });
+  addEventListener('hashchange', () => activate(location.hash.slice(1)));
+
+  addEventListener('scroll', () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(syncTabs);
+  }, { passive: true });
+
+  syncTabs();
 }
 
 /* ---------------- filtros (slicers) ---------------- */
@@ -87,146 +109,164 @@ function slicer(name, label, options) {
     <select id="f-${name}" name="${name}">${opts}</select></div>`;
 }
 
-/* ---------------- render da página ---------------- */
+/* ---------------- render ---------------- */
 
-// Blocos partilhados entre páginas, injetados nos painéis via ctx.
-const ctx = {
-  alerts: d => `<div class="alerts">${d.alertas.map(a =>
-    `<p class="alert alert-${a.nivel}">${a.texto}</p>`).join('')}</div>`,
+function render() {
+  const d = state.data;
 
-  kpis: (d, ids = null) => {
-    const list = ids ? ids.map(id => d.kpis.find(k => k.id === id)).filter(Boolean) : d.kpis;
-    return `<div class="kpi-grid">${list.map(k => {
-      const dd = formatDelta(k.delta, k.invertDelta);
-      return `<article class="kpi">
-        <div class="kpi-top">
-          <span class="kpi-label" title="medida: ${k.hint}">${k.label}</span>
-          ${sparkline(k.spark, { cls: dd.cls === 'down' ? 'spark-neg' : 'spark-pos' })}
-        </div>
-        <div class="kpi-value">${formatValue(k.value, k.format)}</div>
-        <div class="kpi-delta ${dd.cls}">${dd.text}</div>
-      </article>`;
-    }).join('')}</div>`;
-  },
+  renderAlerts();
+  renderKpis();
+  renderPacing();
 
-  pacing: d => {
-    const p = d.pacing;
-    const atingimento = p.faturado / p.deveria_estar;
-    const gapAmbicao = p.projetado - p.ambicao;
-    const linear = p.dias_decorridos / p.dias_ano;
+  set('#monthly', monthlyCombo(d.monthly));
+  set('#funnel', funnel(d.funnel));
+  set('#scatter', scatter(d.channels));
+  set('#share', stacked100(d.share_mercado));
+  set('#rankCanais', rankBars(d.channels, { valueKey: 'faturamento', labelKey: 'canal' }));
+  set('#rankSetores', rankBars(d.setores, { valueKey: 'faturamento', labelKey: 'setor', deltaKey: 'delta' }));
+  $('#hmMetric').textContent = d.heatmap.metric;
+  set('#heatmap', heatmap(d.heatmap));
 
-    const bullets = [
-      bullet({ label: 'Ambição anual', sublabel: formatValue(p.ambicao, 'currency'),
-        actual: p.ambicao, target: p.ambicao, reference: p.ambicao, max: p.ambicao }),
-      bullet({ label: 'Contratado', sublabel: formatValue(p.contratado, 'currency'),
-        actual: p.contratado, target: p.ambicao, reference: p.projetado, max: p.ambicao }),
-      bullet({ label: 'Faturado', sublabel: formatValue(p.faturado, 'currency'),
-        actual: p.faturado, target: p.contratado, reference: p.deveria_estar, max: p.ambicao })
-    ].join('');
+  set('#desvio', divergingBars(d.desvio_projecao, { labelKey: 'mes', valueKey: 'desvio' }));
+  set('#ficheiros', dumbbell(d.ficheiros, {
+    labelKey: 'ficheiro', subKey: 'cliente',
+    aKey: 'negociado', bKey: 'fechado', aLabel: 'Negociado', bLabel: 'Fechado'
+  }));
+  set('#ambicao', targetBars(d.ficheiros, {
+    labelKey: 'ficheiro', subKey: 'cliente', valueKey: 'fechado', targetKey: 'ambicao'
+  }));
+  set('#risco', riskList(d.risco, {
+    idKey: 'negociacao', subKey: 'cliente',
+    targetKey: 'minimo', actualKey: 'faturado', noteKey: 'dias_restantes'
+  }));
 
-    const facts = [
-      fact('Projeção fecho', formatValue(p.projetado, 'currency'),
-        `${gapAmbicao >= 0 ? '+' : ''}${formatValue(gapAmbicao, 'currency')} vs. ambição`,
-        gapAmbicao >= 0 ? 'up' : 'down'),
-      fact('Cenário pessimista', formatValue(p.projetado_pessimista, 'currency'),
-        `${formatValue(p.projetado_pessimista / p.ambicao, 'percent')} da ambição`, 'flat'),
-      fact('Por contratar', formatValue(p.ambicao - p.contratado, 'currency'),
-        'para atingir a ambição', 'flat'),
-      fact('Ano decorrido', formatValue(linear, 'percent'),
-        `${p.dias_decorridos} de ${p.dias_ano} dias`, 'flat')
-    ].join('');
+  $('#cascataHint').textContent = d.cascata.hint;
+  set('#cascata', waterfall(d.cascata.steps));
 
-    return `<div class="pacing-body">
-      ${ring(atingimento, {
-        label: 'do esperado',
-        caption: `${formatValue(p.faturado, 'currency')} faturado vs. ${formatValue(p.deveria_estar, 'currency')} esperado a esta altura do ano`
-      })}
-      <div class="pacing-bullets">${bullets}</div>
-      <dl class="facts">${facts}</dl>
-    </div>`;
-  },
+  set('#yoy', yoyRows(d.yoy_audiencia));
+  set('#shareDim', markerBars(d.share_dimensoes, {
+    labelKey: 'dimensao', barKey: 'atual', barFormat: 'percent',
+    markerKey: 'ly', markerFormat: 'percent', markerLabel: 'ano anterior'
+  }));
 
-  rowCount: d => {
-    const n = applyFilters(d.rows, state.filters).length;
-    return `${n} de ${d.rows.length} linhas`;
-  },
+  $('#duracaoHint').textContent =
+    `duração média ${formatValue(d.duracao.avg, 'decimal')}s · fitting ${formatValue(d.duracao.fitting, 'percent')}`;
+  set('#duracao', histogram(d.duracao.bins, {
+    labelKey: 'seg', valueKey: 'insercoes',
+    marker: d.duracao.avg, markerLabel: `média ${formatValue(d.duracao.avg, 'decimal')}s`
+  }));
+  set('#posicao', markerBars(d.posicao, {
+    labelKey: 'canal', barKey: 'pc_first', barFormat: 'percent',
+    markerKey: 'avg_pos', markerFormat: 'decimal', markerLabel: 'posição média no break',
+    noteKey: 'nr_first'
+  }));
 
-  table: d => {
-    const rows = applyFilters(d.rows, state.filters);
-    const { key, dir } = state.sort;
-    const sorted = [...rows].sort((a, b) => {
-      const x = a[key], y = b[key];
-      const cmp = typeof x === 'number' ? x - y : String(x).localeCompare(String(y), 'pt');
-      return dir === 'asc' ? cmp : -cmp;
-    });
+  renderTable();
+}
 
-    const maxFat = Math.max(...d.rows.map(r => r.faturamento)) || 1;
-    const cols = [
-      ['canal', 'Canal', false], ['daypart', 'Daypart', false],
-      ['insercoes', 'Inserções', true], ['grp', 'GRP eq.', true],
-      ['cpr', 'CPR eq.', true], ['faturamento', 'Faturamento', true],
-      ['desconto', 'Desconto', true]
-    ];
+function renderAlerts() {
+  set('#alertas', state.data.alertas.map(a =>
+    `<p class="alert alert-${a.nivel}">${a.texto}</p>`).join(''));
+}
 
-    const head = cols.map(([k, label, num]) =>
-      `<th class="${num ? 'num' : ''} ${key === k ? 'is-sorted' : ''}" data-sort="${k}">${label}${
-        key === k ? (dir === 'asc' ? ' ↑' : ' ↓') : ''}</th>`).join('');
+// Nota: com o mock os KPIs vêm pré-calculados e não reagem aos filtros.
+// Com a API, cada mudança de filtro refaz a query e eles passam a responder.
+function renderKpis() {
+  set('#kpis', state.data.kpis.map(k => {
+    const d = formatDelta(k.delta, k.invertDelta);
+    return `<article class="kpi">
+      <div class="kpi-top">
+        <span class="kpi-label" title="medida: ${k.hint}">${k.label}</span>
+        ${sparkline(k.spark, { cls: d.cls === 'down' ? 'spark-neg' : 'spark-pos' })}
+      </div>
+      <div class="kpi-value">${formatValue(k.value, k.format)}</div>
+      <div class="kpi-delta ${d.cls}">${d.text}</div>
+    </article>`;
+  }).join(''));
+}
 
-    const body = sorted.map(r => `<tr data-canal="${r.canal}"
-      class="${state.filters.canal === r.canal ? 'is-selected' : ''}">
-      <td>${r.canal}</td>
-      <td>${r.daypart}</td>
-      <td class="num">${formatValue(r.insercoes, 'integer')}</td>
-      <td class="num">${formatValue(r.grp, 'decimal')}</td>
-      <td class="num">${formatValue(r.cpr, 'currency')}</td>
-      <td class="num databar" style="--t:${(r.faturamento / maxFat).toFixed(3)}">${formatValue(r.faturamento, 'currency')}</td>
-      <td class="num">${formatValue(r.desconto, 'percent')}</td>
-    </tr>`).join('');
+function renderPacing() {
+  const p = state.data.pacing;
+  const atingimento = p.faturado / p.deveria_estar;
+  const gapAmbicao = p.projetado - p.ambicao;
+  const linear = p.dias_decorridos / p.dias_ano;
 
-    // Totais — no Power BI viriam do subtotal da matriz.
-    const sum = k => sorted.reduce((a, r) => a + r[k], 0);
-    const totFat = sum('faturamento'), totGrp = sum('grp');
-    const foot = sorted.length ? `<tr>
-      <td colspan="2">Total</td>
-      <td class="num">${formatValue(sum('insercoes'), 'integer')}</td>
-      <td class="num">${formatValue(totGrp, 'decimal')}</td>
-      <td class="num">${formatValue(totGrp ? totFat / totGrp : 0, 'currency')}</td>
-      <td class="num">${formatValue(totFat, 'currency')}</td>
-      <td class="num">—</td>
-    </tr>` : '';
+  set('#pacingRing', ring(atingimento, {
+    label: 'do esperado',
+    caption: `${formatValue(p.faturado, 'currency')} faturado vs. ${formatValue(p.deveria_estar, 'currency')} esperado a esta altura do ano`
+  }));
 
-    return `<div class="table-wrap"><table id="detail">
-      <thead><tr>${head}</tr></thead>
-      <tbody>${body}</tbody>
-      <tfoot>${foot}</tfoot>
-    </table></div>`;
-  }
-};
+  set('#pacingBullets', [
+    bullet({ label: 'Ambição anual', sublabel: formatValue(p.ambicao, 'currency'),
+      actual: p.ambicao, target: p.ambicao, reference: p.ambicao, max: p.ambicao }),
+    bullet({ label: 'Contratado', sublabel: formatValue(p.contratado, 'currency'),
+      actual: p.contratado, target: p.ambicao, reference: p.projetado, max: p.ambicao }),
+    bullet({ label: 'Faturado', sublabel: formatValue(p.faturado, 'currency'),
+      actual: p.faturado, target: p.contratado, reference: p.deveria_estar, max: p.ambicao })
+  ].join(''));
+
+  set('#pacingFacts', [
+    fact('Projeção fecho', formatValue(p.projetado, 'currency'),
+      `${gapAmbicao >= 0 ? '+' : ''}${formatValue(gapAmbicao, 'currency')} vs. ambição`,
+      gapAmbicao >= 0 ? 'up' : 'down'),
+    fact('Cenário pessimista', formatValue(p.projetado_pessimista, 'currency'),
+      `${formatValue(p.projetado_pessimista / p.ambicao, 'percent')} da ambição`, 'flat'),
+    fact('Por contratar', formatValue(p.ambicao - p.contratado, 'currency'),
+      'para atingir a ambição', 'flat'),
+    fact('Ano decorrido', formatValue(linear, 'percent'),
+      `${p.dias_decorridos} de ${p.dias_ano} dias`, 'flat')
+  ].join(''));
+}
 
 function fact(label, value, note, cls) {
   return `<div class="fact"><dt>${label}</dt><dd>${value}</dd><p class="fact-note ${cls}">${note}</p></div>`;
 }
 
-function render() {
-  const page = getPage(state.page);
+function renderTable() {
   const d = state.data;
+  const rows = applyFilters(d.rows, state.filters);
+  const { key, dir } = state.sort;
+  const sorted = [...rows].sort((a, b) => {
+    const x = a[key], y = b[key];
+    const cmp = typeof x === 'number' ? x - y : String(x).localeCompare(String(y), 'pt');
+    return dir === 'asc' ? cmp : -cmp;
+  });
 
-  $('#view').innerHTML = page.panels.map(p => {
-    const body = p.render(d, ctx);
-    if (p.bare) return `<div class="cell span-${p.span}">${body}</div>`;
+  const maxFat = Math.max(...d.rows.map(r => r.faturamento)) || 1;
 
-    const hint = typeof p.hint === 'function' ? p.hint(d, ctx) : p.hint;
-    return `<section class="panel cell span-${p.span}">
-      <div class="panel-head">
-        <h2>${p.title}</h2>
-        ${hint ? `<span class="hint">${hint}</span>` : ''}
-      </div>
-      <div class="panel-body ${p.flush ? 'is-flush' : ''} ${p.scroll ? 'table-wrap' : ''}">${body}</div>
-    </section>`;
-  }).join('');
+  document.querySelectorAll('#detail thead th').forEach(th => {
+    const k = th.dataset.sort;
+    th.classList.toggle('is-sorted', k === key);
+    th.textContent = th.textContent.replace(/ [↑↓]$/, '') + (k === key ? (dir === 'asc' ? ' ↑' : ' ↓') : '');
+  });
+
+  set('#detail tbody', sorted.map(r => `<tr data-canal="${r.canal}"
+    class="${state.filters.canal === r.canal ? 'is-selected' : ''}">
+    <td>${r.canal}</td>
+    <td>${r.daypart}</td>
+    <td class="num">${formatValue(r.insercoes, 'integer')}</td>
+    <td class="num">${formatValue(r.grp, 'decimal')}</td>
+    <td class="num">${formatValue(r.cpr, 'currency')}</td>
+    <td class="num databar" style="--t:${(r.faturamento / maxFat).toFixed(3)}">${formatValue(r.faturamento, 'currency')}</td>
+    <td class="num">${formatValue(r.desconto, 'percent')}</td>
+  </tr>`).join(''));
+
+  // Totais — no Power BI viriam do subtotal da matriz.
+  const sum = k => sorted.reduce((a, r) => a + r[k], 0);
+  const totFat = sum('faturamento'), totGrp = sum('grp');
+  set('#detail tfoot', sorted.length ? `<tr>
+    <td colspan="2">Total</td>
+    <td class="num">${formatValue(sum('insercoes'), 'integer')}</td>
+    <td class="num">${formatValue(totGrp, 'decimal')}</td>
+    <td class="num">${formatValue(totGrp ? totFat / totGrp : 0, 'currency')}</td>
+    <td class="num">${formatValue(totFat, 'currency')}</td>
+    <td class="num">—</td>
+  </tr>` : '');
+
+  $('#rowCount').textContent = `${sorted.length} de ${d.rows.length} linhas`;
 }
 
 init().catch(err => {
-  document.querySelector('#view').innerHTML =
-    `<p class="alert alert-crit">Erro ao iniciar: ${err.message}</p>`;
+  document.querySelector('main').insertAdjacentHTML('afterbegin',
+    `<p class="alert alert-crit">Erro ao iniciar: ${err.message}</p>`);
 });

@@ -4,3 +4,6 @@
 
 # Documentos técnicos com informação sensível (não versionar)
 Soico/pedido-powerbi-soico.md
+
+# Credenciais locais do backend do dashboard-web
+MediaLivre/dashboard-web/api/.env

@@ -70,32 +70,34 @@ dashboard-web/
 │   ├── 01-inventario-pbip.md       # o que existe hoje no .pbip (páginas, visuais, medidas)
 │   ├── 02-mapeamento-visuais.md    # visual PBI → equivalente web
 │   ├── 03-roadmap.md               # fases de implementação
-│   └── 04-catalogo-indicadores.md  # indicadores propostos ↔ medida DAX de origem
+│   ├── 04-catalogo-indicadores.md  # indicadores ↔ medida DAX de origem
+│   └── 05-fase1-backend.md         # fontes, contrato da API, tradução DAX→SQL, segurança
 ├── src/                            # front-end
 │   ├── index.html
 │   ├── css/styles.css
 │   └── js/
-│       ├── app.js                  # estado central + render das páginas
-│       ├── pages.js                # definição declarativa das páginas e painéis
+│       ├── app.js                  # estado central + render dos visuais
 │       ├── charts.js               # gráficos em SVG inline (sem bibliotecas)
-│       ├── data.js                 # acesso a dados (hoje o mock, amanhã a API)
+│       ├── data.js                 # acesso a dados: API primeiro, mock em fallback
 │       └── format.js               # formatação pt-PT alinhada às formatStrings do modelo
 ├── data/mock/                      # JSONs de exemplo (desenvolvimento sem backend)
-└── api/                            # backend (queries SQL que substituem as medidas DAX)
+└── api/                            # backend Node sem dependências (Fase 1)
+    ├── server.js                   # serve front-end + API na mesma origem
+    ├── config.js  databricks.js  cache.js
+    └── queries/                    # tradução DAX → SQL
 ```
 
-### Páginas e visuais implementados
+### Secções e visuais implementados
 
-Tudo em HTML/CSS/SVG puro — **zero dependências externas**. As páginas são declaradas em
-`src/js/pages.js`, numa estrutura deliberadamente parecida com as `sections` do
-`report.json`: trocar de página é trocar de definição, não de HTML.
+Tudo em HTML/CSS/SVG puro — **zero dependências externas**. O `index.html` declara as
+secções explicitamente; as abas do topo são âncoras que saltam para cada uma.
 
-| Página | Visuais |
+| Secção | Visuais |
 | --- | --- |
 | **Main** | alertas · 8 KPI cards com sparkline · pacing (anel + bullets + factos) · combo mensal · funil · dispersão GRP×CPR · share 100% empilhado · 2 rankings · heatmap · tabela |
-| **Negociações 2026** | funil · barras divergentes do desvio da projeção · dumbbell negociado vs. fechado · barras com meta (ambição) · cartões de faturamento mínimo em risco |
-| **Financeiro** | cascata bruto → desconto → líquido · ranking por setor · combo mensal |
-| **Audiência** | comparação homóloga (GRP/CPR/CPS/TRP) · dispersão · heatmap · share por dimensão |
+| **Negociações 2026** | barras divergentes do desvio da projeção · dumbbell negociado vs. fechado · barras com meta (ambição) · cartões de faturamento mínimo em risco |
+| **Financeiro** | cascata bruto → desconto → líquido |
+| **Audiência** | comparação homóloga (GRP/CPR/CPS/TRP) · share por dimensão |
 | **Duration** | histograma de duração com marcador da média · posição no break por canal |
 
 Biblioteca de visuais em `charts.js`: `sparkline`, `bullet`, `ring`, `monthlyCombo`,
@@ -108,11 +110,30 @@ Clicar numa linha da tabela filtra o canal — é o **cross-filter do Power BI r
 > ⚠️ Os KPIs do topo vêm pré-calculados no mock e por isso ainda não reagem aos filtros.
 > Com o backend, cada mudança de filtro refaz a query e eles passam a responder.
 
-## 🚀 Como rodar o esqueleto
+## 🚀 Como correr
 
 ```bash
-cd "MediaLivre/dashboard-web" && python -m http.server 8080
+cd "MediaLivre/dashboard-web" && node api/server.js
 ```
 
-Depois abrir `http://localhost:8080/src/`. Nesta fase o front consome `data/mock/`
-(servir a partir da raiz do projeto, e nao de `src/`, porque o JS busca `../data/mock/`).
+Abre em `http://localhost:8080/`. O servidor serve o front-end **e** a API na mesma
+origem. Requer apenas Node ≥ 18 — **sem dependências npm**.
+
+**Sem credenciais do Databricks arranca em modo mock** e o cabeçalho mostra a origem dos
+dados (*Fonte: mock*), para nunca haver dúvida se um número é real. Para ligar ao
+Databricks: copiar `api/.env.example` para `api/.env` e preencher. Ver
+[`docs/05-fase1-backend.md`](docs/05-fase1-backend.md).
+
+## 📍 Estado
+
+| Fase | Estado |
+| --- | --- |
+| **0** — decisão de escopo | ⬜ por decidir com a equipa |
+| **1** — fundação de dados | ✅ backend, contrato de API, cache · ⚠️ autenticação é placeholder |
+| **2** — tradução das medidas | 🟡 **21 de 141** traduzidas, por validar contra o Power BI |
+| **3** — front-end | ✅ 18 painéis, cross-filter, filtros |
+| **4** — matriz e páginas restantes | ⬜ |
+| **5** — paridade e entrega | ⬜ |
+
+> ⚠️ **Nada foi validado contra o Power BI ainda.** As 21 medidas traduzidas só contam
+> como feitas depois de baterem certo, número a número, com o relatório atual.

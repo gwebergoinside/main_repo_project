@@ -18,20 +18,222 @@
     <div class="topbar-right">
       <p class="updated">Período <b id="periodo">—</b></p>
       <p class="updated">Atualizado em <b id="lastUpdate">—</b></p>
+      <p class="updated">Fonte <b id="fonte">—</b></p>
     </div>
   </header>
 
-  <!-- Abas e filtros são preenchidos por app.js; as páginas vivem em pages.js. -->
-  <nav class="tabs" id="tabs" aria-label="Páginas do relatório"></nav>
+  <nav class="tabs" id="tabs" aria-label="Secções do relatório">
+    <a class="tab is-active" href="#sec-main">Main</a>
+    <a class="tab" href="#sec-negociacoes">Negociações 2026</a>
+    <a class="tab" href="#sec-financeiro">Financeiro</a>
+    <a class="tab" href="#sec-audiencia">Audiência</a>
+    <a class="tab" href="#sec-duration">Duration</a>
+  </nav>
+
   <section class="filters" id="filters" aria-label="Filtros"></section>
 
-  <main id="view" class="page-grid"></main>
+  <main>
+    <!-- Faixa de alertas (equivalente a tx_mensage_alert) -->
+    <section id="alertas" class="alerts" aria-label="Alertas"></section>
 
-  <footer class="disclaimer">
-    Esqueleto de desenvolvimento — dados fictícios de <code>data/mock/dashboard.json</code>.
-    Ainda não conectado ao Databricks. Cada indicador mapeia uma medida real do modelo
-    (ver <code>docs/04-catalogo-indicadores.md</code>).
-  </footer>
+    <h2 class="section-title" id="sec-main">Main</h2>
+
+    <!-- 1. Indicadores de topo -->
+    <section class="kpi-grid" id="kpis" aria-label="Indicadores principais"></section>
+
+    <!-- 2. Pacing comercial -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Pacing comercial — ambição, contratado e realizado</h2>
+        <span class="hint">Onde devíamos estar vs. onde estamos</span>
+      </div>
+      <div class="panel-body pacing-body">
+        <div id="pacingRing"></div>
+        <div id="pacingBullets" class="pacing-bullets"></div>
+        <dl id="pacingFacts" class="facts"></dl>
+      </div>
+    </section>
+
+    <!-- 3. Evolução mensal + funil -->
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Faturamento mensal</h2>
+          <span class="hint"><i class="key key-bar"></i>2026 <i class="key key-line"></i>2025</span>
+        </div>
+        <div class="panel-body" id="monthly"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Funil de negociações</h2>
+          <span class="hint">Registo → faturação</span>
+        </div>
+        <div class="panel-body" id="funnel"></div>
+      </section>
+    </div>
+
+    <!-- 4. Eficiência de audiência + share -->
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Eficiência por canal</h2>
+          <span class="hint">GRP eq. × CPR eq. · área = faturamento</span>
+        </div>
+        <div class="panel-body" id="scatter"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Share de investimento</h2>
+          <span class="hint">vs. ano anterior</span>
+        </div>
+        <div class="panel-body" id="share"></div>
+      </section>
+    </div>
+
+    <!-- 5. Rankings -->
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head"><h2>Faturamento por canal</h2></div>
+        <div class="panel-body" id="rankCanais"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Faturamento por setor</h2>
+          <span class="hint">variação vs. período homólogo</span>
+        </div>
+        <div class="panel-body" id="rankSetores"></div>
+      </section>
+    </div>
+
+    <!-- 6. Heatmap -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Ocupação de audiência</h2>
+        <span class="hint" id="hmMetric"></span>
+      </div>
+      <div class="panel-body table-wrap" id="heatmap"></div>
+    </section>
+
+    <!-- 7. Detalhe -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Detalhe por canal e daypart</h2>
+        <span class="hint" id="rowCount"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="detail">
+          <thead>
+            <tr>
+              <th data-sort="canal">Canal</th>
+              <th data-sort="daypart">Daypart</th>
+              <th class="num" data-sort="insercoes">Inserções</th>
+              <th class="num" data-sort="grp">GRP eq.</th>
+              <th class="num" data-sort="cpr">CPR eq.</th>
+              <th class="num" data-sort="faturamento">Faturamento</th>
+              <th class="num" data-sort="desconto">Desconto</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="sec-negociacoes">Negociações 2026</h2>
+
+    <!-- 8. Desvio da projeção + ficheiros -->
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Desvio: projetado vs. faturado</h2>
+          <span class="hint">pc_dif_project_negotiated_vs_billing</span>
+        </div>
+        <div class="panel-body" id="desvio"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Negociado vs. fechado por ficheiro</h2>
+          <span class="hint">vl_negociado_ficheiro · vl_fechado_ficheiro</span>
+        </div>
+        <div class="panel-body" id="ficheiros"></div>
+      </section>
+    </div>
+
+    <!-- 9. Cobertura da ambição -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Cobertura da ambição por ficheiro</h2>
+        <span class="hint">vl_contracted_shouldBe_ambicao · marcador = ambição</span>
+      </div>
+      <div class="panel-body" id="ambicao"></div>
+    </section>
+
+    <!-- 10. Faturamento mínimo em risco -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Faturamento mínimo em risco</h2>
+        <span class="hint">total_dif_minimal_billing · negociações abaixo do mínimo contratado</span>
+      </div>
+      <div class="panel-body" id="risco"></div>
+    </section>
+
+    <h2 class="section-title" id="sec-financeiro">Financeiro</h2>
+
+    <!-- 11. Cascata -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Do bruto de tabela ao líquido faturado</h2>
+        <span class="hint" id="cascataHint"></span>
+      </div>
+      <div class="panel-body" id="cascata"></div>
+    </section>
+
+    <h2 class="section-title" id="sec-audiencia">Audiência</h2>
+
+    <!-- 12. Homólogo + share por dimensão -->
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Evolução homóloga da audiência</h2>
+          <span class="hint">GRP_EQ_LY · CPR_EQ_LY · CPS_LY</span>
+        </div>
+        <div class="panel-body" id="yoy"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Share por dimensão</h2>
+          <span class="hint">marcador = ano anterior</span>
+        </div>
+        <div class="panel-body" id="shareDim"></div>
+      </section>
+    </div>
+
+    <h2 class="section-title" id="sec-duration">Duration</h2>
+
+    <!-- 13. Duração + posição no break -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Distribuição de inserções por duração</h2>
+        <span class="hint" id="duracaoHint"></span>
+      </div>
+      <div class="panel-body" id="duracao"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Posição no break por canal</h2>
+        <span class="hint">pc_first_position · marcador = avg_position · nº de 1.as posições</span>
+      </div>
+      <div class="panel-body" id="posicao"></div>
+    </section>
+
+    <p class="disclaimer" id="disclaimer"></p>
+  </main>
 
   <script type="module" src="js/app.js"></script>
 </body>
