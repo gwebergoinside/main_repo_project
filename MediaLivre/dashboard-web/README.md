@@ -65,18 +65,45 @@ ser montada no servidor. O front-end consome só JSON agregado.
 
 ```
 dashboard-web/
-├── README.md                  # este arquivo
+├── README.md                       # este arquivo
 ├── docs/
-│   ├── 01-inventario-pbip.md  # o que existe hoje no .pbip (páginas, visuais, medidas)
-│   ├── 02-mapeamento-visuais.md # visual PBI → equivalente web
-│   └── 03-roadmap.md          # fases de implementação
-├── src/                       # front-end
+│   ├── 01-inventario-pbip.md       # o que existe hoje no .pbip (páginas, visuais, medidas)
+│   ├── 02-mapeamento-visuais.md    # visual PBI → equivalente web
+│   ├── 03-roadmap.md               # fases de implementação
+│   └── 04-catalogo-indicadores.md  # indicadores propostos ↔ medida DAX de origem
+├── src/                            # front-end
 │   ├── index.html
 │   ├── css/styles.css
-│   └── js/{app,data,charts}.js
-├── data/mock/                 # JSONs de exemplo (desenvolvimento sem backend)
-└── api/                       # backend (queries SQL que substituem as medidas DAX)
+│   └── js/
+│       ├── app.js                  # estado central + orquestração dos visuais
+│       ├── charts.js               # gráficos em SVG inline (sem bibliotecas)
+│       ├── data.js                 # acesso a dados (hoje o mock, amanhã a API)
+│       └── format.js               # formatação pt-PT alinhada às formatStrings do modelo
+├── data/mock/                      # JSONs de exemplo (desenvolvimento sem backend)
+└── api/                            # backend (queries SQL que substituem as medidas DAX)
 ```
+
+### Visuais já implementados
+
+Tudo em HTML/CSS/SVG puro — **zero dependências externas**.
+
+| Secção | Visual |
+| --- | --- |
+| KPIs | 8 cards com sparkline e variação (sinal invertido em CPR e desconto) |
+| Pacing comercial | anel de atingimento + 3 bullet charts com linha de referência + 4 factos |
+| Faturamento mensal | combo barras (2026) + linha (2025) |
+| Funil de negociações | 4 etapas com queda entre etapas |
+| Eficiência por canal | dispersão GRP × CPR, área da bolha = faturamento |
+| Share de investimento | barra 100% empilhada + legenda com variação em p.p. |
+| Rankings | barras horizontais por canal e por setor |
+| Ocupação de audiência | heatmap canal × daypart |
+| Detalhe | tabela ordenável, barra de dados na célula, totais no rodapé |
+
+Clicar numa linha da tabela filtra o canal — é o **cross-filter do Power BI reimplementado
+à mão**, sobre um estado central em `app.js`.
+
+> ⚠️ Os KPIs do topo vêm pré-calculados no mock e por isso ainda não reagem aos filtros.
+> Com o backend, cada mudança de filtro refaz a query e eles passam a responder.
 
 ## 🚀 Como rodar o esqueleto
 

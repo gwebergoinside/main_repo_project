@@ -15,8 +15,16 @@ export function formatValue(value, kind) {
   }
 }
 
-export function formatDelta(delta) {
+/**
+ * @param {number} delta variação relativa (0.083 = +8,3%)
+ * @param {boolean} invert true quando subir é mau (CPR, desconto) —
+ *        a seta continua a apontar a direção real, só a cor inverte.
+ */
+export function formatDelta(delta, invert = false) {
   if (!delta) return { text: '—', cls: 'flat' };
-  const cls = delta > 0 ? 'up' : 'down';
-  return { text: `${delta > 0 ? '▲' : '▼'} ${percent.format(Math.abs(delta))} vs. período anterior`, cls };
+  const good = invert ? delta < 0 : delta > 0;
+  return {
+    text: `${delta > 0 ? '▲' : '▼'} ${percent.format(Math.abs(delta))} vs. período anterior`,
+    cls: good ? 'up' : 'down'
+  };
 }

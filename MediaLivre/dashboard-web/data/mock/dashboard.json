@@ -1,30 +1,108 @@
 {
-  "_comment": "Dados FICTÍCIOS para desenvolvimento sem backend. Substituir pela resposta da API (api/).",
+  "_comment": "Dados FICTICIOS para desenvolvimento sem backend. Cada campo mapeia uma medida real de ~Medidas.tmdl - ver docs/04-catalogo-indicadores.md",
   "meta": {
     "last_data_updated": "2026-08-27",
+    "periodo": "YTD 2026 (Jan-Ago)",
+    "moeda": "EUR",
     "source": "mock"
   },
   "filters": {
-    "ano": [2024, 2025, 2026],
-    "canal": ["Canal A", "Canal B", "Canal C"],
-    "daypart": ["Manhã", "Tarde", "Prime Time", "Madrugada"]
+    "ano": ["2026", "2025", "2024"],
+    "canal": ["Canal A", "Canal B", "Canal C", "Canal D"],
+    "daypart": ["Manha", "Tarde", "Prime Time", "Late Night", "Madrugada"],
+    "setor": ["Auto", "Banca", "Retalho", "Telecom", "Alimentar", "Farma"]
   },
+
   "kpis": [
-    { "id": "total_billing",          "label": "Faturamento",        "value": 12845300,  "format": "currency", "delta": 0.083 },
-    { "id": "total_gross",            "label": "Bruto",              "value": 31220100,  "format": "currency", "delta": 0.041 },
-    { "id": "nr_insertions",          "label": "Inserções",          "value": 48213,     "format": "integer",  "delta": -0.017 },
-    { "id": "nr_negotiations_total",  "label": "Negociações",        "value": 512,       "format": "integer",  "delta": 0.12 },
-    { "id": "GRP",                    "label": "GRP",                "value": 8421.55,   "format": "decimal",  "delta": 0.026 },
-    { "id": "CPR",                    "label": "CPR",                "value": 1524.9,    "format": "currency", "delta": -0.034 },
-    { "id": "pc_discount_avg",        "label": "Desconto médio",     "value": 0.372,     "format": "percent",  "delta": 0.008 },
-    { "id": "avg_duration",           "label": "Duração média (s)",  "value": 23.4,      "format": "decimal",  "delta": 0.0 }
+    { "id": "total_billing",         "label": "Faturamento",        "hint": "total_billing",           "value": 12845300, "format": "currency", "delta": 0.083,  "spark": [1.28,1.31,1.42,1.55,1.61,1.72,1.68,1.83] },
+    { "id": "total_gross",           "label": "Bruto contratado",   "hint": "total_contracted_gross",  "value": 31220100, "format": "currency", "delta": 0.041,  "spark": [3.6,3.8,3.9,4.1,4.0,4.2,4.3,4.4] },
+    { "id": "pc_contracted_realised","label": "Contratado realizado","hint": "pc_contracted_realised", "value": 0.411,    "format": "percent",  "delta": 0.024,  "spark": [0.31,0.33,0.35,0.36,0.38,0.39,0.40,0.41] },
+    { "id": "nr_insertions",         "label": "Insercoes",          "hint": "nr_insertions",           "value": 48213,    "format": "integer",  "delta": -0.017, "spark": [6.4,6.1,6.3,5.9,6.0,5.8,5.9,5.8] },
+    { "id": "GRP_EQ",                "label": "GRP eq. 30\"",       "hint": "GRP_EQ",                  "value": 8421.55,  "format": "decimal",  "delta": 0.026,  "spark": [980,1010,1040,1075,1050,1090,1080,1096] },
+    { "id": "CPR_EQ",                "label": "CPR eq. 30\"",       "hint": "CPR_EQ",                  "value": 1524.9,   "format": "currency", "delta": -0.034, "spark": [1620,1600,1585,1570,1555,1548,1532,1525], "invertDelta": true },
+    { "id": "pc_discount_avg",       "label": "Desconto medio",     "hint": "pc_discount_avg",         "value": 0.372,    "format": "percent",  "delta": 0.008,  "spark": [0.35,0.36,0.36,0.37,0.37,0.38,0.37,0.37], "invertDelta": true },
+    { "id": "pc_first_position",     "label": "1.a posicao (break)","hint": "pc_first_position",       "value": 0.184,    "format": "percent",  "delta": 0.012,  "spark": [0.16,0.16,0.17,0.17,0.18,0.18,0.18,0.18] }
   ],
+
+  "pacing": {
+    "ambicao": 42000000,
+    "contratado": 31220100,
+    "faturado": 12845300,
+    "deveria_estar": 14100000,
+    "projetado": 38400000,
+    "projetado_pessimista": 34900000,
+    "dias_decorridos": 239,
+    "dias_ano": 365
+  },
+
+  "monthly": [
+    { "mes": "Jan", "billing": 1280000, "billing_ly": 1190000, "grp": 980,  "cpr": 1620 },
+    { "mes": "Fev", "billing": 1310000, "billing_ly": 1240000, "grp": 1010, "cpr": 1600 },
+    { "mes": "Mar", "billing": 1420000, "billing_ly": 1350000, "grp": 1040, "cpr": 1585 },
+    { "mes": "Abr", "billing": 1550000, "billing_ly": 1410000, "grp": 1075, "cpr": 1570 },
+    { "mes": "Mai", "billing": 1610000, "billing_ly": 1520000, "grp": 1050, "cpr": 1555 },
+    { "mes": "Jun", "billing": 1720000, "billing_ly": 1580000, "grp": 1090, "cpr": 1548 },
+    { "mes": "Jul", "billing": 1680000, "billing_ly": 1620000, "grp": 1080, "cpr": 1532 },
+    { "mes": "Ago", "billing": 1830000, "billing_ly": 1690000, "grp": 1096, "cpr": 1525 }
+  ],
+
+  "funnel": [
+    { "label": "Negociacoes registadas", "hint": "nr_register",                     "value": 512 },
+    { "label": "Com insercoes",          "hint": "nr_negotiations_with_insertions", "value": 438 },
+    { "label": "Emitidas",               "hint": "nr_insertions_active",            "value": 401 },
+    { "label": "Faturadas",              "hint": "total_invoice_gross",             "value": 377 }
+  ],
+
+  "channels": [
+    { "canal": "Canal A", "faturamento": 5120400, "grp_eq": 3210.4, "cpr_eq": 1595, "insercoes": 20255, "share": 0.399, "first_position": 0.21 },
+    { "canal": "Canal B", "faturamento": 4391300, "grp_eq": 2540.1, "cpr_eq": 1729, "insercoes": 15926, "share": 0.342, "first_position": 0.18 },
+    { "canal": "Canal C", "faturamento": 2213400, "grp_eq": 1829.8, "cpr_eq": 1210, "insercoes": 8420,  "share": 0.172, "first_position": 0.16 },
+    { "canal": "Canal D", "faturamento": 1120200, "grp_eq": 841.3,  "cpr_eq": 1331, "insercoes": 3612,  "share": 0.087, "first_position": 0.14 }
+  ],
+
+  "share_mercado": [
+    { "player": "Media Livre", "pct": 0.283, "pct_ly": 0.271, "self": true },
+    { "player": "Grupo B",     "pct": 0.341, "pct_ly": 0.352 },
+    { "player": "Grupo C",     "pct": 0.229, "pct_ly": 0.226 },
+    { "player": "Outros",      "pct": 0.147, "pct_ly": 0.151 }
+  ],
+
+  "heatmap": {
+    "metric": "GRP eq. por canal x daypart",
+    "dayparts": ["Manha", "Tarde", "Prime Time", "Late Night", "Madrugada"],
+    "canais": ["Canal A", "Canal B", "Canal C", "Canal D"],
+    "values": [
+      [412, 690, 1420, 480, 208],
+      [355, 588, 1105, 372, 120],
+      [280, 401,  810, 246,  92],
+      [140, 190,  352, 118,  41]
+    ]
+  },
+
+  "setores": [
+    { "setor": "Retalho",  "faturamento": 3210400, "delta": 0.11 },
+    { "setor": "Banca",    "faturamento": 2540100, "delta": 0.04 },
+    { "setor": "Telecom",  "faturamento": 2110900, "delta": -0.06 },
+    { "setor": "Auto",     "faturamento": 1830200, "delta": 0.19 },
+    { "setor": "Alimentar","faturamento": 1620500, "delta": 0.02 },
+    { "setor": "Farma",    "faturamento": 1533200, "delta": 0.08 }
+  ],
+
+  "alertas": [
+    { "nivel": "warn", "texto": "3 negociacoes com data de emissao terminada e faturamento abaixo de 80% do contratado." },
+    { "nivel": "info", "texto": "Canal C acima da meta de GRP no Prime Time (+8,2%)." },
+    { "nivel": "crit", "texto": "Pacing YTD 2,4 p.p. abaixo do linear para atingir a ambicao anual." }
+  ],
+
   "rows": [
-    { "canal": "Canal A", "daypart": "Prime Time", "insercoes": 12045, "grp": 3210.4, "faturamento": 5120400, "desconto": 0.31 },
-    { "canal": "Canal A", "daypart": "Tarde",      "insercoes": 8210,  "grp": 1120.9, "faturamento": 1830200, "desconto": 0.44 },
-    { "canal": "Canal B", "daypart": "Prime Time", "insercoes": 9822,  "grp": 2540.1, "faturamento": 3410800, "desconto": 0.35 },
-    { "canal": "Canal B", "daypart": "Manhã",      "insercoes": 6104,  "grp": 720.3,  "faturamento": 980500,  "desconto": 0.49 },
-    { "canal": "Canal C", "daypart": "Prime Time", "insercoes": 7411,  "grp": 640.2,  "faturamento": 1210900, "desconto": 0.28 },
-    { "canal": "Canal C", "daypart": "Madrugada",  "insercoes": 4621,  "grp": 189.6,  "faturamento": 292500,  "desconto": 0.58 }
+    { "canal": "Canal A", "daypart": "Prime Time", "insercoes": 12045, "grp": 1420.4, "faturamento": 3120400, "cpr": 2197, "desconto": 0.31 },
+    { "canal": "Canal A", "daypart": "Tarde",      "insercoes": 5210,  "grp": 690.9,  "faturamento": 1130200, "cpr": 1636, "desconto": 0.44 },
+    { "canal": "Canal A", "daypart": "Manha",      "insercoes": 3000,  "grp": 412.0,  "faturamento": 869800,  "cpr": 2111, "desconto": 0.38 },
+    { "canal": "Canal B", "daypart": "Prime Time", "insercoes": 9822,  "grp": 1105.1, "faturamento": 2410800, "cpr": 2182, "desconto": 0.35 },
+    { "canal": "Canal B", "daypart": "Manha",      "insercoes": 6104,  "grp": 355.3,  "faturamento": 980500,  "cpr": 2760, "desconto": 0.49 },
+    { "canal": "Canal C", "daypart": "Prime Time", "insercoes": 7411,  "grp": 810.2,  "faturamento": 1210900, "cpr": 1494, "desconto": 0.28 },
+    { "canal": "Canal C", "daypart": "Madrugada",  "insercoes": 1009,  "grp": 92.6,   "faturamento": 92500,   "cpr": 999,  "desconto": 0.58 },
+    { "canal": "Canal D", "daypart": "Late Night", "insercoes": 1612,  "grp": 118.4,  "faturamento": 320200,  "cpr": 2704, "desconto": 0.52 },
+    { "canal": "Canal D", "daypart": "Tarde",      "insercoes": 2000,  "grp": 190.1,  "faturamento": 800000,  "cpr": 4208, "desconto": 0.41 }
   ]
 }

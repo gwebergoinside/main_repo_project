@@ -15,23 +15,106 @@
         <p class="sub">GO NEXT 360 · Media Livre</p>
       </div>
     </div>
-    <p class="updated">Atualizado em <span id="lastUpdate">—</span></p>
+    <div class="topbar-right">
+      <p class="updated">Período <b id="periodo">—</b></p>
+      <p class="updated">Atualizado em <b id="lastUpdate">—</b></p>
+    </div>
   </header>
 
   <nav class="tabs" id="tabs" aria-label="Páginas do relatório">
     <button class="tab is-active" data-page="main">Main</button>
     <button class="tab" data-page="negociacoes">Negociações 2026</button>
     <button class="tab" data-page="agencies">Agencies</button>
+    <button class="tab" data-page="share">Share</button>
     <button class="tab" data-page="duration">Duration</button>
   </nav>
 
-  <section class="filters" id="filters" aria-label="Filtros">
-    <!-- slicers renderizados por app.js -->
-  </section>
+  <section class="filters" id="filters" aria-label="Filtros"></section>
 
   <main>
-    <section class="kpi-grid" id="kpis" aria-label="Indicadores"></section>
+    <!-- Faixa de alertas (equivalente a tx_mensage_alert) -->
+    <section id="alertas" class="alerts" aria-label="Alertas"></section>
 
+    <!-- 1. Indicadores de topo -->
+    <section class="kpi-grid" id="kpis" aria-label="Indicadores principais"></section>
+
+    <!-- 2. Pacing comercial -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Pacing comercial — ambição, contratado e realizado</h2>
+        <span class="hint">Onde devíamos estar vs. onde estamos</span>
+      </div>
+      <div class="panel-body pacing-body">
+        <div id="pacingRing"></div>
+        <div id="pacingBullets" class="pacing-bullets"></div>
+        <dl id="pacingFacts" class="facts"></dl>
+      </div>
+    </section>
+
+    <!-- 3. Evolução mensal + funil -->
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Faturamento mensal</h2>
+          <span class="hint"><i class="key key-bar"></i>2026 <i class="key key-line"></i>2025</span>
+        </div>
+        <div class="panel-body" id="monthly"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Funil de negociações</h2>
+          <span class="hint">Registo → faturação</span>
+        </div>
+        <div class="panel-body" id="funnel"></div>
+      </section>
+    </div>
+
+    <!-- 4. Eficiência de audiência + share -->
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Eficiência por canal</h2>
+          <span class="hint">GRP eq. × CPR eq. · área = faturamento</span>
+        </div>
+        <div class="panel-body" id="scatter"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Share de investimento</h2>
+          <span class="hint">vs. ano anterior</span>
+        </div>
+        <div class="panel-body" id="share"></div>
+      </section>
+    </div>
+
+    <!-- 5. Rankings -->
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head"><h2>Faturamento por canal</h2></div>
+        <div class="panel-body" id="rankCanais"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Faturamento por setor</h2>
+          <span class="hint">variação vs. período homólogo</span>
+        </div>
+        <div class="panel-body" id="rankSetores"></div>
+      </section>
+    </div>
+
+    <!-- 6. Heatmap -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Ocupação de audiência</h2>
+        <span class="hint" id="hmMetric"></span>
+      </div>
+      <div class="panel-body table-wrap" id="heatmap"></div>
+    </section>
+
+    <!-- 7. Detalhe -->
     <section class="panel">
       <div class="panel-head">
         <h2>Detalhe por canal e daypart</h2>
@@ -44,19 +127,22 @@
               <th data-sort="canal">Canal</th>
               <th data-sort="daypart">Daypart</th>
               <th class="num" data-sort="insercoes">Inserções</th>
-              <th class="num" data-sort="grp">GRP</th>
+              <th class="num" data-sort="grp">GRP eq.</th>
+              <th class="num" data-sort="cpr">CPR eq.</th>
               <th class="num" data-sort="faturamento">Faturamento</th>
               <th class="num" data-sort="desconto">Desconto</th>
             </tr>
           </thead>
           <tbody></tbody>
+          <tfoot></tfoot>
         </table>
       </div>
     </section>
 
     <p class="disclaimer">
-      Esqueleto de desenvolvimento — dados de <code>data/mock/dashboard.json</code>.
-      Ainda não conectado ao Databricks.
+      Esqueleto de desenvolvimento — dados fictícios de <code>data/mock/dashboard.json</code>.
+      Ainda não conectado ao Databricks. Cada indicador mapeia uma medida real do modelo
+      (ver <code>docs/04-catalogo-indicadores.md</code>).
     </p>
   </main>
 
