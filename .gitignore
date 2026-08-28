@@ -1,3 +1,6 @@
 # Cache do Power BI (arquivos grandes gerados automaticamente)
 **/.pbi/cache.abf
 **/.pbi/*.abf
+
+# Documentos técnicos com informação sensível (não versionar)
+Soico/pedido-powerbi-soico.md

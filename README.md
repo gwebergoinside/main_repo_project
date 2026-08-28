@@ -10,6 +10,11 @@ Repositório centralizado para **versionamento e desenvolvimento de relatórios 
 relatorios_pbi/
 ├── MediaLivre/          # Relatórios do cliente / projeto Media Livre
 │   └── ...              # Arquivos .pbix, SemanticModels e recursos relacionados
+├── Soico/               # Relatórios do cliente / projeto SOICO
+│   ├── AD/              # AD e AD - Operação Comercial (.pbip, Report, SemanticModel)
+│   ├── TX/              # TX (.pbip, Report, SemanticModel)
+│   ├── PLAN/            # PLAN (.pbip, Report, SemanticModel)
+│   └── INCIDENTES/      # INCIDENTES (.pbip, Report, SemanticModel)
 └── README.md
 ```
 
@@ -34,6 +39,12 @@ Arquivos de cache gerados automaticamente pelo Power BI **não são versionados*
 ```
 **/.pbi/cache.abf
 **/.pbi/*.abf
+```
+
+Documentos técnicos com informação sensível (nomes de servidor, credenciais, referências a Key Vault) também não são versionados:
+
+```
+Soico/pedido-powerbi-soico.md
 ```
 
 ### Commits
@@ -85,6 +96,7 @@ git push origin master
 | Data       | Descrição                                              |
 | ---------- | ------------------------------------------------------ |
 | 27/08/2026 | Criação do repositório — versão inicial com MediaLivre |
+| 28/08/2026 | Adiciona projeto SOICO (AD, TX, PLAN, INCIDENTES) — modelos repontados da instância RDS `gmedia-soico` (desativada) para `gmedia-saas-sql`, com bases renomeadas (prefixo `SOICO_`) |
 
 ---
 
