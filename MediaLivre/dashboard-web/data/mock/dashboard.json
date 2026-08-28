@@ -67,6 +67,13 @@
     { "player": "Outros",      "pct": 0.147, "pct_ly": 0.151 }
   ],
 
+  "share_dimensoes": [
+    { "dimensao": "Share de investimento", "hint": "share_media_investment", "atual": 0.283, "ly": 0.271 },
+    { "dimensao": "Share de GRP",          "hint": "share_media_GRP",        "atual": 0.264, "ly": 0.259 },
+    { "dimensao": "Share de ocupacao",     "hint": "share_media_ocupation",  "atual": 0.301, "ly": 0.312 },
+    { "dimensao": "Share por canal",       "hint": "share_channel",          "atual": 0.247, "ly": 0.238 }
+  ],
+
   "heatmap": {
     "metric": "GRP eq. por canal x daypart",
     "dayparts": ["Manha", "Tarde", "Prime Time", "Late Night", "Madrugada"],
@@ -92,6 +99,71 @@
     { "nivel": "warn", "texto": "3 negociacoes com data de emissao terminada e faturamento abaixo de 80% do contratado." },
     { "nivel": "info", "texto": "Canal C acima da meta de GRP no Prime Time (+8,2%)." },
     { "nivel": "crit", "texto": "Pacing YTD 2,4 p.p. abaixo do linear para atingir a ambicao anual." }
+  ],
+
+  "cascata": {
+    "hint": "total_gross -> pc_discount_avg / total_bonus -> total_net",
+    "steps": [
+      { "label": "Bruto tabela",       "value": 22450000, "type": "start" },
+      { "label": "Desconto negociado", "value": -8355400, "type": "neg" },
+      { "label": "Bonus concedido",    "value": -1420500, "type": "neg" },
+      { "label": "Taxas de posicao",   "value":   171200, "type": "pos" },
+      { "label": "Liquido faturado",   "value": 12845300, "type": "total" }
+    ]
+  },
+
+  "ficheiros": [
+    { "ficheiro": "FIC-2026-014", "cliente": "Cliente Alfa",    "negociado": 4820000, "fechado": 3910000, "ambicao": 5200000 },
+    { "ficheiro": "FIC-2026-021", "cliente": "Cliente Beta",    "negociado": 3410000, "fechado": 3180000, "ambicao": 3300000 },
+    { "ficheiro": "FIC-2026-033", "cliente": "Cliente Gama",    "negociado": 2950000, "fechado": 1740000, "ambicao": 3100000 },
+    { "ficheiro": "FIC-2026-047", "cliente": "Cliente Delta",   "negociado": 2180000, "fechado": 2090000, "ambicao": 2000000 },
+    { "ficheiro": "FIC-2026-052", "cliente": "Cliente Epsilon", "negociado": 1640000, "fechado":  820000, "ambicao": 1900000 }
+  ],
+
+  "desvio_projecao": [
+    { "mes": "Jan", "desvio":  0.031 },
+    { "mes": "Fev", "desvio":  0.018 },
+    { "mes": "Mar", "desvio": -0.024 },
+    { "mes": "Abr", "desvio":  0.042 },
+    { "mes": "Mai", "desvio": -0.051 },
+    { "mes": "Jun", "desvio":  0.012 },
+    { "mes": "Jul", "desvio": -0.083 },
+    { "mes": "Ago", "desvio": -0.037 }
+  ],
+
+  "duracao": {
+    "hint": "avg_duration / pc_duration / vl_duration_fitting",
+    "avg": 23.4,
+    "fitting": 0.86,
+    "bins": [
+      { "seg": 10, "insercoes":  3120 },
+      { "seg": 15, "insercoes":  7840 },
+      { "seg": 20, "insercoes":  9210 },
+      { "seg": 30, "insercoes": 19420 },
+      { "seg": 45, "insercoes":  5320 },
+      { "seg": 60, "insercoes":  3303 }
+    ]
+  },
+
+  "posicao": [
+    { "canal": "Canal A", "pc_first": 0.21, "avg_pos": 3.4, "nr_first": 4253 },
+    { "canal": "Canal B", "pc_first": 0.18, "avg_pos": 4.1, "nr_first": 2867 },
+    { "canal": "Canal C", "pc_first": 0.16, "avg_pos": 4.8, "nr_first": 1347 },
+    { "canal": "Canal D", "pc_first": 0.14, "avg_pos": 5.2, "nr_first":  506 }
+  ],
+
+  "yoy_audiencia": [
+    { "metrica": "GRP eq. 30\"", "hint": "GRP_EQ / GRP_EQ_LY", "atual": 8421.55, "ly": 8208.10, "format": "decimal",  "invert": false },
+    { "metrica": "CPR eq. 30\"", "hint": "CPR_EQ / CPR_EQ_LY", "atual": 1524.90, "ly": 1578.60, "format": "currency", "invert": true },
+    { "metrica": "CPS",          "hint": "CPS / CPS_LY",       "atual":    8.42, "ly":    8.91, "format": "decimal",  "invert": true },
+    { "metrica": "TRP",          "hint": "TRP",                "atual": 6120.30, "ly": 6044.70, "format": "decimal",  "invert": false }
+  ],
+
+  "risco": [
+    { "negociacao": "NEG-2026-0412", "cliente": "Cliente Gama",    "minimo": 420000, "faturado": 286000, "dias_restantes": 12 },
+    { "negociacao": "NEG-2026-0388", "cliente": "Cliente Epsilon", "minimo": 310000, "faturado": 198500, "dias_restantes": 5 },
+    { "negociacao": "NEG-2026-0455", "cliente": "Cliente Alfa",    "minimo": 260000, "faturado": 241000, "dias_restantes": 34 },
+    { "negociacao": "NEG-2026-0501", "cliente": "Cliente Beta",    "minimo": 180000, "faturado":  92000, "dias_restantes": 21 }
   ],
 
   "rows": [

@@ -75,7 +75,8 @@ dashboard-web/
 │   ├── index.html
 │   ├── css/styles.css
 │   └── js/
-│       ├── app.js                  # estado central + orquestração dos visuais
+│       ├── app.js                  # estado central + render das páginas
+│       ├── pages.js                # definição declarativa das páginas e painéis
 │       ├── charts.js               # gráficos em SVG inline (sem bibliotecas)
 │       ├── data.js                 # acesso a dados (hoje o mock, amanhã a API)
 │       └── format.js               # formatação pt-PT alinhada às formatStrings do modelo
@@ -83,21 +84,23 @@ dashboard-web/
 └── api/                            # backend (queries SQL que substituem as medidas DAX)
 ```
 
-### Visuais já implementados
+### Páginas e visuais implementados
 
-Tudo em HTML/CSS/SVG puro — **zero dependências externas**.
+Tudo em HTML/CSS/SVG puro — **zero dependências externas**. As páginas são declaradas em
+`src/js/pages.js`, numa estrutura deliberadamente parecida com as `sections` do
+`report.json`: trocar de página é trocar de definição, não de HTML.
 
-| Secção | Visual |
+| Página | Visuais |
 | --- | --- |
-| KPIs | 8 cards com sparkline e variação (sinal invertido em CPR e desconto) |
-| Pacing comercial | anel de atingimento + 3 bullet charts com linha de referência + 4 factos |
-| Faturamento mensal | combo barras (2026) + linha (2025) |
-| Funil de negociações | 4 etapas com queda entre etapas |
-| Eficiência por canal | dispersão GRP × CPR, área da bolha = faturamento |
-| Share de investimento | barra 100% empilhada + legenda com variação em p.p. |
-| Rankings | barras horizontais por canal e por setor |
-| Ocupação de audiência | heatmap canal × daypart |
-| Detalhe | tabela ordenável, barra de dados na célula, totais no rodapé |
+| **Main** | alertas · 8 KPI cards com sparkline · pacing (anel + bullets + factos) · combo mensal · funil · dispersão GRP×CPR · share 100% empilhado · 2 rankings · heatmap · tabela |
+| **Negociações 2026** | funil · barras divergentes do desvio da projeção · dumbbell negociado vs. fechado · barras com meta (ambição) · cartões de faturamento mínimo em risco |
+| **Financeiro** | cascata bruto → desconto → líquido · ranking por setor · combo mensal |
+| **Audiência** | comparação homóloga (GRP/CPR/CPS/TRP) · dispersão · heatmap · share por dimensão |
+| **Duration** | histograma de duração com marcador da média · posição no break por canal |
+
+Biblioteca de visuais em `charts.js`: `sparkline`, `bullet`, `ring`, `monthlyCombo`,
+`funnel`, `rankBars`, `stacked100`, `heatmap`, `scatter`, `waterfall`, `dumbbell`,
+`divergingBars`, `histogram`, `markerBars`, `targetBars`, `riskList`, `yoyRows`.
 
 Clicar numa linha da tabela filtra o canal — é o **cross-filter do Power BI reimplementado
 à mão**, sobre um estado central em `app.js`.

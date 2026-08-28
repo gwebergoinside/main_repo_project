@@ -166,10 +166,12 @@ export function heatmap({ canais, dayparts, values }) {
     dayparts.map(d => `<div class="hm-cell hm-head">${esc(d)}</div>`).join('');
   const body = canais.map((c, r) =>
     `<div class="hm-cell hm-row">${esc(c)}</div>` +
-    values[r].map((v, i) =>
-      `<div class="hm-cell hm-val" style="--t:${round(v / max, 3)}"
-        title="${esc(c)} · ${esc(dayparts[i])}: ${formatValue(v, 'decimal')}">${formatValue(v, 'integer')}</div>`
-    ).join('')).join('');
+    values[r].map((v, i) => {
+      const t = v / max;
+      // Acima de ~55% de intensidade o fundo fica claro demais para texto claro.
+      return `<div class="hm-cell hm-val ${t > 0.55 ? 'is-hot' : ''}" style="--t:${round(t, 3)}"
+        title="${esc(c)} · ${esc(dayparts[i])}: ${formatValue(v, 'decimal')}">${formatValue(v, 'integer')}</div>`;
+    }).join('')).join('');
   return `<div class="heatmap" style="grid-template-columns: 92px repeat(${dayparts.length}, 1fr)">${head}${body}</div>`;
 }
 
@@ -208,3 +210,231 @@ export function scatter(items, { w = 620, h = 210 } = {}) {
     <text class="c-axis" x="10" y="${pad.t - 4}">CPR ↑</text>
   </svg>`;
 }
+
+/* ------------------------------------------------------------------ */
+/* Cascata — bruto → descontos → líquido                               */
+/* ------------------------------------------------------------------ */
+export function waterfall(steps, { w = 620, h = 235 } = {}) {
+  const pad = { t: 26, r: 10, b: 34, l: 52 };
+
+  // Posição acumulada de cada barra: as de tipo start/total assentam no zero.
+  let run = 0;
+  const bars = steps.map(s => {
+    const isAnchor = s.type === 'start' || s.type === 'total';
+    const from = isAnchor ? 0 : run;
+    const to = isAnchor ? s.value : run + s.value;
+    run = to;
+    return { ...s, from, to, isAnchor };
+  });
+
+  const max = Math.max(...bars.map(b => Math.max(b.from, b.to))) * 1.08;
+  const x = scale(0, steps.length, pad.l, w - pad.r);
+  const y = scale(0, max, h - pad.b, pad.t);
+  const step = x(1) - x(0);
+  const bw = step * 0.56;
+
+  const grid = [0, 0.5, 1].map(f => {
+    const gy = round(y(max * f));
+    return `<line class="c-grid" x1="${pad.l}" y1="${gy}" x2="${w - pad.r}" y2="${gy}"/>
+      <text class="c-axis" x="${pad.l - 6}" y="${gy + 3}" text-anchor="end">${round(max * f / 1e6, 1)}M</text>`;
+  }).join('');
+
+  const rects = bars.map((b, i) => {
+    const bx = x(i) + (step - bw) / 2;
+    const top = Math.min(y(b.from), y(b.to));
+    const hh = Math.max(2, Math.abs(y(b.to) - y(b.from)));
+    const cls = b.isAnchor ? 'wf-anchor' : b.value < 0 ? 'wf-neg' : 'wf-pos';
+    const connector = i < bars.length - 1 && !bars[i + 1].isAnchor
+      ? `<line class="wf-link" x1="${round(bx + bw)}" y1="${round(y(b.to))}" x2="${round(x(i + 1) + (step - bw) / 2)}" y2="${round(y(b.to))}"/>`
+      : '';
+    return `${connector}<rect class="${cls}" x="${round(bx)}" y="${round(top)}" width="${round(bw)}" height="${round(hh)}" rx="2">
+        <title>${esc(b.label)}: ${formatValue(b.value, 'currency')}</title></rect>
+      <text class="wf-value" x="${round(bx + bw / 2)}" y="${round(top - 5)}" text-anchor="middle">${
+        (b.value > 0 && !b.isAnchor ? '+' : '') + formatValue(b.value, 'currency')}</text>
+      <text class="c-axis" x="${round(bx + bw / 2)}" y="${h - 12}" text-anchor="middle">${esc(b.label.split(' ')[0])}</text>
+      <text class="c-axis" x="${round(bx + bw / 2)}" y="${h - 3}" text-anchor="middle">${esc(b.label.split(' ').slice(1).join(' '))}</text>`;
+  }).join('');
+
+  return `<svg viewBox="0 0 ${w} ${h}" class="chart" role="img" aria-label="Cascata do bruto ao líquido">${grid}${rects}</svg>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dumbbell — dois valores por linha (negociado vs. fechado)           */
+/* ------------------------------------------------------------------ */
+export function dumbbell(items, { labelKey, aKey, bKey, aLabel, bLabel, subKey = null, format = 'currency' }) {
+  const max = Math.max(...items.flatMap(i => [i[aKey], i[bKey]])) * 1.02 || 1;
+  const rows = items.map(it => {
+    const a = (it[aKey] / max) * 100;
+    const b = (it[bKey] / max) * 100;
+    const pc = it[aKey] ? it[bKey] / it[aKey] : 0;
+    const tone = pc >= 0.9 ? 'ok' : pc >= 0.7 ? 'warn' : 'bad';
+    return `<li>
+      <span class="db-label">${esc(it[labelKey])}${subKey ? `<em>${esc(it[subKey])}</em>` : ''}</span>
+      <span class="db-track">
+        <i class="db-line" style="left:${round(Math.min(a, b))}%;width:${round(Math.abs(a - b))}%"></i>
+        <i class="db-dot db-a" style="left:${round(a)}%" title="${esc(aLabel)}: ${formatValue(it[aKey], format)}"></i>
+        <i class="db-dot db-b" style="left:${round(b)}%" title="${esc(bLabel)}: ${formatValue(it[bKey], format)}"></i>
+      </span>
+      <span class="db-value">${formatValue(it[bKey], format)}</span>
+      <span class="db-pct tone-${tone}">${formatValue(pc, 'percent')}</span>
+    </li>`;
+  }).join('');
+
+  return `<div class="db-legend">
+      <i class="db-dot db-a"></i><span>${esc(aLabel)}</span>
+      <i class="db-dot db-b"></i><span>${esc(bLabel)}</span>
+    </div>
+    <ul class="dumbbell">${rows}</ul>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Barras divergentes — desvios em torno do zero                       */
+/* ------------------------------------------------------------------ */
+export function divergingBars(items, { labelKey, valueKey, w = 620, h = 180 } = {}) {
+  const pad = { t: 16, r: 10, b: 20, l: 40 };
+  const vals = items.map(i => i[valueKey]);
+  const bound = Math.max(...vals.map(Math.abs)) * 1.25 || 1;
+  const x = scale(0, items.length, pad.l, w - pad.r);
+  const y = scale(-bound, bound, h - pad.b, pad.t);
+  const step = x(1) - x(0);
+  const bw = step * 0.5;
+  const zero = y(0);
+
+  const bars = items.map((it, i) => {
+    const v = it[valueKey];
+    const bx = x(i) + (step - bw) / 2;
+    const top = v >= 0 ? y(v) : zero;
+    const hh = Math.max(1.5, Math.abs(y(v) - zero));
+    return `<rect class="${v >= 0 ? 'dv-pos' : 'dv-neg'}" x="${round(bx)}" y="${round(top)}"
+        width="${round(bw)}" height="${round(hh)}" rx="2">
+        <title>${esc(it[labelKey])}: ${formatValue(v, 'percent')}</title></rect>
+      <text class="dv-value" x="${round(bx + bw / 2)}" y="${round(v >= 0 ? top - 4 : top + hh + 9)}"
+        text-anchor="middle">${formatValue(v, 'percent')}</text>
+      <text class="c-axis" x="${round(bx + bw / 2)}" y="${h - 5}" text-anchor="middle">${esc(it[labelKey])}</text>`;
+  }).join('');
+
+  return `<svg viewBox="0 0 ${w} ${h}" class="chart" role="img" aria-label="Desvio face ao projetado">
+    <line class="c-grid" x1="${pad.l}" y1="${round(zero)}" x2="${w - pad.r}" y2="${round(zero)}"/>
+    <text class="c-axis" x="${pad.l - 6}" y="${round(zero) + 3}" text-anchor="end">0%</text>
+    ${bars}
+  </svg>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Histograma — distribuição com marcador de média                     */
+/* ------------------------------------------------------------------ */
+export function histogram(bins, { labelKey, valueKey, marker = null, markerLabel = '', w = 620, h = 200 } = {}) {
+  const pad = { t: 22, r: 12, b: 26, l: 46 };
+  const max = Math.max(...bins.map(b => b[valueKey])) * 1.15;
+  const x = scale(0, bins.length, pad.l, w - pad.r);
+  const y = scale(0, max, h - pad.b, pad.t);
+  const step = x(1) - x(0);
+  const bw = step * 0.72;
+
+  const cols = bins.map((b, i) => {
+    const bx = x(i) + (step - bw) / 2;
+    return `<rect class="c-bar" x="${round(bx)}" y="${round(y(b[valueKey]))}" width="${round(bw)}"
+        height="${round(h - pad.b - y(b[valueKey]))}" rx="2">
+        <title>${esc(b[labelKey])}&quot;: ${formatValue(b[valueKey], 'integer')} inserções</title></rect>
+      <text class="wf-value" x="${round(bx + bw / 2)}" y="${round(y(b[valueKey]) - 5)}" text-anchor="middle">${formatValue(b[valueKey], 'integer')}</text>
+      <text class="c-axis" x="${round(bx + bw / 2)}" y="${h - 8}" text-anchor="middle">${esc(b[labelKey])}&quot;</text>`;
+  }).join('');
+
+  // Marcador da média: interpolado linearmente entre os centros dos dois bins vizinhos.
+  let markerEl = '';
+  if (marker != null) {
+    const labels = bins.map(b => Number(b[labelKey]));
+    const center = i => x(i) + step / 2;
+    let idx = labels.findIndex(v => v >= marker);
+    let mx;
+    if (idx <= 0) {
+      mx = center(idx < 0 ? labels.length - 1 : 0);
+    } else {
+      const frac = (marker - labels[idx - 1]) / (labels[idx] - labels[idx - 1]);
+      mx = center(idx - 1) + frac * step;
+    }
+    markerEl = `<line class="hg-marker" x1="${round(mx)}" y1="${pad.t - 6}" x2="${round(mx)}" y2="${h - pad.b}"/>
+      <text class="hg-marker-label" x="${round(mx)}" y="${pad.t - 10}" text-anchor="middle">${esc(markerLabel)}</text>`;
+  }
+
+  return `<svg viewBox="0 0 ${w} ${h}" class="chart" role="img" aria-label="Distribuição de inserções por duração">${cols}${markerEl}</svg>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Barras com marcador — valor + referência numa 2.ª escala            */
+/* ------------------------------------------------------------------ */
+export function markerBars(items, { labelKey, barKey, barFormat = 'percent', markerKey = null, markerFormat = 'decimal', markerLabel = '', noteKey = null }) {
+  const max = Math.max(...items.map(i => i[barKey])) * 1.15 || 1;
+  const rows = items.map(it => `<li>
+      <span class="mb-label">${esc(it[labelKey])}</span>
+      <span class="mb-track"><i style="width:${round((it[barKey] / max) * 100)}%"></i></span>
+      <span class="mb-value">${formatValue(it[barKey], barFormat)}</span>
+      ${markerKey ? `<span class="mb-marker" title="${esc(markerLabel)}">${formatValue(it[markerKey], markerFormat)}</span>` : ''}
+      ${noteKey ? `<span class="mb-note">${formatValue(it[noteKey], 'integer')}</span>` : ''}
+    </li>`).join('');
+  return `<ul class="markerbars">${rows}</ul>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Progresso com meta — realizado vs. ambição por linha                */
+/* ------------------------------------------------------------------ */
+export function targetBars(items, { labelKey, valueKey, targetKey, subKey = null, format = 'currency' }) {
+  const max = Math.max(...items.flatMap(i => [i[valueKey], i[targetKey]])) || 1;
+  const rows = items.map(it => {
+    const pc = it[targetKey] ? it[valueKey] / it[targetKey] : 0;
+    const tone = pc >= 1 ? 'ok' : pc >= 0.85 ? 'warn' : 'bad';
+    return `<li>
+      <span class="tb-label">${esc(it[labelKey])}${subKey ? `<em>${esc(it[subKey])}</em>` : ''}</span>
+      <span class="tb-track">
+        <i class="tb-fill tone-${tone}" style="width:${round((it[valueKey] / max) * 100)}%"></i>
+        <i class="tb-target" style="left:${round((it[targetKey] / max) * 100)}%"
+           title="Ambição: ${formatValue(it[targetKey], format)}"></i>
+      </span>
+      <span class="tb-value">${formatValue(it[valueKey], format)}</span>
+      <span class="tb-pct tone-${tone}">${formatValue(pc, 'percent')}</span>
+    </li>`;
+  }).join('');
+  return `<ul class="targetbars">${rows}</ul>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Lista de risco — falta face a um mínimo contratado                  */
+/* ------------------------------------------------------------------ */
+export function riskList(items, { idKey, subKey, targetKey, actualKey, noteKey = null }) {
+  const rows = items.map(it => {
+    const gap = it[targetKey] - it[actualKey];
+    const pc = it[targetKey] ? it[actualKey] / it[targetKey] : 0;
+    // Verde só quando o mínimo já está coberto — abaixo dele nada é "bom".
+    const tone = pc >= 1 ? 'ok' : pc >= 0.9 ? 'warn' : 'bad';
+    return `<li class="risk-item tone-${tone}">
+      <div class="risk-head">
+        <span class="risk-id">${esc(it[idKey])}<em>${esc(it[subKey])}</em></span>
+        <span class="risk-gap">${gap > 0 ? '−' : '+'}${formatValue(Math.abs(gap), 'currency')}</span>
+      </div>
+      <div class="risk-track"><i style="width:${round(Math.min(pc, 1) * 100)}%"></i></div>
+      <div class="risk-sub">
+        ${formatValue(it[actualKey], 'currency')} de ${formatValue(it[targetKey], 'currency')} mínimo
+        · ${formatValue(pc, 'percent')}${noteKey ? ` · ${it[noteKey]} dias para o fim` : ''}
+      </div>
+    </li>`;
+  }).join('');
+  return `<ul class="risklist">${rows}</ul>`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Comparação homóloga — atual vs. ano anterior por métrica            */
+/* ------------------------------------------------------------------ */
+export function yoyRows(items) {
+  return `<ul class="yoy">${items.map(it => {
+    const delta = it.ly ? (it.atual / it.ly) - 1 : 0;
+    const good = it.invert ? delta < 0 : delta > 0;
+    const cls = delta === 0 ? 'flat' : good ? 'up' : 'down';
+    return `<li>
+      <span class="yoy-metric" title="medida: ${esc(it.hint)}">${esc(it.metrica)}</span>
+      <span class="yoy-now">${formatValue(it.atual, it.format)}</span>
+      <span class="yoy-ly">ant. ${formatValue(it.ly, it.format)}</span>
+      <span class="yoy-delta ${cls}">${delta > 0 ? '▲' : delta < 0 ? '▼' : '—'} ${formatValue(Math.abs(delta), 'percent')}</span>
+    </li>`;
+  }).join('')}</ul>`;
+}
+

@@ -119,18 +119,82 @@ reimplementado à mão.
 
 ---
 
-## Indicadores sugeridos ainda não implementados
+## 10. Cascata: do bruto de tabela ao líquido ✅ · página *Financeiro*
 
-| Indicador | Medidas | Valor |
-|---|---|---|
-| ⭕ Cascata bruto → desconto → líquido | `total_gross`, `pc_discount_avg`, `total_net` | Mostra onde o valor se perde entre tabela e fatura |
-| ⭕ Negociado vs. faturado por ficheiro | `vl_negociado_ficheiro`, `vl_fechado_ficheiro`, `pc_contracted_efective_realised_ficheiro` | Toda a pasta `11 Ficheiro` está por explorar |
-| ⭕ Desvio projetado vs. faturado | `vl_dif_project_negotiated_vs_billing`, `pc_dif_project_negotiated_vs_billing` | Qualidade da própria previsão |
-| ⭕ Curva de duração | `avg_duration`, `pc_duration`, `vl_duration_fitting` | Alimenta a página *Duration* |
-| ⭕ Posição média no break | `avg_position`, `nr_first_position` | Qualidade de entrega por canal |
-| ⭕ YoY de audiência | `yoy_GRP_EQ_growth_pct`, `yoy_CPR_EQ_growth_pct`, `CPS_LY` | Evolução da eficiência, não só do volume |
-| ⭕ Faturamento mínimo em risco | `total_dif_minimal_billing` | Contratos abaixo do mínimo acordado |
-| ⭕ Cobertura de ambição por ficheiro | `vl_contracted_shouldBe_ambicao`, `pc_contracted_shouldBe_realised_ambicao` | Pacing ao nível do ficheiro |
+`total_gross` → desconto (`pc_discount_avg`) → `total_bonus` → taxas → `total_net`.
+Mostra **onde o valor se perde** entre a tabela de preços e a fatura. Barras âncora
+(bruto e líquido) assentam no zero; as intermédias flutuam sobre o acumulado.
+
+## 11. Negociado vs. fechado por ficheiro ✅ · página *Negociações 2026*
+
+Dumbbell: `vl_negociado_ficheiro` (ponto vazado) vs. `vl_fechado_ficheiro` (ponto cheio).
+**O comprimento da linha é a distância por fechar** — é o que se quer ver de relance, e
+uma tabela com duas colunas não mostra. % = `pc_contracted_efective_realised_ficheiro`.
+
+## 12. Cobertura da ambição por ficheiro ✅ · página *Negociações 2026*
+
+Barra colorida por atingimento com **marcador da ambição** (`vl_contracted_shouldBe_ambicao`,
+`pc_contracted_shouldBe_realised_ambicao`). É o pacing da secção 2, mas ao nível do ficheiro.
+
+## 13. Desvio projetado vs. faturado ✅ · página *Negociações 2026*
+
+Barras divergentes em torno do zero (`pc_dif_project_negotiated_vs_billing`).
+Mede a **qualidade da própria previsão**, mês a mês — um indicador sobre o processo, não
+sobre a receita.
+
+## 14. Faturamento mínimo em risco ✅ · página *Negociações 2026*
+
+`total_dif_minimal_billing`: negociações abaixo do mínimo contratado, com a falta em euros,
+a barra de cobertura e os dias que faltam para o fim da emissão.
+
+> **Regra de cor:** verde só quando o mínimo já está coberto. Uma negociação a 92% do
+> mínimo é âmbar, não verde — abaixo do mínimo nada é "bom", por muito perto que esteja.
+
+## 15. Evolução homóloga da audiência ✅ · página *Audiência*
+
+`GRP_EQ`/`GRP_EQ_LY`, `CPR_EQ`/`CPR_EQ_LY`, `CPS`/`CPS_LY`, `TRP`. Mostra a evolução da
+**eficiência**, não só do volume — com o sinal invertido em CPR e CPS.
+
+## 16. Share por dimensão ✅ · página *Audiência*
+
+`share_media_investment`, `share_media_GRP`, `share_media_ocupation`, `share_channel`,
+cada um com o marcador do ano anterior (`_ly`). Revela divergências úteis: ganhar share de
+investimento e perder share de ocupação diz algo que nenhuma das medidas diz sozinha.
+
+## 17. Distribuição por duração ✅ · página *Duration*
+
+Histograma de inserções por duração, com marcador da média (`avg_duration`) interpolado
+entre os bins. `vl_duration_fitting` e `pc_duration` no cabeçalho.
+
+## 18. Posição no break por canal ✅ · página *Duration*
+
+`pc_first_position` na barra, `avg_position` no marcador, `nr_first_position` como nota —
+três medidas relacionadas numa linha só.
+
+---
+
+## Mapa de páginas
+
+O ficheiro `src/js/pages.js` declara as páginas e os seus painéis — estrutura
+deliberadamente parecida com a das `sections` do `report.json`. Trocar de página é
+trocar de definição; nenhum HTML de página vive no `index.html`.
+
+| Página | Painéis |
+|---|---|
+| **Main** | alertas, 8 KPIs, pacing, mensal, funil, dispersão, share, 2 rankings, heatmap, tabela |
+| **Negociações 2026** | 4 KPIs, funil, desvio da projeção, ficheiros (dumbbell), cobertura da ambição, risco |
+| **Financeiro** | cascata bruto→líquido, ranking por setor, mensal |
+| **Audiência** | homólogo, dispersão, heatmap, share por dimensão |
+| **Duration** | distribuição por duração, posição no break |
+
+## Ainda por explorar
+
+| Indicador | Medidas |
+|---|---|
+| ⭕ Bónus e taxas em detalhe | `total_bonus`, `pmt_exclude_position_tax`, `pmt_exclude_multiproduct_tax` |
+| ⭕ Investimento de tabela | `vl_table_investment`, `rk_nm_field_investment`, `vl_duration_invest` |
+| ⭕ Simulação de cenários | `pbi_vw_targets_simulado`, `filter_simulated_ds_variant` (página *Simulate* do PBI) |
+| ⭕ Agências | `tp_agencies`, `nr_agencies`, `tx_relationship_agency` (página *Agencies* do PBI) |
 
 ---
 
