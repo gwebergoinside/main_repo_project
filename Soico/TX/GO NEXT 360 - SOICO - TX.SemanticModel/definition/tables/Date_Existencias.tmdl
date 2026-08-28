@@ -1,0 +1,54 @@
+table Date_Existencias
+	lineageTag: cff2f8da-08f5-4fa4-b889-78a079200216
+
+	column Date
+		formatString: General Date
+		lineageTag: a4f97583-82ab-4efb-b483-cf9438b83254
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano = YEAR(Date_Existencias[Date])
+		formatString: 0
+		lineageTag: 88d65c0c-3cfd-46cc-afb3-778b4d5e384a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes = MONTH(Date_Existencias[Date])
+		formatString: 0
+		lineageTag: 60e08026-c1b3-4a84-8b41-0e2f3231c41b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column MesAbre = FORMAT(Date_Existencias[Date],"MMM")
+		lineageTag: 3ba7c45c-39d1-4c7f-b7ea-a210877932c8
+		summarizeBy: none
+		sortByColumn: Mes
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Anomes = Date_Existencias[Ano]& FORMAT( Date_Existencias[Mes], "00")
+		dataType: int64
+		formatString: 0
+		lineageTag: bc90c0b3-19b7-4025-abf4-f87a901948f6
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date_Existencias-e39c8628-3509-4a1f-9191-68f64cef777e = calculated
+		mode: import
+		source = ```
+				CALENDAR(DATE(year(now())-10, 1, 1), DATE(year(now())+10, 12, 31) )
+				
+				```
+
+	annotation PBI_Id = e5248f6e4e5f4a04b25c7608de381390
+

@@ -1,0 +1,62 @@
+table d_Meios
+	lineageTag: baa10fda-dd1a-497a-a471-a96505144704
+
+	column Nome
+		dataType: string
+		lineageTag: 3e236be2-ba27-487c-8154-15766132c5aa
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 745cd0b8-a9d8-4c92-b3ec-d05bbe12b045
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column activo
+		dataType: string
+		lineageTag: 1bb21f55-8bad-4dd5-b9b7-1b80e9ae77f0
+		summarizeBy: none
+		sourceColumn: activo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Nome_Areas
+		dataType: string
+		lineageTag: 061b266f-2141-43e2-89e6-ce19524cdf74
+		summarizeBy: none
+		sourceColumn: Meio_Nome_Areas
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Tipo
+		dataType: string
+		lineageTag: f04545fa-a393-40fc-b9ad-6228218deaf3
+		summarizeBy: none
+		sourceColumn: Meio_Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Atividade
+		dataType: string
+		lineageTag: 67969d17-8bcf-4959-b04b-dfac9b6de593
+		summarizeBy: none
+		sourceColumn: Meio_Atividade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Meios-3845e0b9-2cd5-4376-a870-a80c66807b76 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)    m.Nome,#(lf)    m.Id,#(lf)    m.activo,#(lf)    am.Nome As Meio_Nome_Areas,#(lf)    tp.Nome As Meio_Tipo,#(lf)    atm.Nome As Meio_Atividade#(lf)From#(lf)    Meios m Inner Join#(lf)    Areas_Meios am On m.IdAreaMeio = am.Id Left Join#(lf)    Tipos_Meio tp On m.IdTipoMeio = tp.Id Left Join#(lf)    Actividades_Meios atm On m.IdActividadeMeio = atm.Id"])
+				in
+				    Origem
+
+	annotation PBI_ResultType = Table
+

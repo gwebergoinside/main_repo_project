@@ -1,0 +1,74 @@
+table d_Meios_Incid
+	lineageTag: ac116b20-f337-40c4-8815-d7bcff08ee9d
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 824c0277-ec4d-42aa-9ad0-1c0b719f3e13
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdIncidencia
+		dataType: int64
+		formatString: 0
+		lineageTag: 62341556-4f62-43b7-a3c7-9b33d855dfef
+		summarizeBy: none
+		sourceColumn: IdIncidencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: 17d0e3fc-9ee9-46df-a2c9-06a0028db443
+		summarizeBy: sum
+		sourceColumn: IdMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column Detalhe
+		dataType: string
+		lineageTag: 9deeeb63-252a-4827-bbec-5ac46272aa2e
+		summarizeBy: none
+		sourceColumn: Detalhe
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Nome_Areas = ```
+			
+			    LOOKUPVALUE(
+			        f_Meios[Meio_Nome_Areas]
+			        ,f_Meios[Id]
+			        ,d_Meios_Incid[IdMeio]
+			    )
+			```
+		lineageTag: ebde23bc-c336-4341-95b4-aeb27ceeab76
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Nome = ```
+			
+			    LOOKUPVALUE(
+			        f_Meios[Meio_Nome]
+			        ,f_Meios[Id]
+			        ,d_Meios_Incid[IdMeio]
+			    )
+			```
+		lineageTag: 6010e8ea-b86e-471d-9c0a-b02a7a9697a0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Meios_Incid-8ae67c2e-b10e-4f53-a242-70b1ed19d6c7 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)    Incidencias_Meios.*#(lf)From#(lf)    Incidencias_Meios"])
+				in
+				    Origem
+
+	annotation PBI_ResultType = Table
+

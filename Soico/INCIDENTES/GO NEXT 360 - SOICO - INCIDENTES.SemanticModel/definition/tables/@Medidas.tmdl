@@ -1,0 +1,431 @@
+table @Medidas
+	lineageTag: e77df23e-1f96-4a41-b4b2-a340dfe44736
+
+	measure Titulo2 = ```
+			
+			--IF( SELECTEDVALUE( GrupoCliente[ExternalCode] ) = BLANK(),"TODAS AS CONTAS",
+			-- VALUES( GrupoCliente[Cliente] ) )
+			 IF( SELECTEDVALUE( d_Projectos[Projeto_Título]) <> BLANK(), VALUES( d_Projectos[Projeto_Título]),
+			 --IF( SELECTEDVALUE( Modulos[Nome_Modulo] ) <> BLANK(), VALUES( Modulos[Nome_Modulo] ),   
+			 IF( SELECTEDVALUE(  f_Pessoas[Unidade (pessoas)] ) <> BLANK(),  VALUES( f_Pessoas[Unidade (pessoas)] ),
+			 IF( SELECTEDVALUE( f_Incidencias[Area_Causas] ) <> BLANK(), VALUES( f_Incidencias[Area_Causas] ), 
+			 IF( SELECTEDVALUE( f_Incidencias[Tipo] ) <> BLANK(), VALUES( f_Incidencias[Tipo] ), 
+			 IF( SELECTEDVALUE( f_Meios[Meio_Nome_Areas] ) <> BLANK(), VALUES( f_Meios[Meio_Nome_Areas]), 
+			 IF( SELECTEDVALUE( f_Incidencias[Area] ) <> BLANK(), VALUES( f_Incidencias[Area])
+			  ,"Análise de Incidentes"))))))
+			```
+		displayFolder: Titulo
+		lineageTag: fa127998-fd59-4290-b68b-6dbe0b117583
+
+	measure Titulo =
+			
+			"Análise de Incidentes"
+		displayFolder: Titulo
+		lineageTag: ed0046d7-3e27-40dd-afff-7f03c62f381f
+
+	measure Qnt_Incidente = ```
+			
+			 CALCULATE( COUNT(f_Incidencias[ID_Incidencias]) )--, TREATAS( VALUES( d_Meios[Id] ),d_Meios_Incid[IdMeio] ) )
+			```
+		formatString: 0
+		lineageTag: 3565ba0c-e1b8-4998-a1a2-f9e4d5bf31e8
+
+	measure Duracao_Media =
+			
+			VAR allseconds =
+			    CALCULATE(AVERAGE(f_Incidencias[Duracao_Seg]))
+			VAR days =
+			    INT ( allseconds / 24 / 60 / 60 )
+			VAR hours =
+			    MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			VAR minutes =
+			    MOD ( INT ( allseconds / 60 ), 60 )
+			VAR seconds =
+			    MOD ( INT ( allseconds ), 60 )
+			RETURN
+			days & "d "
+			& hours
+			& "h "
+			& minutes
+			& "m "
+			& seconds
+			& "s "
+		lineageTag: 9d014536-6e43-412c-b167-6d5310d55561
+
+	measure Incid_Abertos = CALCULATE([Qnt_Incidente], FILTER( f_Incidencias, NOT f_Incidencias[Estado]<> "1" && NOT f_Incidencias[Estado]<> "2"))
+		formatString: 0
+		lineageTag: 2ff77232-e4e5-4e5c-8f08-43d2cd69d3d6
+
+	measure 'Qnt_Modulo c/ Incidente' = CALCULATE(COUNT(f_Incidencias[ID_Incidencias]), DISTINCT(Modulos[Nome_Modulo]))
+		formatString: 0
+		isHidden
+		lineageTag: 02ee18b4-91fb-490f-972d-488211c41d9d
+
+		changedProperty = IsHidden
+
+	measure Ind_dias_s/_incidente = IF([Incid_Abertos]<1, FORMAT(MAX(f_Incidencias[DataFimExecucao]), "dd-MM-yyyy"), FORMAT(TODAY(),"dd-MM-yyyy"))-- & "("& DATEDIFF(MAX(f_Incidencias[DataFim]),TODAY(),DAY) &" Dias)"
+		lineageTag: 0876c239-755c-4f10-b8f7-b828cc08c2f9
+
+	measure card_dias = IF([Incid_Abertos]>=1, "Hoje", DATEDIFF(MAX(f_Incidencias[DataFimExecucao]),TODAY(),DAY) &" Dias")
+		lineageTag: 277aa4a3-e70d-4916-803f-9d8a3fc9fbaa
+
+	measure Aberto_Card = [Incid_Abertos]+0
+		formatString: 0
+		lineageTag: db62836d-36de-4ed5-b378-e422bc7bae48
+
+	measure 'Tempo Total_Hora' = ```
+			
+			 
+			Var __seg = CALCULATE(SUM(f_Incidencias[Duracao_Seg])) -- CALCULATE(AVERAGE(f_Incidencias[Duracao_Hora])) --, GENERATEALL(Projetos, ExecucaoMensalConta) )
+			
+			RETURN
+			 
+			IF( ISBLANK(__seg) , BLANK() ,
+			
+			    RIGHT ( "0" & INT ( __seg / 3600 ),2 )
+			
+			    & ":"
+			
+			    & RIGHT (
+			
+			    "0"
+			
+			    & INT ( ( __seg - INT (__seg / 3600 ) * 3600 ) / 60 ),
+			
+			    2
+			
+			))
+			
+			```
+		lineageTag: b5d47c0a-5cf1-435b-accd-627f2f0a1625
+
+	measure Total_seg = SUM(f_Incidencias[Duracao_Seg])
+		formatString: 0
+		lineageTag: 80eaa8e7-0212-4791-9597-79447a50f298
+
+	measure dias = INT([Total_seg])
+		formatString: 0
+		lineageTag: 0552b03e-bcd0-4964-97f1-58f777286552
+
+	measure 'Soma Hora (hh:mm:ss)' =
+			
+			VAR vHorasDecimal = [Total_seg]
+			VAR vHoras = INT ( vHorasDecimal )
+			VAR vMinutosDecimal = 60 * ( vHorasDecimal - vHoras)
+			VAR vMinutos = INT ( vMinutosDecimal )
+			VAR vSegundos = ROUND ( 60 * (vMinutosDecimal - vMinutos), 0 )
+			VAR vHH = IF ( LEN ( vHoras ) = 1, "0" & vHoras, vHoras )
+			VAR vMM = IF ( LEN ( vMinutos ) = 1, "0" & vMinutos, vMinutos )
+			VAR vSS = IF ( LEN ( vSegundos ) = 1, "0" & vSegundos, vSegundos )
+			VAR vResultado = vHH & ":" & vMM & ":" & vSS
+			RETURN
+			    vResultado
+		formatString: 00:00:00
+		lineageTag: d32d520a-846a-4832-9285-847ceb999f24
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure Duracao_Total =
+			
+			Var __seg = CALCULATE(SUM(f_Incidencias[Duracao_Seg])) --, GENERATEALL(Projetos, ExecucaoMensalConta) )
+			
+			var _calc =
+			
+			(__seg / 3600 )
+			
+			return
+			 ROUNDDOWN( _calc,0)
+			 --AVERAGE(f_Incidencias[Duracao_Hora])
+		lineageTag: 2b11adc7-d1b9-4ebf-8d45-1fff1da4ff31
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Qnt_Incidente_Meio = DISTINCTCOUNT(d_Meios_Incid[IdIncidencia])
+		formatString: 0
+		lineageTag: 8e3e5d93-ed90-4eeb-9eb8-d576fde0efb3
+
+	measure Qnt_Incidente_Pessoas = DISTINCTCOUNT(d_Pessoas_Incid[IdIncidencia])
+		formatString: 0
+		lineageTag: 0e488408-9998-4dc0-9e5f-63920a4fc3f9
+
+	measure Duracao_Total_HH =
+			
+			VAR allseconds =
+			    CALCULATE(SUM(f_Incidencias[Duracao_Seg]))
+			VAR days =
+			    INT ( allseconds / 24 / 60 / 60 )
+			VAR hours =
+			    MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			VAR minutes =
+			    MOD ( INT ( allseconds / 60 ), 60 )
+			VAR seconds =
+			    MOD ( INT( allseconds ), 60 )
+			RETURN
+			days & "d "
+			& hours
+			& "h "
+			& minutes
+			& "m "
+			& seconds
+			& "s "
+		lineageTag: 124b1843-0cb1-40e9-b578-d2e32baefae5
+
+	measure 'Gauge End' =
+			
+			VAR SourceMeasure = [Interrupcao] //Actual value [Duracao_Total]
+			VAR TargetMeasure = [Duracao_Mes] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Duracao_Mes]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = [Duracao_Mes]--SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			MaxValue
+		lineageTag: 61e3074e-a125-4f04-b707-44584e97bc26
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Red' = ```
+			
+			VAR SourceMeasure = [Interrupcao] // [Duracao_Mes] Actual value
+			VAR TargetMeasure = [Duracao_Mes] *0.0001 //Target value (end of the yellow zone) 
+			VAR RedZoneMeasure = [Duracao_Mes]*0.5 //Minimum target value (end of the red zone) = 365
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			RedZoneMeasure
+			```
+		lineageTag: 16f12d8a-8370-4fb5-8656-c83df45b007d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Green' =
+			
+			VAR SourceMeasure = [Duracao_Total] //Actual value
+			VAR TargetMeasure = [Duracao_Mes] *0.01 //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Duracao_Mes]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			TargetMeasure
+		formatString: 0.00
+		lineageTag: 06b3a6b0-bb9c-49fa-88e3-3de7b9580703
+
+		changedProperty = FormatString
+
+	measure Duracao_Mes = 730
+		formatString: 0
+		lineageTag: 537f3e27-a90e-48fd-ad97-2665a2c3d185
+
+	measure 'Gauge_Objetivo %' = ```
+			
+			IF([Duracao_Mes]=0, 
+			IF([Duracao_Total]=0,BLANK(),1) , (DIVIDE([Duracao_Total],[Duracao_Mes])-1))
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: eb875f95-a6a7-40d1-ba18-a002d531fdc6
+
+		changedProperty = FormatString
+
+	measure Interrupcao = ```
+			
+			Var __seg = CALCULATE(SUM(f_Incidencias[Duracao_Seg]), FILTER(f_Incidencias, f_Incidencias[Interrupcao] =1)) --, GENERATEALL(Projetos, ExecucaoMensalConta) )
+			var _calc = (__seg / 60 )  --minutos
+			var valor = ROUNDDOWN( _calc,0)
+			 
+			return
+			_calc/60 --hora
+			```
+		formatString: 0.0
+		lineageTag: 4da8200a-656e-4f77-bbb8-9449b5d675ff
+
+		changedProperty = FormatString
+
+	measure Durac_Interrupcoes =
+			
+			SWITCH(
+			    TRUE()
+			    , SELECTEDVALUE(d_Estado[Tipo]) = "Total Horas mês", [Duracao_Mes_Horas] --"Total Horas mês"
+			    , SELECTEDVALUE(d_Estado[Tipo]) = "Total Interrupção", [Interrupcao_month] --"Total Interrupção"
+			)
+		formatString: #,0.00
+		lineageTag: ab52f6cf-ff54-4080-8c05-4308ea8b59d1
+
+		changedProperty = FormatString
+
+	measure Interrupcao_month = ```
+			
+			var _1 = CALCULATE(
+			    [Interrupcao], DATESYTD(Calendario[Date]))
+			
+			var _2=  CALCULATE([Interrupcao]
+			      ,FILTER( all(Calendario),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) )
+			
+			         Return 
+			   _2
+			// IF.EAGER( ISFILTERED(Calendario[Date]),     
+			//     CALCULATE(
+			//     [Interrupcao], DATESYTD(Calendario[Date]))
+			//     , CALCULATE([Interrupcao]
+			//       ,FILTER( ALL(Calendario[Date]),
+			//          MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) )) 
+			```
+		lineageTag: 4b688d6a-c94e-4764-9018-8d65dc90eb97
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Duracao_Mes_Horas = ```
+			
+			CALCULATE( SUM(d_DiasMes[NumDias]) *24
+			        , FILTER(Calendario, MAX(Calendario[QntDiasMes])))
+			
+			--Filter(all('Date'), 'Date'[Date] < DATE( SELECTEDVALUE( 'Date'[Ano] ), SELECTEDVALUE( 'Date'[NºMês] )+1, 1 ) )
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 1323ea21-5a26-4b9f-b702-a6a93fc25755
+
+		changedProperty = FormatString
+
+	measure Utilizações =
+			
+			CALCULATE(
+			    COUNT(f_Tarefas_Meios[Id_TarefaMeios] )
+			    ,TREATAS( VALUES( f_Meios[Id] ), f_Tarefas_Meios[IdMeio] )
+			)--, FILTER(f_Incidencias,  f_Incidencias[Interrupcao_Calc] =1))
+		formatString: #,0
+		lineageTag: af32b01f-7fae-4af9-9992-602b733a85d7
+
+		changedProperty = FormatString
+
+	measure Produção =
+			
+			CALCULATE(
+			    DISTINCTCOUNT( f_Tarefas_Meios[IdTarefa] )
+			    ,TREATAS( VALUES( f_Meios[Id] ), f_Tarefas_Meios[IdMeio] )
+			)
+		formatString: #,0
+		lineageTag: 083cc4b5-4830-4ec9-8cc3-20ada2205132
+
+		changedProperty = FormatString
+
+	measure 'Qnt Interrupcao' =
+			
+			CALCULATE(
+			    COUNT(f_Incidencias[Interrupcao])
+			    ,f_Incidencias[Interrupcao] =1
+			    ,TREATAS( VALUES( f_Meios[Id] ), d_Meios_Incid[IdMeio] )
+			)--, TREATAS( VALUES( d_Meios[Id] ),d_Meios_Incid[IdMeio] ) )
+			--CALCULATE(COUNT(f_Incidencias[Interrupcao]), FILTER(f_Incidencias, f_Incidencias[Interrupcao] =1), TREATAS( VALUES( d_Meios[Id] ),d_Meios_Incid[IdMeio] ) )
+		formatString: #,0
+		lineageTag: d4aaf8fe-ed08-40a7-a1f3-9753ca48d3e3
+
+		changedProperty = FormatString
+
+	measure Duracao_Interrupcao =
+			
+			VAR allseconds =
+			    CALCULATE(SUM(f_Incidencias[Duracao_Seg]), FILTER(f_Incidencias, f_Incidencias[Interrupcao] = 1),TREATAS( VALUES( f_Meios[Id] ), d_Meios_Incid[IdMeio] ))
+			VAR days =
+			    INT ( allseconds / 24 / 60 / 60 )
+			VAR hours =
+			    MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			VAR minutes =
+			    MOD ( INT ( allseconds / 60 ), 60 )
+			VAR seconds =
+			    MOD ( INT ( allseconds ), 60 )
+			RETURN
+			IF.EAGER( ISBLANK(allseconds), "0d 0h 0m 0s",
+			days & "d "
+			& hours
+			& "h "
+			& minutes
+			& "m "
+			& seconds
+			& "s "
+			)
+		lineageTag: dce38271-2da2-447a-b07f-e8a97528c293
+
+	measure 'Qnt Interrupcao_card' = [Qnt Interrupcao] +0
+		formatString: 0
+		lineageTag: d1ce81bf-5e55-4562-8d61-abd21971d534
+
+	measure Qnt_Incidente_card = [Qnt_Incidente] +0
+		formatString: 0
+		lineageTag: 33d67dfb-77fe-460f-8735-2922cbadf4b1
+
+	measure Qnt_Incidente_Analise_Int = ```
+			
+			CALCULATE( 
+			    COUNT(f_Incidencias[ID_Incidencias])
+			    ,TREATAS( VALUES( f_Meios[Id] ), d_Meios_Incid[IdMeio] )
+			)
+			```
+		formatString: 0
+		lineageTag: 0ac60ba0-b0b3-4e38-8864-26ec7d20fa3e
+
+	measure Measure
+		lineageTag: 58688cb0-850f-48bb-a5ac-331f1ff94e3a
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure Duracao_Media_Int =
+			
+			VAR allseconds =
+			    CALCULATE(AVERAGE(f_Incidencias[Duracao_Seg]),TREATAS( VALUES( f_Meios[Id] ), d_Meios_Incid[IdMeio] ))
+			VAR days =
+			    INT ( allseconds / 24 / 60 / 60 )
+			VAR hours =
+			    MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			VAR minutes =
+			    MOD ( INT ( allseconds / 60 ), 60 )
+			VAR seconds =
+			    MOD ( INT ( allseconds ), 60 )
+			RETURN
+			days & "d "
+			& hours
+			& "h "
+			& minutes
+			& "m "
+			& seconds
+			& "s "
+		lineageTag: 1fa3b4c3-501a-4cbb-a570-c5e042d4b617
+
+	measure Duracao_Total_HH_Int =
+			
+			VAR allseconds =
+			    CALCULATE(SUM(f_Incidencias[Duracao_Seg]),TREATAS( VALUES( f_Meios[Id] ), d_Meios_Incid[IdMeio] ))
+			VAR days =
+			    INT ( allseconds / 24 / 60 / 60 )
+			VAR hours =
+			    MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			VAR minutes =
+			    MOD ( INT ( allseconds / 60 ), 60 )
+			VAR seconds =
+			    MOD ( INT( allseconds ), 60 )
+			RETURN
+			days & "d "
+			& hours
+			& "h "
+			& minutes
+			& "m "
+			& seconds
+			& "s "
+		lineageTag: 8cc4c387-a43b-4c4d-8aa6-6e5617a4d2c3
+
+	partition @Medidas-048edccc-6a0e-49e3-863c-2b4329d74898 = m
+		mode: import
+		queryGroup: BD
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Medidas = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Medidas", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Medidas"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

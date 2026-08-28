@@ -1,0 +1,32 @@
+table Processo_Auxiliar
+	lineageTag: 0806246d-16b9-4577-9090-da0ad04f35b2
+
+	column Processo
+		dataType: string
+		lineageTag: 3cd4f8fc-40f5-438f-a2cf-c3ffe4e90b5d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Processo]
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Processo_Auxiliar-29c68479-c505-4ee2-bbf9-71ee4ad60637 = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				    SELECTCOLUMNS(Contratos,
+				        "Processo", Contratos[NUMERO_PROCESSO]
+				    )
+				VAR _2 =
+				    SELECTCOLUMNS(Consumos,
+				        "Processo", Consumos[NUMERO_PROCESSO]
+				    )
+				VAR RESULT = UNION(_1,_2)
+				RETURN
+				SUMMARIZE(RESULT,[Processo])
+
+	annotation PBI_Id = 52e8745b392647e19378e352042a73b9
+

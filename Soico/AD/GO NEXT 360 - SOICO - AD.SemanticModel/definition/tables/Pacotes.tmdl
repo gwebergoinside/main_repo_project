@@ -1,0 +1,51 @@
+table Pacotes
+	lineageTag: 8ff12605-d5e8-4456-8803-7a2bbf66b6d6
+
+	column pacId
+		dataType: int64
+		formatString: 0
+		lineageTag: e3f07c48-3ffc-4a2f-994b-b44e4afa8a0f
+		summarizeBy: none
+		sourceColumn: pacId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pacote
+		dataType: string
+		lineageTag: 7402f6a3-e12c-4873-9e5a-f532ecb49ccd
+		summarizeBy: none
+		sourceColumn: Pacote
+
+		annotation SummarizationSetBy = Automatic
+
+	column PacoteBreve
+		dataType: string
+		lineageTag: 0e219b7d-908f-4aa1-8fd7-210522b39c08
+		summarizeBy: none
+		sourceColumn: PacoteBreve
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Pacote'
+		dataType: string
+		lineageTag: 2c07af34-3a04-46bf-8cc0-b5ad4191cf3f
+		summarizeBy: none
+		sourceColumn: Tipo Pacote
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Pacotes-6c3219a3-65c0-4dab-8bc5-2b37a544fbff = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				Source = Sql.Database(ServerP, BD, [Query="select#(lf)pacId,#(lf)pacDescricao as Pacote,#(lf)pacDescricaoBreve as PacoteBreve,#(lf)pacflgLivre#(tab)pacFlgValidaReserva#(lf)from pacotes"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"pacFlgValidaReserva", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","0","Package",Replacer.ReplaceText,{"pacFlgValidaReserva"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","1","Livre",Replacer.ReplaceText,{"pacFlgValidaReserva"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Replaced Value1",{{"pacFlgValidaReserva", "Tipo Pacote"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

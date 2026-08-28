@@ -1,0 +1,18 @@
+table FichaPessoa_Dias
+	lineageTag: 1bb7fb01-ba00-4a4f-a631-e80869512f58
+
+	column Value
+		formatString: 0
+		lineageTag: 09051106-40d9-4fca-977f-d3eb929f1056
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FichaPessoa_Dias-c1144315-03f6-4dcc-80d5-52d980300247 = calculated
+		mode: import
+		source = GENERATESERIES( 1, 31, 1)
+
+	annotation PBI_Id = 3f31051d54134f57a224c1839fc5dac1
+

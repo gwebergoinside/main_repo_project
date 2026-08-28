@@ -1,0 +1,61 @@
+table NecessidadesGanttUnpivot
+	lineageTag: 5c505eeb-653c-493e-ad9c-1d39e6251d80
+
+	column Index
+		formatString: 0
+		lineageTag: 320dd81f-5d6e-4b47-a79a-9c8dedfe16e1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Index]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekN
+		formatString: 0
+		lineageTag: 2d953272-bcf5-42ff-b7f7-b9bb2cce8de0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekN]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		lineageTag: e8317c08-b5ed-4231-bdd9-452df23f0512
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Dia]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		lineageTag: 0e4d45ac-d744-4d44-9d42-ffdadc713028
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key = NecessidadesGanttUnpivot[Index]&"-"&NecessidadesGanttUnpivot[WeekN]
+		lineageTag: 90d847fa-55e8-4b9f-857b-d358f2c41321
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition NecessidadesGanttUnpivot-660f638e-0972-413a-a111-0584616e785e = calculated
+		mode: import
+		source =
+				
+				FILTER(
+				    UNION(
+				        SELECTCOLUMNS(Necessidades, "Index", Necessidades[Index], "WeekN", 2, "Dia", "Segunda", "Value", [Segunda]),
+				        SELECTCOLUMNS(Necessidades, "Index", Necessidades[Index], "WeekN", 3, "Dia", "Terca", "Value", [Terca]),
+				        SELECTCOLUMNS(Necessidades, "Index", Necessidades[Index], "WeekN", 4, "Dia", "Quarta", "Value", [Quarta]),
+				        SELECTCOLUMNS(Necessidades, "Index", Necessidades[Index], "WeekN", 5, "Dia", "Quinta", "Value", [Quinta]),
+				        SELECTCOLUMNS(Necessidades, "Index", Necessidades[Index], "WeekN", 6, "Dia", "Sexta", "Value", [Sexta]),
+				        SELECTCOLUMNS(Necessidades, "Index", Necessidades[Index], "WeekN", 7, "Dia", "Sabado", "Value", [Sabado]),
+				        SELECTCOLUMNS(Necessidades, "Index", Necessidades[Index], "WeekN", 1, "Dia", "Domingo", "Value", [Domingo])
+				    ), [Value] = "true"
+				)
+
+	annotation PBI_Id = ca7cb04f895b4e20a90ebad68c5f4994
+

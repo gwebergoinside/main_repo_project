@@ -1,0 +1,32 @@
+table Centrais
+	lineageTag: b6988411-b1ad-448f-a167-edcd1157e206
+
+	column Central
+		dataType: string
+		lineageTag: 18cb8271-59e1-4ef2-92ff-d2234dc4912e
+		summarizeBy: none
+		sourceColumn: Central
+
+		annotation SummarizationSetBy = Automatic
+
+	column Distribuidor
+		dataType: int64
+		formatString: 0
+		lineageTag: 6675a5ce-3df4-485e-968f-1f42902fe5f6
+		summarizeBy: sum
+		sourceColumn: Distribuidor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Centrais-556efb58-73ca-44e7-bf8d-0f5bf493f2a6 = m
+		mode: import
+		queryGroup: Manual
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("bc6xCsMgFIXhVynOGbxX71WfoF1CuwcHoVIyBMWS9PVLbRZj1o+fw5kmMcZXWOKc3mIQoIQfWkIre3N9B0Tkqj7SJ5YlPufwS1n1CKj39lrWnC63sIW6a+BEAZ3hM2cCuXta81hTRN0Sa6X6iA+kQWGle47lf5Gs6cS2QmgOjZVMwvsv", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Central = _t, Distribuidor = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Central", type text}, {"Distribuidor", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

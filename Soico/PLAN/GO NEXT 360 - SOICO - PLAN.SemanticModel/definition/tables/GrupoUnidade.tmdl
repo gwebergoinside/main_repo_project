@@ -1,0 +1,57 @@
+table GrupoUnidade
+	lineageTag: 8cd83d17-29bc-4d04-b39a-84af2d5d1882
+
+	column Unidade
+		dataType: string
+		lineageTag: a6d27f59-2519-4c4d-9365-5d51763c361d
+		summarizeBy: none
+		sourceColumn: Unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdGrupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a2a2c52-b29f-49da-be92-84c885109d2a
+		summarizeBy: none
+		sourceColumn: IdGrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		dataType: string
+		lineageTag: 8658c065-ec5c-4247-9b10-39a2ecc13393
+		summarizeBy: none
+		sourceColumn: Grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdUnidade
+		dataType: int64
+		formatString: 0
+		lineageTag: d6d68035-e883-4722-bbf6-5472ad17568c
+		summarizeBy: sum
+		sourceColumn: IdUnidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column RLS
+		dataType: string
+		lineageTag: f33b120d-d80a-4f7e-bc53-750c5563c085
+		summarizeBy: none
+		sourceColumn: RLS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GrupoUnidade-90276039-d232-4e3e-9c90-faba4c6017d4 = m
+		mode: import
+		queryGroup: Pessoas
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    up.Nome As Unidade,#(lf)    gp.Id As IdGrupo,#(lf)    gp.Nome As Grupo,#(lf)    up.Id As IdUnidade#(lf)From#(lf)    Unidades_Pessoas up Inner Join#(lf)    Grupos_Pessoas gp On gp.IdUnidadePessoa = up.Id"]),
+				    #"Added Custom" = Table.AddColumn(Source, "RLS", each "*")
+				in
+				    #"Added Custom"
+
+	annotation PBI_ResultType = Table
+

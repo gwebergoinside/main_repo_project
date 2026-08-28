@@ -1,0 +1,46 @@
+table Advertisers
+	lineageTag: 95eb7567-323b-4997-841a-ef1413cca2b7
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: f8bc6738-88db-4c74-b585-e5837d31b5a4
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAdv =
+			--[Id] + 99999999999999999
+			
+			VAR _1 = LOOKUPVALUE( 'InvestmentGRPs'[IdAnuncianteAD],'InvestmentGRPs'[Anunciante], Advertisers[Anunciante] )
+			RETURN
+			IF.EAGER( _1 = BLANK(), Advertisers[id] + 99999999999999999, _1 )
+		formatString: 0
+		lineageTag: 6f5a2d3b-2007-483e-9524-5fcacd44f093
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Anunciante
+		dataType: string
+		lineageTag: 04ebfadc-8c2b-4ce9-8d69-addfdfbc53a3
+		summarizeBy: none
+		sourceColumn: Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Advertisers-2fe17f55-0770-4e57-ae4d-4877f5511ff6 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Anunciante = _t, Id = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Id", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,32 @@
+table d_Classificação
+	lineageTag: f6cf86a9-5db8-432b-9c32-a2f7d1d50059
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 18eb79d2-d94c-49da-ae06-1221d1ed7351
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Classificacao
+		dataType: string
+		lineageTag: 95cfb591-20bd-40d4-b730-f9e273eef1bf
+		summarizeBy: none
+		sourceColumn: Classificacao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Classificação-4496d24a-c0ff-4e76-87ec-5eac7ac61ad3 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)    Incidencias_Classificacoes.Nome,#(lf)    Incidencias_Classificacoes.Id#(lf)From#(lf)    Incidencias_Classificacoes"]),
+				    #"Renamed Columns" = Table.RenameColumns(Origem,{{"Nome", "Classificacao"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"Id", "Classificacao"})
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_ResultType = Table
+

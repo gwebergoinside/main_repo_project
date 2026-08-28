@@ -1,0 +1,137 @@
+table d_Pessoas_Incid
+	lineageTag: 8584fec8-35e8-44d1-a711-51dde61d1f29
+
+	column IdIncidencia
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f9d45d4-63d5-4d88-b867-a62865255e31
+		summarizeBy: none
+		sourceColumn: IdIncidencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Detalhe
+		dataType: string
+		lineageTag: b4cf332a-a64b-4844-82c1-c7d1ed2799fe
+		summarizeBy: none
+		sourceColumn: Detalhe
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b390ebc7-4c07-49a3-80a0-b4c54d70887f
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		variation Variação
+			isDefault
+			relationship: 6ceeab89-b360-4ef4-b44f-86c050ca695b
+			defaultHierarchy: LocalDateTable_a9e37b17-aa9e-4a78-a1fe-779c4f6973f9.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 303a7acf-6a5e-4939-87e6-27a41412a159
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variação
+			isDefault
+			relationship: f3245fc9-421b-4cce-8d9c-ed64e124c550
+			defaultHierarchy: LocalDateTable_a962502b-8b04-4c1c-90bc-57c15bfce53f.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duracao
+		dataType: int64
+		formatString: 0
+		lineageTag: 68c66b04-1bff-4235-a99e-4a748d49d69b
+		summarizeBy: sum
+		sourceColumn: Duracao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: b1a43619-c61e-48bd-9edf-8813e6ccd01e
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 80e946ac-79d2-49d1-972a-ca698facf234
+		summarizeBy: sum
+		sourceColumn: IdPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pessoa_Nome = ```
+			
+			    LOOKUPVALUE(
+			        f_Pessoas[nome]
+			        ,f_Pessoas[Id]
+			        ,d_Pessoas_Incid[IdPessoa]
+			    )
+			```
+		lineageTag: 80c6ff0a-b5fb-42c1-8592-65fd1e3305be
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pessoa_Grupo = ```
+			
+			    LOOKUPVALUE(
+			        f_Pessoas[Grupo]
+			        ,f_Pessoas[Id]
+			        ,d_Pessoas_Incid[IdPessoa]
+			    )
+			```
+		lineageTag: b5626387-4b28-4762-8b50-436d25a6244e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pessoa_Unidade = ```
+			
+			    LOOKUPVALUE(
+			        f_Pessoas[Unidade (pessoas)]
+			        ,f_Pessoas[Id]
+			        ,d_Pessoas_Incid[IdPessoa]
+			    )
+			```
+		lineageTag: ae2e03ec-572b-48af-bd57-5d2cf9fb2f5e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pessoa_Funcao = ```
+			
+			    LOOKUPVALUE(
+			        f_Pessoas[Funcao]
+			        ,f_Pessoas[Id]
+			        ,d_Pessoas_Incid[IdPessoa]
+			    )
+			```
+		lineageTag: a75fc0e8-fece-4f9a-a78e-72c75f6fb2cc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Pessoas_Incid-41ea3aea-b65e-4160-94c9-cfb9f4dad921 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)    *#(lf)From#(lf)    Incidencias_Pessoas"])
+				in
+				    Origem
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,96 @@
+table PlanoContrato_Direitos
+	lineageTag: 0ee48b98-1405-456e-9efc-edef760a255a
+
+	column Id_contrato_direito
+		dataType: int64
+		formatString: 0
+		lineageTag: 43bea33a-0751-4c39-aa61-b8ccfafd1de4
+		summarizeBy: sum
+		sourceColumn: Id_contrato_direito
+
+		annotation SummarizationSetBy = Automatic
+
+	column codPlano
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c250117-deb7-4c41-8e35-f25a9799a2e5
+		summarizeBy: none
+		sourceColumn: codPlano
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_direito
+		dataType: int64
+		formatString: 0
+		lineageTag: 7fe0f2c7-9e31-4695-b1f1-ba8a45ef204b
+		summarizeBy: none
+		sourceColumn: cod_direito
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_inicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 069781ce-f244-4bb7-bb70-05a71496e2fc
+		summarizeBy: none
+		sourceColumn: data_inicio
+
+		variation Variation
+			isDefault
+			relationship: 78d612bb-c9c6-4e87-998c-b844b1a90244
+			defaultHierarchy: LocalDateTable_45563d55-0c3b-4682-9d0d-049756149e44.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_fim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 568982f6-7ee4-48b0-9cd6-040237661cde
+		summarizeBy: none
+		sourceColumn: data_fim
+
+		variation Variation
+			isDefault
+			relationship: 5e043274-e688-46f3-ad63-665a87b22724
+			defaultHierarchy: LocalDateTable_3885aa9a-a27c-4f61-9212-9170aa16be56.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_data_ilimitada
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8f414cfc-4d5c-4a65-8af1-19c38d338213
+		summarizeBy: none
+		sourceColumn: flag_data_ilimitada
+
+		annotation SummarizationSetBy = Automatic
+
+	column notas
+		dataType: string
+		lineageTag: 0cd56a46-b623-4a19-a72a-1c53187f781b
+		summarizeBy: none
+		sourceColumn: notas
+
+		annotation SummarizationSetBy = Automatic
+
+	column TerritorioInclui
+		dataType: int64
+		formatString: 0
+		lineageTag: 32b0a17a-c281-42a7-b1f8-997b52ed7a47
+		summarizeBy: sum
+		sourceColumn: TerritorioInclui
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PlanoContrato_Direitos-34d7af76-3032-44e2-a599-7c6023558114 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    *#(lf) From#(lf)    PlanoContrato_Direitos"])
+				in
+				    Source
+
+	annotation PBI_QueryRelationships = {"columnCount":8,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/PlanoContrato_Direitos/Source.{Id_contrato_direito,0}","Section1/PlanoContrato_Direitos/Source.{codPlano,1}","Section1/PlanoContrato_Direitos/Source.{cod_direito,2}","Section1/PlanoContrato_Direitos/Source.{data_inicio,3}","Section1/PlanoContrato_Direitos/Source.{data_fim,4}","Section1/PlanoContrato_Direitos/Source.{flag_data_ilimitada,5}","Section1/PlanoContrato_Direitos/Source.{notas,6}","Section1/PlanoContrato_Direitos/Source.{TerritorioInclui,7}"],"ColumnCount":8,"KeyColumnNames":[],"ColumnIdentities":["Section1/PlanoContrato_Direitos/Source.{Id_contrato_direito,0}","Section1/PlanoContrato_Direitos/Source.{codPlano,1}","Section1/PlanoContrato_Direitos/Source.{cod_direito,2}","Section1/PlanoContrato_Direitos/Source.{data_inicio,3}","Section1/PlanoContrato_Direitos/Source.{data_fim,4}","Section1/PlanoContrato_Direitos/Source.{flag_data_ilimitada,5}","Section1/PlanoContrato_Direitos/Source.{notas,6}","Section1/PlanoContrato_Direitos/Source.{TerritorioInclui,7}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

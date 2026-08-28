@@ -1,0 +1,56 @@
+table d_Status
+	lineageTag: d1238f61-167c-496a-9cc1-5c949a32639b
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e2d246d-0f4e-40c6-aed5-d148ffdfdaa4
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusName
+		dataType: string
+		lineageTag: 35ae0d8f-4f07-490e-b53e-081fa910654f
+		summarizeBy: none
+		sourceColumn: StatusName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusColor
+		dataType: string
+		lineageTag: be1b4b90-49c7-4132-8a0e-943d864e7457
+		summarizeBy: none
+		sourceColumn: StatusColor
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusFgColor
+		dataType: string
+		lineageTag: 2f77de4d-2ca9-49d5-9c74-70c6efeb82f3
+		summarizeBy: none
+		sourceColumn: StatusFgColor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'f_Incidencias.Estado'
+		dataType: string
+		lineageTag: abeccdbb-ae3a-486c-96bb-21b7e8eb94af
+		summarizeBy: none
+		sourceColumn: f_Incidencias.Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Status-bee06f83-5dc1-46de-b7da-c167eecd7a63 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="SELECT Inc.Id#(lf),Config.Valor.value('(/ArrayOfState/State/Name[../IntegerValue=sql:column(""Inc.Estado"")])[1]', 'varchar(max)') StatusName#(lf),Config.Valor.value('(/ArrayOfState/State/Color[../IntegerValue=sql:column(""Inc.Estado"")])[1]', 'char(7)') StatusColor#(lf),Config.Valor.value('(/ArrayOfState/State/FgColor[../IntegerValue=sql:column(""Inc.Estado"")])[1]', 'char(7)') StatusFgColor#(lf)FROM Incidencias Inc#(lf)CROSS JOIN Configuracoes_Estados Config#(lf)WHERE Config.Tipo = 'IncidenceStateMachine'"]),
+				    #"Merged Queries" = Table.NestedJoin(Origem, {"Id"}, f_Incidencias, {"ID_Incidencias"}, "f_Incidencias", JoinKind.LeftOuter),
+				    #"Expanded f_Incidencias" = Table.ExpandTableColumn(#"Merged Queries", "f_Incidencias", {"Estado"}, {"f_Incidencias.Estado"})
+				in
+				    #"Expanded f_Incidencias"
+
+	annotation PBI_ResultType = Table
+

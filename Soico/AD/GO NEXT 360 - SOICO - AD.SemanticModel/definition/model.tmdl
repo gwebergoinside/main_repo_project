@@ -1,0 +1,128 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Share
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup BD
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Manual
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup Encomendas
+
+	annotation PBI_QueryGroupOrder = 5
+
+queryGroup Audiências
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup Negociações
+
+	annotation PBI_QueryGroupOrder = 6
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Encomendas","Canais","Vendedores","Anunciante","~Medidas","GrupoCanais","Classificação de Canais","Centrais","Objetivos","Propostas","Ocupacao","Variacao Receita","Alvos","Pub","Mapeamento","Negociacao","TipoProduto","Advertisers","Channels","InvestmentGRPs","MediaAgencies","Sectors","Targets","Programs","Brands","Audiencias","ServerP","BD","TipoCliente","Table","Titulos","Tipo Publicidade","AlvoPadrao","AnoUpdate","Produtos","OrdemPubClassificacao","Bonus","Distribuidor","Faturação","Outros Custos","d_Neg_Característica","NegDetalhe","d_Neg_TaxaMultiProduto","d_Neg_Cond_Neg","d_Neg_Posicoes","d_Neg_Audiencia","d_Neg_EcrDescricao","d_Neg_Prioridade","Multiprodutos","DuracaoBase","d_Neg_Descontos","FlagFaturacao","Rappel","images","lista de imagem","logo header","TipoRappelComissao","d_DayPart","Valor","Pacotes","DescontoTVI","DescontoRTP","DescontoCMTV","DescontoSIC","DescontoCartoonNetwork"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Encomendas
+ref table DateTableTemplate_4cc20a94-09e2-4929-a9d5-8240048e93fc
+ref table Canais
+ref table Vendedores
+ref table Anunciante
+ref table ~Medidas
+ref table Objetivos
+ref table Calendario
+ref table Propostas
+ref table LocalDateTable_d7dbf4d4-47f4-4530-9576-115d27ca723d
+ref table LocalDateTable_ef8293a3-2ca0-491a-a1b2-b4178b43a7c6
+ref table LocalDateTable_59dbc8da-6956-43ed-ba11-ad4b8a28ac86
+ref table 'Simulador Exclusivos'
+ref table 'GRP Simulador'
+ref table 'Variacao Receita'
+ref table Ocupacao
+ref table LocalDateTable_9d33ffac-dbe0-4a28-8540-db153444ba3d
+ref table Alvos
+ref table Audiencias
+ref table GrupoCanais
+ref table Advertisers
+ref table Channels
+ref table InvestmentGRPs
+ref table MediaAgencies
+ref table Sectors
+ref table Targets
+ref table 'Ligacao Inv-Map'
+ref table Mapeamento
+ref table LocalDateTable_a6eef63c-d3f3-47a8-a8ee-ff49da6b1a02
+ref table LigacaoINVMAP
+ref table 'Alvos Var'
+ref table Pub
+ref table LocalDateTable_3c67d549-5f20-49aa-a857-cc198ae6b70e
+ref table Programs
+ref table Brands
+ref table TipoCliente
+ref table Table
+ref table Titulos
+ref table 'Tipo Publicidade'
+ref table 'Calendario comparativo'
+ref table Centrais
+ref table Produtos
+ref table OrdemPubClassificacao
+ref table Bonus
+ref table Distribuidor
+ref table Negociacao
+ref table TipoProduto
+ref table LocalDateTable_65ea416e-d8fe-4601-a5fe-4c2b38e6ab7c
+ref table Faturação
+ref table 'Outros Custos'
+ref table d_Neg_Característica
+ref table LocalDateTable_1f0842dc-60c0-4465-8dfc-2960fbdffd18
+ref table LocalDateTable_e9564673-7ccd-464f-85e9-50938f65ee86
+ref table NegDetalhe
+ref table LocalDateTable_5d3ec3d0-2d11-48c4-9e3a-0db9fe0a9ea1
+ref table d_Neg_TaxaMultiProduto
+ref table d_Neg_Cond_Neg
+ref table d_Neg_Posicoes
+ref table LocalDateTable_077f7a2a-a344-4e3b-bf6e-4131d46bffb2
+ref table LocalDateTable_37529e72-ed85-47da-9d39-214bf7ae2632
+ref table d_Neg_Audiencia
+ref table LocalDateTable_4f834c8c-1cb9-4352-b792-76ce28b6a8ae
+ref table LocalDateTable_1068e344-4b63-4a28-b724-074bbbb65cae
+ref table d_Neg_EcrDescricao
+ref table d_Neg_Prioridade
+ref table Multiprodutos
+ref table d_DayPart
+ref table d_Neg_Descontos
+ref table LocalDateTable_5f362b0c-0471-4922-9d15-01d535154cde
+ref table LocalDateTable_609519f8-358f-473e-a07a-cfb8ce7f1385
+ref table Valor
+ref table Central
+ref table FlagFaturacao
+ref table LocalDateTable_202571d0-8c17-419a-b101-4f7e8d669940
+ref table LocalDateTable_08c6cf5d-373a-4f47-83ce-6f7d7595bb04
+ref table TipoNeg
+ref table DuracaoBase
+ref table Rappel
+ref table images
+ref table 'logo header'
+ref table TipoRappelComissao
+ref table Pacotes
+ref table DescontoTVI
+ref table DescontoRTP
+ref table DescontoCMTV
+ref table DescontoSIC
+ref table DescontoCartoonNetwork
+
+ref cultureInfo en-US
+

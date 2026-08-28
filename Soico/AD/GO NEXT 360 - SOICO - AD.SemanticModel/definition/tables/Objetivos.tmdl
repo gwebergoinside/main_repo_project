@@ -1,0 +1,125 @@
+table Objetivos
+	lineageTag: 155385dc-42ec-42f0-a0bd-52c4a0905d09
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: eda4024b-e283-44c8-a75a-6683a91e6d04
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateNegoc = date(Objetivos[negObjAno],Objetivos[negObjMes],1)
+		formatString: General Date
+		lineageTag: 76a03880-bbde-4eaa-9c72-6cf15052d45e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column utiId
+		dataType: int64
+		formatString: 0
+		lineageTag: dc5530a9-49dd-4d02-8b85-0a7605065478
+		summarizeBy: count
+		sourceColumn: utiId
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: a5e7dbf9-9958-4272-b101-be77f484c5f9
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column negObjTipo
+		dataType: string
+		lineageTag: 683ecb69-5e17-421f-8ef8-7b048e6cffab
+		summarizeBy: none
+		sourceColumn: negObjTipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column negObjValor
+		dataType: double
+		lineageTag: 11411d60-3f65-4cd9-8c87-043b0e5c9d60
+		summarizeBy: sum
+		sourceColumn: negObjValor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column negObjValorBruto
+		dataType: double
+		lineageTag: 53a3ce46-88b6-4f27-9c7d-b2498faa3e62
+		summarizeBy: sum
+		sourceColumn: negObjValorBruto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column negObjMes
+		dataType: int64
+		formatString: 0
+		lineageTag: cf87bb9b-d676-4b89-9f40-da365fb692a6
+		summarizeBy: sum
+		sourceColumn: negObjMes
+
+		annotation SummarizationSetBy = Automatic
+
+	column negObjAno
+		dataType: int64
+		formatString: 0
+		lineageTag: 203b0ec0-0ff9-4cce-ae71-28366028717d
+		summarizeBy: sum
+		sourceColumn: negObjAno
+
+		annotation SummarizationSetBy = Automatic
+
+	column perId
+		dataType: int64
+		formatString: 0
+		lineageTag: 31acb377-cdf9-44c5-b2e2-4c3cacc30971
+		summarizeBy: count
+		sourceColumn: perId
+
+		annotation SummarizationSetBy = Automatic
+
+	column negObjId
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b502e52-e571-4547-81a6-0f1fc03e0654
+		summarizeBy: count
+		sourceColumn: negObjId
+
+		annotation SummarizationSetBy = Automatic
+
+	column anuId
+		dataType: int64
+		formatString: 0
+		lineageTag: c5d21fcf-690b-4f03-809b-309c3bf3e50a
+		summarizeBy: none
+		sourceColumn: anuId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Objetivos-d443ff34-4878-41a1-9612-6b4afea6d1f3 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    NegociacaoObjectivos.utiId,#(lf)    NegociacaoObjectivos.tipPubId,#(lf)    NegociacaoObjectivos.canCodigo,#(lf)    NegociacaoObjectivos.negObjTipo,#(lf)    NegociacaoObjectivos.negObjValor,#(lf)    NegociacaoObjectivos.negObjValorBruto,#(lf)    NegociacaoObjectivos.negObjMes,#(lf)    NegociacaoObjectivos.negObjAno,#(lf)    NegociacaoObjectivos.perId,#(lf)    NegociacaoObjectivos.negObjId,#(lf)    NegociacaoObjectivos.anuId#(lf)From#(lf)    NegociacaoObjectivos#(lf)Where#(lf)    NegociacaoObjectivos.negObjAno >= Year(GetDate()) - 3"])
+				in
+				    Source
+
+	annotation PBI_QueryRelationships = {"columnCount":10,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/negociacaoObjectivos/Source.{utiId,0}","Section1/negociacaoObjectivos/Source.{tipPubId,1}","Section1/negociacaoObjectivos/Source.{canCodigo,2}","Section1/negociacaoObjectivos/Source.{negObjTipo,3}","Section1/negociacaoObjectivos/Source.{negObjValor,4}","Section1/negociacaoObjectivos/Source.{negObjValorBruto,5}","Section1/negociacaoObjectivos/Source.{negObjMes,6}","Section1/negociacaoObjectivos/Source.{negObjAno,7}","Section1/negociacaoObjectivos/Source.{perId,8}","Section1/negociacaoObjectivos/Source.{negObjId,9}"],"ColumnCount":10,"KeyColumnNames":[],"ColumnIdentities":["Section1/negociacaoObjectivos/Source.{utiId,0}","Section1/negociacaoObjectivos/Source.{tipPubId,1}","Section1/negociacaoObjectivos/Source.{canCodigo,2}","Section1/negociacaoObjectivos/Source.{negObjTipo,3}","Section1/negociacaoObjectivos/Source.{negObjValor,4}","Section1/negociacaoObjectivos/Source.{negObjValorBruto,5}","Section1/negociacaoObjectivos/Source.{negObjMes,6}","Section1/negociacaoObjectivos/Source.{negObjAno,7}","Section1/negociacaoObjectivos/Source.{perId,8}","Section1/negociacaoObjectivos/Source.{negObjId,9}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

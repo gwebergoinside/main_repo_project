@@ -1,0 +1,31 @@
+table d_Estado
+	lineageTag: df7b97e7-8b5f-4080-ab03-b5429802b373
+
+	column Tipo
+		dataType: string
+		lineageTag: c0e2128c-388f-42fe-8f69-4d717c69ff79
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c62127c-90c1-4ff4-9fba-9c238ee60932
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Estado-512e6ffe-bb29-4430-a307-4ae9e6f70a8a = m
+		mode: import
+		source =
+				let
+				    Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCskvScxR8MwrSS0qKi04vPzw4nwlHSVDpVgdmFxGflFisULu4VXFQAkDpdhYAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Tipo = _t, Id = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Origem,{{"Tipo", type text}, {"Id", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,21 @@
+/// Período de atualização
+table DescontoRTP
+	lineageTag: 9b2b156e-0a55-41d2-87cb-13369e061be5
+
+	column DescontoRTP
+		dataType: string
+		lineageTag: ff337de3-e780-4705-930e-3858186ac253
+		summarizeBy: none
+		sourceColumn: DescontoRTP
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DescontoRTP-54f6d496-da4c-4108-b5eb-5ced7ace20d1 = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

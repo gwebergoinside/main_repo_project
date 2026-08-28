@@ -1,0 +1,61 @@
+table Channels
+	lineageTag: 81cb040d-a45b-4e38-a44e-ee78eefb08a5
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a21105c-53dd-4533-bd54-7da3943786d3
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Logo
+		dataType: string
+		lineageTag: 4740d0b8-1264-4b35-9121-1144d79272f9
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: Logo
+
+		annotation SummarizationSetBy = Automatic
+
+	column LogoAgrupamento
+		dataType: string
+		lineageTag: 7ed151b6-a65c-47f4-a326-070823db6a2c
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: LogoAgrupamento
+		sortByColumn: AgrupamentoLogo
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgrupamentoLogo
+		dataType: string
+		lineageTag: e06d99cc-e40d-4dcf-b141-e1454e7f7b0f
+		summarizeBy: none
+		sourceColumn: AgrupamentoLogo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: 545a14ed-86b8-4c46-a930-8f054a674bda
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Channels-c31b346b-d1f8-4a13-bef1-9dce08400ef6 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [AgrupamentoLogo = _t, Canal = _t, Id = _t, Logo = _t, LogoAgrupamento = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Id", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

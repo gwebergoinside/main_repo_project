@@ -1,0 +1,21 @@
+/// Período de atualização
+table DescontoTVI
+	lineageTag: fa8a1da4-9067-4449-b336-f0f52a172136
+
+	column DescontoTVI
+		dataType: string
+		lineageTag: 0ade2a73-aa99-4c21-a1ec-c838c2a5136e
+		summarizeBy: none
+		sourceColumn: DescontoTVI
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DescontoTVI-d0affab2-3b8b-495c-8c85-c23dd9f31bda = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,64 @@
+table d_Neg_Posicoes
+	lineageTag: e52484f3-f9d8-4a3a-a9b4-381e37c54468
+
+	column locPerId
+		dataType: int64
+		formatString: 0
+		lineageTag: 47b35c62-4428-4fc8-a6d0-7c540d9e07a1
+		summarizeBy: count
+		sourceColumn: locPerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerId
+		dataType: int64
+		formatString: 0
+		lineageTag: 4493a98a-03fc-4713-bc03-7295f4514f0a
+		summarizeBy: none
+		sourceColumn: negPerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column locPerDataInicio
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a3ffbf52-c750-468d-b9e0-5f38464c868e
+		summarizeBy: none
+		sourceColumn: locPerDataInicio
+
+		variation Variation
+			isDefault
+			relationship: 60577d7e-25ac-4a75-869c-463ac437a43e
+			defaultHierarchy: LocalDateTable_077f7a2a-a344-4e3b-bf6e-4131d46bffb2.'Date Hierarchy'
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column locPerDataFim
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c6670815-fa1b-4f7f-aab7-6b7c8feb4bb0
+		summarizeBy: none
+		sourceColumn: locPerDataFim
+
+		variation Variation
+			isDefault
+			relationship: b5979c75-d4b0-4060-b2a8-d7afaa329f0e
+			defaultHierarchy: LocalDateTable_37529e72-ed85-47da-9d39-214bf7ae2632.'Date Hierarchy'
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Neg_Posicoes-796428a3-7a50-445b-8de9-73442f8666be = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    *#(lf)From#(lf)    negPeriodosLocPeriodos"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

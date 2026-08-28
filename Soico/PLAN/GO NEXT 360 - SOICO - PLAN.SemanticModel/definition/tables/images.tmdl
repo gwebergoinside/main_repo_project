@@ -1,0 +1,41 @@
+table images
+	lineageTag: fad3a333-76e6-4b65-ac4a-3857e88bf104
+
+	column Nome
+		dataType: string
+		lineageTag: ced643de-d0f9-4324-b020-6e474f6f5ba0
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Logo
+		dataType: string
+		lineageTag: 03042944-a05a-4225-b8be-7f0eae15f882
+		summarizeBy: none
+		sourceColumn: Logo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cliente '
+		dataType: string
+		lineageTag: a8436c07-82ca-40e2-a78b-b2f6796fbbd6
+		summarizeBy: none
+		sourceColumn: "Cliente "
+
+		annotation SummarizationSetBy = Automatic
+
+	partition images-5a1f92b2-233e-4b2d-98fe-9319759e5275 = m
+		mode: import
+		queryGroup: Config
+		source =
+				let
+				    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type1", each [Nome] = #"logo header")
+				in
+				    #"Filtered Rows"
+

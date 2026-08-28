@@ -1,0 +1,518 @@
+table f_Incidencias
+	lineageTag: 41658bb9-82d3-429b-b45c-bcb5d26bcbb4
+
+	column Titulo
+		dataType: string
+		lineageTag: f158cde6-5844-4a8b-b774-297bc08a67d1
+		summarizeBy: none
+		sourceColumn: Titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descricao
+		dataType: string
+		lineageTag: ec6c5c23-a411-4b9c-8766-e806a999edfe
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c739a6eb-63f2-4518-8b5b-bad76d49c277
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		variation Variação
+			isDefault
+			relationship: baf32f12-c8f3-46dd-be05-a6052bd2fba9
+			defaultHierarchy: LocalDateTable_2f2bd226-0535-4970-867b-bdeee23e647b.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3a5d2b7c-bcb6-4bd0-8ae6-e7dbe131fbb1
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variação
+			isDefault
+			relationship: f3562472-dda3-48dc-8dc1-31d22b824194
+			defaultHierarchy: LocalDateTable_339326d7-9172-4356-b6d9-1b93d1bcf1bd.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo
+		dataType: string
+		lineageTag: 7e33661d-1e74-4b44-9046-9c2593d5be7d
+		summarizeBy: none
+		sourceColumn: Codigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: 456675d7-f46b-486e-8914-1a6a2b164451
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicioExecucao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 92ebcef5-e597-4f78-8c31-650cf2641cde
+		summarizeBy: none
+		sourceColumn: DataInicioExecucao
+
+		variation Variação
+			isDefault
+			relationship: d6634d65-5959-4603-b6ac-86541566ce3a
+			defaultHierarchy: LocalDateTable_dbef7fc7-3899-4e35-a475-8e4cad23ed2a.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFimExecucao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0a5d3bbe-cd05-444e-b118-81e539187e56
+		summarizeBy: none
+		sourceColumn: DataFimExecucao
+
+		variation Variação
+			isDefault
+			relationship: d7b5cc62-77b5-4a4a-a90a-1a181884e86f
+			defaultHierarchy: LocalDateTable_8c2822d5-fb05-4a5b-aebb-d1daec9cfa1e.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duracao
+		dataType: int64
+		formatString: 0
+		lineageTag: 47707c03-2b59-4cf6-91b3-2027124c1d73
+		summarizeBy: sum
+		sourceColumn: Duracao
+
+		annotation SummarizationSetBy = Automatic
+
+	column DuracaoExecucao
+		dataType: int64
+		formatString: 0
+		lineageTag: 3dbb3e5e-7d14-4107-ada0-b905791aefd7
+		summarizeBy: sum
+		sourceColumn: DuracaoExecucao
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnidadeDuracao
+		dataType: string
+		lineageTag: 2c873cb9-d72e-484b-bd60-dc2846c0eca9
+		summarizeBy: none
+		sourceColumn: UnidadeDuracao
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnidadeDuracaoExecucao
+		dataType: string
+		lineageTag: 41eae94d-3f5e-4266-818a-7ba3bd034e2c
+		summarizeBy: none
+		sourceColumn: UnidadeDuracaoExecucao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Interrupcao
+		dataType: int64
+		formatString: 0
+		lineageTag: 2233ebe8-0b2d-4a71-97f1-b92f4115ff83
+		summarizeBy: sum
+		sourceColumn: Interrupcao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: 6e31d49e-302b-4414-8cd0-e15145ff9674
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResolucaoTecnica
+		dataType: string
+		lineageTag: 798cbfbe-4144-4de8-8e45-3e1930fc85b5
+		summarizeBy: none
+		sourceColumn: ResolucaoTecnica
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observacoes
+		dataType: string
+		lineageTag: ec586383-5a5d-48ef-ab66-02171fcee324
+		summarizeBy: none
+		sourceColumn: Observacoes
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resolucao
+		dataType: string
+		lineageTag: f919f528-4603-480a-9c2e-f37401fcaa3a
+		summarizeBy: none
+		sourceColumn: Resolucao
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubArea
+		dataType: string
+		lineageTag: 834d2b75-ca80-426f-908f-11cb70d9378c
+		summarizeBy: none
+		sourceColumn: SubArea
+
+		annotation SummarizationSetBy = Automatic
+
+	column Local
+		dataType: string
+		lineageTag: 018b8661-cf86-4848-8a87-39698528cdce
+		summarizeBy: none
+		sourceColumn: Local
+
+		annotation SummarizationSetBy = Automatic
+
+	column Causas
+		dataType: string
+		lineageTag: dbaf65a9-b00f-4901-b2d9-a09e64341554
+		summarizeBy: none
+		sourceColumn: Causas
+
+		annotation SummarizationSetBy = Automatic
+
+	column TempoMedioResolucao
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e6474bd-e870-4f9e-9b9c-c019074499b2
+		summarizeBy: sum
+		sourceColumn: TempoMedioResolucao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Area
+		dataType: string
+		lineageTag: 02f04049-2590-44c9-8661-db4bff71cdae
+		summarizeBy: none
+		sourceColumn: Area
+
+		annotation SummarizationSetBy = Automatic
+
+	column Area_Causas
+		dataType: string
+		lineageTag: d4e13ae7-ec9c-4868-ae25-ba85295f9dd8
+		summarizeBy: none
+		sourceColumn: Area_Causas
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdSubArea
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d9adad1-b837-455a-846f-63f7a21458ed
+		summarizeBy: sum
+		sourceColumn: IdSubArea
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdArea
+		dataType: int64
+		formatString: 0
+		lineageTag: 344d0ff1-0473-41d6-b173-1a9169cd7849
+		summarizeBy: sum
+		sourceColumn: IdArea
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdModulo
+		dataType: int64
+		formatString: 0
+		lineageTag: 5bc3a6cc-8794-427a-9f1a-089b890a2df6
+		summarizeBy: sum
+		sourceColumn: IdModulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c01f05b-3f29-4446-ad95-fafab85e2ad6
+		summarizeBy: none
+		sourceColumn: IdProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_Incidencias
+		dataType: int64
+		formatString: 0
+		lineageTag: 1efc9a73-2958-434d-992c-6f665208d94c
+		summarizeBy: none
+		sourceColumn: ID_Incidencias
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAreaCausa
+		dataType: int64
+		formatString: 0
+		lineageTag: dd22a980-d957-4a0b-bb70-aa84a34656fb
+		summarizeBy: sum
+		sourceColumn: IdAreaCausa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCausa
+		dataType: int64
+		formatString: 0
+		lineageTag: c480e45b-d48c-4220-a62b-3c2294a4a0a5
+		summarizeBy: sum
+		sourceColumn: IdCausa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duracao_Calc =
+			
+			VAR allseconds =
+			    DATEDIFF(f_Incidencias[DataInicioExecucao],f_Incidencias[DataFimExecucao],SECOND)
+			VAR days =
+			    INT ( allseconds / 24 / 60 / 60 )
+			VAR hours =
+			    MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			VAR minutes =
+			    MOD ( INT ( allseconds / 60 ), 60 )
+			VAR seconds =
+			    MOD ( INT( allseconds ), 60 )
+			RETURN
+			days & "d "
+			& hours
+			& "h "
+			& minutes
+			& "m "
+			& seconds
+			& "s "
+		lineageTag: 09ea390c-b1b8-4f85-b1bd-9e07122433a0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdIncidenciaRelacionada
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f130a62-1bb3-4d46-8c36-5c483694b631
+		summarizeBy: sum
+		sourceColumn: IdIncidenciaRelacionada
+
+		annotation SummarizationSetBy = Automatic
+
+	column Link
+		dataType: string
+		lineageTag: 3fa99a44-8dcd-4418-8813-c022cb94ac1b
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: Link
+
+		annotation SummarizationSetBy = Automatic
+
+	column Areas_meios =
+			
+			
+			CONCATENATEX (
+			
+			CALCULATETABLE (
+			
+			VALUES ( d_Meios_Incid[Meio_Nome_Areas] )
+			
+			--,CROSSFILTER ( d_Meios_Incid[IdMeio], f_Meios[Id], BOTH )
+			
+			),
+			
+			[Meio_Nome_Areas],
+			
+			", "
+			
+			)
+		lineageTag: cd4c6731-6ab9-4290-8646-db78f0c0eb78
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unidade_Pessoas =
+			
+			
+			CONCATENATEX (
+			
+			CALCULATETABLE (
+			
+			VALUES ( d_Pessoas_Incid[Pessoa_Unidade] )--,
+			
+			--CROSSFILTER ( d_Pessoas_Incid[IdPessoa], f_Pessoas[Id], BOTH )
+			
+			),
+			
+			[Pessoa_Unidade],
+			
+			", "
+			
+			)
+		lineageTag: 052380f6-c373-4f5d-802a-8655c0a6a3a1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo_Cod
+		dataType: int64
+		formatString: 0
+		lineageTag: ceee840f-40d9-4dd5-918c-c6429990a75e
+		summarizeBy: sum
+		sourceColumn: Tipo_Cod
+
+		annotation SummarizationSetBy = Automatic
+
+	column Link_Incid_Relacionada
+		dataType: string
+		lineageTag: 48577096-531b-4a23-b51a-a4813f2dc6f1
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: Link_Incid_Relacionada
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicioExecucao_Calc
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a6bf50f5-8420-4d1f-a7cc-13b769151a24
+		summarizeBy: none
+		sourceColumn: DataInicioExecucao_Calc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Titulo2
+		dataType: string
+		lineageTag: 3519df16-a66e-4915-af42-856d3358bffb
+		summarizeBy: none
+		sourceColumn: Titulo2
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 83584c17-efdd-4ead-a8c8-9e7694492fc7
+		summarizeBy: none
+		sourceColumn: DataInicio2
+
+		variation Variation
+			isDefault
+			relationship: cd71c183-0168-47b1-ae07-b073eec2222f
+			defaultHierarchy: LocalDateTable_084e2f2d-332a-4ba0-8c54-470d0bfdcb04.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b37a1558-438a-44c2-a215-8481cf38bc3b
+		summarizeBy: none
+		sourceColumn: DataFim2
+
+		variation Variation
+			isDefault
+			relationship: 9f4ce225-849d-441c-aad5-9b8329dec65d
+			defaultHierarchy: LocalDateTable_a64473a8-6728-4f7a-b37a-e71b2d971691.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Evento_Producao
+		dataType: string
+		lineageTag: 80fd78b5-0c30-493b-9f23-4b4385080fd4
+		summarizeBy: none
+		sourceColumn: Evento_Producao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duracao_Seg = DATEDIFF(f_Incidencias[DataInicioExecucao],f_Incidencias[DataFimExecucao],SECOND)
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ad965ba-ca8c-40f7-beec-e56f50ee805b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdClassificacao
+		dataType: int64
+		formatString: 0
+		lineageTag: 139399ce-eb0a-46d0-a0a6-69f3060db3d7
+		summarizeBy: none
+		sourceColumn: IdClassificacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column StampUser
+		dataType: string
+		lineageTag: 2a17b5a8-1757-4041-aa1e-ae30f7558cb2
+		summarizeBy: none
+		sourceColumn: StampUser
+
+		annotation SummarizationSetBy = Automatic
+
+	column PessoaNome
+		dataType: string
+		lineageTag: 43053b5d-f54a-4ee3-9c7b-e4197f365e63
+		summarizeBy: none
+		sourceColumn: PessoaNome
+
+		annotation SummarizationSetBy = Automatic
+
+	column FuncaoNome
+		dataType: string
+		lineageTag: 65dbd4c8-16ea-44dd-92d6-743c32078c07
+		summarizeBy: none
+		sourceColumn: FuncaoNome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Interrupções_Desc = IF.EAGER(f_Incidencias[Interrupcao] = 1, "Sim", "Não")
+		lineageTag: af8a35e1-7e52-4baf-915c-32c8bde61d88
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id_Interrupção =
+			
+			IF.EAGER( f_Incidencias[Interrupcao] = 1, f_Incidencias[ID_Incidencias], BLANK())
+		formatString: 0
+		lineageTag: 694cf4f1-39b4-4746-959f-9d90a7137cb7
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Incidencias-835da081-5614-418b-95f8-eb186e517b23 = m
+		mode: import
+		queryGroup: Fatos
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)    Incidencias.Id As ID_Incidencias,#(lf)    Incidencias.IdSubArea,#(lf)    Incidencias.IdArea,#(lf)    Incidencias.IdModulo,#(lf)    Incidencias.IdProjecto,#(lf)    Incidencias.Titulo,#(lf)    Incidencias.Descricao,#(lf)    Incidencias.DataInicio,#(lf)    Incidencias.DataFim,#(lf)    Incidencias.Codigo,#(lf)    Incidencias.IdIncidenciaRelacionada,#(lf)    Incidencias.Estado,#(lf)    Incidencias.DataInicioExecucao,#(lf)    Incidencias.DataFimExecucao,#(lf)    Incidencias.Duracao,#(lf)    Incidencias.DuracaoExecucao,#(lf)    Incidencias.UnidadeDuracao,#(lf)    Incidencias.UnidadeDuracaoExecucao,#(lf)    Incidencias.Interrupcao,#(lf)    Incidencias.Tipo,#(lf)    Incidencias_Tipos.Nome As Tipo_Desc,#(lf)    Incidencias.ResolucaoTecnica,#(lf)    Incidencias.Observacoes,#(lf)    Incidencias.Resolucao,#(lf)    Incidencias_SubAreas.Nome As SubArea,#(lf)    Incidencias_Locais.Nome As Local,#(lf)    Incidencias_Causas.Nome As Causas,#(lf)    Incidencias_Causas.TempoMedioResolucao,#(lf)    Incidencias_Areas.Nome As Area,#(lf)    Incidencias_Areas_Causas.Nome As Area_Causas,#(lf)    Incidencias.IdAreaCausa,#(lf)    Incidencias.IdCausa,#(lf)    Tarefas.Titulo,#(lf)    Tarefas.DataInicio,#(lf)    Tarefas.DataFim,#(lf)    Incidencias.IdClassificacao,#(lf)    Incidencias.StampUser,#(lf)    Pessoas.nome AS PessoaNome,#(lf)    Funcoes_Pessoas.Nome As FuncaoNome#(lf)From#(lf)    Incidencias Left Join#(lf)    Incidencias_Areas On Incidencias.IdArea = Incidencias_Areas.Id Left Join#(lf)    Incidencias_Areas_Causas On Incidencias.IdAreaCausa = Incidencias_Areas_Causas.Id Left Join#(lf)    Incidencias_Causas On Incidencias.IdCausa = Incidencias_Causas.Id Left Join#(lf)    Incidencias_Locais On Incidencias.IdLocal = Incidencias_Locais.Id Left Join#(lf)    Incidencias_SubAreas On Incidencias.IdSubArea = Incidencias_SubAreas.Id Left Join#(lf)    Incidencias_Tipos On Incidencias_Tipos.Id = Incidencias.Tipo Left Join#(lf)    Tarefas On Incidencias.IdTarefa = Tarefas.Id Left Join#(lf)    Pessoas On Pessoas.utilizador = Incidencias.StampUser Left Join#(lf)    Funcoes_Pessoas On Pessoas.IdFuncaoPessoa = Funcoes_Pessoas.Id"]),
+				    #"Duplicated Column" = Table.DuplicateColumn(Origem, "DataInicioExecucao", "DataInicioExecucao - Copy"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Duplicated Column",{{"DataInicioExecucao - Copy", type date}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type1",{{"DataInicioExecucao - Copy", "DataInicioExecucao_Calc"}}),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(#"Renamed Columns1",{"ID_Incidencias", "IdSubArea", "IdArea", "IdModulo", "IdProjecto", "Titulo", "Descricao", "DataInicio", "DataInicioExecucao_Calc", "DataFim", "Codigo", "Estado", "DataInicioExecucao", "DataFimExecucao", "Duracao", "DuracaoExecucao", "UnidadeDuracao", "UnidadeDuracaoExecucao", "Interrupcao", "Tipo", "ResolucaoTecnica", "Observacoes", "Resolucao", "SubArea", "Local", "Causas", "TempoMedioResolucao", "Area", "Area_Causas", "IdAreaCausa", "IdCausa"}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Colunas Reordenadas",{{"Estado", type text}}),
+				    #"Coluna Intercalada Inserida-Link" = Table.AddColumn(#"Tipo Alterado1", "Link", each Text.Combine({URL,Text.From([ID_Incidencias], "pt-PT")}), type text),
+				    #"Added Custom-Link_Incid_Relacionada" = Table.AddColumn(#"Coluna Intercalada Inserida-Link", "Link_Incid_Relacionada", each Text.Combine({URL,Text.From([IdIncidenciaRelacionada], "pt-PT")})),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom-Link_Incid_Relacionada",{{"Link_Incid_Relacionada", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Tipo", "Tipo_Cod"}, {"Tipo_Desc", "Tipo"}}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Renamed Columns", "Evento_Producao", each Text.Combine({[Titulo2], " (", Text.From([DataInicio2], "pt-PT"), " - ", Text.From([DataFim2], "pt-PT"), ")"}), type text),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Inserted Merged Column",{{"Interrupcao", Int64.Type}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_ResultType = Exception
+

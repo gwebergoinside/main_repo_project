@@ -1,0 +1,117 @@
+table MeiosHoras
+	lineageTag: ca723e49-3afa-4524-a98c-abd26c2cf0d1
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e4af7cb-0a7f-4529-b4d8-f6b51cd29c98
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4cfe01f9-c0bb-43c8-9952-5a13e9f9b715
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: c104988d-23d6-46c6-a867-5110326ba4d6
+		summarizeBy: sum
+		sourceColumn: IdMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capacidade
+		dataType: double
+		lineageTag: e08d50b3-0687-4e6e-a603-96af87cd0eb0
+		summarizeBy: sum
+		sourceColumn: Capacidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Inatividade
+		dataType: double
+		lineageTag: 882294ee-4595-488d-8268-4374596d7639
+		summarizeBy: sum
+		sourceColumn: Inatividade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IdCentroCusto
+		dataType: int64
+		formatString: 0
+		lineageTag: df15a749-9fc6-4a03-b9ea-0ea3227790f1
+		summarizeBy: sum
+		sourceColumn: IdCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdActividadeMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: a25d160e-967e-4317-8636-52fabe55f696
+		summarizeBy: sum
+		sourceColumn: IdActividadeMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column ValorHora
+		dataType: double
+		lineageTag: 55d921ce-82d1-4e60-9ed9-dec30a81f5db
+		summarizeBy: sum
+		sourceColumn: ValorHora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NaoConsiderarParaCalculoCapacidadeAtividade
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1bd81f74-204b-4794-b49d-0f51b0a73a2f
+		summarizeBy: none
+		sourceColumn: NaoConsiderarParaCalculoCapacidadeAtividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoActividadeApurada
+		dataType: int64
+		formatString: 0
+		lineageTag: fde317e7-0ce3-447b-b284-1b686f4c62e8
+		summarizeBy: sum
+		sourceColumn: TipoActividadeApurada
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Centro Custo'
+		dataType: string
+		lineageTag: 82694351-ee07-46d5-a0d0-85e0ed1089fd
+		summarizeBy: none
+		sourceColumn: Nome Centro Custo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MeiosHoras-2124a920-e175-4773-adf8-aab7a797cd38 = m
+		mode: import
+		queryGroup: Meios
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    mhm.Id,#(lf)    mhm.Data,#(lf)    mhm.IdMeio,#(lf)    mhm.Capacidade,#(lf)    mhm.Inatividade,#(lf)    mvm.IdCentroCusto,#(lf)    mvm.IdActividadeMeio,#(lf)    mvm.ValorHora,#(lf)    mvm.NaoConsiderarParaCalculoCapacidadeAtividade,#(lf)    Centros_Custo.TipoActividadeApurada,#(lf)    Centros_Custo.Nome As [Nome Centro Custo]#(lf)From#(lf)    Meios_Horas_Mensais As mhm Join#(lf)    Meios_Valorizacoes_Mensais mvm On mhm.IdMeio = mvm.IdMeio#(lf)            And Month(mhm.Data) = mvm.Mes#(lf)            And Year(mhm.Data) = mvm.Ano Inner Join#(lf)    Centros_Custo On mvm.IdCentroCusto = Centros_Custo.Id#(lf)Where#(lf)    mvm.Ano >= Year(GetDate()) - 3"])
+				in
+				    Origem
+
+	annotation PBI_QueryRelationships = {"columnCount":11,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/MeiosHoras/Origem.{Id,0}","Section1/MeiosHoras/Origem.{Data,1}","Section1/MeiosHoras/Origem.{IdMeio,2}","Section1/MeiosHoras/Origem.{Capacidade,3}","Section1/MeiosHoras/Origem.{Inatividade,4}","Section1/MeiosHoras/Origem.{IdCentroCusto,5}","Section1/MeiosHoras/Origem.{IdActividadeMeio,6}","Section1/MeiosHoras/Origem.{ValorHora,7}","Section1/MeiosHoras/Origem.{NaoConsiderarParaCalculoCapacidadeAtividade,8}","Section1/MeiosHoras/Origem.{TipoActividadeApurada,9}","Section1/MeiosHoras/Origem.{Nome Centro Custo,10}"],"ColumnCount":11,"KeyColumnNames":[],"ColumnIdentities":["Section1/MeiosHoras/Origem.{Id,0}","Section1/MeiosHoras/Origem.{Data,1}","Section1/MeiosHoras/Origem.{IdMeio,2}","Section1/MeiosHoras/Origem.{Capacidade,3}","Section1/MeiosHoras/Origem.{Inatividade,4}","Section1/MeiosHoras/Origem.{IdCentroCusto,5}","Section1/MeiosHoras/Origem.{IdActividadeMeio,6}","Section1/MeiosHoras/Origem.{ValorHora,7}","Section1/MeiosHoras/Origem.{NaoConsiderarParaCalculoCapacidadeAtividade,8}","Section1/MeiosHoras/Origem.{TipoActividadeApurada,9}","Section1/MeiosHoras/Origem.{Nome Centro Custo,10}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

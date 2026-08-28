@@ -1,0 +1,514 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 720,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 924
+          },
+          "nodeIndex": "Medidas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 1730.9,
+            "y": 586
+          },
+          "nodeIndex": "Areas",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 581.6,
+            "y": 1074
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 1400.1,
+            "y": 498.8
+          },
+          "nodeIndex": "Canais",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 3243.6,
+            "y": 39.2
+          },
+          "nodeIndex": "Catalogo",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 3362.2333333333336,
+            "y": 1330.7
+          },
+          "nodeIndex": "Custos",
+          "size": {
+            "height": 616.66666666666652,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 1372.8,
+            "y": 865.3
+          },
+          "nodeIndex": "Date",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 40
+        },
+        {
+          "location": {
+            "x": 977.2,
+            "y": 712.7
+          },
+          "nodeIndex": "Date Cons",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 1750.5,
+            "y": 1796.1
+          },
+          "nodeIndex": "Date Exp",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 2670,
+            "y": 1685.8
+          },
+          "nodeIndex": "Distribuidores",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 2452.4,
+            "y": 281.8
+          },
+          "nodeIndex": "moedas",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 395.6,
+            "y": 1459.6
+          },
+          "nodeIndex": "Objetivo",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 3061.8,
+            "y": 679.7
+          },
+          "nodeIndex": "PlanoContrato_Direitos",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 1942.1,
+            "y": 1506.5
+          },
+          "nodeIndex": "T_Contratos",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 44
+        },
+        {
+          "location": {
+            "x": 2522.1,
+            "y": 753.5
+          },
+          "nodeIndex": "T_Contratos_Estados",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 27
+        },
+        {
+          "location": {
+            "x": 2852.1,
+            "y": 1049.5
+          },
+          "nodeIndex": "Tipos_direitos",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 41
+        },
+        {
+          "location": {
+            "x": 3639.2,
+            "y": 1010
+          },
+          "nodeIndex": "Titulo",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 2056.8,
+            "y": 0
+          },
+          "nodeIndex": "Titulos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 2056.8,
+            "y": 619.4
+          },
+          "nodeIndex": "CanaisTitulos",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 1186.8,
+            "y": 1802.3
+          },
+          "nodeIndex": "Faixa",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 1496.5,
+            "y": 637.2
+          },
+          "nodeIndex": "OrcamentoCompras",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 1794.7,
+            "y": 788.4
+          },
+          "nodeIndex": "Canal Compra",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 4034.8,
+            "y": 974
+          },
+          "nodeIndex": "Date Parcela",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 4430.4,
+            "y": 986
+          },
+          "nodeIndex": "TitulosRunsIlim",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 4826.1,
+            "y": 998
+          },
+          "nodeIndex": "Icones",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 5221.7,
+            "y": 1010
+          },
+          "nodeIndex": "tipoConta",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 2341.5,
+            "y": 1378.1
+          },
+          "nodeIndex": "Contrato_Auxiliar",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 2274.4,
+            "y": 1667.7
+          },
+          "nodeIndex": "Plano_Auxiliar",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 38
+        },
+        {
+          "location": {
+            "x": 1004.5,
+            "y": 350
+          },
+          "nodeIndex": "Orcamento_Exibcao",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1588.1,
+            "y": 1488.4
+          },
+          "nodeIndex": "Processo_Auxiliar",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 39
+        },
+        {
+          "location": {
+            "x": 2848,
+            "y": 233.2
+          },
+          "nodeIndex": "Compromissos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1644.5,
+            "y": 1049.4
+          },
+          "nodeIndex": "Consumos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 43
+        },
+        {
+          "location": {
+            "x": 2040.1,
+            "y": 981
+          },
+          "nodeIndex": "Contratos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 42
+        },
+        {
+          "location": {
+            "x": 1886.2,
+            "y": 2229.7
+          },
+          "nodeIndex": "PROGRAMAS_CASTS_DATAS",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 1738,
+            "y": 360.5
+          },
+          "nodeIndex": "PeriodoExcecao",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 5617.3,
+            "y": 998
+          },
+          "nodeIndex": "images",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 6012.9,
+            "y": 1022
+          },
+          "nodeIndex": "logo header",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 791.2,
+            "y": 1643.4
+          },
+          "nodeIndex": "PlanFormatos",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 931.5,
+            "y": 1146.3
+          },
+          "nodeIndex": "Date_Existencias",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 2666.2,
+            "y": 899.2
+          },
+          "nodeIndex": "Canais Existencias",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 2304.5,
+            "y": 1188.8
+          },
+          "nodeIndex": "Paises",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 60,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

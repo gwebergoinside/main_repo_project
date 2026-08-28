@@ -1,0 +1,109 @@
+table Canais
+	lineageTag: c55745c7-4e33-4134-92fe-f6e59eee06d2
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 16534e1a-c47a-4567-b680-f6af887abe69
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: 70092513-2a47-4870-a548-8c4f00630cc8
+		summarizeBy: none
+		sourceColumn: Canal
+		sortByColumn: Agrupador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio
+		dataType: string
+		lineageTag: 4d936d79-6198-4d8f-a6c3-811ccdf85470
+		summarizeBy: none
+		sourceColumn: Meio
+		sortByColumn: 'Ord Meio'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: e214a12d-7f9d-493f-bbdb-99afd6f69b41
+		summarizeBy: none
+		sourceColumn: Tipo
+		sortByColumn: 'Ord Tipo'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agrupador
+		dataType: string
+		lineageTag: 83c92b57-4821-42a7-9a55-7db909303b5d
+		summarizeBy: none
+		sourceColumn: Agrupador
+		sortByColumn: 'Ord Agrupador'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ord Agrupador'
+		dataType: int64
+		formatString: 0
+		lineageTag: 72e5b3b6-c556-494a-975b-385bc982a99c
+		summarizeBy: sum
+		sourceColumn: Ord Agrupador
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ord Tipo'
+		dataType: int64
+		formatString: 0
+		lineageTag: 602b231d-6e2f-4565-9ee8-ad8c727e3864
+		summarizeBy: sum
+		sourceColumn: Ord Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ord Meio'
+		dataType: int64
+		formatString: 0
+		lineageTag: 646878db-c983-404f-a513-97f18bd538cb
+		summarizeBy: sum
+		sourceColumn: Ord Meio
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal_Agrupador =
+			
+			SWITCH(
+			TRUE()
+			    ,Canais[Canal] = "RTP 1", "RTP 1"
+			    ,Canais[Canal] = "INTERNET", "INTERNET"
+			    ,"Outros"
+			)
+		lineageTag: 3c235769-53de-450e-ae46-4637afb73c3e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Canais-8e69a97c-f717-4cb5-985a-3d249ae7f22d = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    Canais.canDescricao,#(lf)    Canais.canCodigo#(lf)From#(lf)    Canais"]),
+				    #"Merged Queries" = Table.NestedJoin(Source, {"canCodigo"}, #"Classificação de Canais", {"CanCodigo"}, "Classificação de Canais", JoinKind.LeftOuter),
+				    #"Expanded Classificação de Canais" = Table.ExpandTableColumn(#"Merged Queries", "Classificação de Canais", {"Meio", "Tipo", "Agrupador", "Ord Tipo", "Ord Meio", "Ord Agrupador"}, {"Meio", "Tipo", "Agrupador", "Ord Tipo", "Ord Meio", "Ord Agrupador"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Expanded Classificação de Canais",{{"Agrupador", Text.Upper, type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Uppercased Text",{{"canDescricao", "Canal"}}),
+				    Custom2 = Table.TransformColumns(#"Renamed Columns",{{"Canal", Text.Trim, type text}}),
+				    Custom1 = Table.SelectRows(Custom2, each ([canCodigo] <> 19))
+				in
+				    Custom1
+
+	annotation PBI_QueryRelationships = {"columnCount":8,"keyColumnNames":[],"queryRelationships":[{"keyColumnCount":1,"keyColumn":1,"otherKeyColumnIdentity":"Section1/Classificação de Canais/Changed Type.{CanCodigo,3}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":4,"otherKeyColumnIdentity":"Section1/Ordenação Agrupador/Uppercased Text.{Agrupador,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":3,"otherKeyColumnIdentity":"Section1/Ordenação Tipo/Changed Type.{Tipo,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":2,"otherKeyColumnIdentity":"Section1/Ordenação Meio/Changed Type.{Meio,0}","KeyColumnCount":1}],"columnIdentities":["Section1/Canais/Source.{canDescricao,0}","Section1/Canais/Source.{canCodigo,1}","Section1/Classificação de Canais/Changed Type.{Meio,0}","Section1/Classificação de Canais/Changed Type.{Tipo,1}","Section1/Canais/Uppercased Text.{Agrupador,4}","Section1/Ordenação Agrupador/Changed Type.{Ord Agrupador,1}","Section1/Ordenação Tipo/Changed Type.{Ord Tipo,1}","Section1/Ordenação Meio/Changed Type.{Ord Meio,1}"],"ColumnCount":8,"KeyColumnNames":[],"ColumnIdentities":["Section1/Canais/Source.{canDescricao,0}","Section1/Canais/Source.{canCodigo,1}","Section1/Classificação de Canais/Changed Type.{Meio,0}","Section1/Classificação de Canais/Changed Type.{Tipo,1}","Section1/Canais/Uppercased Text.{Agrupador,4}","Section1/Ordenação Agrupador/Changed Type.{Ord Agrupador,1}","Section1/Ordenação Tipo/Changed Type.{Ord Tipo,1}","Section1/Ordenação Meio/Changed Type.{Ord Meio,1}"],"RelationshipInfo":[{"keyColumnCount":1,"keyColumn":1,"otherKeyColumnIdentity":"Section1/Classificação de Canais/Changed Type.{CanCodigo,3}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":4,"otherKeyColumnIdentity":"Section1/Ordenação Agrupador/Uppercased Text.{Agrupador,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":3,"otherKeyColumnIdentity":"Section1/Ordenação Tipo/Changed Type.{Tipo,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":2,"otherKeyColumnIdentity":"Section1/Ordenação Meio/Changed Type.{Meio,0}","KeyColumnCount":1}]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

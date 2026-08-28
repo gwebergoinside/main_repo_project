@@ -1,0 +1,26 @@
+table Distribuidor
+	lineageTag: 1eb9a4f9-b669-41c3-8877-850f8c143bec
+
+	column Id
+		formatString: 0
+		lineageTag: be682f49-edf4-4849-a0d1-6c53c92f63c3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Entidades[Id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		lineageTag: 6239c8ef-9d84-4b46-8ef9-8d2f87c3ec77
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Entidades[Nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Distribuidor-5264545c-66c0-46ae-aeb5-168c38288c69 = calculated
+		mode: import
+		source = Entidades
+
+	annotation PBI_Id = a8b840bfac184317a3b82a3b5deaecd1
+

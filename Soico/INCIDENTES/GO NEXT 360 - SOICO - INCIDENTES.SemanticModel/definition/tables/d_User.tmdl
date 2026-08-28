@@ -1,0 +1,65 @@
+table d_User
+	lineageTag: d7dee341-3427-4f1e-b304-442cfecc4aff
+
+	column Id_Incidencia
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d0d6f3e-e93b-42f3-8a83-496c0b8bcede
+		summarizeBy: none
+		sourceColumn: Id_Incidencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdUtilizador
+		dataType: int64
+		formatString: 0
+		lineageTag: cd2e9388-7e94-46b5-b2c7-38b11c139ab4
+		summarizeBy: sum
+		sourceColumn: IdUtilizador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Utilizador
+		dataType: string
+		lineageTag: 2942094c-a394-4850-8677-a117f827470c
+		summarizeBy: none
+		sourceColumn: Utilizador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: 1a060a51-398b-432b-b82d-45ab678e753a
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdUnidadeNegocio
+		dataType: int64
+		formatString: 0
+		lineageTag: c60eed6b-8559-4696-bbdb-38e922c69d98
+		summarizeBy: sum
+		sourceColumn: IdUnidadeNegocio
+
+		annotation SummarizationSetBy = Automatic
+
+	column StampUser
+		dataType: string
+		lineageTag: e0a7b131-dd1b-4e4b-9261-51f074b1cb5f
+		summarizeBy: none
+		sourceColumn: StampUser
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_User-202c79e6-27c7-457f-a793-558d4ebde327 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)    Utilizadores.IdUtilizador,#(lf)    Utilizadores.Utilizador,#(lf)    Utilizadores.Nome,#(lf)    Utilizadores.IdUnidadeNegocio,#(lf)    Incidencias.Id As Id_Incidencia,#(lf)    Incidencias.StampUser#(lf)From#(lf)    Utilizadores Inner Join#(lf)    Incidencias On Utilizadores.Utilizador = Incidencias.StampUser"]),
+				    #"Colunas Reordenadas" = Table.ReorderColumns(Origem,{"Id_Incidencia", "IdUtilizador", "Utilizador", "Nome", "IdUnidadeNegocio", "StampUser"})
+				in
+				    #"Colunas Reordenadas"
+
+	annotation PBI_ResultType = Table
+

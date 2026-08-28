@@ -1,0 +1,31 @@
+table Funcao
+	lineageTag: e155e2bf-a558-4226-850a-4d9b8e89e46c
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7378b508-ec5c-4a7f-8c7d-4cfd8dfcf348
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Funcao
+		dataType: string
+		lineageTag: 6744dd14-04a2-45a0-9d43-8c3aa9850ff0
+		summarizeBy: none
+		sourceColumn: Funcao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Funcao-313d5383-77c2-4039-a4e8-43c9068a1306 = m
+		mode: import
+		queryGroup: Pessoas
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="SELECT#(lf)   Id#(lf)   ,Nome as Funcao#(lf)FROM#(lf)   Funcoes_Pessoas"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,234 @@
+table TarefasMeiosFaixas
+	lineageTag: ab30c059-014e-468b-a1c7-6192ab54c945
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e34fdf8-c90d-4990-9d7b-7fedf4a26a6d
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column MeioPrincipal
+		dataType: string
+		lineageTag: 19ec150a-9007-400a-9986-5b270b361a59
+		summarizeBy: none
+		sourceColumn: MeioPrincipal
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7e943b56-efac-44b8-b7f5-0214a586b5c3
+		summarizeBy: none
+		sourceColumn: HoraInicio
+
+		variation Variation
+			isDefault
+			relationship: ff11fcbb-0a8e-418e-b8a9-777103b0a135
+			defaultHierarchy: LocalDateTable_dd1c291c-e46c-41f7-b455-540140810d36.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f815a38a-be73-4955-bff4-f4ab896c2219
+		summarizeBy: none
+		sourceColumn: HoraFim
+
+		variation Variation
+			isDefault
+			relationship: d46e47d8-6043-4bd6-9d5f-8d778960af87
+			defaultHierarchy: LocalDateTable_763b490a-0bc0-4801-a12c-391446b865b2.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixa
+		dataType: string
+		lineageTag: db53ee1c-1fcb-49ad-82b0-ad2881ce1d8e
+		summarizeBy: none
+		sourceColumn: Faixa
+
+		annotation SummarizationSetBy = Automatic
+
+	column InicioFaixa
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 644d8cdb-db37-4c49-9285-34ff5edd7431
+		summarizeBy: none
+		sourceColumn: InicioFaixa
+
+		variation Variation
+			isDefault
+			relationship: 63cab59d-79a8-44a8-ae10-4b16bb4f01cf
+			defaultHierarchy: LocalDateTable_2a177033-9fe6-413c-994d-6e2aad715197.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column FimFaixa
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f5427460-e9eb-4998-ad90-7151c92cd440
+		summarizeBy: none
+		sourceColumn: FimFaixa
+
+		variation Variation
+			isDefault
+			relationship: e32df89d-869f-4cd4-b93e-b2c294b20c4a
+			defaultHierarchy: LocalDateTable_1f8cd00e-4ef6-450e-a962-f8d0ca451fa0.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCentroCusto
+		dataType: int64
+		formatString: 0
+		lineageTag: a7a0d8e3-82cc-4ffe-a9d4-adeb73d632ab
+		summarizeBy: none
+		sourceColumn: IdCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodCentroCusto
+		dataType: string
+		lineageTag: 5834f204-dec6-4fb8-bf20-e5ca2001a285
+		summarizeBy: none
+		sourceColumn: CodCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefa
+		dataType: int64
+		formatString: 0
+		lineageTag: 95912172-a143-4874-8588-be5c36ad0360
+		summarizeBy: none
+		sourceColumn: IdTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: b3449a0b-6891-4698-b353-f4bb6326c11f
+		summarizeBy: none
+		sourceColumn: IdMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAreaTipoTarefa
+		dataType: int64
+		formatString: 0
+		lineageTag: 3813cf9c-8cc8-4133-afe9-960978920151
+		summarizeBy: sum
+		sourceColumn: IdAreaTipoTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdActividadeMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: 5aa3fcea-fc1e-429d-a349-24f768e1589e
+		summarizeBy: sum
+		sourceColumn: IdActividadeMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column SemPeriodoDefinido
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0482af2e-066e-4249-acb7-89defcbacd9e
+		summarizeBy: none
+		sourceColumn: SemPeriodoDefinido
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinutosPausa
+		dataType: int64
+		formatString: 0
+		lineageTag: 81da3542-60fe-44e2-bcdd-ca55e6ab789d
+		summarizeBy: sum
+		sourceColumn: MinutosPausa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e3600d3-7d40-4002-bfdb-d4da4fc30059
+		summarizeBy: none
+		sourceColumn: IdProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ed10b223-b7ec-4abe-bcb0-9e9ee4b4288f
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Nome
+		dataType: string
+		lineageTag: fdb3c867-cbcb-4736-8189-44216c617176
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo
+		dataType: string
+		lineageTag: 407261f5-3f2a-4773-9ca0-b7af5d089b47
+		summarizeBy: none
+		sourceColumn: titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana' = SWITCH(WEEKDAY(TarefasMeiosFaixas[Date]),1,"Domingo",2,"Segunda-Feira",3,"Terça-Feira",4,"Quarta-Feira",5,"Quinta-Feira",6,"Sexta-Feira",7,"Sábado")
+		lineageTag: c2880f28-0036-42b1-9684-9a0cf8cba8d6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Período =
+			
+			SWITCH(
+			    TRUE()
+			    ,HOUR(TarefasMeiosFaixas[Horainicio])>=0 && hour(TarefasMeiosFaixas[Horainicio])<6,"Madrugada"
+			    ,HOUR(TarefasMeiosFaixas[Horainicio])>=6 && hour(TarefasMeiosFaixas[Horainicio])<12,"Manhã"
+			    ,HOUR(TarefasMeiosFaixas[Horainicio])>=12 && hour(TarefasMeiosFaixas[Horainicio])<18,"Tarde"
+			    ,HOUR(TarefasMeiosFaixas[Horainicio])>=18 && hour(TarefasMeiosFaixas[Horainicio])<24,"Noite"
+			)
+		lineageTag: 4f8ecadb-6827-4f0f-a2f8-814c821ca69f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: 8acb10d6-4493-43ad-aef7-e2a4cf772c10
+		summarizeBy: sum
+		sourceColumn: IdTipoProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TarefasMeiosFaixas-a7b65505-3157-4a8a-9bb6-77a8b843d390 = m
+		mode: import
+		queryGroup: Meios
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    tm.Id,#(lf)    tm.MeioPrincipal,#(lf)    tm.HoraInicio,#(lf)    tm.HoraFim,#(lf)    Right('0' + Cast(fh.Hora % 24 As VARCHAR(2)), 2) + ':00' Faixa,#(lf)    DateAdd(hour, fh.Hora % 24, DateAdd(day, fh.Hora / 24, Cast(Cast(tm.HoraInicio As DATE) As DATETIME))) InicioFaixa,#(lf)    DateAdd(second, -1, DateAdd(hour, 1, DateAdd(hour, fh.Hora % 24, DateAdd(day, fh.Hora / 24, Cast(Cast(tm.HoraInicio#(lf)    As DATE) As DATETIME))))) FimFaixa,#(lf)    cc.Id IdCentroCusto,#(lf)    tm.CodCentroCusto,#(lf)    tm.IdTarefa,#(lf)    tm.IdMeio,#(lf)    tm.IdAreaTipoTarefa,#(lf)    tm.IdActividadeMeio,#(lf)    tm.SemPeriodoDefinido,#(lf)    IsNull(tm.MinutosPausa, 0) MinutosPausa,#(lf)    t.IdProjecto,#(lf)    Meios.Nome,#(lf)    Projectos.titulo,#(lf)    Projectos.IdTipoProjecto#(lf)From#(lf)    Tarefas_Meios tm Join#(lf)    Tarefas t On tm.IdTarefa = t.Id Left Join#(lf)    Centros_Custo cc On tm.CodCentroCusto = cc.Codigo Join#(lf)    vwFaixasHorarias fh On (tm.SemPeriodoDefinido = 0#(lf)                And fh.Hora Between DatePart(hour, tm.HoraInicio) And Ceiling(DateDiff(minute, Cast(Cast(tm.HoraInicio#(lf)                As DATE) As DATETIME), tm.HoraFim) / 60.0) - 1)#(lf)            Or (tm.SemPeriodoDefinido = 1#(lf)                And fh.Hora Between 0 And 23) Inner Join#(lf)    Meios On tm.IdMeio = Meios.Id Inner Join#(lf)    Projectos On t.IdProjecto = Projectos.Id#(lf)Where#(lf)    Year(tm.HoraInicio) >= Year(GetDate()) -3"]),
+				    #"Inserted Date" = Table.AddColumn(Origem, "Date", each DateTime.Date([HoraInicio]), type date)
+				in
+				    #"Inserted Date"
+
+	annotation PBI_QueryRelationships = {"columnCount":20,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/TarefasMeiosFaixas/Origem.{Id,0}","Section1/TarefasMeiosFaixas/Origem.{MeioPrincipal,1}","Section1/TarefasMeiosFaixas/Origem.{HoraInicio,2}","Section1/TarefasMeiosFaixas/Origem.{HoraFim,3}","Section1/TarefasMeiosFaixas/Origem.{Faixa,4}","Section1/TarefasMeiosFaixas/Origem.{InicioFaixa,5}","Section1/TarefasMeiosFaixas/Origem.{FimFaixa,6}","Section1/TarefasMeiosFaixas/Origem.{IdCentroCusto,7}","Section1/TarefasMeiosFaixas/Origem.{CodCentroCusto,8}","Section1/TarefasMeiosFaixas/Origem.{IdTarefa,9}","Section1/TarefasMeiosFaixas/Origem.{IdMeio,10}","Section1/TarefasMeiosFaixas/Origem.{IdAreaTipoTarefa,11}","Section1/TarefasMeiosFaixas/Origem.{IdActividadeMeio,12}","Section1/TarefasMeiosFaixas/Origem.{SemPeriodoDefinido,13}","Section1/TarefasMeiosFaixas/Origem.{MinutosPausa,14}","Section1/TarefasMeiosFaixas/Origem.{IdProjecto,15}","Section1/TarefasMeiosFaixas/Origem.{Nome,16}","Section1/TarefasMeiosFaixas/Origem.{titulo,17}","Section1/TarefasMeiosFaixas/Origem.{IdTipoProjecto,18}","Section1/TarefasMeiosFaixas/Inserted Date.{Date,19}"],"ColumnCount":20,"KeyColumnNames":[],"ColumnIdentities":["Section1/TarefasMeiosFaixas/Origem.{Id,0}","Section1/TarefasMeiosFaixas/Origem.{MeioPrincipal,1}","Section1/TarefasMeiosFaixas/Origem.{HoraInicio,2}","Section1/TarefasMeiosFaixas/Origem.{HoraFim,3}","Section1/TarefasMeiosFaixas/Origem.{Faixa,4}","Section1/TarefasMeiosFaixas/Origem.{InicioFaixa,5}","Section1/TarefasMeiosFaixas/Origem.{FimFaixa,6}","Section1/TarefasMeiosFaixas/Origem.{IdCentroCusto,7}","Section1/TarefasMeiosFaixas/Origem.{CodCentroCusto,8}","Section1/TarefasMeiosFaixas/Origem.{IdTarefa,9}","Section1/TarefasMeiosFaixas/Origem.{IdMeio,10}","Section1/TarefasMeiosFaixas/Origem.{IdAreaTipoTarefa,11}","Section1/TarefasMeiosFaixas/Origem.{IdActividadeMeio,12}","Section1/TarefasMeiosFaixas/Origem.{SemPeriodoDefinido,13}","Section1/TarefasMeiosFaixas/Origem.{MinutosPausa,14}","Section1/TarefasMeiosFaixas/Origem.{IdProjecto,15}","Section1/TarefasMeiosFaixas/Origem.{Nome,16}","Section1/TarefasMeiosFaixas/Origem.{titulo,17}","Section1/TarefasMeiosFaixas/Origem.{IdTipoProjecto,18}","Section1/TarefasMeiosFaixas/Inserted Date.{Date,19}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

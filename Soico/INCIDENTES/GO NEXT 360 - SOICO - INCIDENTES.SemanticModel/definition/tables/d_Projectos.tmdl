@@ -1,0 +1,131 @@
+table d_Projectos
+	lineageTag: 7b9ac48e-5052-41fe-8f1a-668195e34f92
+
+	column Projeto_Título
+		dataType: string
+		lineageTag: 708170ed-ac7a-4f32-bfe8-eea26a19e738
+		summarizeBy: none
+		sourceColumn: Projeto_Título
+
+		annotation SummarizationSetBy = Automatic
+
+	column abreviatura
+		dataType: string
+		lineageTag: cdcb6931-7d5a-4afe-a6fc-059a128ce28f
+		summarizeBy: none
+		sourceColumn: abreviatura
+
+		annotation SummarizationSetBy = Automatic
+
+	column Referencia
+		dataType: string
+		lineageTag: 53c69590-d8bb-4cb9-b107-78325b1d08aa
+		summarizeBy: none
+		sourceColumn: Referencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: de2fdc87-e99a-4e5d-913e-21e2247718ae
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variação
+			isDefault
+			relationship: 5ac34e9b-66ee-4064-a264-d4ff928429b6
+			defaultHierarchy: LocalDateTable_7c4a2029-44f1-4246-8296-b3530a5d7385.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8b4bafaa-9d1b-4829-9535-bae212dabb5d
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		variation Variação
+			isDefault
+			relationship: 79bebdc9-f3f9-480e-813d-a08c2d60df9d
+			defaultHierarchy: LocalDateTable_bcd68107-fe5f-4b75-a6d8-d1318cd36577.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Locais
+		dataType: string
+		lineageTag: f602794d-1c67-4f12-b7c9-018e32aa3f77
+		summarizeBy: none
+		sourceColumn: Locais
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meios
+		dataType: string
+		lineageTag: 70f2de50-03d4-497c-bdc8-a78c7ce387a0
+		summarizeBy: none
+		sourceColumn: Meios
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: bcd06dfa-3338-40e5-bfbc-f6b9ffda1bb1
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observacoes
+		dataType: string
+		lineageTag: 832b2f13-2274-4d5b-9b39-fba7bf2e058f
+		summarizeBy: none
+		sourceColumn: Observacoes
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodClassificacao
+		dataType: string
+		lineageTag: 54692993-7b90-4526-abc2-164e8a94d101
+		summarizeBy: none
+		sourceColumn: CodClassificacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column responsavelCliente
+		dataType: string
+		lineageTag: a97fca40-0938-45a7-9739-13d902c9bd90
+		summarizeBy: none
+		sourceColumn: responsavelCliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column responsavel
+		dataType: string
+		lineageTag: 966bb93d-4dea-478e-b37e-621bb499b386
+		summarizeBy: none
+		sourceColumn: responsavel
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 122ef877-f6e7-4723-b42b-095416036280
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Projectos-79c983a0-718a-425e-9fc3-53529236741a = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select Projectos.id,#(lf)    Projectos.titulo,#(lf)    Projectos.abreviatura,#(lf)    Projectos.Referencia,#(lf)    Projectos.DataFim,#(lf)    Projectos.DataInicio,#(lf)    Projectos.Locais,#(lf)    Projectos.Meios,#(lf)    Projectos.Estado,#(lf)    Projectos.Observacoes,#(lf)    Projectos.CodClassificacao,#(lf)    Projectos.responsavelCliente,#(lf)    Projectos.responsavel#(lf)From#(lf)    Projectos"]),
+				    #"Colunas com Nome Mudado" = Table.RenameColumns(Origem,{{"titulo", "Projeto_Título"}})
+				in
+				    #"Colunas com Nome Mudado"
+
+	annotation PBI_ResultType = Table
+

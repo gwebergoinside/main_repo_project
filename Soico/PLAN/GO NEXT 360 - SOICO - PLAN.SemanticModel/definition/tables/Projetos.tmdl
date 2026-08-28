@@ -1,0 +1,313 @@
+table Projetos
+	lineageTag: ee88b762-8067-439e-94f0-68a6d0df7621
+
+	measure link =
+			
+			var __last = MAX(Projetos[Id])
+			var __link = LinkProjeto
+			Return
+			__link & __last
+			--IF( [Actividade Pessoas (h)] > 0 , __link & __last, BLANK() )
+		lineageTag: ef0376b1-be3d-4758-9dfe-39ea5be69e29
+		dataCategory: WebUrl
+
+	measure 'link RH CC' =
+			
+			var __last = LASTNONBLANK(Projetos[Id], SELECTEDVALUE(Projetos[Projeto]))
+			var __link = LinkProjeto
+			Return
+			--__link & __last
+			IF( [Atividade Pessoas (h)] > 0 , __link & __last, BLANK() )
+		lineageTag: 24f59911-ef15-44fd-9b6f-4886321823e5
+		dataCategory: WebUrl
+
+	measure 'link Nec Meios' =
+			
+			var __last = MAX('NecessidadesGantt Final'[IdProjeto])
+			var __link = LinkNec
+			Return
+			IF( [DuracaoDia Nec Meios] > 0 , __link & __last, BLANK() )
+		lineageTag: a988cd57-18f3-4122-83d5-dd139318aecd
+		dataCategory: WebUrl
+
+	measure 'link Nec Pessoas' =
+			
+			var __last = MAX('NecessidadesGantt Final'[IdProjeto])
+			var __link = LinkNec
+			Return
+			IF( [DuracaoDia Nec Pessoas] > 0 , __link & __last, BLANK() )
+		lineageTag: 1ba9a8c8-7d5c-4dc9-bf92-4ea1f9d47d0b
+		dataCategory: WebUrl
+
+	column Referencia
+		dataType: string
+		lineageTag: 84909c23-1efa-4ea3-ba9b-fb5f8480401e
+		summarizeBy: none
+		sourceColumn: Referencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: f1a69871-f41b-42bc-80da-ca04fd631ef3
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: e4805620-7d9d-44b5-9d0b-9b725408a05f
+		summarizeBy: sum
+		sourceColumn: IdTipoProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: c1ec0616-b69b-46a3-83f4-9f7110755aba
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		variation Variation
+			isDefault
+			relationship: 095409f6-5881-4730-b77d-52dc37d9a8be
+			defaultHierarchy: LocalDateTable_39a59ee7-d6d7-452c-92d0-a6530520cee9.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column DataFim
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 5c63facd-d726-4201-bc4a-71f77e3ff9e9
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variation
+			isDefault
+			relationship: ff229d7e-17b9-48e4-8aa2-b956c00d6e6d
+			defaultHierarchy: LocalDateTable_03ba8e4a-57d9-4b2e-8105-b50a3d3c1887.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Estado
+		dataType: string
+		lineageTag: 5272f7ef-d88e-4d1c-a9fc-b7305906196e
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status = ```
+			
+			SWITCH( TRUE() ,  Projetos[Estado] = "E", "Em Andamento",
+			                
+			                    Projetos[Estado] = "C", "Cancelado",
+			
+			                    Projetos[Estado] = "P", "Pendente",
+			              
+			                    Projetos[Estado] = "T", "Terminado",
+			              
+			                    Projetos[Estado] = "M", "Em Preparação",
+			            
+			                    Projetos[Estado] = "R", "Forecast",
+			          
+			                    Projetos[Estado] = "E", "default" )
+			```
+		lineageTag: 0505e00b-b23d-4f88-a624-0d884d332136
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Receita = BLANK()
+		formatString: 0
+		lineageTag: 11ea8b35-9929-4260-857a-38857b11e7c2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Inicio' = MONTH(Projetos[DataInicio])
+		formatString: 0
+		lineageTag: 8e678ccb-8bdb-4583-b267-af41d2137b62
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Fim' = MONTH(Projetos[DataFim])
+		formatString: 0
+		lineageTag: 1844a1d2-2d6b-44d5-aec0-8233f23cb50d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano = YEAR(Projetos[DataInicio])
+		formatString: 0
+		lineageTag: 6389f44a-becf-43a6-9e74-7d97a3705fab
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column IfProj = IF( Projetos[ProjectoMaster] = BLANK() , Projetos[Projeto], Projetos[ProjectoMaster] )
+		lineageTag: 129600e3-939c-4586-a830-61643f597415
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Projeto
+		dataType: string
+		lineageTag: 0f228cde-a1e4-44d7-84d1-4ee4b5197162
+		summarizeBy: none
+		sourceColumn: Projeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Duracao Média'
+		dataType: int64
+		formatString: 0
+		lineageTag: ab6da89e-a8dd-4741-b585-b6876cecaf56
+		summarizeBy: sum
+		sourceColumn: Duracao Média
+
+		annotation SummarizationSetBy = Automatic
+
+	column Evento
+		dataType: int64
+		formatString: 0
+		lineageTag: 957fea5d-e517-4337-923e-9a529efe2b5f
+		summarizeBy: sum
+		sourceColumn: Evento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Projeto'
+		dataType: string
+		lineageTag: 4cc438e9-c876-4371-9e85-646c6ce1aab3
+		summarizeBy: none
+		sourceColumn: Tipo Projeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ultima Data'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f675fc63-0650-4372-b93b-2f6b8647308a
+		summarizeBy: none
+		sourceColumn: Ultima Data
+
+		variation Variation
+			isDefault
+			relationship: e356758c-081b-47c7-a2e6-00c5bdf81123
+			defaultHierarchy: LocalDateTable_b1223968-7ab1-4a80-a6e1-bc9cccab4534.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReferenciaProjectoMaster
+		dataType: string
+		lineageTag: 643ca589-6b53-41ce-918c-fa5d58ddb8d3
+		summarizeBy: none
+		sourceColumn: ReferenciaProjectoMaster
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDProjectoMaster
+		dataType: int64
+		formatString: 0
+		lineageTag: f915afb3-8fb4-4e49-bfe3-20f242f4eb9f
+		summarizeBy: sum
+		sourceColumn: IDProjectoMaster
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Programa'
+		dataType: string
+		lineageTag: 79758091-a78f-46a0-8ecf-7c7edfdaf053
+		summarizeBy: none
+		sourceColumn: Tipo Programa
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Producao'
+		dataType: string
+		lineageTag: 50dd6470-0306-4f7e-8212-e8d3539c7c58
+		summarizeBy: none
+		sourceColumn: Tipo Producao
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectoMaster
+		dataType: string
+		lineageTag: 7dfe8add-ff8a-4a5e-a109-dff0a00ee916
+		summarizeBy: none
+		sourceColumn: ProjectoMaster
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusAtivo = IF( TODAY() > Projetos[DataFim], 0, IF( TODAY() = Projetos[DataFim], 1, 2 ) )
+		formatString: 0
+		lineageTag: b232881b-3eca-4007-9f00-9091bade53a7
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImputacaoProgramas
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9c0a42ef-6224-4666-9d0e-a4b6ae148dcb
+		summarizeBy: none
+		sourceColumn: ImputacaoProgramas
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Referencia de Projeto'
+		dataType: string
+		lineageTag: 2d258953-5d5e-4962-855e-ce01403bf508
+		summarizeBy: none
+		sourceColumn: Referencia de Projeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column RLS
+		dataType: string
+		lineageTag: dd3d8980-2656-4c50-b458-0f04ad5038ee
+		summarizeBy: none
+		sourceColumn: RLS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nec =
+			
+			// LOOKUPVALUE(
+			//     'NecessidadesGantt Final'[Projeto]
+			//     ,'NecessidadesGantt Final'[IdProjeto]
+			//     ,Projetos[Id]
+			// )
+			CALCULATE(FIRSTNONBLANK('NecessidadesGantt Final'[Projeto],1),
+			filter(all('NecessidadesGantt Final'),
+			'Projetos'[Id] = 'NecessidadesGantt Final'[IdProjeto]))
+		lineageTag: fb82d7ea-c26a-4c08-9ef2-aed3d1f0e3e1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Projetos-4afaf328-925d-4ea8-91a5-3619ba8847ad = m
+		mode: import
+		queryGroup: Projetos
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="With#(lf)    Tar As (#(lf)     Select#(lf)         Tarefas.IdProjecto,#(lf)         Max(Tarefas.DataInicio) As [Ultima Data]#(lf)     From#(lf)         Tarefas#(lf)     Group By#(lf)         Tarefas.IdProjecto#(lf)    ),#(lf)    Proj As (#(lf)     Select#(lf)         Projectos.Referencia,#(lf)         Projectos.titulo As titulo,#(lf)         Projectos.Id,#(lf)         Avg(Programas.Duracao) As [Duracao Média],#(lf)         Count(Programas.Evento) As Evento,#(lf)         Projectos.IdTipoProjecto,#(lf)         Projectos.DataInicio,#(lf)         Projectos.DataFim,#(lf)         Projectos.Estado,#(lf)         Tipos_Projecto.Nome As [Tipo Projeto],#(lf)         IsNull(Projectos.IdMasterProject, Projectos.Id) IDProjectoMaster,#(lf)         IsNull(ProjectosMaster.Referencia, Projectos.Referencia) ReferenciaProjectoMaster,#(lf)         Projectos.IdTipoProducao,#(lf)         Projectos.IdTipoPrograma,#(lf)         ProjectosMaster.titulo As ProjectoMaster#(lf)     From#(lf)         Projectos Left Join#(lf)         Programas On Programas.IDProjecto = Projectos.Id Left Join#(lf)         Tipos_Projecto On Projectos.IdTipoProjecto = Tipos_Projecto.Id Left Join#(lf)         Projectos ProjectosMaster On ProjectosMaster.Id = Projectos.IdMasterProject#(lf)     Group By#(lf)         Projectos.Referencia,#(lf)         Projectos.titulo,#(lf)         Projectos.Id,#(lf)         Projectos.IdTipoProjecto,#(lf)         Projectos.DataInicio,#(lf)         Projectos.DataFim,#(lf)         Projectos.Estado,#(lf)         Tipos_Projecto.Nome,#(lf)         IsNull(Projectos.IdMasterProject, Projectos.Id),#(lf)         IsNull(ProjectosMaster.Referencia, Projectos.Referencia),#(lf)         Projectos.IdTipoProducao,#(lf)         Projectos.IdTipoPrograma,#(lf)         ProjectosMaster.titulo#(lf)    )#(lf)Select#(lf)    Proj.Id,#(lf)    Proj.Referencia,#(lf)    Proj.titulo,#(lf)    Proj.[Duracao Média],#(lf)    Proj.Evento,#(lf)    Proj.IdTipoProjecto,#(lf)    Proj.DataInicio,#(lf)    Proj.DataFim,#(lf)    Proj.Estado,#(lf)    Proj.[Tipo Projeto],#(lf)    t.[Ultima Data],#(lf)    Proj.ReferenciaProjectoMaster,#(lf)    Proj.IDProjectoMaster,#(lf)    ptp.Nome As [Tipo Producao],#(lf)    tp.Nome As [Tipo Programa],#(lf)    Proj.ProjectoMaster,#(lf)    pr.ImputacaoProgramas,#(lf)    pr.Referencia As [Referencia de Projeto]#(lf)From#(lf)    Proj Left Join#(lf)    Tar t On t.IdProjecto = Proj.Id Left Join#(lf)    Projectos_Tipos_Producoes ptp On ptp.Id = Proj.IdTipoProducao Left Join#(lf)    Tipos_Programas tp On tp.Id = Proj.IdTipoPrograma Left Join#(lf)    Projectos_Referencias pr On Proj.Referencia Like pr.Referencia + '.%'#(lf)Where#(lf)    Year(Proj.DataFim) >= Year(GetDate()) - 3"]),
+				    Personalizado1 = Table.RenameColumns(Origem,{"titulo", "Projeto"}),
+				    #"Added Custom" = Table.AddColumn(Personalizado1, "RLS", each "*")
+				in
+				    #"Added Custom"
+
+	annotation PBI_QueryRelationships = {"columnCount":15,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Projetos/Origem.{Id,0}","Section1/Projetos/Origem.{Referencia,1}","Section1/Projetos/Origem.{Nome,2}","Section1/Projetos/Origem.{titulo,3}","Section1/Projetos/Origem.{Duracao Média,4}","Section1/Projetos/Origem.{Evento,5}","Section1/Projetos/Origem.{IdTipoProjecto,6}","Section1/Projetos/Origem.{DataInicio,7}","Section1/Projetos/Origem.{DataFim,8}","Section1/Projetos/Origem.{Estado,9}","Section1/Projetos/Origem.{Tipo Projeto,10}","Section1/Projetos/Origem.{Ultima Data,11}","Section1/Projetos/Origem.{ReferenciaProjectoMaster,12}","Section1/Projetos/Origem.{TituloProjectoMaster,13}","Section1/Projetos/Origem.{IDProjectoMaster,14}"],"ColumnCount":15,"KeyColumnNames":[],"ColumnIdentities":["Section1/Projetos/Origem.{Id,0}","Section1/Projetos/Origem.{Referencia,1}","Section1/Projetos/Origem.{Nome,2}","Section1/Projetos/Origem.{titulo,3}","Section1/Projetos/Origem.{Duracao Média,4}","Section1/Projetos/Origem.{Evento,5}","Section1/Projetos/Origem.{IdTipoProjecto,6}","Section1/Projetos/Origem.{DataInicio,7}","Section1/Projetos/Origem.{DataFim,8}","Section1/Projetos/Origem.{Estado,9}","Section1/Projetos/Origem.{Tipo Projeto,10}","Section1/Projetos/Origem.{Ultima Data,11}","Section1/Projetos/Origem.{ReferenciaProjectoMaster,12}","Section1/Projetos/Origem.{TituloProjectoMaster,13}","Section1/Projetos/Origem.{IDProjectoMaster,14}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

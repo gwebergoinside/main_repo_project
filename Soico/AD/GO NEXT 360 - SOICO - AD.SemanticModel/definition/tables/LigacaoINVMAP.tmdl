@@ -1,0 +1,41 @@
+table LigacaoINVMAP
+	lineageTag: e0abdef4-d3e8-4553-8fc8-66c38156a48c
+
+	measure #count = COUNT('LigacaoINVMAP'[IdAnunciante])
+		formatString: 0
+		lineageTag: 74b431ed-ff17-462d-96a9-17b2e62f8549
+
+	column IdAnunciante
+		formatString: 0
+		lineageTag: 1ade6398-62a0-4ffe-8e43-59732894339d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IdAnunciante]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LigacaoINVMAP-4f9514f3-f3a8-43b8-9eca-a9567adb1592 = calculated
+		mode: import
+		source = ```
+				--FILTER( SUMMARIZE('Ligacao Inv-Map', 'Ligacao Inv-Map'[NomeAnunciante], 'Ligacao Inv-Map'[IdAnunciante], "Anunciante", MAX('Ligacao Inv-Map'[Anunciante]) ) , [Anunciante] <> BLANK() )
+				
+				--SUMMARIZE('Ligacao Inv-Map', 'Ligacao Inv-Map'[NomeAnunciante], 'Ligacao Inv-Map'[IdAnunciante], "Anunciante", MAX('Ligacao Inv-Map'[Anunciante]) )
+				
+				VAR _Invest = 
+				    SELECTCOLUMNS(
+				        Advertisers
+				        ,"IdAnunciante", Advertisers[IdAdv]
+				    )
+				VAR _AD = 
+				    SELECTCOLUMNS(
+				        Anunciante
+				        ,"IdAnunciante", Anunciante[entId]
+				    )
+				VAR _Union = UNION(_Invest,_AD)
+				VAR Result = SUMMARIZE(_Union, [IdAnunciante] )
+				RETURN
+				Result
+				```
+
+	annotation PBI_Id = bad9689030234de7b5f24f80e1079f9e
+

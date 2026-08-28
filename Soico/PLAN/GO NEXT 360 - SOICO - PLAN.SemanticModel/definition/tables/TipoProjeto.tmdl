@@ -1,0 +1,38 @@
+table TipoProjeto
+	lineageTag: 8d8abbf7-a0c5-473e-aff3-82451d865cdf
+
+	measure 'Selected Type' =
+			
+			SELECTEDVALUE( TipoProjeto[ID] )
+		formatString: 0
+		lineageTag: e5222234-7090-40a5-8c38-c3a38017c421
+
+	column Tipo
+		dataType: string
+		lineageTag: 419d59c8-0652-4958-9ab9-1d2fa8c91e15
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: f0fe3bad-4c02-4b74-8fa6-56ce146e745a
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoProjeto-ffe736ac-e875-4881-b22f-91b9093574f0 = m
+		mode: import
+		queryGroup: Agrupadores
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCijKz0otyS9WCEpNzi8qSs0rSS1W0lEyVIrVQZL0yy/LBwkbKcXGAgA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Tipo = _t, ID = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Tipo", type text}, {"ID", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

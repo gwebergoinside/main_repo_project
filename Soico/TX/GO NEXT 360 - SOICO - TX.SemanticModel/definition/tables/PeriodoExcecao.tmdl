@@ -1,0 +1,58 @@
+table PeriodoExcecao
+	lineageTag: 9e0f0297-78ef-4949-8c06-2a9ee6101c4a
+
+	column codTitulo
+		dataType: int64
+		formatString: 0
+		lineageTag: b88802f4-26a5-49f7-9e36-4e14177bd255
+		summarizeBy: none
+		sourceColumn: codTitulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Canal
+		dataType: string
+		lineageTag: 91c7b93b-c072-4aa4-b13c-2f1d79ed427c
+		summarizeBy: none
+		sourceColumn: Cod_Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a74736df-0ccd-4606-8ac3-49a329b5366f
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		variation Variation
+			isDefault
+			relationship: 70d914bd-db13-436b-9faf-971324a59c17
+			defaultHierarchy: LocalDateTable_bd6d1c38-9cae-4466-a9c1-faf30f46d5be.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bb72b69a-b554-40a2-aea9-344ef079beef
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variation
+			isDefault
+			relationship: 68f32266-c6ce-441a-9558-bb96f8c63227
+			defaultHierarchy: LocalDateTable_b50d2966-0193-4589-8f93-9695713171ba.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PeriodoExcecao-cb50bd00-86c1-4acb-9c41-dc4c686ae443 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao.codTitulo,#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao.Cod_Canal,#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao.DataInicio,#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao.DataFim#(lf)#(tab)#(tab)From#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao#(lf)#(tab)#(tab)Group By#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao.codTitulo,#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao.Cod_Canal,#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao.DataInicio,#(lf)#(tab)#(tab)#(tab)Titulos_PeriodoExcecao.DataFim"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

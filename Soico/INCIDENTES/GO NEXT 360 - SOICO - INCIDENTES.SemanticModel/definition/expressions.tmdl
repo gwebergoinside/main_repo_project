@@ -1,0 +1,45 @@
+expression BD = "GMP_Soico_Prd" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: fe18155e-6da8-4447-ad9b-34654bdcde41
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+/// Enter the Server of the GMedia
+expression @Org = "gmedia-saas-sql.chwk3oqgzb7x.eu-west-1.rds.amazonaws.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: fe66b2e4-b66e-4e2e-94e3-f9f652ec9f9d
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+expression URL = "http://soico-gmediaplan.goinside.co/Incidencias/FichaIncidencia.aspx?Id=" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 42c066a3-870f-47f3-9682-60a20439ad50
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+expression 'lista de imagem' =
+		let
+		    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Logo", "Cliente "}),
+		    Nome = #"Removed Columns"[Nome]
+		in
+		    Nome
+	lineageTag: 58f06062-8f21-4070-b777-c6d80f91ad2e
+	queryGroup: BD
+
+expression TarefasCodigo =
+		let
+		    Source = Sql.Database(#"@Org", BD, [Query="SELECT DISTINCT t.p.value('(Name)[1]', 'varchar(max)') [Name]#(lf)    ,t.p.value('(StringValue)[1]', 'varchar(max)') StringValue#(lf)    ,t.p.value('(IntegerValue)[1]', 'int') IntegerValue#(lf)    ,t.p.value('(Color)[1]', 'varchar(max)') Color#(lf)    ,t.p.value('(FgColor)[1]', 'varchar(max)') FgColor#(lf)    ,t.p.value('(Prefix)[1]', 'varchar(max)') Prefix#(lf)    ,t.p.value('(Image)[1]', 'varchar(max)') [Image]#(lf)    ,t.p.value('(IsBuiltIn)[1]', 'bit') IsBuiltIn#(lf)    ,t.p.value('(IsEnabled)[1]', 'bit') IsEnabled#(lf)    ,t.p.value('(CanBeDisabled)[1]', 'bit') CanBeDisabled#(lf)    ,t.p.value('(Highlighted)[1]', 'bit') Highlighted#(lf)FROM Configuracoes_Estados#(lf)CROSS APPLY Valor.nodes('/ArrayOfState/State') t(p)#(lf)WHERE Tipo = 'TaskStateMachine'"]),
+		    #"Removed Columns" = Table.RemoveColumns(Source,{"IntegerValue", "Color", "FgColor", "Prefix", "Image", "IsBuiltIn", "IsEnabled", "CanBeDisabled", "Highlighted"})
+		in
+		    #"Removed Columns"
+	lineageTag: 2b3a706b-2196-4119-a3f7-4336bae9b7be
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

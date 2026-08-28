@@ -1,0 +1,206 @@
+table ExecucaoMensalItem
+	lineageTag: 86d6515f-2fef-4ec1-b52a-46efec337dff
+
+	column ProjectReference
+		dataType: int64
+		formatString: 0
+		lineageTag: 5aff0092-0aa3-4086-bd06-c6561c7c9640
+		summarizeBy: none
+		sourceColumn: ProjectReference
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectTitle
+		dataType: string
+		lineageTag: a6b15c8b-bfc2-4e47-9515-813ce20d8d5e
+		summarizeBy: none
+		sourceColumn: ProjectTitle
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c36d4ca-532c-4c74-8b7a-8755c19633c8
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 18371320-62aa-47fe-b122-4e759f9bf686
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATE
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fef8664f-0482-49a5-a459-567ca2e7b67c
+		summarizeBy: none
+		sourceColumn: DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetGroupReference
+		dataType: int64
+		formatString: 0
+		lineageTag: b371d05f-fdba-4bc3-b25a-5b9c8bcc6903
+		summarizeBy: sum
+		sourceColumn: BudgetGroupReference
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetGroupOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: 370b9566-3cb4-4a81-b630-e6ef6e6bdeec
+		summarizeBy: sum
+		sourceColumn: BudgetGroupOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetGroupName
+		dataType: string
+		lineageTag: 0ce57e2f-0642-4685-af52-143b33874c97
+		summarizeBy: none
+		sourceColumn: BudgetGroupName
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetRubricReference
+		dataType: int64
+		formatString: 0
+		lineageTag: b77953b6-3788-4883-b9b8-9511679b282c
+		summarizeBy: sum
+		sourceColumn: BudgetRubricReference
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetRubricName
+		dataType: string
+		lineageTag: 175049e0-3ad5-4c92-aee2-38d566eac9f7
+		summarizeBy: none
+		sourceColumn: BudgetRubricName
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetItemReference
+		dataType: int64
+		formatString: 0
+		lineageTag: 73adb24e-17e9-4994-87f5-7089efd2ae7e
+		summarizeBy: sum
+		sourceColumn: BudgetItemReference
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetItemName
+		dataType: string
+		lineageTag: f73716a9-ee34-4c5a-9ac8-ddbc7c64de55
+		summarizeBy: none
+		sourceColumn: BudgetItemName
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitType
+		dataType: string
+		lineageTag: 9e71efca-8722-4f2f-9df5-3355436d5260
+		summarizeBy: none
+		sourceColumn: UnitType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit
+		dataType: double
+		lineageTag: d046f5c8-36eb-4e57-863a-35a6d9b752df
+		summarizeBy: sum
+		sourceColumn: Unit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Amount
+		dataType: double
+		lineageTag: 56a67ea0-4ef0-46b0-bd6a-e26151324de0
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BudgetUnitPurchaseValue
+		dataType: double
+		lineageTag: aae13c37-dabb-443d-9a39-5c24538f131f
+		summarizeBy: sum
+		sourceColumn: BudgetUnitPurchaseValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BudgetUnitSellValue
+		dataType: double
+		lineageTag: d57cca95-0e42-421e-bdfd-21727213c4ea
+		summarizeBy: sum
+		sourceColumn: BudgetUnitSellValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BudgetPurchaseValue
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 10d865dd-f69c-4c15-97e4-1cdef7a00ee8
+		summarizeBy: sum
+		sourceColumn: BudgetPurchaseValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetSellValue
+		dataType: double
+		lineageTag: 43a3e5ec-13e6-491c-92ef-3faa780f99b8
+		summarizeBy: sum
+		sourceColumn: BudgetSellValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalCosts
+		dataType: double
+		formatString: #,0.0
+		lineageTag: ff8c27da-ea0d-4ee4-a0b6-9ae7455e5fd1
+		summarizeBy: sum
+		sourceColumn: TotalCosts
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGrupado =
+			SWITCH( TRUE(),
+			ExecucaoMensalItem[BudgetGroupReference] in {67,68,69} , "Total Despesas Diretas",
+			--ExecucaoMensalItem[BudgetGroupReference] = 68 , "Total de Despesas Diretas",
+			--ExecucaoMensalItem[BudgetGroupReference] = 69 , "Total de Despesas Diretas",
+			ExecucaoMensalItem[BudgetGroupName])
+		lineageTag: e52f0b51-0c22-4d92-a46d-3845481a7f4c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ExecucaoMensalItem-31248015-983f-4e8d-91bf-1e38096aff44 = m
+		mode: import
+		queryGroup: 'Execução Mensal'
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    ExecucaoMensal.ProjectReference,#(lf)    ExecucaoMensal.ProjectTitle,#(lf)    ExecucaoMensal.Year,#(lf)    ExecucaoMensal.Month,#(lf)    DateFromParts(ExecucaoMensal.Year, ExecucaoMensal.Month, 1) DATE,#(lf)    ExecucaoMensal.BudgetGroupReference,#(lf)    ExecucaoMensal.BudgetGroupOrder,#(lf)    ExecucaoMensal.BudgetGroupName,#(lf)    ExecucaoMensal.BudgetRubricReference,#(lf)    ExecucaoMensal.BudgetRubricName,#(lf)    ExecucaoMensal.BudgetItemReference,#(lf)    ExecucaoMensal.BudgetItemName,#(lf)    ExecucaoMensal.UnitType UnitType,#(lf)    ExecucaoMensal.Unit,#(lf)    ExecucaoMensal.Amount,#(lf)    ExecucaoMensal.BudgetUnitPurchaseValue,#(lf)    ExecucaoMensal.BudgetUnitSellValue,#(lf)    ExecucaoMensal.BudgetPurchaseValue,#(lf)    ExecucaoMensal.BudgetSellValue,#(lf)    ExecucaoMensal.TotalCosts + ISNULL((Select#(lf)              IsNull(Sum(IsNull(vwcip.Valor, 0)), 0) As ValorCED#(lf)          From#(lf)              vwComprasItemsProjecto vwcip #(lf)          Where#(lf)              vwcip.estado <> 4#(lf)#(tab)#(tab)#(tab)  And vwcip.IdProjecto =   ExecucaoMensal.ProjectReference#(lf)#(tab)#(tab)#(tab)  And vwcip.IdOrcItem =ExecucaoMensal.IdOrc_Items#(lf)#(tab)#(tab)#(tab)  And vwcip.DataPedido between ExecucaoMensal.DataExecucaoInicio And ExecucaoMensal.dataExecucaoFim #(lf)#(tab)#(tab)),0) #(lf)#(tab)TotalCosts #(lf)From#(lf)    (Select Distinct#(lf)         Year(prjcmp.DataExecucaoInicio) Year,#(lf)         Month(prjcmp.DataExecucaoInicio) Month,#(lf)         prjcmp.IdProjecto ProjectReference,#(lf)         prjcmp.titulo ProjectTitle,#(lf)         prjcmp.Idgrupo BudgetGroupReference,#(lf)         prjcmp.NomeGrupo BudgetGroupName,#(lf)         prjcmp.IdRubrica BudgetRubricReference,#(lf)         prjcmp.NomeRubrica BudgetRubricName,#(lf)         prjcmp.IdOrcItem BudgetItemReference,#(lf)         prjcmp.ItemNome BudgetItemName,#(lf)         prjcmp.OrdemGrupo BudgetGroupOrder,#(lf)         prjcmp.itemtipo BudgetItemType,#(lf)         Replace(Str(IsNull(Contas.CodigoConta, ''), 12), Space(1), '0') AccountCode,#(lf)         IsNull(Contas.DescricaoConta, '') AccountDescription,#(lf)         ISNULL(TOI.TipoUnidade,prjcmp.TipoUnidade) UnitType,#(lf)         ISNULL(TOI.Unidades,prjcmp.Quantidade)  Unit,  --rever?#(lf)         ISNULL(TOI.Quantidade,prjcmp.Quantidade)  Amount,#(lf)         ISNULL(TOI.PrecoCompraUnidade,prjcmp.PrecoCompraUnidade)  BudgetUnitPurchaseValue,#(lf)         ISNULL(TOI.PrecoVendaUnidade,prjcmp.PrecoVendaUnidade)  BudgetUnitSellValue,#(lf)         IsNull(TOI.OrcamentoCompra, 0) BudgetPurchaseValue,#(lf)         IsNull(TOI.OrcamentoVenda, 0) BudgetSellValue,#(lf)         IsNull((Select#(lf)              Sum(IsNull(cim.Valor, 0))#(lf)          From#(lf)              CustosInternosManuais cim Inner Join#(lf)              Projectos p2 On p2.Id = cim.IdProjeto Inner Join#(lf)              Centros_Custo cc On cc.Id = cim.IdCentroCustoEmissor Inner Join#(lf)              Orc_Items oi On cc.IdOrcItem = oi.Id Inner Join#(lf)              Orcamento_Items As oi3 On oi.Id = oi3.IdOrcItem Inner Join#(lf)              Orcamentos o On oi3.IdOrcamento = o.Id#(lf)                      And p2.Id = o.IdProjecto#(lf)          Where#(lf)              oi3.Id = oi.Id And#(lf)              p2.Id = prjcmp.IdProjecto), 0) + IsNull(TImeios.CustosInternosMeios, 0) + IsNull(TIpessoas.CustosInternosPessoas,#(lf)         0) + IsNull((Select#(lf)              Sum(csa.TarifaHora * csaprj.Horas) As valor#(lf)          From#(lf)              Contratos_Servicos_Actividades_Projectos csaprj Inner Join#(lf)              Contratos_Servicos_Actividades csa On csa.ID = csaprj.IdContratoServicoActividade Inner Join#(lf)              Orc_Items oi On csa.IdOrcItem = oi.Id Inner Join#(lf)              Projectos p2 On p2.Id = csaprj.IdProjecto Inner Join#(lf)              Orcamento_Items As oi3 On oi.Id = oi3.IdOrcItem Inner Join#(lf)              Orcamentos o On oi3.IdOrcamento = o.Id#(lf)                      And p2.Id = o.IdProjecto#(lf)          Where#(lf)              oi3.Id = oi.Id And#(lf)              p2.Id = prjcmp.IdProjecto#(lf)          Group By#(lf)              oi3.Id), 0) + IsNull(TCEImeios.CustosExternosIndirectosMeios, 0) +#(lf)         IsNull(TCEIpessoas.CustosExternosIndirectosPessoas, 0)#(lf)#(tab)#(tab) + 0 TotalCosts,#(lf)#(tab)#(tab) prjcmp.IdOrc_Items,#(lf)#(tab)#(tab) prjcmp.DataExecucaoInicio,#(lf)#(tab)     prjcmp.DataExecucaoFim#(lf)     From#(lf)#(tab)#(tab)(Select #(lf)#(tab)#(tab) prj.Id  IdProjecto ,prj.titulo,  oi.IdOrcItem, I.CodConta, i.Nome ItemNome, o.id IdOrcamento, o.DataExecucaoInicio, o.DataExecucaoFim, G.Id IdGrupo, G.Nome NomeGrupo, R.Id IdRubrica, R.NOME NomeRubrica, I.Tipo ItemTipo, o.Mensualizado, g.Ordem OrdemGrupo,#(lf)#(tab)#(tab)#(tab)oi.TipoUnidade,#(lf)#(tab)#(tab)#(tab)IsNull(oi.unidades, 0) Unidades,#(lf)            IsNull(oi.Quantidade, 0) Quantidade,#(lf)#(tab)#(tab)#(tab)IsNull(oi.PrecoCompraUnidade, 0) PrecoCompraUnidade,#(lf)#(tab)#(tab)#(tab)IsNull(oi.PrecoVendaUnidade, 0) PrecoVendaUnidade,#(lf)#(tab)#(tab)#(tab)IsNull(IsNull(oi.unidades, 0) * IsNull(oi.Quantidade, 0) * IsNull(oi.PrecoCompraUnidade, 0),0) As 'OrcamentoCompra',#(lf)#(tab)#(tab)#(tab)IsNull(IsNull(oi.unidades, 0) * IsNull(oi.Quantidade, 0) * IsNull(oi.PrecoVendaUnidade, 0) * (1 - Coalesce(oi.PrecoVendaDesconto / 100, 0)), 0) As 'OrcamentoVenda',#(lf)#(tab)#(tab)#(tab)i.id IdOrc_Items#(lf)#(tab)#(tab)from Projectos prj #(lf)#(tab)#(tab)Inner join Orcamentos o On prj.Id = o.IdProjecto #(lf)#(tab)#(tab)Inner join  Orcamento_Items oi on oi.IdOrcamento = o.Id #(lf)#(tab)#(tab)Inner join  Orc_Items As I On I.Id = oi.IdOrcItem #(lf)        Inner join Orc_Rubricas As R On I.IdOrcRubrica = R.Id #(lf)        Inner Join Orc_Grupos As G On R.IdOrcGrupo = G.Id #(lf)        UNION ALL#(lf)#(tab)#(tab)Select  ciip.IdProjecto , prjciip.titulo,  ci.IdOrcItem ,  oic.CodConta, oic.Nome ItemNome, NULL IdOrcamento, DataPedido DataExecucaoInicio, DataPedido DataExecucaoFim, G.Id IdGrupo, G.NOME NomeGrupo, R.ID IdRubrica, R.Nome NomeRubrica, OIC.Tipo ItemTipo, 1 Mensualizado, g.ordem OrdemGrupo,#(lf)#(tab)#(tab)#(tab)oic.TipoUnidade,#(lf)#(tab)#(tab)#(tab)IsNull(ci.unidade, 0) Unidades,#(lf)            IsNull(ci.Quantidade, 0) Quantidade,#(lf)#(tab)#(tab)#(tab)IsNull(ci.ValorUnitario, 0) PrecoCompraUnidade,#(lf)#(tab)#(tab)#(tab)0 PrecoVendaUnidade,#(lf)#(tab)#(tab)#(tab)IsNull(IsNull(ci.Quantidade, 0) * IsNull(ci.ValorUnitario, 0),0) As 'OrcamentoCompra',#(lf)#(tab)#(tab)#(tab)0 As 'OrcamentoVenda',#(lf)#(tab)#(tab)#(tab)oic.id IdOrc_Items#(lf)#(tab)#(tab)FROM Compras_Items_Imputacao_Projectos ciip #(lf)#(tab)#(tab)INNER JOIN Compras_Items ci ON ci.Id = ciip.IdCompraItem #(lf)#(tab)#(tab)INNER JOIN Projectos prjciip ON prjciip.Id = ciip.IdProjecto --Adicionado#(lf)#(tab)#(tab)Inner join Compras c ON ci.IdCompra = c.Id #(lf)#(tab)#(tab)INNER JOIN Orc_Items AS oic ON oic.Id = ci.IdOrcItem #(lf)#(tab)#(tab)Inner join Orc_Rubricas As R On oic.IdOrcRubrica = R.Id #(lf)        Inner Join Orc_Grupos As G On R.IdOrcGrupo = G.Id #(lf)#(tab)#(tab)Where  c.estado <> 4#(lf)#(tab)#(tab)#(tab) AND NOT EXISTS (  #(tab)#(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)Select 1#(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)from Projectos prj #(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)Inner join Orcamentos o On prj.Id = o.IdProjecto #(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)Inner join Orcamento_Items oi  On oi.IdOrcamento = o.Id #(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab) Where#(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab) Year(o.DataExecucaoInicio) =  Year(DataPedido) #(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab) And Month(o.DataExecucaoInicio) =Month(DataPedido)#(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab) And prj.Id = ciip.IdProjecto #(lf)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab) And oi.IdOrcItem  =  ci.IdOrcItem)#(lf)#(tab)#(tab)) prjcmp#(lf)#(tab)#(tab) Left Outer Join#(lf)         (Select#(lf)              c.Codigo As CodigoConta,#(lf)              c.Descricao As DescricaoConta,#(lf)              p2.Id IdProjecto#(lf)          From#(lf)              Contas As c Inner Join#(lf)              Orc_Items As I On I.CodConta = c.Codigo Inner Join#(lf)              Orcamento_Items oi On oi.IdOrcItem = I.Id Inner Join#(lf)              Orcamentos o On oi.IdOrcamento = o.Id Inner Join#(lf)              Projectos p2 On p2.Id = o.IdProjecto#(lf)          Group By#(lf)              c.Codigo,#(lf)              c.Descricao,#(lf)              p2.Id) As Contas On Contas.CodigoConta = prjcmp.CodConta#(lf)                 And Contas.IdProjecto = prjcmp.IdProjecto #(lf)#(tab)#(tab)Left Outer Join#(lf)         (Select#(lf)              o.Id IdOrcamento,#(lf)              oi.IdOrcItem,#(lf)              oi.TipoUnidade,#(lf)              IsNull(oi.unidades, 0) Unidades,#(lf)              IsNull(oi.Quantidade, 0) Quantidade,#(lf)              IsNull(oi.PrecoCompraUnidade, 0) PrecoCompraUnidade,#(lf)              IsNull(oi.PrecoVendaUnidade, 0) PrecoVendaUnidade,#(lf)              Cast(IsNull(Sum(IsNull(oi.unidades, 0) * IsNull(oi.Quantidade, 0) * IsNull(oi.PrecoCompraUnidade, 0)),#(lf)              0) As NUMERIC(18,2)) As 'OrcamentoCompra',#(lf)              Cast(IsNull(Sum(IsNull(oi.unidades, 0) * IsNull(oi.Quantidade, 0) * IsNull(oi.PrecoVendaUnidade, 0) * (1 -#(lf)              Coalesce(oi.PrecoVendaDesconto / 100, 0))), 0) As NUMERIC(18,2)) As 'OrcamentoVenda',#(lf)              p2.Id IdProjecto#(lf)          From#(lf)              Orcamento_Items oi Inner Join#(lf)              Orcamentos o On oi.IdOrcamento = o.Id Inner Join#(lf)              Orc_Items As I On I.Id = oi.IdOrcItem Inner Join#(lf)              Orc_Rubricas As R On I.IdOrcRubrica = R.Id Inner Join#(lf)              Projectos p2 On p2.Id = o.IdProjecto#(lf)          Where#(lf)              o.estado In ('A', 'V', 'P', 'T', 'B', 'Q')#(lf)          Group By#(lf)              o.Id,#(lf)              oi.IdOrcItem,#(lf)              oi.TipoUnidade,#(lf)              IsNull(oi.unidades, 0),#(lf)              IsNull(oi.Quantidade, 0),#(lf)              IsNull(oi.PrecoCompraUnidade, 0),#(lf)              IsNull(oi.PrecoVendaUnidade, 0),#(lf)              p2.Id) As TOI On TOI.IdOrcItem = prjcmp.IdOrcItem#(lf)                 And prjcmp.IdOrcamento = TOI.IdOrcamento#(lf)                 And TOI.IdProjecto = prjcmp.IdProjecto Left Outer Join#(lf)         (Select#(lf)              vwcip.IdOrcItem,#(lf)              Sum(IsNull(vwcip.ValorComprometido, 0)) As ComprasComprometido,#(lf)              Sum(IsNull(vwcip.ValorEfectivo, 0)) As ComprasEfectivo,#(lf)              Sum(IsNull(vwcip.Valor, 0)) As ComprasValor,#(lf)              p2.Id IdProjecto#(lf)          From#(lf)              vwComprasItemsProjecto As vwcip Inner Join#(lf)              Projectos p2 On p2.Id = vwcip.IdProjecto#(lf)          Where#(lf)              vwcip.estado <> 4#(lf)          Group By#(lf)              vwcip.IdOrcItem,#(lf)              p2.Id) As TC On TC.IdOrcItem = prjcmp.IdOrcItem                 #(lf)#(tab)#(tab)#(tab)  And TC.IdProjecto = prjcmp.IdProjecto Left Outer Join#(lf)         (Select#(lf)              oi2.Id As 'IdOrcItem',#(lf)              Month(TM.ExecucaoHoraInicio) As 'Mes',#(lf)              Sum(IsNull(TM.Valor, 0)) As 'CustosInternosMeios',#(lf)              p2.Id IdProjecto#(lf)          From#(lf)              Tarefas_Meios As TM Inner Join#(lf)              Meios m On TM.IdMeio = m.Id Inner Join#(lf)              Actividades_Meios am On am.Id = TM.IdActividadeMeio Inner Join#(lf)              Orc_Items As oi2 On am.IdOrcItem = oi2.Id Inner Join#(lf)              Tarefas As T On TM.IdTarefa = T.Id Inner Join#(lf)              Projectos p2 On p2.Id = T.IdProjecto#(lf)          Where#(lf)              TM.TempoImputado Is Not Null And#(lf)              m.Tipo = 'I' And#(lf)              T.Concluida = 1#(lf)          Group By#(lf)              oi2.Id,#(lf)              Month(TM.ExecucaoHoraInicio),#(lf)              p2.Id,#(lf)              Year(TM.ExecucaoHoraInicio)) As TImeios On TImeios.IdOrcItem = prjcmp.IdOrcItem #(lf)                 And TImeios.IdProjecto = prjcmp.IdProjecto#(lf)                 And TImeios.Mes = Month(prjcmp.DataExecucaoInicio) Left Outer Join#(lf)         (Select#(lf)              oi2.Id As 'IdOrcItem',#(lf)              Month(TP.ExecucaoHoraInicio) As 'Mes',#(lf)              Sum(IsNull(TP.Valor, 0)) As 'CustosInternosPessoas',#(lf)              Proj.Id IdProjecto#(lf)          From#(lf)              Tarefas_Pessoas As TP Inner Join#(lf)              Pessoas p On TP.IdPessoa = p.Id Inner Join#(lf)              Actividades_Pessoas ap On ap.Id = TP.IdActividadePessoa Inner Join#(lf)              Orc_Items As oi2 On ap.IdOrcItem = oi2.Id Inner Join#(lf)              Tarefas As T On TP.IdTarefa = T.Id Inner Join#(lf)              Projectos As Proj On T.IdProjecto = Proj.Id#(lf)          Where#(lf)              TP.TempoImputado Is Not Null And#(lf)              p.tipo = 'I' And#(lf)              T.Concluida = 1 And#(lf)              Year(TP.HoraInicio) = Year(oi2.StampData) And#(lf)              Month(TP.HoraInicio) = Month(oi2.StampData)#(lf)          Group By#(lf)              oi2.Id,#(lf)              Month(TP.ExecucaoHoraInicio),#(lf)              Proj.Id,#(lf)              Year(TP.ExecucaoHoraInicio)) As TIpessoas On TIpessoas.IdOrcItem = prjcmp.IdOrcItem#(lf)                 And TIpessoas.IdProjecto = prjcmp.IdProjecto#(lf)                 And TIpessoas.Mes = Month(prjcmp.DataExecucaoInicio) Left Outer Join#(lf)         (Select#(lf)              oi2.Id As 'IdOrcItem',#(lf)              Sum(IsNull(TP.Valor, 0)) As 'CustosExternosIndirectosPessoas',#(lf)              t.IdProjecto#(lf)          From#(lf)              Tarefas_Pessoas As TP Inner Join#(lf)              Tarefas t On t.Id = TP.IdTarefa Inner Join#(lf)              Contratos_Servicos_Actividades_Pessoas_Tarefas_Pessoas csaptp On csaptp.idTarefaPessoa = TP.Id Inner Join#(lf)              Contratos_Servicos_Actividades_Pessoas csap On csap.Id = csaptp.idContratoServicoActividadePessoa#(lf)              Inner Join#(lf)              Contratos_Servicos_Actividades csa On csa.ID = csap.IdContratoServicoActividade Inner Join#(lf)              Orc_Items As oi2 On csa.IdOrcItem = oi2.Id#(lf)          Where#(lf)              TP.TempoImputado Is Not Null And#(lf)              t.Concluida = 1#(lf)          Group By#(lf)              oi2.Id,#(lf)              t.IdProjecto) As TCEIpessoas On TCEIpessoas.IdOrcItem = prjcmp.IdOrcItem#(lf)                 And TCEIpessoas.IdProjecto = prjcmp.IdProjecto Left Outer Join#(lf)         (Select#(lf)              oi2.Id As 'IdOrcItem',#(lf)              Sum(IsNull(TM.Valor, 0)) As 'CustosExternosIndirectosMeios',#(lf)              t.IdProjecto#(lf)          From#(lf)              Tarefas_Meios As TM Inner Join#(lf)              Tarefas t On t.Id = TM.IdTarefa Inner Join#(lf)              Contratos_Servicos_Actividades_Meios_Tarefas_Meios csamtm On csamtm.idTarefaMeio = TM.Id Inner Join#(lf)              Contratos_Servicos_Actividades_Meios csam On csam.Id = csamtm.idContratoServicoActividadeMeio Inner Join#(lf)              Contratos_Servicos_Actividades csa On csa.ID = csam.IdContratoServicoActividade Inner Join#(lf)              Orc_Items As oi2 On csa.IdOrcItem = oi2.Id#(lf)          Where#(lf)              TM.TempoImputado Is Not Null And#(lf)              t.Concluida = 1#(lf)          Group By#(lf)              oi2.Id,#(lf)              t.IdProjecto) As TCEImeios On TCEImeios.IdOrcItem = prjcmp.IdOrcItem#(lf)                 And TCEImeios.IdProjecto = prjcmp.IdProjecto#(lf)     Where#(lf)         1 = 1 And#(lf)         prjcmp.Mensualizado = 1 AND#(lf)#(tab)#(tab) Year(prjcmp.DataExecucaoInicio) >= year(getdate())-3#(lf)#(tab)#(tab) ) ExecucaoMensal#(lf)Where#(lf)      (#(lf)#(tab)(ExecucaoMensal.BudgetPurchaseValue != 0) Or#(lf)    (ExecucaoMensal.BudgetSellValue != 0) Or#(lf)    (ExecucaoMensal.TotalCosts + ISNULL((Select#(lf)              IsNull(Sum(IsNull(vwcip.Valor, 0)), 0) As ValorCED#(lf)          From#(lf)              vwComprasItemsProjecto vwcip #(lf)          Where#(lf)              vwcip.estado <> 4#(lf)#(tab)#(tab)#(tab)  And vwcip.IdProjecto =   ExecucaoMensal.ProjectReference#(lf)#(tab)#(tab)#(tab)  And vwcip.IdOrcItem =ExecucaoMensal.IdOrc_Items#(lf)#(tab)#(tab)#(tab)  And vwcip.DataPedido between ExecucaoMensal.DataExecucaoInicio And ExecucaoMensal.dataExecucaoFim #(lf)#(tab)#(tab)),0) != 0)#(lf)#(tab))  ", CommandTimeout=#duration(0, 1, 0, 0)]),
+				    #"Grouped Rows" = Table.Group(Origem, {"ProjectReference", "ProjectTitle", "Year", "Month", "DATE", "BudgetGroupReference", "BudgetGroupOrder", "BudgetGroupName", "BudgetRubricReference", "BudgetRubricName", "BudgetItemReference", "BudgetItemName", "TotalCosts"}, {{"UnitType", each List.Max([UnitType]), type nullable text}, {"Unit", each List.Sum([Unit]), type number}, {"Amount", each List.Sum([Amount]), type number}, {"BudgetUnitPurchaseValue", each List.Sum([BudgetUnitPurchaseValue]), type nullable number}, {"BudgetUnitSellValue", each List.Sum([BudgetUnitSellValue]), type number}, {"BudgetPurchaseValue", each List.Sum([BudgetPurchaseValue]), type number}, {"BudgetSellValue", each List.Sum([BudgetSellValue]), type number}})
+				in
+				    #"Grouped Rows"
+
+	annotation PBI_ResultType = Table
+

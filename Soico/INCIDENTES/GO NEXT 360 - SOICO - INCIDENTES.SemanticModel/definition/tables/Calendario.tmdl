@@ -1,0 +1,64 @@
+table Calendario
+	lineageTag: d5572d16-7209-466d-b478-aac32125c66b
+
+	column Date
+		formatString: Short Date
+		lineageTag: a4f22612-59e4-48a4-94ae-e5a17551685f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variação
+			isDefault
+			relationship: 38396a16-2fcd-4950-bdf1-efc225723fcc
+			defaultHierarchy: LocalDateTable_7c186134-cea0-4078-9976-0800ded3e6bf.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano = year(Calendario[Date])
+		formatString: 0
+		lineageTag: 5331b81f-ad18-4594-9882-51e0801e8a35
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia = day(Calendario[Date])
+		formatString: 0
+		lineageTag: 59887fd6-c35f-4839-9cfe-e92b0f40afa9
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes No' = MONTH(Calendario[Date])
+		formatString: 0
+		lineageTag: fa7698b9-25af-4363-98cb-ae0afd8bac98
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes = SWITCH(MONTH(Calendario[Date]),1,"Jan",2,"Fev",3,"Mar",4,"Abr",5,"Mai",6,"Jun",7,"Jul",8,"Ago",9,"Set",10,"Out",11,"Nov",12,"Dez")
+		lineageTag: 771830cb-3449-4bbc-bbca-22d2fefea202
+		summarizeBy: none
+		sortByColumn: 'Mes No'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre = CONCATENATE("Trimestre ",ROUNDUP(MONTH([date])/3,0))
+		lineageTag: c0021e9e-bbad-43ea-b242-8e5fe59646bd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column QntDiasMes = DAY(DATE(YEAR(Calendario[Date]),MONTH(Calendario[Date])+1,1)-1)
+		formatString: 0
+		lineageTag: 5eb45f72-079f-4dda-a614-e73d45a02386
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendario-52adbc47-e43a-4d93-87d5-bf8970585a9d = calculated
+		mode: import
+		source = CALENDAR(DATE(year(now())-5, 1, 1), DATE(year(now()), 12, 31) )
+
+	annotation PBI_Id = f6c960192d3a4572be585e58af0cb987
+

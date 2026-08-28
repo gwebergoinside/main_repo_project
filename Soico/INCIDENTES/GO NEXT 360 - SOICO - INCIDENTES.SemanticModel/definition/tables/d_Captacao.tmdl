@@ -1,0 +1,39 @@
+table d_Captacao
+	lineageTag: 3851ee7a-7404-4991-86e9-891bc5e8ac8e
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 03abc62c-e896-4083-b100-797390dc0784
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Field
+		dataType: string
+		lineageTag: dd09e906-a022-48da-8772-e58172a911a1
+		summarizeBy: none
+		sourceColumn: Field
+
+		annotation SummarizationSetBy = Automatic
+
+	column TextValue
+		dataType: string
+		lineageTag: e43f1a98-05a3-4046-ab3c-39338acecdee
+		summarizeBy: none
+		sourceColumn: TextValue
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Captacao-3a8ab354-1361-4db6-99f7-f87616929368 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="SELECT Inc.Id#(lf),EF.[Name] Field#(lf),EFV.TextValue#(lf)FROM Incidencias Inc#(lf)LEFT JOIN Global_ExtendedFieldsValues EFV ON Inc.Id = EFV.BusinessObject#(lf)LEFT JOIN Global_ExtendedFields EF ON EFV.ExtendedFieldId = EF.Id#(lf)LEFT JOIN Global_ExtendedFieldsContexts EFC ON EF.ContextId = EFC.Id#(lf)WHERE 1 = 1#(lf)AND EFC.EntityId = 7#(lf)AND EF.IsEnabled = 1"]),
+				    #"Linhas Filtradas" = Table.SelectRows(Origem, each ([Field] = "Tipo Captação"))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_ResultType = Table
+

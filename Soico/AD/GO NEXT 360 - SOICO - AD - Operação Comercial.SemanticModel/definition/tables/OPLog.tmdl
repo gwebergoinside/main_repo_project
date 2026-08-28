@@ -1,0 +1,320 @@
+table OPLog
+	lineageTag: 693fb34d-0151-4a77-929f-25f130d35f2a
+
+	column ordPubCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 995732de-263c-469c-aad9-f892ef380084
+		summarizeBy: none
+		sourceColumn: ordPubCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacId
+		dataType: int64
+		formatString: 0
+		lineageTag: b34f4cff-ca21-4e99-86fd-7a7ba27afd63
+		summarizeBy: count
+		sourceColumn: pacId
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacConComId
+		dataType: int64
+		formatString: 0
+		lineageTag: ec78abb7-cf25-4f4e-9e43-77466868f8b3
+		summarizeBy: count
+		sourceColumn: pacConComId
+
+		annotation SummarizationSetBy = Automatic
+
+	column camId
+		dataType: int64
+		formatString: 0
+		lineageTag: 41081105-61b5-4ddb-a810-923162d0c78e
+		summarizeBy: count
+		sourceColumn: camId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubAno
+		dataType: int64
+		formatString: 0
+		lineageTag: 6400676d-0a3c-45bd-b572-2e7846e959cf
+		summarizeBy: sum
+		sourceColumn: ordPubAno
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubMes
+		dataType: int64
+		formatString: 0
+		lineageTag: 1623b484-22ed-469a-99b1-e6ef9accff05
+		summarizeBy: sum
+		sourceColumn: ordPubMes
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 2cbbba78-fe9b-47af-b852-87686db0f582
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: bb222199-6ff9-4e11-80e9-7e26a192f7f8
+		summarizeBy: count
+		sourceColumn: tipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		dataType: int64
+		formatString: 0
+		lineageTag: 46561a82-4a84-49f6-9af7-fac20a9afc46
+		summarizeBy: count
+		sourceColumn: proId
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipForFaixaId
+		dataType: int64
+		formatString: 0
+		lineageTag: cd03cb62-88fb-4803-a04f-dd078c245eee
+		summarizeBy: count
+		sourceColumn: tipForFaixaId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubReferencia
+		dataType: string
+		lineageTag: 540780d6-3539-4dbd-9c9a-307ea4977efe
+		summarizeBy: none
+		sourceColumn: ordPubReferencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubContacto
+		dataType: string
+		lineageTag: aac924ce-b1ba-46fd-9695-a0b15098101d
+		summarizeBy: none
+		sourceColumn: ordPubContacto
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubMarcacoes
+		dataType: string
+		lineageTag: bb806043-b2be-4773-8e2d-f84b9ebac7f9
+		summarizeBy: none
+		sourceColumn: ordPubMarcacoes
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubData
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fcdb7075-db6c-419b-8d0d-a89793d4a09c
+		summarizeBy: none
+		sourceColumn: ordPubData
+
+		variation Variation
+			isDefault
+			relationship: 073ad9bc-5207-4229-90ef-aa3702d7daa2
+			defaultHierarchy: LocalDateTable_a3392157-db1c-47b4-911c-7f9d93f611e5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubMarca
+		dataType: int64
+		formatString: 0
+		lineageTag: e6a4d4a4-9b0a-4363-ac09-51b65fdbdf89
+		summarizeBy: sum
+		sourceColumn: ordPubMarca
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubFlagWeb
+		dataType: int64
+		formatString: 0
+		lineageTag: ad479897-fa02-4a74-9258-d030513ea809
+		summarizeBy: sum
+		sourceColumn: ordPubFlagWeb
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubTipoNeg
+		dataType: string
+		lineageTag: f6e68ff6-0677-4c16-9c65-46792b0624ee
+		summarizeBy: none
+		sourceColumn: ordPubTipoNeg
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubNegociacao
+		dataType: int64
+		formatString: 0
+		lineageTag: 73b2df6f-834b-4ae6-8e15-a1a4a014e071
+		summarizeBy: sum
+		sourceColumn: ordPubNegociacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column propostaId
+		dataType: int64
+		formatString: 0
+		lineageTag: 2263fe76-56d8-46a2-936c-c06f8af8f578
+		summarizeBy: count
+		sourceColumn: propostaId
+
+		annotation SummarizationSetBy = Automatic
+
+	column accNegId
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b53c104-3517-470f-9032-6f5837253203
+		summarizeBy: count
+		sourceColumn: accNegId
+
+		annotation SummarizationSetBy = Automatic
+
+	column WebID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8815d11d-c51b-4c6f-8ba8-cd43c5aefac4
+		summarizeBy: count
+		sourceColumn: WebID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Accao
+		dataType: string
+		lineageTag: 11871e42-ea0d-44d6-9ea3-b3e4f138f22b
+		summarizeBy: none
+		sourceColumn: Accao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 808bc278-e192-4656-9bee-8063c1ec374e
+		summarizeBy: none
+		sourceColumn: Data
+
+		variation Variation
+			isDefault
+			relationship: df3322f7-7941-4726-9c9c-5df8b4ee2d1f
+			defaultHierarchy: LocalDateTable_dabf4ed1-18e9-45e6-b60e-02b9970f2ea4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubAssistente
+		dataType: int64
+		formatString: 0
+		lineageTag: a93cb1fc-e644-421c-b6a8-ba2cbed93d65
+		summarizeBy: none
+		sourceColumn: ordPubAssistente
+
+		annotation SummarizationSetBy = Automatic
+
+	column codAlvo
+		dataType: int64
+		formatString: 0
+		lineageTag: 42f95d99-3a64-4578-a7f8-274157dd2614
+		summarizeBy: sum
+		sourceColumn: codAlvo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubTitulo
+		dataType: string
+		lineageTag: 13c6ce1f-507b-43d4-8c4a-93f9bc12e1ba
+		summarizeBy: none
+		sourceColumn: ordPubTitulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5d2c5e82-aa6c-4f39-939d-f25944a04ee3
+		summarizeBy: none
+		sourceColumn: ordPubDate
+
+		variation Variation
+			isDefault
+			relationship: 2482d01d-0c45-4f15-9510-78b1a6c80e57
+			defaultHierarchy: LocalDateTable_437cf090-204c-417f-847d-369050a3cd4e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column UtiNome
+		dataType: string
+		lineageTag: a1309cb2-c792-4fce-b43e-cc2f7f905275
+		summarizeBy: none
+		sourceColumn: UtiNome
+
+		annotation SummarizationSetBy = Automatic
+
+	column camAnunciante
+		dataType: int64
+		formatString: 0
+		lineageTag: aa71400a-89af-43da-9ff2-476d368d0d84
+		summarizeBy: none
+		sourceColumn: camAnunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column camDistribuidor
+		dataType: int64
+		formatString: 0
+		lineageTag: 45e9aaf1-f575-4cda-a6fa-47fb6da81ed0
+		summarizeBy: none
+		sourceColumn: camDistribuidor
+
+		annotation SummarizationSetBy = Automatic
+
+	column camResponsavel
+		dataType: int64
+		formatString: 0
+		lineageTag: 7bcd9dbd-84e7-40a0-a27d-5235db23237d
+		summarizeBy: none
+		sourceColumn: camResponsavel
+
+		annotation SummarizationSetBy = Automatic
+
+	column camVendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: bde1df42-7a3f-4b53-82c0-7f833611c66a
+		summarizeBy: none
+		sourceColumn: camVendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OrdPubData 00' = DATE( YEAR( OPLog[ordPubData] ), MONTH( OPLog[ordPubData] ), DAY( OPLog[ordPubData] ) )
+		formatString: General Date
+		lineageTag: 70e8f4cf-97f7-45a3-80e1-797d1589dc25
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OPLog-180ebdb0-0ffc-49ea-8675-7de43b508d04 = m
+		mode: import
+		queryGroup: 'Operação Comercial'
+		source =
+				let
+				    Source = Sql.Database(Server, BD, [Query="Select#(lf)    ordempublog.ordPubCodigo,#(lf)    ordempublog.ordPubAno,#(lf)    ordempublog.ordPubMes,#(lf)    ordempublog.pacId,#(lf)    ordempublog.camId,#(lf)    ordempublog.pacConComId,#(lf)    ordempublog.canCodigo,#(lf)    ordempublog.tipPubId,#(lf)    ordempublog.proId,#(lf)    ordempublog.tipForFaixaId,#(lf)    ordempublog.ordPubContacto,#(lf)    ordempublog.ordPubMarcacoes,#(lf)    ordempublog.ordPubReferencia,#(lf)    ordempublog.ordPubData,#(lf)    ordempublog.ordPubMarca,#(lf)    ordempublog.ordPubFlagWeb,#(lf)    ordempublog.ordPubTipoNeg,#(lf)    ordempublog.ordPubNegociacao,#(lf)    ordempublog.propostaId,#(lf)    ordempublog.accNegId,#(lf)    ordempublog.WebID,#(lf)    ordempublog.Accao,#(lf)    Convert(VARCHAR(10),ordempublog.ordPubData,103) As ordPubDate,#(lf)    Convert(VARCHAR(10),ordempublog.Data,103) + ' ' + Convert(VARCHAR(8),ordempublog.Data,14) As Data,#(lf)    ordempublog.ordPubAssistente,#(lf)    ordempublog.codAlvo,#(lf)    ordempublog.ordPubTitulo,#(lf)    Utilizadores.UtiNome,#(lf)    campanhas.camAnunciante,#(lf)    campanhas.camDistribuidor,#(lf)    campanhas.camResponsavel,#(lf)    campanhas.camVendedor#(lf)From#(lf)    ordempublog Left Join#(lf)    Utilizadores On Utilizadores.UtiId = ordempublog.UtiID Left Join#(lf)    campanhas On campanhas.camId = ordempublog.camId#(lf)Where#(lf)    Year(ordempublog.ordPubData) >= Year(GetDate()) - 1"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"ordPubDate", type date}, {"Data", type datetime}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Exception
+

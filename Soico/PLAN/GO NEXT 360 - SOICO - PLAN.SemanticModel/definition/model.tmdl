@@ -1,0 +1,188 @@
+model Model
+	culture: pt-PT
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-PT
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Execução Mensal'
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup Meios
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup Pessoas
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup Config
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Projetos
+
+	annotation PBI_QueryGroupOrder = 6
+
+queryGroup Necessidades
+
+	annotation PBI_QueryGroupOrder = 7
+
+queryGroup Lancamentos
+
+	annotation PBI_QueryGroupOrder = 8
+
+queryGroup Agrupadores
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup Translation
+
+	annotation PBI_QueryGroupOrder = 8
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["~Measure","Org","BD","Meios","MeiosHoras","Apontamentos","Horarios","TipoPessoa","TiposHorario","TipoProjeto","TarefasMeiosFaixas","TarefasPessoasFaixas","HorariosFaixas","Tarefas_Pessoas","ExecucaoMensalConta","ExecucaoMensalItem","CentroCusto","Titulos","Pessoas","Capacidade","Ausencias","Picagem","Projetos","Tipo_Tarefas_Meios","Documentos","Episodios","Tarifa","Fotos","LancManuais","Tarefas","Necessidades","LinkProjeto","TarefasCodigo","LinkNec","LinkTarefa","Language","Meios_Nome","Translation table","TranslationTable","CentroCustoAgrupador","GrupoUnidade","Funcao","CCPessoas","Necessidades_FH","CCMeio","RLS_Projeto","RLS_Meios","RLS_Unidade","HorariosRefs","Necessidades_FH_Execucao","NecTipo","Necessidades_Exclusoes","images","lista de imagem","logo header"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DateTableTemplate_c7de5667-a819-4d28-a958-712e6de00d1c
+ref table ~Measure
+ref table Meios
+ref table Horarios
+ref table LocalDateTable_a3d0c1e3-b7ee-4353-8465-30752ea95283
+ref table LocalDateTable_2f657d41-88c4-4c02-bea2-f1c239412905
+ref table LocalDateTable_725a000b-9499-4471-9c0d-aca6a035a4c8
+ref table LocalDateTable_117811e0-118d-4b25-893f-3b1525c7b325
+ref table LocalDateTable_1355d6d4-7984-4558-aef4-b6c2f8f98428
+ref table TarefasPessoasFaixas
+ref table LocalDateTable_fbe983b4-bbd8-4839-8f99-7552ebb738f1
+ref table LocalDateTable_fcb9606d-4d3c-4ed8-a606-f2005e6b73ce
+ref table HorariosFaixas
+ref table LocalDateTable_6bd9b7c0-6ae3-4763-bb12-0091219ce137
+ref table LocalDateTable_928a9404-0b5a-4271-9a65-698a01f8b605
+ref table LocalDateTable_fb8e2416-95a4-4bf7-a5ec-db78e83c402c
+ref table LocalDateTable_721e3f59-6fc6-49da-9b9b-4d067b29af96
+ref table LocalDateTable_14e258b5-6dff-4d0f-9d10-5ace8926077d
+ref table LocalDateTable_a38865fe-befb-424e-8d97-f09043fe463a
+ref table Calendario
+ref table MeiosHoras
+ref table Tarefas_Pessoas
+ref table ExecucaoMensalConta
+ref table LocalDateTable_75d6e854-d306-4553-82b9-c8c7cfc1d25b
+ref table TarefasMeiosFaixas
+ref table LocalDateTable_763b490a-0bc0-4801-a12c-391446b865b2
+ref table LocalDateTable_2a177033-9fe6-413c-994d-6e2aad715197
+ref table LocalDateTable_1f8cd00e-4ef6-450e-a962-f8d0ca451fa0
+ref table LocalDateTable_dd1c291c-e46c-41f7-b455-540140810d36
+ref table CentroCusto
+ref table Pessoas
+ref table LocalDateTable_0741b00c-0e25-41a3-9903-aa881a2d0c75
+ref table LocalDateTable_56e05e5e-2c8a-489f-a340-ce30dfa4dee2
+ref table LocalDateTable_f715b96b-cc80-4581-83c6-811709ec93cf
+ref table LocalDateTable_f0099f37-7c02-4c12-9693-db37250daeed
+ref table LocalDateTable_ac61bea9-4ddb-4dae-b72f-81216a30bf73
+ref table LocalDateTable_699f8f65-9b4e-479f-9dd2-1e407df924fc
+ref table Capacidade
+ref table Projetos
+ref table Tipo_Tarefas_Meios
+ref table LocalDateTable_39a59ee7-d6d7-452c-92d0-a6530520cee9
+ref table LocalDateTable_03ba8e4a-57d9-4b2e-8105-b50a3d3c1887
+ref table Episodios
+ref table LocalDateTable_ed00cf7c-caa8-4194-9e24-2b64ff468b9c
+ref table LocalDateTable_de24dd6a-f220-44c5-9a3c-8e0e62e886bc
+ref table LocalDateTable_ed521de8-1d93-433f-92ea-4c6750c162e1
+ref table LocalDateTable_d700ac9d-b4c9-4087-8019-584294398f34
+ref table LocalDateTable_80335f0d-2996-4045-bdd9-7422f65d6ced
+ref table LocalDateTable_4bc87d34-296b-4142-8955-9e1dd00fe333
+ref table ExecucaoMensalItem
+ref table OrcCust
+ref table LancManuais
+ref table Necessidades
+ref table LocalDateTable_b6cf7be0-eeb5-42bf-9b3b-2bc693ee18b9
+ref table 'NecessidadesGantt Final'
+ref table NecessidadesAtividadesGantt
+ref table LocalDateTable_f79761a7-ab78-45e1-95ab-111ee4dbdde8
+ref table LocalDateTable_a60bbfd7-3da0-4d9e-80ba-17c470de8b9f
+ref table NecessidadesGanttUnpivot
+ref table LocalDateTable_95d1eaee-a937-4a1d-976b-9f0f412d40de
+ref table LocalDateTable_fbe0fffd-0dd3-4a4f-a0cd-48c6b46770e1
+ref table LocalDateTable_3ad25bd7-0030-47be-8897-c60f07fdbbc1
+ref table Simulador
+ref table LocalDateTable_f065b5a1-109a-4a44-8023-9ebd229749dd
+ref table Tarefas
+ref table LocalDateTable_511a774a-1ff5-4b0c-8bb3-044209fe7911
+ref table LocalDateTable_73c7855d-3b20-4b11-8b89-306b002d8263
+ref table LocalDateTable_1293d353-6355-4f94-b7e3-4fbc2d137517
+ref table Lancamentos
+ref table LocalDateTable_b1223968-7ab1-4a80-a6e1-bc9cccab4534
+ref table LocalDateTable_d196fbe6-ae1e-4c84-8673-917bb7d4b0b3
+ref table LocalDateTable_7ea6ede7-4580-4e26-a605-5296089a1445
+ref table Meios_Nome
+ref table LinkProjeto
+ref table LinkNec
+ref table Titulos
+ref table GrupoUnidade
+ref table LocalDateTable_f35afae6-0033-4f28-8a27-8523ae37020d
+ref table LocalDateTable_9bca1a46-6758-4490-9e0b-101e70893e9d
+ref table LocalDateTable_431f6f3b-bcb7-462e-8ca3-a6325f9fb1ce
+ref table LocalDateTable_b4275095-570f-457b-b548-4c5a9af685f6
+ref table LocalDateTable_33474961-67b6-4431-bdf6-0f1353da5f67
+ref table LocalDateTable_93fa6803-56ca-4bc0-8a0d-0c9e3fff8552
+ref table LocalDateTable_ddd7aa17-3ba0-4e03-9615-2369c9c138b1
+ref table TranslationTable
+ref table Apontamentos
+ref table LocalDateTable_837005d5-bd06-435a-8451-dd2b5d2f7116
+ref table LocalDateTable_4d8e8de0-fe88-411f-b9c3-7b297f327293
+ref table LocalDateTable_e6519905-b748-4486-9371-1ac29814646b
+ref table LocalDateTable_81403bf3-d319-4f69-8ad1-e6d00285a273
+ref table LocalDateTable_a1dd4c43-0411-477f-97b5-7763d813ec65
+ref table LocalDateTable_32b150c5-01d8-41ae-9e0b-ff5d2ec48e56
+ref table LocalDateTable_f6a651da-f698-4ca3-81f6-08f8f14b7000
+ref table LocalDateTable_1b66909b-ade2-4d23-8e8a-721098443866
+ref table LocalDateTable_3b5d702f-6a18-4606-8027-6baf82815d6d
+ref table LocalDateTable_fc0013d3-1f46-4bb5-bfe8-eab7d325e8b5
+ref table LocalDateTable_1892eab5-9545-4fda-b6f9-fda605518e0b
+ref table LocalDateTable_8e10aa3f-cfdc-4556-8176-f1265c827cc3
+ref table LocalDateTable_38f388d1-1410-4eb8-bc98-2fcd855bfbfd
+ref table LocalDateTable_097d2138-795a-4be6-9068-39b1e83f8ed0
+ref table LocalDateTable_d70768d6-fd83-4626-86ed-8108bb1816dc
+ref table LocalDateTable_6bfee7f8-3be1-4f32-91d1-e02dfaeac78b
+ref table LocalDateTable_3ac44c51-236a-4a39-840f-5d9599fd055d
+ref table LinkTarefa
+ref table FichaPessoa_Dias
+ref table FichaPessoa_Horas
+ref table TiposHorario
+ref table FichaPessoa_Meses
+ref table TipoProjeto
+ref table Funcao
+ref table TipoPessoa
+ref table Necessidades_FH
+ref table LocalDateTable_6ef92e07-527f-4254-94ab-f659c420ee5f
+ref table LocalDateTable_d894d45f-6816-4dab-bb23-8e36bd06e4e4
+ref table 'RH Sem Escala'
+ref table LocalDateTable_daf24e58-08d9-4013-b670-0790217198ad
+ref table HorariosRefs
+ref table LocalDateTable_3c2beae8-fd70-4045-add3-b89178a0279e
+ref table DateTime
+ref table LocalDateTable_efc94554-5830-40ec-b055-50d11e5e3cd1
+ref table LocalDateTable_fa8feffa-2574-4b5c-9d54-ebf98ff5a791
+ref table LocalDateTable_abe25b04-3ca8-4f7e-a04b-d5817b44d927
+ref table LocalDateTable_cb0ae344-354c-4370-b69e-8dff3f60cc55
+ref table LocalDateTable_9e41bd99-c7f8-44db-aef6-1b70bfa7f656
+ref table NecTipo
+ref table 'NecessidadesGantt Extra'
+ref table Necessidades_Exclusoes
+ref table LocalDateTable_b2c1cd53-f0ac-4dbd-a085-ea50f1425970
+ref table images
+ref table 'logo header'
+ref table LocalDateTable_898cdb10-851b-466b-aeb5-6c5c087e3143
+ref table LocalDateTable_1c139b89-9b4a-467e-8ee5-c0f7de727dad
+ref table LocalDateTable_c99c8a15-0e37-496b-a606-5aa02e6957aa
+ref table LocalDateTable_2d14ca2f-2b5b-4f4b-b276-60655ba3d688
+ref table LocalDateTable_19f50fab-a000-4806-8da2-2fbb8cb7ce69
+
+ref cultureInfo pt-PT
+

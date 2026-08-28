@@ -1,0 +1,318 @@
+table Titulos
+	lineageTag: 7326a3ae-7129-484f-993e-a44d596f73f2
+
+	column CodTitulo
+		dataType: int64
+		formatString: 0
+		lineageTag: bfa5a142-6718-4584-b15c-403a98a77c90
+		summarizeBy: none
+		sourceColumn: CodTitulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumEpisodio
+		dataType: int64
+		formatString: 0
+		lineageTag: be0eac07-3e74-47a9-95cb-38cf24f15bd3
+		summarizeBy: sum
+		sourceColumn: NumEpisodio
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumeroProcessoEpisodio = Titulos[Numero_processo] & FORMAT(Titulos[NumEpisodio],"000")
+		dataType: string
+		lineageTag: 91dacaa7-b723-4381-99b0-beb84a1816ce
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Run Stock' = ```
+			
+			VAR _1 = [# Runs Existing]
+			Return 
+			_1 
+			```
+		formatString: #,0
+		lineageTag: 6c12c801-144d-4d15-8dbc-43c5049e87b7
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Area = LOOKUPVALUE(Contratos[COD_AREA], 'Contratos'[COD_TITULO], Titulos[CodTitulo])
+		lineageTag: f73a1c17-a79a-46b8-830f-75d89539745c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: int64
+		formatString: 0
+		lineageTag: 4ca42331-33bb-4172-965f-aca27f0a7d94
+		summarizeBy: sum
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Episodio
+		dataType: string
+		lineageTag: 33972aae-1955-47b5-b9f5-529de20ea90b
+		summarizeBy: none
+		sourceColumn: Nome_Episodio
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Production'
+		dataType: int64
+		formatString: 0
+		lineageTag: 624d23d0-8073-43b8-85d2-f9526530ec2c
+		summarizeBy: sum
+		sourceColumn: Year Production
+
+		annotation SummarizationSetBy = Automatic
+
+	column numero_processo
+		dataType: string
+		lineageTag: 152e4d3b-f64f-4c03-8606-da2fb754d4c6
+		summarizeBy: none
+		sourceColumn: numero_processo
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo
+		dataType: string
+		lineageTag: 0d025f9d-22c7-4465-97ce-a7ee3f24d2c5
+		summarizeBy: none
+		sourceColumn: titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column numero_de_episodios
+		dataType: int64
+		formatString: 0
+		lineageTag: 28bea05e-b204-4dc8-ab42-da5286449656
+		summarizeBy: sum
+		sourceColumn: numero_de_episodios
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 7971f9cf-22da-4367-83ac-ddae80baf006
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column genero
+		dataType: string
+		lineageTag: c33f0425-b713-4f17-be09-38ffe82079c5
+		summarizeBy: none
+		sourceColumn: genero
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem
+		dataType: string
+		lineageTag: bb82c44a-48ba-469e-80e8-a2a26f80d5ec
+		summarizeBy: none
+		sourceColumn: origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column pais
+		dataType: string
+		lineageTag: 874e67b8-0531-4a2e-9c48-7cc8b52c2653
+		summarizeBy: none
+		sourceColumn: pais
+
+		annotation SummarizationSetBy = Automatic
+
+	column distribuidor
+		dataType: string
+		lineageTag: 30646514-0944-45d5-b758-15a20aad0579
+		summarizeBy: none
+		sourceColumn: distribuidor
+
+		annotation SummarizationSetBy = Automatic
+
+	column produtor
+		dataType: string
+		lineageTag: 8fd9c4a1-d5d2-4cc2-a6ab-c7523c897dc5
+		summarizeBy: none
+		sourceColumn: produtor
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_inicio_acontecimento
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b33de33f-3873-46ff-8577-c1784668ea43
+		summarizeBy: none
+		sourceColumn: data_inicio_acontecimento
+
+		variation Variation
+			isDefault
+			relationship: 36d4399d-c364-4152-a20d-6bfeed838505
+			defaultHierarchy: LocalDateTable_26859345-32e2-40b9-b967-f1bd31e85782.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_fim_acontecimento
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 1837dd8c-2ac1-4e81-b150-2b2899807276
+		summarizeBy: none
+		sourceColumn: data_fim_acontecimento
+
+		variation Variation
+			isDefault
+			relationship: 828b4c57-b038-42da-aef3-7ba47758a65a
+			defaultHierarchy: LocalDateTable_670ed1ae-73ef-499b-808c-c7b735f4e762.'Hierarquia de Datas'
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Pais_Formato
+		dataType: string
+		lineageTag: 61bd8d22-9f89-48d2-ba39-b44d30d2b301
+		summarizeBy: none
+		sourceColumn: Cod_Pais_Formato
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodIntencaoConteudo
+		dataType: string
+		lineageTag: d5b652d0-1fa4-4381-9e37-cb9c115295b8
+		summarizeBy: none
+		sourceColumn: CodIntencaoConteudo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sigla
+		dataType: string
+		lineageTag: 6231c360-e921-45a1-accf-7f5dfeba7d7d
+		summarizeBy: none
+		sourceColumn: Sigla
+
+		annotation SummarizationSetBy = Automatic
+
+	column flagTituloIncluiEpisodio
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c7d9800b-3895-478a-918d-931ebb9ce92a
+		summarizeBy: none
+		sourceColumn: flagTituloIncluiEpisodio
+
+		annotation SummarizationSetBy = Automatic
+
+	column refExterna
+		dataType: string
+		lineageTag: 5aa6a407-5af6-45d0-955c-89f705429d3f
+		summarizeBy: none
+		sourceColumn: refExterna
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_cria
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3b011caf-68b9-4c5a-a0d7-ad3a02652b98
+		summarizeBy: none
+		sourceColumn: data_cria
+
+		variation Variation
+			isDefault
+			relationship: 35e8323a-3ecd-4147-a070-3440d6aa95f8
+			defaultHierarchy: LocalDateTable_bb1ef926-a9b7-49a6-8311-c4c5ac8254e9.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column resumo_sintetico
+		dataType: string
+		lineageTag: d734ba52-7a09-46dd-91d2-1a1c3768a3c2
+		summarizeBy: none
+		sourceColumn: resumo_sintetico
+
+		annotation SummarizationSetBy = Automatic
+
+	column pesquisa
+		dataType: string
+		lineageTag: f32acb71-f1ff-42e7-a910-a514d96df8eb
+		summarizeBy: none
+		sourceColumn: pesquisa
+
+		annotation SummarizationSetBy = Automatic
+
+	column temporada
+		dataType: string
+		lineageTag: f76e9ebb-41d4-4b0d-9242-18b934809169
+		summarizeBy: none
+		sourceColumn: temporada
+
+		annotation SummarizationSetBy = Automatic
+
+	column RunIlimitado = LOOKUPVALUE( Contratos[RunIlim], Contratos[COD_TITULO], Titulos[CodTitulo] )
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b50c1bb8-adb8-4c5d-b602-ec904f622ced
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column RunsExisIlim = LOOKUPVALUE( Contratos[RunsExisIlim], Contratos[COD_TITULO], Titulos[CodTitulo] )
+		formatString: 0
+		lineageTag: f63e3646-3a8f-44f4-b9d5-70dc53100bfe
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Flag Stock' = IF.EAGER( Titulos[DataFim] > now() -1 || Titulos[DataFim] = BLANK(), 1,0 )
+		formatString: 0
+		lineageTag: babcc801-7e41-4dea-b609-a608ac74deb0
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Período = if(Titulos[Hora]>=0 && Titulos[Hora]<5,"Late Night",if(Titulos[Hora]>=5 && Titulos[Hora]<=9,"Breakfast",if(Titulos[Hora]>9 && Titulos[Hora]<=12,"Late Morning",if(Titulos[Hora]>12 && Titulos[Hora]<=17,"Afternoon",if(Titulos[Hora]>17 && Titulos[Hora]<=23,"Prime Time",if(Titulos[Hora]>23 ,"Late Night"))))))
+		lineageTag: a9fa6d03-8c25-4729-a340-5bd4719a578c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora = LEFT(Titulos[data_cria],2)
+		dataType: int64
+		formatString: 0
+		lineageTag: 52299620-1e49-49df-aa65-fab5d21cbad7
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a992f13a-baa7-4f6a-a3f9-ab3fba6fb2f4
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variação
+			isDefault
+			relationship: c79bf66a-cec8-4923-951d-f6647e332074
+			defaultHierarchy: LocalDateTable_17cd687d-a761-4546-a335-c6e02e27c0bf.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Titulos-e01cf929-de3c-420b-83a0-4ca9ae2b24f7 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    Titulos.CodTitulo,#(lf)    Titulos.NumEpisodio,#(lf)    Titulos.Estado,#(lf)    Titulos.DataFim,#(lf)    Titulos.Titulo As Nome_Episodio,#(lf)    Programas.ano As [Year Production],#(lf)    Right('00000000' + Cast(Titulos.Numero_processo As VARCHAR), 8) As numero_processo,#(lf)    Programas.titulo,#(lf)    Programas.numero_de_episodios,#(lf)    Programas.ano,#(lf)    Programas.genero,#(lf)    Programas.origem,#(lf)    Programas.pais,#(lf)    Programas.distribuidor,#(lf)    Programas.produtor,#(lf)    Programas.data_inicio_acontecimento,#(lf)    Programas.data_fim_acontecimento,#(lf)    Programas.Cod_Pais_Formato,#(lf)    Programas.CodIntencaoConteudo,#(lf)    Programas.Sigla,#(lf)    Programas.flagTituloIncluiEpisodio,#(lf)    Programas.refExterna,#(lf)    Programas.data_cria,#(lf)    Programas.resumo_sintetico,#(lf)    Programas.pesquisa,#(lf)    Programas.temporada#(lf)From#(lf)    Titulos Inner Join#(lf)    Fichas_Videotape On Titulos.Numero_processo = Fichas_Videotape.numero_processo#(lf)            And Titulos.NumEpisodio = Fichas_Videotape.episodio Inner Join#(lf)    Programas On Fichas_Videotape.numero_processo = Programas.numero_processo"])
+				in
+				    Origem
+
+	annotation PBI_QueryRelationships = {"columnCount":4,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Titulos/Origem.{Numero_processo,0}","Section1/Titulos/Origem.{NumEpisodio,1}","Section1/Titulos/Origem.{CodTitulo,2}","Section1/Titulos/Origem.{Titulo,3}"],"ColumnCount":4,"KeyColumnNames":[],"ColumnIdentities":["Section1/Titulos/Origem.{Numero_processo,0}","Section1/Titulos/Origem.{NumEpisodio,1}","Section1/Titulos/Origem.{CodTitulo,2}","Section1/Titulos/Origem.{Titulo,3}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

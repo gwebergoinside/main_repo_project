@@ -1,0 +1,31 @@
+table Canais
+	lineageTag: 5f46b271-7e52-474c-840e-0c70db0c01aa
+
+	column CanCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: e2cb6080-0416-440a-a819-814f8af56104
+		summarizeBy: none
+		sourceColumn: CanCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: 46aeec2a-56e9-4cde-b75a-3c394050c797
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Canais-85ae2b5f-ef30-442a-96a0-af711a6ad32c = m
+		mode: import
+		queryGroup: 'Operação Comercial'
+		source =
+				let
+				    Source = Sql.Database(Server, BD, [Query="Select#(lf)CanCodigo,#(lf)CanDescricao as Canal#(lf)from canais"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,225 @@
+table Episodios
+	lineageTag: 0b49f951-cb3c-4893-8b48-e72a5574afe7
+
+	measure 'Duração Produção (h)' =
+			
+			Var __seg = CALCULATE( SUM(Episodios[Duracao]) )*60
+			RETURN
+			VAR allseconds = __seg
+			
+			VAR days = INT ( allseconds / 24 / 60 / 60 )
+			
+			VAR hours =  MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			
+			VAR minutes = MOD ( INT ( allseconds / 60 ), 60 )
+			
+			VAR seconds = MOD ( allseconds, 60 )
+			
+			RETURN
+			
+			IF( ISBLANK(__seg) , BLANK() ,
+			days & "d "
+			
+			& hours
+			
+			& "h "
+			
+			& minutes
+			
+			& "m "
+			)
+		lineageTag: 56ed0a0a-10ce-4257-a03e-8c64bb4f9723
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 32ea4cc5-4ef1-4561-a578-e8116d140a86
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo
+		dataType: string
+		lineageTag: 18bb3aa5-8da1-4ffb-9014-399268c318ee
+		summarizeBy: none
+		sourceColumn: titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column abreviatura
+		dataType: string
+		lineageTag: a4e183c9-1fd5-4322-b1b6-f61adac1c047
+		summarizeBy: none
+		sourceColumn: abreviatura
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataPrevistaEntrega
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: af94cba5-db02-4d77-98e1-e1d63f25b0e0
+		summarizeBy: none
+		sourceColumn: DataPrevistaEntrega
+
+		variation Variation
+			isDefault
+			relationship: ab7e1e48-2fad-4b6b-ac35-221b926d9e39
+			defaultHierarchy: LocalDateTable_ed00cf7c-caa8-4194-9e24-2b64ff468b9c.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Evento
+		dataType: int64
+		formatString: 0
+		lineageTag: 75bbb2c0-242f-43a9-80eb-cdf0c8d44d6c
+		summarizeBy: sum
+		sourceColumn: Evento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duracao
+		dataType: int64
+		formatString: 0
+		lineageTag: b047851c-9e2b-4528-a332-b4e57299cede
+		summarizeBy: sum
+		sourceColumn: Duracao
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataEntrega
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 072775a7-80a1-4c27-a828-4c80d9bd59dd
+		summarizeBy: none
+		sourceColumn: DataEntrega
+
+		variation Variation
+			isDefault
+			relationship: e0d86b32-f206-4989-8839-80b223552cc3
+			defaultHierarchy: LocalDateTable_de24dd6a-f220-44c5-9a3c-8e0e62e886bc.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column ReferenciaPrograma
+		dataType: string
+		lineageTag: fdf64f93-a291-49a0-a1cd-c766a2705df2
+		summarizeBy: none
+		sourceColumn: ReferenciaPrograma
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubTitulo
+		dataType: string
+		lineageTag: a241714e-e1bd-4fde-b25a-96ed25dec0e2
+		summarizeBy: none
+		sourceColumn: SubTitulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observacoes
+		dataType: string
+		lineageTag: d543e910-a245-4cb9-ac07-8113d2d36108
+		summarizeBy: none
+		sourceColumn: Observacoes
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataPrevistaEmissao
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 76e23492-f3f7-4b75-99a7-f87ac4c33a4d
+		summarizeBy: none
+		sourceColumn: DataPrevistaEmissao
+
+		variation Variation
+			isDefault
+			relationship: 591af992-824e-4092-b02c-44932664f10d
+			defaultHierarchy: LocalDateTable_ed521de8-1d93-433f-92ea-4c6750c162e1.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column DataEmissao
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: b67cc85a-32a9-4043-9573-a01365893194
+		summarizeBy: none
+		sourceColumn: DataEmissao
+
+		variation Variation
+			isDefault
+			relationship: 71dc16e5-8015-4fa4-b0de-076a93428f06
+			defaultHierarchy: LocalDateTable_d700ac9d-b4c9-4087-8019-584294398f34.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Estado
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c317567-4e5c-489a-9180-a8e760dd56f9
+		summarizeBy: sum
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sinopse
+		dataType: string
+		lineageTag: 35b898a5-95d4-4bc2-b94d-f7dea67f9854
+		summarizeBy: none
+		sourceColumn: Sinopse
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ficheiros
+		dataType: int64
+		formatString: 0
+		lineageTag: 923a003f-9c49-4e4c-9c83-d032281598e6
+		summarizeBy: sum
+		sourceColumn: Ficheiros
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDPrograma
+		dataType: int64
+		formatString: 0
+		lineageTag: ac669587-d9b7-4192-b6c6-fb082e7186a0
+		summarizeBy: sum
+		sourceColumn: IDPrograma
+
+		annotation SummarizationSetBy = Automatic
+
+	column Documento
+		dataType: string
+		lineageTag: cc7e98eb-5ff4-4966-bfea-cd7b5045dc80
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: Documento
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Episodios-a99c94cd-5c33-4ab8-ac4b-15795bdffb72 = m
+		mode: import
+		queryGroup: Projetos
+		source = ```
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    Projectos.Id,#(lf)    Projectos.titulo,#(lf)    Projectos.abreviatura,#(lf)    Programas.DataPrevistaEntrega,#(lf)    Programas.Evento,#(lf)    Programas.Duracao,#(lf)    Programas.DataEntrega,#(lf)    Programas.ReferenciaPrograma,#(lf)    Programas.SubTitulo,#(lf)    Programas.Observacoes,#(lf)    Programas.DataPrevistaEmissao,#(lf)    Programas.DataEmissao,#(lf)    Programas.Estado,#(lf)    Programas.Sinopse,#(lf)    Count(Documentos.Ficheiro) As Ficheiros,#(lf)    Programas.ID As IDPrograma#(lf)From#(lf)    Projectos Left Join#(lf)    Programas On Programas.IDProjecto = Projectos.Id Left Join#(lf)    Documentos_Entidades On Documentos_Entidades.IdEntidade = Programas.ID#(lf)            And Documentos_Entidades.TipoEntidade = 'Episode' Left Join#(lf)    Documentos On Documentos.Id = Documentos_Entidades.IdDocumento#(lf)Group By#(lf)    Projectos.Id,#(lf)    Projectos.titulo,#(lf)    Projectos.abreviatura,#(lf)    Programas.DataPrevistaEntrega,#(lf)    Programas.Evento,#(lf)    Programas.Duracao,#(lf)    Programas.DataEntrega,#(lf)    Programas.ReferenciaPrograma,#(lf)    Programas.SubTitulo,#(lf)    Programas.Observacoes,#(lf)    Programas.DataPrevistaEmissao,#(lf)    Programas.DataEmissao,#(lf)    Programas.Estado,#(lf)    Programas.Sinopse,#(lf)    Programas.ID"]),
+				    #"Added Custom" = Table.AddColumn(Origem, "Documento", each Documentos 
+				& "?Id=" & Number.ToText([IDPrograma]) 
+				& "&IdEpisodio=" & Number.ToText([IDPrograma]) 
+				& "&IdProjecto=" & Number.ToText([Id]))
+				in
+				    #"Added Custom"
+				```
+
+	annotation PBI_QueryRelationships = {"columnCount":16,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Episodios/Origem.{Id,0}","Section1/Episodios/Origem.{titulo,1}","Section1/Episodios/Origem.{abreviatura,2}","Section1/Episodios/Origem.{DataPrevistaEntrega,3}","Section1/Episodios/Origem.{Evento,4}","Section1/Episodios/Origem.{Duracao,5}","Section1/Episodios/Origem.{DataEntrega,6}","Section1/Episodios/Origem.{ReferenciaPrograma,7}","Section1/Episodios/Origem.{SubTitulo,8}","Section1/Episodios/Origem.{Observacoes,9}","Section1/Episodios/Origem.{DataPrevistaEmissao,10}","Section1/Episodios/Origem.{DataEmissao,11}","Section1/Episodios/Origem.{Estado,12}","Section1/Episodios/Origem.{Sinopse,13}","Section1/Episodios/Origem.{Ficheiro,14}","Section1/Episodios/Added Custom.{Documento,15}"],"ColumnCount":16,"KeyColumnNames":[],"ColumnIdentities":["Section1/Episodios/Origem.{Id,0}","Section1/Episodios/Origem.{titulo,1}","Section1/Episodios/Origem.{abreviatura,2}","Section1/Episodios/Origem.{DataPrevistaEntrega,3}","Section1/Episodios/Origem.{Evento,4}","Section1/Episodios/Origem.{Duracao,5}","Section1/Episodios/Origem.{DataEntrega,6}","Section1/Episodios/Origem.{ReferenciaPrograma,7}","Section1/Episodios/Origem.{SubTitulo,8}","Section1/Episodios/Origem.{Observacoes,9}","Section1/Episodios/Origem.{DataPrevistaEmissao,10}","Section1/Episodios/Origem.{DataEmissao,11}","Section1/Episodios/Origem.{Estado,12}","Section1/Episodios/Origem.{Sinopse,13}","Section1/Episodios/Origem.{Ficheiro,14}","Section1/Episodios/Added Custom.{Documento,15}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Exception
+

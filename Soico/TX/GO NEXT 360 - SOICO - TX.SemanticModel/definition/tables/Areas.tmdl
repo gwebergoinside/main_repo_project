@@ -1,0 +1,31 @@
+table Areas
+	lineageTag: 5759848e-3172-4251-bff6-a22db0f7d90d
+
+	column codigo
+		dataType: string
+		lineageTag: f52e40c8-65a6-46d4-b9eb-288481ed1f87
+		summarizeBy: none
+		sourceColumn: codigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		lineageTag: ab3fa2f6-d155-40c2-912b-e43eb134088b
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Areas-6076af79-694d-4aeb-b402-9d3877c10660 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    Areas.codigo,#(lf)    Areas.nome#(lf)From#(lf)    Areas"])
+				in
+				    Origem
+
+	annotation PBI_QueryRelationships = {"columnCount":2,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Areas/Origem.{codigo,0}","Section1/Areas/Origem.{nome,1}"],"ColumnCount":2,"KeyColumnNames":[],"ColumnIdentities":["Section1/Areas/Origem.{codigo,0}","Section1/Areas/Origem.{nome,1}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

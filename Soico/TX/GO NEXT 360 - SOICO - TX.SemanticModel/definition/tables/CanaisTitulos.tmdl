@@ -1,0 +1,56 @@
+table CanaisTitulos
+	lineageTag: a2e6b478-3f43-42ea-b942-6a9ad0e6669c
+
+	column codCanal
+		dataType: string
+		lineageTag: 5133dfdb-9dcb-4e7d-acad-60c0769888e1
+		summarizeBy: none
+		sourceColumn: codCanal
+
+		annotation SummarizationSetBy = Automatic
+
+	column runsConsumidos
+		dataType: int64
+		formatString: 0
+		lineageTag: 96227b17-8b0f-4a0f-aef6-b8b1f6fe3c5e
+		summarizeBy: sum
+		sourceColumn: runsConsumidos
+
+		annotation SummarizationSetBy = Automatic
+
+	column runsPlaneados1
+		dataType: int64
+		formatString: 0
+		lineageTag: 57c702dd-b0d3-42aa-908f-2ec3da36ae1e
+		summarizeBy: sum
+		sourceColumn: runsPlaneados1
+
+		annotation SummarizationSetBy = Automatic
+
+	column codtitulo
+		dataType: int64
+		formatString: 0
+		lineageTag: 65ad43af-7e04-40fd-8cef-0480ce9d8eb8
+		summarizeBy: none
+		sourceColumn: codtitulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		lineageTag: efe7555f-4173-4824-bc73-1c385a458c31
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CanaisTitulos-c51df2c0-e93e-49eb-b6c3-1b9b8285f092 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    trc.codCanal,#(lf)    trc.runsConsumidos,#(lf)    trc.runsPlaneados As runsPlaneados1,#(lf)    tr.codtitulo,#(lf)    c.nome#(lf)From#(lf)    Titulos_Runs tr Inner Join#(lf)    Titulos_RunsCanais trc On trc.codigoRun = tr.codRun Inner Join#(lf)    T_Canais c On trc.codCanal = c.codigo"])
+				in
+				    Origem
+
+	annotation PBI_ResultType = Table
+

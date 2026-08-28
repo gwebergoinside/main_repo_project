@@ -1,0 +1,107 @@
+table f_Pessoas
+	isHidden
+	lineageTag: 6824bb2f-f8cb-4faa-99c5-43293142f472
+
+	column Id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cdfb1783-e509-4849-8c68-174e66539e5e
+		summarizeBy: count
+		sourceColumn: Id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		isHidden
+		lineageTag: 78afea5e-b850-42fa-87b6-43ab7e883dd5
+		summarizeBy: none
+		sourceColumn: nome
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column activo
+		dataType: string
+		isHidden
+		lineageTag: d0792fe8-92d5-4dae-b546-87632fb729e7
+		summarizeBy: none
+		sourceColumn: activo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo
+		dataType: string
+		isHidden
+		lineageTag: 699e159e-071b-46a7-97b4-58687be2831f
+		summarizeBy: none
+		sourceColumn: tipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		dataType: string
+		isHidden
+		lineageTag: e5c0cabb-b9f0-4c91-b80f-d61441aa4293
+		summarizeBy: none
+		sourceColumn: Grupo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unidade (pessoas)'
+		dataType: string
+		isHidden
+		lineageTag: 0dccc142-3697-4ff4-9c2e-5b69baebf6c5
+		summarizeBy: none
+		sourceColumn: Unidade (pessoas)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Atividade
+		dataType: string
+		isHidden
+		lineageTag: db6b34a9-2538-4f46-80e8-d126c1a7b088
+		summarizeBy: none
+		sourceColumn: Atividade
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Funcao
+		dataType: string
+		isHidden
+		lineageTag: 6c8c8ed2-e972-432e-bddb-f933d9897734
+		summarizeBy: none
+		sourceColumn: Funcao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Pessoas-dde9041f-d0e3-4d9b-9360-ffb5fd34411f = m
+		mode: import
+		queryGroup: Fatos
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)p.Id,#(lf)p.nome,#(lf)p.activo,#(lf)p.tipo,#(lf)Grupos_Pessoas.Nome As Grupo,#(lf)Unidades_Pessoas.Nome As Unidade,#(lf)Actividades_Pessoas.Nome As Atividade,#(lf)Funcoes_Pessoas.Nome As Funcao#(lf)From#(lf)Pessoas p Left Join#(lf)Grupos_Pessoas On p.IdGrupoPessoa = Grupos_Pessoas.Id Left Join#(lf)Unidades_Pessoas On Grupos_Pessoas.IdUnidadePessoa = Unidades_Pessoas.Id Inner Join#(lf)Actividades_Pessoas On p.IdActividadePessoa = Actividades_Pessoas.Id Inner Join#(lf)Funcoes_Pessoas On p.IdFuncaoPessoa = Funcoes_Pessoas.Id"]),
+				    #"Colunas com Nome Mudado" = Table.RenameColumns(Origem,{{"Unidade", "Unidade (pessoas)"}})
+				in
+				    #"Colunas com Nome Mudado"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

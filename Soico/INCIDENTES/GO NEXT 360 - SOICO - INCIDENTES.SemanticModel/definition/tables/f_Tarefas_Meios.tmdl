@@ -1,0 +1,103 @@
+table f_Tarefas_Meios
+	lineageTag: 692f03cb-67e0-4ec5-b8e1-c6ca892cb8f1
+
+	column TempoImputado
+		dataType: double
+		lineageTag: f4a8d314-b9eb-4df6-a5eb-b39b633cb367
+		summarizeBy: sum
+		sourceColumn: TempoImputado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HoraInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7213b564-62d9-49fc-b935-e73b98449011
+		summarizeBy: none
+		sourceColumn: HoraInicio
+
+		variation Variation
+			isDefault
+			relationship: daed32c1-a2b8-4c43-b77d-a6fa2ea088c4
+			defaultHierarchy: LocalDateTable_09ce35a7-1f6b-4d80-98ca-e32e8d565ef9.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 05c359e2-bffc-443a-b622-532128db0b7c
+		summarizeBy: none
+		sourceColumn: HoraFim
+
+		variation Variation
+			isDefault
+			relationship: 11bdca71-509a-4a72-abf5-a9ad14703790
+			defaultHierarchy: LocalDateTable_7315bd77-32b5-4ee4-9f67-293be2d181a8.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id_TarefaMeios
+		dataType: int64
+		formatString: 0
+		lineageTag: f3f7d77e-03a8-4ba0-81cd-50c1da6068ec
+		summarizeBy: sum
+		sourceColumn: Id_TarefaMeios
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: d277c28d-3b60-44c0-8538-b443c03a56eb
+		summarizeBy: none
+		sourceColumn: IdMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefa
+		dataType: int64
+		formatString: 0
+		lineageTag: f32763ad-5ccc-4f92-8d45-6a8359d11657
+		summarizeBy: sum
+		sourceColumn: IdTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: 440d9625-da98-4de6-98bd-561b841838e7
+		summarizeBy: none
+		sourceColumn: IdProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 18f53bc8-e73b-42ba-bc4d-cde618e92ae1
+		summarizeBy: none
+		sourceColumn: Data
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition f_Tarefas_Meios-029f074e-76a4-4b1a-a171-a4741efac2a7 = m
+		mode: import
+		queryGroup: Fatos
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)    tm.TempoImputado,#(lf)    tm.HoraInicio,#(lf)    tm.HoraFim,#(lf)    tm.Id As Id_TarefaMeios,#(lf)    tm.IdMeio,#(lf)    tm.IdTarefa,#(lf)    Tarefas.IdProjecto#(lf)From#(lf)    Tarefas_Meios tm Inner Join#(lf)    Tarefas On tm.IdTarefa = Tarefas.Id#(lf)Where#(lf)    Year(tm.HoraInicio) >= Year(GetDate()) - 3"]),
+				    #"Duplicated Column" = Table.DuplicateColumn(Origem, "HoraInicio", "Data"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

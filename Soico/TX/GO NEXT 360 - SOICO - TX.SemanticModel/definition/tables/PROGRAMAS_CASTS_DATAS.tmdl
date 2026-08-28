@@ -1,0 +1,62 @@
+table PROGRAMAS_CASTS_DATAS
+	lineageTag: 72a1bb01-59c7-40f1-a0ac-0072951d0f94
+
+	column Numero_Processo
+		dataType: int64
+		formatString: 0
+		lineageTag: 913a2fb6-e0c9-444d-912d-ca09e0af1488
+		summarizeBy: none
+		sourceColumn: Numero_Processo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Atores
+		dataType: string
+		lineageTag: 3d009fd5-937c-4e03-b28c-1bccbbb3d9c4
+		summarizeBy: none
+		sourceColumn: Atores
+
+		annotation SummarizationSetBy = Automatic
+
+	column Casts
+		dataType: string
+		lineageTag: 1c85829c-624a-4a4d-9cf8-68538cee658e
+		summarizeBy: none
+		sourceColumn: Casts
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExibicaoPassada
+		dataType: string
+		lineageTag: aaee4c7f-fc1b-4ed4-aff9-ae525e75b4c0
+		summarizeBy: none
+		sourceColumn: ExibicaoPassada
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExibicaoFutura
+		dataType: string
+		lineageTag: a3f355c1-5dc0-44bb-ba94-a0e3f42483f7
+		summarizeBy: none
+		sourceColumn: ExibicaoFutura
+
+		annotation SummarizationSetBy = Automatic
+
+	column url = "https://wallpapershome.com/images/pages/pic_h/19547.jpg"
+		lineageTag: 5fd52233-08aa-4589-9b41-d0c293b2bde9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PROGRAMAS_CASTS_DATAS-c609e6e5-2195-4cb9-af8d-5f561a80e5b5 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select P.Numero_Processo,#(lf)#(tab)Replace(ISNULL((Select ISNULL(CE.description,'') +  'BRKLINE'  #(lf)#(tab)#(tab)from [Cast] C #(lf)#(tab)#(tab)Left join CastEntityTypes CET on CET.ID = c.CastEntityTypeId#(lf)#(tab)#(tab)LEFT JOIN CastType CT on CT.Id = CET.CastTypeID#(lf)#(tab)#(tab)LEFT JOIN CastEntity CE on CE.ID = CET.CastEntityID#(lf)#(tab)#(tab)Where C.Contextid = P.numero_Processo#(lf)#(tab)#(tab)AND ISNULL(CE.description,'') <>''#(lf)#(tab)#(tab)AND CT.Description = 'Intérpretes'#(lf)#(tab)#(tab)ORDER BY CT.Description, CE.Description#(lf)#(tab)#(tab)FOR XML PATH ('')),''), 'BRKLINE', CHAR(13)  ) Atores,#(lf)#(tab)Replace(ISNULL((Select ISNULL(CT.description,'') + ' ' + ISNULL(CE.description,'') +  'BRKLINE'  #(lf)#(tab)#(tab)from [Cast] C #(lf)#(tab)#(tab)Left join CastEntityTypes CET on CET.ID = c.CastEntityTypeId#(lf)#(tab)#(tab)LEFT JOIN CastType CT on CT.Id = CET.CastTypeID#(lf)#(tab)#(tab)LEFT JOIN CastEntity CE on CE.ID = CET.CastEntityID#(lf)#(tab)#(tab)Where C.Contextid = P.numero_Processo#(lf)#(tab)#(tab)AND ISNULL(CE.description,'') <>''#(lf)#(tab)#(tab)AND CT.Description != 'Intérpretes'#(lf)#(tab)#(tab)ORDER BY CT.Description, CE.Description#(lf)#(tab)#(tab)FOR XML PATH ('') ),''), 'BRKLINE', CHAR(13)  ) Casts,#(lf)#(tab)Replace(ISNULL((Select Convert(varchar, pfd.data, 105) + ' ' + Left(dbo.csegundoshoras(hora),5) + ' ' + Right('000' + cast(pfd.Episodio as varchar),3) + ' ' + t.nome +  'BRKLINE' #(lf)#(tab)#(tab)#(tab)From Plan_Formatos_detalhe pfd #(lf)#(tab)#(tab)#(tab)Inner join t_canais T on T.codigo = pfd.cod_canal#(lf)#(tab)#(tab)#(tab)Where pfd.numero_Processo = P.numero_Processo #(lf)#(tab)#(tab)#(tab)And pfd.data < Cast(GetDate() as date)#(lf)#(tab)#(tab)#(tab)order by data desc FOR XML PATH ('')),''), 'BRKLINE', CHAR(13)  )  'ExibicaoPassada',#(lf)#(tab)Replace(ISNULL((Select Convert(varchar, pfd.data, 105) + ' ' + Left(dbo.csegundoshoras(hora),5) + ' ' +  Right('000' + cast(pfd.Episodio as varchar),3) + ' ' + t.nome + 'BRKLINE' #(lf)#(tab)#(tab)#(tab)From Plan_Formatos_detalhe pfd #(lf)#(tab)#(tab)#(tab)Inner join t_canais T on T.codigo = pfd.cod_canal#(lf)#(tab)#(tab)#(tab)Where pfd.numero_Processo = P.numero_Processo #(lf)#(tab)#(tab)#(tab)And pfd.data >= Cast(GetDate() as date)#(lf)#(tab)#(tab)#(tab)order by data FOR XML PATH ('')),''), 'BRKLINE',  CHAR(13) ) 'ExibicaoFutura'#(lf)#(tab)#(tab)#(tab)--ISNULL((Select Top 1 fullpath from GODASHBOARD_PROGRAMAS_POSTER GP Where p.numero_processo = GP.numero_processo),'') PosterDefault#(lf)from Programas P"])
+				in
+				    Source
+
+	annotation PBI_QueryRelationships = {"columnCount":5,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{Numero_Processo,0}","Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{Atores,1}","Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{Casts,2}","Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{ExibicaoPassada,3}","Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{ExibicaoFutura,4}"],"ColumnCount":5,"KeyColumnNames":[],"ColumnIdentities":["Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{Numero_Processo,0}","Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{Atores,1}","Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{Casts,2}","Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{ExibicaoPassada,3}","Section1/GODASHBOARD_PROGRAMAS_CASTS_DATAS/Source.{ExibicaoFutura,4}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

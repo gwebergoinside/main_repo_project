@@ -1,0 +1,37 @@
+table d_DayPart
+	lineageTag: b0c4e365-e8ce-4157-b7e3-eb777f1599b1
+
+	column DayPart_
+		dataType: string
+		lineageTag: f61746c8-5368-4580-bf66-672f833b9cd7
+		summarizeBy: none
+		sourceColumn: DayPart_
+		sortByColumn: ID
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 43fcf181-ca8d-47fc-a41f-efb11bce4a4d
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_DayPart-8734ac4e-b1dd-4654-a43f-0906c53dfe07 = m
+		mode: import
+		queryGroup: Manual
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8k3Myzi8WMFQSUfJUClWBy5gBBQwAgs45uTmH16eD+Qbg/khiUUpqUCeCUQ2ObW4OF8hoCgzFyRoChYE8xRCQATIYDN0QZDh5mBBn8SSVAW/zPSMEqCQBdQBKUWl6YkpiUARS7CIf2lJEch+QwOl2FgA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [DayPart_ = _t, ID = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"DayPart_", type text}, {"ID", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

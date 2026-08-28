@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "GO NEXT 360 - SOICO - AD - Operação Comercial"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "96efdbe2-f3b3-48bc-92da-1707f2cd75fa"
+  }
+}

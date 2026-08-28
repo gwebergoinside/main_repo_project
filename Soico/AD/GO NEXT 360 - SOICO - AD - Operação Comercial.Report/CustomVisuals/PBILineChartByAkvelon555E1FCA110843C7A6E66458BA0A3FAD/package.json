@@ -1,0 +1,29 @@
+{
+  "version": "1.0.2",
+  "author": {
+    "name": "Akvelon Inc",
+    "email": "pbisupport@akvelon.com"
+  },
+  "resources": [
+    {
+      "resourceId": "rId0",
+      "sourceType": 5,
+      "file": "resources/PBILineChartByAkvelon555E1FCA110843C7A6E66458BA0A3FAD.pbiviz.json"
+    }
+  ],
+  "visual": {
+    "guid": "PBILineChartByAkvelon555E1FCA110843C7A6E66458BA0A3FAD",
+    "name": "LineChartByAkvelon",
+    "displayName": "Line Chart by Akvelon",
+    "version": "1.0.2",
+    "description": "Small Multiple Line Chart By Akvelon",
+    "supportUrl": "http://akvelon.com/feedback",
+    "gitHubUrl": "",
+    "visualClassName": "Visual"
+  },
+  "metadata": {
+    "pbivizjson": {
+      "resourceId": "rId0"
+    }
+  }
+}

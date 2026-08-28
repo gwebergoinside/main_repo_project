@@ -1,0 +1,70 @@
+table Central
+	lineageTag: e96781cf-5263-46e8-ace7-19c46c1c70cf
+
+	column IdDistribuidor
+		formatString: 0
+		lineageTag: 96cc2d24-06e8-43a3-a869-e22030e82547
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IdDistribuidor]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Central Agrupador' = ```
+			
+			SWITCH(
+			    TRUE(), 
+			        Central[IdDistribuidor] in {13,280,293,15559 }, "Megameios"
+			       , Central[IdDistribuidor] in {263,12459 } , "Powermedia"
+			       , Central[IdDistribuidor] in {271,12976,16510 } , "Grupo Havas"
+			       , Central[IdDistribuidor] in {12224,6433,12226,14132 } , "GroupM"
+			       , Central[IdDistribuidor] in {12587,12588,15277,18065} , "Opera"
+			
+			
+			        // , ISERROR ( FIND ( "DIRECTOS", [Distribuidor] ) ) <> TRUE (), "CLIENTES DIRETOS",
+			        // ISERROR ( FIND ( "CARAT", [Distribuidor] ) ) <> TRUE (), "POWER MEDIA",
+			        // ISERROR ( FIND ( "ARENA", [Distribuidor] ) ) <> TRUE (), "HAVAS",
+			        // ISERROR ( FIND ( "OMD", [Distribuidor] ) ) <> TRUE (), "OMG",
+			        // ISERROR ( FIND ( "INITIATIVE", [Distribuidor] ) ) <> TRUE (), "MEGA",
+			        // ISERROR ( FIND ( "WAVEMAKER", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "STARCOM", [Distribuidor] ) ) <> TRUE (), "MEGA",
+			        // ISERROR ( FIND ( "MINDSHARE", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "PHD", [Distribuidor] ) ) <> TRUE (), "OMG",
+			        // ISERROR ( FIND ( "MEDIACOM", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "GROUPM", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "HAVAS", [Distribuidor] ) ) <> TRUE (), "HAVAS",
+			        // ISERROR ( FIND ( "MCCANN", [Distribuidor] ) ) <> TRUE (), "MEGA",
+			        // ISERROR ( FIND ( "ZENITH", [Distribuidor] ) ) <> TRUE (), "MEGA",
+			        // ISERROR ( FIND ( "STUDIOM", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "EXPRESSAO", [Distribuidor] ) ) <> TRUE (), "POWER MEDIA",
+			        // ISERROR ( FIND ( "MEDIAGATE", [Distribuidor] ) ) <> TRUE (), "POWER MEDIA",
+			        // ISERROR ( FIND ( "INDEFINIDO", [Distribuidor] ) ) <> TRUE (), "INDEFINIDO"
+			    , "Clientes Diretos"
+			)
+			```
+		lineageTag: 213c1c11-26cb-4bfc-a0b7-a5f7962354ac
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Central-d2ffe583-cd87-46f0-9475-d2e542a0390a = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				    SELECTCOLUMNS(
+				        Encomendas
+				        ,"IdDistribuidor", Encomendas[distribuidorid]
+				    )
+				VAR _2 =
+				    SELECTCOLUMNS(
+				        'Faturação'
+				        ,"IdDistribuidor", 'Faturação'[distribuidorId]
+				    )
+				VAR _3 =
+				UNION( _1,_2)
+				RETURN
+				SUMMARIZE(_3, [IdDistribuidor] )
+
+	annotation PBI_Id = de2c6b7590cd446a923e4e7fde2cab99
+

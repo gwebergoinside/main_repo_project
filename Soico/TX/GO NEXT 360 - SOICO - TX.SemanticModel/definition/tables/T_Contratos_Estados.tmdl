@@ -1,0 +1,30 @@
+table T_Contratos_Estados
+	lineageTag: 200875f5-2fef-4cf9-a64b-bd6a57bcb7f2
+
+	column CodEstado
+		dataType: int64
+		formatString: 0
+		lineageTag: d0e791d5-5de2-44fe-be7d-d991d114451f
+		summarizeBy: none
+		sourceColumn: CodEstado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descricao
+		dataType: string
+		lineageTag: a4dd6094-fefc-4a0f-a533-a88f12c87479
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition T_Contratos_Estados-92d0581b-1ce9-4828-9253-68d61db383a8 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    T.CodEstado,#(lf)    T.Descricao#(lf) From#(lf)    ContratosEstados T"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

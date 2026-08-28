@@ -1,0 +1,156 @@
+table Distribuidores
+	lineageTag: cd2e5361-bc34-4a3e-b5f6-577c91f31cb7
+
+	column CodDistribuidor
+		dataType: int64
+		formatString: 0
+		lineageTag: 8aa5ece2-7f3c-4943-9a6a-3f2cf19b4257
+		summarizeBy: none
+		sourceColumn: CodDistribuidor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sigla
+		dataType: string
+		lineageTag: 9b0db1bf-19b6-4ca8-9b3f-1acf26564b3c
+		summarizeBy: none
+		sourceColumn: Sigla
+
+		annotation SummarizationSetBy = Automatic
+
+	column Num
+		dataType: int64
+		formatString: 0
+		lineageTag: f0d7d1eb-f998-4c05-b4d5-e4209bb38094
+		summarizeBy: sum
+		sourceColumn: Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_independente
+		dataType: string
+		lineageTag: d3e1b11d-9433-4b54-a69a-d1ef09a96d46
+		summarizeBy: none
+		sourceColumn: flag_independente
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_pais
+		dataType: string
+		lineageTag: 43ba4f11-809a-464b-aa21-be66e7c4108d
+		summarizeBy: none
+		sourceColumn: cod_pais
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_entidade_externa
+		dataType: string
+		lineageTag: 0e97aa41-6664-4a9f-bbc0-490d3565372a
+		summarizeBy: none
+		sourceColumn: cod_entidade_externa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Flag_direitos
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a85e9e97-0a0e-489f-9d6e-8267acc5d5bd
+		summarizeBy: none
+		sourceColumn: Flag_direitos
+
+		annotation SummarizationSetBy = Automatic
+
+	column Flag_Custos
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f53a48ba-82d3-4972-a27a-d332c54676b1
+		summarizeBy: none
+		sourceColumn: Flag_Custos
+
+		annotation SummarizationSetBy = Automatic
+
+	column Flag_Outros
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2d4ac9c5-1a34-4534-a68b-5021c956c82e
+		summarizeBy: none
+		sourceColumn: Flag_Outros
+
+		annotation SummarizationSetBy = Automatic
+
+	column VAT
+		dataType: string
+		lineageTag: 6094f6c8-aac8-465d-9b15-b6b24f7be407
+		summarizeBy: none
+		sourceColumn: VAT
+
+		annotation SummarizationSetBy = Automatic
+
+	column Blocked
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f164146-aa6c-4113-9125-eba9436f1454
+		summarizeBy: sum
+		sourceColumn: Blocked
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Fornecedor
+		dataType: string
+		lineageTag: 9e65e901-ab8e-4bfd-aef0-1e966ec2e0c7
+		summarizeBy: none
+		sourceColumn: Cod_Fornecedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fccd1733-1dd8-480e-a6b6-7d1f50b381f4
+		summarizeBy: none
+		sourceColumn: Status_Date
+
+		variation Variation
+			isDefault
+			relationship: 20ab24fe-e5bd-4658-a220-263d1edd4bc3
+			defaultHierarchy: LocalDateTable_b707ea22-483c-4bba-a975-021c73442687.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column NIF
+		dataType: string
+		lineageTag: 433f3dd6-ee6c-4e61-80f1-f1f3a109f8f5
+		summarizeBy: none
+		sourceColumn: NIF
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeDistribuidores
+		dataType: string
+		lineageTag: bd39edcd-5aa9-4d2c-a2b7-a55ca74edc6a
+		summarizeBy: none
+		sourceColumn: NomeDistribuidores
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'tipo_mercado.1'
+		dataType: string
+		lineageTag: 20dfdfb2-e8aa-4759-91a9-1a222f034b5d
+		summarizeBy: none
+		sourceColumn: tipo_mercado.1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Distribuidores-9551419b-0d60-4c39-97ac-4184166f543a = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    *#(lf) From#(lf)    Distribuidores"]),
+				    Custom1 = Table.RenameColumns(Source,{{"Tipo_Mercado", "tipo_mercado.1"}, {"Nome", "NomeDistribuidores"}})
+				in
+				    Custom1
+
+	annotation PBI_QueryRelationships = {"columnCount":16,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Distribuidores/Source.{CodDistribuidor,0}","Section1/Distribuidores/Source.{Nome,1}","Section1/Distribuidores/Source.{Sigla,2}","Section1/Distribuidores/Source.{Num,3}","Section1/Distribuidores/Source.{flag_independente,4}","Section1/Distribuidores/Source.{cod_pais,5}","Section1/Distribuidores/Source.{cod_entidade_externa,6}","Section1/Distribuidores/Source.{Flag_direitos,7}","Section1/Distribuidores/Source.{Flag_Custos,8}","Section1/Distribuidores/Source.{Flag_Outros,9}","Section1/Distribuidores/Source.{VAT,10}","Section1/Distribuidores/Source.{Blocked,11}","Section1/Distribuidores/Source.{Cod_Fornecedor,12}","Section1/Distribuidores/Source.{Status_Date,13}","Section1/Distribuidores/Source.{Tipo_Mercado,14}","Section1/Distribuidores/Source.{NIF,15}"],"ColumnCount":16,"KeyColumnNames":[],"ColumnIdentities":["Section1/Distribuidores/Source.{CodDistribuidor,0}","Section1/Distribuidores/Source.{Nome,1}","Section1/Distribuidores/Source.{Sigla,2}","Section1/Distribuidores/Source.{Num,3}","Section1/Distribuidores/Source.{flag_independente,4}","Section1/Distribuidores/Source.{cod_pais,5}","Section1/Distribuidores/Source.{cod_entidade_externa,6}","Section1/Distribuidores/Source.{Flag_direitos,7}","Section1/Distribuidores/Source.{Flag_Custos,8}","Section1/Distribuidores/Source.{Flag_Outros,9}","Section1/Distribuidores/Source.{VAT,10}","Section1/Distribuidores/Source.{Blocked,11}","Section1/Distribuidores/Source.{Cod_Fornecedor,12}","Section1/Distribuidores/Source.{Status_Date,13}","Section1/Distribuidores/Source.{Tipo_Mercado,14}","Section1/Distribuidores/Source.{NIF,15}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

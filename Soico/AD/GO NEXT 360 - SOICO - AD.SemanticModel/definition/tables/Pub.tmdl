@@ -1,0 +1,31 @@
+table Pub
+	lineageTag: 2e04f142-cee2-4cec-ba81-9f3e3719ef05
+
+	column tippubid
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b1c3fff-ba38-4a87-8f68-48a6cc0390e5
+		summarizeBy: none
+		sourceColumn: tippubid
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo PUB'
+		dataType: string
+		lineageTag: 04d254a5-30ed-489a-83a2-b7927f4a64fe
+		summarizeBy: none
+		sourceColumn: Tipo PUB
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Pub-11d581cd-b602-41a6-b6c5-d1e6a92c1578 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Origem = Sql.Database(ServerP, BD, [Query="select #(lf)tippubid,#(lf)tippubdescricao as [Tipo PUB]#(lf)from#(lf)tipopublicidade"])
+				in
+				    Origem
+
+	annotation PBI_ResultType = Table
+

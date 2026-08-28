@@ -1,0 +1,66 @@
+table moedas
+	lineageTag: c92097f3-eb0c-41e7-bf53-d4972240e243
+
+	column cod_moeda
+		dataType: string
+		lineageTag: 8f20be75-9da6-4bb9-804c-cc6934ea8f23
+		summarizeBy: none
+		sourceColumn: cod_moeda
+
+		annotation SummarizationSetBy = Automatic
+
+	column descricao
+		dataType: string
+		lineageTag: 500c94a2-2384-411e-b64a-ae1aeb828312
+		summarizeBy: none
+		sourceColumn: descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column zona_euro
+		dataType: string
+		lineageTag: 2efdf208-fdce-4f2f-a608-34870652dfbc
+		summarizeBy: none
+		sourceColumn: zona_euro
+
+		annotation SummarizationSetBy = Automatic
+
+	column taxa_conv
+		dataType: double
+		lineageTag: 59fdf937-8eb1-4a33-9de6-a8cb3f43c376
+		summarizeBy: sum
+		sourceColumn: taxa_conv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column decimais
+		dataType: int64
+		formatString: 0
+		lineageTag: 46fad4a2-37e9-47c6-bb8e-7da8ba04344e
+		summarizeBy: sum
+		sourceColumn: decimais
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_con
+		dataType: string
+		lineageTag: 7c49868a-6d03-4085-b1f3-4da64ddaafd1
+		summarizeBy: none
+		sourceColumn: cod_con
+
+		annotation SummarizationSetBy = Automatic
+
+	partition moedas-d8ed4234-fbdd-473f-a746-cea6cdb2c6de = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    *#(lf) From#(lf)    moedas"])
+				in
+				    Source
+
+	annotation PBI_QueryRelationships = {"columnCount":6,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/moedas/Source.{cod_moeda,0}","Section1/moedas/Source.{descricao,1}","Section1/moedas/Source.{zona_euro,2}","Section1/moedas/Source.{taxa_conv,3}","Section1/moedas/Source.{decimais,4}","Section1/moedas/Source.{cod_con,5}"],"ColumnCount":6,"KeyColumnNames":[],"ColumnIdentities":["Section1/moedas/Source.{cod_moeda,0}","Section1/moedas/Source.{descricao,1}","Section1/moedas/Source.{zona_euro,2}","Section1/moedas/Source.{taxa_conv,3}","Section1/moedas/Source.{decimais,4}","Section1/moedas/Source.{cod_con,5}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

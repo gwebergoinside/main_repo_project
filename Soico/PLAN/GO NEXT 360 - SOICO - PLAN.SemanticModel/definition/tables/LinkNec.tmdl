@@ -1,0 +1,18 @@
+table LinkNec
+	lineageTag: 8d176009-b56c-40c4-958f-8c038a7dc4ad
+
+	column LinkNec
+		dataType: string
+		lineageTag: cf54528f-c22a-4b91-82df-03daeaf08a99
+		summarizeBy: none
+		sourceColumn: LinkNec
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LinkNec-a101bdf9-c18f-48ce-98b1-39f9ef009bda = m
+		mode: import
+		queryGroup: Config
+		source = "https://soico-gmediaplan.goinside.co/Tarefas/ListaTemplatesTarefas.aspx?IdProjecto=" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_ResultType = Text
+

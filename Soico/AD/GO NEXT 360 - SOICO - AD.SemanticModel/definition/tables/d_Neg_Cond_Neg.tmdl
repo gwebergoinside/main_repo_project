@@ -1,0 +1,73 @@
+table d_Neg_Cond_Neg
+	lineageTag: cf3ccf06-e6a7-4d9e-af1e-6bfeb5a9d345
+
+	column negValor
+		dataType: double
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 9ccff887-16b6-4893-a863-d1884212ce51
+		summarizeBy: none
+		sourceColumn: negValor
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column negDesconto
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6f82d8dc-7899-44cd-8301-43e8c945ee53
+		summarizeBy: none
+		sourceColumn: negDesconto
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column negShare
+		dataType: double
+		lineageTag: 11392623-cace-45dd-804b-e6d03718b9f7
+		summarizeBy: none
+		sourceColumn: negShare
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column negFlgActivo
+		dataType: double
+		lineageTag: ab69011a-3d64-4171-a315-6942858daa85
+		summarizeBy: none
+		sourceColumn: negFlgActivo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column negPerId
+		dataType: int64
+		formatString: 0
+		lineageTag: 666552b8-8ce0-408b-93c1-603924de5ac4
+		summarizeBy: none
+		sourceColumn: negPerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status = IF.EAGER(d_Neg_Cond_Neg[negFlgActivo] = 1 , "Ativo", "Inativo")
+		lineageTag: 8238e33d-3586-464a-b054-662d17111fb9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Neg_Cond_Neg-54bbb356-9f37-4295-b376-2d2ba0de7f75 = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    negociacao.negValor,#(lf)    negociacao.negDesconto,#(lf)    negociacao.negShare,#(lf)    negociacao.negFlgActivo,#(lf)    negociacao.negPerId#(lf)From#(lf)    negociacao"]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each true),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"negFlgActivo", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

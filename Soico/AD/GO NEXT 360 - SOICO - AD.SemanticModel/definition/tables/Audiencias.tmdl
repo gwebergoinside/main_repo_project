@@ -1,0 +1,312 @@
+table Audiencias
+	lineageTag: ab4e73bc-93a0-4090-9239-077065995c63
+
+	measure 'Previsão Receita Grelha Atual' =
+			
+			Var __Tempo = CALCULATE( MAX(Ocupacao[CanalMaxNormal]) , USERELATIONSHIP( Ocupacao[ChavePrev], 'Audiencias'[Chave] ) )
+			Var __Val = ROUND(AVERAGE('Audiencias'[Valor]),2)
+			Var __CMGRP = CALCULATE( [CM GRP Equivalente] , USERELATIONSHIP( Encomendas[ChavePrev], 'Audiencias'[Chave] ) )
+			-- Para calcular a Média por dia
+			Var __dias = CALCULATE( COUNT( Calendario[Dia Semana] ) , FILTER(Calendario, Calendario[Mês] = MONTH(NOW())) )
+			-- GRP Equiv.
+			Var __indice = 20
+			Return
+			( ( ( __Tempo / __indice) * __Val) * __CMGRP )
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: e1871527-50ae-46b0-9ed7-1ebd881d1326
+
+	measure 'Receita AtualPrevisão' =
+			
+			If ( SELECTEDVALUE(Calendario[Mês]) ,
+			CALCULATE( [Receita Média] , ALL(Alvos)),
+			
+			CALCULATE( [Receita Média] , ALL(Alvos), FILTER( Calendario , Calendario[Mês] = MONTH(NOW()))))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 786022a3-e2e8-4036-b17d-bdd65ca240ec
+
+	measure 'Receita Média' = CALCULATE(DIVIDE(SUM(Encomendas[valorPub]),COUNT(Calendario[Dia])) , OrdemPubClassificacao[ordPubClaDescricao] <> "Pré-Facturação" , USERELATIONSHIP(Encomendas[ChavePrev],'Audiencias'[Chave]) )
+		lineageTag: f408470a-895d-4d7a-bcbb-0e9bf364e7c0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previsão Receita Grelha Seguinte' =
+			
+			Var __Tempo = CALCULATE( MAX(Ocupacao[CanalMaxNormal]) , USERELATIONSHIP( Ocupacao[ChavePrev], 'Audiencias'[Chave] ) )
+			Var __Val = ROUND(AVERAGE('Audiencias'[Valor]),2)
+			Var __CMGRP = CALCULATE( [CM GRP Equivalente] , USERELATIONSHIP( Encomendas[ChavePrev], 'Audiencias'[Chave] ) )
+			-- Para calcular a Média por dia
+			Var __dias = CALCULATE( COUNT( Calendario[Dia Semana] ) , FILTER(Calendario, Calendario[Mês] = MONTH(NOW())+1) )
+			-- GRP Equiv.
+			Var __indice = 20
+			Return
+			( ( ( __Tempo / __indice) * __Val) * __CMGRP )
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: d667baab-07af-4542-82b3-b03e5aee674e
+
+	measure 'Receita Previsão Seguinte' =
+			
+			CALCULATE( [Receita Média] , ALL(Alvos), FILTER( Calendario , Calendario[Mês] = MONTH(NOW())+1))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: c19e7765-0c89-4f14-a238-0d79e9c18269
+
+	measure 'Média All' = CALCULATE( AVERAGE( 'Audiencias'[Valor] ), CROSSFILTER(Canais[canCodigo],Audiencias[CodCanal],None) )
+		lineageTag: 637bf024-cec1-44a7-97e9-afdfb2fc2516
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previsão Receita Mes' =
+			
+			Var __prevFDS = CALCULATE( SUMX( VALUES(Audiencias[Faixa (groups)]), [Previsão Receita Grelha Atual]) , ALLSELECTED(Calendario) , Calendario[Periodo da Semana] = "Fim de Semana")
+			Var __prevDS = CALCULATE( SUMX( VALUES(Audiencias[Faixa (groups)]), [Previsão Receita Grelha Atual]) , ALLSELECTED(Calendario) , Calendario[Periodo da Semana] = "Dia de Semana")
+			Var __prevT = CALCULATE( SUMX( VALUES(Audiencias[Faixa (groups)]), [Previsão Receita Grelha Atual]) , ALLSELECTED(Calendario) )
+			--
+			Var __dias = COUNT( Calendario[Periodo da Semana] )
+			
+			Return
+			IF( SELECTEDVALUE(Calendario[Periodo da Semana]) = "Dia de Semana" , __prevDS ,
+			IF( SELECTEDVALUE(Calendario[Periodo da Semana]) = "Fim de Semana" , __prevFDS , __prevT ) )
+			*__dias
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 7f34b601-434e-446e-a0c5-f3914cb9b64e
+
+	measure 'Receita S Alvos' = CALCULATE( [Receita] , ALL( Alvos ), USERELATIONSHIP( Encomendas[ChavePrev], 'Audiencias'[Chave] ), USERELATIONSHIP( Ocupacao[ChavePrev], 'Audiencias'[Chave] ) )
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 75721445-b515-4a58-83d4-fe9322a5df30
+
+	measure 'CM GRP Equiv.' = CALCULATE( [CM GRP Equivalente] , USERELATIONSHIP( Encomendas[ChavePrev], 'Audiencias'[Chave] ) )
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: ad9d9ac1-3ca5-4c00-a595-20e9b8763818
+
+	measure 'Previsão %' = DIVIDE([Receita S Alvos]-[Previsão Receita Mes],[Previsão Receita Mes])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a74589b6-eafb-4b27-be0f-9694f8b11358
+
+	column Canal
+		dataType: string
+		lineageTag: b2f50269-a024-4c8a-8cbe-420b0e553f09
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da Semana'
+		dataType: string
+		lineageTag: 6f3e418b-5ad2-4140-b861-f308148aea3c
+		summarizeBy: none
+		sourceColumn: Dia da Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: double
+		lineageTag: 55ba4065-eb0b-40c6-90c0-949182bd534e
+		summarizeBy: sum
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Faixa
+		dataType: string
+		lineageTag: 6e275901-84b9-4858-aaff-b6a2d106c355
+		summarizeBy: none
+		sourceColumn: Faixa
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Audiencias","TableItemName":"Faixa (groups)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column Alvo
+		dataType: string
+		lineageTag: f83550df-61eb-4a05-b9cc-9993413b4c0d
+		summarizeBy: none
+		sourceColumn: Alvo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chave = RELATED(Canais[Canal])&'Audiencias'[Faixa (groups)]&'Audiencias'[Nome do Dia (groups)]
+		lineageTag: 3063ac8c-08df-4357-bdeb-9b45dd5a7bfb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodCanal =
+			
+			-- Varia de Cliente (Sujeito a alteração)
+			SWITCH( TRUE(),
+			[Canal]="AÇORES",1,
+			[Canal]="RTP 1",2,
+			[Canal]="RTP 2",3,
+			[Canal]="MADEIRA",4,
+			[Canal]="RTP AFRICA",5,
+			[Canal]="RTPI",6,
+			[Canal]="RTP 3",7,
+			[Canal]="SPONSORING",8,
+			[Canal]="RTP Memoria",9,
+			[Canal]="RTP MOBILE",10,
+			[Canal]="RTPI América",12,
+			[Canal]="INTERNET",11,
+			[Canal]="RTPI Asia",13,
+			[Canal]="RTP Musica",14,
+			[Canal]="RTP HD JOLIMPICOS",15,
+			[Canal]="RTP Memoria TDT",16,
+			[Canal]="RTP 3 TDT",17,
+			[Canal]="RTP PLAY",18
+			)
+		formatString: 0
+		lineageTag: 9b141445-0d62-49af-8f01-623689d17ff5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa (groups)' =
+			SWITCH(
+			  TRUE,
+			  ISBLANK('Audiencias'[Faixa]),
+			  "(Blank)",
+			  'Audiencias'[Faixa] IN {"00:00:00",
+			    "00:30:00"},
+			  "00:00",
+			  'Audiencias'[Faixa] IN {"01:00:00",
+			    "01:30:00"},
+			  "01:00",
+			  'Audiencias'[Faixa] IN {"02:00:00",
+			    "02:30:00"},
+			  "02:00",
+			  'Audiencias'[Faixa] IN {"03:00:00",
+			    "03:30:00"},
+			  "03:00",
+			  'Audiencias'[Faixa] IN {"04:00:00",
+			    "04:30:00"},
+			  "04:00",
+			  'Audiencias'[Faixa] IN {"05:00:00",
+			    "05:30:00"},
+			  "05:00",
+			  'Audiencias'[Faixa] IN {"06:00:00",
+			    "06:30:00"},
+			  "06:00",
+			  'Audiencias'[Faixa] IN {"07:00:00",
+			    "07:30:00"},
+			  "07:00",
+			  'Audiencias'[Faixa] IN {"08:00:00",
+			    "08:30:00"},
+			  "08:00",
+			  'Audiencias'[Faixa] IN {"09:00:00",
+			    "09:30:00"},
+			  "09:00",
+			  'Audiencias'[Faixa] IN {"10:00:00",
+			    "10:30:00"},
+			  "10:00",
+			  'Audiencias'[Faixa] IN {"11:00:00",
+			    "11:30:00"},
+			  "11:00",
+			  'Audiencias'[Faixa] IN {"12:00:00",
+			    "12:30:00"},
+			  "12:00",
+			  'Audiencias'[Faixa] IN {"13:00:00",
+			    "13:30:00"},
+			  "13:00",
+			  'Audiencias'[Faixa] IN {"14:00:00",
+			    "14:30:00"},
+			  "14:00",
+			  'Audiencias'[Faixa] IN {"15:00:00",
+			    "15:30:00"},
+			  "15:00",
+			  'Audiencias'[Faixa] IN {"16:00:00",
+			    "16:30:00"},
+			  "16:00",
+			  'Audiencias'[Faixa] IN {"17:00:00",
+			    "17:30:00"},
+			  "17:00",
+			  'Audiencias'[Faixa] IN {"18:00:00",
+			    "18:30:00"},
+			  "18:00",
+			  'Audiencias'[Faixa] IN {"19:00:00",
+			    "19:30:00"},
+			  "19:00",
+			  'Audiencias'[Faixa] IN {"20:00:00",
+			    "20:30:00"},
+			  "20:00",
+			  'Audiencias'[Faixa] IN {"21:00:00",
+			    "21:30:00"},
+			  "21:00",
+			  'Audiencias'[Faixa] IN {"22:00:00",
+			    "22:30:00"},
+			  "22:00",
+			  'Audiencias'[Faixa] IN {"23:00:00",
+			    "23:30:00"},
+			  "23:00",
+			  'Audiencias'[Faixa] IN {"24:00:00",
+			    "24:30:00"},
+			  "24:00",
+			  'Audiencias'[Faixa] IN {"25:00:00",
+			    "25:30:00"},
+			  "25:00",
+			  'Audiencias'[Faixa] IN {"26:00:00"},
+			  "26:00",
+			  'Audiencias'[Faixa]
+			)
+		lineageTag: f4ac7bc4-b49d-44c7-bd92-812ddc62e8db
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Audiencias"
+				          }
+				        },
+				        "Property": "Faixa"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"a","Entity":"Audiencias"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"GroupItems":[{"DisplayName":"(Blank)","BlankDefaultPlaceholder":true},{"DisplayName":"00:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'00:00:00'"}}],[{"Literal":{"Value":"'00:30:00'"}}]]}}},{"DisplayName":"01:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'01:00:00'"}}],[{"Literal":{"Value":"'01:30:00'"}}]]}}},{"DisplayName":"02:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'02:00:00'"}}],[{"Literal":{"Value":"'02:30:00'"}}]]}}},{"DisplayName":"03:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'03:00:00'"}}],[{"Literal":{"Value":"'03:30:00'"}}]]}}},{"DisplayName":"04:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'04:00:00'"}}],[{"Literal":{"Value":"'04:30:00'"}}]]}}},{"DisplayName":"05:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'05:00:00'"}}],[{"Literal":{"Value":"'05:30:00'"}}]]}}},{"DisplayName":"06:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'06:00:00'"}}],[{"Literal":{"Value":"'06:30:00'"}}]]}}},{"DisplayName":"07:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'07:00:00'"}}],[{"Literal":{"Value":"'07:30:00'"}}]]}}},{"DisplayName":"08:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'08:00:00'"}}],[{"Literal":{"Value":"'08:30:00'"}}]]}}},{"DisplayName":"09:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'09:00:00'"}}],[{"Literal":{"Value":"'09:30:00'"}}]]}}},{"DisplayName":"10:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'10:00:00'"}}],[{"Literal":{"Value":"'10:30:00'"}}]]}}},{"DisplayName":"11:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'11:00:00'"}}],[{"Literal":{"Value":"'11:30:00'"}}]]}}},{"DisplayName":"12:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'12:00:00'"}}],[{"Literal":{"Value":"'12:30:00'"}}]]}}},{"DisplayName":"13:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'13:00:00'"}}],[{"Literal":{"Value":"'13:30:00'"}}]]}}},{"DisplayName":"14:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'14:00:00'"}}],[{"Literal":{"Value":"'14:30:00'"}}]]}}},{"DisplayName":"15:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'15:00:00'"}}],[{"Literal":{"Value":"'15:30:00'"}}]]}}},{"DisplayName":"16:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'16:00:00'"}}],[{"Literal":{"Value":"'16:30:00'"}}]]}}},{"DisplayName":"17:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'17:00:00'"}}],[{"Literal":{"Value":"'17:30:00'"}}]]}}},{"DisplayName":"18:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'18:00:00'"}}],[{"Literal":{"Value":"'18:30:00'"}}]]}}},{"DisplayName":"19:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'19:00:00'"}}],[{"Literal":{"Value":"'19:30:00'"}}]]}}},{"DisplayName":"20:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'20:00:00'"}}],[{"Literal":{"Value":"'20:30:00'"}}]]}}},{"DisplayName":"21:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'21:00:00'"}}],[{"Literal":{"Value":"'21:30:00'"}}]]}}},{"DisplayName":"22:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'22:00:00'"}}],[{"Literal":{"Value":"'22:30:00'"}}]]}}},{"DisplayName":"23:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'23:00:00'"}}],[{"Literal":{"Value":"'23:30:00'"}}]]}}},{"DisplayName":"24:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'24:00:00'"}}],[{"Literal":{"Value":"'24:30:00'"}}]]}}},{"DisplayName":"25:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'25:00:00'"}}],[{"Literal":{"Value":"'25:30:00'"}}]]}}},{"DisplayName":"26:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Faixa"}}],"Values":[[{"Literal":{"Value":"'26:00:00'"}}]]}}}]}
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tempo = IF('Audiencias'[Canal] = "RTP 1" , 360 , 720 )
+		formatString: 0
+		lineageTag: bbc0bc80-5ee2-4de1-a43a-71790025cd54
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdChannel
+		dataType: int64
+		lineageTag: 38bf484e-bf71-41cf-b561-519f3c1e9d3d
+		summarizeBy: sum
+		sourceColumn: IdChannel
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Nome do Dia (groups)'
+		dataType: string
+		lineageTag: e057c7c0-fb7b-48d0-b181-11ec35410c18
+		summarizeBy: none
+		sourceColumn: Nome do Dia (groups)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Audiencias-45607edc-5f32-46d3-b5ff-90a7994fae8e = m
+		mode: import
+		queryGroup: Audiências
+		source =
+				let
+				    Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Canal = _t, #"Dia da Semana" = _t, Valor = _t, Faixa = _t, Alvo = _t, IdChannel = _t, #"Nome do Dia (groups)" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Origem,{{"Valor", type number}, {"IdChannel", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

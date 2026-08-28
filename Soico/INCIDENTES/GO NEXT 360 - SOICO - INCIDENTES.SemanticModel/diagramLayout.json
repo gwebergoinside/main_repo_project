@@ -1,0 +1,262 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 398.9
+          },
+          "nodeIndex": "@Medidas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1142.7,
+            "y": 308.2
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1485.6,
+            "y": 150
+          },
+          "nodeIndex": "d_Atraso_Grav",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1495,
+            "y": 1199.9
+          },
+          "nodeIndex": "d_Captacao",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 2259.5,
+            "y": 149.5
+          },
+          "nodeIndex": "d_Meios_Incid",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 1862.9,
+            "y": 221.4
+          },
+          "nodeIndex": "d_Pessoas_Incid",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 1452.9,
+            "y": 837.4
+          },
+          "nodeIndex": "d_Status",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1553.5,
+            "y": 429
+          },
+          "nodeIndex": "f_Incidencias",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 2656,
+            "y": 436.9
+          },
+          "nodeIndex": "f_Meios",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 3052.5,
+            "y": 412.9
+          },
+          "nodeIndex": "f_Pessoas",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 1882.2,
+            "y": 0
+          },
+          "nodeIndex": "d_Classificação",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 3449.1,
+            "y": 472.9
+          },
+          "nodeIndex": "images",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 3845.6,
+            "y": 496.9
+          },
+          "nodeIndex": "logo header",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1031.9,
+            "y": 189.3
+          },
+          "nodeIndex": "d_DiasMes",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 4242.2,
+            "y": 484.9
+          },
+          "nodeIndex": "d_Estado",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1845.1,
+            "y": 696.8
+          },
+          "nodeIndex": "d_User",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 396.5,
+            "y": 585.1
+          },
+          "nodeIndex": "d_Meios",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 793.1,
+            "y": 377.3
+          },
+          "nodeIndex": "f_Tarefas_Meios",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 1189.6,
+            "y": 578.1
+          },
+          "nodeIndex": "d_Projectos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 4638.7,
+            "y": 484.9
+          },
+          "nodeIndex": "d_Titulos",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 60,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

@@ -1,0 +1,67 @@
+table d_Neg_Audiencia
+	lineageTag: 06ad1012-fc50-42ec-95ec-e78d05ed9563
+
+	column AudPaiId
+		dataType: int64
+		formatString: 0
+		lineageTag: 33db7297-f8b0-41f6-a854-e79f6fb75a58
+		summarizeBy: none
+		sourceColumn: AudPaiId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AudPaiCodigo
+		dataType: string
+		lineageTag: ac940e25-8998-4489-999c-ba57dd55c2ab
+		summarizeBy: none
+		sourceColumn: AudPaiCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column AudPaiDescricao
+		dataType: string
+		lineageTag: e949afa9-0f56-4e38-8af5-ef5ed306cdf6
+		summarizeBy: none
+		sourceColumn: AudPaiDescricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column AudPaiDataInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bccecb74-74be-42d4-ad3b-8bf62ffc6f4e
+		summarizeBy: none
+		sourceColumn: AudPaiDataInicio
+
+		variation Variation
+			isDefault
+			relationship: 4a35b315-5eb0-4ef3-8b20-9a20457de739
+			defaultHierarchy: LocalDateTable_4f834c8c-1cb9-4352-b792-76ce28b6a8ae.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column AudPaiDataFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9e0e93c0-eb7d-4b3d-a23f-ad8cb3a1858f
+		summarizeBy: none
+		sourceColumn: AudPaiDataFim
+
+		variation Variation
+			isDefault
+			relationship: 1d090e11-5677-45c8-b8df-c6e4cd4e707d
+			defaultHierarchy: LocalDateTable_1068e344-4b63-4a28-b724-074bbbb65cae.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Neg_Audiencia-27c4909b-0df3-4ee8-b18b-88529a5b90c7 = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    *#(lf)From#(lf)    aud_painel"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

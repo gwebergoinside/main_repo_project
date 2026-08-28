@@ -1,0 +1,373 @@
+table 'NecessidadesGantt Extra'
+	lineageTag: 00079633-9868-4a8a-8536-1e4a3f2ed7a8
+
+	column Index
+		formatString: 0
+		lineageTag: 5d1e5fdc-6c37-42ec-b0d5-3eb21ee63bb7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Index]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datas
+		formatString: General Date
+		lineageTag: 06d8a851-0ac8-4d2e-bd00-9611a78e40fa
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Datas]
+
+		variation Variation
+			isDefault
+			relationship: 886c4dd7-0002-407c-8964-17673ec3f0f5
+			defaultHierarchy: LocalDateTable_898cdb10-851b-466b-aeb5-6c5c087e3143.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes
+		formatString: 0
+		lineageTag: 7fbfcaea-5b8d-43d5-b670-cb1b95f29f82
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekDay
+		formatString: 0
+		lineageTag: b6d6590e-ff4d-4781-a2be-e25e1d5dfe5b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [WeekDay]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key
+		lineageTag: 440e217f-2f2d-45a0-aa56-b1c9d1fbbcc1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		formatString: General Date
+		lineageTag: 3ea574e6-07a8-4c17-88c7-c35920e0103f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DataInicio]
+
+		variation Variation
+			isDefault
+			relationship: 7fcfca64-837d-4c20-bcdd-34891ca730cb
+			defaultHierarchy: LocalDateTable_1c139b89-9b4a-467e-8ee5-c0f7de727dad.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim
+		formatString: General Date
+		lineageTag: bdb2ac61-0678-42ab-a37a-e3d4122caf98
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DataFim]
+
+		variation Variation
+			isDefault
+			relationship: fa0e5ec5-23af-4635-bb17-08dc91c2e71a
+			defaultHierarchy: LocalDateTable_c99c8a15-0e37-496b-a606-5aa02e6957aa.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DuracaoDia
+		formatString: 0
+		lineageTag: 3c2010e9-0527-494e-b5f3-b442e90f57fc
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [DuracaoDia]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCentroCusto
+		formatString: 0
+		lineageTag: c7505e97-9668-4cf4-bf5a-7a7496b6313c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [IdCentroCusto]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjeto
+		formatString: 0
+		lineageTag: 622e4ed8-6a29-41d2-beab-580f279b183b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [IdProjeto]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Projeto
+		lineageTag: e265252d-b5d0-4e7f-9cc4-05e2d0e69316
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Projeto]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Calculo'
+		lineageTag: be7da02a-ff3f-445e-a1c4-ae0c80f5f020
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tipo Calculo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeActividade
+		lineageTag: 352d3314-6baf-4f02-a721-9ec7cd619160
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NomeActividade]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		lineageTag: af890ec9-69be-4bdb-aa60-708e00f59851
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeEtapa
+		lineageTag: 2110a595-48cc-4c19-b506-795151d125df
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NomeEtapa]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantidade
+		lineageTag: c48513d8-45ca-4ec2-8828-97ec70c2382f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Quantidade]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Tipo
+		lineageTag: c092ab88-8b3f-4a7f-911f-9d67615023a5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tipo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Funcao
+		lineageTag: 08c761db-6bb5-44a5-be65-120f6b74a0e0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Funcao]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdNecessidade
+		formatString: 0
+		lineageTag: ef200677-dd50-4176-9e2f-c17e334a3dd7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [IdNecessidade]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoPrograma
+		formatString: 0
+		lineageTag: 2e5256cd-be95-4c85-80be-351a3182ddfa
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [IdTipoPrograma]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		formatString: 0
+		lineageTag: b4d9efa3-f1b6-4285-9556-2da25db7ba1b
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [Id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Days
+		lineageTag: 59956216-7d12-49c2-8a5f-6f2e261d80ba
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Days]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Days Nec'
+		lineageTag: 921546db-81bb-45b3-b818-605d86269ed6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Days Nec]
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuantidadeDias
+		formatString: 0
+		lineageTag: 5bc3a9da-f8bf-4171-9e5e-5063a8fc75e4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [QuantidadeDias]
+
+		annotation SummarizationSetBy = Automatic
+
+	column QTDDiasSemana
+		formatString: 0
+		lineageTag: 6fad2e95-ae01-4023-bc72-ecd60b3eb86f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [QTDDiasSemana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Ev. Prod.'
+		lineageTag: 050575f6-b798-4191-aeb3-385502d69e76
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tipo Ev. Prod.]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tarefa
+		lineageTag: 3ed3774f-5403-48e5-ae82-a84fdc7dc7ec
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tarefa]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoa
+		formatString: 0
+		lineageTag: bc567311-953b-43d7-810f-93c0d0811b74
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [IdPessoa]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDMeio
+		formatString: 0
+		lineageTag: 000b2607-7cb8-4942-b186-428d2e303da7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [IDMeio]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rows
+		formatString: 0
+		lineageTag: 83408081-b8c5-48cd-9644-91647c4e8f23
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Rows]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoNec
+		lineageTag: d8a4a513-0071-4130-8e75-9a01d22221df
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [TipoNec]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valida
+		lineageTag: 638678b8-a4ec-4e83-b663-75c6fc96e220
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Valida]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyAtividade = 'NecessidadesGantt Extra'[Datas] & "-" & 'NecessidadesGantt Extra'[IdCentroCusto] & "-" & 'NecessidadesGantt Extra'[IdProjeto]
+		lineageTag: ba9a47df-1117-43e5-96a7-682a89199eff
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Nec'
+		lineageTag: 12550618-2ed8-450b-9997-49b84d316457
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Status Nec]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Template'
+		lineageTag: 65678216-6090-4806-8c6a-d589ea9558f5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Status Template]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'NecessidadesGantt Extra-9c287f7f-d527-433a-a2ab-ac33bf96e9db' = calculated
+		mode: import
+		source = ```
+				
+				VAR _1 = SELECTCOLUMNS(
+				    GENERATE(
+				            'Necessidades',
+				            FILTER(
+				                CALENDAR(MIN('Necessidades'[DataInicio]),MAX('Necessidades'[DataFim]))
+				                ,[Date]>=[DataInicio] && [Date] <= IF(NOT IsBlank([DataFim]),[DataFim],MAX('Necessidades'[DataFim])
+				                )
+				            )
+				       )
+				       ,"Index", Necessidades[Index]
+				       ,"Datas", [Date]
+				       ,"Mes", MONTH([Date])
+				       ,"WeekDay", WEEKDAY( [Date] )
+				       ,"Key", Necessidades[Index]&"-"&WEEKDAY( [Date] )
+				       ,"DataInicio", [DataInicio]
+				       ,"DataFim", [DataFim]
+				       ,"DuracaoDia", [DuracaoDia] 
+				       --,"Estado", [Estado],
+				       ,"IdCentroCusto",[IdCentroCusto]
+				       ,"IdProjeto", [IdProjecto]
+				       ,"Projeto", [Projeto]
+				       ,"Tipo Calculo", [Tipo Calculo]
+				       ,"NomeActividade", [NomeActividade]
+				       ,"Nome", [Nome]
+				       ,"NomeEtapa", [NomeEtapa]
+				       ,"Quantidade", [Quantidade]
+				       ,"Tipo", [Tipo]
+				       ,"Funcao", [Funcao]
+				       --,"IdGrupoPessoa", [IdGrupoPessoa]
+				       ,"IdNecessidade", [IdNecessidade]
+				       ,"IdTipoPrograma", [IdTipoPrograma]
+				       ,"Id", [Id]
+				       ,"Days", [Days]
+				       ,"Days Nec", [Days]& " (ID: "&Necessidades[IdNecessidade]&" "& Necessidades[TipoEvProd] &""&")"
+				       ,"QuantidadeDias", [QuantidadeDias]
+				       ,"QTDDiasSemana", [QTDDiasSemana]
+				       ,"Tipo Ev. Prod.", [TipoEvProd]
+				       ,"Tarefa", [TipoTarefa]
+				       ,"IdPessoa", [IdPessoa]
+				       ,"IDMeio", [IdMeio]
+				       ,"Rows", 1
+				       ,"TipoNec", "Necessidades"
+				       ,"Status Nec", [Status Nec]
+				       ,"Status Template", [Status Template]
+				    )
+				VAR _2 = SELECTCOLUMNS( 
+				            'NecessidadesGanttUnpivot', "Key", FORMAT([Key],"String"), "Valida", NecessidadesGanttUnpivot[Value] )
+				Var _3 = NATURALINNERJOIN(_1,_2)
+				Return
+				_3
+				```
+
+	annotation PBI_Id = d570f7f3df1f4b8e84d43af4733b62de
+

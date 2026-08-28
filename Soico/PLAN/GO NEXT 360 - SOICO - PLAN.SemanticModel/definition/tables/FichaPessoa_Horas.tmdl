@@ -1,0 +1,55 @@
+table FichaPessoa_Horas
+	lineageTag: 5adaa25f-b66b-456a-bd62-a710b54e7eaa
+
+	column Value
+		formatString: 0
+		lineageTag: 8287aef0-bc93-4bcc-b309-29959cbe028a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	column FH =
+			
+			SWITCH(
+			    TRUE()
+			    ,FichaPessoa_Horas[Value] = 0, "0h"
+			    ,FichaPessoa_Horas[Value] = 1, "1h"
+			    ,FichaPessoa_Horas[Value] = 2, "2h"
+			    ,FichaPessoa_Horas[Value] = 3, "3h"
+			    ,FichaPessoa_Horas[Value] = 4, "4h"
+			    ,FichaPessoa_Horas[Value] = 5, "5h"
+			    ,FichaPessoa_Horas[Value] = 6, "6h"
+			    ,FichaPessoa_Horas[Value] = 7, "7h"
+			    ,FichaPessoa_Horas[Value] = 8, "8h"
+			    ,FichaPessoa_Horas[Value] = 9, "9h"
+			    ,FichaPessoa_Horas[Value] = 10, "10h"
+			    ,FichaPessoa_Horas[Value] = 11, "11h"
+			    ,FichaPessoa_Horas[Value] = 12, "12h"
+			    ,FichaPessoa_Horas[Value] = 13, "13h"
+			    ,FichaPessoa_Horas[Value] = 14, "14h"
+			    ,FichaPessoa_Horas[Value] = 15, "15h"
+			    ,FichaPessoa_Horas[Value] = 16, "16h"
+			    ,FichaPessoa_Horas[Value] = 17, "17h"
+			    ,FichaPessoa_Horas[Value] = 18, "18h"
+			    ,FichaPessoa_Horas[Value] = 19, "19h"
+			    ,FichaPessoa_Horas[Value] = 20, "20h"
+			    ,FichaPessoa_Horas[Value] = 21, "21h"
+			    ,FichaPessoa_Horas[Value] = 22, "22h"
+			    ,FichaPessoa_Horas[Value] = 23, "23h"
+			)
+		lineageTag: 6304b757-9264-4a08-9fcc-e61ec16a724a
+		summarizeBy: none
+		sortByColumn: Value
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FichaPessoa_Horas-280bb0f0-1733-4660-982f-6a50aab85dbf = calculated
+		mode: import
+		source = GENERATESERIES( 0, 23, 1)
+
+	annotation PBI_Id = d625ae49af784e7a95834b55dce4fdc0
+

@@ -1,0 +1,634 @@
+table Encomendas
+	lineageTag: 487f0557-de7d-46f9-9c81-8186b7bd6a9d
+
+	measure 'GRP vs GRPPrevisto' = ```
+			
+			Var __GRP = SUM(Encomendas[GRP Equivalente])
+			Var __GRPPre = SUM(Encomendas[GRP Previsto Equivalente])
+			--Var __blank = SUM( GMediaBI_Encomendas[GRP Equivalente]) <> BLANK() && SUM(GMediaBI_Encomendas[GRP Previsto Equivalente]) <> BLANK()
+			RETURN
+			IF( __GRP = __GRPPre , 0 , 
+			IF( __GRP > __GRPPre , 1 , 2 ) )
+			```
+		formatString: 0
+		lineageTag: 4e639534-a7cf-4a64-8201-67d7227748d3
+
+	measure 'Custo GRP vs GRPPrevisto LY' = ```
+			
+			Var __GRP = [CM GRP Equivalente]
+			Var __GRPLY = CALCULATE( [CM GRP Equivalente], SAMEPERIODLASTYEAR( Calendario[Date] ))
+			--Var __blank = SUM( GMediaBI_Encomendas[GRP Equivalente]) <> BLANK() && SUM(GMediaBI_Encomendas[GRP Previsto Equivalente]) <> BLANK()
+			RETURN
+			IF( __GRP = __GRPLY , 0 , 
+			IF( __GRP > __GRPLY , 1 , 2 ) )
+			```
+		formatString: 0
+		lineageTag: 1af71e56-5c8a-42fe-bb63-2811b3ad14b9
+
+	measure 'Qtd.Marcações' = calculate( COUNTROWS(Encomendas), filter(Encomendas, Encomendas[ordPubNegociacao]))
+		formatString: 0
+		lineageTag: 648f80e0-a942-41d9-b900-2e589a99f33e
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 2692fb88-c56b-48ce-a859-2fc979933ced
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column diaExib
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: eb959874-aa7c-47cf-8f97-bb95c0264a38
+		summarizeBy: none
+		sourceColumn: diaExib
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column valorPub
+		dataType: double
+		lineageTag: 6fb5d4b7-40f9-4a3d-926a-4786af064354
+		summarizeBy: sum
+		sourceColumn: valorPub
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorTab
+		dataType: double
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 084f20e9-cacf-46d3-917c-903c30c01a17
+		summarizeBy: sum
+		sourceColumn: valorTab
+
+		annotation SummarizationSetBy = Automatic
+
+	column valorBonus
+		dataType: double
+		lineageTag: c8608544-f904-4f39-947c-2e04e77dd0cb
+		summarizeBy: sum
+		sourceColumn: valorBonus
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column grpReal
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 57ed4101-8edb-4f9e-881e-d94a081a65bc
+		summarizeBy: sum
+		sourceColumn: grpReal
+
+		annotation SummarizationSetBy = Automatic
+
+	column durEmissao
+		dataType: int64
+		formatString: #,0
+		lineageTag: 27f5aea8-fb1b-40a9-bbad-1f797aa5dfbf
+		summarizeBy: sum
+		sourceColumn: durEmissao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column DayPart =
+			
+			SWITCH(
+			    TRUE()
+			    ,Encomendas[MinutosExib] >= 390  && Encomendas[MinutosExib] < 480,  "Manhã 1"
+			    ,Encomendas[MinutosExib] >= 480  && Encomendas[MinutosExib] < 720,  "Manhã 2"
+			    ,Encomendas[MinutosExib] >= 720  && Encomendas[MinutosExib] < 870,  "Almoço"
+			    ,Encomendas[MinutosExib] >= 870  && Encomendas[MinutosExib] < 1080, "Tarde"
+			    ,Encomendas[MinutosExib] >= 1080 && Encomendas[MinutosExib] < 1200, "Acesso Prime"
+			    ,Encomendas[MinutosExib] >= 1200 && Encomendas[MinutosExib] < 1350, "Prime Time 1"
+			    ,Encomendas[MinutosExib] >= 1350 && Encomendas[MinutosExib] < 1440, "Prime Time 2"
+			    ,Encomendas[MinutosExib] >= 1440 && Encomendas[MinutosExib] < 1590, "Late Night"
+			    ,Encomendas[MinutosExib] >= 1590 || Encomendas[MinutosExib] < 390 , "Madrugada"
+			    ,"Outro"
+			)
+		dataType: string
+		lineageTag: 5d2c52cd-b4d8-4fb3-9bfd-5d59ad4eeff0
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubNegociacao
+		dataType: int64
+		formatString: 0
+		lineageTag: 75d848fb-84fd-4fd9-8273-b88396820c98
+		summarizeBy: none
+		sourceColumn: ordPubNegociacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column anuncianteId
+		dataType: int64
+		formatString: 0
+		lineageTag: 4065cbc8-93ba-4155-a96c-6cfd55fcd25a
+		summarizeBy: none
+		sourceColumn: anuncianteId
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c139f42-5446-4e4f-957b-78e436d98f72
+		summarizeBy: none
+		sourceColumn: proId
+
+		annotation SummarizationSetBy = Automatic
+
+	column horaExib
+		dataType: int64
+		formatString: 0
+		lineageTag: fd42c61c-016f-4afb-b98a-0b1910082ec1
+		summarizeBy: sum
+		sourceColumn: horaExib
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Encomendas","TableItemName":"horaExib (groups)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column ordPubCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: b610815c-6277-492c-9343-a0e8c2089f07
+		summarizeBy: sum
+		sourceColumn: ordPubCodigo
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo
+		dataType: string
+		lineageTag: a62af891-4b34-48e0-8100-f207a86cfd8e
+		summarizeBy: none
+		sourceColumn: tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column grpPrevisto
+		dataType: double
+		lineageTag: 9d6ff18e-52c3-4b86-9940-8b55d3a9e80e
+		summarizeBy: sum
+		sourceColumn: grpPrevisto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column indice_equi
+		dataType: double
+		lineageTag: 4ad518ec-55ba-440c-9125-912a6e0a3d48
+		summarizeBy: sum
+		sourceColumn: indice_equi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GRP Equivalente'
+		dataType: double
+		formatString: #,0.00
+		lineageTag: ab3a534b-62a9-4edb-b16c-888458857cf1
+		summarizeBy: sum
+		sourceColumn: GRP Equivalente
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GRP Previsto Equivalente'
+		dataType: double
+		lineageTag: e436476d-e473-4921-b0ad-2e331bf9aa1f
+		summarizeBy: sum
+		sourceColumn: GRP Previsto Equivalente
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column distribuidorid
+		dataType: int64
+		formatString: 0
+		lineageTag: d26b9816-771b-4d83-840d-58551cade096
+		summarizeBy: none
+		sourceColumn: distribuidorid
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: 160ba20b-7923-4bb0-969e-c2a6c248d5f5
+		summarizeBy: none
+		sourceColumn: vendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipo
+		dataType: string
+		lineageTag: c87c2dda-22f0-4f45-a98f-ac2ea36d5cfb
+		summarizeBy: none
+		sourceColumn: negPerTipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoNeg = ```
+			if( [negPerTipo] = "F" , "Desconto" , if( [negPerTipo] = "G" , "GRP" , if( [negPerTipo] = "T" , "Tabela" , if( [negPerTipo] = "D" , "Desconto" , if( [negPerTipo] = "V" , "Valor" , 
+			        IF.EAGER([negPerTipo] = BLANK(), 
+			        "Outros"
+			        ))))))
+			```
+		lineageTag: e6a0284a-787e-40f8-a730-4e6de9b9ca3b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Alvo Yummi'
+		dataType: string
+		lineageTag: 30ca341d-dfab-464b-88c4-f9b564986ad5
+		summarizeBy: none
+		sourceColumn: Alvo Yummi
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'horaExib (groups)' =
+			SWITCH(
+			  TRUE,
+			  ISBLANK('Encomendas'[horaExib]),
+			  "(Blank)",
+			  'Encomendas'[horaExib] IN {0},
+			  "00:00",
+			  'Encomendas'[horaExib] IN {5},
+			  "05:00",
+			  'Encomendas'[horaExib] IN {6},
+			  "06:00",
+			  'Encomendas'[horaExib] IN {7},
+			  "07:00",
+			  'Encomendas'[horaExib] IN {8},
+			  "08:00",
+			  'Encomendas'[horaExib] IN {9},
+			  "09:00",
+			  'Encomendas'[horaExib] IN {10},
+			  "10:00",
+			  'Encomendas'[horaExib] IN {11},
+			  "11:00",
+			  'Encomendas'[horaExib] IN {12},
+			  "12:00",
+			  'Encomendas'[horaExib] IN {13},
+			  "13:00",
+			  'Encomendas'[horaExib] IN {14},
+			  "14:00",
+			  'Encomendas'[horaExib] IN {15},
+			  "15:00",
+			  'Encomendas'[horaExib] IN {16},
+			  "16:00",
+			  'Encomendas'[horaExib] IN {17},
+			  "17:00",
+			  'Encomendas'[horaExib] IN {18},
+			  "18:00",
+			  'Encomendas'[horaExib] IN {19},
+			  "19:00",
+			  'Encomendas'[horaExib] IN {20},
+			  "20:00",
+			  'Encomendas'[horaExib] IN {21},
+			  "21:00",
+			  'Encomendas'[horaExib] IN {22},
+			  "22:00",
+			  'Encomendas'[horaExib] IN {23},
+			  "23:00",
+			  'Encomendas'[horaExib] IN {24},
+			  "24:00",
+			  'Encomendas'[horaExib] IN {25},
+			  "25:00",
+			  'Encomendas'[horaExib] IN {26},
+			  "26:00",
+			  'Encomendas'[horaExib] IN {27},
+			  "27:00",
+			  'Encomendas'[horaExib] IN {28},
+			  "28:00",
+			  'Encomendas'[horaExib] IN {29},
+			  "29:00",
+			  'Encomendas'[horaExib] IN {30},
+			  "30:00",
+			  'Encomendas'[horaExib] IN {31},
+			  "31:00",
+			  'Encomendas'[horaExib] IN {32},
+			  "32:00",
+			  'Encomendas'[horaExib] IN {33},
+			  "33:00",
+			  'Encomendas'[horaExib] IN {34},
+			  "34:00",
+			  'Encomendas'[horaExib] IN {35},
+			  "35:00",
+			  'Encomendas'[horaExib] IN {36},
+			  "36:00",
+			  'Encomendas'[horaExib] IN {37},
+			  "37:00",
+			  'Encomendas'[horaExib] IN {38},
+			  "38:00",
+			  'Encomendas'[horaExib] IN {39},
+			  "39:00",
+			  'Encomendas'[horaExib] IN {40},
+			  "40:00",
+			  'Encomendas'[horaExib] IN {41},
+			  "41:00",
+			  "Other"
+			)
+		formatString: 0
+		lineageTag: a4f391fc-ed87-4112-906a-b03ffdfb2a47
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Encomendas"
+				          }
+				        },
+				        "Property": "horaExib"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"g","Entity":"Encomendas"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"GroupItems":[{"DisplayName":"(Blank)","BlankDefaultPlaceholder":true},{"DisplayName":"00:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"0L"}}]]}}},{"DisplayName":"05:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"5L"}}]]}}},{"DisplayName":"06:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"6L"}}]]}}},{"DisplayName":"07:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"7L"}}]]}}},{"DisplayName":"08:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"8L"}}]]}}},{"DisplayName":"09:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"9L"}}]]}}},{"DisplayName":"10:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"10L"}}]]}}},{"DisplayName":"11:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"11L"}}]]}}},{"DisplayName":"12:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"12L"}}]]}}},{"DisplayName":"13:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"13L"}}]]}}},{"DisplayName":"14:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"14L"}}]]}}},{"DisplayName":"15:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"15L"}}]]}}},{"DisplayName":"16:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"16L"}}]]}}},{"DisplayName":"17:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"17L"}}]]}}},{"DisplayName":"18:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"18L"}}]]}}},{"DisplayName":"19:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"19L"}}]]}}},{"DisplayName":"20:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"20L"}}]]}}},{"DisplayName":"21:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"21L"}}]]}}},{"DisplayName":"22:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"22L"}}]]}}},{"DisplayName":"23:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"23L"}}]]}}},{"DisplayName":"24:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"24L"}}]]}}},{"DisplayName":"25:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"25L"}}]]}}},{"DisplayName":"26:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"26L"}}]]}}},{"DisplayName":"27:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"27L"}}]]}}},{"DisplayName":"28:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"28L"}}]]}}},{"DisplayName":"29:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"29L"}}]]}}},{"DisplayName":"30:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"30L"}}]]}}},{"DisplayName":"31:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"31L"}}]]}}},{"DisplayName":"32:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"32L"}}]]}}},{"DisplayName":"33:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"33L"}}]]}}},{"DisplayName":"34:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"34L"}}]]}}},{"DisplayName":"35:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"35L"}}]]}}},{"DisplayName":"36:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"36L"}}]]}}},{"DisplayName":"37:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"37L"}}]]}}},{"DisplayName":"38:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"38L"}}]]}}},{"DisplayName":"39:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"39L"}}]]}}},{"DisplayName":"40:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"40L"}}]]}}},{"DisplayName":"41:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"g"}},"Property":"horaExib"}}],"Values":[[{"Literal":{"Value":"41L"}}]]}}},{"DisplayName":"Other"}]}
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal = RELATED(Canais[Canal])
+		lineageTag: 5c22d3b4-d45b-4c38-9765-748f9b044f23
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChavePrev = 'Encomendas'[Canal]&'Encomendas'[horaExib (groups)]&'Encomendas'[Periodo]
+		lineageTag: 6dc2baae-bca4-4f1c-a76f-cd70a987ce3e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo = RELATED(Calendario[Periodo da Semana])
+		lineageTag: 04219368-fbdb-49ba-b71b-de41ed517769
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GRP Total' =
+			IF( Encomendas[GRP Equivalente] = 0, Encomendas[GRP Previsto Equivalente], [GRP Equivalente] )
+			// VAR _1 = IF( Encomendas[GRP Equivalente] = BLANK(), 0, Encomendas[GRP Equivalente] )
+			// Var _11 = IF( Encomendas[indice_equi] = BLANK(), 0, Encomendas[indice_equi] )
+			// VAR _2 = IF( _11 = 0, 1, _11 )
+			// VAR _3 = _1 * _2
+			// RETURN
+			// IF( _3 = 0 , Encomendas[GRP Previsto Equivalente], _3 )
+		lineageTag: 5436b843-7545-43c4-8faa-7b5d564209a5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Central = ```
+			
+			SWITCH(
+			    TRUE(), 
+			        Encomendas[distribuidorid] in {13,280,293,15559 }, "Megameios"
+			       ,Encomendas[distribuidorid] in {263,12459 } , "Powermedia"
+			       ,Encomendas[distribuidorid] in {271,12976,16510 } , "Grupo Havas"
+			       ,Encomendas[distribuidorid] in {12224,6433,12226,14132 } , "GroupM"
+			       ,Encomendas[distribuidorid] in {12587,12588,15277,18065} , "Opera"
+			
+			
+			        // , ISERROR ( FIND ( "DIRECTOS", [Distribuidor] ) ) <> TRUE (), "CLIENTES DIRETOS",
+			        // ISERROR ( FIND ( "CARAT", [Distribuidor] ) ) <> TRUE (), "POWER MEDIA",
+			        // ISERROR ( FIND ( "ARENA", [Distribuidor] ) ) <> TRUE (), "HAVAS",
+			        // ISERROR ( FIND ( "OMD", [Distribuidor] ) ) <> TRUE (), "OMG",
+			        // ISERROR ( FIND ( "INITIATIVE", [Distribuidor] ) ) <> TRUE (), "MEGA",
+			        // ISERROR ( FIND ( "WAVEMAKER", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "STARCOM", [Distribuidor] ) ) <> TRUE (), "MEGA",
+			        // ISERROR ( FIND ( "MINDSHARE", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "PHD", [Distribuidor] ) ) <> TRUE (), "OMG",
+			        // ISERROR ( FIND ( "MEDIACOM", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "GROUPM", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "HAVAS", [Distribuidor] ) ) <> TRUE (), "HAVAS",
+			        // ISERROR ( FIND ( "MCCANN", [Distribuidor] ) ) <> TRUE (), "MEGA",
+			        // ISERROR ( FIND ( "ZENITH", [Distribuidor] ) ) <> TRUE (), "MEGA",
+			        // ISERROR ( FIND ( "STUDIOM", [Distribuidor] ) ) <> TRUE (), "GRUPO M",
+			        // ISERROR ( FIND ( "EXPRESSAO", [Distribuidor] ) ) <> TRUE (), "POWER MEDIA",
+			        // ISERROR ( FIND ( "MEDIAGATE", [Distribuidor] ) ) <> TRUE (), "POWER MEDIA",
+			        // ISERROR ( FIND ( "INDEFINIDO", [Distribuidor] ) ) <> TRUE (), "INDEFINIDO"
+			    , "Clientes Diretos"
+			)
+			```
+		lineageTag: 94766385-4f52-413a-9731-1b9b05fc82cd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column valorComissaoAgencia
+		dataType: double
+		lineageTag: a30aa498-cf40-4a7e-8be4-567af1a52816
+		summarizeBy: sum
+		sourceColumn: valorComissaoAgencia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ordPubClaId
+		dataType: int64
+		formatString: 0
+		lineageTag: ae5a980e-6b45-44a7-ba41-1d3663f8dc2a
+		summarizeBy: none
+		sourceColumn: ordPubClaId
+
+		annotation SummarizationSetBy = Automatic
+
+	column bonId
+		dataType: int64
+		formatString: 0
+		lineageTag: ce0e6cae-b1c8-4408-a6af-708361a77f77
+		summarizeBy: none
+		sourceColumn: bonId
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b511adf-c613-4cd0-af93-02e8b0731ebe
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_alvo
+		dataType: int64
+		formatString: 0
+		lineageTag: 65632c1c-d6df-44c0-9e61-62eec0199535
+		summarizeBy: sum
+		sourceColumn: cod_alvo
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinutosExib
+		dataType: int64
+		lineageTag: 081e8040-1043-4e88-9a9b-65ab8bdbd117
+		summarizeBy: sum
+		sourceColumn: MinutosExib
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Alvo
+		dataType: string
+		lineageTag: 759faae5-464a-4eff-91de-3a904ece915c
+		summarizeBy: none
+		sourceColumn: Alvo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hora Formatada' = ```
+			
+			VAR Duration = Encomendas[MinutosExib] *60
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		dataType: string
+		lineageTag: 28b582fa-8805-44ca-b368-c6df8a37dc34
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayPart_Ordem =
+			
+			SWITCH(
+			    TRUE()
+			    ,Encomendas[DayPart] = "Manhã 1",  1
+			    ,Encomendas[DayPart] = "Manhã 2",2
+			    ,Encomendas[DayPart] = "Almoço",3
+			    ,Encomendas[DayPart] = "Tarde",4
+			    ,Encomendas[DayPart] = "Acesso Prime",5
+			    ,Encomendas[DayPart] = "Prime Time 1",6
+			    ,Encomendas[DayPart] = "Prime Time 2",7
+			    ,Encomendas[DayPart] = "Late Night",8
+			    ,Encomendas[DayPart] = "Madrugada",9
+			    ,Encomendas[DayPart] = "Outro",10
+			)
+		formatString: 0
+		lineageTag: 04e17439-4c55-4fb6-a2e6-85ef3c5ffdab
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column Anunciante = LOOKUPVALUE(Anunciante[Anunciante], Anunciante[entId] ,Encomendas[anuncianteId] )
+		lineageTag: 2fc045a7-ea9a-4377-b95a-fc2e27c459dc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubFlagValorBrutoVendas
+		dataType: int64
+		formatString: 0
+		lineageTag: c3fb39f9-af04-44ac-93b0-c0b1424cce4e
+		summarizeBy: none
+		sourceColumn: ordPubFlagValorBrutoVendas
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubFlagValorLiquidoVendas
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c813074-dc45-4eb8-8ec6-fe82f09fcf61
+		summarizeBy: sum
+		sourceColumn: ordPubFlagValorLiquidoVendas
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacId
+		dataType: int64
+		formatString: 0
+		lineageTag: ecd71d1f-638e-4229-acc3-1ab77e894e92
+		summarizeBy: none
+		sourceColumn: pacId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Encomendas-748911e9-513d-4cc5-893d-2ee7cc33bd27 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="set datefirst 1;#(lf)declare @AlvoCanal int#(lf)set @AlvoCanal= "&AlvoPadrao&" --2#(lf)declare @durBase int = "&DuracaoBase&" --20#(lf)#(lf)/*#(lf)select * from encomendasexibidas where ordpubcodigo=21000370#(lf)select * from encomendasAudiencias where encId=8265576#(lf)select ordPubNegociacao, ordpubflagfixo, * from ordempub where ordpubcodigo=21000370#(lf)select * from negPeriodos where negPerId=3051#(lf)*/#(lf)#(lf)Select#(lf)    encomendas.ordPubCodigo,#(lf)    encomendas.canCodigo,#(lf)    campanhas.camAnunciante As anuncianteId,#(lf)    ordemPub.proId,#(lf)    Case#(lf)        When IsNull(ordemPub.ordPubNegociacao, 0) = 0#(lf)        Then ordemPub.ordPubFlagFixo#(lf)        Else ordemPub.ordPubNegociacao#(lf)    End As ordPubNegociacao,#(lf)    encomendas.greComHoraInicio As horaExib,#(lf)    encomendas.encDataExibicao As diaExib,#(lf)    'E' As tipo,#(lf)    campanhas.camDistribuidor As distribuidorid,#(lf)    campanhas.camVendedor As vendedor,#(lf)    IsNull(encomendas.encValorPub, 0) As valorPub,#(lf)    IsNull(encomendas.encValorTab, 0) As valorTab,#(lf)    IsNull(encomendas.encValorBonus, 0) As valorBonus,#(lf)#(tab)pacotes.pacId,#(lf)    IsNull(encomendas.encValorPub, 0) * (IsNull(campanhas.camDescontoAgencia, 0) / 100) As valorComissaoAgencia,#(lf)    -- Round(Case#(lf)        -- When IsNull(ordemPub.flgRappel, 0) <> 0#(lf)        -- Then (IsNull(IsNull(RappelTaxas.rapTaxTaxa, Rappel.rapTaxaNegociada), 0.00)) *#(lf)            -- (Round(IsNull(encomendas.encValorPub, 0) * (1 - (IsNull(campanhas.camDescontoAgencia, 0) / 100)), 2))#(lf)        -- Else Cast(0.00 As DECIMAL(18,2))#(lf)    -- End, 2) As valorRappel,#(lf)    IsNull(EncomendasAudiencias.encRating, IsNull(aud_prev_faixa.Rating, 0)) As grpPrevisto,#(lf)    0 As grpReal,#(lf)    indiceeq.ratValor As indice_equi,#(lf)    encomendas.encMaterialDuracaoEmissao As durEmissao,#(lf)    ordemPub.ordPubClaId,#(lf)    encomendas.bonId,#(lf)    ordemPub.tipPubId,#(lf)    aud_alvos.cod_alvo,#(lf)    Case ordemPub.ordPubFlagFixo#(lf)        When 2#(lf)        Then negPeriodos.negPerTipo#(lf)        When 1#(lf)        Then 'V'#(lf)        Else 'D'#(lf)    End As negPerTipo,#(lf)    ordemPub.ordPubFlagValorBrutoVendas,#(lf)    ordemPub.ordPubFlagValorLiquidoVendas#(lf)From#(lf)    encomendas With(NoLock) #(lf)#(tab)Inner Join ordemPub With(NoLock) On encomendas.ordPubCodigo = ordemPub.OrdPubCodigo #(lf)#(tab)Left Join Pacotes With(NoLock) On ordempub.pacId = pacotes.pacId#(lf)#(tab)Left Outer Join encomendasAudiencias EncomendasAudiencias With(NoLock) On EncomendasAudiencias.encId = encomendas.encid#(lf)    Left Outer Join campanhas With(NoLock) On campanhas.camId = ordemPub.camId #(lf)#(tab)Left Outer Join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao #(lf)#(tab)-- Left Outer Join#(lf)    -- Rappel With(NoLock) On (Rappel.entIdCliente = campanhas.camEntidadeFacturar#(lf)                -- Or (IsNull(Rappel.flgCentral, 0) = 1#(lf)                    -- And Rappel.entIdCliente = campanhas.camCentralCompras))#(lf)            -- And '01-' + Right('00' + Cast(ordemPub.ordPubMes As varchar), 2) + '-' + Cast(ordemPub.ordPubAno As varchar)#(lf)            -- Between Rappel.rapDataInicio And Rappel.rapDataFim #(lf)#(tab)-- Left Outer Join#(lf)    -- RappelTaxas With(NoLock) On RappelTaxas.rapId = Rappel.rapId#(lf)            -- And RappelTaxas.rapTaxCanalCodigo = ordemPub.canCodigo#(lf)            -- And RappelTaxas.rapTipTaxId = 1 #(lf)#(tab)Left Outer Join  #(lf)#(tab)ratingsTabela indiceeq With(NoLock) On (IsNull(indiceeq.canCodigo, 0) = 0#(lf)                Or indiceeq.canCodigo = ordemPub.canCodigo)#(lf)            And indiceeq.ratDuracaoIntermed = encomendas.encMaterialDuracaoFacturacao#(lf)            And indiceeq.ratDuracaoBase = @durBase#(lf)            And encomendas.encDataExibicao Between indiceeq.ratDataInicio And indiceeq.ratDataFim #(lf)#(tab)Left Join ratingsTabela indiceeq2030 With(NoLock) On (IsNull(indiceeq2030.canCodigo, 0) = 0#(lf)                Or indiceeq2030.canCodigo = ordemPub.canCodigo)#(lf)            And indiceeq2030.ratDuracaoBase = @durBase#(lf)            And indiceeq2030.ratDuracaoIntermed = 30#(lf)            And encomendas.encDataExibicao Between indiceeq2030.ratDataInicio And indiceeq2030.ratDataFim #(lf)#(tab)Left Join aud_alvos With(NoLock) On aud_alvos.cod_alvo = IsNull(ordemPub.codAlvo, @AlvoCanal) #(lf)#(tab)Left Join aud_prev_faixa With(NoLock) On aud_prev_faixa.Cod_Alvo = aud_alvos.cod_alvo#(lf)            And aud_prev_faixa.CanCodigo = encomendas.canCodigo#(lf)            And encomendas.encDataExibicao >= aud_prev_faixa.dataInicio#(lf)            And (encomendas.encDataExibicao < aud_prev_faixa.dataFim#(lf)                Or aud_prev_faixa.dataFim Is Null)#(lf)            And encomendas.greComHoraInicio >= aud_prev_faixa.horaInicio#(lf)            And encomendas.greComHoraInicio < aud_prev_faixa.horaFim#(lf)            And DatePart(dw, encomendas.encDataExibicao) + 1 = aud_prev_faixa.DiaSemId#(lf)Where#(lf)    Year(encomendas.encDataExibicao) >= Year(GetDate()) - "&AnoUpdate&"#(lf)Union All#(lf)Select#(lf)    encomendasExibidas.ordPubCodigo,#(lf)    encomendasExibidas.canCodigo,#(lf)    campanhas.camAnunciante As anuncianteId,#(lf)    ordemPub.proId,#(lf)    Case#(lf)        When IsNull(ordemPub.ordPubNegociacao, 0) = 0#(lf)        Then ordemPub.ordPubFlagFixo#(lf)        Else ordemPub.ordPubNegociacao#(lf)    End As ordPubNegociacao,#(lf)    encomendasExibidas.greComHoraInicio As horaExib,#(lf)    encomendasExibidas.encDataExibicao As diaExib,#(lf)    'E' As tipo,#(lf)    campanhas.camDistribuidor As distribuidorid,#(lf)    campanhas.camVendedor As vendedor,#(lf)    IsNull(encomendasExibidas.encValorPub, 0) As valorPub,#(lf)    IsNull(encomendasExibidas.encValorTab, 0) As valorTab,#(lf)    IsNull(encomendasExibidas.encValorBonus, 0) As valorBonus,#(lf)#(tab)pacotes.pacId,#(lf)    IsNull(encomendasExibidas.encValorPub, 0) * (IsNull(campanhas.camDescontoAgencia, 0) / 100) As valorComissaoAgencia,#(lf)    -- Round(Case#(lf)        -- When IsNull(ordemPub.flgRappel, 0) <> 0#(lf)        -- Then (IsNull(IsNull(RappelTaxas.rapTaxTaxa, Rappel.rapTaxaNegociada), 0.00)) *#(lf)            -- (Round(IsNull(encomendasExibidas.encValorPub, 0) * (1 - (IsNull(campanhas.camDescontoAgencia, 0) /#(lf)            -- 100)), 2))#(lf)        -- Else Cast(0.00 As DECIMAL(18,2))#(lf)    -- End, 2) As valorRappel,#(lf)    IsNull(aud_prev_faixa.Rating, 0) As grpPrevisto,#(lf)    IsNull(EncomendasAudiencias.encRating, IsNull(aud_exib_id.audiencia, 0)) As grpReal,#(lf)    indiceeq.ratValor As indice_equi,#(lf)    encomendasExibidas.encMaterialDuracaoEmissao As durEmissao,#(lf)    ordemPub.ordPubClaId,#(lf)    encomendasExibidas.bonId,#(lf)    ordemPub.tipPubId,#(lf)    aud_alvos.cod_alvo,#(lf)    Case ordemPub.ordPubFlagFixo#(lf)        When 2#(lf)        Then negPeriodos.negPerTipo#(lf)        When 1#(lf)        Then 'V'#(lf)        Else 'D'#(lf)    End As negPerTipo,#(lf)    ordemPub.ordPubFlagValorBrutoVendas,#(lf)    ordemPub.ordPubFlagValorLiquidoVendas#(lf)From#(lf)    encomendasExibidas With(NoLock) #(lf)#(tab)Inner Join ordemPub With(NoLock) On encomendasExibidas.ordPubCodigo = ordemPub.OrdPubCodigo #(lf)#(tab)Left Join Pacotes With(NoLock) On ordempub.pacId = pacotes.pacId#(lf)#(tab)Left Outer Join encomendasAudiencias EncomendasAudiencias With(NoLock) On EncomendasAudiencias.encId = encomendasExibidas.encId#(lf)            And EncomendasAudiencias.audPaiId = 1 #(lf)#(tab)Left Outer Join campanhas With(NoLock) On campanhas.camId = ordemPub.camId #(lf)#(tab)Left Outer Join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao #(lf)#(tab)Left Outer Join ratingsTabela indiceeq With(NoLock) On (IsNull(indiceeq.canCodigo, 0) = 0#(lf)                Or indiceeq.canCodigo = ordemPub.canCodigo)#(lf)            And indiceeq.ratDuracaoIntermed = encomendasExibidas.encMaterialDuracaoFacturacao#(lf)            And indiceeq.ratDuracaoBase = @durBase#(lf)            And encomendasExibidas.encDataExibicao Between indiceeq.ratDataInicio And indiceeq.ratDataFim #(lf)#(tab)Left Join ratingsTabela indiceeq2030 With(NoLock) On (IsNull(indiceeq2030.canCodigo, 0) = 0#(lf)                Or indiceeq2030.canCodigo = ordemPub.canCodigo)#(lf)            And indiceeq2030.ratDuracaoBase = @durBase#(lf)            And indiceeq2030.ratDuracaoIntermed = 30#(lf)            And encomendasExibidas.encDataExibicao Between indiceeq2030.ratDataInicio And indiceeq2030.ratDataFim#(lf)    -- Left Outer Join#(lf)    -- Rappel With(NoLock) On (Rappel.entIdCliente = campanhas.camEntidadeFacturar#(lf)                -- Or (IsNull(Rappel.flgCentral, 0) = 1#(lf)                    -- And Rappel.entIdCliente = campanhas.camCentralCompras))#(lf)            -- And '01-' + Right('00' + Cast(ordemPub.ordPubMes As varchar), 2) + '-' + Cast(ordemPub.ordPubAno As varchar)#(lf)            -- Between Rappel.rapDataInicio And Rappel.rapDataFim Left Outer Join#(lf)    -- RappelTaxas With(NoLock) On RappelTaxas.rapId = Rappel.rapId#(lf)            -- And RappelTaxas.rapTaxCanalCodigo = ordemPub.canCodigo#(lf)            -- And RappelTaxas.rapTipTaxId = 1 #(lf)#(tab)Left Join aud_alvos With(NoLock) On aud_alvos.cod_alvo = IsNull(ordemPub.codAlvo, @AlvoCanal) #(lf)#(tab)Left Join aud_prev_faixa With(NoLock) On aud_prev_faixa.CanCodigo = encomendasExibidas.canCodigo#(lf)            And DatePart(dw, encomendasExibidas.encDataExibicao) + 1 = aud_prev_faixa.DiaSemId#(lf)            And aud_prev_faixa.Cod_Alvo = aud_alvos.cod_alvo#(lf)            And encomendasExibidas.encDataExibicao >= aud_prev_faixa.dataInicio#(lf)            And (encomendasExibidas.encDataExibicao < aud_prev_faixa.dataFim#(lf)                Or aud_prev_faixa.dataFim Is Null)#(lf)            And encomendasExibidas.greComHoraInicio >= aud_prev_faixa.horaInicio#(lf)            And encomendasExibidas.greComHoraInicio < aud_prev_faixa.horaFim #(lf)#(tab)Left Join aud_alinhamento_publicidade With(NoLock) On aud_alinhamento_publicidade.encId = encomendasExibidas.encId#(lf)            And aud_alinhamento_publicidade.spoAutId = 0 #(lf)#(tab)Left Join aud_rel_alinhamento_publicidade With(NoLock) On aud_rel_alinhamento_publicidade.id_pub =#(lf)            aud_alinhamento_publicidade.id_pub #(lf)#(tab)Left Join aud_exib With(NoLock) On aud_exib.id_exib = aud_rel_alinhamento_publicidade.id_pubreport #(lf)#(tab)Left Join aud_exib_id With(NoLock) On aud_exib_id.id_exib = aud_exib.id_exib#(lf)            And aud_exib_id.cod_alvo = aud_alvos.cod_alvo#(lf)Where#(lf)    Year(encomendasExibidas.encDataExibicao) >= Year(GetDate()) - "&AnoUpdate&"#(lf)Union All#(lf)Select#(lf)    ordemPub.OrdPubCodigo,#(lf)    ordemPub.canCodigo,#(lf)    campanhas.camAnunciante As anuncianteId,#(lf)    ordemPub.proId,#(lf)    Case#(lf)        When IsNull(ordemPub.ordPubNegociacao, 0) = 0#(lf)        Then ordemPub.ordPubFlagFixo#(lf)        Else ordemPub.ordPubNegociacao#(lf)    End As ordPubNegociacao,#(lf)    0 As horaExib,#(lf)    Cast(Convert(VARCHAR,ordemPub.ordPubAno) + '-' + Convert(VARCHAR,ordemPub.ordPubMes) + '-' + Convert(VARCHAR,1) As#(lf)    DATETIME) As diaExib,#(lf)    'O' As tipo,#(lf)    campanhas.camDistribuidor As distribuidorid,#(lf)    campanhas.camVendedor As vendedor,#(lf)    IsNull(ordemPub.ordPubValor, 0) As valorPub,#(lf)    IsNull(ordemPub.ordPubValorTab, 0) As valorTab,#(lf)    IsNull(ordemPub.valorBonus, 0) As valorBonus,#(lf)#(tab)pacotes.pacId,#(lf)    IsNull(ordemPub.ordPubValor, 0) * (IsNull(campanhas.camDescontoAgencia, 0) / 100) As valorComissaoAgencia,#(lf)    -- Round(Case#(lf)        -- When IsNull(ordemPub.flgRappel, 0) <> 0#(lf)        -- Then (IsNull(IsNull(RappelTaxas.rapTaxTaxa, Rappel.rapTaxaNegociada), 0.00)) *#(lf)            -- (Round(IsNull(ordemPub.ordPubValor, 0) * (1 - (IsNull(campanhas.camDescontoAgencia, 0) / 100)), 2))#(lf)        -- Else Cast(0.00 As DECIMAL(18,2))#(lf)    -- End, 2) As valorRappel,#(lf)    0 As grpPrevisto,#(lf)    0 As grpReal,#(lf)    0 As indice_equi,#(lf)    0 As durEmissao,#(lf)    ordemPub.ordPubClaId,#(lf)    ordemPub.ordPubBonus As bonId,#(lf)    ordemPub.tipPubId,#(lf)    aud_alvos.cod_alvo,#(lf)    Case ordemPub.ordPubFlagFixo#(lf)        When 2#(lf)        Then negPeriodos.negPerTipo#(lf)        When 1#(lf)        Then 'V'#(lf)        Else 'D'#(lf)    End As negPerTipo,#(lf)    ordemPub.ordPubFlagValorBrutoVendas,#(lf)    ordemPub.ordPubFlagValorLiquidoVendas#(lf)From#(lf)    ordemPub With(NoLock) #(lf)#(tab)Left Outer Join campanhas With(NoLock) On campanhas.camId = ordemPub.camId #(lf)#(tab)Left Join Pacotes With(NoLock) On ordempub.pacId = pacotes.pacId#(lf)#(tab)--Left Outer Join#(lf)    -- Rappel With(NoLock) On (Rappel.entIdCliente = campanhas.camEntidadeFacturar#(lf)                -- Or (IsNull(Rappel.flgCentral, 0) = 1#(lf)                    -- And Rappel.entIdCliente = campanhas.camCentralCompras))#(lf)            -- And '01-' + Right('00' + Cast(ordemPub.ordPubMes As varchar), 2) + '-' + Cast(ordemPub.ordPubAno As varchar)#(lf)            -- Between Rappel.rapDataInicio And Rappel.rapDataFim Left Outer Join#(lf)    -- RappelTaxas With(NoLock) On RappelTaxas.rapId = Rappel.rapId#(lf)            -- And RappelTaxas.rapTaxCanalCodigo = ordemPub.canCodigo#(lf)            -- And RappelTaxas.rapTipTaxId = 1 #(lf)#(tab)Left Join aud_alvos With(NoLock) On aud_alvos.cod_alvo = IsNull(ordemPub.codAlvo, @AlvoCanal) #(lf)#(tab)Left Join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao#(lf)Where#(lf)    ordemPub.ordPubAno >= Year(GetDate()) - "&AnoUpdate&" And#(lf)    ordemPub.OrdPubCodigo Not In (Select#(lf)         e.ordPubCodigo#(lf)     From#(lf)         encomendas e With(NoLock)#(lf)     Where#(lf)         e.ordPubCodigo = ordemPub.OrdPubCodigo#(lf)     Group By#(lf)         e.ordPubCodigo#(lf)     Union#(lf)     Select#(lf)         e.ordPubCodigo#(lf)     From#(lf)         encomendasExibidas e With(NoLock)#(lf)     Where#(lf)         e.ordPubCodigo = ordemPub.OrdPubCodigo#(lf)     Group By#(lf)         e.ordPubCodigo#(lf)     Union#(lf)     Select#(lf)         e.ordPubCodigo#(lf)     From#(lf)         encomendasExcepcoes e With(NoLock)#(lf)     Where#(lf)         IsNull(e.encValorPub, 0) <> 0 And#(lf)         e.ordPubCodigo = ordemPub.OrdPubCodigo#(lf)     Group By#(lf)         e.ordPubCodigo)#(lf)Union All#(lf)Select#(lf)    encomendas.ordPubCodigo,#(lf)    encomendas.canCodigo,#(lf)    campanhas.camAnunciante As anuncianteId,#(lf)    ordemPub.proId,#(lf)    Case#(lf)        When IsNull(ordemPub.ordPubNegociacao, 0) = 0#(lf)        Then ordemPub.ordPubFlagFixo#(lf)        Else ordemPub.ordPubNegociacao#(lf)    End As ordPubNegociacao,#(lf)    encomendas.greComHoraInicio As horaExib,#(lf)    encomendas.encDataExibicao As diaExib,#(lf)    'X' As tipo,#(lf)    campanhas.camDistribuidor As distribuidorid,#(lf)    campanhas.camVendedor As vendedor,#(lf)    IsNull(encomendas.encValorPub, 0) As valorPub,#(lf)    IsNull(encomendas.encValorTab, 0) As valorTab,#(lf)    0 As valorBonus,#(lf)#(tab)pacotes.pacId,#(lf)    IsNull(encomendas.encValorPub, 0) * (IsNull(campanhas.camDescontoAgencia, 0) / 100) As valorComissaoAgencia,#(lf)    -- Round(Case#(lf)        -- When IsNull(ordemPub.flgRappel, 0) <> 0#(lf)        -- Then (IsNull(IsNull(RappelTaxas.rapTaxTaxa, Rappel.rapTaxaNegociada), 0.00)) *#(lf)            -- (Round(IsNull(encomendas.encValorPub, 0) * (1 - (IsNull(campanhas.camDescontoAgencia, 0) / 100)), 2))#(lf)        -- Else Cast(0.00 As DECIMAL(18,2))#(lf)    -- End, 2) As valorRappel,#(lf)    IsNull(EncomendasAudiencias.encRating, IsNull(aud_prev_faixa.Rating, 0)) As grpPrevisto,#(lf)    0 As grpReal,#(lf)    indiceeq.ratValor As indice_equi,#(lf)    encomendas.encMaterialDuracaoEmissao As durEmissao,#(lf)    ordemPub.ordPubClaId,#(lf)    encomendas.bonId,#(lf)    ordemPub.tipPubId,#(lf)    aud_alvos.cod_alvo,#(lf)    Case ordemPub.ordPubFlagFixo#(lf)        When 2#(lf)        Then negPeriodos.negPerTipo#(lf)        When 1#(lf)        Then 'V'#(lf)        Else 'D'#(lf)    End As negPerTipo,#(lf)    ordemPub.ordPubFlagValorBrutoVendas,#(lf)    ordemPub.ordPubFlagValorLiquidoVendas#(lf)From#(lf)    encomendasExcepcoes encomendas With(NoLock) #(lf)#(tab)Inner Join ordemPub With(NoLock) On encomendas.ordPubCodigo = ordemPub.OrdPubCodigo#(lf)    Left Join Pacotes With(NoLock) On ordempub.pacId = pacotes.pacId#(lf)#(tab)Left Outer Join grelhaComercial With(NoLock) On grelhaComercial.greComId = encomendas.greComId #(lf)#(tab)Left Outer Join encomendasAudiencias EncomendasAudiencias With(NoLock) On EncomendasAudiencias.encId = encomendas.encId#(lf)    Left Outer Join campanhas With(NoLock) On campanhas.camId = ordemPub.camId #(lf)#(tab)Left Outer Join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao #(lf)#(tab)-- Left Outer Join#(lf)    -- Rappel With(NoLock) On (Rappel.entIdCliente = campanhas.camEntidadeFacturar#(lf)                -- Or (IsNull(Rappel.flgCentral, 0) = 1#(lf)                    -- And Rappel.entIdCliente = campanhas.camCentralCompras))#(lf)            -- And '01-' + Right('00' + Cast(ordemPub.ordPubMes As varchar), 2) + '-' + Cast(ordemPub.ordPubAno As varchar)#(lf)            -- Between Rappel.rapDataInicio And Rappel.rapDataFim Left Outer Join#(lf)    -- RappelTaxas With(NoLock) On RappelTaxas.rapId = Rappel.rapId#(lf)            -- And RappelTaxas.rapTaxCanalCodigo = ordemPub.canCodigo#(lf)            -- And RappelTaxas.rapTipTaxId = 1 #(lf)#(tab)Left Outer Join ratingsTabela indiceeq With(NoLock) On (IsNull(indiceeq.canCodigo, 0) = 0#(lf)                Or indiceeq.canCodigo = ordemPub.canCodigo)#(lf)            And indiceeq.ratDuracaoIntermed = encomendas.encMaterialDuracaoFacturacao#(lf)            And indiceeq.ratDuracaoBase = @durBase#(lf)            And encomendas.encDataExibicao Between indiceeq.ratDataInicio And indiceeq.ratDataFim #(lf)#(tab)Left Join ratingsTabela indiceeq2030 With(NoLock) On (IsNull(indiceeq2030.canCodigo, 0) = 0#(lf)                Or indiceeq2030.canCodigo = ordemPub.canCodigo)#(lf)            And indiceeq2030.ratDuracaoBase = @durBase#(lf)            And indiceeq2030.ratDuracaoIntermed = 30#(lf)            And encomendas.encDataExibicao Between indiceeq2030.ratDataInicio And indiceeq2030.ratDataFim #(lf)#(tab)Left Join aud_alvos With(NoLock) On aud_alvos.cod_alvo = IsNull(ordemPub.codAlvo, @AlvoCanal) #(lf)#(tab)Left Join aud_prev_faixa With(NoLock) On aud_prev_faixa.Cod_Alvo = aud_alvos.cod_alvo#(lf)            And aud_prev_faixa.CanCodigo = encomendas.canCodigo#(lf)            And encomendas.encDataExibicao >= aud_prev_faixa.dataInicio#(lf)            And (encomendas.encDataExibicao < aud_prev_faixa.dataFim#(lf)                Or aud_prev_faixa.dataFim Is Null)#(lf)            And encomendas.greComHoraInicio >= aud_prev_faixa.horaInicio#(lf)            And encomendas.greComHoraInicio < aud_prev_faixa.horaFim#(lf)            And DatePart(dw, encomendas.encDataExibicao) + 1 = aud_prev_faixa.DiaSemId#(lf)Where#(lf)    Year(encomendas.encDataExibicao) >= Year(GetDate()) - "&AnoUpdate&"", CommandTimeout=#duration(6, 6, 0, 0)]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"diaExib", type date}}),
+				    #"Personalizado Adicionado" = Table.AddColumn(#"Changed Type", "GRP Equivalente", each if [grpReal] = 0 then [grpPrevisto] * [indice_equi] else [grpReal] * [indice_equi]),
+				    #"Personalizado Adicionado2" = Table.AddColumn(#"Personalizado Adicionado", "GRP Previsto Equivalente", each [grpPrevisto] * [indice_equi]),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Personalizado Adicionado2",{{"GRP Equivalente", type number}, {"GRP Previsto Equivalente", type number}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Tipo Alterado2",0,null,Replacer.ReplaceValue,{"grpPrevisto", "grpReal"}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Replaced Value", "horaExib", "horaExib - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"horaExib - Copy", "MinutosExib"}}),
+				    #"Divided Column" = Table.TransformColumns(#"Renamed Columns", {{"horaExib", each _ / 60, type number}}),
+				    #"Arredondado por Defeito" = Table.TransformColumns(#"Divided Column",{{"horaExib", Number.RoundDown, Int64.Type}}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Arredondado por Defeito", {"cod_alvo"}, Alvos, {"cod_alvo"}, "Alvos", JoinKind.LeftOuter),
+				    #"Expanded Alvos" = Table.ExpandTableColumn(#"Merged Queries2", "Alvos", {"Alvo", "Alvo Yummi"}, {"Alvo", "Alvo Yummi"})
+				in
+				    #"Expanded Alvos"
+
+	annotation PBI_QueryRelationships = {"columnCount":33,"keyColumnNames":[],"queryRelationships":[{"keyColumnCount":1,"keyColumn":9,"otherKeyColumnIdentity":"Section1/Centrais/Changed Type.{Distribuidor,1}","KeyColumnCount":1}],"columnIdentities":["Section1/GMediaBI_Encomendas/Source.{encid,0}","Section1/GMediaBI_Encomendas/Source.{ordPubCodigo,1}","Section1/GMediaBI_Encomendas/Source.{canCodigo,2}","Section1/GMediaBI_Encomendas/Source.{anuncianteId,3}","Section1/GMediaBI_Encomendas/Source.{proId,4}","Section1/GMediaBI_Encomendas/Source.{ordPubNegociacao,5}","Section1/GMediaBI_Encomendas/Source.{horaExib,6}","Section1/GMediaBI_Encomendas/Source.{diaExib,7}","Section1/GMediaBI_Encomendas/Source.{tipo,8}","Section1/GMediaBI_Encomendas/Source.{distribuidorid,9}","Section1/GMediaBI_Encomendas/Source.{vendedor,10}","Section1/GMediaBI_Encomendas/Source.{valorPub,11}","Section1/GMediaBI_Encomendas/Source.{valorTab,12}","Section1/GMediaBI_Encomendas/Source.{valorBonus,13}","Section1/GMediaBI_Encomendas/Source.{valorRappel,14}","Section1/GMediaBI_Encomendas/Source.{grpPrevisto,15}","Section1/GMediaBI_Encomendas/Source.{grpReal,16}","Section1/GMediaBI_Encomendas/Source.{indice_equi,18}","Section1/GMediaBI_Encomendas/Source.{durEmissao,19}","Section1/GMediaBI_Encomendas/Source.{ordPubClaDescricao,20}","Section1/GMediaBI_Encomendas/Source.{bonDescricao,21}","Section1/GMediaBI_Encomendas/Source.{Distribuidor,22}","Section1/GMediaBI_Encomendas/Source.{tipPubDescricao,23}","Section1/GMediaBI_Encomendas/Replaced Value.{abr_alvo,24}","Section1/GMediaBI_Encomendas/Source.{proDescricao,25}","Section1/GMediaBI_Encomendas/Source.{tipProDescricao,26}","Section1/GMediaBI_Encomendas/Source.{negPerDescricao,29}","Section1/GMediaBI_Encomendas/Source.{negPerTipo,30}","Section1/Centrais/Origem.{Central,0}","Section1/GMediaBI_Encomendas/Arredondado.{GRP Equivalente,32}","Section1/GMediaBI_Encomendas/Arredondado.{GRP Previsto Equivalente,33}","Section1/GMediaBI_Encomendas/Changed Type.{custo grp,33}","Section1/TipoProduto/Source.{tipProDescricao,1}"],"ColumnCount":33,"KeyColumnNames":[],"ColumnIdentities":["Section1/GMediaBI_Encomendas/Source.{encid,0}","Section1/GMediaBI_Encomendas/Source.{ordPubCodigo,1}","Section1/GMediaBI_Encomendas/Source.{canCodigo,2}","Section1/GMediaBI_Encomendas/Source.{anuncianteId,3}","Section1/GMediaBI_Encomendas/Source.{proId,4}","Section1/GMediaBI_Encomendas/Source.{ordPubNegociacao,5}","Section1/GMediaBI_Encomendas/Source.{horaExib,6}","Section1/GMediaBI_Encomendas/Source.{diaExib,7}","Section1/GMediaBI_Encomendas/Source.{tipo,8}","Section1/GMediaBI_Encomendas/Source.{distribuidorid,9}","Section1/GMediaBI_Encomendas/Source.{vendedor,10}","Section1/GMediaBI_Encomendas/Source.{valorPub,11}","Section1/GMediaBI_Encomendas/Source.{valorTab,12}","Section1/GMediaBI_Encomendas/Source.{valorBonus,13}","Section1/GMediaBI_Encomendas/Source.{valorRappel,14}","Section1/GMediaBI_Encomendas/Source.{grpPrevisto,15}","Section1/GMediaBI_Encomendas/Source.{grpReal,16}","Section1/GMediaBI_Encomendas/Source.{indice_equi,18}","Section1/GMediaBI_Encomendas/Source.{durEmissao,19}","Section1/GMediaBI_Encomendas/Source.{ordPubClaDescricao,20}","Section1/GMediaBI_Encomendas/Source.{bonDescricao,21}","Section1/GMediaBI_Encomendas/Source.{Distribuidor,22}","Section1/GMediaBI_Encomendas/Source.{tipPubDescricao,23}","Section1/GMediaBI_Encomendas/Replaced Value.{abr_alvo,24}","Section1/GMediaBI_Encomendas/Source.{proDescricao,25}","Section1/GMediaBI_Encomendas/Source.{tipProDescricao,26}","Section1/GMediaBI_Encomendas/Source.{negPerDescricao,29}","Section1/GMediaBI_Encomendas/Source.{negPerTipo,30}","Section1/Centrais/Origem.{Central,0}","Section1/GMediaBI_Encomendas/Arredondado.{GRP Equivalente,32}","Section1/GMediaBI_Encomendas/Arredondado.{GRP Previsto Equivalente,33}","Section1/GMediaBI_Encomendas/Changed Type.{custo grp,33}","Section1/TipoProduto/Source.{tipProDescricao,1}"],"RelationshipInfo":[{"keyColumnCount":1,"keyColumn":9,"otherKeyColumnIdentity":"Section1/Centrais/Changed Type.{Distribuidor,1}","KeyColumnCount":1}]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

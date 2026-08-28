@@ -1,0 +1,26 @@
+table Responsavel
+	lineageTag: 3edbbfdd-cebb-4770-9a3f-56908c0662b9
+
+	column Id
+		formatString: 0
+		lineageTag: 3f712832-1a70-45bd-be7f-ed1ffecb56b4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Utilizadores[Id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		lineageTag: 384e5b16-64f9-4df9-87fc-037c0d923e76
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Utilizadores[Nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Responsavel-69315627-518d-46bc-987b-e389a0180052 = calculated
+		mode: import
+		source = Utilizadores
+
+	annotation PBI_Id = 0da2e0b227e043c3b37c56b0db42666c
+

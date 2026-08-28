@@ -1,0 +1,69 @@
+table Calendario
+	lineageTag: 9dcd13fa-2241-436e-8451-15c42bdecbb1
+
+	column Date
+		formatString: dd/mm/yyyy
+		lineageTag: cd134997-6f60-4945-a2e9-74468ccfa687
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variação
+			isDefault
+			relationship: fb6620ea-f2f4-4cbf-b56e-f42fb3dbbaf3
+			defaultHierarchy: LocalDateTable_fac7d48a-ceb4-4a15-a62e-65dcaa55cc44.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column MesAbre = FORMAT(Calendario[Date],"MMM")
+		lineageTag: b0ef4b5a-d2bb-47ba-80d8-574d31918911
+		summarizeBy: none
+		sortByColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month = MONTH(Calendario[Date])
+		formatString: 0
+		lineageTag: 2ba7c513-2126-4395-9614-deb62ac8d02c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano = YEAR(Calendario[Date])
+		formatString: 0
+		lineageTag: aa306109-99d8-49e5-ae83-39a55e8be227
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes-Ano = FORMAT((Calendario[Month] &"-"& Calendario[Ano]),"MMM-yyyy")
+		dataType: dateTime
+		formatString: yyyy-mm
+		lineageTag: 9d771ce0-a915-4e71-b2a8-ef8394aada81
+		summarizeBy: none
+		sortByColumn: Month
+
+		variation Variation
+			isDefault
+			relationship: 605f67b3-7df7-4569-acd3-308cd54ed797
+			defaultHierarchy: LocalDateTable_82d3aef1-caad-4e80-91e7-fd2f4fe88acf.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Column = MONTH(Calendario[Date]) &"-"& YEAR(Calendario[Date])
+		dataType: string
+		lineageTag: 0f6572b0-2997-4446-a146-30122a7d7e08
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendario-82de596a-06e9-4a6d-abdb-24377842d6b8 = calculated
+		mode: import
+		source = CALENDAR(DATE(year(now())-5, 1, 1), DATE(year(now()), 12, 31) )
+

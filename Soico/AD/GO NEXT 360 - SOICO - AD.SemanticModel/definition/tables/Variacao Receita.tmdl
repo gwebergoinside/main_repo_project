@@ -1,0 +1,295 @@
+table 'Variacao Receita'
+	lineageTag: 4fe62b0e-3fcf-45c5-b327-b048af7cd238
+
+	column data_carregamento
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: a82a3bbe-e0a0-4575-abf5-deb215c162f5
+		summarizeBy: none
+		sourceColumn: data_carregamento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column valorMensalId
+		dataType: int64
+		formatString: 0
+		lineageTag: 8bcf8e3c-e512-41fc-94d3-2b622e6ef0e8
+		summarizeBy: count
+		sourceColumn: valorMensalId
+
+		annotation SummarizationSetBy = Automatic
+
+	column clienteId
+		dataType: int64
+		formatString: 0
+		lineageTag: a1aaab3b-048c-4af6-9c5b-33771c7987a9
+		summarizeBy: count
+		sourceColumn: clienteId
+
+		annotation SummarizationSetBy = Automatic
+
+	column distribuidorId
+		dataType: int64
+		formatString: 0
+		lineageTag: 072081a5-6cbc-4276-bcd1-e3e4f89f7f9e
+		summarizeBy: count
+		sourceColumn: distribuidorId
+
+		annotation SummarizationSetBy = Automatic
+
+	column anuncianteId
+		dataType: int64
+		formatString: 0
+		lineageTag: bb45a315-92bb-4d4f-bb0b-d9016faae1b6
+		summarizeBy: none
+		sourceColumn: anuncianteId
+
+		annotation SummarizationSetBy = Automatic
+
+	column centralcomprasId
+		dataType: int64
+		formatString: 0
+		lineageTag: 158d5d02-7e06-4a08-856e-92c2c26e24bc
+		summarizeBy: count
+		sourceColumn: centralcomprasId
+
+		annotation SummarizationSetBy = Automatic
+
+	column agenciaId
+		dataType: int64
+		formatString: 0
+		lineageTag: f8b28d5a-4915-4600-8102-54342dd45236
+		summarizeBy: count
+		sourceColumn: agenciaId
+
+		annotation SummarizationSetBy = Automatic
+
+	column prodId
+		dataType: int64
+		formatString: 0
+		lineageTag: 969bce57-35a5-4dd5-bbfc-9b99ef3c0953
+		summarizeBy: count
+		sourceColumn: prodId
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipProId
+		dataType: string
+		lineageTag: 8a4243e5-d371-4eed-a670-8698a7ac32c0
+		summarizeBy: none
+		sourceColumn: tipProId
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9bcf7d13-f9b6-4cf1-a522-714f6cd4ecd7
+		summarizeBy: count
+		sourceColumn: pacId
+
+		annotation SummarizationSetBy = Automatic
+
+	column executivoId
+		dataType: int64
+		formatString: 0
+		lineageTag: d161d825-1356-472d-88c5-2eb827a63761
+		summarizeBy: count
+		sourceColumn: executivoId
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupoId
+		dataType: int64
+		formatString: 0
+		lineageTag: 88f533a1-1b3c-4f9d-b1d2-4fd788a75f07
+		summarizeBy: count
+		sourceColumn: grupoId
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		formatString: 0
+		lineageTag: 969e176d-1c07-4027-9a7a-eb576c245f31
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 89dc0d68-63d5-4cd7-89f6-ab7a1b503994
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column mesFacturacao
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b1ea2af-aae6-4adb-9cee-590ad317dd73
+		summarizeBy: sum
+		sourceColumn: mesFacturacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column anoFacturacao
+		dataType: int64
+		formatString: 0
+		lineageTag: 267dc706-5c18-4830-8146-dd02ef2ea42b
+		summarizeBy: sum
+		sourceColumn: anoFacturacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column edicao
+		dataType: int64
+		formatString: 0
+		lineageTag: 859e2311-7378-40d0-b7d7-5d224156ab34
+		summarizeBy: sum
+		sourceColumn: edicao
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipoPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: c5d331fe-8249-42cc-81d5-79cd61ec2ce3
+		summarizeBy: none
+		sourceColumn: tipoPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 1931904b-6858-432b-8848-f66cf115ba40
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column valorFact
+		dataType: double
+		lineageTag: b7c8ceda-8675-4b72-8460-17f52f2f27c1
+		summarizeBy: sum
+		sourceColumn: valorFact
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sumValorPub
+		dataType: double
+		lineageTag: 7fb365e4-118d-43a3-be5d-ff5a923063ee
+		summarizeBy: sum
+		sourceColumn: sumValorPub
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sumValorTab
+		dataType: double
+		lineageTag: 9d5be6c4-fd89-4405-8b28-ba83aa6ff12b
+		summarizeBy: sum
+		sourceColumn: sumValorTab
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sumValorBonus
+		dataType: double
+		lineageTag: 8d57bf03-9be1-426b-a5ab-dae798deccf3
+		summarizeBy: sum
+		sourceColumn: sumValorBonus
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ordPubCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: dd764994-df78-4a37-954c-7fa97c289c47
+		summarizeBy: sum
+		sourceColumn: ordPubCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column negperid
+		dataType: int64
+		formatString: 0
+		lineageTag: 2e80544a-d2f8-4bb3-90f1-f412bc314d8e
+		summarizeBy: sum
+		sourceColumn: negperid
+
+		annotation SummarizationSetBy = Automatic
+
+	column formato
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ddee278-23b8-4713-98fc-0485ab5c33b2
+		summarizeBy: sum
+		sourceColumn: formato
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data = 'Variacao Receita'[mes]&"-"&01&"-"&'Variacao Receita'[ano]
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b769a94a-4a33-4d93-933a-cbc3d30267f7
+		summarizeBy: none
+
+		variation Variação
+			isDefault
+			relationship: 935d4baf-fe22-436e-a851-419f56793096
+			defaultHierarchy: LocalDateTable_3c67d549-5f20-49aa-a857-cc198ae6b70e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Mês = ```
+			SWITCH(TRUE(),
+			            'Variacao Receita'[mes] = 1, "Janeiro" ,
+			            'Variacao Receita'[mes] = 2, "Fevereiro" ,
+			            'Variacao Receita'[mes] = 3, "Março" ,
+			            'Variacao Receita'[mes] = 4, "Abril" ,
+			            'Variacao Receita'[mes] = 5, "Maio" ,
+			            'Variacao Receita'[mes] = 6, "Junho" ,
+			            'Variacao Receita'[mes] = 7, "Julho" ,
+			            'Variacao Receita'[mes] = 8, "Agosto" ,
+			            'Variacao Receita'[mes] = 9, "Setembro" ,
+			            'Variacao Receita'[mes] = 10, "Outubro" ,
+			            'Variacao Receita'[mes] = 11, "Novembro" ,
+			            'Variacao Receita'[mes] = 12, "Dezembro" 
+			)
+			```
+		lineageTag: be364657-9760-485a-8edb-6b94e32ce895
+		summarizeBy: none
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Variacao Receita-773407c8-ae72-4c49-acc6-3422b189151d' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    *#(lf)From#(lf)    ValorMensalHistorico"]),
+				    Personalizado2 = Table.TransformColumnTypes(Source,{{"data_carregamento", type date}})
+				in
+				    Personalizado2
+
+	annotation PBI_QueryRelationships = {"columnCount":26,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Variacao Receita/Personalizado2.{data_carregamento,0}","Section1/Variacao Receita/Source.{valorMensalId,1}","Section1/Variacao Receita/Source.{clienteId,2}","Section1/Variacao Receita/Source.{distribuidorId,3}","Section1/Variacao Receita/Source.{anuncianteId,4}","Section1/Variacao Receita/Source.{centralcomprasId,5}","Section1/Variacao Receita/Source.{agenciaId,6}","Section1/Variacao Receita/Source.{prodId,7}","Section1/Variacao Receita/Source.{tipProId,8}","Section1/Variacao Receita/Source.{pacId,9}","Section1/Variacao Receita/Source.{executivoId,10}","Section1/Variacao Receita/Source.{grupoId,11}","Section1/Variacao Receita/Source.{mes,12}","Section1/Variacao Receita/Source.{ano,13}","Section1/Variacao Receita/Source.{mesFacturacao,14}","Section1/Variacao Receita/Source.{anoFacturacao,15}","Section1/Variacao Receita/Source.{edicao,16}","Section1/Variacao Receita/Source.{tipoPubId,17}","Section1/Variacao Receita/Source.{canCodigo,18}","Section1/Variacao Receita/Source.{valorFact,19}","Section1/Variacao Receita/Source.{sumValorPub,20}","Section1/Variacao Receita/Source.{sumValorTab,21}","Section1/Variacao Receita/Source.{sumValorBonus,22}","Section1/Variacao Receita/Source.{ordPubCodigo,23}","Section1/Variacao Receita/Source.{negperid,24}","Section1/Variacao Receita/Source.{formato,25}"],"ColumnCount":26,"KeyColumnNames":[],"ColumnIdentities":["Section1/Variacao Receita/Personalizado2.{data_carregamento,0}","Section1/Variacao Receita/Source.{valorMensalId,1}","Section1/Variacao Receita/Source.{clienteId,2}","Section1/Variacao Receita/Source.{distribuidorId,3}","Section1/Variacao Receita/Source.{anuncianteId,4}","Section1/Variacao Receita/Source.{centralcomprasId,5}","Section1/Variacao Receita/Source.{agenciaId,6}","Section1/Variacao Receita/Source.{prodId,7}","Section1/Variacao Receita/Source.{tipProId,8}","Section1/Variacao Receita/Source.{pacId,9}","Section1/Variacao Receita/Source.{executivoId,10}","Section1/Variacao Receita/Source.{grupoId,11}","Section1/Variacao Receita/Source.{mes,12}","Section1/Variacao Receita/Source.{ano,13}","Section1/Variacao Receita/Source.{mesFacturacao,14}","Section1/Variacao Receita/Source.{anoFacturacao,15}","Section1/Variacao Receita/Source.{edicao,16}","Section1/Variacao Receita/Source.{tipoPubId,17}","Section1/Variacao Receita/Source.{canCodigo,18}","Section1/Variacao Receita/Source.{valorFact,19}","Section1/Variacao Receita/Source.{sumValorPub,20}","Section1/Variacao Receita/Source.{sumValorTab,21}","Section1/Variacao Receita/Source.{sumValorBonus,22}","Section1/Variacao Receita/Source.{ordPubCodigo,23}","Section1/Variacao Receita/Source.{negperid,24}","Section1/Variacao Receita/Source.{formato,25}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,31 @@
+table TipoPessoa
+	lineageTag: c360f57f-4863-401d-ae32-6370b01078ac
+
+	column Id
+		dataType: string
+		lineageTag: 81d5498a-113a-4fae-bb9e-df724ea41fa7
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoPessoa
+		dataType: string
+		lineageTag: 2369fbed-73fe-4389-862a-c4a90fbaa6d0
+		summarizeBy: none
+		sourceColumn: TipoPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoPessoa-65f5ee91-840c-4f84-a0e8-124e04c4348a = m
+		mode: import
+		queryGroup: Agrupadores
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8lTSUfLMK0ktystXitWJVnIF8l0roPxYAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Id = _t, TipoPessoa = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Id", type text}, {"TipoPessoa", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

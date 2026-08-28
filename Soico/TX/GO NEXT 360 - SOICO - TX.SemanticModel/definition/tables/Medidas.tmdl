@@ -1,0 +1,890 @@
+table Medidas
+	lineageTag: 8ee8d01a-912b-4945-80cd-4cd3bb1802dd
+
+	measure 'Total Time (h)' = SUM(Contratos[DURACAO_MEDIA_TITULO_HORAS])
+		formatString: #,0.00
+		displayFolder: Time
+		lineageTag: 101ab857-644a-4311-81fb-aca9b982dbf4
+
+	measure '# Titles - Contratos' = DISTINCTCOUNT(Contratos[COD_TITULO])
+		formatString: #,0
+		displayFolder: Titles
+		lineageTag: 9ff74ec8-fa87-4115-beed-cdfba2051247
+
+	measure '# Titles 1º Exibition' = CALCULATE(DISTINCTCOUNT(Contratos[NUMERO_PROCESSO_EPISODIO]),Contratos[NUMERO_DE_RUNS_CONSUMIDOS]=1)
+		formatString: #,0
+		displayFolder: Titles
+		lineageTag: f7e4980a-93c6-45f5-850a-a4e2645bf978
+
+	measure 'Rights MO' = SUM(Contratos[VALOR_DIREITOS_MOEDA_ORIGINAL])
+		formatString: 0.00
+		displayFolder: Rights
+		lineageTag: 48254cdd-50b2-4da7-b5de-9cb4e379eeb5
+
+		changedProperty = FormatString
+
+	measure 'Rights ML' = SUM(Contratos[VALOR_DIREITOS])
+		formatString: #,0
+		displayFolder: Rights
+		lineageTag: 2ab81e24-85ab-4ba4-9d3d-32c09202b0e8
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Rights Consumed MO' = SUM(Contratos[VALOR_DIREITOS_CONSUMIDOS_MOEDA_ORIGINAL])
+		formatString: 0.00
+		displayFolder: Rights
+		lineageTag: 62780283-042f-4988-8618-4da4a89e404b
+
+		changedProperty = FormatString
+
+	measure 'Rights Consumed ML' = SUM(Contratos[VALOR_DIREITOS_CONSUMIDOS])
+		formatString: #,0
+		displayFolder: Rights
+		lineageTag: dc7bd487-5030-4874-a229-7503aeac492f
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Rights Existing MO' = [Rights MO]-[Rights Consumed MO]
+		formatString: 0.00
+		displayFolder: Rights
+		lineageTag: 3672293c-27fa-4ad6-bf24-e619b52b9a05
+
+		changedProperty = FormatString
+
+	measure 'Rights Existing ML' = [Rights ML]-[Rights Consumed ML]
+		formatString: #,0
+		displayFolder: Rights
+		lineageTag: c31dc6d4-5985-4c82-b763-b5c74dc3228f
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure '# Runs' = SUM(Contratos[NUMERO_DE_RUNS])
+		formatString: #,0
+		displayFolder: RUNS
+		lineageTag: 6a8d39d9-e48c-4f81-9fb3-bd193794d505
+
+	measure '# Runs Consumed' = SUM(Contratos[NUMERO_DE_RUNS_CONSUMIDOS])
+		formatString: #,0
+		displayFolder: RUNS
+		lineageTag: a5479833-1fd8-4122-ae81-3cf6733437df
+
+	measure '# Runs Existing' = [# Runs]-[# Runs Consumed]
+		formatString: #,0
+		displayFolder: RUNS
+		lineageTag: 243563af-30d1-4767-b2b2-dc39b71723ad
+
+	measure 'Rights Consumption ML' = SUM(Consumos[VALOR_DIREITOS_CONSUMO])
+		formatString: #,0
+		displayFolder: Rights
+		lineageTag: 03067b68-d413-4244-9172-78ab86fc11c3
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Rights Consumption MO' = SUM(Consumos[VALOR_DIREITOS_MOEDA_ORIGINAL_CONSUMO])
+		formatString: 0.00
+		displayFolder: Rights
+		lineageTag: 1ef51f2b-4e28-4eac-a077-550bd8843be8
+
+		changedProperty = FormatString
+
+	measure 'Other Costs ML' = sum(Contratos[VALOR_OUTROS_CUSTOS])
+		formatString: #,0.00
+		displayFolder: Other Costs
+		lineageTag: 27ddbf5d-0df5-496e-bcc5-4a686fa38653
+
+		changedProperty = FormatString
+
+	measure 'Other Costs Consumed ML' = sum(Contratos[VALOR_DIREITOS_CONSUMIDOS])
+		formatString: #,0.00
+		displayFolder: Other Costs
+		lineageTag: 51d80f3b-2729-4658-9c5e-02006a412fa4
+
+		changedProperty = FormatString
+
+	measure 'LY Rights ML' = CALCULATE([Rights ML],SAMEPERIODLASTYEAR('Date'[Date]))
+		formatString: #,0
+		displayFolder: LY
+		lineageTag: e99f152c-6946-466b-b5fd-8ab31402b56a
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'LY Other Costs ML' = CALCULATE([Other Costs ML],SAMEPERIODLASTYEAR('Date'[Date]))
+		formatString: 0.00
+		displayFolder: LY
+		lineageTag: 350a8812-5ccf-45a6-8695-271a2b9be5cf
+
+		changedProperty = FormatString
+
+	measure 'Rights by Title' = divide([Rights ML],[# Titles - Contratos])
+		formatString: 0.00
+		displayFolder: Titles
+		lineageTag: 8a9ca6a1-f6b9-49e3-bc47-9df67d748475
+
+		changedProperty = FormatString
+
+	/// Revenue
+	measure Revenue = CALCULATE( SUM(Consumos[RECEITA]), TREATAS( VALUES(Contratos[COD_TITULO]), Consumos[COD_TITULO] ))
+		formatString: #,0.0
+		displayFolder: Revenue
+		lineageTag: 986280d7-3fb2-4514-9837-7e341e38be60
+
+		changedProperty = FormatString
+
+	measure 'Other Costs Existing ML' = [Other Costs ML]-[Other Costs Consumed ML]
+		formatString: 0.00
+		displayFolder: Other Costs
+		lineageTag: 1d3943a9-c56e-46f1-81b5-ed39c6fbd0c9
+
+		changedProperty = FormatString
+
+	measure '# Programas 1º Exibition' = CALCULATE(DISTINCTCOUNT(Contratos[NUMERO_PROCESSO]),Contratos[NUMERO_DE_RUNS_CONSUMIDOS]=0)
+		formatString: #,0
+		displayFolder: Programas
+		lineageTag: 50d393dd-6ec9-42f1-ba72-57fc0b0368d4
+
+	measure '# Programas 2º Exibition' = CALCULATE(DISTINCTCOUNT(Contratos[NUMERO_PROCESSO]),Contratos[NUMERO_DE_RUNS_CONSUMIDOS]=1)
+		formatString: #,0
+		displayFolder: Programas
+		lineageTag: b08fa27b-11f4-4085-8088-e2f7fb09682d
+
+	measure 'Revenue by Title' = IF( CALCULATE( SUM(Consumos[RECEITA]) ) = 0, BLANK(), [Revenue] )
+		formatString: #,0.0
+		displayFolder: Titles
+		lineageTag: c697ad43-bc8c-4bb9-84d6-8757c0bb415d
+
+		changedProperty = FormatString
+
+	measure 'Runs by title' = [# Runs]/[# Titles - Contratos]
+		formatString: 0
+		displayFolder: Titles
+		lineageTag: 896ad3cc-aa31-4a28-8363-fc9d76e7dd36
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure '# Programas' = DISTINCTCOUNT(Contratos[NUMERO_PROCESSO])
+		formatString: #,0
+		displayFolder: Programas
+		lineageTag: 8c5d79a6-e8f4-4159-a54c-fa7c1697387b
+
+	measure '# Programas +2 Exibition' = CALCULATE(DISTINCTCOUNT(Contratos[NUMERO_PROCESSO]),Contratos[NUMERO_DE_RUNS_CONSUMIDOS]>1)
+		formatString: #,0
+		displayFolder: Programas
+		lineageTag: 80ab9d04-e65e-4743-9b78-238a05a29a48
+
+	measure 'Rentabilidade %' = DIVIDE([Revenue by Title]-[Custos], [Custos])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Revenue
+		lineageTag: 666d4fd5-6002-4535-ab23-7c26d4097b50
+
+	measure 'Ep Exibidos' =
+			
+			VAR _FVD = CALCULATE( DISTINCTCOUNT(Custos[Episodio]), USERELATIONSHIP( Calendario[Date], Custos[Data] ), USERELATIONSHIP( Canais[codigo], Custos[CodCanal] ) )
+			VAR _FVOC= CALCULATE( DISTINCTCOUNT(Custos[Episodio]), USERELATIONSHIP( Calendario[Date], Custos[Data] ), USERELATIONSHIP( Canais[codigo], Custos[CodCanal] ) )
+			RETURN
+			IF( _FVD = 0, BLANK(), _FVD)
+		formatString: 0
+		displayFolder: Episodio
+		lineageTag: 9f76ee1a-e1be-4308-8f0d-37af3100b5e5
+
+	measure 'Avg Receita' =
+			
+			VAR _Re = [Revenue by Title] / [Ep Exibidos]
+			RETURN
+			IF( _Re = 0, BLANK(), _Re)
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		displayFolder: Revenue
+		lineageTag: 0edb0790-2c11-4164-989d-8ea6393d70cc
+
+	measure Titulo =
+			
+			SWITCH (
+			    [Selected TituloParameter],
+			    1, SELECTEDVALUE(Titulo[Parameter]),
+			    2, SELECTEDVALUE(Titulo[Parameter]),
+			    3, SELECTEDVALUE(Titulo[Parameter]),
+			    4, SELECTEDVALUE(Titulo[Parameter]),
+			    5, SELECTEDVALUE(Titulo[Parameter]),
+			    6, SELECTEDVALUE(Titulo[Parameter]),
+			    7, SELECTEDVALUE(Titulo[Parameter]),
+			    8, SELECTEDVALUE(Titulo[Parameter]),
+			    9, SELECTEDVALUE(Titulo[Parameter]),
+			    10, SELECTEDVALUE(Titulo[Parameter]),
+			    11, SELECTEDVALUE(Titulo[Parameter]),
+			    12, SELECTEDVALUE(Titulo[Parameter]),
+			    13, SELECTEDVALUE(Titulo[Parameter]),
+			    14, SELECTEDVALUE(Titulo[Parameter]),
+			    15, SELECTEDVALUE(Titulo[Parameter]),
+			    16, SELECTEDVALUE(Titulo[Parameter]),
+			    17, SELECTEDVALUE(Titulo[Parameter]),
+			    18, SELECTEDVALUE(Titulo[Parameter]),
+			    19, SELECTEDVALUE(Titulo[Parameter])
+			    , "TX"
+			)
+		displayFolder: Titles
+		lineageTag: 224430c2-271e-4972-b09f-95999871bacc
+
+	measure 'Selected TituloParameter' =
+			
+			MIN ( Titulo[ID] )
+		formatString: 0
+		displayFolder: Titles
+		lineageTag: 25dd90ca-a365-4ef8-bfef-91a66340e71d
+
+	measure 'Rights + Other Costs' = [Rights ML]+[Other Costs ML]
+		displayFolder: Rights
+		lineageTag: 285eaef7-a187-4cbc-a48a-ac8a00d025fe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'LY Rights + Other Costs' = CALCULATE( [Rights + Other Costs], SAMEPERIODLASTYEAR( 'Date'[Date] ) )
+		formatString: 0.00
+		displayFolder: LY
+		lineageTag: ed52b819-f145-4e2a-8200-1c9c0c1e4ea4
+
+		changedProperty = FormatString
+
+	measure 'Tempo Médio Epis (m)' =
+			
+			VAR _min = SUM(Contratos[DURACAO_MEDIA_TITULO_MINUTOS])
+			VAR _ct = [Rights + Other Costs]
+			RETURN
+			--divide(_ct,_min)
+			Average(Contratos[DURACAO_MEDIA_TITULO_MINUTOS])
+		formatString: #,0
+		displayFolder: Episodio
+		lineageTag: 66808357-cbb2-4dd0-bd3b-206423727b9e
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure Start = ```
+			
+			    IF.EAGER(SELECTEDVALUE(Contratos[RunIlim]) = tRUE(), 9999999, IF.EAGER( [# Runs] * [# Titles - Contratos] = [# Runs Consumed], 99999999,  [# Runs Consumed]))  /*8*/
+			```
+		formatString: 0
+		displayFolder: Outros
+		lineageTag: 36a25c68-4fb1-486d-8ff8-01ff2f7a20af
+
+	measure VALOR_MED_EPI = ```
+			
+			--VAR Tempo = [Total Time (h)]*60 --  GMediaBI_Contratos[Duração Média Episódio (h)]
+			VAR CUSTO_TOTAL = SUM( Consumos[VALOR_DIREITOS_CONSUMO])+ SUM(Consumos[VALOR_OUTROS_CUSTOS_CONSUMO])
+			VAR Num_Ep = [# Runs Consumed - Consumos] -- [# Runs Consumed]
+			RETURN 
+			Divide(CUSTO_TOTAL,Num_Ep)
+			```
+		formatString: #,0
+		displayFolder: Episodio
+		lineageTag: c3979325-faff-4db3-9fa7-59a18068b837
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure Orcamento_Exib = sum(Orcamento_Exibcao[Orçamento_Exib])
+		formatString: 0.00
+		displayFolder: Orçamento
+		lineageTag: 11825f1e-a95b-45ce-8ec7-d735e745e6af
+
+		changedProperty = FormatString
+
+	measure 'Total Direitos Cons' = sum(Consumos[VALOR_DIREITOS_CONSUMO] ) + SUM(Consumos[VALOR_OUTROS_CUSTOS_CONSUMO] )
+		formatString: #,0.0
+		displayFolder: Rights
+		lineageTag: d501606c-b94f-447e-a7eb-1068642b07b3
+
+		changedProperty = FormatString
+
+	measure 'Total Direitos Cons LY' = calculate( sum(Consumos[VALOR_DIREITOS_CONSUMO] ) + SUM(Consumos[VALOR_OUTROS_CUSTOS_CONSUMO] ), SAMEPERIODLASTYEAR('Date Cons'[Date] ) )
+		formatString: #,0.0
+		displayFolder: Rights
+		lineageTag: 57784d59-3525-4f32-83a9-aa5c430ef27b
+
+		changedProperty = FormatString
+
+	measure '# Title Stock' = CALCULATE( DISTINCTCOUNT(Contratos[NUMERO_PROCESSO_EPISODIO]), FILTER( Contratos, Contratos[# RunStock] >0))
+		formatString: #,0
+		displayFolder: Titles
+		lineageTag: bdc26543-902d-44f8-8aec-bbfbf8fc28c1
+
+	measure '% Runs Consumed' = DIVIDE([# Runs Consumed], [# Runs])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Runs
+		lineageTag: 5399adb7-ba1f-4fb1-828d-084fd70fa82b
+
+	measure VALOR_MED_EPI_Stock = ```
+			
+			--VAR Tempo = [Total Time (h)]*60 --  GMediaBI_Contratos[Duração Média Episódio (h)]
+			VAR valor_Stock = [Rights Existing ML]
+			VAR Ep_Stock = [# Title Stock]
+			RETURN 
+			Divide(valor_Stock,Ep_Stock)
+			```
+		displayFolder: Episodio
+		lineageTag: 0d937ffb-2b2b-4ee5-ae47-f12b032f8340
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Valor Perda direitos' = ```
+			
+					Var _1 = 
+					CALCULATE( SUM(Contratos[VALOR_DIREITOS_EXISTENCIAS]), FILTER(Contratos, Contratos[Flag_Perdadireitos] =1) )
+			
+					Return 
+					IF(_1 = 0, BLANK(), _1)
+			```
+		formatString: #,0.0
+		displayFolder: Rights
+		lineageTag: 264512f9-2579-46a0-8cb7-ba5b05904530
+
+		changedProperty = FormatString
+
+	measure 'Run Stock_Final' = ```
+			
+			CALCULATE( 
+			    SUM(Contratos[RunsExisIlim] )
+			    --,TREATAS( VALUES(GMediaBI_Consumos[NUMERO_PROCESSO] ),Processo_Auxiliar[Processo] )
+			    --,USERELATIONSHIP( GMediaBI_Consumos[NUMERO_PROCESSO] ,Processo_Auxiliar[Processo] )
+			)
+			```
+		formatString: #,0
+		displayFolder: Runs
+		lineageTag: 3939025d-d5fd-44e3-a385-690400702ee5
+
+		changedProperty = FormatString
+
+	measure Objetivo = CALCULATE( SUM(Objetivo[negObjValor]) , Objetivo[negObjTipo] = "C" )
+		displayFolder: Outros
+		lineageTag: d8801d7d-5e51-40ff-9359-772309cb4f86
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Custo Episódio' = [Custos] / [Ep Exibidos]
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		displayFolder: Episodio
+		lineageTag: b89eed2c-bff9-4e4a-acff-fb3ee6c32cfd
+
+	measure Custos =
+			
+			VAR _1 = SUM(Custos[FaixaValorDireitos])+SUM(Custos[FaixaValorOutrosCustos])
+			RETURN
+			_1 --IF( _1 = 0, BLANK(), _1 )
+		formatString: #,0.0
+		displayFolder: Other Costs
+		lineageTag: a3dd26dc-8eaa-4ab7-9204-0d40141281bc
+
+		changedProperty = FormatString
+
+	measure Direitos =
+			
+			VAR _FVD = SUM(Custos[FaixaValorDireitos])
+			VAR _FVOC= SUM(Custos[FaixaValorOutrosCustos])
+			RETURN
+			IF( _FVD = 0, BLANK(), _FVD)
+		formatString: #,0.00
+		displayFolder: Rights
+		lineageTag: d06101b5-f89a-4947-9773-7000b0844148
+
+		changedProperty = FormatString
+
+	measure 'Outros Custos' =
+			
+			VAR _FVD = SUM(Custos[FaixaValorDireitos])
+			VAR _FVOC= SUM(Custos[FaixaValorOutrosCustos])
+			RETURN
+			IF( _FVOC = 0, BLANK(), _FVOC)
+		formatString: #,0
+		displayFolder: Other Costs
+		lineageTag: 675af5b2-8fbf-48e6-a310-b0bd58f147bd
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure CANAL_COMPRA_visual_Contratos = ```
+			
+			var _1 = CALCULATE( CONCATENATEX(SUMMARIZE(Contratos,Contratos[Canal Nome]),[Canal Nome],", ") )
+			Return 
+			 IF( LEN(_1) > 15, LEFT(_1,15) & "..." , _1 )
+			```
+		displayFolder: Visual
+		lineageTag: d9ef5906-948b-4658-9fc9-e33e71e80aec
+
+	measure CodContrato_visual_Consumos = ```
+			
+			var _1 = CALCULATE( CONCATENATEX(SUMMARIZE(Consumos,Consumos[COD_CONTRATO]),[COD_CONTRATO],", ") )
+			
+			Return 
+			 IF( LEN(_1) > 15, LEFT(_1,15) & "..." , _1 )
+			```
+		displayFolder: Visual
+		lineageTag: c5e64812-161f-4315-b442-468f0158d9fa
+
+	measure CodContrato_visual_Contratos = ```
+			
+			
+			Var _1 = CONCATENATEX(SUMMARIZE(Contratos, Contratos[CodContrato]),[CodContrato], ", " )
+			
+			--var _1 = CONCATENATEX(SUMMARIZE(Contratos,Contratos[NUMERO_PROCESSO]),[NUMERO_PROCESSO],", ")
+			
+			Return 
+			 IF( LEN(_1) > 15, LEFT(_1,15) & "..." , _1 )
+			--CodContrato_visual__ = IF.EAGER( HASONEVALUE(Programas[titulo]), max(Contratos[CodContrato]), BLANK() )
+			```
+		displayFolder: Visual
+		lineageTag: 17af3667-7688-4ec0-b830-25f0b2691fba
+
+	measure 'Duração Média Episódio (h)' =
+			
+			Var __seg = AVERAGE(Contratos[DURACAO_MEDIA_TITULO_MINUTOS])
+			RETURN
+			IF.EAGER( ISBLANK(__seg) , BLANK() ,
+			RIGHT ( "0" & INT ( __seg / 60 ), 2 )
+			    & ":"
+			    & RIGHT (
+			        "0"
+			            & INT ( ( __seg - INT (__seg / 60 ) * 60 ) ),
+			        2
+			    ))
+		displayFolder: Episodio
+		lineageTag: 9553073f-110d-4800-af01-70d0982da893
+
+	measure NUMERO_PROCESSO_visual_Consumos = ```
+			
+			var _1 = CALCULATE( CONCATENATEX(SUMMARIZE(Consumos,Consumos[NUMERO_PROCESSO]),[NUMERO_PROCESSO],", ") )
+			
+			Return 
+			 IF( LEN(_1) > 15, LEFT(_1,15) & "..." , _1 )
+			```
+		displayFolder: Visual
+		lineageTag: 8cb3c7be-5fd0-410a-87d7-94647366d0b5
+
+	measure NUMERO_PROCESSO_visual_Contratos = ```
+			
+			var _1 = CALCULATE( CONCATENATEX(SUMMARIZE(Contratos,Contratos[NUMERO_PROCESSO]),[NUMERO_PROCESSO],", ") )
+			
+			Return 
+			 IF( LEN(_1) > 15, LEFT(_1,15) & "..." , _1 )
+			 --IF.EAGER( ISINSCOPE(Contratos[NUMERO_PROCESSO]), max(Contratos[NUMERO_PROCESSO]), BLANK() )
+			--NUMERO_PROCESSO_visual_ = IF.EAGER( HASONEVALUE(Programas[titulo]), max(Contratos[NUMERO_PROCESSO]), BLANK() )
+			```
+		displayFolder: Visual
+		lineageTag: 84f61740-ac55-4f4e-89ef-59eba80da678
+
+	measure 'Rights Existing ML_Card' = CALCULATE([Rights Existing ML], REMOVEFILTERS(), KEEPFILTERS( Contratos[VALOR_DIREITOS_EXISTENCIAS]),  KEEPFILTERS( Contratos[Flag Stock]), not T_Contratos[Descricao] in {"Invalido", "Prog. Fictícios(Contabilidade)", "RTP", "RTP Informação"} )
+		displayFolder: Rights
+		lineageTag: 6fc78fe7-90a2-4361-881c-811628a7baae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Existencias_DataCompra =
+			
+			VAR _1 =calculate( SUM(contratos[VALOR_DIREITOS_EXISTENCIAS]), Filter(all('Date_Existencias'), 'Date_Existencias'[Date] < DATE( SELECTEDVALUE( 'Date_Existencias'[Ano] ), SELECTEDVALUE( 'Date_Existencias'[Mes] )+1, 1 )  ), USERELATIONSHIP('Date'[Date], Date_Existencias[Date]) ) --YEAR( Contratos[DATA_FIM_TITULO])  = SELECTEDVALUE('Date'[Ano]) && MONTH(Contratos[DATA_FIM_TITULO]) > 6 --MONTH(SELECTEDVALUE('Date'[Date])
+			--)  ||  Contratos[DATA_FIM_TITULO] =BLANK() ))))
+			RETURN
+			IF.EAGER( _1 = 0, BLANK(),
+			    IF.EAGER(SELECTEDVALUE('Date_Existencias'[Date])> DATE( YEAR(NOW()),MONTH(NOW())-1, 1),
+			    BLANK()
+			    , _1 )
+			)
+		formatString: #,0.00
+		displayFolder: Existências
+		lineageTag: 5de6b1f9-c476-4c60-bd20-924a2094ec0c
+
+		changedProperty = FormatString
+
+	measure 'Valor Existencia_Final' =
+			
+			CALCULATE(  [ValorExistencia mes seg] + [ValorConsumo mes seg] - [ValorCompra mes seg])
+		formatString: #,0.00
+		displayFolder: Existências
+		lineageTag: 042da037-9321-4f4b-ab04-07e541a5e32f
+
+		changedProperty = FormatString
+
+	measure Estatitica_Consumo = ```
+			
+			VAR _1 = 
+			CALCULATE( SUM('Consumos'[VALOR_DIREITOS_CONSUMO])
+			    ,USERELATIONSHIP( 'Canais Existencias'[codigo] , Consumos[COD_CANAL] )
+			    ,REMOVEFILTERS( Contratos[Descricao_Estado] ) 
+			    --,REMOVEFILTERS( T_Contratos[Descricao] ) 
+			    ,REMOVEFILTERS( Contratos[DataPlaneamento] ) 
+			    ,Consumos[Data fim_titulo] > SELECTEDVALUE('Date_Existencias'[Date]) || Consumos[Data fim_titulo] = BLANK()
+			    --,REMOVEFILTERS(Contratos[Flag Stock])
+			    ,USERELATIONSHIP( Date_Existencias[Date], 'Date Cons'[Date])
+			 )
+			RETURN
+			IF.EAGER( _1 = 0, BLANK(), _1 )
+			```
+		displayFolder: Existências
+		lineageTag: 2fc03212-9705-4df3-9d85-3cc66c6e4714
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Estatitica_Compras =
+			
+			VAR _1 =calculate( sum(contratos[VALOR_DIREITOS]), USERELATIONSHIP('Date'[Date], Date_Existencias[Date])) --, REMOVEFILTERS(Consumos[DATA_CONSUMO]))--, 'Date'[Date] < DATE( SELECTEDVALUE( 'Date'[Ano] ), SELECTEDVALUE( 'Date'[NºMês] )+1, 1 ) ) ) --YEAR( Contratos[DATA_FIM_TITULO])  = SELECTEDVALUE('Date'[Ano]) && MONTH(Contratos[DATA_FIM_TITULO]) > 6 --MONTH(SELECTEDVALUE('Date'[Date])
+			--)  ||  Contratos[DATA_FIM_TITULO] =BLANK() ))))
+			RETURN
+			IF.EAGER( _1 = 0, BLANK(), _1 )
+		displayFolder: Existências
+		lineageTag: 7c81bf6b-c6cd-433d-b6ae-303860a8a081
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ValorConsumo mes seg' = ```
+			
+			VAR _1 = SELECTEDVALUE(Date_Existencias[Anomes])+1
+			RETURN
+			CALCULATE(
+			    [Estatitica_Consumo]
+			    ,FILTER( all( Date_Existencias)
+			    ,Date_Existencias[Anomes] >= SELECTEDVALUE(Date_Existencias[Anomes])+1) 
+			)
+			```
+		displayFolder: Existências
+		lineageTag: dd8cc90f-ab1c-42d0-a6a0-14fb662b2743
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ValorCompra mes seg' = ```
+			
+			VAR _1 = SELECTEDVALUE(Date_Existencias[Anomes])
+			RETURN
+			CALCULATE([Estatitica_Compras], 
+			FILTER( all( Date_Existencias), 
+			Date_Existencias[Anomes] >= SELECTEDVALUE(Date_Existencias[Anomes])+1) 
+			)
+			
+			
+			```
+		displayFolder: Existências
+		lineageTag: d9dc1412-f405-420f-aaeb-d3e50dd4e6f8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ValorExistencia mes seg' = ```
+			
+			VAR _1 = SELECTEDVALUE(Date_Existencias[Anomes])
+			VAR _2 =  INT(year(now())& FORMAT(month(now()), 00))
+			RETURN
+			 CALCULATE([Existencias_DataCompra], 
+			 FILTER( all( Date_Existencias), 
+			 Date_Existencias[Anomes] =_2 --202210 --MAX(Date_Existencias[Anomes])
+			 ) 
+			 )
+			
+			--SUM(Contratos[VALOR_DIREITOS_EXISTENCIAS]))
+			```
+		formatString: #,0.0
+		displayFolder: Existências
+		lineageTag: 74e3363e-b5af-4943-a1f4-dd78039fac43
+
+		changedProperty = FormatString
+
+	measure 'Qtd Episodios_Existencia' = CALCULATE( DISTINCTCOUNT( Contratos[EPISODIO] ), REMOVEFILTERS(Date_Existencias) )
+		formatString: #,0
+		displayFolder: Existências
+		lineageTag: 702efb25-5df6-4086-a842-c73c06ca1556
+
+		changedProperty = FormatString
+
+	measure '# Qtd Runs_Existencias' = CALCULATE( SUM(Contratos[NUMERO_DE_RUNS]), REMOVEFILTERS(Date_Existencias))
+		formatString: #,0
+		displayFolder: Existências
+		lineageTag: 818883fb-c39e-4640-92f7-33c31a1fbf59
+
+		changedProperty = FormatString
+
+	measure Direitos_Existencias = CALCULATE( [Rights ML], REMOVEFILTERS(Date_Existencias))
+		displayFolder: Existências
+		lineageTag: 5f48a8cf-fa62-4cf0-a7fc-1a06851d2379
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '# Runs_Existencias_Consumo' = ```
+			
+			CALCULATE( 
+			    SUM(Consumos[Index])
+			    ,REMOVEFILTERS( Date_Existencias )
+			    --, ALL(Date_Existencias)
+			    ,Consumos[Ano/Mes] <= MAX(Date_Existencias[Anomes])
+			)
+			```
+		formatString: 0
+		displayFolder: Existências
+		lineageTag: 605f7947-542f-4de7-97ea-2bf5fe23a880
+
+		changedProperty = FormatString
+
+	measure '# Runs_Stock Existencia Apoio' =
+			
+			IF.EAGER( CALCULATE( SELECTEDVALUE( Titulos[RunIlimitado] ) = TRUE() ), BLANK(), CALCULATE( [# Qtd Runs_Existencias] - [# Runs_Existencias_Consumo] ) )
+		formatString: #,0
+		displayFolder: Existências
+		lineageTag: a03be6ba-d807-4ee7-9cca-276756aadfca
+
+		changedProperty = FormatString
+
+	measure 'OtherCosts_ Existencias' = CALCULATE( [Other Costs ML], REMOVEFILTERS(Date_Existencias))
+		formatString: #,0.00
+		displayFolder: Existências
+		lineageTag: 30c04a73-51ad-40f6-81c8-bed9fc0e7c2a
+
+		changedProperty = FormatString
+
+	measure '2Run Apoio' = ```
+			
+			VAR _1 = [# EpisodiosStockExistencias]
+			VAR _2 = [# Runs_Stock Existencia Final]
+			VAR _3 = [# Qtd Runs_Existencias]
+			VAR _4 = SELECTEDVALUE(Titulos[RunIlimitado])
+			VAR _5 = [1Run] 
+			VAR _6 = [Runs_Exist_consumidas]
+			RETURN
+			SWITCH(
+			    TRUE()
+			    ,_4 = TRUE(), BLANK()
+			    ,_2 < 1, BLANK()
+			    ,ISBLANK( _5 ), _2
+			    ,_1 = 1 && _2 > 0 && ISBLANK(_6), _3 - _5
+			    ,_2 = 1  && ISBLANK(_6), 0
+			    ,ISBLANK( _6 ), _2
+			    , ( ( NOT isblank( _1 ) || _1 <> 0 ) && ( NOT ISBLANK( _2 ) || _2 <> 0 ) ) && (_1-_2 = 0 || _1-_2 = 1 ) , 1
+			    , BLANK() 
+			)
+			// IF.EAGER( SELECTEDVALUE(Titulos[RunIlimitado]) = TRUE(), BLANK(),
+			// IF.EAGER( [# Runs_Stock Existencia Final] < 1, BLANK(),
+			// IF.EAGER( ISBLANK( [1Run] ), [# Runs_Stock Existencia Final], --Validar se fica nesta posição do IF
+			// IF.EAGER( [# EpisodiosStockExistencias] = 1 && [# Runs_Stock Existencia Final] > 0 && ISBLANK([Runs_Exist_consumidas]),  _3 - _5,
+			// IF.EAGER( [# Runs_Stock Existencia Final] = 1  && ISBLANK([Runs_Exist_consumidas]), 0, 
+			// --IF.EAGER( ISBLANK( [Runs_Exist_consumidas] ), _3 - _5,
+			// IF.EAGER( ISBLANK( [Runs_Exist_consumidas] ), [# Runs_Stock Existencia Final],
+			// IF.EAGER( ( ( NOT isblank( [# EpisodiosStockExistencias] ) || [# EpisodiosStockExistencias] <> 0 ) && ( NOT ISBLANK( [# Runs_Stock Existencia Final] ) || [# Runs_Stock Existencia Final] <> 0 ) ) && (_1-_2 = 0 || _1-_2 = 1 ) , 1, BLANK() ) ) ) ) ) ))
+			```
+		formatString: 0
+		displayFolder: Existências
+		lineageTag: 0047f58f-08b4-49df-8481-c57593bf30e4
+
+	measure 'Diferenca de Runs' = [# Qtd Runs_Existencias] - [# Runs_Stock Existencia Apoio]
+		formatString: 0
+		displayFolder: Existências
+		lineageTag: bf6d4e69-f1dd-49a3-8631-c1274dd82d61
+
+	measure 1Run =
+			
+			--SUMX( Titulos, IF.EAGER(SELECTEDVALUE(Titulos[RunIlimitado]), [# EpisodiosStockExistencias] - [Runs_Exist_Consumidas], [1Run Apoio] ) )
+			SUMX( VALUES( Titulos[CodTitulo] ), CALCULATE( [1Run Apoio] ) )
+		formatString: #,0
+		displayFolder: Existências
+		lineageTag: 9d3f5643-2528-4b66-9386-9ffb59af124c
+
+		changedProperty = FormatString
+
+	measure '1Run Apoio' = ```
+			
+			VAR _1 = SELECTEDVALUE( Titulos[RunIlimitado] )
+			VAR _2 = [# EpisodiosStockExistencias]
+			VAR _3 = [Runs_Exist_Consumidas]
+			VAR _4 = [Diferenca de Runs]
+			VAR _5 = [# Qtd Runs_Existencias]
+			VAR _6 = [# Runs_Stock Existencia Final]
+			RETURN
+			--IF.EAGER( CALCULATE( SELECTEDVALUE(Titulos[RunIlimitado]) = TRUE(), TREATAS( VALUES( Contratos[Cod_Titulo]), Titulos[CODTITULO] ) ), [# EpisodiosStockExistencias] - [Runs_Exist_Consumidas]
+			SWITCH(
+			    TRUE()
+			    ,_1 = TRUE(), _2 - _3
+			    ,ISBLANK( _4 ), BLANK()
+			    ,( ISBLANK( _5 ) || _5 = 0 ), BLANK()
+			    ,( ISBLANK( _6 ) || _6 = 0 ), BLANK()
+			    ,_4 = 0, 1
+			    ,BLANK()
+			)
+			// IF.EAGER( _1 = TRUE(), [# EpisodiosStockExistencias] - [Runs_Exist_Consumidas]
+			// ,IF.EAGER( ISBLANK( [Diferenca de Runs] ), BLANK()
+			// ,IF.EAGER( ( ISBLANK( [# Qtd Runs_Existencias] ) || [# Qtd Runs_Existencias] = 0 ), BLANK() 
+			// ,IF.EAGER( ( ISBLANK( [# Runs_Stock Existencia Final] ) || [# Runs_Stock Existencia Final] = 0 ), BLANK()
+			// ,IF.EAGER( [Diferenca de Runs] = 0 , 1, BLANK() ) ) ) ) )
+			```
+		formatString: 0
+		displayFolder: Existências
+		lineageTag: 1eb221b1-cc12-4ca6-911c-3bda99048725
+
+	measure 2Run =
+			
+			--SUMX( Titulos, IF.EAGER([# Runs_Stock Existencia Final] < 1, BLANK(), IF.EAGER( ISBLANK([# Runs_Existencias_Consumo] ), CALCULATE( [# Qtd Runs_Existencias] - [1Run] ), CALCULATE( [2Run Apoio] ) ) ))
+			SUMX( ALLSELECTED( Titulos[CodTitulo] ), CALCULATE( [2Run Apoio] ) )
+		formatString: #,0
+		displayFolder: Existências
+		lineageTag: 8bffc800-c149-4422-8485-c716c2fc2a6c
+
+		changedProperty = FormatString
+
+	measure 'Start Existencias' = ```
+			
+			--    IF.EAGER(SELECTEDVALUE(Contratos[RunIlim]) = tRUE(), 9999999, IF.EAGER( [# Runs] * [# Titles] = [# Runs Consumed], 99999999,  [# Runs Consumed]))  /*8*/
+			    IF.EAGER(SELECTEDVALUE(Contratos[RunIlim]) = tRUE(), 9999999, IF.EAGER( [# Qtd Runs_Existencias] * [Qtd Episodios_Existencia] = [# Runs_Existencias_Consumo], 99999999,  [# Runs_Existencias_Consumo]))  
+			```
+		formatString: 0
+		displayFolder: Existências
+		lineageTag: 41cf21d8-16da-4384-b39d-c96a7ccae904
+
+	measure Runs_Exist_Consumidas =
+			
+			CALCULATE(
+			    DISTINCTCOUNT(Consumos[COD_TITULO])
+			    --,ALL(Date_Existencias)
+			    ,REMOVEFILTERS(Date_Existencias)
+			    ,Consumos[Ano/Mes] <= MAX(Date_Existencias[Anomes])
+			    --,TREATAS( VALUES( Contratos[COD_TITULO] ), Consumos[COD_TITULO] )
+			)
+		formatString: 0
+		displayFolder: Existências
+		lineageTag: 812a79d1-787e-4b25-8dfc-6cfe25eb93ac
+
+	measure '# Runs_Stock Existencia Final' = SUMX( Titulos,  [# Runs_Stock Existencia Apoio] )
+		formatString: #,0
+		displayFolder: Existências
+		lineageTag: 816f1fa3-4bd7-42e1-8044-bfea6a90e04d
+
+		changedProperty = FormatString
+
+	measure '# Titles - Consumos' = DISTINCTCOUNT(Consumos[COD_TITULO])
+		formatString: #,0
+		displayFolder: Titles
+		lineageTag: 2e5ce24f-4a34-4679-aa41-e274a8013143
+
+		changedProperty = FormatString
+
+	measure '# Runs Consumed - Consumos' = SUM( Consumos[Index])
+		formatString: #,0
+		displayFolder: RUNS
+		lineageTag: 98736f50-2d78-4e84-8413-557c27454fa4
+
+		changedProperty = FormatString
+
+	measure 'Valor Stock - Consumos' = CALCULATE( SUM(Contratos[VALOR_DIREITOS_EXISTENCIAS]), TREATAS( VALUES(Consumos[NUMERO_PROCESSO]), Contratos[NUMERO_PROCESSO] ))
+		formatString: #,0
+		displayFolder: Episodio
+		lineageTag: ea1f9614-fd80-4526-a2cb-bf287f8aefd8
+
+		changedProperty = FormatString
+
+	measure '# Titles 1º Exibition - Consumos' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT(Contratos[NUMERO_PROCESSO_EPISODIO])
+			    ,Contratos[NUMERO_DE_RUNS_CONSUMIDOS] = 1
+			    ,TREATAS( VALUES( Consumos[COD_TITULO] ), Contratos[COD_TITULO] ) 
+			)
+			```
+		formatString: #,0
+		displayFolder: Titles
+		lineageTag: e1e64d2e-4d92-480d-9a2c-00d79aa576dd
+
+		changedProperty = FormatString
+
+	measure '# Stock - Consumos' = CALCULATE( SUM(Contratos[RunsExisIlim]), TREATAS( VALUES(Consumos[NUMERO_PROCESSO]), Contratos[NUMERO_PROCESSO] ))
+		formatString: #,0
+		displayFolder: Episodio
+		lineageTag: efde5d7b-eee7-4c02-b058-89bbc1437e42
+
+		changedProperty = FormatString
+
+	measure '# EpisodiosStockExistencias' = ```
+			
+			VAR _1 = SELECTEDVALUE(Date_Existencias[Anomes])
+			VAR _2 =  INT(year(now())& FORMAT(month(now()), 00))
+			RETURN
+			 CALCULATE(
+			    [Stock_Existencias_DataCompra]
+			    ,FILTER( 
+			        all( Date_Existencias)
+			        ,Date_Existencias[Anomes] =_2
+			    ) 
+			 )
+			```
+		formatString: #,0
+		displayFolder: Existências
+		lineageTag: 91b2068e-3ea5-4a39-b720-f09502402e66
+
+		changedProperty = FormatString
+
+	measure Stock_Existencias_DataCompra =
+			
+			VAR _1 =calculate( DISTINCTCOUNT(Contratos[COD_TITULO]), Filter(all('Date_Existencias'), 'Date_Existencias'[Date] < DATE( SELECTEDVALUE( 'Date_Existencias'[Ano] ), SELECTEDVALUE( 'Date_Existencias'[Mes] )+1, 1 )  ), USERELATIONSHIP('Date'[Date], Date_Existencias[Date]) )
+			RETURN
+			IF.EAGER( _1 = 0, BLANK(),
+			    IF.EAGER(SELECTEDVALUE('Date_Existencias'[Date])> DATE( YEAR(NOW()),MONTH(NOW())-1, 1),
+			    BLANK()
+			    , _1 )
+			)
+		formatString: 0
+		displayFolder: Existências
+		lineageTag: c98cd38b-f412-40bc-bdf5-d27d7331e2bd
+
+	measure Stock_Existencias_Consumo = ```
+			
+			VAR _1 = 
+			CALCULATE( SUM('Consumos'[Index])
+			    ,USERELATIONSHIP( 'Canais Existencias'[codigo] , Consumos[COD_CANAL] )
+			    ,REMOVEFILTERS( Contratos[Descricao_Estado] )
+			    ,REMOVEFILTERS( Contratos[DataPlaneamento] ) 
+			    ,Consumos[Data fim_titulo] > SELECTEDVALUE('Date_Existencias'[Date]) || Consumos[Data fim_titulo] = BLANK()
+			    ,REMOVEFILTERS(Contratos[Flag Stock])
+			    ,USERELATIONSHIP( Date_Existencias[Date], 'Date Cons'[Date])
+			 )
+			RETURN
+			IF.EAGER( _1 = 0, BLANK(), _1 )
+			```
+		formatString: 0
+		displayFolder: Existências
+		lineageTag: 487bb500-dd11-4f89-a4bd-a24f39cd4822
+
+	measure 'VALOR_MED_EPI - Contratos' = ```
+			
+			VAR _1 = CALCULATE( SUM( Consumos[VALOR_DIREITOS_CONSUMO]), TREATAS( VALUES( Contratos[COD_TITULO] ), Consumos[COD_TITULO] ) )
+			VAR _2 = CALCULATE( SUM( Consumos[VALOR_OUTROS_CUSTOS_CONSUMO]), TREATAS( VALUES( Contratos[COD_TITULO] ), Consumos[COD_TITULO] ) )
+			VAR CUSTO_TOTAL = _1 + _2
+			VAR Num_Ep = CALCULATE( SUM( Consumos[Index]), TREATAS( VALUES( Contratos[COD_TITULO] ), Consumos[COD_TITULO] ) )
+			RETURN 
+			Divide(CUSTO_TOTAL,Num_Ep)
+			```
+		displayFolder: Episodio
+		lineageTag: 3d2ba699-1afd-4d29-9e7d-266065a1ff93
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Valor Direitos - Consumos' = CALCULATE( SUM(Contratos[VALOR_DIREITOS]), TREATAS( VALUES(Consumos[NUMERO_PROCESSO]), Contratos[NUMERO_PROCESSO] ))
+		formatString: #,0
+		displayFolder: Rights
+		lineageTag: 4a2f9abc-7ea0-4e86-96b7-2d51ad3c311b
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	partition Medidas-6aa427d2-4c11-4c7f-b414-512b916de3a5 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_QueryRelationships = {"columnCount":0,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":[],"ColumnCount":0,"KeyColumnNames":[],"ColumnIdentities":[],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

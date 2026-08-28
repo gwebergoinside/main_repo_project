@@ -1,0 +1,3338 @@
+table ~Medidas
+	lineageTag: 990b436c-ad8f-404f-b743-871182f2fd81
+
+	measure Receita = ```
+			
+			    SWITCH([Selected SalesParameter],
+			    1, CALCULATE( SUM(Encomendas[valorPub]) , OrdemPubClassificacao[ordPubClaDescricao] <> "Pré-Facturação" ),
+			    3, [Val Faturado total] --CALCULATE( SUM('Faturação'[valorFaturado]) - sum(Encomendas[valorComissaoAgencia] ) - [ValorRappel_Atual] )
+			)
+			```
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: f9393cd9-2227-4a62-9a4d-f64a3591c69d
+
+	measure Bonus = sum(Encomendas[valorBonus])
+		formatString: #,0.0
+		displayFolder: Bonus
+		lineageTag: 0f2b1cfb-9072-4647-ba06-70963478cc85
+
+	measure 'Valor Tab' = sum(Encomendas[valorTab])
+		displayFolder: Tab
+		lineageTag: a65f3cfc-a000-4e75-b875-b09ed56ff80c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Objetivo =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, SUM(Objetivos[negObjValorBruto]),
+			    3, SUM(Objetivos[negObjValorBruto]),-- FICA O BRUTO ENQUANTO O FATURADO NÃO FOR LIQUIDO SUM(Objetivos[negObjValor]),
+			    BLANK ()
+			)
+		formatString: #,0.0
+		displayFolder: Objetivo
+		lineageTag: 07c37b61-3bfd-4499-9048-b0ea389354c3
+
+	measure 'Objetivo YTD' = ```
+			CALCULATE([Objetivo],FILTER(ALL(Calendario[Date]),Calendario[Date]<=MAX(Calendario[Date])&&YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])))) 
+			```
+		formatString: #,0
+		displayFolder: Objetivo
+		lineageTag: fa6d1dca-96f7-4ab7-8146-3fd0507c6af9
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Receita LY' = ```
+			
+			    SWITCH([Selected SalesParameter],
+			    1,
+			    CALCULATE([Receita], SAMEPERIODLASTYEAR(Calendario[Date])),
+			    3, 
+			    [Val Faturado total LY] 
+			)
+			```
+		formatString: #,0.0
+		displayFolder: Receita
+		lineageTag: 6afaf9a9-947f-4188-8569-5ab58b58d93c
+
+	measure 'Receita YTD' = ```
+			CALCULATE([Receita],
+			FILTER(
+			         ALL(Calendario[Date]),
+			         Calendario[Date]<=MAX(Calendario[Date])&&YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])))) 
+			```
+		formatString: #,0
+		displayFolder: Receita
+		lineageTag: 6f699cc2-f48a-4a87-af9d-bc4f31fb807e
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Bonus  LY' = CALCULATE([Bonus],SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.0
+		displayFolder: Bonus
+		lineageTag: f9bb6319-78e3-4cbb-b955-19914c40205f
+
+	measure 'YoY %' =
+			--if ([Receita LY]=0; if([Receita]=0;BLANK();1) ; (DIVIDE([Receita];[Receita LY])-1))
+			   IF( [Receita] = 0 && [Receita LY] = 0, BLANK() , IF( [Receita LY] = 0 , 1 ,
+					DIVIDE([Receita] , [Receita LY] ) - 1 --)
+			))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Receita
+		lineageTag: 67fe1c3b-a214-43b9-a25f-29e38871eadf
+
+	measure 'Receita LY YTD' =
+			CALCULATE([Receita LY],
+			FILTER(
+			         ALL(Calendario[Date]),
+			         Calendario[Date]<=MAX(Calendario[Date])&&YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date]))))
+		formatString: #,0.0
+		displayFolder: Receita
+		lineageTag: d815e68d-e9e6-4cbf-ae6d-854a39fd6ce1
+
+	measure 'YoY YTD %' = ```
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, 
+			     IF.EAGER ([Receita LY YTD Atual Month]=0,
+			                IF.EAGER([Receita YTD Atual Month]=0,BLANK(),1) , (DIVIDE([Receita YTD Atual Month],[Receita LY YTD Atual Month])-1)),
+			    3, IF.EAGER ([Val Faturado YTD Atual Month]=0, 
+				            IF.EAGER([Val Faturado YTD Atual Month]=0,BLANK(),1) , (DIVIDE([Val Faturado YTD Atual Month],[Val faturado LY YTD Atual Month])-1))
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Receita
+		lineageTag: 5a19f43e-603f-4350-b836-89463a15f347
+
+		changedProperty = FormatString
+
+	measure 'Objetivo %' = ```
+			if ([Objetivo]=0, 
+			if([Receita]=0,BLANK(),1) , (DIVIDE([Receita],[Objetivo])-1))
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Objetivo
+		lineageTag: 25137b98-6285-46df-a86f-747cdefe68eb
+
+	measure 'Valor segundo' = divide([Receita],sum(Encomendas[durEmissao]))
+		formatString: #,0.00
+		displayFolder: Ocupação
+		lineageTag: 7daeae82-9745-4d55-bf2b-0f6efdb4c732
+
+	measure 'Receita Sem Neg' = CALCULATE([Receita],Encomendas[ordPubNegociacao] =1)
+		formatString: #,0.0
+		displayFolder: Receita
+		lineageTag: 5a3727d3-4f26-43fa-b785-8701b9c2c3c5
+
+	measure 'Receita Com Neg' = CALCULATE([Receita],Encomendas[ordPubNegociacao] <>1)
+		formatString: #,0.0
+		displayFolder: Receita
+		lineageTag: 23136380-bebc-484a-b35a-d0f748d96d55
+
+	measure SumLost =
+			--CALCULATE([Receita LY Ytdd];FILTER(Anunciante;[Receita LY Ytdd]>0 && (ISBLANK([Receita])||[Receita]=0)))
+			CALCULATE([Receita LY YTD Atual Month],FILTER(Anunciante,[Receita LY YTD Atual Month]>0 && (ISBLANK([Receita])||[Receita]=0)))
+		formatString: #,0.00
+		displayFolder: Outros
+		lineageTag: 101020cc-eb1f-4388-98d6-06104a82b782
+
+	measure percentVarLost =
+			
+			Var __1nivel = DIVIDE(CALCULATE ( [SumLost] ) , [Receita LY YTD Atual Month] ) --CALCULATE ( [SumLost] ; ALLSELECTED(GMediaBI_Encomendas[Central]) ))
+			Var __2nivel = DIVIDE(CALCULATE ( [SumLost] ) , CALCULATE ( [SumLost] , ALLSELECTED(Anunciante[Anunciante]) ))
+			--Var __3nivel = CALCULATE ( [SumLost] ) / CALCULATE ( [SumLost] ; ALLSELECTED(Vendedores[UtiNome]) )
+			--Var __level2 = if(__3nivel=1 ; __2nivel;__3nivel)
+			RETURN
+			if(__2nivel = 1, __1nivel , __2nivel)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: abead50c-1500-40ab-a8b4-a52e54485bdb
+
+	measure SumEarned =
+			--CALCULATE([Receita];FILTER(Anunciante;[Receita]>0 && (ISBLANK([Receita LY Ytdd])||[Receita LY Ytdd]=0)))
+			CALCULATE([Receita],FILTER(Anunciante,[Receita YTD Atual Month]>0 && (ISBLANK([Receita LY YTD Atual Month])||[Receita LY YTD Atual Month]=0)))
+		displayFolder: Outros
+		lineageTag: 1de9dbd1-d79f-4033-bd15-f0e2645c4fc4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure percentVarEarned = ```
+			--divide([Receita];[SumEarned])
+			--CALCULATE ( divide([SumEarned];[Receita]) ;
+			--        ALLEXCEPT ( Anunciante;Anunciante[entNome] )
+			--    )
+			--CALCULATE ( [SumEarned] )
+			--    / CALCULATE ( [SumEarned]; ALLEXCEPT ( GMediaBI_Encomendas; GMediaBI_Encomendas[Central] ))
+			 
+			Var __1nivel = DIVIDE(CALCULATE ( [SumEarned] ) , [Receita YTD Atual Month] ) -- CALCULATE ( [SumEarned] ; ALLSELECTED(GMediaBI_Encomendas[Central]) )
+			Var __2nivel = DIVIDE(CALCULATE ( [SumEarned] ) , CALCULATE ( [SumEarned] , ALLSELECTED(Anunciante[Anunciante]) ))
+			--Var __3nivel = CALCULATE ( [SumEarned] ) / CALCULATE ( [SumEarned] ; ALLSELECTED(Vendedores[UtiNome]) )
+			--Var __level2 = if(__3nivel=1 ; __2nivel;__3nivel)
+			RETURN
+			if(__2nivel = 1, __1nivel , __2nivel)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: b1cda887-4a80-43ac-af3b-2a0016451e23
+
+	measure percentVarKeep = divide(([Receita YTD Atual Month]-[Receita LY YTD Atual Month]),[Receita LY YTD Atual Month])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: 097b7a7c-246d-4473-af25-26f2c7f1c980
+
+	measure SumInvestimento = [Investimento]
+		formatString: #,0.0
+		displayFolder: Investimento
+		lineageTag: d79095f2-6142-42a8-91e6-a6fd977f9837
+
+	measure '% Share Exclusivos' =
+			
+			VAR _1 = CALCULATE( [SumInvestimento], InvestmentGRPs[CountCanais] = 1)
+			VAR _2 = CALCULATE( [SumInvestimento], ALL( Advertisers[Anunciante]) )
+			--, InvestmentGRPs[Grupo Canais] = "SIC"
+			RETURN
+			DIVIDE( _1, _2)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Share
+		lineageTag: ca84a6fa-2d69-4400-830e-534d16ef155b
+
+		changedProperty = FormatString
+
+	measure 'Taxa de Ocupação' = IF( divide([Ocupação Normal],[Grelha Max Normal]) = 0, BLANK(), divide([Ocupação Normal],[Grelha Max Normal]) )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Ocupação
+		lineageTag: 9d027034-cdcb-4db5-92ae-8200101e858b
+
+	measure 'Ocupação Normal' = sum(Ocupacao[OcupacaoNormal])
+		formatString: 0
+		displayFolder: Ocupação
+		lineageTag: b08d7cd4-18a2-450d-b417-e15cbcda3a3b
+
+	measure 'Grelha Max Normal' = SUM(Ocupacao[GrelhaMaxNormal])
+		formatString: 0
+		displayFolder: Ocupação
+		lineageTag: f5046e34-d4ff-480c-a1c1-05cb18466095
+
+	measure 'Canal Max Normal' = sum(Ocupacao[CanalMaxNormal])
+		formatString: 0
+		displayFolder: Ocupação
+		lineageTag: 81135339-d9d4-425a-b49b-5f45af3020da
+
+	measure 'Taxa de Capacidade' = divide([Grelha Max Normal],[Canal Max Normal])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Ocupação
+		lineageTag: 9cd00043-4a68-43e0-9761-7f30c79f8ef2
+
+	measure 'Receita Atual' = calculate([Receita], FILTER(Calendario, month( Calendario[Date])= MONTH(NOW()) && Year(Calendario[Date]) = YEAR(NOW() )))
+		formatString: #,0.0
+		displayFolder: Receita
+		lineageTag: 4757ccc1-5b11-4843-a338-69394ca4c59d
+
+	measure NumeroSpots = IF( sum(Ocupacao[NumeroSpots]) = 0, BLANK(), sum(Ocupacao[NumeroSpots]) )
+		formatString: 0
+		displayFolder: Ocupação
+		lineageTag: ef85846a-a51a-4068-8f30-0935f6171f31
+
+	measure 'Taxa Ocupacao Max' = divide([Ocupação Normal],[Canal Max Normal])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: 0e996409-a3db-4ed3-a634-1fca96b340bd
+
+	measure 'Simulador % Share Investimento Anunciante' = IF( DIVIDE([SumInvestimento],CALCULATE([SumInvestimento],ALLEXCEPT(InvestmentGRPs,Advertisers[Anunciante],Calendario[Ano],Calendario[Mes]))) >= [Parâmetro Valor] , 1,0 )
+		formatString: 0
+		displayFolder: Outros
+		lineageTag: 67580828-ea73-4f08-b3b1-8e9588836520
+
+	measure 'Taxa Ocupacao Max AY' =
+			
+			Var __ocu = CALCULATE( sum(Ocupacao[OcupacaoNormal])) --; Calendario_Pub[Ano] = YEAR(NOW()) )
+			Var __Max = CALCULATE( sum(Ocupacao[CanalMaxNormal])) --; Calendario_Pub[Ano] = YEAR(NOW()) )
+			Return
+			--CALCULATE( divide([Ocupação Normal];[Canal Max Normal]) ; Calendario_Pub[Ano] = YEAR(NOW())-1 )
+			DIVIDE(__ocu,__Max)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Ocupação
+		lineageTag: da6446c3-1197-47e1-9d96-ebcd532d8de5
+
+	measure 'Taxa Ocupacao Max LY' =
+			
+			Var __ocu = CALCULATE( sum(Ocupacao[OcupacaoNormal]) , SAMEPERIODLASTYEAR(Calendario[Date]) )
+			Var __Max = CALCULATE( sum(Ocupacao[CanalMaxNormal]) , SAMEPERIODLASTYEAR(Calendario[Date]) )
+			Return
+			--CALCULATE( divide([Ocupação Normal];[Canal Max Normal]) ; Calendario_Pub[Ano] = YEAR(NOW())-1 )
+			DIVIDE(__ocu,__Max)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Ocupação
+		lineageTag: 3cc63b56-b6b0-4ca1-8e86-4c5591c84ad3
+
+	measure 'Taxa Ocupacao LY' =
+			
+			Var __ocu = CALCULATE( sum(Ocupacao[OcupacaoNormal]) , SAMEPERIODLASTYEAR(Calendario[Date]) )
+			Var __Max = CALCULATE( sum(Ocupacao[GrelhaMaxNormal]) , SAMEPERIODLASTYEAR(Calendario[Date]) )
+			Return
+			--CALCULATE( divide([Ocupação Normal];[Canal Max Normal]) ; Calendario_Pub[Ano] = YEAR(NOW())-1 )
+			DIVIDE(__ocu,__Max)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Ocupação
+		lineageTag: e04e27e1-d002-4a87-b2c8-674568e10917
+
+	measure 'Taxa Ocupacao AY' =
+			
+			Var __ocu = CALCULATE( sum(Ocupacao[OcupacaoNormal])) --; Calendario_Pub[Ano] = YEAR(NOW()) )
+			Var __Max = CALCULATE( sum(Ocupacao[GrelhaMaxNormal])) --; Calendario_Pub[Ano] = YEAR(NOW()) )
+			Return
+			--CALCULATE( divide([Ocupação Normal];[Canal Max Normal]) ; Calendario_Pub[Ano] = YEAR(NOW())-1 )
+			DIVIDE(__ocu,__Max)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Ocupação
+		lineageTag: 3c070ded-7bbd-4dd5-8517-e655ba087376
+
+	measure 'Ocupação Normal AY' = CALCULATE( sum(Ocupacao[OcupacaoNormal])) --; Calendario_Pub[Ano] = YEAR(NOW() ) )
+		formatString: 0
+		displayFolder: Ocupação
+		lineageTag: d7f81277-2f4f-464c-9351-e01c25540119
+
+	measure 'Ocupação Normal LY' = CALCULATE( sum(Ocupacao[OcupacaoNormal]) , SAMEPERIODLASTYEAR(Calendario[Date]) )
+		formatString: 0
+		displayFolder: Ocupação
+		lineageTag: e0fec29e-8c44-4db0-bbf0-aaf9c0735a27
+
+	measure 'Desconto Medio' = DIVIDE(SUM(Encomendas[valorTab])-SUM(Encomendas[valorPub]),SUM(Encomendas[valorTab]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: GRP
+		lineageTag: 2149a9ae-df0f-458e-a82f-80dacd753723
+
+	measure 'Custo Médio GRP Equivalente LY' = CALCULATE( [CM GRP Equivalente] , SAMEPERIODLASTYEAR(Calendario[Date]))
+		formatString: #,0.0
+		displayFolder: GRP
+		lineageTag: 5d19a6e7-2c43-476b-8fe6-99237c170743
+
+	measure 'SumInvestimento LY' = CALCULATE([Investimento] , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		displayFolder: Investimento
+		lineageTag: 660b0876-fd71-4c40-befc-59721d9aa512
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo YTD Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]),
+			         CALCULATE([Objetivo Bruto], DATESYTD(Calendario[Date])), CALCULATE( [Objetivo Bruto], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		formatString: #,0
+		displayFolder: Objetivo
+		lineageTag: afc05245-60cc-4760-aebe-cf1424e977fa
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Receita LY YTD Atual Month' = ```
+			
+			    IF ( ISFILTERED(Calendario[Mes]), CALCULATE([Receita LY] , DATESYTD(Calendario[Date])), CALCULATE( [Receita LY] , FILTER( ALL(Calendario[Date]),
+			            MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )   
+			```
+		formatString: #,0
+		displayFolder: Receita
+		lineageTag: 09634f02-4716-4973-9a68-7006664edafd
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Ocupação LY' = ```
+			
+			VAR Duration = CALCULATE( SUM(Encomendas[durEmissao]), SAMEPERIODLASTYEAR(Calendario[Date]))
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK() , BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		displayFolder: Ocupação
+		lineageTag: 503992e1-a13f-430f-9724-73dd28c579c5
+
+	measure 'Ocupação vs Ocupação LY' = ```
+			
+			Var __Ocu = SUM(Encomendas[durEmissao])
+			Var __OcuLY = CALCULATE(SUM(Encomendas[durEmissao]),SAMEPERIODLASTYEAR(Calendario[Date]))
+			--Var __blank = SUM( GMediaBI_Encomendas[GRP Equivalente]) <> BLANK() && SUM(GMediaBI_Encomendas[GRP Previsto Equivalente]) <> BLANK()
+			RETURN
+			IF( __Ocu = __OcuLY , 0 , 
+			IF( __Ocu > __OcuLY , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Ocupação
+		lineageTag: c0bbf1f7-1238-406c-91a2-0fcf3dac9a93
+
+	measure 'Bonus vs Bonus LY' = ```
+			
+			Var __Bonus = [Bonus]
+			Var __BonusLY = [Bonus  LY]
+			--Var __blank = SUM( GMediaBI_Encomendas[GRP Equivalente]) <> BLANK() && SUM(GMediaBI_Encomendas[GRP Previsto Equivalente]) <> BLANK()
+			RETURN
+			IF( __Bonus = __BonusLY , 0 , 
+			IF( __Bonus > __BonusLY , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Bonus
+		lineageTag: 4c5fc9fd-ea6c-4654-8ebc-abe7ff2b1aa4
+
+	measure 'CM GRP Equivalente' = ```
+			
+			CALCULATE(
+			    DIVIDE( [Receita] 
+			        , SUM(Encomendas[GRP Total] 
+			        --, SUM( Encomendas[GRP Equivalente]
+			        )  
+			    )
+			    --, FILTER(Encomendas, Encomendas[Alvo] <> "Sem Alvo" )
+			)
+			```
+		formatString: #,0.0
+		displayFolder: Outros
+		lineageTag: f9085e37-f176-4c0b-9bfa-201b36bf7c74
+
+	measure 'Receita YTD Atual Month' = ```
+			
+			    IF.EAGER( 
+			        ISFILTERED(Calendario[Mes]), 
+			            CALCULATE([Receita], 
+			                    DATESYTD(Calendario[Date])
+			                    ), 
+			            CALCULATE( [Receita],
+			                    FILTER( ALL(Calendario[Date]),
+			                    MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) 
+			                    ) 
+			            ) 
+			    )
+			    
+			```
+		formatString: #,0
+		displayFolder: Receita
+		lineageTag: a55e6a2f-e23b-45c7-b2d4-11984371298a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'percentVarEarned Gestor' = ```
+			--divide([Receita];[SumEarned])
+			--CALCULATE ( divide([SumEarned];[Receita]) ;
+			--        ALLEXCEPT ( Anunciante;Anunciante[entNome] )
+			--    )
+			--CALCULATE ( [SumEarned] )
+			--    / CALCULATE ( [SumEarned]; ALLEXCEPT ( GMediaBI_Encomendas; GMediaBI_Encomendas[Central] ))
+			 
+			--Var __2nivel = CALCULATE ( [SumEarned] ) / CALCULATE ( [SumEarned] ; ALLSELECTED(GMediaBI_Encomendas[Central]) )
+			Var __2nivel = DIVIDE(CALCULATE ( [SumEarned] ) , CALCULATE ( [SumEarned] , ALLSELECTED(Anunciante[Anunciante]) ))
+			Var __1nivel = DIVIDE(CALCULATE ( [SumEarned] ) , [Receita YTD Atual Month] )-- CALCULATE ( [SumEarned] ; ALLSELECTED(Vendedores[Gestor de Conta]) ) )
+			--Var __level2 = if(__3nivel=1 ; __2nivel;__3nivel)
+			RETURN
+			if(__2nivel = 1, __1nivel , __2nivel)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: 22a3f699-72d1-4a25-801f-46933b2d54a2
+
+	measure 'percentVarLost Gestor' =
+			
+			--Var __3nivel = CALCULATE ( [SumLost] ) / CALCULATE ( [SumLost] ; ALLSELECTED(GMediaBI_Encomendas[Central]) )
+			Var __2nivel = DIVIDE(CALCULATE ( [SumLost] ) , CALCULATE ( [SumLost] , ALLSELECTED(Anunciante[Anunciante]) ))
+			Var __1nivel = DIVIDE(CALCULATE ( [SumLost] ) , [Receita LY YTD Atual Month] ) --CALCULATE ( [SumLost] ; ALLSELECTED(Vendedores[Gestor de Conta]) ))
+			--Var __level2 = if(__3nivel=1 ; __2nivel;__3nivel)
+			RETURN
+			if(__2nivel = 1, __1nivel , __2nivel)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: d3792651-f21b-4671-a3f9-a525ccd3b000
+
+	measure 'Bonus Var €' =
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorBonus] ),0)
+			VAR _val2 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorBonus] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0)
+			var _result = _val1-_val2
+			RETURN
+			IF(_result =0, BLANK(), _val1-_val2 )
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		displayFolder: Bonus
+		lineageTag: 042c3673-7202-4194-a648-c1b0e1da994b
+
+	measure 'Receita Var €' =
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorPub] ),0)
+			VAR _val2 = CALCULATE( ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0))
+			var _result = _val1-_val2
+			RETURN
+			IF(_result =0, BLANK(), _val1-_val2 )
+			
+			// Previous Sales :=
+			// CALCULATE (
+			//     [Sales Amount],
+			//     ALL ( 'Date' ),
+			//     USERELATIONSHIP ( 'Date'[Date], 'Previous Date'[Date] )
+			// )
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: 70a6176c-54c5-434f-97a0-6198b9394bbd
+
+	measure 'Receita Var %' = ```
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorPub] ),0)
+			VAR _val2 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0)
+			RETURN
+			DIVIDE([Receita Var €],_val2,1)
+			
+			// Receita Var YTD % = 
+			// var CurrDate = MAX('Variacao Receita'[data_carregamento])
+			// var _maxdate = EOMONTH(CurrDate,-1)
+			// var _mindate = STARTOFMONTH('Variacao Receita'[data_carregamento])
+			// var _lastday = ROUND( CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ),FILTER(ALL(Calendario[Date]),Calendario[Date] = _maxdate), REMOVEFILTERS('Variacao Receita'[data_carregamento])),0)
+			// VAR _val1 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ) ),0)
+			
+			// RETURN
+			// DIVIDE(_val1-_lastday,_lastday)
+			// --_val1
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Receita
+		lineageTag: 835e3d05-e323-42a1-acca-52e9a4037a06
+
+	measure 'Bonus Var %' =
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorBonus] ),0)
+			VAR _val2 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorBonus] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0)
+			RETURN
+			DIVIDE([Bonus var €],_val2,1)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Bonus
+		lineageTag: 9c2a620d-5b63-43e4-b715-7753d0a8d329
+
+	measure 'GRP LY' = CALCULATE( SUM( Encomendas[GRP Equivalente] ) , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		displayFolder: GRP
+		lineageTag: 7b919dc1-dcc9-4d37-964d-74440bbfedac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receita %' =
+			
+			DIVIDE([Receita]-[Receita LY],[Receita LY])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Receita
+		lineageTag: 49be5123-b365-4aeb-bfba-bad364d46ec4
+
+	measure 'Canal percentVarLost' =
+			
+			Var __countAnunc = CALCULATE(DISTINCTCOUNT(Anunciante[Anunciante]),FILTER(Anunciante,[Receita]>0 || [Receita LY]>0))
+			Var __countPerdidos = CALCULATE(DISTINCTCOUNT(Anunciante[Anunciante]),FILTER(Anunciante,[Receita LY]>0 && (ISBLANK([Receita])||[Receita]=0)))
+			--Var __sumlost = CALCULATE([Receita LY];FILTER(Anunciante;[Receita LY]>0 && (ISBLANK([Receita])||[Receita]=0)))
+			--Var __2nivel = CALCULATE ( [Canal SumEarned] ) / CALCULATE ( [Canal SumEarned] ; ALLSELECTED(Canais[Canal]) )
+			--Var __3nivel = CALCULATE ( [Canal SumEarned] ) / CALCULATE ( [Canal SumEarned] ; ALLSELECTED(Anunciante[Anunciante]) )
+			--Var __1nivel = CALCULATE ( [Canal SumEarned] ) / CALCULATE ( [Canal SumEarned] ; ALLSELECTED(Canais[Tipo]) )
+			--Var __level2 = if(__3nivel=1 ; __2nivel;__3nivel)
+			RETURN
+			DIVIDE(__countPerdidos , __countAnunc)
+			--if(__level2 = 1; __1nivel ; __level2)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: 6c19914b-a844-4ad3-8edd-f9cba2e883e4
+
+	measure 'Canal percentVarEarned' =
+			
+			Var __countAnunc = CALCULATE(DISTINCTCOUNT(Anunciante[Anunciante]),FILTER(Anunciante,[Receita]>0 || [Receita LY]>0))
+			Var __countGanhos = CALCULATE(DISTINCTCOUNT(Anunciante[Anunciante]),FILTER(Anunciante,[Receita]>0 && (ISBLANK([Receita LY])||[Receita LY]=0)))
+			--Var __sumlost = CALCULATE([Receita LY];FILTER(Anunciante;[Receita LY]>0 && (ISBLANK([Receita])||[Receita]=0)))
+			--Var __2nivel = CALCULATE ( [Canal SumEarned] ) / CALCULATE ( [Canal SumEarned] ; ALLSELECTED(Canais[Canal]) )
+			--Var __3nivel = CALCULATE ( [Canal SumEarned] ) / CALCULATE ( [Canal SumEarned] ; ALLSELECTED(Anunciante[Anunciante]) )
+			--Var __1nivel = CALCULATE ( [Canal SumEarned] ) / CALCULATE ( [Canal SumEarned] ; ALLSELECTED(Canais[Tipo]) )
+			--Var __level2 = if(__3nivel=1 ; __2nivel;__3nivel)
+			RETURN
+			DIVIDE(__countGanhos , __countAnunc)
+			--if(__level2 = 1; __1nivel ; __level2)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: cf94c5e2-6ad3-427a-a31d-2964ee3243df
+
+	measure '# Spots' =
+			
+			--Var __3nivel = DIVIDE( COUNT(GMediaBI_Encomendas[ordPubCodigo]) ; CALCULATE( DISTINCTCOUNT( GMediaBI_Encomendas[durEmissao]) ; ALLSELECTED( GMediaBI_Encomendas[horaExib] ) ))
+			Var __1nivel = DIVIDE( COUNT(Encomendas[ordPubCodigo]) , CALCULATE( DISTINCTCOUNT( Encomendas[durEmissao]) , ALLSELECTED( Encomendas[durEmissao] ) ) )
+			Var __2nivel = DIVIDE( COUNT(Encomendas[ordPubCodigo]) , CALCULATE( DISTINCTCOUNT( Encomendas[DayPart]) , ALLSELECTED( Encomendas[DayPart] ) ) )
+			--Var __level2 = if(__3nivel=1 ; __2nivel;__3nivel)
+			RETURN
+			if(__2nivel < __1nivel , __1nivel , __2nivel)
+		displayFolder: GRP
+		lineageTag: 84529d32-3de6-4b53-a8d4-3b0dadcdfa5a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Duração Emissão' = MAXX(Encomendas,Encomendas[durEmissao])*[# Spots]
+		formatString: #,0
+		displayFolder: Outros
+		lineageTag: d090dc1e-3e6a-42c1-8d4d-69875d9f3afe
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Objetivo Anunciante' = ```
+			CALCULATE( SUM(Objetivos[negObjValor]) , REMOVEFILTERS(Objetivos[negObjTipo] ) 
+			, Objetivos[negObjTipo] = "A" 
+			)
+			```
+		formatString: #,0.00
+		displayFolder: Objetivo
+		lineageTag: 37e9e7d5-dde3-4fc5-9237-298748fff948
+
+	measure 'Objetivo Negociação' =
+			
+			VAR __ReceitaLYTotal = CALCULATE( [Receita LY] , ALLSELECTED(Calendario) )
+			VAR __Objetivo = CALCULATE( MAXX(Negociacao, Negociacao[negValor]) , ALL(Calendario) )
+			VAR __ReceitaLY = [Receita LY]
+			--VAR Result = (__ReceitaLY*100/__ReceitaLYTotal)*__Objetivo/100
+			
+			RETURN
+			--IF( HASONEVALUE(Anunciante[Anunciante]); (__ReceitaLY*100/__ReceitaLYTotal)*__Objetivo/100 ;BLANK())
+			(DIVIDE(__ReceitaLY*100,__ReceitaLYTotal))*DIVIDE(__Objetivo,100)
+			--if(Result = BLANK(); BLANK() ; Result)
+			
+			--__Objetivo
+			--__ReceitaLY
+			--__ReceitaLYTotal
+		displayFolder: Objetivo
+		lineageTag: 8751dc4e-6f66-467f-a45d-3e78fce15534
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo YTD % Atual Month' = ```
+			--([Receita YTD Atual Month]/[Objetivo YTD Atual Month])-1
+			
+			if ([Objetivo YTD Atual Month]=0, 
+			if([Receita YTD Atual Month]=0,BLANK(),1) , (DIVIDE([Receita YTD Atual Month],[Objetivo YTD Atual Month])-1))
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Objetivo
+		lineageTag: e7131cc6-9477-4efd-bd82-ea741942c40b
+
+	measure 'Receita Spark' = ```
+			
+			IF( YEAR(NOW()) = MAX(Calendario[Ano]) , CALCULATE([Receita] , FILTER( Calendario , Calendario[Mês] <= MONTH(NOW()))) , [Receita])
+			
+			// Receita Switch = 
+			// SWITCH (
+			//     [Selected SalesParameter],
+			//     1, [Receita],
+			//     3, [Val Faturado total],
+			//     BLANK ()
+			// )
+			```
+		formatString: #,0.00
+		displayFolder: Gauge
+		lineageTag: 6f99af62-506e-47db-b3ab-5f2394c489f4
+
+	measure Gauge = ```
+			
+			VAR SourceMeasure = [Receita YTD Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo YTD Atual Month]/2 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			VAR RedZoneColor = "#cc3232" //Red zone color
+			VAR YellowZoneColor = "#ffc90d" //Yellow zone color
+			VAR MainZoneColor = "#99c140" //Green zone color
+			VAR Size = 50 // SVG-image size
+			VAR Radius = Size*0.4 //Defines the gauge radius
+			Var Circumference = 2*PI()*Radius
+			VAR RedZone = (RedZoneMeasure/MaxValue)*PI()*Radius //Red zone lenght
+			VAR YellowZone = ((TargetMeasure-RedZoneMeasure)/MaxValue)*PI()*Radius //Yellow zone length
+			VAR LineAngle = ROUND(SourceMeasure*180/MaxValue,0) //Actual value - arrow rotation angle
+			VAR YellowZoneAngle = 180+ROUND(RedZoneMeasure*180/MaxValue,0) //Yellow circle rotation angle
+			
+			/*Defines the svg image */ VAR Output = "data:image/svg+xml;utf8,"
+			    & "<svg xmlns='http://www.w3.org/2000/svg' x= '0px' y = '0px' width='" & Size & "' height='" & Size/2 & "'>"
+			 &"<circle r='"&Radius&"' cx='" & Size/2  & "' cy='" & Size/2&"' stroke='"&MainZoneColor&"' stroke-width='"&Size*0.1&"' stroke-dasharray='"&Circumference*RedZone&","& Circumference&"' transform= 'rotate(240,"&Size/2&","&Size/2&")' fill='none'></circle>" // Green zone
+			    & "<circle cx='" & Size/2 & "' cy='" & Size/2 & "' r='"   & Radius& "' stroke='"&RedZoneColor&"' fill = 'none'  stroke-width='"&Size*0.1&"' " 
+			&"stroke-dasharray='"& RedZone &","& Circumference &"' transform= 'rotate(180,"& Size/2 &","& Size/2 &")' />" //Red zone
+			& "<circle cx = '" & Size/2 & "' cy='" & Size/2 & "' r='"   & Radius& "' stroke='"&YellowZoneColor&"' fill = 'none'  stroke-width='"&Size*0.1&"' "
+			&"stroke-dasharray='"& YellowZone &","& Circumference &"' transform= 'rotate("&YellowZoneAngle&","& Size/2 &","& Size/2 &")' />" //Yellow zone
+			
+			&"<line x1='"&Size/2&"' y1='"&Size/2&"' x2='"&Size*0.1&"' y2='"&Size/2&"' stroke='black' stroke-width='2' transform='rotate("&LineAngle&","&Size/2&","&Size/2&")' />"
+			    & "</svg>"
+			RETURN //Use HASONEVALUE expression in order to eliminate issue with totals
+			    IF ( HASONEVALUE ( 'Canais'[Canal] )&&SourceMeasure<>BLANK(), Output, BLANK () )
+			
+			```
+		displayFolder: Gauge
+		lineageTag: 57e2f358-ef20-4f7b-8e31-3ca5d8f4639e
+		dataCategory: ImageUrl
+
+	measure 'Custo Médio GRP Equivalente' = [CM GRP Equivalente]
+		formatString: #,0.00
+		displayFolder: GRP
+		lineageTag: 98ff6f7c-ad41-4493-9978-135ab0e62ae7
+
+	measure 'Gauge Red' =
+			
+			VAR SourceMeasure = [Receita Ytd Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo YTD Atual Month]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			RedZoneMeasure
+		displayFolder: Gauge
+		lineageTag: 6969794d-574b-49dd-ad99-ecaea8be3c4f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Green' =
+			
+			VAR SourceMeasure = [Receita Ytd Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo YTD Atual Month]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			TargetMeasure
+		displayFolder: Gauge
+		lineageTag: cd44ab33-8360-455c-8109-8fdce0620363
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Green Actual' =
+			
+			VAR SourceMeasure = [Receita Gauge] //Actual value
+			VAR TargetMeasure = [Objetivo Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo Gauge]/2 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			TargetMeasure
+		displayFolder: Gauge
+		lineageTag: 814adc5e-3ef6-4f7c-aba2-f32fc3fecaaf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Red Actual' =
+			
+			VAR SourceMeasure = [Receita Gauge] //Actual value
+			VAR TargetMeasure = [Objetivo Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo Gauge]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			RedZoneMeasure
+		displayFolder: Gauge
+		lineageTag: a5bc56a0-e3c1-4efd-bbfe-6573f58862c1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge End' =
+			
+			VAR SourceMeasure = [Receita Ytd Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo YTD Atual Month]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			MaxValue
+		displayFolder: Gauge
+		lineageTag: 12c9e1b6-ef2f-41a6-b825-710ef52e5e14
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge End Actual' =
+			
+			VAR SourceMeasure = [Receita Gauge] //Actual value
+			VAR TargetMeasure = [Objetivo Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo Gauge]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			MaxValue
+		displayFolder: Gauge
+		lineageTag: 547b70f4-09ef-4be3-b948-4d94ff5c6e08
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Title Gauge Receita' =
+			
+			"Receita vs Objetivo | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Gauge
+		lineageTag: 27393f5d-d9ba-48e0-9deb-f82a5556948f
+
+	measure 'Receita Gauge' =
+			
+			IF( ISFILTERED(Calendario[Mes]) , calculate([Receita] , FILTER(Calendario, Calendario[Mês] = MAX(Calendario[Mês]) && Calendario[Ano] = MAX(Calendario[Ano]) ) ) ,
+			 calculate([Receita], FILTER(Calendario,  Month(Calendario[Date])= MONTH(NOW()) && Year(Calendario[Date]) = YEAR(NOW() ))) )
+		displayFolder: Gauge
+		lineageTag: a135fc52-d3f4-4bbb-b289-a1f2aba6a553
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo Gauge' =
+			
+			IF( ISFILTERED(Calendario[Mes]) , calculate([Objetivo] , FILTER(Calendario, Calendario[Mês] = MAX(Calendario[Mês]) && Calendario[Ano] = MAX(Calendario[Ano]) ) ) ,
+			 calculate([Objetivo],FILTER(Calendario,Month(Calendario[Date])=month(now())&&Year(Calendario[Date])=year(NOW()))) )
+		displayFolder: Gauge
+		lineageTag: aaf2e676-1f17-4f31-be42-e1a44ae867e1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Var Objetivo Anunciante YTD' = ```
+			
+			
+			VAR __ReceitaLYTotal = CALCULATE( [Receita LY YTD] , ALLSELECTED(Calendario) )
+			VAR __Objetivo = CALCULATE( MAXX(Negociacao, Negociacao[negValor]) , ALL(Calendario) )
+			VAR __ReceitaLY = [Receita LY YTD]
+			VAR Result =(DIVIDE(__ReceitaLY*100,__ReceitaLYTotal))*DIVIDE(__Objetivo,100)
+			Var __Obj = CALCULATE(Result,FILTER(ALL(Calendario),'Calendario'[Ano]=MAX(Calendario[Ano])&&'Calendario'[Mês]<=MAX(Calendario[Mês])))
+			Var __Rec = [Receita YTD]
+			
+			RETURN
+			--IF( __Obj = __Rec ; 0 ; 
+			--IF( __Obj > __Rec ; 1 ; 2 ) )
+			DIVIDE(__Rec,__Obj)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Objetivo
+		lineageTag: c95bdeed-1d80-4f4f-a051-60fa0fad35fc
+
+	measure '% Share Investiment Anunciante Exclusivo' =
+			
+			Var _c = DIVIDE([SumInvestimento],CALCULATE([SumInvestimento],ALLEXCEPT(InvestmentGRPs,Advertisers[Anunciante],Calendario[Ano],Calendario[Mes])))
+			Return
+			AVERAGEX( VALUES(Advertisers[Anunciante]), IF( [_simulator] = 3 , BLANK() , _c ))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Outros
+		lineageTag: c38954f8-f568-43d8-97d3-1e224a586692
+
+	measure _simulator =
+			
+			Var __val = [Parâmetro Valor]
+			Var __c = DIVIDE([SumInvestimento],CALCULATE([SumInvestimento],ALLEXCEPT(InvestmentGRPs,Advertisers[Anunciante],Calendario[Ano],Calendario[Mes])))
+			
+			Var __2nivel = CALCULATE ( __c  , ALLSELECTED(Advertisers) )
+			Var __1nivel = __c
+			RETURN
+			if(__2nivel >= __val, 2,3)
+			
+			--IF( __c > __val , 1 , 0 )
+		formatString: 0
+		displayFolder: Outros
+		lineageTag: ec234f0b-f080-429f-9335-c675d7293cc9
+
+	measure SumInvestimentoExclusivos =
+			
+			SUMX (VALUES(Advertisers[Anunciante]), IF( [_simulator] <> 3, [Investimento] , BLANK() ))
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		displayFolder: Outros
+		lineageTag: b6526eeb-dcbf-4c70-8271-d6b8d919ec58
+
+	measure ReceitaCanal =
+			
+			SUMX (VALUES(Anunciante[Anunciante]), IF( [_simulatorCanal] <> 3, [Receita] , BLANK() ))
+		displayFolder: Receita
+		lineageTag: ada71e5a-e7bc-4ab9-b3c6-78684ba2ea20
+
+	measure 'ReceitaCanal Perdido' =
+			
+			SUMX (VALUES(Anunciante[Anunciante]), IF( [_simulatorCanal] <> 2, [Receita] , BLANK() ))
+		displayFolder: Receita
+		lineageTag: cf3a1849-aba2-49c7-a94a-46431bb14eb9
+
+	measure _simulatorCanal =
+			
+			Var __val = [Receita LY]
+			Var __c = [Receita]
+			
+			Var __2nivel = CALCULATE ( __c  , ALLSELECTED(Anunciante) )
+			Var __1nivel = __c
+			RETURN
+			if(__2nivel >= __val && __val = BLANK(), 2,3)
+			
+			--IF( __c > __val , 1 , 0 )
+		formatString: 0
+		displayFolder: Receita
+		lineageTag: c86a278e-020c-4982-84cd-386df040aa59
+
+	measure 'Title Receita YTD' = "Receita YTD | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Receita
+		lineageTag: a48232cb-68f5-4a8d-b59f-9ff050abe889
+
+	measure 'Receita LY Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), [Receita LY], calculate([Receita LY], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: 8b6b3f8f-4586-45e8-80da-8143bfe4a731
+
+	measure 'Objetivo Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), [Objetivo Bruto], calculate([Objetivo Bruto], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		formatString: #,0.00
+		displayFolder: Objetivo
+		lineageTag: dd3ea998-6e87-4379-b60e-79fcb9fe295f
+
+	measure 'Receita Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), [Receita], calculate([Receita], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: a5aba453-118d-47a5-b66f-d66c20fd99f6
+
+	measure 'Objetivo % Atual Month' = ```
+			--([Receita YTD Atual Month]/[Objetivo YTD Atual Month])-1
+			
+			if ([Objetivo Atual Month]=0, 
+			if([Receita Atual Month]=0,BLANK(),1) , (DIVIDE([Receita Atual Month],[Objetivo Atual Month])-1))
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Objetivo
+		lineageTag: 79d78ef9-1df7-44fa-a098-c50b74053715
+
+	measure 'Objetivo YTD Resumo Tooltip' =
+			
+			CALCULATE([Objetivo], FILTER(Calendario, Calendario[Date] < TODAY()))
+		displayFolder: Objetivo
+		lineageTag: 1c372d7b-fc76-41ad-b985-86b539337e44
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Title Anunciante YTD' = "Receita por Anunciante | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Receita
+		lineageTag: 2131c3f9-d11b-4e8a-9472-980c10041bf1
+
+	measure 'Bonus Var YTD' =
+			
+			var CurrDate = MAX('Variacao Receita'[data_carregamento])
+			var _maxdate = EOMONTH(CurrDate,-1)
+			var _mindate = STARTOFMONTH('Variacao Receita'[data_carregamento])
+			var _lastday = ROUND( CALCULATE( SUM( 'Variacao Receita'[sumValorBonus] ),FILTER(ALL(Calendario[Date]),Calendario[Date] = _maxdate), REMOVEFILTERS('Variacao Receita'[data_carregamento])),0)
+			VAR _val1 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorBonus] ) ),0)
+			RETURN
+			DIVIDE(_val1-_lastday,_lastday)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Bonus
+		lineageTag: 90ab55d4-794d-4397-a89b-e751e24f0c3a
+
+	measure 'Receita Var € Day' =
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorPub] ),0)
+			VAR _val2 = CALCULATE( ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0))
+			var _result = _val1-_val2
+			RETURN
+			_val1
+		formatString: #,0
+		displayFolder: Receita
+		lineageTag: 479d3d84-5b50-430d-9c8c-944b87a9927a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Receita Var € PrevDay' =
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorPub] ),0)
+			VAR _val2 = CALCULATE( ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0))
+			var _result = _val1-_val2
+			RETURN
+			_val2
+		formatString: #,0
+		displayFolder: Receita
+		lineageTag: 7191ec5e-57f2-431f-9951-807888c59189
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Title Grp' = "GRP Previsto Vs. GRP (Indexado a " & duracaobase &"'') | " & FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT")
+		displayFolder: Outros
+		lineageTag: 28f5814d-6aa3-4c3f-b6fd-ba23dd4d60c3
+
+	measure 'Title Receita Anunciante' = "Receita Anunciante | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Receita
+		lineageTag: f8c4965d-9fa8-458e-834d-a999688f06e1
+
+	measure 'Title Var' = "Evolução comparativa com Dia Anterior | " & FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT")
+		displayFolder: Outros
+		lineageTag: 5badf5ca-3668-418b-87ab-c73bf11a83f9
+
+	measure 'Var Descrição' = IF( NOT ISFILTERED( 'Variacao Receita'[data_carregamento] ), "🢀 Selecionar Data a Comparar", "Estamos a Comparar " & FORMAT( SELECTEDVALUE( 'Variacao Receita'[data_carregamento] ), "dd-MM-yyyy") & " com " & FORMAT(SELECTEDVALUE( 'Variacao Receita'[data_carregamento] ) -1, "dd-MM-yyyy") )
+		displayFolder: Outros
+		lineageTag: 6592d0b4-e0a3-436b-9102-0b2cc0dd43c9
+
+	measure 'Receita Var YTD %' =
+			
+			var CurrDate = MAX('Variacao Receita'[data_carregamento])
+			var _maxdate = EOMONTH(CurrDate,-1)
+			var _mindate = STARTOFMONTH('Variacao Receita'[data_carregamento])
+			var _lastday = ROUND( CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ),FILTER(ALL(Calendario[Date]),Calendario[Date] = _maxdate), REMOVEFILTERS('Variacao Receita'[data_carregamento])),0)
+			VAR _val1 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ) ),0)
+			
+			RETURN
+			DIVIDE(_val1-_lastday,_lastday)
+			--_val1
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Receita
+		lineageTag: 64ba19e4-31de-4998-a835-63926f2da0e9
+
+	measure 'Bonus Var € Day' =
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorBonus] ),0)
+			VAR _val2 = CALCULATE( ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorBonus] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0))
+			var _result = _val1-_val2
+			RETURN
+			_val1
+		formatString: #,0
+		displayFolder: Bonus
+		lineageTag: 9270777d-4db0-430c-b0ea-2893f32c48a4
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Bonus Var € PrevDay' =
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorBonus] ),0)
+			VAR _val2 = CALCULATE( ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorBonus] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0))
+			var _result = _val1-_val2
+			RETURN
+			_val2
+		formatString: #,0
+		displayFolder: Bonus
+		lineageTag: 75eb9603-5fa0-4570-90e2-d99beca246ea
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'GRP %' = ```
+			
+			VAR _CurrentAxis = SELECTEDVALUE('Alvos Var'[Alvo])
+			var _1 = IF(_CurrentAxis = "Total",
+			        IF( SUM(Encomendas[GRP Equivalente]) = BLANK(), BLANK(),
+			            CALCULATE( DIVIDE((SUM(Encomendas[GRP Equivalente])-SUM(Encomendas[GRP Previsto Equivalente])),SUM(Encomendas[GRP Previsto Equivalente]) ), ALL('Alvos Var'[Alvo] ) ) ),
+			        IF( SUM(Encomendas[GRP Equivalente]) = BLANK(), BLANK(), 
+			            CALCULATE( DIVIDE((SUM(Encomendas[GRP Equivalente])-SUM(Encomendas[GRP Previsto Equivalente])),SUM(Encomendas[GRP Previsto Equivalente]) ), 'Alvos'[Alvo] = _CurrentAxis )
+			    )
+			)
+			Return 
+			IF.EAGER(_1=0, BLANK(), _1)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: GRP
+		lineageTag: 23029c5f-7c38-435b-9c80-31acd50b9070
+
+		changedProperty = FormatString
+
+	measure 'CM GRP Equivalente Card' = CALCULATE( DIVIDE( [Receita] , SUM(Encomendas[GRP Equivalente] ) ) , Encomendas[GRP Equivalente] <> BLANK() )+0
+		formatString: #,0.00
+		displayFolder: GRP
+		lineageTag: 3d8d862e-584c-4565-bb75-a9e9072c4e33
+
+	measure 'Receita Spark LY' =
+			
+			CALCULATE( [Receita LY] , FILTER( Calendario , Calendario[Mês] <= MONTH(NOW())))
+		formatString: 0.00
+		displayFolder: Receita
+		lineageTag: 58dca6dd-c197-40af-a1db-15483fc77a1b
+
+	measure 'Ocupacao Hora' = ```
+			
+			VAR Duration = SUM(Ocupacao[OcupacaoNormal] )
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		displayFolder: Ocupação
+		lineageTag: 8abe0855-2737-45d6-86d8-a9b823d6d67f
+
+	measure 'Ocupacao Espera Hora' = ```
+			
+			VAR Duration = SUM(Ocupacao[Espera] )
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		displayFolder: Ocupação
+		lineageTag: 7808021c-4989-4044-93e8-b19346b3d1b7
+
+	measure 'Ocupação Encomendas' = ```
+			
+			VAR Duration = SUM( Encomendas[durEmissao] )
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		displayFolder: Ocupação
+		lineageTag: 8e65e15f-0a40-4255-83e0-bf3d6e903bb3
+
+	measure 'Share GRP' = ```
+			
+			VAR _grpAdultos = CALCULATE( SUM( InvestmentGRPs[Valor] ), InvestmentGRPs[IdTarget] = 1 )
+			VAR _grpTotal = CALCULATE( SUM( InvestmentGRPs[Valor] ), ALLSELECTED( Targets[GRP] ) )
+			RETURN
+			IF( ISFILTERED( Targets[GRP] ), _grpTotal, _grpAdultos )
+			
+			// Share GRP LY % = 
+			// VAR _LY = CALCULATE( [Share GRP], SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			// RETURN
+			// DIVIDE( _LY- [Share GRP], _LY )
+			```
+		displayFolder: Share
+		lineageTag: 55a0ed3a-4668-4c57-acee-188feb863c32
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Share GRP LY %' =
+			
+			VAR _LY = CALCULATE( [Share GRP], SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			RETURN
+			
+			DIVIDE([Share GRP]- _LY, _LY )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Share
+		lineageTag: a494e81a-fcc9-4fe9-82ca-b9c0b0b3a0a2
+
+	measure 'Valor Excecoes' =
+			
+			--CALCULATE( SUM( Ocupacao[ValorExcepcoes] ) )
+			
+			
+			CALCULATE( SUM( Encomendas[valorPub] ), REMOVEFILTERS( Encomendas[tipo] ), Encomendas[tipo] = "x" )
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: e78e10e5-041f-4b7b-8cf2-b1aca58ea976
+
+	measure 'Receita Mtd' = ```
+			
+			VAR LY = TOTALMTD( [Receita LY], Calendario[Date] )
+			VAR CY = TOTALMTD( [Receita], Calendario[Date] )
+			RETURN
+			IF.EAGER( ( (ISBLANK([Receita LY]) || [Receita LY] =0 ) && (ISBLANK([Receita]) || [Receita] =0) ) , BLANK(), 
+			         DIVIDE( CY-LY, LY )) 
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Receita
+		lineageTag: c00e1fdb-25b5-442a-8dd9-190bc78d39ff
+
+	measure 'Val Liquido Tooltip' = ```
+			
+			IF( HASONEFILTER( Advertisers[Anunciante] )
+			    , CALCULATE( [Receita]
+			        --, CROSSFILTER( Meios[Anunciante], Anunciante[Anunciante], OneWay )
+			         )
+			            ,SUMX( SUMMARIZE( VALUES( Advertisers[Anunciante] ), "val"
+			                , CALCULATE( [Receita]--,NATURALINNERJOIN(MediaAgencies,InvestmentGRPs )
+			--, CROSSFILTER( Meios[Anunciante], Anunciante[Anunciante], OneWay ) 
+			            ) 
+			        ), [val] 
+			    ) 
+			    )
+			
+			```
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: cf09f9a1-21ff-4733-a20e-192c8a463093
+
+		changedProperty = FormatString
+
+	measure 'Var Desconto Liquido Tooltip' = ```
+			
+			IF( HASONEFILTER( Anunciante[Anunciante] )
+			    , CALCULATE([Desconto Medio]
+			        --, CROSSFILTER( Meios[Anunciante], Anunciante[Anunciante], OneWay ) 
+			    )
+			        ,SUMX( SUMMARIZE( VALUES( Anunciante[Anunciante] )
+			            , "val", CALCULATE( [Desconto Medio]
+			                --, CROSSFILTER( Meios[Anunciante], Anunciante[Anunciante], OneWay ) 
+			            ) 
+			        ), [val] 
+			    ) 
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Receita
+		lineageTag: 8529e73c-88bd-4501-bf71-fc02b8dab7fc
+
+		changedProperty = FormatString
+
+	measure 'Duracao Invest' = SUM(InvestmentGRPs[duracao])/DISTINCTCOUNT(InvestmentGRPs[IdTarget])
+		formatString: #,0.00
+		displayFolder: Investimento
+		lineageTag: a20db9f7-4a9b-424e-a008-47c5e4248db9
+
+		changedProperty = FormatString
+
+	measure 'Share GRP LY' =
+			
+			VAR _LY = CALCULATE( [Share GRP], SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			
+			RETURN
+			_LY
+		displayFolder: Share
+		lineageTag: 5f310353-a562-4c7f-915c-497a4d02f3ce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Alvo Tooltip' = ```
+			
+			            SUMX( SUMMARIZE( VALUES( Alvos[Alvo] ), "val"
+			                , max( Alvos[Alvo]--, CROSSFILTER( Meios[Anunciante], Anunciante[Anunciante], OneWay ) 
+			            ) 
+			        ), [val] 
+			    ) 
+			```
+		formatString: 0
+		lineageTag: 6310e77a-cdc6-4cf2-9859-42624a798d8e
+
+	measure 'Share GRP Exclusivos' = SUMX (VALUES(Advertisers[Anunciante]), IF( [_simulator] <> 3, [Share GRP] , BLANK() ))
+		displayFolder: Share
+		lineageTag: 668d95ff-7b66-4542-b4d9-99905b31d59c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Share Ocupação Exclusivos' = SUMX (VALUES(Advertisers[Anunciante]), IF( [_simulator] <> 3, calculate(SUM(InvestmentGRPs[Duracao])) , BLANK() ))
+		formatString: 0
+		displayFolder: Share
+		lineageTag: 8f8e3aeb-d7c9-4822-b04e-8731272bffa1
+
+	measure 'Titulo_Ganhos Perdidos' = ```
+			
+			vAR _1 = concatenatex(SUMMARIZE('Calendario','Calendario'[Mes]), 'Calendario'[Mes],", " )
+			vAR _12 = MIN('Calendario'[Mês])
+			VAR _11 = MONTH(now())
+			--VAR _2 =  IF.EAGER(ISFILTERED('Calendario Carteira'[Mes]),  MONTH(CALEND), BLANK())
+			--Var _3 = Titulos[ID]
+			// IF.EAGER(
+			//     ISFILTERED('Calendario Carteira'[Mes]) && Titulos[Selected TituloParameter] = 10, [Titulo] & " " & ,
+			//     )
+			RETURN 
+			 --_1
+			IF.EAGER( ISFILTERED('Calendario'[Mes])
+			    ,"Ganhos e Perdidos (" & _1 & ")"
+			    ,CALCULATE( [Titulo], Titulos[ID] = 10 ) & " (" & SWITCH(
+			    _12
+			    ,1,"Jan",2,"Fev",3,"Mar",4,"Abr"
+			    ,5,"Mai",6,"Jun",7,"Jul",8,"Ago"
+			    ,9,"Set",10,"Out",11,"Nov",12,"Dez") & " - " & SWITCH(
+			    _11
+			    ,1,"Jan",2,"Fev",3,"Mar",4,"Abr"
+			    ,5,"Mai",6,"Jun",7,"Jul",8,"Ago"
+			    ,9,"Set",10,"Out",11,"Nov",12,"Dez") & ")"
+			) 
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 215a8f71-1ab6-4763-a55b-4a5495f32b34
+
+	measure valor_tipoCliente_ = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			
+			IF( [Selected Type] = 3,
+			    SUMX (
+			    _1,
+			    [Clientes Perdidos]
+			),
+			
+			IF( [Selected Type] = 2,
+			SUMX (
+			    _1,
+			    [Clientes Novos]
+			),
+			
+			IF( [Selected Type] = 4,
+			SUMX (
+			    _1,
+			    [Clientes Queda]
+			),
+			
+			IF( [Selected Type] = 5,
+			SUMX (
+			    _1,
+			    [Clientes Crescimento]
+			)
+			))))
+			```
+		formatString: #,0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 7b781417-83ce-4970-bdcb-04de5849f04f
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure valor_tipoCliente_graphs = ```
+			
+			VAR _1 = SUMMARIZE(Vendedores, Vendedores[UtiId])
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			IF( [Selected Type] = 1,
+			SUMX (
+			    _1,
+			    [Clientes Recorrentes_]
+			),
+			
+			IF( [Selected Type] = 2,
+			    SUMX (
+			    _1,
+			    [Clientes Novos]
+			),
+			
+			IF( [Selected Type] = 3,
+			SUMX (
+			    _1,
+			    ABS([Clientes Perdidos_Graph])
+			),
+			
+			IF( [Selected Type] = 4,
+			SUMX (
+			    _1,
+			   ABS([Clientes Queda_Graph])
+			), 
+			
+			--Format( métrica, "$#,##0;($#,##0)" )
+			
+			IF( [Selected Type] = 5,
+			SUMX (
+			    _1,
+			    [Clientes Crescimento]
+			)
+			)))))
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: e763d620-f37b-40b4-b6d3-16ec37b156c8
+
+	measure Classif_Cliente = ```
+			
+			// IF.EAGER([GPQC] = "Novos", [Clientes Novos],
+			//     IF.EAGER([GPQC] = "Crescimento", [Clientes Crescimento],
+			//         IF.EAGER([GPQC] = "Perdidos", [Clientes Perdidos],
+			//                 IF.EAGER([GPQC] = "Queda", [Clientes Queda])
+			//         )))
+			
+			    var _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			    
+			    RETURN 
+			    IF.EAGER([GPQC] = "Novos", _1,
+			    IF.EAGER([GPQC] = "Crescimento", _1,
+			        IF.EAGER([GPQC] = "Perdidos", _1,
+			                IF.EAGER([GPQC] = "Queda", _1)
+			        )))
+			
+			//VAR _1 = SUMMARIZE('Emp_Venda Carteira', 'Emp_Venda Carteira'[ExternalCode])
+			```
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: b4643ab4-810f-4801-b4ce-559cfc744c4e
+
+	measure 'Clientes Crescimento' = ```
+			
+			    VAR _1 = CALCULATE( [Receita LY YTD Atual Month]
+			           ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			
+			    VAR _2 = CALCULATE( [Receita YTD Atual Month]
+			           ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			
+			return
+			   IF.EAGER(_2 > 0 && ( _2 > _1) && (_1 <> BLANK() || _1 <> 0) , [Valor dif Carteira Ganhos e Perdidos YTD] )--, "Crescimento"
+			  
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: c8c0d488-3572-4b75-9032-aeb42ecee11e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Clientes Novos' = ```
+			
+			VAR _1 = CALCULATE( 
+			   [Receita LY YTD Atual Month]
+			              ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			VAR _2 = CALCULATE( 
+			       [Receita YTD Atual Month]
+			                ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			
+			Return
+			    IF.EAGER( _2 > 0 && ( _1 = BLANK() || _1 <= 0),[Valor dif Carteira Ganhos e Perdidos YTD], BLANK() )-- bruto
+			   
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: ad1c015e-c3eb-484f-983e-db298b6dfa76
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Clientes Perdidos' = ```
+			
+			VAR _1 = CALCULATE( [Receita LY YTD Atual Month]
+			                   ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			
+			VAR _2 = CALCULATE( [Receita YTD Atual Month]
+			                   ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			
+			
+			RETURN
+			
+			    IF.EAGER(
+			        ( not(ISBLANK(_1) && _1 = 0) && (ISBLANK( _2 ) || _2 = 0 )) || (ISBLANK( _1) && ( _2 = 0 && not( ISBLANK( _2)))) || (_1 = 0 && (_2 = 0 && not (ISBLANK( _2)))) || ((_1 = 0 || ISBLANK( _1)) && _2 < 0)  || (_1 > 0 && (_2 <= 0 || ISBLANK( _2))) || (_1 < 0 && ( _2 <> 0 || not(ISBLANK( _2)))) || (_1 < 0 && ( _2 <= 0 || ISBLANK( _2))), [Valor dif Carteira Ganhos e Perdidos YTD],BLANK() ) --bruto
+			    
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 0e37ac50-de80-48eb-b6b5-37f618c5ebe5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Clientes Queda' = ```
+			
+			    VAR _1 = CALCULATE( [Receita LY YTD Atual Month]
+			              ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			    VAR _2 = CALCULATE( [Receita YTD Atual Month]
+			              ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			
+			Return 
+			
+			   IF.EAGER(  _2 > 0 && ( _1 > _2), [Valor dif Carteira Ganhos e Perdidos YTD] ) --"bruto"
+			   
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: dff8043f-80c5-4637-bcfc-98d96c84ab86
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Clientes Recorrentes_' = ```
+			
+			    VAR _1 = CALCULATE( [Receita LY YTD Atual Month]
+			             ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    VAR _2 = CALCULATE( [Receita YTD Atual Month]
+			            ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    VAR _3 = CALCULATE( 
+			   [Val Faturado LY YTD Atual Month]
+			              ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    VAR _4 = CALCULATE( 
+			       [Val Faturado YTD Atual Month]
+			               ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			Return 
+			
+			SWITCH( [Selected SalesParameter],
+			   1, 
+			  IF.EAGER( _1 > 0 && _2 > 0, [Valor dif Carteira Ganhos e Perdidos YTD] ), -- Recorrentes
+			   3, 
+			   IF.EAGER( _3 > 0 && _4 > 0, [Valor Faturado dif Carteira Ganhos e Perdidos YTD]) ) -- Recorrentes))
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: df529361-aa07-44b0-9a32-836a4fe1b1c6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure GPQC = ```
+			
+			VAR _1 = CALCULATE([Receita LY YTD Atual Month]
+			                ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			
+			
+			VAR _2 = CALCULATE([Receita YTD Atual Month]
+			            ,ALLSELECTED(Central[Central Agrupador]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED('Tipo Publicidade'[tipPubDescricao]))
+			
+			return
+				SWITCH(
+					TRUE()
+					 , ((not(ISBLANK(_1)) && _1 = 0) && (ISBLANK( _2 ) || _2 = 0 )) || (ISBLANK( _1) && ( _2 = 0 && not( ISBLANK( _2)))) || (_1 = 0 && (_2 = 0 && not (ISBLANK( _2)))) || ((_1 = 0 || ISBLANK( _1)) && _2 < 0)  || (_1 > 0 && (_2 <= 0 || ISBLANK( _2))) || (_1 < 0 && ( _2 <> 0 || not(ISBLANK( _2)))) || (_1 < 0 && ( _2 <= 0 || ISBLANK( _2))),  "Perdidos" 
+					, _2 > 0 && ( _1 = BLANK() || _1 <= 0), "Novos"
+					, _2 > 0 && ( _1 > _2), "Queda"
+					, _2 > 0 && ( _2 > _1) && (_1 <> BLANK() || _1 <> 0), "Crescimento"
+					, "Outros"
+				)
+			
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 9cd9a664-2096-49bc-8890-d9ae6395bc5d
+
+	measure GPQC_ConditionalFormating = ```
+			
+			    IF.EAGER([GPQC] = "Novos", -99,
+			    IF.EAGER([GPQC] = "Crescimento", 2,
+			        IF.EAGER([GPQC] = "Perdidos", -98,
+			                IF.EAGER([GPQC] = "Queda", 4)
+			        )))
+			
+			```
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: c53ae086-417c-40ce-aefd-5673ab88cd48
+
+	measure 'Qtd Cliente_v2' = CALCULATE(DISTINCTCOUNT(Vendedores[UtiId]))
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: e5e4edc8-0363-448d-8c06-ad4ac45dcfd5
+
+	measure 'Qtd Cliente_v2Ano Anterior' = CALCULATE([Qtd Cliente_v2], SAMEPERIODLASTYEAR('Calendario'[Date]))
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 4a12f971-8a34-4ee6-a53f-1f31560f43e5
+
+	measure 'Qtd_Clientes Crescimento' = ```
+			
+			        VAR _1 = CALCULATE( [Receita LY YTD Atual Month]
+			             ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Tipo]), ALLSELECTED(Pub[Tipo PUB]))
+			    VAR _2 = CALCULATE( [Receita YTD Atual Month]
+			             ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Tipo]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			   
+			Return 
+				 IF.EAGER(_2 > 0 && ( _2 > _1) && (_1 <> BLANK() || _1 <> 0) , DISTINCTCOUNT(Anunciante[Anunciante]), BLANK())--, "Crescimento"
+			```
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 458b8ade-54ae-4ab1-bf95-bd0d30d4b33e
+
+	measure 'Qtd_Clientes Novos' = ```
+			
+			VAR _1 = CALCULATE( 
+			   [Receita LY YTD Atual Month]
+			              ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			VAR _2 = CALCULATE( 
+			       [Receita YTD Atual Month]
+			               ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			VAR _3 = CALCULATE( 
+			        [Val Faturado LY YTD Atual Month]
+			              ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			VAR _4 = CALCULATE( 
+			        [Val Faturado YTD Atual Month]
+			               ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			RETURN
+			SWITCH( [Selected SalesParameter],
+			    1, 
+			    IF.EAGER( _2 > 0 && ( _1 = BLANK() || _1 <= 0),DistinctCount(Anunciante[Anunciante]), BLANK() ),  --Novos bruto
+			    3,
+			    IF.EAGER( _4 > 0 && ( _3 = BLANK() || _3 <= 0),DistinctCount(Anunciante[Anunciante]), BLANK() )  --Novos fatu
+			)
+			```
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 63c3f510-d14b-4df1-8fb0-7692baace823
+
+	measure 'Qtd_Clientes Perdidos' = ```
+			
+			    VAR _1 = CALCULATE( [Receita LY YTD Atual Month]
+			             ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    
+			    VAR _2 = CALCULATE( [Receita YTD Atual Month]
+			             ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    
+			    VAR _3 = CALCULATE( 
+			        [Val Faturado LY YTD Atual Month]
+			              ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    
+			    VAR _4 = CALCULATE( 
+			        [Val Faturado YTD Atual Month]
+			               ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			RETURN
+			SWITCH( [Selected SalesParameter],
+			    1, 
+			 IF.EAGER(
+			     ( not(ISBLANK(_1) && _1 = 0) && (ISBLANK( _2 ) || _2 = 0 )) || (ISBLANK( _1) && ( _2 = 0 && not( ISBLANK( _2)))) || (_1 = 0 && (_2 = 0 && not (ISBLANK( _2)))) || ((_1 = 0 || ISBLANK( _1)) && _2 < 0)  || (_1 > 0 && (_2 <= 0 || ISBLANK( _2))) || (_1 < 0 && ( _2 <> 0 || not(ISBLANK( _2)))) || (_1 < 0 && ( _2 <= 0 || ISBLANK( _2))),  DISTINCTCOUNT(Anunciante[Anunciante] ), BLANK()) , -- bruto
+			     3,
+			IF.EAGER(
+			     ( not(ISBLANK(_3) && _3 = 0) && (ISBLANK( _4 ) || _4 = 0 )) || (ISBLANK( _3) && ( _4 = 0 && not( ISBLANK( _4)))) || (_3 = 0 && (_4 = 0 && not (ISBLANK( _4)))) || ((_3 = 0 || ISBLANK( _3)) && _4 < 0)  || (_3 > 0 && (_4 <= 0 || ISBLANK( _4))) || (_3 < 0 && ( _4 <> 0 || not(ISBLANK( _4)))) || (_3 < 0 && ( _4 <= 0 || ISBLANK( _4))),  DISTINCTCOUNT(Anunciante[Anunciante] ), BLANK()) -- fatu
+			)
+			
+			```
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 6b4cff98-f405-4e73-80be-37d647ad43c3
+
+	measure 'Qtd_Clientes Queda' = ```
+			
+			    VAR _1 = CALCULATE( [Receita LY YTD Atual Month]
+			        ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    
+			    VAR _2 = CALCULATE( [Receita YTD Atual Month]
+			       ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    
+			    VAR _3 = CALCULATE( 
+			        [Val Faturado LY YTD Atual Month]
+			              ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			    
+			    VAR _4 = CALCULATE( 
+			        [Val Faturado YTD Atual Month]
+			               ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			RETURN
+			SWITCH( [Selected SalesParameter],
+			    1, 
+			    IF.EAGER(  _2 > 0 && ( _1 > _2), DISTINCTCOUNT(Anunciante[Anunciante]),BLANK() ),-- bruto
+			    3,
+			    IF.EAGER(  _4 > 0 && ( _3 > _4), DISTINCTCOUNT(Anunciante[Anunciante]),BLANK() )-- fatu
+			)
+			```
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: a55b9a92-8401-4f3e-87ae-da8bf48c4c15
+
+	measure 'Qtd_Clientes Recorrentes' = ```
+			
+			VAR _1 = CALCULATE( [Val Receita YTD LY Atual Month]
+			            ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Tipo]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			VAR _2 = CALCULATE( [Val Receita YTD Atual Month]
+			            ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Tipo]), ALLSELECTED(Pub[Tipo PUB]))
+			    
+			VAR _3 = CALCULATE( 
+			        [Val Faturado LY YTD Atual Month]
+			              ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			VAR _4 = CALCULATE( 
+			        [Val Faturado YTD Atual Month]
+			               ,ALLSELECTED(Encomendas[Central]), ALLSELECTED(Vendedores[UtiNome]), ALLSELECTED(Canais[Canal]), ALLSELECTED(Pub[Tipo PUB]))
+			
+			RETURN
+			SWITCH( [Selected SalesParameter],
+			    1, 
+			    IF.EAGER( _1 > 0 && _2 > 0, DistinctCount(Vendedores[UtiId]) ), -- bruto
+			    3,
+			    IF.EAGER( _3 > 0 && _4 > 0, DistinctCount(Vendedores[UtiId]) ) -- fatu
+			)
+			```
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: c0d76ba3-0836-4d2b-b5ae-82d2975305bf
+
+	measure Qtd_Clientes_Total = ```
+			
+			VAR _1 = SUMMARIZE(Vendedores, Vendedores[UtiId])
+			
+			Var _2 =
+			
+			    SUMX (
+			    _1,
+			   [Qtd_Clientes Novos]+[Qtd_Clientes Perdidos]+[Qtd_Clientes Queda]+[Qtd_Clientes Crescimento]
+			) 
+			RETURN
+			_2
+			```
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 3d6da93c-a537-4126-b8a5-777ed4b9041d
+
+	measure Qtd_tipoCliente =
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			RETURN
+			
+			IF( [Selected Type] = 3,
+			SUMX (
+			    _1,
+			    [Qtd_Clientes Perdidos]
+			),
+			
+			IF( [Selected Type] = 2,
+			    SUMX (
+			    _1,
+			   [Qtd_Clientes Novos]
+			),
+			
+			IF( [Selected Type] = 4,
+			SUMX (
+			    _1,
+			    [Qtd_Clientes Queda]
+			),
+			
+			IF( [Selected Type] = 5,
+			SUMX (
+			    _1,
+			    [Qtd_Clientes Crescimento]
+			)
+			))))
+		formatString: #,0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 9bbc5a18-9166-4917-be6e-dbf28a81de90
+
+		changedProperty = FormatString
+
+	measure Qtd_tipoCliente_card =
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			RETURN
+			
+			IF( [Selected Type] = 3,
+			SUMX (
+			    _1,
+			    [Qtd_Clientes Perdidos]
+			),
+			
+			IF( [Selected Type] = 2,
+			    SUMX (
+			    _1,
+			   [Qtd_Clientes Novos]
+			),
+			
+			IF( [Selected Type] = 4,
+			SUMX (
+			    _1,
+			    [Qtd_Clientes Queda]
+			),
+			
+			IF( [Selected Type] = 5,
+			SUMX (
+			    _1,
+			    [Qtd_Clientes Crescimento]
+			)
+			))))
+		formatString: #,0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: ff592ff6-57ca-4e99-a73e-29ab79f1ef51
+
+		changedProperty = FormatString
+
+	measure Qtd_tipoCliente_icon =
+			
+			VAR _1 = [Qtd_tipoCliente]
+			
+			RETURN
+			    IF( _1 = 0, UNICHAR ( 128993 ) & " " & FORMAT(_1, "# %" ),
+			    IF( _1 > 0, UNICHAR ( 128994 ) & " " & FORMAT(_1, "# %" ),
+			    UNICHAR ( 128992 ) & " " & FORMAT(_1, "# %" )
+			    ) )
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 49318b4a-b57c-4a35-aa92-67e77d953488
+
+	measure 'Titulo GanhosPerdidos' = ```
+			
+			    IF.EAGER( [Valor dif Carteira Ganhos e Perdidos YTD] = BLANK(), "Sem valores a apresentar", [GPQC] ) -- bruto
+			   
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 0c9289c4-3f9e-49f3-a464-b3d7962ebe5e
+
+	measure Titulo_EmpVenda = "Empresa de Venda " & "(" & [GPQC]  & ")"
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 2328a85a-7753-4241-83cc-cf899f0ddf63
+
+	measure 'Valor dif Carteira Ganhos e Perdidos YTD' = ```
+			
+			
+			[Receita YTD Atual Month] - [Receita LY YTD Atual Month]
+			
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 65fdd5dc-0439-4635-b329-d681216d071f
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Valor var Carteira Ganhos e Perdidos YTD' = ```
+			
+			        IF(
+			        ISFILTERED('Calendario'[Date]),
+			        ERROR("Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column."),
+			        VAR __PREV_YEAR = [Val Receita YTD LY Atual Month]
+			        RETURN
+			            DIVIDE([Val Receita YTD Atual Month] - __PREV_YEAR, ABS(__PREV_YEAR),1))
+			   
+			// --)
+			// IF(
+			// 	ISFILTERED('Calendario'[Date]),
+			// 	ERROR("Time intelligence quick measures can only be grouped or filtered by the Power BI-provided date hierarchy or primary date column."),
+			// 	VAR __PREV_YEAR = [Val Receita YTD LY Atual Month]
+			// 	RETURN
+			// 		DIVIDE([Val Receita YTD Atual Month] - __PREV_YEAR, ABS(__PREV_YEAR),1)
+			// )
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 0e63cf55-f45a-4118-ab5b-4a65ed03e194
+
+		changedProperty = FormatString
+
+	measure valor_tipoCliente_% =
+			
+			SWITCH(
+			    [Selected Type],
+			    1, DIVIDE(SUMX( SUMMARIZE(Vendedores, Vendedores[UtiId], "sum", [Clientes Recorrentes_] ), [Sum] ),  [Valor dif Carteira Ganhos e Perdidos YTD]),
+			    2, DIVIDE(SUMX( SUMMARIZE(Vendedores, Vendedores[UtiId], "sum", [Clientes Novos] ), [Sum] ),[Valor dif Carteira Ganhos e Perdidos YTD]),
+			    3, DIVIDE(SUMX( SUMMARIZE(Vendedores, Vendedores[UtiId], "sum", [Clientes Perdidos] ), [Sum]),[Valor dif Carteira Ganhos e Perdidos YTD]), -- perdidos
+			    4, DIVIDE(SUMX( SUMMARIZE(Vendedores, Vendedores[UtiId], "sum", [Clientes Queda] ), [Sum] ),  [Valor dif Carteira Ganhos e Perdidos YTD]), -- queda
+			    5, DIVIDE(SUMX( SUMMARIZE(Vendedores, Vendedores[UtiId], "sum", [Clientes Crescimento] ), [Sum] ), [Valor dif Carteira Ganhos e Perdidos YTD])
+			)
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 2b13c942-0b28-43b1-8bea-5c3b8c31d7cd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Receita YTD LY Atual Month' = ```
+			
+			
+			    IF.EAGER( 
+			        ISFILTERED('Calendario'[Mes])
+			            ,[Receita LY]
+			            ,CALCULATE( [Receita LY]
+			                ,FILTER( ALL('Calendario'[Date])
+			                    ,MONTH('Calendario'[Date])<=MONTH(NOW()) && YEAR('Calendario'[Date])=YEAR( MAX('Calendario'[Date]) 
+			                    ) 
+			                ) 
+			            ) 
+			    )
+			```
+		formatString: #,0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 7545e0d1-135c-4ac4-97b6-9edd257a0eaf
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Val Receita YTD Atual Month' = ```
+			
+			    IF.EAGER( 
+			        ISFILTERED('Calendario'[Mes])
+			            ,[Receita]
+			            ,CALCULATE( [Receita]
+			                ,FILTER( ALL('Calendario'[Date])
+			                    ,MONTH('Calendario'[Date])<=MONTH(NOW()) && YEAR('Calendario'[Date])=YEAR( MAX('Calendario'[Date]) 
+			                    ) 
+			                ) 
+			            ) 
+			    )
+			```
+		formatString: #,0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: d2cfe2cb-ad0d-4044-9c98-9a2d97fe820a
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Clientes Perdidos_Graph' = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			SUMX (
+			    _1,
+			   [Clientes Perdidos]*(-1)
+			)
+			```
+		formatString: -#,##0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 97ca6116-b2cc-40dd-8757-2d9f73b75c89
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Clientes Perdidos_Graph LY' = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			SUMX (
+			    _1,
+			   CALCULATE([Clientes Perdidos] *(-1), SAMEPERIODLASTYEAR('Calendario'[Date])
+			))
+			```
+		formatString: -#,##0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 329a7ee6-78f3-48ad-b577-375f913f4fbe
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Clientes Queda_Graph' = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			SUMX (
+			    _1,
+			   [Clientes Queda] *(-1)
+			)
+			```
+		formatString: -#,##0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 27b8edea-449b-4a8b-8e4b-8ccaf2e042e7
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Clientes Queda_Graph LY' = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			RETURN
+			SUMX (
+			    _1,
+			   CALCULATE([Clientes Queda] *(-1), SAMEPERIODLASTYEAR('Calendario'[Date])
+			)) 
+			```
+		formatString: -#,##0€
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 8e15c891-c9c6-47aa-a428-25e0d4324fa9
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure Titulo =
+			
+			SWITCH (
+			    [Selected TituloParameter],
+			    10, SELECTEDVALUE(Titulos[Parameter])
+			    , "GESTOR DE CONTA"
+			)
+		displayFolder: Ganhos e Perdidos
+		lineageTag: bf5cd137-988c-483d-9610-ff04e3409e07
+
+	measure Qtd_Clientes_Total_LY = CALCULATE( [Qtd_Clientes_Total], SAMEPERIODLASTYEAR('Calendario'[Date]))
+		formatString: 0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: fe87ee38-f6a9-4cfb-9030-033ad5e6e3b6
+
+	measure 'Clientes Novos_Graph' = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			SUMX (
+			    _1,
+			   [Clientes Novos]
+			)
+			```
+		formatString: #,0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 549eb7a2-493b-498b-9631-7b581019422d
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Clientes Novo_Graph LY' = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			SUMX (
+			    _1,
+			   CALCULATE([Clientes Novos], SAMEPERIODLASTYEAR('Calendario'[Date])
+			))
+			```
+		formatString: #,0.00
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 2d928f2d-36cc-4275-a7c2-e0eeb685592d
+
+		changedProperty = FormatString
+
+	measure 'Clientes Crescimento_graph' = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			SUMX (
+			    _1,
+			   [Clientes Crescimento]
+			) 
+			```
+		formatString: #,0
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 1c89df07-20c4-4831-bea8-8dfb6c81c4c9
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Clientes Crescimento_Graph LY' = ```
+			
+			VAR _1 = SUMMARIZE(Anunciante, Anunciante[Anunciante])
+			
+			RETURN
+			//IF( 
+			    // NOT (HASONEFILTER('Executivos Carteira'[Executivo])) 
+			    // && NOT (HASONEFILTER(Gerentes[Gerente]))   
+			    // && NOT (HASONEFILTER(TipoMidia[ExternalCode])) 
+			    // && NOT (HASONEFILTER(TipoVenda[ExternalCode])
+			    // ),
+			SUMX (
+			    _1,
+			   CALCULATE([Clientes Crescimento], SAMEPERIODLASTYEAR('Calendario'[Date])
+			))
+			```
+		formatString: #,0.00
+		displayFolder: Ganhos e Perdidos
+		lineageTag: 8a231106-d7f4-495e-80f8-084bec7a5d88
+
+		changedProperty = FormatString
+
+	measure ValorRappel_Atual =
+			
+			// SWITCH(
+			//     [Selected TypeRappel],
+			//     1, CALCULATE( SUM(Rappel[valorRappel]), FILTER(Rappel, Rappel[Tipo] = "FATURADO")),
+			//     2, CALCULATE( SUM(Rappel[valorRappel]), FILTER(Rappel, Rappel[Tipo] = "PROVISÓRIO"))
+			// )
+			
+			// VAR _1 = YEAR(NOW())
+			// RETURN
+			// SWITCH(
+			//     TRUE(),
+			//     SELECTEDVALUE( Calendario[Ano] ) >= _1 , CALCULATE( SUM(Rappel[valorRappel]), Rappel[Tipo] = "PROVISÓRIO" ),
+			//     [Selected TypeRappel] = 1, CALCULATE( SUM(Rappel[valorRappel]), Rappel[Tipo] = "FATURADO" ),
+			//     [Selected TypeRappel] = 2, CALCULATE( SUM(Rappel[valorRappel]), Rappel[Tipo] = "PROVISÓRIO" )
+			// )
+			
+			SWITCH(
+			    [Selected SalesParameter],
+			    1, CALCULATE( SUM(Rappel[valorRappel]), USERELATIONSHIP( Calendario[Date], Rappel[dataExib] ) ),
+			    3, CALCULATE( SUM(Rappel[valorRappel]))
+			)
+		formatString: #,0
+		displayFolder: Receita
+		lineageTag: ae24746f-b884-4bcb-ac5d-93ddcf56d09d
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure ValorRappel_LY =
+			
+			//     SWITCH([Selected TypeRappel],
+			//     1, CALCULATE([ValorRappel_Atual], SAMEPERIODLASTYEAR(Calendario[Date])),
+			//     2, CALCULATE([ValorRappel_Atual], SAMEPERIODLASTYEAR(Calendario[Date]))
+			// )
+			CALCULATE( [ValorRappel_Atual], SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: #,0
+		displayFolder: Receita
+		lineageTag: 1fc42f7f-40b5-47b6-99c9-a77e74ebe91e
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Receita Liquida' = [Receita] - SUM(Encomendas[valorComissaoAgencia]) - [ValorRappel_Atual]
+		formatString: #,0.0
+		displayFolder: Receita
+		lineageTag: b4c69953-bdcb-4068-a7f5-d7b560931d2c
+
+		changedProperty = FormatString
+
+	measure 'Receita Liquido_LY' = [Receita LY] - [ValorRappel_LY] -- - Medidas[Desconto Medio_LY]
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: 4631a776-2032-4b10-bad6-69770ec492dc
+
+	measure 'Desconto Medio_LY' = CALCULATE([Desconto Medio], SAMEPERIODLASTYEAR(Calendario[Date]))
+		lineageTag: 4e1969e2-1761-4c60-bc0c-c917cb71eee1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receita Liquido Gauge' =
+			
+			IF( ISFILTERED(Calendario[Mes]) , calculate([Receita Liquida] , FILTER(Calendario, Calendario[Mês] = MAX(Calendario[Mês]) && Calendario[Ano] = MAX(Calendario[Ano]) ) ) ,
+			 calculate([Receita Liquida], FILTER(Calendario,  Month(Calendario[Date])= MONTH(NOW()) && Year(Calendario[Date]) = YEAR(NOW() ))) )
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: 2193558c-8213-4555-a151-d484480cb256
+
+	measure 'Gauge Red Actual_Receita Liq' =
+			
+			VAR SourceMeasure = [Receita Liquido Gauge] //Actual value
+			VAR TargetMeasure = [Objetivo liquido Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo liquido Gauge]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			RedZoneMeasure
+		displayFolder: Gauge
+		lineageTag: 4583274e-6a50-408f-b8e6-1a52921aa50e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Green Actual_Receita liq' =
+			
+			VAR SourceMeasure = [Receita Liquido Gauge] //Actual value
+			VAR TargetMeasure = [Objetivo liquido Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo liquido Gauge]/2 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			TargetMeasure
+		displayFolder: Gauge
+		lineageTag: 918842f9-6c56-4190-a8ab-88320a380d71
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liquido' = SUM(Objetivos[negObjValor])
+		displayFolder: Objetivo
+		lineageTag: bfa89fd3-2492-4bf4-8d76-934a65ea4ef7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liquido Gauge' =
+			
+			IF( ISFILTERED(Calendario[Mes]) , calculate([Objetivo liquido] , FILTER(Calendario, Calendario[Mês] = MAX(Calendario[Mês]) && Calendario[Ano] = MAX(Calendario[Ano]) ) ) ,
+			 calculate([Objetivo liquido],FILTER(Calendario,Month(Calendario[Date])=month(now())&&Year(Calendario[Date])=year(NOW()))) )
+		displayFolder: Objetivo
+		lineageTag: fd22326d-7fc9-4793-9b40-44f741320744
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liquido YTD' = ```
+			CALCULATE([Objetivo liquido],FILTER(ALL(Calendario[Date]),Calendario[Date]<=MAX(Calendario[Date])&&YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])))) 
+			```
+		displayFolder: Objetivo
+		lineageTag: 78b696ad-115a-49ee-b89b-41bae031f6e5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receita liq LY YTD Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), CALCULATE([Receita Liquido_LY] , DATESYTD(Calendario[Date])), CALCULATE( [Receita Liquido_LY] , FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		formatString: #,0
+		displayFolder: Receita
+		lineageTag: e4b2a5e6-e3a5-4d9a-a5a3-0eba368518e5
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Receita liq YTD Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), CALCULATE([Receita Liquida], DATESYTD(Calendario[Date])), CALCULATE( [Receita Liquida], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: 2f2aa633-5f17-47c9-b3c9-faa04a61f308
+
+		changedProperty = FormatString
+
+	measure 'Gauge liq End Actual' =
+			
+			VAR SourceMeasure = [Receita Liquido Gauge]  //Actual value
+			VAR TargetMeasure = [Objetivo liquido Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo liquido Gauge]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			MaxValue
+		displayFolder: Gauge
+		lineageTag: eeb7e592-c896-4975-9696-42127296be0b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge liq End' =
+			
+			VAR SourceMeasure = [Receita liq Ytd Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo liq YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo liq YTD Atual Month]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			MaxValue
+		displayFolder: Gauge
+		lineageTag: 0cfc722f-6a54-488d-a7f5-a80795fdcc99
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liq YTD Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), CALCULATE([Objetivo liquido], DATESYTD(Calendario[Date])), CALCULATE( [Objetivo liquido], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		formatString: #,0.00
+		displayFolder: Objetivo
+		lineageTag: a3a10ae3-33ba-4c6d-9ebb-6efe595dec92
+
+		changedProperty = FormatString
+
+	measure 'Gauge liq Red' =
+			
+			VAR SourceMeasure = [Receita liq Ytd Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo liq YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo liq YTD Atual Month]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			RedZoneMeasure
+		displayFolder: Gauge
+		lineageTag: e7498a81-1d4c-4703-aba0-5f06710d9faf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge liq Green' =
+			
+			VAR SourceMeasure = [Receita liq Ytd Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo liq YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo liq YTD Atual Month]/2 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			TargetMeasure
+		displayFolder: Gauge
+		lineageTag: 93f70a47-451e-4589-a58d-b2978fbe4f37
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liq YTD Resumo Tooltip' =
+			
+			CALCULATE([Objetivo liquido], FILTER(Calendario, Calendario[Date] < TODAY()))
+		displayFolder: Objetivo
+		lineageTag: 8c47cebf-03aa-49b6-980f-ac94b5d7fdff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receita Var €_Comparativo' = ```
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorPub] ),0) //Valor da data inicial
+			//VAR _val2 = CALCULATE( ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0))
+			//var _result = _val1-_val2
+			var _3 = CALCULATE(ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), ALL(Calendario[Date]), USERELATIONSHIP(Calendario[Date],'Calendario comparativo'[Date])),0)) * [Normalization Factor] //Valor da data comparativa 
+			var _result2 = _val1-_3
+			var _c = SELECTEDVALUE('calendario comparativo'[date])
+			var _i = SELECTEDVALUE('Calendario'[Date])
+			
+			RETURN
+			
+			IF(_result2 =0, BLANK(),
+			            IF.EAGER( _c > _i , _3 - _val1 , 
+			                     _val1-_3 ) )
+			
+			// Previous Sales :=
+			// CALCULATE (
+			//     [Sales Amount],
+			//     ALL ( 'Date' ),
+			//     USERELATIONSHIP ( 'Date'[Date], 'Previous Date'[Date] )
+			//
+			```
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: ba8e4f72-13c2-4298-937a-2eb9e25fb905
+
+		changedProperty = FormatString
+
+	measure 'Normalization Factor' =
+			
+			DIVIDE (
+			    COUNTROWS ( 'Calendario' ),
+			    COUNTROWS ( 'Calendario comparativo' )
+			)
+		lineageTag: 346c5057-2d05-4baf-8666-1e3ef9143f14
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receita Var %_Comparativo' = ```
+			
+			VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorPub] ),0) //Valor da data inicial
+			VAR _val2 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0)
+			var _3 = CALCULATE(ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), ALL(Calendario[Date]), USERELATIONSHIP(Calendario[Date],'Calendario comparativo'[Date])),0)) * [Normalization Factor] //Valor da data comparativa 
+			RETURN
+			DIVIDE([Receita Var €_Comparativo],_3,1)
+			
+			// Receita Var €_Comparativo = 
+			// VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorPub] ),0) //Valor da data inicial
+			// //VAR _val2 = CALCULATE( ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0))
+			// //var _result = _val1-_val2
+			// var _3 = CALCULATE(ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), ALL(Calendario[Date]), USERELATIONSHIP(Calendario[Date],'Calendario comparativo'[Date])),0)) * [Normalization Factor] //Valor da data comparativa 
+			// var _result2 = _val1-_3
+			// var _c = SELECTEDVALUE('calendario comparativo'[date])
+			// var _i = SELECTEDVALUE('Calendario'[Date])
+			
+			// RETURN
+			
+			// IF(_result2 =0, BLANK(),
+			//             IF.EAGER( _c > _i , _3 - _val1 , 
+			//                      _val1-_3 ) )
+			
+			// // Previous Sales :=
+			// // CALCULATE (
+			// //     [Sales Amount],
+			// //     ALL ( 'Date' ),
+			// //     USERELATIONSHIP ( 'Date'[Date], 'Previous Date'[Date] )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Receita
+		lineageTag: 0a84354d-ca87-4121-8f14-314d26a21aa1
+
+		changedProperty = FormatString
+
+	measure 'Receita Var YTD %_Comparativo' = ```
+			
+			var CurrDate = MAX('Variacao Receita'[data_carregamento])
+			var _maxdate = EOMONTH(CurrDate,-1)
+			var _mindate = STARTOFMONTH('Variacao Receita'[data_carregamento])
+			var _lastday = ROUND( CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ),FILTER(ALL(Calendario[Date]),Calendario[Date] = _maxdate), REMOVEFILTERS('Variacao Receita'[data_carregamento])),0)
+			VAR _val1 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ) ),0)
+			var _3 = CALCULATE(ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), ALL(Calendario[Date]), USERELATIONSHIP(Calendario[Date],'Calendario comparativo'[Date])),0)) * [Normalization Factor] //Valor da data comparativa 
+			
+			RETURN
+			DIVIDE(_val1-_lastday,_lastday)
+			--_val1
+			
+			// Receita Var €_Comparativo = 
+			// VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorPub] ),0) //Valor da data inicial
+			// //VAR _val2 = CALCULATE( ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0))
+			// //var _result = _val1-_val2
+			// var _3 = CALCULATE(ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), ALL(Calendario[Date]), USERELATIONSHIP(Calendario[Date],'Calendario comparativo'[Date])),0)) * [Normalization Factor] //Valor da data comparativa 
+			// var _result2 = _val1-_3
+			// var _c = SELECTEDVALUE('calendario comparativo'[date])
+			// var _i = SELECTEDVALUE('Calendario'[Date])
+			
+			// RETURN
+			
+			// IF(_result2 =0, BLANK(),
+			//             IF.EAGER( _c > _i , _3 - _val1 , 
+			//                      _val1-_3 ) )
+			
+			// // Previous Sales :=
+			// // CALCULATE (
+			// //     [Sales Amount],
+			// //     ALL ( 'Date' ),
+			// //     USERELATIONSHIP ( 'Date'[Date], 'Previous Date'[Date] )
+			```
+		displayFolder: Receita
+		lineageTag: a0ab2345-47f9-4339-ad56-8c20f284dbee
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Bonus Var €_Comparativo' = ```
+			
+				VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorBonus] ),0) //Valor da data inicial
+				VAR _val2 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorBonus] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0)
+				var _result = _val1-_val2
+			
+				var _3 = CALCULATE(ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), ALL(Calendario[Date]), USERELATIONSHIP(Calendario[Date],'Calendario comparativo'[Date])),0)) * [Normalization Factor] //Valor da data comparativa 
+			
+				var _result2 = _val1-_3
+			
+				var _c = SELECTEDVALUE('calendario comparativo'[date])
+				
+				var _i = SELECTEDVALUE('Calendario'[Date])
+			
+				RETURN
+				
+				IF.EAGER(_result2 =0, BLANK(),
+							IF.EAGER( _c > _i , _3 - _val1 , 
+									 _result2 ) )
+			```
+		displayFolder: Bonus
+		lineageTag: d80029d8-3c94-4f9f-8eea-8f95c5c72e9a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Bonus Var %_Comparativo' = ```
+			
+					
+					VAR _val1 = ROUND(SUM( 'Variacao Receita'[sumValorBonus] ),0) //Valor da data inicial
+					
+					VAR _val2 = ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorBonus] ), PREVIOUSDAY( 'Variacao Receita'[data_carregamento] ) ),0)
+					
+					var _3 = CALCULATE(ROUND(CALCULATE( SUM( 'Variacao Receita'[sumValorPub] ), ALL(Calendario[Date]), USERELATIONSHIP(Calendario[Date],'Calendario comparativo'[Date])),0)) * [Normalization Factor] //Valor da data comparativa
+					
+					RETURN
+					DIVIDE([Bonus var €_Comparativo],_3,1)
+			```
+		displayFolder: Bonus
+		lineageTag: d96fc9fd-8aec-4583-a85c-73e3a2d47a27
+
+		changedProperty = FormatString
+
+	measure 'Titulo Alvo Tooltip' = ```
+			
+			--concatenatex(SUMMARIZE('Calendario','Calendario'[Mes]), 'Calendario'[Mes],", " )
+			"GRP (" &
+			 IF( ISFILTERED( Targets[GRP] )
+			    , CONCATENATEX( SUMMARIZE( Targets, Targets[GRP] ), Targets[GRP], ", " ) & ")"
+			    , CALCULATE( MIN(Targets[GRP]), Targets[Id] = 1 ) 
+			 & ")")
+			```
+		displayFolder: Outros
+		lineageTag: ad66731e-9e47-4689-bc70-058c81f52b26
+
+	measure 'Val Faturado total' = CALCULATE( SUM('Faturação'[valorFaturado]) ) -- RETIRADO TEMPORARIAMENTE - sum(Encomendas[valorComissaoAgencia] ) - [ValorRappel_Atual] )
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: ab7fd19d-986f-4efa-8be0-79923a85260d
+
+	measure 'Valor Outros_Custo' = SUM('Outros Custos'[valor])
+		formatString: 0.0
+		displayFolder: Receita
+		lineageTag: 77337e6e-8d52-4039-b658-d53a2b92873a
+
+		changedProperty = FormatString
+
+	measure 'valor total DescontoExibicao' = SUM(Multiprodutos[valorDescontoExibicao])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: 18417524-a301-4c17-ba76-660cb75159a0
+
+		changedProperty = FormatString
+
+	measure 'valor total DescontoOP' = SUM(Multiprodutos[valorDescontoOP])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: edd34f87-4503-44ad-8413-b4660bddc54c
+
+		changedProperty = FormatString
+
+	measure 'valor total TaxaMultiproduto' = SUM(Multiprodutos[valorTaxaMultiproduto])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: 01864ebb-ad5a-47f2-a81a-c6ac7785c175
+
+		changedProperty = FormatString
+
+	measure 'valor total TaxaPosicao' = SUM(Multiprodutos[valorTaxaPosicao])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: 3123187d-9bed-460b-bfd7-a15c2a724194
+
+		changedProperty = FormatString
+
+	measure 'Total ValorPub' = SUM(Multiprodutos[encValorPub])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: b1296bf3-e6c4-4131-ae24-48fd05dd507e
+
+		changedProperty = FormatString
+
+	measure 'valor total TabelaNeg' = SUM(Multiprodutos[encValorTabNeg])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: 1735aada-e447-4313-b1e6-65cdb02a0ca4
+
+		changedProperty = FormatString
+
+	measure 'Valor Total DescontoCampanha' = SUM(Multiprodutos[valorDescontoCampanha])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: 9b5e34be-840b-45dc-b091-87c90325fb2a
+
+		changedProperty = FormatString
+
+	measure 'valor total CustoMinimo' = SUM(Multiprodutos[valorCustoMinimo])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: 6edc654e-1c9b-437c-b921-70aded6f106f
+
+		changedProperty = FormatString
+
+	measure 'Total ValorBonus' = SUM(Multiprodutos[encValorBonus])
+		formatString: #,0.0
+		displayFolder: Multiproduto
+		lineageTag: 9fb4d0be-9b9b-4fd2-b829-3cb2279b3ae7
+
+		changedProperty = FormatString
+
+	measure 'Objetivo liq % Atual Month' = ```
+			--([Receita YTD Atual Month]/[Objetivo YTD Atual Month])-1
+			
+			if ([Objetivo liq Atual Month]=0, 
+			if([Receita liq Atual Month] =0,BLANK(),1) , (DIVIDE([Receita liq Atual Month],[Objetivo liq Atual Month])-1))
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Objetivo
+		lineageTag: 8e8dadd7-8002-4e8a-823f-9834152d9e92
+
+		changedProperty = FormatString
+
+	measure 'Objetivo liq %' = ```
+			if ([Objetivo liquido]=0, 
+			if([Receita Liquida]=0,BLANK(),1) , (DIVIDE([Receita Liquida],[Objetivo liquido])-1))
+			```
+		displayFolder: Objetivo
+		lineageTag: 101fbc69-d89b-424d-bd13-96efa196ec30
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liq Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), [Objetivo liquido], calculate([Objetivo liquido], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		displayFolder: Objetivo
+		lineageTag: a7daa477-72b2-48b8-ad18-5cc732cd1902
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receita liq Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), [Receita Liquida], calculate([Receita Liquida], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		displayFolder: Receita
+		lineageTag: 6a1ef2cf-eaba-4ec8-ab8b-b7382e6c9316
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo liq YTD % Atual Month' = ```
+			--([Receita YTD Atual Month]/[Objetivo YTD Atual Month])-1
+			
+			if ([Objetivo liq YTD Atual Month]=0, 
+			if([Receita liq YTD Atual Month]=0,BLANK(),1) , (DIVIDE([Receita liq YTD Atual Month],[Objetivo liq YTD Atual Month])-1))
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Objetivo
+		lineageTag: 61a83cd3-5a36-4902-9c84-704c8a5f7c1a
+
+		changedProperty = FormatString
+
+	measure 'val faturado Gauge' =
+			
+			IF( ISFILTERED(Calendario[Mes]) , calculate([Val Faturado total] , FILTER(Calendario, Calendario[Mês] = MAX(Calendario[Mês]) && Calendario[Ano] = MAX(Calendario[Ano]) ) ) ,
+			 calculate([Val Faturado total], FILTER(Calendario,  Month(Calendario[Date])= MONTH(NOW()) && Year(Calendario[Date]) = YEAR(NOW() ))) )
+		displayFolder: Gauge
+		lineageTag: 9abe34ba-d49e-44f5-ab77-65a98d2354e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge End Faturado' =
+			
+			VAR SourceMeasure = [val faturado Gauge] //Actual value
+			VAR TargetMeasure = [Objetivo Gauge] --[Objetivo liquido Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo Gauge]*0.5 --[Objetivo liquido Gauge]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			Return
+			MaxValue
+		displayFolder: Gauge
+		lineageTag: eb59d539-d55a-4e5f-8fda-ef6abd4bb4a0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Red Faturado' =
+			
+			VAR SourceMeasure = [val faturado Gauge] //Actual value
+			VAR TargetMeasure = [Objetivo Gauge] --[Objetivo liquido Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo Gauge]*0.5 --[Objetivo liquido Gauge]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			Return
+			RedZoneMeasure
+		displayFolder: Gauge
+		lineageTag: 570e66eb-3f64-41d9-8045-f615b5ba04f9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Green Faturado Actual' =
+			
+			VAR SourceMeasure = [val faturado Gauge] //Actual value
+			VAR TargetMeasure = [Objetivo Gauge] --[Objetivo liquido Gauge] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo Gauge]/2 --[Objetivo liquido Gauge]/2 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			TargetMeasure
+		displayFolder: Gauge
+		lineageTag: 67330441-76ed-4543-bb2c-623697ab530d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Green Faturado' =
+			
+			VAR SourceMeasure = [Val Faturado total] //Actual value
+			VAR TargetMeasure = [Objetivo] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			Return
+			TargetMeasure
+		displayFolder: Gauge
+		lineageTag: 4838aa73-70a1-4846-a1a0-a4cfc3129bdb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Title Gauge Faturado' =
+			
+			"Faturação vs Objetivo | "&SELECTEDVALUE(Calendario[Mes Completo], FORMAT( DATE(YEAR(NOW()),MONTH(NOW()) , 1) , "MMMM", "pt-PT") )
+		displayFolder: Gauge
+		lineageTag: 34847c89-a6d9-4127-b3c7-8c40e92c22bb
+
+	measure 'Val Faturado total LY' = ```
+			CALCULATE([Val Faturado total], SAMEPERIODLASTYEAR(Calendario[Date])) 
+			```
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: df09ea67-bcbf-44b4-b917-a2cb23a523f5
+
+		changedProperty = FormatString
+
+	measure 'Val Faturado %' =
+			
+			DIVIDE([Val Faturado total]-[Val Faturado total LY],[Val Faturado total LY])
+		displayFolder: Receita
+		lineageTag: 31d44317-6e1c-4e3e-9719-93ff9a262d0b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receita % Switch' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [Receita %],
+			    3, [Val Faturado %],
+			    BLANK ()
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Switch
+		lineageTag: ea276cd3-96ca-41be-933a-dd474c690be3
+
+		changedProperty = FormatString
+
+	measure 'Val Faturado YTD Atual Month' = ```
+			
+				IF.EAGER( ISFILTERED(Calendario[Mes]),
+			     CALCULATE([Val Faturado total], 
+			        DATESYTD(Calendario[Date])), 
+			        
+			    CALCULATE( [Val Faturado total], FILTER( ALL(Calendario[Date]),
+						 MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) 
+			             ) 
+			    )
+			
+			  
+			    
+			```
+		formatString: #,0.0
+		displayFolder: Receita
+		lineageTag: 3e9d0b46-65bd-4cf5-93a9-9fa94737150e
+
+		changedProperty = FormatString
+
+	measure 'Val faturado LY YTD Atual Month' = ```
+			
+				IF ( ISFILTERED(Calendario[Mes]), CALCULATE([Val Faturado total LY] , DATESYTD(Calendario[Date])), CALCULATE( [Val Faturado total LY] , FILTER( ALL(Calendario[Date]),
+						 MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+			```
+		formatString: #,0.0
+		displayFolder: Receita
+		lineageTag: 8a9feef3-5fae-4cd5-ba36-22ba2dc731ff
+
+		changedProperty = FormatString
+
+	measure 'YoY YTD % val faturado' = ```
+			if ([Val Faturado YTD Atual Month]=0, 
+				if([Val Faturado YTD Atual Month]=0,BLANK(),1) , (DIVIDE([Val Faturado YTD Atual Month],[Val faturado LY YTD Atual Month])-1))
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Receita
+		lineageTag: 37904aa7-a39c-4754-a45b-386b5d57786d
+
+		changedProperty = FormatString
+
+	measure 'YoY Va %' =
+			--if ([Receita LY]=0; if([Receita]=0;BLANK();1) ; (DIVIDE([Receita];[Receita LY])-1))
+			   IF( [Receita] = 0 && [Receita LY] = 0, BLANK() , IF( [Receita LY] = 0 , 1 ,
+					DIVIDE([Receita] , [Receita LY] ) - 1 --)
+			))
+		displayFolder: Receita
+		lineageTag: 2a5225ba-3555-4dcc-8525-f0578cedce46
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YoY liq %' = ```
+			--if ([Receita LY]=0; if([Receita]=0;BLANK();1) ; (DIVIDE([Receita];[Receita LY])-1))
+			   IF( [Receita Liquida] = 0 && [Receita Liquido_LY] = 0, BLANK() , IF( [Receita Liquido_LY] = 0 , 1 ,
+					DIVIDE([Receita Liquida] , [Receita Liquido_LY] ) - 1 --)
+			))
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Receita
+		lineageTag: f8adc74b-cf11-4e9e-bae7-99d53d6e423e
+
+		changedProperty = FormatString
+
+	measure 'YoY liq YTD %' = ```
+			if ([Receita liq LY YTD Atual Month]=0, 
+			if([Receita liq YTD Atual Month]=0,BLANK(),1) , (DIVIDE([Receita liq YTD Atual Month],[Receita liq LY YTD Atual Month])-1))
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Receita
+		lineageTag: 5eed1b49-f32e-40dc-a3d7-cbc498621e67
+
+		changedProperty = FormatString
+
+	measure 'YoY % val faturado' =
+			--if ([Receita LY]=0; if([Receita]=0;BLANK();1) ; (DIVIDE([Receita];[Receita LY])-1))
+			   IF( [Val Faturado total] = 0 && [Val Faturado total LY] = 0, BLANK() , IF( [Val Faturado total LY] = 0 , 1 ,
+					DIVIDE([Val Faturado total] , [Val Faturado total LY] ) - 1 --)
+			))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Receita
+		lineageTag: b8384344-32f1-4c24-912e-6bd691517001
+
+		changedProperty = FormatString
+
+	measure 'YoY% Switch' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [YoY %],
+			    3, [YoY % val faturado],
+			    BLANK ()
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Switch
+		lineageTag: a6b8608b-396b-43a7-b64e-17c0a4f12fbd
+
+		changedProperty = FormatString
+
+	measure 'YoY YTD % Switch' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [YoY YTD %],
+			    3, [YoY YTD % val faturado],
+			    BLANK ()
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Switch
+		lineageTag: 36a884af-6016-4fae-99bb-34cb698d1f32
+
+		changedProperty = FormatString
+
+	measure 'Receita YTD Atual Month Switch' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [Receita YTD Atual Month],
+			    3, [Val Faturado YTD Atual Month],
+			    BLANK ()
+			)
+		formatString: #,0
+		displayFolder: Switch
+		lineageTag: 94716203-e86d-4bee-94ee-739751ec37e3
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Receita YTD Atual Month Switch LY_' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [Receita LY YTD Atual Month],
+			    3, [Val Faturado LY YTD Atual Month],
+			    BLANK ()
+			)
+		formatString: #,0
+		displayFolder: Switch
+		lineageTag: c7177c20-aa79-46bf-aa56-250befe65b61
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Receita LY Atual Month Switch' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [Receita LY Atual Month],
+			    3, [Val Faturado LY Atual Month],
+			    BLANK ()
+			)
+		displayFolder: Receita
+		lineageTag: 41cba1c6-856e-415f-9655-d697023281b3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Faturado LY Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mes]), [Val Faturado total LY], calculate([Val Faturado total LY], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		displayFolder: Receita
+		lineageTag: 2d655396-a84a-4d80-b1fa-36b977a791a0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Faturado Atual Month' =
+			
+			--IF ( ISFILTERED(Calendario[Mes]), [Val Faturado total], calculate([Val Faturado total], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+			IF.EAGER( ISFILTERED(Calendario[Mes]), [Val Faturado total], calculate([Val Faturado total], FILTER(Calendario, Calendario[Mês] =  MONTH(NOW()) )))
+		displayFolder: Receita
+		lineageTag: 54cc322b-925b-43b0-a996-06b5b976e2ba
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Receita Atual Month Switch' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [Receita Atual Month],
+			    3, [Val Faturado Atual Month],
+			    BLANK ()
+			)
+		displayFolder: Receita
+		lineageTag: 1944621d-c0bd-4c3b-bd0d-17e48df39dd1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Faturado Correcao' =
+			
+			SWITCH( [Selected SalesParameter],
+			1,
+			CALCULATE( SUM('Faturação'[valorFaturado]),'Faturação'[Column1] = "CORREÇÃO", USERELATIONSHIP(Calendario[Date],'Faturação'[Data_Correcao]) ),
+			3,
+			CALCULATE( SUM('Faturação'[valorFaturado]),'Faturação'[Column1] = "CORREÇÃO" )
+			)
+		formatString: #,0.00
+		displayFolder: Receita
+		lineageTag: a136efaa-ff37-4626-a011-8935269e5e59
+
+		changedProperty = FormatString
+
+	measure 'Val Faturado s/ Correcao' =
+			
+			SWITCH( [Selected SalesParameter],
+			    1, CALCULATE( SUM('Faturação'[valorFaturado]),'Faturação'[Column1] <> "CORREÇÃO" ),
+			    3, CALCULATE( SUM('Faturação'[valorFaturado]),'Faturação'[Column1] <> "CORREÇÃO" )
+			)
+		displayFolder: Receita
+		lineageTag: 9aa0afe3-2f89-4086-ac00-9b559fbe70d4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Valor Faturado dif Carteira Ganhos e Perdidos YTD' = ```
+			
+				VAR __PREV_YEAR = [Val Faturado LY YTD Atual Month]
+				RETURN
+					[Val Faturado YTD Atual Month] - __PREV_YEAR
+			
+			```
+		displayFolder: Ganhos e Perdidos
+		lineageTag: ad477bf1-08e4-4971-8450-a4d9b8c1e019
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Receita YTD Atual Month Switch' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [Val Receita YTD Atual Month], --[Receita YTD Atual Month],
+			    3, [Val Faturado YTD Atual Month],
+			    BLANK ()
+			)
+			--Val Receita YTD Atual Month
+		formatString: #,0
+		lineageTag: 7f59cc38-d9a6-49e0-8604-979ed6438ccf
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Val Receita YTD LY Atual Month Switch' =
+			
+			SWITCH (
+			    [Selected SalesParameter],
+			    1, [Val Receita YTD LY Atual Month], --[Receita YTD Atual Month],
+			    3, [Val Faturado LY YTD Atual Month],
+			    BLANK ()
+			)
+		formatString: #,0
+		lineageTag: a1b16c15-def8-4148-87d4-577beaa41da8
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Titulos Tabelas GRP e CPR' = ```
+			
+			     "Análise GRP e CPR indexado a "& DuracaoBase & "''" 
+			
+			```
+		lineageTag: bb80c32f-66ef-43b3-80f3-9e4cc3f60645
+
+	measure 'Titulos Tabelas CPR' = ```
+			
+			     "Análise CPR (GRP indexado a "& DuracaoBase & "'')" 
+			```
+		lineageTag: a6311e28-4b83-4eeb-8f75-b64ac7928804
+
+	measure 'Titulo Tabelas CPR por Anunciante' = ```
+			
+			     "Análise CPR por Anunciante (GRP indexado a "& DuracaoBase & "'')" 
+			```
+		lineageTag: f516028d-57e3-4c57-a1c0-30c4d90cf549
+
+	measure 'Titulo CPR por Faixa Horária' = ```
+			
+			     "Análise CPR por Faixa Horária (GRP indexado a "& DuracaoBase & "'')" 
+			```
+		lineageTag: c0334661-3b96-4aef-adf1-4863fd5fc442
+
+	measure 'Objetivo YTD % val faturado Atual Month' = ```
+			--([Receita YTD Atual Month]/[Objetivo YTD Atual Month])-1
+			
+			if ([Objetivo YTD Atual Month]=0, 
+			if([Val Faturado YTD Atual Month] =0,BLANK(),1) , (DIVIDE([Val Faturado YTD Atual Month],[Objetivo YTD Atual Month])-1))
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 845b0d5b-7911-4f1e-b723-2622da90a500
+
+		changedProperty = FormatString
+
+	measure 'Val Faturado Spark' =
+			
+			IF( YEAR(NOW()) = MAX(Calendario[Ano]) , CALCULATE([Val Faturado total] , FILTER( Calendario , Calendario[Mês] <= MONTH(NOW()))) , [Val Faturado total])
+		formatString: 0.0
+		lineageTag: 7c543efa-c2f3-464b-aab8-c1cc3e6a2a21
+
+		changedProperty = FormatString
+
+	measure 'Val Faturado Spark LY' =
+			
+			IF( YEAR(NOW()) = MAX(Calendario[Ano]) , CALCULATE([Val Faturado total LY] , FILTER( Calendario , Calendario[Mês] <= MONTH(NOW()))) , [Val Faturado total LY])
+		formatString: 0.0
+		lineageTag: f4bdfcf1-3dc0-474a-bf95-1983da0c4c5a
+
+		changedProperty = FormatString
+
+	measure 'GRP Previsto Tooltip Var' = ```
+			
+			VAR _CurrentAxis = SELECTEDVALUE('Alvos Var'[Alvo])
+			var _1 = IF(_CurrentAxis = "Total",
+			        IF( SUM(Encomendas[GRP Equivalente]) = BLANK(), BLANK(),
+			            CALCULATE( SUM(Encomendas[GRP Previsto Equivalente]), ALL('Alvos Var'[Alvo] ) ) ),
+			        IF( SUM(Encomendas[GRP Equivalente]) = BLANK(), BLANK(), 
+			            CALCULATE( SUM(Encomendas[GRP Previsto Equivalente]), 'Alvos'[Alvo] = _CurrentAxis )
+			    )
+			)
+			Return 
+			IF.EAGER(_1=0, BLANK(), _1)
+			```
+		lineageTag: 31ba50ff-efbf-4652-9249-0bbb6a8f2389
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'GRP Equivalente Tooltip Var' = ```
+			
+			VAR _CurrentAxis = SELECTEDVALUE('Alvos Var'[Alvo])
+			var _1 = IF(_CurrentAxis = "Total",
+			        IF( SUM(Encomendas[GRP Equivalente]) = BLANK(), BLANK(),
+			            CALCULATE( SUM(Encomendas[GRP Equivalente] ), ALL('Alvos Var'[Alvo] ) ) ),
+			        IF( SUM(Encomendas[GRP Equivalente]) = BLANK(), BLANK(), 
+			            CALCULATE( SUM(Encomendas[GRP Equivalente]), 'Alvos'[Alvo] = _CurrentAxis )
+			    )
+			)
+			Return 
+			IF.EAGER(_1=0, BLANK(), _1)
+			```
+		lineageTag: a82dbce0-ea2b-44cc-b747-bdc88d8c9a49
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo % val faturado Atual Month_' = ```
+			--([Receita YTD Atual Month]/[Objetivo YTD Atual Month])-1
+			
+			if ([Objetivo Atual Month]=0, 
+			if([val faturado Atual Month]=0,BLANK(),1) , (DIVIDE([val faturado Atual Month],[Objetivo Atual Month])-1))
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 678e7466-3dd4-456b-925a-ee01be28fc28
+
+		changedProperty = FormatString
+
+	measure 'Gauge End Faturado YTD' =
+			
+			VAR SourceMeasure = [Val Faturado YTD Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo YTD Atual Month] --[Objetivo liq YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo YTD Atual Month]*0.5 --[Objetivo liq YTD Atual Month]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			Return
+			MaxValue
+		lineageTag: 97ede111-0eb1-4212-8cf0-e13dcca83e5e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Red Faturado YTD' =
+			
+			VAR SourceMeasure = [Val Faturado YTD Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo YTD Atual Month] --[Objetivo liq YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure = [Objetivo YTD Atual Month]*0.5 --[Objetivo liq YTD Atual Month]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			
+			Return
+			
+			RedZoneMeasure
+		lineageTag: 26f26658-3898-47e7-9a49-66f1c97c13b1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gauge Green Faturado YTD' =
+			
+			VAR SourceMeasure = [val faturado ytd Atual Month] //Actual value
+			VAR TargetMeasure = [Objetivo YTD Atual Month] --[Objetivo liq YTD Atual Month] //Target value (end of the yellow zone)
+			VAR RedZoneMeasure =  [Objetivo YTD Atual Month]*0.5 --[Objetivo liq YTD Atual Month]*0.5 //Minimum target value (end of the red zone)
+			VAR MaxValue = SWITCH(TRUE(),SourceMeasure>TargetMeasure,SourceMeasure*1.2,TargetMeasure*1.2) //Defines max value of the scale
+			Return
+			TargetMeasure
+		lineageTag: 8b4bfa50-fc8e-4288-86e4-fc277b1cf1c6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Objetivo Bruto' =
+			
+			SUM(Objetivos[negObjValorBruto])
+		lineageTag: 7ea1f1ac-4ef9-4a24-84fa-64f8e263e2d2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Simulador % Ocup' = ```
+			
+			IF( 
+			    [Taxa de Ocupação] >= [Parâmetro Valor]
+			    ,1
+			    ,0
+			)
+			```
+		formatString: 0
+		lineageTag: e5b6caf4-3896-4325-86b1-a20a8384567a
+
+	measure 'Taxa de Ocupacao Simulador' = ```
+			
+			VAR _1 = IF( divide([Ocupação Normal],[Grelha Max Normal]) = 0, BLANK(), divide([Ocupação Normal],[Grelha Max Normal]) )
+			RETURN
+			AVERAGEX( 
+			    VALUES( Ocupacao[FaixaHorariaFormatada] )
+			        ,IF( 'Simulador Exclusivos'[Parâmetro Valor] <= CALCULATE( _1 ) , CALCULATE( _1 ) , BLANK() )
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 95e55c5e-9f50-4794-9406-1f7c11609b53
+
+		changedProperty = FormatString
+
+	measure 'NumeroSpots Simulador' = ```
+			
+			SUMX( 
+			    VALUES( Ocupacao[FaixaHorariaFormatada] )
+			        ,IF( 'Simulador Exclusivos'[Parâmetro Valor] <= [Taxa de Ocupação] , [NumeroSpots] , BLANK() )
+			)
+			```
+		formatString: 0
+		lineageTag: 3d15a5cb-7c7b-4bb2-b263-bff4999d60fc
+
+	measure 'Ocupacao Hora Simulador' = ```
+			
+			VAR Duration = --SUM(Ocupacao[OcupacaoNormal] )
+			
+			SUMX( 
+			    VALUES( Ocupacao[FaixaHorariaFormatada] )
+			        ,IF( 'Simulador Exclusivos'[Parâmetro Valor] <= [Taxa de Ocupação] , CALCULATE( SUM(Ocupacao[OcupacaoNormal] ) ) , BLANK() )
+			)
+			
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		lineageTag: 83b8e2db-0b90-4b88-b6a4-af1cc286bdcb
+
+	measure 'Ocupacao Espera Hora Simulador' = ```
+			
+			VAR Duration = --SUM(Ocupacao[Espera] )
+			
+			SUMX( 
+			    VALUES( Ocupacao[FaixaHorariaFormatada] )
+			        ,IF( 'Simulador Exclusivos'[Parâmetro Valor] <= [Taxa de Ocupação] , CALCULATE( SUM(Ocupacao[Espera] ) ) , BLANK() )
+			)
+			
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		lineageTag: b4a313cd-3015-4d10-9e7f-e9deb3ee1d4c
+
+	measure 'Subtitulo ValFatu' = "* Valor Faturado"-- "Valor Líquido" "Valor Bruto"
+		lineageTag: 0fbc2582-fdee-4016-96ae-54f4bb4d8117
+
+	measure 'Subtitulo ValLiqu' = "* Valor Líquido"-- "Valor Bruto"
+		lineageTag: 5eabc708-6a23-4b7c-8acd-685207891148
+
+	measure 'Subtitulo ValBruto' = "* Valor Bruto"
+		lineageTag: 814e6c42-32d8-47df-90db-a90598c45f96
+
+	measure 'Receita liq Spark' = ```
+			
+			IF( YEAR(NOW()) = MAX(Calendario[Ano]) , CALCULATE([Receita Liquida] , FILTER( Calendario , Calendario[Mês] <= MONTH(NOW()))) , [Receita Liquida])
+			
+			// Receita Switch = 
+			// SWITCH (
+			//     [Selected SalesParameter],
+			//     1, [Receita],
+			//     3, [Val Faturado total],
+			//     BLANK ()
+			// )
+			```
+		formatString: #,0.0
+		lineageTag: 57051ed3-3365-4795-97c9-e42d77727b3f
+
+		changedProperty = FormatString
+
+	measure 'Receita liq Spark LY' =
+			
+			CALCULATE( [Receita Liquido_LY] , FILTER( Calendario , Calendario[Mês] <= MONTH(NOW())))
+		formatString: #,0
+		lineageTag: c1b73331-3989-4b5d-84c6-1d86a0418962
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure RappelFaturado =
+			
+			SWITCH(
+			    TRUE()
+			    ,SELECTEDVALUE( TipoRappelComissao[Tipo] ) = "Rappel", CALCULATE( SUM(Rappel[valorRappel] ) )
+			    ,SELECTEDVALUE( TipoRappelComissao[Tipo] ) = "Comissão Agência", CALCULATE( SUM( Encomendas[valorComissaoAgencia] ) )
+			    ,SELECTEDVALUE( TipoRappelComissao[Tipo] ) = "Rappel LY", CALCULATE( SUM(Rappel[valorRappel] ), SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			    ,SELECTEDVALUE( TipoRappelComissao[Tipo] ) = "Comissão Agência LY", CALCULATE( SUM( Encomendas[valorComissaoAgencia] ), SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			)
+		formatString: #,0.00
+		lineageTag: 588fdf47-1919-4925-a3e6-c3e7d560a926
+
+		changedProperty = FormatString
+
+	measure RappelLiquido =
+			
+			SWITCH(
+			    TRUE()
+			    ,SELECTEDVALUE( TipoRappelComissao[Tipo] ) = "Rappel", CALCULATE( SUM(Rappel[valorRappel] ), USERELATIONSHIP( Calendario[Date], Rappel[dataExib] ) )
+			    ,SELECTEDVALUE( TipoRappelComissao[Tipo] ) = "Comissão Agência", CALCULATE( SUM( Encomendas[valorComissaoAgencia] ) )
+			    ,SELECTEDVALUE( TipoRappelComissao[Tipo] ) = "Rappel LY", CALCULATE( SUM(Rappel[valorRappel] ), SAMEPERIODLASTYEAR( Calendario[Date] ), USERELATIONSHIP( Calendario[Date], Rappel[dataExib] ) )
+			    ,SELECTEDVALUE( TipoRappelComissao[Tipo] ) = "Comissão Agência LY", CALCULATE( SUM( Encomendas[valorComissaoAgencia] ), SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			)
+		formatString: #,0.00
+		lineageTag: a1b9fe1e-8e95-49ef-8432-647b900b4f1c
+
+		changedProperty = FormatString
+
+	column Column1
+		dataType: int64
+		formatString: 0
+		lineageTag: 2718a873-2566-4df4-9cd4-a580c578b435
+		summarizeBy: sum
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Empty = " "
+		lineageTag: c967c743-8b2d-40fd-adc7-0efc3d3f5909
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ~Medidas-03cfb19b-8e90-40a6-ad56-a16a373ec871 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

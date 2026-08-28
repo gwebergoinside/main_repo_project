@@ -1,0 +1,103 @@
+table 'Date Cons'
+	lineageTag: 01c3540a-e700-4320-a7de-59de31091192
+
+	column Date
+		lineageTag: 63f6881b-4d9a-4a5c-9d0e-7ed9a614e260
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variação
+			isDefault
+			relationship: c3b71c98-b207-4c5a-9b43-61ed9c313d23
+			defaultHierarchy: LocalDateTable_4f4aa587-3c15-418a-90f7-407219ea3279.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Ano
+		formatString: 0
+		lineageTag: cc0d454b-9f16-4cbc-a6e2-cdd3f519c426
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ano]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		lineageTag: 3c21b77f-317b-4e80-9269-034dd8a8949e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mês]
+		sortByColumn: NºMês
+
+		annotation SummarizationSetBy = Automatic
+
+	column NºMês
+		formatString: 0
+		lineageTag: a8faff35-d20e-4b0b-b42a-2d81c1ddcbaf
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [NºMês]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		lineageTag: fa0838d1-0e22-4ac4-a6a7-03c19f576782
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana'
+		lineageTag: c72f38e5-e4c5-4b85-83f4-42048d4a445a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Dia Semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nº dia Semana'
+		formatString: 0
+		lineageTag: fee4a3e9-8986-4fcb-9040-84cb3104e876
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Nº dia Semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		formatString: 0
+		lineageTag: af64472a-829d-428d-87b6-127eaf9e05a1
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Dia]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Date Cons-bd3032c9-0fe9-4c9e-8713-ecfa01ee8679' = calculated
+		mode: import
+		source = ```
+				var a =year(min(Consumos[DATA_CONSUMO]))
+				var b=YEAR(max(Consumos[DATA_CONSUMO]))
+				var dates=filter(CALENDARAUTO(),
+				year([Date])>=a && YEAR([Date])<=b)
+				
+				RETURN
+				    ADDCOLUMNS(
+				        Dates,
+				        "Ano", YEAR ( [Date] ),
+				        "Mês", SWITCH(MONTH([Date]),1,"Jan",2,"Fev",3,"Mar",4,"Abr",5,"Mai",6,"Jun",7,"Jul",8,"Ago",9,"Set",10,"Out",11,"Nov",12,"Dez"),
+				        "NºMês", MONTH ( [Date] ),
+				        "Trimestre",  CONCATENATE("Trimestre ",ROUNDUP(MONTH([date])/3,0)),
+						"Dia Semana" ,SWITCH(WEEKDAY([Date]),1,"Sunday",2,"Monday",3,"Tuesday",4,"Wednesday",5,"Thursday",6,"Friday",7,"Saturday"),
+						"Nº dia Semana",  WEEKDAY([Date]),
+						"Dia" , DAY([Date])
+						
+				)
+				```
+

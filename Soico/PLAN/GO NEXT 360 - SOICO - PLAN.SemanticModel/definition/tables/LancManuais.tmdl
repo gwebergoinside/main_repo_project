@@ -1,0 +1,78 @@
+table LancManuais
+	lineageTag: 856db763-bb6c-49fc-aaaa-a3aedc85fd42
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 152f4363-d190-4ec9-bf2f-15a7db80b3d8
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCC
+		dataType: int64
+		formatString: 0
+		lineageTag: 734f2de7-9b3d-485c-b3c3-dbb4cb8009a7
+		summarizeBy: none
+		sourceColumn: IdCC
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjeto
+		dataType: int64
+		formatString: 0
+		lineageTag: 50369d64-b11c-4a81-88d8-993dd1aaf281
+		summarizeBy: none
+		sourceColumn: IdProjeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0d914a98-4f11-4cf6-b5ae-d34b3c1b282b
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantidade
+		dataType: double
+		lineageTag: 10cc076c-9a83-4c73-ac0a-51fc2d9d30bf
+		summarizeBy: sum
+		sourceColumn: Quantidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Valor
+		dataType: double
+		lineageTag: c9d335e3-4779-4bd2-89d1-cd8795e36b62
+		summarizeBy: sum
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Tipo
+		dataType: string
+		lineageTag: bc7f602d-a504-4d08-a2fb-bc09c66e0622
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LancManuais-870323eb-c7eb-49a3-ac71-b5195aeba605 = m
+		mode: import
+		queryGroup: Lancamentos
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    CustosInternosManuais.Id,#(lf)    CustosInternosManuais.IdCentroCustoEmissor As IdCC,#(lf)    CustosInternosManuais.IdProjeto,#(lf)    CustosInternosManuais.Data,#(lf)    CustosInternosManuais.Quantidade,#(lf)    CustosInternosManuais.Valor,#(lf)    'Manual' As Tipo#(lf)From#(lf)    CustosInternosManuais#(lf)Where#(lf)    Year(CustosInternosManuais.Data) >= Year(GetDate()) - 3"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,54 @@
+table HorariosRefs
+	lineageTag: 9b3353e9-82b8-4413-9393-ab744def929f
+
+	column Descricao
+		dataType: string
+		lineageTag: 7b02debc-dd04-4edd-8361-2340a1acb16c
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdHorariosRefs
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c564b90-c0d9-48dc-aad9-a4a69b7f6a8a
+		summarizeBy: none
+		sourceColumn: IdHorariosRefs
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo
+		dataType: string
+		lineageTag: 7b8c5f7c-9377-4c17-ae84-874f3a636bd7
+		summarizeBy: none
+		sourceColumn: Codigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column TrabalhoEfectivo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4a9d921a-4f40-4420-8fe8-984fe541bbfb
+		summarizeBy: none
+		sourceColumn: TrabalhoEfectivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodDesc = HorariosRefs[Codigo] & " (" & HorariosRefs[Descricao] & ")"
+		lineageTag: 1c7dc8da-c3b2-485e-8019-0b719466e370
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HorariosRefs-de2f2700-eddf-4000-84d1-1fbd2ec4948e = m
+		mode: import
+		queryGroup: Pessoas
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    hr.Descricao,#(lf)    hr.Id As IdHorariosRefs,#(lf)    hr.Codigo,#(lf)    hr.TrabalhoEfectivo#(lf)From#(lf)    Horarios_Refs hr"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,18 @@
+table LinkProjeto
+	lineageTag: 456f1f86-8181-4050-bf5d-378ce423b128
+
+	column LinkProjeto
+		dataType: string
+		lineageTag: ead90bf5-8399-4565-b181-acce2c7b1d49
+		summarizeBy: none
+		sourceColumn: LinkProjeto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LinkProjeto-437d2515-c474-4102-9491-5d43642f4eb4 = m
+		mode: import
+		queryGroup: Config
+		source = "https://soico-gmediaplan.goinside.co/Projectos/FichaProjecto.aspx?Tab=1&IdProjecto=" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_ResultType = Text
+

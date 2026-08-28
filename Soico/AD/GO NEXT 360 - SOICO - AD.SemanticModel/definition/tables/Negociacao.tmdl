@@ -1,0 +1,41 @@
+table Negociacao
+	lineageTag: e36bd020-2c38-411b-bfe6-6d59fdfbc634
+
+	column negPerId
+		dataType: int64
+		formatString: 0
+		lineageTag: e8272e08-c760-4666-a201-fd31d494212d
+		summarizeBy: none
+		sourceColumn: negPerId
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerDescricao
+		dataType: string
+		lineageTag: 5f51451d-7a9f-495a-a6c2-8e4a9c6c3c92
+		summarizeBy: none
+		sourceColumn: negPerDescricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column negValor
+		dataType: double
+		lineageTag: 4c2b3b39-3338-4998-920d-91fdc7398ed1
+		summarizeBy: sum
+		sourceColumn: negValor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Negociacao-281f394e-10c5-42e3-b3d1-bcf9e4aa345b = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				Source = Sql.Database(ServerP, BD, [Query="Select#(lf) np.negPerId,#(lf) np.negPerDescricao,#(lf) SUM(n.negValor) as negValor#(lf)From#(lf) Negociacao n Inner Join#(lf) NegPeriodos np On n.negPerId = np.negPerId#(lf)Group By#(lf) np.negPerId,#(lf) np.negPerDescricao"])
+				in
+				Source
+
+	annotation PBI_ResultType = Table
+

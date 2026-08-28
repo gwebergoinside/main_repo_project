@@ -1,0 +1,633 @@
+table Comercial
+	lineageTag: 5b0250a5-d743-4885-8106-f0dbf89709ff
+
+	measure Inserções = ```
+			
+			CALCULATE( 
+			    COUNT( Comercial[ordPubCodigo])
+			    , Comercial[__minDateInsercao] = "I"
+			) 
+			--,Comercial[encLogAccao] = "I" )
+			```
+		formatString: #,0
+		lineageTag: 753ef6a3-4798-4f2e-9db4-369f102fd421
+
+	measure 'Falta Espaço' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogAccao] = "X", SEARCH("espaço",Comercial[encExcDescricaoErro],1,0) )
+		formatString: #,0
+		lineageTag: 1dff06eb-ec1f-4de6-8432-c7c33b0504d3
+
+	measure Alterações = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[LogAcao] = "Alteração" )
+		formatString: #,0
+		lineageTag: 0324308b-4144-4a23-97e4-7d760629654d
+
+	measure Remoções = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[LogAcao] = "Remover encomenda" )
+		formatString: #,0
+		lineageTag: 6fa02910-0a51-486c-a4b0-294d9424602c
+
+	measure 'Remoções Falta Esp.' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[RemocaoUtilizador] = 1 )
+		formatString: #,0
+		lineageTag: 2cdbb67b-1515-4ebd-ad8c-2ed6143db6f6
+
+	measure 'OrdPub Atual' =
+			
+			CALCULATE( count( Comercial[ordPubCodigo] ) , YEAR(Comercial[encLogData]) =  YEAR(NOW()) )
+		formatString: #,0
+		lineageTag: fbe41768-2038-4a92-94fa-d78c4ac864c9
+
+	measure 'OrdPub LY' =
+			
+			CALCULATE( count( Comercial[ordPubCodigo] ) , SAMEPERIODLASTYEAR(Calendario[Date]) )
+		formatString: #,0
+		lineageTag: cd69a2ce-ca14-451b-acd8-b03d442a7fe4
+
+	measure Manual = CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , ISBLANK(Comercial[Tipo]) , USERELATIONSHIP( Calendario[Date] , Comercial[DataOrdPub] ) )
+		formatString: #,0
+		lineageTag: fe8797e3-667f-4052-b57d-6dbfbc159656
+
+	measure Contratos = CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , Comercial[Tipo] = "C" , USERELATIONSHIP( Calendario[Date] , Comercial[DataOrdPub] ))
+		formatString: #,0
+		lineageTag: 1dcf5031-3f16-4e4b-a79f-eb51de7aac9b
+
+	measure Eletrónica = CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , Comercial[Tipo] <> "C" && NOT(ISBLANK(Comercial[Tipo])) , USERELATIONSHIP( Calendario[Date] , Comercial[DataOrdPub] ) )
+		formatString: #,0
+		lineageTag: 0c4db1ed-b0f0-4958-b7fc-972ea2145b00
+
+	measure 'Novas Campanhas' =
+			
+			CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , USERELATIONSHIP( Calendario[Date] , Comercial[__campsDate] ) )
+		formatString: 0
+		lineageTag: 66807767-c9b1-4cbc-a3db-180847e6bfbc
+
+	measure 'Novas CampanhasGraph LY' =
+			
+			CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , USERELATIONSHIP( Calendario[Date] , Comercial[__campsDate] ) , SAMEPERIODLASTYEAR(Calendario[Date]) )
+			--CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , USERELATIONSHIP( Calendario[Date] , Comercial[__campsDate] ), YEAR(Comercial[__campsDate]) =  YEAR(NOW())-1)
+		formatString: 0
+		lineageTag: 14229372-2e9e-49e3-ab7e-4aac5d19aa5e
+
+	measure 'Avg Inserção Inicio' = ```
+			
+			CALCULATE(
+			    DIVIDE([Inserções],
+			        DISTINCTCOUNT(Comercial[ordPubCodigo])
+			    ),
+			            FILTER(Comercial, Comercial[encLogDataHora] = [__minDate] ) , 
+			                    ALLEXCEPT(Comercial,Comercial[ordPubCodigo])
+			        , 
+			            Comercial[LogAcao] = "Inserção")
+			```
+		formatString: 0
+		lineageTag: e35249a0-efff-4f93-8bf4-5bee1f165743
+
+	measure 'Avg Alterações' =
+			
+			
+			Var __count1 = sumx(summarize(Comercial, Comercial[encLogDataHora], "_dist", count(Comercial[ordPubCodigo])),[_dist])
+			--Var __count2 =
+			Return
+			DIVIDE(__count1,DISTINCTCOUNT(Comercial[ordPubCodigo]))
+		formatString: 0
+		lineageTag: 1db2634e-6fbf-4f42-9da3-9ace80cdb6f6
+
+	measure 'OPs Log' =
+			
+			--Var __sum = SUMX(SUMMARIZE(Comercial, Comercial[ordPubCodigo], "Count", MAX(Comercial[Count])),[Count])
+			Var __sum = SUMX(SUMMARIZE(OPLog, OPLog[ordPubCodigo], OPLog[Accao], OPLog[ordPubData], "Count", CALCULATE(DISTINCTCOUNT(OPLog[ordPubCodigo]), OPLog[Accao] = "M" )),[Count])
+			Return
+			DIVIDE(__sum,CALCULATE( DISTINCTCOUNT(Comercial[ordPubCodigo]),USERELATIONSHIP(Comercial[ordPubCodigo],OPLog[ordPubCodigo])))
+		formatString: #,0
+		lineageTag: afd092af-233f-4164-bb7f-362d81c349fd
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Avg Inserção Após Inicio' = ```
+			
+			CALCULATE(
+			    DIVIDE([Inserções],
+			        DISTINCTCOUNT(Comercial[ordPubCodigo])
+			    ),
+			            FILTER(Comercial, Comercial[encLogDataHora] > [__minDate] ) , 
+			                    ALLEXCEPT(Comercial,Comercial[ordPubCodigo])
+			        , 
+			            Comercial[LogAcao] = "Inserção")
+			```
+		formatString: #,0
+		lineageTag: 6bc0dc5c-46a2-4e7d-aa54-2839ecd23441
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure __minDate = CALCULATE ( MIN ( Comercial[encLogDataHora] ), ALLEXCEPT ( Comercial, Comercial[ordPubCodigo],Comercial[encLogAccao]) )
+		formatString: General Date
+		lineageTag: d1182602-d0cc-4ecb-bdea-9881ed89ec61
+
+	measure ContratosCard =
+			
+			Var __contr = CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , Comercial[Tipo] = "C" , USERELATIONSHIP( Calendario[Date] , Comercial[DataOrdPub] ) )
+			Return
+			IF( __contr = BLANK() , 0 , __contr )
+		formatString: #,0
+		lineageTag: ffd342f2-c63a-42a5-9723-9db6bae040e1
+
+	measure EletrónicaCard =
+			
+			Var __elec = CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , Comercial[Tipo] <> "C" && NOT(ISBLANK(Comercial[Tipo])) , USERELATIONSHIP( Calendario[Date] , Comercial[DataOrdPub] ) )
+			Return
+			IF( __elec = BLANK() , 0 , __elec )
+		formatString: #,0
+		lineageTag: 53c7a3dd-1baa-4c78-a9c2-06236894d6c7
+
+	measure ManualCard =
+			
+			Var __manu = CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , ISBLANK(Comercial[Tipo]) , USERELATIONSHIP( Calendario[Date] , Comercial[DataOrdPub] ) )
+			Return
+			IF( __manu = BLANK() , 0 , __manu )
+		formatString: #,0
+		lineageTag: 3954a49c-7f7a-4c75-998a-41d104b9229d
+
+	measure 'Novas CampanhasGraph' =
+			
+			CALCULATE( DISTINCTCOUNT( Comercial[ordPubCodigo] ) , USERELATIONSHIP( Calendario[Date] , Comercial[__campsDate] ), YEAR(Comercial[__campsDate]) =  YEAR(NOW()))
+		formatString: 0
+		lineageTag: 7da20d9d-3857-4c94-9b82-4b180c5f1f44
+
+	measure 'Dia Fechado' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogAccao] = "X", SEARCH("dia está fechado",Comercial[encExcDescricaoErro],1,0) )
+		formatString: #,0
+		lineageTag: 49979559-edb7-4b4b-8772-eb596d4e0bfc
+
+	measure 'Outras Exc' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogAccao] = "X", NOT(SEARCH("dia está fechado",Comercial[encExcDescricaoErro],1,0)) && NOT(SEARCH("espaço",Comercial[encExcDescricaoErro],1,0)) )
+		formatString: #,0
+		lineageTag: 60eda342-7205-4aa7-aa40-ba51c55826ba
+
+	measure 'Força Exceção' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "ForçaExcepção" )
+		formatString: #,0
+		lineageTag: 85712832-8907-4df4-b894-18446bfd8813
+
+	measure 'Marca Exceção' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "MarcaExcepção" )
+		formatString: #,0
+		lineageTag: efaa0078-2ded-4150-b4cc-c8f98ad8aff3
+
+	measure 'Passa Marca Exc' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "encpassmarcexc" )
+		formatString: #,0
+		lineageTag: 55f5314b-cb63-4a0e-a6ad-e518e9e5c2ca
+
+	measure 'Alteração de Spot' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "alteração de spot" )
+		formatString: #,0
+		lineageTag: 43c33dd4-dd2b-4d35-ae49-083cfa9c4ef8
+
+	measure 'Spots Altera Dur' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "spotsalteradur" )
+		formatString: #,0
+		lineageTag: 428d17fe-5531-45b3-b4ea-1c991f229976
+
+	measure Verificação = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "Verificação" )
+		formatString: #,0
+		lineageTag: 493c01d0-3d85-4210-9d5a-5bd4de55fafa
+
+	measure Tratamento = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "tratamento" )
+		formatString: #,0
+		lineageTag: d0982072-a05d-4231-809a-276524ddd175
+
+	measure 'Processamento V' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "processamento v" )
+		formatString: #,0
+		lineageTag: 5da538ca-694f-4f75-a007-6b925156d0d8
+
+	measure 'Altera Exc' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "encalteraexc" )
+		formatString: #,0
+		lineageTag: 34df0331-6bad-4ff1-8841-16a6ca220781
+
+	measure 'Passa Exc' = CALCULATE( COUNT( Comercial[ordPubCodigo]), Comercial[encLogLocal] = "encpassexc" )
+		formatString: #,0
+		lineageTag: dae1c732-aa1d-491d-8383-25822c1eed0d
+
+	column enclogid
+		dataType: int64
+		formatString: 0
+		lineageTag: ce821b2a-2f58-46d5-b6ac-aab9c381b469
+		summarizeBy: sum
+		sourceColumn: enclogid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: d5e216ec-6d63-43b9-92ea-cdbe59d7cae7
+		summarizeBy: none
+		sourceColumn: ordPubCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column camId
+		dataType: int64
+		formatString: 0
+		lineageTag: c568f94e-8bf4-4959-b0e0-9a7320d10be3
+		summarizeBy: count
+		sourceColumn: camId
+
+		annotation SummarizationSetBy = Automatic
+
+	column camDescricao
+		dataType: string
+		lineageTag: a262136a-e9a2-4d53-9904-67ebd8bd185f
+		summarizeBy: none
+		sourceColumn: camDescricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column encLogAccao
+		dataType: string
+		lineageTag: e2e70117-f60f-4787-bf5b-437314a1c915
+		summarizeBy: none
+		sourceColumn: encLogAccao
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataCampanhas = DATE(YEAR(Comercial[camDataRegisto]),MONTH(Comercial[camDataRegisto]),1)
+		formatString: General Date
+		lineageTag: 3ab4180a-702b-438d-b65e-e072f95609ee
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 9ecf1c53-5276-48b0-9667-de041a585ef5
+			defaultHierarchy: LocalDateTable_67355890-bc3f-4496-82bd-c3a9e061dbc7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column LogAcao =
+			SWITCH( TRUE(),
+			// Comercial[encLogAccao] = "A" , "Alteração",
+			// Comercial[encLogAccao] = "RR" , "Encomenda Recuperada",
+			// Comercial[encLogAccao] = "X" , "Excepção",
+			// Comercial[encLogAccao] = "I" , "Inserção",
+			// Comercial[encLogAccao] = "EE" , "Passar a exibidas",
+			// Comercial[encLogAccao] = "R" , "Remover encomenda",
+			// Comercial[encLogAccao] = "RX" , "Remover excepção",
+			// Comercial[encLogAccao] = "RE" , "Remover exibida",
+			// Comercial[encLogAccao])
+			Comercial[__minDateInsercao] = "A" , "Alteração",
+			Comercial[__minDateInsercao] = "RR" , "Encomenda Recuperada",
+			Comercial[__minDateInsercao] = "X" , "Excepção",
+			Comercial[__minDateInsercao] = "I" , "Inserção",
+			Comercial[__minDateInsercao] = "EE" , "Passar a exibidas",
+			Comercial[__minDateInsercao] = "R" , "Remover encomenda",
+			Comercial[__minDateInsercao] = "RX" , "Remover excepção",
+			Comercial[__minDateInsercao] = "RE" , "Remover exibida",
+			Comercial[encLogAccao])
+		lineageTag: abf7530c-2d45-481b-b81b-c588c1392309
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column encLogLocal
+		dataType: string
+		lineageTag: 495e13a6-9875-48e5-b7bc-1ec0c484f6f4
+		summarizeBy: none
+		sourceColumn: encLogLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo = if([Hora]>=0 && [Hora]<5,"Late Night",if([Hora]>=5 && [Hora]<=9,"Breakfast",if([Hora]>9 && [Hora]<=12,"Late Morning",if([Hora]>12 && [Hora]<=17,"Afternoon",if([Hora]>17 && [Hora]<=23,"Prime Time",if([Hora]>23 ,"Late Night"))))))
+		lineageTag: 65139b4e-2eaf-4158-90ea-cf42323c17db
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b7eb170-a47c-4307-911c-c6f461a92aef
+		summarizeBy: sum
+		sourceColumn: Hora
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubAno
+		dataType: int64
+		formatString: 0
+		lineageTag: 8341643f-f926-41fc-beda-b50ad4be8d0a
+		summarizeBy: sum
+		sourceColumn: ordPubAno
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubMes
+		dataType: int64
+		formatString: 0
+		lineageTag: 621bcf5a-9fff-483b-9304-72f4887724c0
+		summarizeBy: sum
+		sourceColumn: ordPubMes
+
+		annotation SummarizationSetBy = Automatic
+
+	column encLogData
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 444b7818-5cce-41b8-ba39-c2ea52475f4a
+		summarizeBy: none
+		sourceColumn: encLogData
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Anunciante
+		dataType: string
+		lineageTag: 899a9414-a585-4d8d-a55b-c32bbd0af054
+		summarizeBy: none
+		sourceColumn: Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column Distribuidor
+		dataType: string
+		lineageTag: 138854ad-a8fb-4f4f-9768-6f3cba5192a6
+		summarizeBy: none
+		sourceColumn: Distribuidor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendedor
+		dataType: string
+		lineageTag: 45d35b68-a9e3-418b-91da-50adf470f090
+		summarizeBy: none
+		sourceColumn: Vendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Responsavel
+		dataType: string
+		lineageTag: 86836ca7-b959-432f-b13e-81fb08bb30b5
+		summarizeBy: none
+		sourceColumn: Responsavel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Assistente
+		dataType: string
+		lineageTag: 65fc16eb-93a7-49d8-8d5f-acaa423419cf
+		summarizeBy: none
+		sourceColumn: Assistente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubData
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c0c4bbd8-5e76-452f-b887-d619447f7458
+		summarizeBy: none
+		sourceColumn: ordPubData
+
+		variation Variation
+			isDefault
+			relationship: 4dce3dcf-beb8-43cf-b8ea-fff58b2ccf94
+			defaultHierarchy: LocalDateTable_91206f6c-afe5-423e-96bc-99be7c51129a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataOrdPub = DATE(YEAR(Comercial[ordPubData]),MONTH(Comercial[ordPubData]),DAY(Comercial[ordPubData]))
+		formatString: General Date
+		lineageTag: ad1adb35-d2fb-44ee-8c32-77fb0fd1394b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column encDataExibicao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 26d60375-99c9-4cbb-9b4a-4f098e8d7d6e
+		summarizeBy: none
+		sourceColumn: encDataExibicao
+
+		variation Variation
+			isDefault
+			relationship: 27f716a2-dcf0-4a3f-88a1-80702befdaa7
+			defaultHierarchy: LocalDateTable_437baecc-696c-40df-aca9-de2f025a1ad2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: 55b11bfb-1384-4ad5-b4bb-dc82ced84658
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrdPubHora
+		dataType: int64
+		formatString: 0
+		lineageTag: 0d1d1008-8891-4b18-89b5-2b3713b0be7f
+		summarizeBy: sum
+		sourceColumn: OrdPubHora
+
+		annotation SummarizationSetBy = Automatic
+
+	column encLogDataHora
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8643597b-cb0f-4dc8-8559-7b57ef259c67
+		summarizeBy: none
+		sourceColumn: encLogDataHora
+
+		variation Variation
+			isDefault
+			relationship: 2a62b4f1-157e-49af-b3ec-5afdbd11a5a1
+			defaultHierarchy: LocalDateTable_de5ec805-ad53-4669-8cc8-dc89bc44ee3b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: 4390df61-2d21-493f-a8ca-d04bb86a41b9
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column camDataRegisto
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3e2d5395-96e1-445c-80f9-c2fb39b3d6a4
+		summarizeBy: none
+		sourceColumn: camDataRegisto
+
+		variation Variation
+			isDefault
+			relationship: c6ed2192-5d0e-40b8-8bb5-c112637ee58c
+			defaultHierarchy: LocalDateTable_c16567ee-dbf7-4603-90ce-93aa6b47440e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column __campsDate =
+			
+			Var __date = CALCULATE ( MIN ( 'OPLog'[Data] ), USERELATIONSHIP( Comercial[ordPubCodigo], OPLog[ordPubCodigo] ), ALLEXCEPT ( Comercial, Comercial[ordPubCodigo]) , 'OPLog'[Accao] = "I" )
+			Return
+			DATE(YEAR(__date),MONTH(__date),DAY(__date))
+		formatString: dd/mm/yyyy
+		lineageTag: c5de58a7-01fe-4f8a-9d85-29bd338b4c43
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column __campsMonth = FORMAT(Comercial[__campsDate], "MMM" )
+		lineageTag: 47cb1ca4-a1be-414e-bc75-d4c0df1a8aa8
+		summarizeBy: none
+		sortByColumn: __campsMonthNumb
+
+		annotation SummarizationSetBy = Automatic
+
+	column __campsDay = DAY(Comercial[__campsDate])
+		formatString: 0
+		lineageTag: 65ca4088-6311-4d22-81b2-841c2a7843c9
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column __campsHora = LEFT( HOUR( CALCULATE ( MIN ( 'OPLog'[Data] ), USERELATIONSHIP( Comercial[ordPubCodigo], OPLog[ordPubCodigo] ), ALLEXCEPT ( Comercial, Comercial[ordPubCodigo]) , 'OPLog'[Accao] = "I" ) ) , 2 )
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b03980f-7c44-4916-8505-4254e211475d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column campsPeriodo = if([__campsHora]>=0 && [__campsHora]<5,"Late Night",if([__campsHora]>=5 && [__campsHora]<=9,"Breakfast",if([__campsHora]>9 && [__campsHora]<=12,"Late Morning",if([__campsHora]>12 && [__campsHora]<=17,"Afternoon",if([__campsHora]>17 && [__campsHora]<=23,"Prime Time",if([__campsHora]>23 ,"Late Night"))))))
+		lineageTag: a6f27477-e724-495c-a14d-3415a5a767ac
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column __campsMonthNumb = MONTH(Comercial[__campsDate])
+		formatString: 0
+		lineageTag: 889adc6d-1ab0-4188-87ba-2a43ed30eeb6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Operação =
+			SWITCH( TRUE(),
+			Comercial[Tipo] = "C" ,"Contratos",
+			Comercial[Tipo] <> "C" && NOT(ISBLANK(Comercial[Tipo]) ),"Eletrónica",
+			ISBLANK(Comercial[Tipo]) ,"Manual")
+		lineageTag: 3503e174-4b70-4b46-9aae-7bce5cffd04c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column encExcDescricaoErro
+		dataType: string
+		lineageTag: 57dcc93b-1b05-458a-ba11-a7e9e61a076a
+		summarizeBy: none
+		sourceColumn: encExcDescricaoErro
+
+		annotation SummarizationSetBy = Automatic
+
+	column RemocaoUtilizador
+		dataType: int64
+		formatString: 0
+		lineageTag: a15abd0f-d4cc-4226-b847-0a277439edfa
+		summarizeBy: sum
+		sourceColumn: RemocaoUtilizador
+
+		annotation SummarizationSetBy = Automatic
+
+	column encId
+		dataType: int64
+		formatString: 0
+		lineageTag: 732f6264-a3c1-4053-945f-973bb5be2db7
+		summarizeBy: count
+		sourceColumn: encId
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdResponsavel
+		dataType: int64
+		formatString: 0
+		lineageTag: 92cc1486-9e5d-4cb7-a73b-872ae0c23101
+		summarizeBy: none
+		sourceColumn: IdResponsavel
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdVendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: e650cdf7-ae40-4708-9b42-3ae6388079a0
+		summarizeBy: none
+		sourceColumn: IdVendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdDistribuidor
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d6f20d8-b568-4232-afce-060cd833489a
+		summarizeBy: none
+		sourceColumn: IdDistribuidor
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAnunciante
+		dataType: int64
+		formatString: 0
+		lineageTag: f51edfec-23b0-42e7-be64-373bc6d352e7
+		summarizeBy: none
+		sourceColumn: IdAnunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAssistente
+		dataType: int64
+		formatString: 0
+		lineageTag: c3926385-bf31-451c-8c89-f1d083095f97
+		summarizeBy: none
+		sourceColumn: IdAssistente
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 15d78008-b1d6-4c9b-85fa-e772b8355c61
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column __minDateInsercao =
+			
+			VAR _1 = CALCULATE ( MIN ( Comercial[encLogDataHora] ), ALLEXCEPT ( Comercial, Comercial[ordPubCodigo]) )+0.0003
+			RETURN
+			IF( Comercial[encLogAccao] = "A" && Comercial[encLogDataHora] < _1, "I", Comercial[encLogAccao] )
+		lineageTag: a2527216-59c5-48aa-a3cc-573f2a7a586c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Comercial-05c1a839-1009-496f-a17f-5e69359fe7c4 = m
+		mode: import
+		queryGroup: 'Operação Comercial'
+		source =
+				let
+				    Source = Sql.Database(Server, BD, [Query="With#(lf)    web As (#(lf)     Select#(lf)         ordPubWeb.ordPubCodigo,#(lf)         ordPubWeb.flgOrigem As Tipo#(lf)     From#(lf)         ordPubWeb#(lf)     Where#(lf)         ordPubWeb.ordPubCodigo Is Not Null And#(lf)         ordPubWeb.estado <> 'R'#(lf)     Group By#(lf)         ordPubWeb.ordPubCodigo,#(lf)         ordPubWeb.flgOrigem#(lf)     Union All#(lf)     Select#(lf)         OrdemPublicidadeElectronica.OrdemPublicidadeGMediaAdId As ordPubCodigo,#(lf)         OrdemPublicidadeElectronica.TipoMarcacao As Tipo#(lf)     From#(lf)         OrdemPublicidadeElectronica#(lf)     Where#(lf)         OrdemPublicidadeElectronica.OrdemPublicidadeGMediaAdId Is Not Null#(lf)    )#(lf)Select#(lf)    encomendasLog.enclogid,#(lf)    ordemPub.ordPubCodigo,#(lf)    campanhas.camId,#(lf)    campanhas.camDescricao,#(lf)    Convert(VARCHAR(10),campanhas.camDataRegisto,103) + ' ' + Convert(VARCHAR(8),campanhas.camDataRegisto,14) As#(lf)    camDataRegisto,#(lf)    encomendasLog.encLogAccao,#(lf)    ordemPub.ordPubAno,#(lf)    encomendasLog.encLogLocal,#(lf)    ordemPub.ordPubMes,#(lf)    Convert(VARCHAR(10),encomendasLog.encLogData,103) + ' ' + Convert(VARCHAR(8),encomendasLog.encLogData,14) As#(lf)    encLogData,#(lf)    entidades.entNome As Anunciante,#(lf)    entidades1.entNome As Distribuidor,#(lf)    Utilizadores1.UtiNome As Vendedor,#(lf)    Utilizadores2.UtiNome As Responsavel,#(lf)    Utilizadores.UtiNome As Assistente,#(lf)    encomendasLog.encDataExibicao,#(lf)    ordemPub.ordPubData,#(lf)    Canais.canDescricao As Canal,#(lf)    web.Tipo,#(lf)    encomendasLog.encId,#(lf)    encomendasLog.encExcDescricaoErro,#(lf)    Case#(lf)        When (Select#(lf)                 Count(*)#(lf)             From#(lf)                 encomendasLog x#(lf)             Where#(lf)                 x.encNui = encomendasLog.encNui And#(lf)                 x.encLogData > encomendasLog.encLogData And#(lf)                 encomendasLog.encLogAccao = 'RX') = 0 And encomendasLog.encLogAccao = 'RX'#(lf)        Then 1#(lf)        Else 0#(lf)    End RemocaoUtilizador,#(lf)    Utilizadores2.UtiId As IdResponsavel,#(lf)    Utilizadores1.UtiId As IdVendedor,#(lf)    entidades1.entId As IdDistribuidor,#(lf)    entidades.entId As IdAnunciante,#(lf)    Utilizadores.UtiId As IdAssistente,#(lf)    Canais.canCodigo#(lf)From#(lf)    encomendasLog Right Join#(lf)    ordemPub On ordemPub.ordPubCodigo = encomendasLog.ordPubCodigo Inner Join#(lf)    campanhas On campanhas.camId = ordemPub.camId Left Join#(lf)    entidades On campanhas.camAnunciante = entidades.entId Left Join#(lf)    entidades entidades1 On entidades1.entId = campanhas.camDistribuidor Left Join#(lf)    Utilizadores Utilizadores1 On campanhas.camVendedor = Utilizadores1.UtiId Left Join#(lf)    Utilizadores On Utilizadores.UtiId = encomendasLog.encLogUtiId Left Join#(lf)    Utilizadores Utilizadores2 On campanhas.camResponsavel = Utilizadores2.UtiId Left Join#(lf)    Canais On Canais.canCodigo = encomendasLog.canCodigo Left Join#(lf)    web On web.ordPubCodigo = ordemPub.ordPubCodigo#(lf)Where#(lf)    Year(ordemPub.ordPubData) >= Year(GetDate()) - 1", CommandTimeout=#duration(6, 6, 0, 0)]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([encLogLocal] <> null and [encLogLocal] <> "AlterarExibida" and [encLogLocal] <> "Alteração de spot (F" and [encLogLocal] <> "audienciasReabreDia" and [encLogLocal] <> "ConciliaTX" and [encLogLocal] <> "Grelha" and [encLogLocal] <> "PassaExibidas" and [encLogLocal] <> "TratamentoRemoveExc" and [encLogLocal] <> "ValorizaMarkTest" and [encLogLocal] <> "ValorizaMarkTestOP")),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows",{{"encLogData", type datetime}, {"camDataRegisto", type datetime}}),
+				    #"Inserted Hour" = Table.AddColumn(#"Changed Type1", "Hora", each Time.Hour([encLogData]), Int64.Type),
+				    Custom1 = Table.AddColumn(#"Inserted Hour", "OrdPubHora", each Time.Hour([ordPubData]), Int64.Type),
+				    #"Duplicated Column" = Table.DuplicateColumn(Custom1, "encLogData", "encLogDataHora"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Duplicated Column",{{"encLogData", type date}, {"camDataRegisto", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

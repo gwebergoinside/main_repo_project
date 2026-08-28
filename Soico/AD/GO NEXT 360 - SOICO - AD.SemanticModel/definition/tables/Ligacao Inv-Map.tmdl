@@ -1,0 +1,56 @@
+table 'Ligacao Inv-Map'
+	lineageTag: 6101740a-6d86-45bc-b4cd-4ad051ff84f9
+
+	measure '# count' = COUNT('Ligacao Inv-Map'[IdAnunciante])
+		formatString: 0
+		lineageTag: 3f71a741-5c0e-4c25-9258-0389eba7c6f8
+
+	column IdAnunciante
+		formatString: 0
+		lineageTag: 0fb6c2da-6616-42b7-bc92-771acf78ae40
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [IdAnunciante]
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeAnunciante
+		lineageTag: a87a3994-a6c7-42fd-be21-87f2aea23a7a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [NomeAnunciante]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Anunciante
+		lineageTag: bd988467-dc7f-426d-a13a-7a657fd88221
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Anunciante]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Ligacao Inv-Map-481054a0-7f7d-4a0d-b8b6-6ed5e76be8a6' = calculated
+		mode: import
+		source =
+				
+				VAR A =
+				    SELECTCOLUMNS (
+				        InvestmentGRPs,
+				        "Anunciante", RELATED(Advertisers[Anunciante]),
+				        "Chave", FORMAT(InvestmentGRPs[Chave],"string")
+				        --"Color"; Investimento[Color]
+				    )
+				VAR B =
+				    SELECTCOLUMNS (
+				        Mapeamento,
+				        "IdAnunciante", Mapeamento[IdAnunciante],
+				        "NomeAnunciante", Mapeamento[NomeAnunciante],
+				        "Chave", FORMAT(Mapeamento[ChaveMkt],"string")
+				    )
+				VAR Result =
+				    NATURALINNERJOIN( B, A )
+				VAR Dist = SUMMARIZE(Result, [IdAnunciante] , [NomeAnunciante], [Anunciante] )
+				RETURN
+				    Dist
+

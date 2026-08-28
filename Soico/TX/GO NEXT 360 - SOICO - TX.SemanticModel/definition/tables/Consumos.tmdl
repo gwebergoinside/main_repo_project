@@ -1,0 +1,331 @@
+table Consumos
+	lineageTag: 81feb6ec-10bf-4320-a70e-7706f8b70088
+
+	column DATA_CONSUMO
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 3219c75f-adaf-406d-bf84-416cae0ca221
+		summarizeBy: none
+		sourceColumn: DATA_CONSUMO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column COD_CANAL
+		dataType: string
+		lineageTag: d8cdbb1c-7e10-40c0-b8ec-e4c3f21d9205
+		summarizeBy: none
+		sourceColumn: COD_CANAL
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_TITULO
+		dataType: int64
+		formatString: 0
+		lineageTag: 786bc99c-7498-4b8f-a79d-80243f662e05
+		summarizeBy: none
+		sourceColumn: COD_TITULO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_CONTRATO
+		dataType: int64
+		formatString: 0
+		lineageTag: bb62446b-6b73-470c-8a5b-bb5d469ece5b
+		summarizeBy: none
+		sourceColumn: COD_CONTRATO
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO_DE_RUNS
+		dataType: int64
+		formatString: 0
+		lineageTag: 864cdd29-3cab-4f84-8793-e774528a5506
+		summarizeBy: sum
+		sourceColumn: NUMERO_DE_RUNS
+
+		annotation SummarizationSetBy = Automatic
+
+	column AMORTIZACAO
+		dataType: int64
+		formatString: 0
+		lineageTag: 5dd552ab-c78d-4c88-a6ed-75400b0a7b13
+		summarizeBy: sum
+		sourceColumn: AMORTIZACAO
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_CONTRATO
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6bbf7a5a-0aff-43a0-bce2-f296a8118043
+		summarizeBy: none
+		sourceColumn: DATA_CONTRATO
+
+		variation Variation
+			isDefault
+			relationship: 13315fc1-707c-4c42-9b6d-d39dd0bda496
+			defaultHierarchy: LocalDateTable_87e8a65b-adf3-4770-b234-173a1713f4b9.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column VALOR_DIREITOS_CONSUMO
+		dataType: double
+		formatString: #,0
+		lineageTag: 463354f0-6e57-4579-8cde-15ca49fadc65
+		summarizeBy: sum
+		sourceColumn: VALOR_DIREITOS_CONSUMO
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column VALOR_DIREITOS_MOEDA_ORIGINAL_CONSUMO
+		dataType: double
+		lineageTag: b79a7534-a917-4816-8176-b546d3213032
+		summarizeBy: sum
+		sourceColumn: VALOR_DIREITOS_MOEDA_ORIGINAL_CONSUMO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column nome
+		dataType: string
+		lineageTag: fa0d0c16-52a0-43b3-b903-578c94931a2b
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column RECEITA
+		dataType: double
+		lineageTag: 04bd0c84-919a-416c-a098-d02f3ef5f82d
+		summarizeBy: sum
+		sourceColumn: RECEITA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FAIXA
+		dataType: string
+		lineageTag: c6182b14-fb77-4020-927f-bb15488424a7
+		summarizeBy: none
+		sourceColumn: FAIXA
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO_PROCESSO
+		dataType: string
+		lineageTag: 13330c0a-7f60-47bc-b2ae-c5ca0e30196e
+		summarizeBy: none
+		sourceColumn: NUMERO_PROCESSO
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO_RUN
+		dataType: int64
+		formatString: 0
+		lineageTag: a0f75a87-581b-40ed-8fa4-c2384ed23e54
+		summarizeBy: sum
+		sourceColumn: NUMERO_RUN
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa Formatada' = Consumos[FAIXA]&":00"
+		lineageTag: fbdb5418-d53b-4037-b3cc-7a844087ff29
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_canal_compra
+		dataType: string
+		lineageTag: 8c7c729a-1821-4ea4-bbee-c0d24eb301dc
+		summarizeBy: none
+		sourceColumn: Cod_canal_compra
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_compra
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4d84873f-8ea0-485a-b4b9-3704d19d7979
+		summarizeBy: none
+		sourceColumn: data_compra
+
+		variation Variação
+			isDefault
+			relationship: 19cb40eb-3d0d-496a-94bb-160ca2a0a00f
+			defaultHierarchy: LocalDateTable_e86d8f3f-fc28-489b-a3b5-3c93e018bee9.'Hierarquia de Datas'
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column VALOR_OUTROS_CUSTOS_CONSUMO
+		dataType: double
+		lineageTag: 8b108185-686b-4e57-b0a2-ee2ade45b480
+		summarizeBy: sum
+		sourceColumn: VALOR_OUTROS_CUSTOS_CONSUMO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Run/Amortização = Consumos[NUMERO_RUN] &"/"& Consumos[NUMERO_DE_RUNS]
+		lineageTag: 04556e6d-a296-4ec7-beb6-cfd86cf7a34a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_CONSUMO_TIPO
+		dataType: int64
+		formatString: 0
+		lineageTag: 62e4d9d3-7d7b-4a6a-944e-f624a6cddc7a
+		summarizeBy: sum
+		sourceColumn: COD_CONSUMO_TIPO
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescricaoTipoConsumo
+		dataType: string
+		lineageTag: 20918dbb-1a25-489f-98b8-2ec8fe486922
+		summarizeBy: none
+		sourceColumn: DescricaoTipoConsumo
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_TipoConsumo = IF.EAGER(Consumos[DescricaoTipoConsumo] = "Perda de Direitos",1,0)
+		formatString: 0
+		lineageTag: b7215d64-f4fd-483d-90da-68cf50554263
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data fim_titulo' = LOOKUPVALUE(Contratos[DATA_FIM_TITULO], 'Contratos'[COD_TITULO], Consumos[COD_TITULO])
+		formatString: Short Date
+		lineageTag: a7894981-b011-42db-a3f9-abfabc4bde56
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column Run-Amortização = Consumos[NUMERO_DE_RUNS] - Consumos[NUMERO_RUN]
+		formatString: 0
+		lineageTag: 38962662-fdb9-467a-b800-1993429f9ff9
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Existencias = LOOKUPVALUE(Contratos[VALOR_DIREITOS_EXISTENCIAS], Contratos[COD_TITULO], Consumos[COD_TITULO])
+		lineageTag: 291cf783-750e-4d59-a685-a356209ba55c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Data inicio_titulo' = LOOKUPVALUE(Contratos[DATA_INICIO_TITULO], 'Contratos'[COD_TITULO], Consumos[COD_TITULO])
+		formatString: General Date
+		lineageTag: eb7c5c91-e98f-4f33-a8e2-c34a86d4e766
+		summarizeBy: none
+
+		variation Variação
+			isDefault
+			relationship: 805d1eae-41ee-4da2-9ce7-74723f16f047
+			defaultHierarchy: LocalDateTable_5107ff97-2a86-4201-bf05-875381bad6db.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Index = 1
+		formatString: 0
+		lineageTag: 1d577f2e-b845-424a-8ffe-0540494279d5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano/Mes = INT( YEAR(Consumos[DATA_CONSUMO]) & FORMAT(MONTH(Consumos[DATA_CONSUMO]), "00") )
+		formatString: 0
+		lineageTag: 4a839769-fb36-4acd-84b8-44c746d6f147
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Area = LOOKUPVALUE(Contratos[COD_AREA], 'Contratos'[COD_TITULO], Consumos[COD_TITULO])
+		lineageTag: 182012a5-0989-4cc6-bac4-2055e2be7481
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal_Compra_Nome = LOOKUPVALUE( Canais[nome], Canais[codigo], Consumos[Cod_canal_compra] )
+		lineageTag: f49a417c-2519-4a91-a949-dfe469aabfbd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Distribuidor = LOOKUPVALUE(Contratos[COD_DISTRIBUIDOR], 'Contratos'[COD_TITULO], Consumos[COD_TITULO])
+		formatString: 0
+		lineageTag: 55415570-d9c0-4cbf-904a-68c1f49a2a75
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodContrato = LOOKUPVALUE( Contratos[CodContrato], Contratos[COD_TITULO], Consumos[COD_TITULO] )
+		lineageTag: d0e6a7ff-8634-4832-95b4-d9f1b9bbea12
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Contrato_Plano = LOOKUPVALUE( Contratos[Cod_Contrato_Plano], Contratos[COD_TITULO], Consumos[COD_TITULO] )
+		formatString: 0
+		lineageTag: 967d8595-e9dd-4ad3-b2d0-21922c12f65b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ano Compra' = YEAR( Consumos[data_compra] )
+		formatString: 0
+		lineageTag: 99a59714-5696-451a-86fa-3058f98ef858
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Contrato_Tipo = LOOKUPVALUE(Contratos[COD_CONTRATO_TIPO], 'Contratos'[COD_TITULO], Consumos[COD_TITULO])
+		formatString: 0
+		lineageTag: b49bba41-337d-4fe6-94d5-752918ec874f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column descricao_pais = LOOKUPVALUE( Contratos[descricao_pais], Contratos[COD_TITULO], Consumos[COD_TITULO] )
+		lineageTag: d54ec6ca-8fcf-4af2-9359-731e083a9742
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Consumos-f899be47-52de-40a7-83cc-cb7c26de8e0b = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    Consumos.COD_CONTRATO,#(lf)    Consumos.NUMERO_DE_RUNS,#(lf)    Consumos.AMORTIZACAO,#(lf)    Consumos.VALOR_DIREITOS_CONSUMO,#(lf)    Consumos.VALOR_DIREITOS_MOEDA_ORIGINAL_CONSUMO,#(lf)    Consumos.VALOR_OUTROS_CUSTOS_CONSUMO,#(lf)    Consumos.DATA_CONTRATO,#(lf)    Consumos.COD_CANAL,#(lf)    Consumos.COD_TITULO,#(lf)    Consumos.DATA_CONSUMO,#(lf)    Consumos.RECEITA,#(lf)    Consumos.FAIXA,#(lf)    Consumos.NUMERO_RUN,#(lf)    Consumos.NUMERO_PROCESSO,#(lf)    T_Canais.nome,#(lf)    Consumos.COD_CONSUMO_TIPO,#(lf)    Consumos.DescricaoTipoConsumo,#(lf)    Consumos.Cod_canal_compra,#(lf)    Consumos.data_compra#(lf)From#(lf)    (Select#(lf)         Consumos.id_consumo As ID_CONSUMO,#(lf)         Consumos.data As DATA_CONSUMO,#(lf)         Consumos.cod_canal As COD_CANAL,#(lf)         Consumos.id_titulo As COD_TITULO,#(lf)         IsNull(Titulos.Estado, 0) As COD_TITULO_ESTADO,#(lf)         IsNull(PlanoContrato.CodPlano, 0) As COD_CONTRATO_PLANO,#(lf)         IsNull(Contratos.NumContrato, 0) As COD_CONTRATO,#(lf)         IsNull(Contratos.Estado, 0) As COD_CONTRATO_ESTADO,#(lf)         Right('00000000' + Cast(Titulos.Numero_processo As VARCHAR), 8) As NUMERO_PROCESSO,#(lf)         Right('00000000' + Cast(Titulos.Numero_processo As VARCHAR), 8) + Right('000' + Cast(Titulos.NumEpisodio As#(lf)         VARCHAR), 3) As NUMERO_PROCESSO_EPISODIO,#(lf)         Right('000' + Cast(Titulos.NumEpisodio As VARCHAR), 3) As EPISODIO,#(lf)         Contratos.TipoContrato As COD_CONTRATO_TIPO,#(lf)         Programas.origem As COD_ORIGEM,#(lf)         Fichas_Videotape.codgenero As COD_GENERO,#(lf)         Programas.area As COD_AREA,#(lf)         TP3.cod2 As COD_PAIS_FACTURACAO_CONTRATO,#(lf)         TP2.cod2 As COD_PAIS_FORMATO,#(lf)         TP.cod2 As COD_PAIS_PRODUCAO,#(lf)         Consumos.Tipo_Consumo COD_CONSUMO_TIPO,#(lf)         Consumos.flag_associados As EMITIDODENTRODEOUTROPROGRAMA,#(lf)         Consumos.flag_directa As CONSUMOFORAALINHAMENTO,#(lf)         Consumos.numero_run As NUMERO_RUN,#(lf)         Titulos.NumRun As NUMERO_DE_RUNS,#(lf)         IsNull(Consumos.amortizacao, 0) As AMORTIZACAO,#(lf)         Consumos.CC As CCORCAMENTO,#(lf)         Contratos.DataContrato As DATA_CONTRATO,#(lf)         IsNull(Contratos.CodDistribuidor, 0) As COD_DISTRIBUIDOR_FACTURACAO,#(lf)         IsNull(Contratos.coddistribuidor_facturacao, 0) As COD_ENTIDADE_FACTURACAO,#(lf)         IsNull(Cast((IsNull(Titulos.TotalCustos, 0)) * IsNull(Consumos.amortizacao, 0) / 100 As decimal(18,2)),#(lf)         0) VALOR_DIREITOS_CONSUMO,#(lf)         IsNull(Cast((IsNull(Titulos.TotalCustos, 0)) * IsNull(Consumos.amortizacao, 0) / 100 As decimal(18,2)),#(lf)         0) VALOR_DIREITOS_MOEDA_ORIGINAL_CONSUMO,#(lf)         IsNull(Cast((IsNull(Titulos.TotalOutrosCustos, 0)) * IsNull(Consumos.amortizacao, 0) / 100 As decimal(18,2)),#(lf)         0) VALOR_OUTROS_CUSTOS_CONSUMO,#(lf)         dbo.csegundoshoras(Consumos.hora) HORA,#(lf)         IsNull(Consumos.hora, 0) HORASEGUNDOS,#(lf)         Case#(lf)             When Consumos.hora >= 86400#(lf)             Then Left(dbo.csegundoshoras(Consumos.hora - 86400), 2)#(lf)             Else Left(dbo.csegundoshoras(Consumos.hora), 2)#(lf)         End FAIXA,#(lf)         IsNull((Select#(lf)              Sum(IsNull(E.encValorPub, 0)) VALORPUB#(lf)          From#(lf)              [GMEDIAPUB.DBO.GRELHACOMERCIAL] GC Inner Join#(lf)              [GMEDIAPUB.DBO.ENCUNIONENCEXIB] E On GC.greComId = E.greComId Inner Join#(lf)              T_Canais C On C.cod_canal_comercial = GC.canCodigo#(lf)          Where#(lf)              C.codigo = Consumos.cod_canal And#(lf)              GC.greComData = Consumos.data And#(lf)              Titulos.Numero_processo = GC.numeroProcesso And#(lf)              Titulos.NumEpisodio = GC.numeroProcessoEpisodio), 0) RECEITA,#(lf)         PlanoContrato.cod_canal Cod_canal_compra,#(lf)         PlanoContrato.data_compra,#(lf)         Tipo_Consumo.DescricaoTipoConsumo#(lf)     From#(lf)         Consumos Inner Join#(lf)         Titulos On Titulos.CodTitulo = Consumos.id_titulo Inner Join#(lf)         PlanoContrato On PlanoContrato.CodPlano = Titulos.CodPlano Inner Join#(lf)         Contratos On Contratos.NumContrato = PlanoContrato.NumContrato Inner Join#(lf)         Fichas_Videotape On Fichas_Videotape.numero_processo = Titulos.Numero_processo#(lf)                 And Fichas_Videotape.episodio = Titulos.NumEpisodio Inner Join#(lf)         Programas On Programas.numero_processo = Fichas_Videotape.numero_processo Left Outer Join#(lf)         t_Paises TP On TP.codigo_pais = Fichas_Videotape.Pais Left Outer Join#(lf)         t_Paises TP2 On TP2.codigo_pais = Programas.Cod_Pais_Formato Left Outer Join#(lf)         t_Paises TP3 On TP3.codigo_pais = Contratos.cod_pais_facturacao Inner Join#(lf)         Tipo_Consumo On Consumos.Tipo_Consumo = Tipo_Consumo.codtipoconsumo) Consumos Left Join#(lf)    T_Canais On T_Canais.codigo = Consumos.COD_CANAL"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"DATA_CONSUMO", type date}, {"DATA_CONTRATO", type date}, {"data_compra", type date}}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Changed Type", each [NUMERO_RUN] < 900 or [NUMERO_RUN] = null),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Linhas Filtradas", each [NUMERO_DE_RUNS] < 900 or [NUMERO_DE_RUNS] = null)
+				in
+				    #"Linhas Filtradas1"
+
+	annotation PBI_QueryRelationships = {"columnCount":14,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/GMediaBI_Consumos/Source.{COD_CONTRATO,0}","Section1/GMediaBI_Consumos/Source.{NUMERO_DE_RUNS,1}","Section1/GMediaBI_Consumos/Source.{AMORTIZACAO,2}","Section1/GMediaBI_Consumos/Source.{VALOR_DIREITOS_CONSUMO,3}","Section1/GMediaBI_Consumos/Source.{VALOR_DIREITOS_MOEDA_ORIGINAL_CONSUMO,4}","Section1/GMediaBI_Consumos/Source.{DATA_CONTRATO,5}","Section1/GMediaBI_Consumos/Source.{COD_CANAL,6}","Section1/GMediaBI_Consumos/Source.{COD_TITULO,7}","Section1/GMediaBI_Consumos/Source.{DATA_CONSUMO,8}","Section1/GMediaBI_Consumos/Source.{RECEITA,9}","Section1/GMediaBI_Consumos/Source.{FAIXA,10}","Section1/GMediaBI_Consumos/Source.{NUMERO_RUN,11}","Section1/GMediaBI_Consumos/Source.{NUMERO_PROCESSO,12}","Section1/GMediaBI_Consumos/Source.{nome,13}"],"ColumnCount":14,"KeyColumnNames":[],"ColumnIdentities":["Section1/GMediaBI_Consumos/Source.{COD_CONTRATO,0}","Section1/GMediaBI_Consumos/Source.{NUMERO_DE_RUNS,1}","Section1/GMediaBI_Consumos/Source.{AMORTIZACAO,2}","Section1/GMediaBI_Consumos/Source.{VALOR_DIREITOS_CONSUMO,3}","Section1/GMediaBI_Consumos/Source.{VALOR_DIREITOS_MOEDA_ORIGINAL_CONSUMO,4}","Section1/GMediaBI_Consumos/Source.{DATA_CONTRATO,5}","Section1/GMediaBI_Consumos/Source.{COD_CANAL,6}","Section1/GMediaBI_Consumos/Source.{COD_TITULO,7}","Section1/GMediaBI_Consumos/Source.{DATA_CONSUMO,8}","Section1/GMediaBI_Consumos/Source.{RECEITA,9}","Section1/GMediaBI_Consumos/Source.{FAIXA,10}","Section1/GMediaBI_Consumos/Source.{NUMERO_RUN,11}","Section1/GMediaBI_Consumos/Source.{NUMERO_PROCESSO,12}","Section1/GMediaBI_Consumos/Source.{nome,13}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

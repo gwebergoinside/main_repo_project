@@ -1,0 +1,59 @@
+model Model
+	culture: pt-PT
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-PT
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup BD
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup Fatos
+
+	annotation PBI_QueryGroupOrder = 4
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["@Medidas","f_Incidencias","f_Tarefas_Meios","f_Pessoas","f_Meios","BD","@Org","URL","d_Meios_Incid","d_Captacao","d_User","d_Atraso_Grav","d_Meios","d_Pessoas_Incid","d_Status","d_Projectos","d_Classificação","images","lista de imagem","logo header","d_Estado","d_DiasMes","d_Titulos","TarefasCodigo"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DateTableTemplate_c7de5667-a819-4d28-a958-712e6de00d1c
+ref table Calendario
+ref table @Medidas
+ref table f_Incidencias
+ref table LocalDateTable_339326d7-9172-4356-b6d9-1b93d1bcf1bd
+ref table LocalDateTable_dbef7fc7-3899-4e35-a475-8e4cad23ed2a
+ref table LocalDateTable_8c2822d5-fb05-4a5b-aebb-d1daec9cfa1e
+ref table f_Pessoas
+ref table d_Meios_Incid
+ref table d_Projectos
+ref table LocalDateTable_7c4a2029-44f1-4246-8296-b3530a5d7385
+ref table LocalDateTable_bcd68107-fe5f-4b75-a6d8-d1318cd36577
+ref table LocalDateTable_7c186134-cea0-4078-9976-0800ded3e6bf
+ref table LocalDateTable_2f2bd226-0535-4970-867b-bdeee23e647b
+ref table f_Meios
+ref table d_Pessoas_Incid
+ref table LocalDateTable_a9e37b17-aa9e-4a78-a1fe-779c4f6973f9
+ref table LocalDateTable_a962502b-8b04-4c1c-90bc-57c15bfce53f
+ref table d_Status
+ref table d_Captacao
+ref table d_Atraso_Grav
+ref table LocalDateTable_084e2f2d-332a-4ba0-8c54-470d0bfdcb04
+ref table LocalDateTable_a64473a8-6728-4f7a-b37a-e71b2d971691
+ref table d_Classificação
+ref table images
+ref table 'logo header'
+ref table d_Estado
+ref table d_DiasMes
+ref table d_User
+ref table f_Tarefas_Meios
+ref table LocalDateTable_7315bd77-32b5-4ee4-9f67-293be2d181a8
+ref table d_Meios
+ref table d_Titulos
+ref table LocalDateTable_09ce35a7-1f6b-4d80-98ca-e32e8d565ef9
+
+ref cultureInfo pt-PT
+

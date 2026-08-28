@@ -1,0 +1,3771 @@
+table ~Measure
+	lineageTag: 81bbe853-36e9-4d94-a49e-80297d335997
+
+	measure '% Execução' = DIVIDE([Custo],[Orçamento])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 1405662b-4b12-44ea-9fbc-17477bdb4d89
+
+	measure '% Execução Acumulado' = DIVIDE([Custo Acumulado],[Orç. Acumulado])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 4f68572d-726b-44c0-92d4-20fc173ed68a
+
+	measure '% Execução Mensal' = DIVIDE([Custo Mensal],[Orç. Mensal])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 6cf9319a-4a79-42bb-8684-5d955daf7407
+
+	measure Custo = SUM(ExecucaoMensalConta[TotalCosts])
+		formatString: #,0.00
+		displayFolder: Custo
+		lineageTag: b0dae276-3d6a-45f8-bad9-375ac13436c7
+
+	measure 'Custo Acumulado' = ```
+			
+			--    CALCULATE( 
+			--        SUM(ExecucaoMensalConta[TotalCosts]), 
+			--            FILTER( 
+			--                ALL( Calendario), 
+			--                    MAX( Calendario[Mês]) >=Calendario[Mês]
+			--            )
+			--        ,VALUES( Calendario[Ano])
+			--    )
+			IF ( ISFILTERED(Calendario[Mês Nome]), CALCULATE([Custo], DATESYTD(Calendario[Date])), CALCULATE( [Custo], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+			```
+		displayFolder: Custo
+		lineageTag: 8b14b35b-f064-4827-bcd3-b7f47c991282
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Custo Mensal' =
+			
+			SUM(ExecucaoMensalConta[TotalCosts])
+		formatString: #,0.0
+		displayFolder: Custo
+		lineageTag: a2122458-ed5b-49e5-978e-a80a9ebd4288
+
+	measure 'Custo Previsto' =
+			
+			CALCULATE (
+			    SUM ( ExecucaoMensalConta[TotalCosts]),
+			    FILTER (
+			        ALL ( Calendario[Date]),
+			        Calendario[Date] > MAX ( Calendario[Date] )
+			    )
+			)
+		displayFolder: Custo
+		lineageTag: 6460420e-3845-4c28-8cc2-51a9cabb9a10
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Orçamento = [Orç. Mensal]
+		formatString: #,0.00
+		displayFolder: Orçamentos
+		lineageTag: e6bd413b-784f-463c-aab5-dcf5a4d97c96
+
+	measure 'Orç. Acumulado' = ```
+			
+			--    CALCULATE( 
+			--        [Orç. Mensal], 
+			--            FILTER( 
+			--                ALL( Calendario), 
+			--                    MAX( Calendario[Mês]) >=Calendario[Mês]
+			--            )
+			--        ,VALUES( Calendario[Ano])
+			--    )
+			IF ( ISFILTERED(Calendario[Mês Nome]), CALCULATE([Orçamento], DATESYTD(Calendario[Date])), CALCULATE( [Orçamento], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+			```
+		formatString: #,0
+		displayFolder: Orçamentos
+		lineageTag: cfe69692-09da-4ded-adff-93d09fbf77a2
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Orç. Mensal' =
+			
+			VAR _1 = SUM(ExecucaoMensalConta[BudgetPurchaseValue])
+			RETURN
+			IF( _1 = 0, BLANK(), _1 )
+		displayFolder: Orçamentos
+		lineageTag: ff1376e0-0cc1-4b83-af07-b0f7a712165e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orç. Previsto' =
+			
+			VAR _1 = CALCULATE (
+			    [Orç. Mensal],
+			FILTER(
+			         ALL(Calendario[Date]),
+			         YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date]))&&MONTH(Calendario[Date])>=MONTH(MAX(Calendario[Date]))) )
+			RETURN
+			IF ( ISFILTERED(Calendario[Mês Nome]), _1, CALCULATE( [Orç. Mensal], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])>=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		displayFolder: Orçamentos
+		lineageTag: edf6b3d3-c3c2-4688-b74e-1da24b817257
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Atividade Pessoas (h)' = ```
+			
+			CALCULATE( 
+			    SUM( 'Tarefas_Pessoas'[TempoImputado] )
+			    --,TREATAS( VALUES( Tarefas_Pessoas[IdHorarioRef] ), Horarios[IdHorariosRefs] ) 
+			)-- , USERELATIONSHIP( Horarios[IdHorariosRefs] , Tarefas_Pessoas[IdHorarioRef] ) )
+			```
+		formatString: #,0.0
+		displayFolder: Actividade
+		lineageTag: e167694b-4840-4783-8ef6-91df4936594c
+
+	measure 'Capacidade Prevista (h)' = CALCULATE( sum(Horarios[Capacidade])  )
+		formatString: #,0
+		displayFolder: Capacidade
+		lineageTag: dece5690-1c76-4228-a873-189b63a5ccf1
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Capacidade Planeada (h)' = ```
+			
+			CALCULATE( 
+			    ( sum(Horarios[Diff_1]) + SUM(Horarios[Diff_2]) + SUM(Horarios[Diff_3]) ) - (SUM(Horarios[MinutosPausaNaoIdentificada]))/60 
+			    ,Horarios[TrabalhoEfectivo] = TRUE() 
+			    ,FILTER( Horarios , ISBLANK(Horarios[Diff_1]) = FALSE() || ISBLANK(Horarios[Diff_2]) = FALSE() || ISBLANK(Horarios[Diff_3]) = FALSE() ) 
+			)
+			```
+		formatString: #,0.00
+		displayFolder: Capacidade
+		lineageTag: 4d238b76-a3f9-4f8a-90bc-e3e71ae53844
+
+	measure '% Taxa Ocupação Pessoas' = divide([Atividade Pessoas (h)],[Capacidade - Ferias e Aus])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 7c9f8a26-7938-4db2-a751-7a6b3c85d761
+
+	measure 'Atividade Pessoas (d)' = ```
+			
+			Var __horas = 
+			CALCULATE( 
+			    SUM( 'Tarefas_Pessoas'[TempoImputado] )
+			    --,TREATAS( VALUES( Tarefas_Pessoas[IdHorarioRef] ), Horarios[IdHorariosRefs] )
+			)--, USERELATIONSHIP( Horarios[IdHorariosRefs] , Tarefas_Pessoas[IdHorarioRef] ) )
+			Var __dias = 
+			CALCULATE( 
+			    MAXX(Horarios, Horarios[HorasDia] )
+			    --,TREATAS( VALUES( Tarefas_Pessoas[IdHorarioRef] ), Horarios[IdHorariosRefs] ) 
+			)--, USERELATIONSHIP( Horarios[IdHorariosRefs] , Tarefas_Pessoas[IdHorarioRef] ) )
+			RETURN
+			DIVIDE( __horas, __dias )
+			```
+		formatString: #,0
+		displayFolder: Actividade
+		lineageTag: 78d34b98-fac2-43e1-aa22-78bd26e07920
+
+	measure 'Nº Pessoas Act. Planeada' = DISTINCTCOUNT(TarefasPessoasFaixas[IdPessoa])
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: dc1e6e0b-8dd7-4b7d-9ac2-a1aabbbf8fa6
+
+	measure 'Nº Pessoas Act. PlaneadaVERIFICAR' =
+			
+			//talvez apagar
+			 CALCULATE( DISTINCTCOUNT(HorariosFaixas[IdPessoa]), USERELATIONSHIP( HorariosFaixas[Faixa], TarefasPessoasFaixas[Faixa] ) )
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: 60c13c86-d959-46cf-a421-ea8f7125a952
+
+	measure 'Nº Meios Act. Planeada' =
+			
+			CALCULATE( DISTINCTCOUNT( TarefasMeiosFaixas[IdMeio] ) ) -- , USERELATIONSHIP( Meios[Id] , TarefasMeiosFaixas[IdMeio] ) )
+			--CALCULATE( DISTINCTCOUNT( Meios[Id] ) , USERELATIONSHIP( Meios[Id] , TarefasMeiosFaixas[IdMeio] ) )
+		formatString: #,0
+		displayFolder: Meios
+		lineageTag: 20dbd893-cd5b-4ce2-a981-a6bbb3b4d9a1
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Nº Pessoas Atividade' = CALCULATE( DISTINCTCOUNT(TarefasPessoasFaixas[IdPessoa]) ) -- , USERELATIONSHIP( Tarefas_Pessoas[IdPessoa] , TarefasPessoasFaixas[IdPessoa] ) )
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: 6a1f49b8-48bc-4b22-a26e-ac747d0e87da
+
+	measure 'Atividade Meios (h)' = SUM( Meios[TempoImputado] )
+		formatString: #,0.0
+		displayFolder: Actividade
+		lineageTag: be753e53-4f17-40d7-85a4-e5b733ea3fdc
+
+	measure '% Taxa Ocupação Meios' =
+			
+			divide([Atividade Meios (h)],[Capacidade Total])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: %
+		lineageTag: d7a9491b-eae9-4fae-a91c-838bed5c51b8
+
+	measure 'Nº Meios_Plan' =
+			
+			[Nº Meios Act. Planeada]
+			--CALCULATE( AVERAGEX(KEEPFILTERS(VALUES(TarefasMeiosFaixas[Faixa])),CALCULATE(DISTINCTCOUNT(TarefasMeiosFaixas[IdMeio]))), USERELATIONSHIP(Calendario[Date], TarefasMeiosFaixas[Date] ) )
+		formatString: 0
+		displayFolder: Meios
+		lineageTag: fc8c7d3d-1c6e-42f6-8caa-f09f5409c2e3
+
+	measure 'Nº Meios Plan. por Faixa' =
+			
+			[Nº Meios Act. Planeada]
+			--CALCULATE( if(HASONEFILTER(TarefasMeiosFaixas[Faixa]),DISTINCTCOUNT(TarefasMeiosFaixas[IdMeio]),AVERAGEX(KEEPFILTERS(VALUES(TarefasMeiosFaixas[Faixa])),calculate([Nº Meios_Plan])+0)), USERELATIONSHIP(Calendario[Date], TarefasMeiosFaixas[Date] ) )
+		formatString: 0
+		displayFolder: Meios
+		lineageTag: 3ab5df1b-7f37-46bb-9941-a8aebc1a90f8
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Media Nº Pessoas por Dia Atividade' = ```
+			AVERAGEX ( 
+			    KEEPFILTERS ( VALUES ( 'Calendario'[Dia Semana] ) ), 
+			    CALCULATE ( [Nº Pessoas Act. Planeada] ) + 0   
+			) 
+			```
+		formatString: 0.0
+		displayFolder: Media
+		lineageTag: d9474881-95cd-4e59-bb4a-070201516f37
+
+	measure PessoaHorasDia = SUM( Horarios[HorasDia])
+		displayFolder: Ausencias
+		lineageTag: 2f168cf2-0592-4914-b80e-7e7f83e5cf4e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dedutiveis (d)' = CALCULATE( COUNT( Horarios[IdPessoaHorarios] ) , Horarios[TrabalhoEfectivo] = FALSE() )
+		formatString: #,0
+		displayFolder: Ausencias
+		lineageTag: fc8b2039-5252-402c-9f09-dbab17a2f327
+
+	measure 'Dedutiveis (h)' =
+			
+			[Dedutiveis (d)]*[PessoaHorasDia]
+		formatString: #,0
+		displayFolder: Ausencias
+		lineageTag: 8857f524-e5c4-4804-be45-ed36d35df24d
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Capacidade Total' = CALCULATE( SUM( Capacidade[Capacidade] ) , USERELATIONSHIP( Meios[Id], Capacidade[IdMeio] ) )
+		formatString: #,0
+		displayFolder: Capacidade
+		lineageTag: 3c12563c-e38a-48f2-966d-5cedfc374836
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Capacidade Planeada Pessoas (d)' =
+			
+			--Var __horas = sum(Horarios[Diff_1])+SUM(Horarios[Diff_2])+SUM(Horarios[Diff_3])
+			--Var __dias = CALCULATE( MAXX(Horarios; Horarios[HorasDia] ) ; USERELATIONSHIP( Horarios[IdHorariosRefs] ; Tarefas_Pessoas[IdHorarioRef] ) )
+			--RETURN
+			--__horas/__dias
+			CALCULATE( DISTINCTCOUNT( Horarios[Data] ) , Horarios[TrabalhoEfectivo] = TRUE() )
+		formatString: #,0
+		displayFolder: Capacidade
+		lineageTag: c8a7dbf4-e5a2-4228-90a9-0f2fbeafd54b
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Capacidade - Aus' = ```
+			
+			-- subtrai as ausencias 
+			-SUM(Horarios[Ausencia])
+			```
+		displayFolder: Capacidade
+		lineageTag: 27bd97f8-e2b5-46cc-9025-b81bf62f96e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Capacidade - Ferias e Aus' = ```
+			
+			-- subtrai as férias e ausencias e adiciona as Horas Extras
+			var __ferias = CALCULATE( [HorasDias] , FILTER(Horarios, Horarios[Descricao] = "Férias" ) )
+			RETURN
+			-- SUM(Horarios[Capacidade]) - __ferias - SUM(Horarios[Ausencia]) 
+			[Capacidade Planeada (h)] + SUM(Horarios[quantidade]) - SUM(Horarios[Ausencia])
+			```
+		formatString: #,0.00
+		displayFolder: Capacidade
+		lineageTag: af1be651-8014-450d-b198-fcaea192cb77
+
+	measure 'Capacidade - Horas Extra' =
+			
+			-- subtrai as férias
+			var __ferias = CALCULATE( [HorasDias] , FILTER(Horarios, Horarios[Descricao] = "Férias" ) )
+			RETURN
+			SUM(Horarios[quantidade])
+		displayFolder: Capacidade
+		lineageTag: ff56976d-891d-4928-9efc-ad51fff644f3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure HorasDias =
+			
+			CALCULATE( SUM( Horarios[HorasDia] ) , FILTER( Horarios , ISBLANK(Horarios[Diff_1]) = TRUE() && ISBLANK(Horarios[Diff_2]) = TRUE() && ISBLANK(Horarios[Diff_3]) = TRUE() ))
+		formatString: #,0
+		displayFolder: Pessoas
+		lineageTag: 7ccf38f3-1fc7-4235-988e-988cf04ea98d
+
+	measure 'Custo Mensal LY' =
+			
+			CALCULATE( SUM(ExecucaoMensalConta[TotalCosts]) , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: #,0.0
+		displayFolder: Custo
+		lineageTag: d1b33db1-5c4a-492d-9cfa-6399fe3fd46a
+
+	measure 'Custo Acumulado LY' = ```
+			
+			
+			CALCULATE( [Custo Acumulado] , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			
+			--FILTER(
+			--         ALL(Calendario[Date]),
+			--         Calendario[Date]<=MAX(Calendario[Date])&&YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])))) 
+			```
+		formatString: #,0.0
+		displayFolder: Custo
+		lineageTag: 7ad3cac5-a7d1-48d7-a09c-c4fad619189a
+
+	measure 'Custo vs Orçamento YTD' = ```
+			
+			Var __custo = [Custo Acumulado]
+			Var __custoly = [Orç. Acumulado]
+			RETURN
+			IF( __custo = __custoly , 0 , 
+			IF( __custo > __custoly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Custo
+		lineageTag: 51691055-24b9-4c0e-9663-b09be1377470
+
+	measure 'Custo vs Orçamento' = ```
+			
+			Var __custo = [Custo Mensal]
+			Var __custoly = [Orçamento]
+			RETURN
+			IF( __custo = __custoly , 0 , 
+			IF( __custo > __custoly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Custo
+		lineageTag: e76f5e29-c2ae-4539-a7b4-cb29cecaa169
+
+	measure '% Execução Mensal LY' = DIVIDE([Custo Mensal LY],[Orç. Mensal LY])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: b8b342ea-8205-4e98-a5dc-e3d976356946
+
+	measure 'Orç. Mensal LY' = CALCULATE( [Orç. Mensal] , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		displayFolder: Orçamentos
+		lineageTag: 9997989d-335e-4e48-ad09-3246027f5e06
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orç. Acumulado LY' = ```
+			
+			--CALCULATE 
+			--     ( SUM(ExecucaoMensalConta[bUDGETPURCHASEVALUE] );
+			--    FILTER (
+			--        ALL ( Calendario);
+			--        Calendario[Date] < MAX ( Calendario[Date]) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date]))))
+			CALCULATE( [Orç. Acumulado] , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			
+			--FILTER(
+			--         ALL(Calendario[Date]),
+			--         Calendario[Date]<=MAX(Calendario[Date])&&YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])))) 
+			
+			--TOTALyTD( SUM( ExecucaoMensalConta[BudgetPurchaseValue] ) ; DATEADD(Calendario[Date]; 0; MONTH)) 
+			```
+		displayFolder: Orçamentos
+		lineageTag: 622fcea6-9a86-4800-81af-bb4de895d7f4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Execução YTD LY' =
+			
+			
+			CALCULATE( DIVIDE([Custo Acumulado LY],[Orç. Acumulado LY],0))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 930fd81d-0abe-4867-9ace-82a3e1668dab
+
+	measure '% Execução vs Execução LY YTD' = ```
+			
+			Var __ex = [% Execução Acumulado]
+			Var __exly = [% Execução YTD LY]
+			RETURN
+			IF( __ex = __exly , 0 , 
+			IF( __ex > __exly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: %
+		lineageTag: 93e74f8a-c5ca-4964-838c-16b1dca75e39
+
+	measure '% Execução vs Execução LY' = ```
+			
+			Var __ex = [% Execução Mensal]
+			Var __exly = [% Execução Mensal LY]
+			RETURN
+			IF( __ex = __exly , 0 , 
+			IF( __ex > __exly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: %
+		lineageTag: 8cb3cf71-7eda-46ed-b677-fc165cdfc6dc
+
+	measure 'Custo vs Orçamento LY' = ```
+			
+			Var __orly = [Orç. Mensal LY]
+			Var __or = [Custo Mensal LY]
+			RETURN
+			IF( __or = __orly , 0 , 
+			IF( __or > __orly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Orçamentos
+		lineageTag: af8741b1-1f90-4876-abfd-2e9051925144
+
+	measure '# Meios LY' = CALCULATE( [# Meios] , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: 0
+		displayFolder: Meios
+		lineageTag: 4f5a6e97-e8bf-43c0-9d6c-5158d60c4309
+
+	measure 'Meios vs Meios LY' = ```
+			
+			Var __m = DISTINCTCOUNT( Meios[Id] )
+			Var __mly = [# Meios LY]
+			RETURN
+			IF( __m = __mly , 0 , 
+			IF( __m > __mly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Meios
+		lineageTag: 1d5ad463-0bee-4bdd-b651-d99054fd2e25
+
+	measure 'Atividade Meios (h) LY' = CALCULATE( SUM( Meios[TempoImputado] ) , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		displayFolder: Actividade
+		lineageTag: bf313036-755c-47b4-b461-c3f9a605ecaa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '# Pessoas LY' = CALCULATE( DISTINCTCOUNT( Tarefas_Pessoas[IdPessoa] ) , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: 01b66edd-9f80-42b9-9d73-657c2ac872c8
+
+	measure 'Pessoas vs Pessoas LY' = ```
+			
+			Var __m = DISTINCTCOUNT( Tarefas_Pessoas[IdPessoa] )
+			Var __mly = [# Pessoas LY]
+			RETURN
+			IF( __m = __mly , 0 , 
+			IF( __m > __mly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: d025b80d-7e4d-41ee-b732-d23673ffb0ab
+
+	measure '# RH Ativ LY' = CALCULATE( DISTINCTCOUNT( Tarefas_Pessoas[Id] ) ,SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: 582ad0e9-0fcb-4fb7-a74f-d84167f1a2e3
+
+	measure '% Taxa Ocupação Pessoas LY' = CALCULATE( [% Taxa Ocupação Pessoas] , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: %
+		lineageTag: 98b3aac5-34a6-4156-a6b7-5ec50efe9083
+
+	measure '% Ocup vs Ocup RH LY' = ```
+			
+			Var __ex = [% Taxa Ocupação Pessoas]
+			Var __exly = [% Taxa Ocupação Pessoas LY]
+			RETURN
+			IF( __ex = __exly , 0 , 
+			IF( __ex > __exly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: %
+		lineageTag: 92191e31-a28c-4926-b985-d74e4e092191
+
+	measure 'Ativ vs Plan RH LY' = ```
+			
+			Var __ex = CALCULATE( DISTINCTCOUNT( Tarefas_Pessoas[IdPessoa]) )
+			Var __exly = CALCULATE( DISTINCTCOUNT( Horarios[IdPessoaHorarios]) )
+			RETURN
+			IF( __ex = __exly , 0 , 
+			IF( __ex > __exly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Actividade
+		lineageTag: 52cc1fdc-ea60-4887-b55a-b830f86516df
+
+	measure '% Taxa Ocupação Meios LY' = CALCULATE( [% Taxa Ocupação Meios] , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: %
+		lineageTag: dae9918a-744f-4366-b011-6b7d59a547bc
+
+	measure '% Ocup vs Ocup Meios LY' = ```
+			
+			Var __ex = [% Taxa Ocupação Meios]
+			Var __exly = [% Taxa Ocupação Meios LY]
+			RETURN
+			IF( __ex = __exly , 0 , 
+			IF( __ex > __exly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: %
+		lineageTag: 99c8e7b7-6cb7-45d2-bbce-5452ae4cdc86
+
+	measure 'Ativ vs Plan Meios LY' = ```
+			
+			Var __ex = [Atividade Meios (h)]
+			Var __exly = [Capacidade Total]
+			RETURN
+			IF( __ex = __exly , 0 , 
+			IF( __ex > __exly , 1 , 2 ) )
+			```
+		formatString: 0
+		displayFolder: Actividade
+		lineageTag: d9228e46-8a86-4c13-8526-a5fee3d6dd36
+
+	measure 'Nº Meios Act. Planeada LY' = CALCULATE( [Nº Meios Act. Planeada] , SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: 0
+		displayFolder: Meios
+		lineageTag: 657dd147-a5d9-4041-b694-14421b6f448a
+
+	measure 'Valor Médio Episódio' =
+			DIVIDE(
+			    SUM(ExecucaoMensalConta[BudgetPurchaseValue])
+			    ,
+			     CALCULATE( SUM(Projetos[Evento]) , GENERATEALL(Projetos, ExecucaoMensalConta) )
+			    )
+		formatString: #,0.0
+		displayFolder: Media
+		lineageTag: 2f4902a7-e7c9-4067-a342-21cad3ea92e9
+
+	measure 'Duração Média (h)' =
+			
+			Var __seg = CALCULATE( AVERAGE(Projetos[Duracao Média]) , GENERATEALL(Projetos, ExecucaoMensalConta) )
+			RETURN
+			VAR allseconds = __seg
+			
+			VAR days = INT ( allseconds / 24 / 60 / 60 )
+			
+			VAR hours =  MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			
+			VAR minutes = MOD ( INT ( allseconds / 60 ), 60 )
+			
+			VAR seconds = MOD ( allseconds, 60 )
+			
+			RETURN
+			
+			IF( ISBLANK(__seg) , BLANK() ,
+			days & "d "
+			
+			& hours
+			
+			& "h "
+			
+			& minutes
+			
+			& "m "
+			)
+		displayFolder: Media
+		lineageTag: d86cdec1-5a94-4f48-8af6-42406f6f3496
+
+	measure Episódios = CALCULATE( SUM(Projetos[Evento]) , GENERATEALL(Projetos, ExecucaoMensalConta) )
+		formatString: 0
+		displayFolder: Filtro
+		lineageTag: ea340e6f-84d5-4417-b913-e06a16576765
+
+	measure 'Orç. Previsto Card' =
+			
+			[Orç. Previsto]+0
+		displayFolder: Orçamentos
+		lineageTag: 486d8fa9-5226-4e64-b05b-4e8f6a56f30e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Taxa Ocupação Meios (Allexcept)' =
+			
+			IF(ISBLANK( [% Taxa Ocupação Meios]), BLANK() , CALCULATE( divide([Atividade Meios (h)],[Capacidade Total]) , ALL(Projetos), ALL(Tipo_Tarefas_Meios)))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: %
+		lineageTag: 584ad980-14a7-4631-ac2d-de5d203ed00f
+
+	measure '% Taxa Ocupação Pessoas (Allexcept)' = ```
+			
+			--IF(ISBLANK( [% Taxa Ocupação Pessoas]), BLANK() , 
+			IF( [Atividade Pessoas (h)] = BLANK() && [Capacidade - Ferias e Aus] <> BLANK() , 0,
+			IF( [Atividade Pessoas (h)] <> BLANK() && [Capacidade - Ferias e Aus] = BLANK() , 0,
+			CALCULATE( divide([Atividade Pessoas (h)],[Capacidade - Ferias e Aus]), ALL(Projetos)) ) )
+			--)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: %
+		lineageTag: 5c15d601-3404-4033-9b58-4454ce493f9f
+
+	measure 'Duração Média Produção (h)' =
+			
+			Var __seg = CALCULATE( AVERAGE(Projetos[Duracao Média]) )
+			RETURN
+			VAR allseconds = __seg
+			
+			VAR days = INT ( allseconds / 24 / 60 / 60 )
+			
+			VAR hours =  MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			
+			VAR minutes = MOD ( INT ( allseconds / 60 ), 60 )
+			
+			VAR seconds = MOD ( allseconds, 60 )
+			
+			RETURN
+			
+			IF( ISBLANK(__seg) , BLANK() ,
+			days & "d "
+			
+			& hours
+			
+			& "h "
+			
+			& minutes
+			
+			& "m "
+			)
+		displayFolder: Trabalho
+		lineageTag: 0cfec003-e882-40f9-aff4-3523614795c6
+
+	measure 'Valor Médio Episódio Produção' =
+			IF( ISBLANK( DIVIDE(
+			    SUM(ExecucaoMensalConta[BudgetPurchaseValue])
+			    ,
+			    SUM(Projetos[Evento])
+			    )),0,DIVIDE( SUM(ExecucaoMensalConta[BudgetPurchaseValue])
+			    ,
+			    SUM(Projetos[Evento])
+			    ))
+		displayFolder: Trabalho
+		lineageTag: 35756dc4-7149-418f-802e-13ffeb38aabd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Projetos Abertos' =
+			
+			IF( ISBLANK(CALCULATE( DISTINCTCOUNT( Projetos[Id] ) , Projetos[Estado] <> "C" && Projetos[Estado] <> "T" )) , 0 ,
+			CALCULATE( DISTINCTCOUNT( Projetos[Id] ) , Projetos[Estado] <> "C" && Projetos[Estado] <> "T" ) )
+		formatString: 0
+		displayFolder: Trabalho
+		lineageTag: 5c7a1e50-13a0-455c-8340-85c48110aae0
+
+	measure 'Calendario as Filter' = ```
+			
+			VAR SelectedMonth = SELECTEDVALUE('Calendario'[Mês])
+			--VAR SelectedYear = SELECTEDVALUE(Projetos[DataInicio].[Ano])
+			RETURN 
+			    IF(ISBLANK(SelectedMonth) , 1 , IF(SelectedMonth >= MAX('Projetos'[Mês Inicio]) && SelectedMonth <= MAX(Projetos[Mês Fim]),1,0) )
+			```
+		formatString: 0
+		displayFolder: Filtro
+		lineageTag: 37efe48b-42a2-426d-9cc7-c12e7dab06f3
+
+	measure 'RH Sem Horario card' =
+			
+			[# RH Sem Escala]+0
+			--CALCULATE( DISTINCTCOUNT( Pessoas[Id] ), FILTER( Pessoas, NOT (Pessoas[Id]) in VALUES(horarios[IdPessoaHorarios]) ))+0
+		formatString: #,0
+		displayFolder: Trabalho
+		lineageTag: 26f2ff56-b599-4c6f-b087-8aed3a9f39e0
+
+		changedProperty = FormatString
+
+	measure 'Kpi Green' = IF( [Orçamento] > [Custo] , 1 , 0 )
+		formatString: 0
+		displayFolder: Filtro
+		lineageTag: 57580d56-17c8-49e1-b3e6-65fc9b565a21
+
+	measure 'Kpi Red' = IF( [Orçamento] < [Custo] , 1 , 0 )
+		formatString: 0
+		displayFolder: Filtro
+		lineageTag: 43de5265-9687-4692-8ded-649f39db8ff5
+
+	measure 'Color KPI' = ```
+			SWITCH( TRUE(),
+			[Orçamento] < [Custo] , "#d63031",
+			[Orçamento] > [Custo] , "#00b894", "#fdcb6e")
+			
+			```
+		displayFolder: Filtro
+		lineageTag: d67283c0-1aaf-4183-b02e-5d086de9b87b
+
+	measure '% Execução Item' = DIVIDE(SUM(ExecucaoMensalItem[TotalCosts]),SUM(ExecucaoMensalItem[BudgetPurchaseValue]))
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: %
+		lineageTag: dbd31086-8c63-401d-a7ab-d34fca1e93d5
+
+	measure '% Execução Acumulado Card' = DIVIDE([Custo Acumulado],[Orç. Acumulado])+0
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: f93608fd-32c7-4ebd-bd10-d11e50a173b1
+
+	measure '% Execução Card' = DIVIDE([Custo],[Orçamento])+0
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 65221138-a5f6-4392-a11e-6b5989aad358
+
+	measure 'Duração Média (h) Card' =
+			
+			Var __seg = CALCULATE( AVERAGE(Projetos[Duracao Média]) , GENERATEALL(Projetos, ExecucaoMensalConta) )
+			RETURN
+			
+			VAR allseconds = __seg
+			
+			VAR days = INT ( allseconds / 24 / 60 / 60 )
+			
+			VAR hours =  MOD ( INT ( allseconds / 60 / 60 ), 24 )
+			
+			VAR minutes = MOD ( INT ( allseconds / 60 ), 60 )
+			
+			VAR seconds = MOD ( allseconds, 60 )
+			
+			RETURN
+			
+			IF( ISBLANK(__seg) , 0 ,
+			days & "d "
+			
+			& hours
+			
+			& "h "
+			
+			& minutes
+			
+			& "m "
+			)
+		displayFolder: Media
+		lineageTag: 2e5cdf63-9c2c-43cd-a5d3-869f65af798d
+
+	measure 'Valor Médio Episódio Card' =
+			DIVIDE(
+			    [Orç. Mensal]
+			    ,
+			     CALCULATE( SUM(Projetos[Evento]) , GENERATEALL(Projetos, ExecucaoMensalConta) )
+			    )+0
+		formatString: 0
+		displayFolder: Media
+		lineageTag: 5e5e02ee-38be-4d8a-a877-f2f665288e56
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Meios Atividade Card' = DISTINCTCOUNT( TarefasMeiosFaixas[IdMeio] )+0
+		formatString: #,0
+		displayFolder: Meios
+		lineageTag: fd67c6d6-d938-4a4b-b347-dd9e9aa71889
+
+		changedProperty = FormatString
+
+	measure 'Nº Meios Planeados Card' = DISTINCTCOUNT(Meios[Id]) +0
+		formatString: #,0
+		displayFolder: Meios
+		lineageTag: d3a9a29f-96d8-4e67-b4b0-1ae3dc1282b8
+
+		changedProperty = FormatString
+
+	measure '% Taxa Ocupação Meios Card' = [% Taxa Ocupação Meios]+0
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: %
+		lineageTag: 031c9d06-d807-439d-be8d-679fe8aac5b5
+
+	measure 'RH Atividade Card' = DISTINCTCOUNT( Tarefas_Pessoas[IdPessoa] )+0
+		formatString: #,0
+		displayFolder: Pessoas
+		lineageTag: 63e9c430-eccb-4893-809a-c2fc4c3ba229
+
+		changedProperty = FormatString
+
+	measure 'RH Planeado Card' =
+			--DISTINCTCOUNT( Horarios[IdPessoaHorarios] )+0
+			--CALCULATE( DISTINCTCOUNT( Horarios[IdPessoaHorarios] ), NOT ISBLANK(Pessoas[HorasDia]))
+			CALCULATE( DISTINCTCOUNT( Pessoas[Id] ), FILTER( Pessoas, Pessoas[Id] in VALUES(horarios[IdPessoaHorarios]) ))+0
+		formatString: #,0
+		displayFolder: Pessoas
+		lineageTag: 3fcfd977-1934-4df2-829d-6a51e117c7f5
+
+		changedProperty = FormatString
+
+	measure '% Taxa Ocupação Pessoas Card' = [% Taxa Ocupação Pessoas]+0
+		formatString: 0%;-0%;0%
+		displayFolder: %
+		lineageTag: 5dd6d9ea-f170-444e-82da-2147988c1295
+
+		changedProperty = FormatString
+
+	measure 'Custo Card' = [Custo]+0
+		formatString: #,0
+		displayFolder: Custo
+		lineageTag: 9897a83d-335a-40af-ac32-9fbf62660efd
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Orçamento Atividades' = CALCULATE( [Orçamento], FILTER(ExecucaoMensalConta, ExecucaoMensalConta[AGrupado] = "Estrutural" ) )
+		displayFolder: Orçamentos
+		lineageTag: 679e627b-bca9-4bf7-961b-84eea57abdc6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orçamento Despesas Diretas' = CALCULATE( [Orçamento], FILTER(ExecucaoMensalConta, ExecucaoMensalConta[AGrupado] = "Total Despesas Diretas" ) )
+		displayFolder: Orçamentos
+		lineageTag: 5f9f0141-2c53-4e9e-b0f5-65efe1f778ae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Custo Atividades' = CALCULATE( [Custo], FILTER(ExecucaoMensalConta, ExecucaoMensalConta[AGrupado] = "Estrutural" ) )
+		displayFolder: Custo
+		lineageTag: c9284cf5-ac58-4512-be57-8adbaaed2a02
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Custo Despesas Diretas' = CALCULATE( [Custo], FILTER(ExecucaoMensalConta, ExecucaoMensalConta[AGrupado] = "Total Despesas Diretas" ) )
+		displayFolder: Custo
+		lineageTag: d5bcbb7e-41e3-4aae-8a2a-4881ed90141d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'OrcCusto Orc Atividades' = IF( SELECTEDVALUE(OrcCust[Tipo]) = "Orçamento", [Orçamento Atividades], BLANK() )
+		displayFolder: Orçamentos
+		lineageTag: 8e7f08df-53f5-430b-94c6-0a5287965455
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'OrcCusto Orc Despesas Diretas' = IF( SELECTEDVALUE(OrcCust[Tipo]) = "Orçamento", [Orçamento Despesas Diretas], BLANK() )
+		displayFolder: Orçamentos
+		lineageTag: f3657a7c-ce9f-4222-80f1-9ce35da8552f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'OrcCusto Cust Atividades' = IF( SELECTEDVALUE(OrcCust[Tipo]) = "Custo", [Custo Atividades], BLANK() )
+		displayFolder: Orçamentos
+		lineageTag: bf1a5368-8b99-4c27-b27d-04f9c014e60d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'OrcCusto Cust Despesas Diretas' = IF( SELECTEDVALUE(OrcCust[Tipo]) = "Custo", [Custo Despesas Diretas], BLANK() )
+		displayFolder: Orçamentos
+		lineageTag: f86ab114-09d0-4f06-9782-32ee30636339
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Saldo YTD' = [Orç. Acumulado]-[Custo Acumulado]
+		formatString: #,0.00
+		displayFolder: Orçamentos
+		lineageTag: 8b68b54a-1212-44e3-8514-dd63d1df0492
+
+	measure Saldo = [Orç. Mensal]-[Custo Mensal]
+		displayFolder: Orçamentos
+		lineageTag: 9edec67a-8251-4c11-b49f-d0e9eeab1466
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Saldo Item' = SUM(ExecucaoMensalItem[BudgetPurchaseValue]) - SUM(ExecucaoMensalItem[TotalCosts])
+		displayFolder: Orçamentos
+		lineageTag: 541426d7-a954-4849-b883-ecbbab659d25
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Capacidade Total RH' =
+			
+			Var __days = COUNT(Calendario[Dia Semana])
+			Var __h = CALCULATE( SUM(Pessoas[HorasDia]), FILTER(Horarios, not ISBLANK(Horarios[IdPessoaHorarios]) ) )
+			Return
+			__days * __h
+		displayFolder: Capacidade
+		lineageTag: 66d6e373-e587-47a2-a71d-fb78aa21102a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Dedutiveis = CALCULATE( [HorasDias], Horarios[TrabalhoEfectivo] = FALSE() )
+		displayFolder: Pessoas
+		lineageTag: 9edf4c69-d80d-48d0-86dc-c3bbfb890cda
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Custo Despesas Financeiras' = CALCULATE( [Custo], FILTER(ExecucaoMensalConta, ExecucaoMensalConta[AGrupado] = "Despesas Financeiras" ) )
+		displayFolder: Custo
+		lineageTag: a2133342-e0f3-482e-9693-5cdde878fac3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orçamento Despesas Financeiras' = CALCULATE( [Orçamento], FILTER(ExecucaoMensalConta, ExecucaoMensalConta[AGrupado] = "Despesas Financeiras" ) )
+		displayFolder: Orçamentos
+		lineageTag: 197b25cc-5859-4e2c-a257-9a416714ee2c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Disponibilidade = [Capacidade - Ferias e Aus]-[Atividade Pessoas (h)]
+		formatString: #,0.00
+		displayFolder: Pessoas
+		lineageTag: ec1f980b-833d-4202-b44e-aaccc2a08532
+
+	measure 'Disponibilidade Meios' = [Capacidade Total] - [Atividade Meios (h)]
+		formatString: #,0.00
+		displayFolder: Meios
+		lineageTag: 6affdffa-0fae-451b-af39-29c058eba1f3
+
+	measure 'Nº Meios Planeados' = DISTINCTCOUNT(Meios[Id])
+		formatString: 0
+		displayFolder: Meios
+		lineageTag: b045dca0-36a5-464e-a317-830115d146ff
+
+	measure 'QTD Eventos' = COUNT(Meios[IdTarefaMeios])
+		formatString: #,0
+		displayFolder: Meios
+		lineageTag: 9dd01c66-f147-4074-9c70-c7a371e8023d
+
+	measure 'Necessidades Total' =
+			--SUMX(VALUES('NecessidadesGantt Final'[Days]), [Dias Necessidades] * [Total (h)] )
+			 [Dias Necessidades] * [Total (h)]
+		formatString: #,0.00
+		displayFolder: Necessidades
+		lineageTag: 905b7add-3970-4edf-9a62-25c737c3ea98
+
+	measure 'Total (h)' =
+			
+			VAR _2 = SUMX( SUMMARIZE(Necessidades,[IdNecessidade],[IdCentroCusto],"Sum", [QTD Final] * [DuracaoDia Final] ),[Sum])
+			RETURN
+			_2
+		displayFolder: Necessidades
+		lineageTag: 70d5e395-b706-4f1a-ae8a-bc3a5092510f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'QTD Final' = SUM(Necessidades[Quantidade])
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: 54f6e19b-66ac-4fdb-ab8c-33099f96b3cd
+
+	measure 'DuracaoDia Final' = SUM( Necessidades[DuracaoDia] )
+		displayFolder: Necessidades
+		lineageTag: deaab42e-b2d2-4a5e-bebb-f53bed1d58a0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Atividade Necessidades' = ```
+			
+			VAR _1 = SELECTEDVALUE(CentroCusto[Ativ. Apurada (CC)]) = "Pessoas"
+			VAR _2 = SELECTEDVALUE(CentroCusto[Ativ. Apurada (CC)]) = "Meios"
+			RETURN
+			SWITCH( 
+			    TRUE()
+			    ,_1, [Atividade Necessidades Pessoas]
+			    ,_2, [Atividade Necessidades Meios]
+			    ,[Atividade Necessidades Meios]+[Atividade Necessidades Pessoas] 
+			)
+			```
+		formatString: #,0.00
+		displayFolder: Necessidades
+		lineageTag: ba371b0d-2798-4b2b-b607-127f91e965bb
+
+	measure 'Dias Necessidades' = DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] )
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: 2070274a-884c-4039-84cf-92094e4c89e7
+
+	measure 'QTD Recursos Necessidades Meios' =
+			
+			// CALCULATE( SUMX(  CentroCusto, [QTD Recursos Necessidades Meios_Apoio] ), CROSSFILTER('NecessidadesGantt Final'[IdProjeto], projetos[id], Both ) )
+			AVERAGEX( VALUES( 'NecessidadesGantt Final'[TipoNec] ), CALCULATE( [QTD Recursos Necessidades Meios_Apoio] ) )
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: dbba8a94-5696-4cd8-a286-226ed6147878
+
+	measure 'QTD Recursos Necessidades Pessoas' = ```
+			
+			// CALCULATE( 
+			//     SUMX( 
+			//         CentroCusto
+			//         ,[QTD Recursos Necessidades Pessoas_Apoio] 
+			//     )--, TREATAS( VALUES('NecessidadesGantt Final'[IdProjeto]) , projetos[id] ) 
+			//     , CROSSFILTER('NecessidadesGantt Final'[IdProjeto], projetos[id], Both ) 
+			// )
+			--VAR _2 = 
+			AVERAGEX( VALUES( 'NecessidadesGantt Final'[TipoNec] ), CALCULATE( [QTD Recursos Necessidades Pessoas_Apoio] ) )
+			--RETURN
+			--IF( HASONEVALUE( 'NecessidadesGantt Final'[TipoNec] ), _2, DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ) )
+			```
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: 2a10c171-345a-4d2e-a62e-6f7d144ff009
+
+	measure 'Atividade Necessidades Pessoas' =
+			
+			VAR _2 = SUMX( VALUES( 'NecessidadesGantt Final'[TipoNec] ), [Atividade Necessidades Pessoas_Apoio] )
+			RETURN
+			_2
+		displayFolder: Necessidades
+		lineageTag: 3e72ac52-e00a-41c6-982e-278f945c5fd4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Atividade Necessidades Meios' = ```
+			
+			// CALCULATE( 
+			//     SUM( Meios[TempoImputado] )
+			//     --,TREATAS( VALUES( 'NecessidadesGantt Final'[IdProjeto] ), projetos[id] )
+			//     , CROSSFILTER('NecessidadesGantt Final'[IdProjeto], projetos[id], Both )
+			// )
+			VAR _2 = SUMX( VALUES( 'NecessidadesGantt Final'[TipoNec] ), [Atividade Necessidades Meios_Apoio] )
+			RETURN
+			_2
+			```
+		displayFolder: Necessidades
+		lineageTag: de7007ed-0dcd-4584-bb41-604b540eb038
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Capacidade Necessidades Pessoas' =
+			
+			// CALCULATE(
+			//     SUMX(
+			//         CentroCusto
+			//         ,CALCULATE( [Capacidade Necessidades Pessoas_Apoio2] )
+			//     )
+			// )
+			
+			IF.EAGER(
+			    [Atividade Necessidades Pessoas] > 0
+			    ,[Capacidade Planeada (h)]
+			)
+		displayFolder: Necessidades
+		lineageTag: 2984a22f-64cd-4139-8e57-738523858652
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Capacidade Necessidades Meios' =
+			
+			IF.EAGER(
+			    [Atividade Necessidades Meios] > 0
+			    ,[Capacidade Total]
+			)
+		displayFolder: Necessidades
+		lineageTag: 979520ea-8f41-44fa-8923-0dabf8caa747
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Duration NecAtivGantt' = ```
+			
+			IF( 
+			    CALCULATE( 
+			        DISTINCTCOUNT( NecessidadesAtividadesGantt[Value] )
+			        ,TREATAS( VALUES('NecessidadesGantt Final'[IdProjeto]), NecessidadesAtividadesGantt[IDProjeto] )
+			        --,USERELATIONSHIP(NecessidadesAtividadesGantt[IDProjeto],'NecessidadesGantt Final'[IdProjeto])
+			        ,NecessidadesAtividadesGantt[Value] = 1
+			    ) 
+			        > 0, 1
+			        , BLANK() 
+			)
+			```
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: 9e5f7cba-3b9f-4484-af86-f1e271b2ca2e
+
+	measure 'Duration NecGantt' =
+			IF( CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Key] ), NecessidadesGanttUnpivot[Value] = "true" )
+			--, USERELATIONSHIP(NecessidadesGantt[IDProjeto],Projetos[Id]) )
+			> 0, 1, BLANK() )
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: 39cc39bc-ce90-4455-b401-0b60a4a2cab3
+
+	measure 'Dias Nec Meios' = ```
+			
+			VAR _1 = SUMX( SUMMARIZE('NecessidadesGantt Final', [Datas],"Sum", CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ), 'NecessidadesGantt Final'[Tipo] = "Meios" ) ),[Sum])
+			VAR _2 = SUMX( SUMMARIZE('NecessidadesGantt Final', [IdCentroCusto],"Sum", CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ), 'NecessidadesGantt Final'[Tipo] = "Meios" ) ),[Sum])
+			RETURN 
+			IF( 
+			    HASONEVALUE(Meios_Nome[nome])
+			    ,BLANK()
+			    ,IF( HASONEVALUE( Calendario[Dia Semana] )
+			        ,_2
+			        ,_1
+			    )
+			)
+			```
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: e65057eb-7a7a-425a-b544-988e0330c3e2
+
+	measure 'Dias Nec Pessoas' = ```
+			
+			VAR _1 = SUMX( SUMMARIZE('NecessidadesGantt Final', [Datas],"Sum", CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ), 'NecessidadesGantt Final'[Tipo] = "RH" ) ),[Sum])
+			VAR _2 = SUMX( SUMMARIZE('NecessidadesGantt Final', [IdCentroCusto],"Sum", CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ), 'NecessidadesGantt Final'[Tipo] = "RH" ) ),[Sum])
+			RETURN 
+			IF( 
+			    HASONEVALUE(Meios_Nome[nome])
+			    ,BLANK()
+			    ,IF( HASONEVALUE( Calendario[Dia Semana] )
+			        ,_2
+			        ,_1
+			    )
+			)
+			```
+		formatString: #,0
+		displayFolder: Necessidades
+		lineageTag: 208fc7e2-4f84-4640-bb4c-bf669d9dfbdc
+
+	measure 'DuracaoDia Nec Meios' =
+			
+			IF( HASONEVALUE(Meios_Nome[nome]), BLANK(),
+			    SUMX(VALUES(Calendario[Dia Semana]), CALCULATE( SUM( Necessidades[DuracaoDia] ) ) )
+			    --, USERELATIONSHIP(Meios[IdProjeto], 'NecessidadesGantt Final'[IdProjeto] ) ) )
+			)
+		displayFolder: Necessidades
+		lineageTag: 61283f7e-aa5a-48e5-ba92-a61751b73fae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'DuracaoDia Nec Pessoas' = ```
+			
+			--IF( SELECTEDVALUE(NecTipo[Tipo]) = "Extra Necessidade", BLANK(),
+			IF(
+			    HASONEVALUE(Pessoas[nome]), BLANK()
+			    ,CALCULATE( 
+			        SUMX( VALUES(Calendario[Dia Semana])
+			            ,CALCULATE(
+			                SUM(Necessidades[DuracaoDia])
+			            )
+			        ),TREATAS( VALUES( Horarios[IdHorariosRefs] ) , Tarefas_Pessoas[IdHorarioRef] ) 
+			        --,USERELATIONSHIP( Horarios[IdHorariosRefs] , Tarefas_Pessoas[IdHorarioRef] )
+			    ) 
+			) 
+			--)
+			```
+		displayFolder: Necessidades
+		lineageTag: 8f46591e-c2bb-4f20-87b0-38354160b585
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Necessidades Meios' =
+			
+			VAR _1 =
+			SUMMARIZE('NecessidadesGantt Final', 'NecessidadesGantt Final'[WeekDay],'NecessidadesGantt Final'[IdCentroCusto], 'NecessidadesGantt Final'[NomeEtapa], [IdNecessidade] )
+			RETURN
+			SUMX( _1, CALCULATE( [Dias Nec Meios] * [Total Nec Meios] ) )
+		displayFolder: Necessidades
+		lineageTag: 2863326e-bcf5-4b25-9593-d1b243c62cb9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Necessidades Pessoas' =
+			
+			VAR _1 =
+			SUMMARIZE('NecessidadesGantt Final', 'NecessidadesGantt Final'[WeekDay],'NecessidadesGantt Final'[IdCentroCusto], 'NecessidadesGantt Final'[NomeEtapa], [IdNecessidade] )
+			RETURN
+			SUMX( _1, CALCULATE( [Dias Nec Pessoas] * [Total Nec Pessoas] ) )
+		displayFolder: Necessidades
+		lineageTag: d6b78cdd-98d0-4e85-a13a-e70494e142b9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Progresso Meios' = DIVIDE([Atividade Necessidades Meios], [Necessidades Meios])
+		formatString: 0%;-0%;0%
+		displayFolder: Necessidades
+		lineageTag: 028ec575-5cee-413e-a2fa-98dd76a76400
+
+	measure 'Progresso Pessoas' = DIVIDE([Atividade Necessidades Pessoas], [Necessidades Pessoas])
+		formatString: 0%;-0%;0%
+		displayFolder: Necessidades
+		lineageTag: d1703a8b-90a6-4ea7-b402-1084ee26d249
+
+	measure 'QTD Nec Meios' =
+			
+			--SUMX( CentroCusto,  [QTD Nec Meios_Apoio] )
+			
+			IF( HASONEVALUE(Meios_Nome[nome]), BLANK(),
+			CALCULATE( SUMX( CentroCusto,  [QTD Nec Meios_Apoio] ) ) )
+		formatString: 0.0
+		displayFolder: Necessidades
+		lineageTag: 549bb5b2-00d5-4e2b-bdf6-1d34aa064bfd
+
+	measure 'QTD Nec Pessoas' = ```
+			
+			--SUMX( CentroCusto,  [QTD Nec Pessoas_Apoio] )
+			--IF( SELECTEDVALUE(NecTipo[Tipo]) = "Extra Necessidade", BLANK(),
+			IF( HASONEVALUE(Pessoas[nome]), BLANK()
+			,CALCULATE( SUMX( CentroCusto,  [QTD Nec Pessoas_Apoio] ) ) ) 
+			--)
+			```
+		formatString: 0.0
+		displayFolder: Necessidades
+		lineageTag: 59fcbd2d-3be8-46ee-9820-505656cfdfaf
+
+	measure 'Total Nec Meios' =
+			
+			VAR _2 = SUMX( SUMMARIZE(Necessidades,[IdNecessidade],[IdCentroCusto],"Sum", [QTD Nec Meios] * [DuracaoDia Nec Meios] ),[Sum])
+			--VAR _2 = [QTD Nec Meios] * [DuracaoDia Nec Meios]
+			RETURN
+			_2
+		displayFolder: Necessidades
+		lineageTag: fe3e6446-d5dc-45de-bc0f-f489a82278cd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Nec Pessoas' =
+			
+			VAR _2 = SUMX( SUMMARIZE(Necessidades,[IdNecessidade],[IdCentroCusto],"Sum", [QTD Nec Pessoas] * [DuracaoDia Nec Pessoas] ),[Sum])
+			--VAR _2 = [QTD Nec Pessoas] * [DuracaoDia Nec Pessoas]
+			RETURN
+			_2
+		displayFolder: Necessidades
+		lineageTag: c66ba96c-3c2c-405a-acf3-135e1899ffa6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Orçamento Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mês Nome]), [Orç. Mensal], calculate([Orç. Mensal], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		displayFolder: Orçamentos
+		lineageTag: 9dea7621-8cee-499a-8d59-0865940181a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Custo Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mês Nome]), [Custo Mensal], calculate([Custo Mensal], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		displayFolder: Custo
+		lineageTag: 83fd36fc-4e16-4a1d-92fd-5adb3e7114a0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Saldo Atual Month' =
+			
+			[Orçamento Atual Month]-[Custo Atual Month]
+		displayFolder: Orçamentos
+		lineageTag: 439df72f-f029-4a08-85d2-15dd7448395a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Execução Mensal Atual Month' =
+			
+			DIVIDE([Custo Atual Month],[Orçamento Atual Month])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: %
+		lineageTag: 77c96a98-d1ea-468d-a25c-5ae5b9dd960e
+
+	measure 'Custo LY Atual Month' =
+			
+			IF ( ISFILTERED(Calendario[Mês Nome]), [Custo Mensal LY], calculate([Custo Mensal LY], FILTER(Calendario, Calendario[Mês] = MONTH(NOW()) )))
+		displayFolder: Custo
+		lineageTag: 1dac106e-6907-4a59-8331-5dbee9995776
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Escala (h)' = ```
+			
+			VAR _MIN = MIN( Apontamentos[Planeado | Hora Inicio] )
+			VAR _MAX = MAX( Apontamentos[Planeado | Hora Fim] )
+			VAR _Duration = DATEDIFF( _MIN , _MAX , MINUTE )
+			// VAR Duration = DATEDIFF( _MIN , _MAX , SECOND )
+			// VAR Hours =
+			//     INT ( Duration / 3600)
+			// VAR Minutes =
+			//     INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			// VAR H =
+			//     IF ( LEN ( Hours ) = 1, 
+			//         CONCATENATE ( "0", Hours ),
+			//         CONCATENATE ( "", Hours )
+			//       )
+			// VAR M =
+			//     IF (
+			//         LEN ( Minutes ) = 1,
+			//         CONCATENATE ( "0", Minutes ),
+			//         CONCATENATE ( "", Minutes )
+			//     )
+			// RETURN
+			// IF( Duration = BLANK(), BLANK() ,
+			//     CONCATENATE (
+			//         H,
+			//         CONCATENATE ( ":", M )
+			//     )
+			// )
+			VAR __seg = _Duration * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(_Duration >= 1440, days &" d "& hours &":"& minutes, IF( _Duration = BLANK(), BLANK(), hours &":"& minutes) )
+			```
+		displayFolder: Controlo de RH
+		lineageTag: 55332aa7-a7df-442e-a224-ff4551861602
+
+	measure 'Ponto (h)' = ```
+			
+			VAR _MIN = MIN( Apontamentos[PicagemInicio] )
+			VAR _MAX = MAX( Apontamentos[Picagem_Fim] )
+			VAR _Duration = DATEDIFF( _MIN , _MAX , MINUTE )
+			// VAR Hours =
+			//     INT ( Duration / 3600)
+			// VAR Minutes =
+			//     INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			// VAR H =
+			//     IF ( LEN ( Hours ) = 1, 
+			//         CONCATENATE ( "0", Hours ),
+			//         CONCATENATE ( "", Hours )
+			//       )
+			// VAR M =
+			//     IF (
+			//         LEN ( Minutes ) = 1,
+			//         CONCATENATE ( "0", Minutes ),
+			//         CONCATENATE ( "", Minutes )
+			//     )
+			// RETURN
+			// IF( Duration = BLANK(), BLANK() ,
+			//     CONCATENATE (
+			//         H,
+			//         CONCATENATE ( ":", M )
+			//     )
+			// )
+			VAR __seg = _Duration * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(_Duration >= 1440, days &" d "& hours &":"& minutes, IF( _Duration = BLANK(), BLANK(), hours &":"& minutes) )
+			```
+		displayFolder: Controlo de RH
+		lineageTag: 38d4ff04-749a-4bcc-be92-1e7cb3f79982
+
+	measure 'Atividade (h)' = ```
+			
+			VAR _MIN = MIN( Apontamentos[HoraIni] )
+			VAR _MAX = MAX( Apontamentos[HoraFim] )
+			VAR _Duration = DATEDIFF( _MIN , _MAX , MINUTE )
+			// VAR Hours =
+			//     INT ( Duration / 3600)
+			// VAR Minutes =
+			//     INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			// VAR H =
+			//     IF ( LEN ( Hours ) = 1, 
+			//         CONCATENATE ( "0", Hours ),
+			//         CONCATENATE ( "", Hours )
+			//       )
+			// VAR M =
+			//     IF (
+			//         LEN ( Minutes ) = 1,
+			//         CONCATENATE ( "0", Minutes ),
+			//         CONCATENATE ( "", Minutes )
+			//     )
+			// RETURN
+			// IF( Duration = BLANK(), BLANK() ,
+			//     CONCATENATE (
+			//         H,
+			//         CONCATENATE ( ":", M )
+			//     )
+			// )
+			VAR __seg = _Duration * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(_Duration >= 1440, days &" d "& hours &":"& minutes, IF( _Duration = BLANK(), BLANK(), hours &":"& minutes) )
+			```
+		displayFolder: Controlo de RH
+		lineageTag: 38477c9a-95a3-40b0-aef0-0f0780ccc475
+
+	measure 'RH Planeado' = ```
+			
+			--DISTINCTCOUNT( Horarios[IdPessoaHorarios] )+0
+			CALCULATE( 
+			    DISTINCTCOUNT( Horarios[IdPessoaHorarios] )
+			    ,NOT ISBLANK(Pessoas[HorasDia])
+			)
+			```
+		formatString: 0
+		displayFolder: Trabalho
+		lineageTag: eb7cefac-e5ff-4da2-b8d6-fbe735c34a4f
+
+	measure 'Execucao (h)' = ```
+			
+			VAR _MIN = MIN( Apontamentos[ExecucaoHoraInicio] )
+			VAR _MAX = MAX (Apontamentos[ExecucaoHoraFim] )
+			VAR _Duration = DATEDIFF( _MIN , _MAX , MINUTE )
+			// VAR Hours =
+			//     INT ( Duration / 3600)
+			// VAR Minutes =
+			//     INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			// VAR H =
+			//     IF ( LEN ( Hours ) = 1, 
+			//         CONCATENATE ( "0", Hours ),
+			//         CONCATENATE ( "", Hours )
+			//       )
+			// VAR M =
+			//     IF (
+			//         LEN ( Minutes ) = 1,
+			//         CONCATENATE ( "0", Minutes ),
+			//         CONCATENATE ( "", Minutes )
+			//     )
+			// RETURN
+			// IF( Duration = BLANK(), BLANK() ,
+			//     CONCATENATE (
+			//         H,
+			//         CONCATENATE ( ":", M )
+			//     )
+			// )
+			VAR __seg = _Duration * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(_Duration >= 1440, days &" d "& hours &":"& minutes, IF( _Duration = BLANK(), BLANK(), hours &":"& minutes) )
+			```
+		displayFolder: Controlo de RH
+		lineageTag: 420c2771-93dc-4a0d-8b04-186d3dbd1d93
+
+	measure 'RH Sem Horario' = [# RH Sem Escala]
+		formatString: 0
+		displayFolder: Trabalho
+		lineageTag: 93a8b007-7c62-4377-9672-f83abfbdaed2
+
+	measure '# RH Sem Escala' = ```
+			
+			// CALCULATE( 
+			//     DISTINCTCOUNT( Pessoas[Id] )
+			//     ,FILTER( Pessoas, ISBLANK([Escala (h)]) )
+			//     , ( Horarios[IdHorariosRefs] = 1 || ISBLANK( Horarios[IdHorariosRefs] ) ) // Considera Apenas se tiver Horário Trabalhado
+			// )
+			CALCULATE (
+			    DISTINCTCOUNT( 'RH Sem Escala'[idPessoa] ),
+			        'RH Sem Escala'[Result] = "Sem Escala"
+			        ,treatas( values( pessoas[id] ), 'RH Sem Escala'[idpessoa] ) 
+			        ,treatas( values( Calendario[Date] ), 'RH Sem Escala'[Calendario] )
+			        ,treatas( values( CentroCusto[Id] ), 'RH Sem Escala'[idCC] )
+			)
+			```
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: b430b397-c002-462f-bef5-d7aea227a20f
+
+		changedProperty = FormatString
+
+	measure '# RH Sem Ponto' = ```
+			
+			CALCULATE( 
+			    DISTINCTCOUNT( Pessoas[Id] )
+			    ,FILTER( Pessoas, ISBLANK([Ponto (h)] ) )
+			    ,FILTER( Horarios, Horarios[IdHorariosRefs] in {1,67,68,69} ) // "Horário Trabalhado, Trabalho em Feriado, Treinamento e Viagem"
+			)
+			```
+		formatString: 0
+		displayFolder: Controlo de RH
+		lineageTag: 8f1f304c-7493-4a1d-966e-b7ffb58de951
+
+		changedProperty = FormatString
+
+	measure '# RH Sem Execução e Com Atividade' =
+			
+			CALCULATE( DISTINCTCOUNT( Pessoas[Id] ), FILTER( Pessoas, ISBLANK([Execucao (h)]) && NOT ISBLANK([Atividade (h)])) )
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: 7b6f146c-df4b-45c9-b665-9d4d9fd91a3c
+
+		changedProperty = FormatString
+
+	measure '# RH Escala Vs Ponto' =
+			
+			COUNTX( VALUES(Pessoas[Id]), [# RH Escala Vs Ponto One] )
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: 620d68eb-f27a-4a88-9105-d9a2b647373a
+
+		changedProperty = FormatString
+
+	measure '# RH Escala Vs Ponto One' = ```
+			
+			VAR _PontoIni = MIN( Apontamentos[PicagemInicio] )
+			VAR _EscalaIni = MIN( Apontamentos[Planeado | Hora Inicio] )
+			VAR _PontoFim = MAX( Apontamentos[Picagem_Fim])
+			VAR _EscalaFim = MAX( Apontamentos[Planeado | Hora Fim] )
+			--
+			VAR _ExecucaoIni = MIN( Apontamentos[ExecucaoHoraInicio] )
+			VAR _AtividadeIni = MIN( Apontamentos[HoraIni] )
+			RETURN   
+			CALCULATE( DISTINCTCOUNT( Pessoas[Id] ), FILTER( Pessoas, 
+			    ((_EscalaIni <> _PontoIni) && DATEDIFF( _PontoIni, _EscalaIni, MINUTE ) > Simulador[Simulador Value] ) || 
+			    ((_PontoFim <> _EscalaFim) && DATEDIFF( _PontoFim, _EscalaFim, MINUTE ) > Simulador[Simulador Value] ) ||
+			    ((_EscalaIni <> _PontoIni) && DATEDIFF( _EscalaIni, _PontoIni, MINUTE ) > Simulador[Simulador Value] ) || 
+			    ((_PontoFim <> _EscalaFim) && DATEDIFF( _EscalaFim, _PontoFim, MINUTE ) > Simulador[Simulador Value] ) ||
+			    ((ISBLANK(_EscalaIni) && NOT ISBLANK(_PontoIni) ) || ( NOT ISBLANK(_EscalaIni) && ISBLANK(_PontoIni) )) ||
+			    ((ISBLANK(_EscalaFim) && NOT ISBLANK(_PontoFim) ) || ( NOT ISBLANK(_EscalaFim) && ISBLANK(_PontoFim) ))
+			))
+			```
+		formatString: 0
+		displayFolder: Controlo de RH
+		lineageTag: 908d117d-c969-4656-92e5-3a79652758dd
+
+	measure '# RH Escala Vs Atividade One' = ```
+			
+			VAR _AtividadeIni = MIN( Apontamentos[HoraIni] )
+			VAR _EscalaIni = MIN( Apontamentos[Planeado | Hora Inicio] )
+			VAR _AtividadeFim = MAX( Apontamentos[HoraFim] )
+			VAR _EscalaFim = MAX( Apontamentos[Planeado | Hora Fim] )
+			--
+			VAR _ExecucaoIni = MIN( Apontamentos[ExecucaoHoraInicio] )
+			VAR _PontoIni = MIN( Apontamentos[PicagemInicio] )
+			RETURN   
+			CALCULATE( DISTINCTCOUNT( Pessoas[Id] ), FILTER( Pessoas,
+			    ((_EscalaIni <> _AtividadeIni) && DATEDIFF( _AtividadeIni, _EscalaIni, MINUTE ) > Simulador[Simulador Value] ) || 
+			    ((_AtividadeFim <> _EscalaFim) && DATEDIFF( _AtividadeFim, _EscalaFim, MINUTE ) > Simulador[Simulador Value] ) ||
+			    ((_EscalaIni <> _AtividadeIni) && DATEDIFF( _EscalaIni, _AtividadeIni, MINUTE ) > Simulador[Simulador Value] ) || 
+			    ((_AtividadeFim <> _EscalaFim) && DATEDIFF( _EscalaFim, _AtividadeFim, MINUTE ) > Simulador[Simulador Value] ) ||
+			    ((ISBLANK(_EscalaIni) && NOT ISBLANK(_AtividadeIni) ) || ( NOT ISBLANK(_EscalaIni) && ISBLANK(_AtividadeIni) )) ||
+			    ((ISBLANK(_EscalaFim) && NOT ISBLANK(_AtividadeFim) ) || ( NOT ISBLANK(_EscalaFim) && ISBLANK(_AtividadeFim) ))
+			))
+			```
+		formatString: 0
+		displayFolder: Controlo de RH
+		lineageTag: 2435c4b4-ca9e-454f-872c-e748c3e2f423
+
+	measure '# RH Escala Vs Atividade' =
+			
+			COUNTX( VALUES(Pessoas[Id]), [# RH Escala Vs Atividade One] )
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: 2f63b365-410a-43c1-8b5f-131cba00f0e5
+
+		changedProperty = FormatString
+
+	measure '# RH Atividade Vs Execucao One' = ```
+			
+			VAR _AtividadeIni = MIN( Apontamentos[HoraIni] )
+			VAR _ExecucaoIni = MIN( Apontamentos[ExecucaoHoraInicio] )
+			VAR _AtividadeFim = MAX( Apontamentos[HoraFim] )
+			VAR _ExecucaoFim = MAX( Apontamentos[ExecucaoHoraFim] )
+			--
+			VAR _EscalaIni = MIN( Apontamentos[Planeado | Hora Inicio] )
+			VAR _PontoIni = MIN( Apontamentos[PicagemInicio] )
+			RETURN   
+			CALCULATE( DISTINCTCOUNT( Pessoas[id] ), FILTER( Pessoas,
+			    ((_AtividadeIni <> _ExecucaoIni) && DATEDIFF( _ExecucaoIni, _AtividadeIni, MINUTE ) > Simulador[Simulador Value] ) || 
+			    ((_ExecucaoFim <> _AtividadeFim) && DATEDIFF( _ExecucaoFim, _AtividadeFim, MINUTE ) > Simulador[Simulador Value] ) ||
+			    ((_AtividadeIni <> _ExecucaoIni) && DATEDIFF( _AtividadeIni, _ExecucaoIni, MINUTE ) > Simulador[Simulador Value] ) || 
+			    ((_ExecucaoFim <> _AtividadeFim) && DATEDIFF( _AtividadeFim, _ExecucaoFim, MINUTE ) > Simulador[Simulador Value] ) ||
+			    (( ISBLANK(_ExecucaoIni) && NOT ISBLANK(_AtividadeIni) ) || ( NOT ISBLANK(_ExecucaoIni) && ISBLANK(_AtividadeIni) )) ||
+			    (( ISBLANK(_ExecucaoFim) && NOT ISBLANK(_AtividadeFim) ) || ( NOT ISBLANK(_ExecucaoFim) && ISBLANK(_AtividadeFim) ))
+			))
+			```
+		formatString: 0
+		displayFolder: Controlo de RH
+		lineageTag: 98bb6b43-a014-4174-8f86-f344b3e41ec6
+
+	measure '# RH Atividade Vs Execucao' =
+			
+			COUNTX( VALUES(Pessoas[Id]), [# RH Atividade Vs Execucao One] )
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: ca262812-311d-4cb7-9251-d6f4bfda91d1
+
+		changedProperty = FormatString
+
+	measure '# RH Ponto Vs Execucao One' = ```
+			
+			--VAR _Picagem = [Picagem (h)]
+			--VAR _Exec = [Execucao (h)]
+			VAR _PontoIni = MIN( Apontamentos[PicagemInicio] )
+			VAR _PontoFim = MAX( Apontamentos[Picagem_Fim] )
+			VAR _ExecucaoIni = MIN( Apontamentos[ExecucaoHoraInicio] )
+			VAR _ExecucaoFim = MAX( Apontamentos[ExecucaoHoraFim] )
+			--
+			VAR _AtividadeIni = MIN( Apontamentos[HoraIni] )
+			VAR _EscalaIni = MIN( Apontamentos[Planeado | Hora Inicio] )
+			RETURN   
+			CALCULATE( DISTINCTCOUNT( Pessoas[Id] ), FILTER( Pessoas,
+			    // ((_Picagem <> _Exec) && (DATEDIFF( _PicagemIni, _PicagemFim, MINUTE ) - DATEDIFF( _ExecIni, _ExecFim, MINUTE )) > Simulador[Simulador Value] ) ||
+			    // ((_Picagem <> _Exec) && (DATEDIFF( _ExecIni, _ExecFim, MINUTE ) - DATEDIFF( _PicagemIni, _PicagemFim, MINUTE )) > Simulador[Simulador Value] ) ) )
+			    ((_ExecucaoIni <> _PontoIni) && DATEDIFF( _PontoIni, _ExecucaoIni, MINUTE ) > Simulador[Simulador Value] ) || 
+			    ((_PontoFim <> _ExecucaoFim) && DATEDIFF( _PontoFim, _ExecucaoFim, MINUTE ) > Simulador[Simulador Value] ) ||
+			    --((_ExecucaoIni <> _PontoIni) && DATEDIFF( _ExecucaoIni, _PontoIni, MINUTE ) > Simulador[Simulador Value] ) || 
+			    --((_PontoFim <> _ExecucaoFim) && DATEDIFF( _ExecucaoFim, _PontoFim, MINUTE ) > Simulador[Simulador Value] ) ||
+			    ((ISBLANK(_ExecucaoIni) && NOT ISBLANK(_PontoIni) ) || ( NOT ISBLANK(_ExecucaoIni) && ISBLANK(_PontoIni) )) ||
+			    ((ISBLANK(_ExecucaoFim) && NOT ISBLANK(_PontoFim) ) || ( NOT ISBLANK(_ExecucaoFim) && ISBLANK(_PontoFim) ))
+			))
+			```
+		formatString: 0
+		displayFolder: Controlo de RH
+		lineageTag: a0ca7359-2dc9-4fdf-84f1-5e31e6332ba7
+
+	measure '# RH Ponto Vs Execucao' =
+			
+			COUNTX( VALUES(Pessoas[Id]), [# RH Ponto Vs Execucao One] )
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: 179df09f-1ba2-420f-94a7-2ed47c9c4910
+
+		changedProperty = FormatString
+
+	measure '# RH Atividade Vs Execucao Card' =
+			
+			SUMX( SUMMARIZE(Calendario, Calendario[Date], "sum", [# RH Atividade Vs Execucao]), [sum] )+0
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: 8840b75c-d022-4e3b-af52-6efe613e2a02
+
+		changedProperty = FormatString
+
+	measure '# RH Escala Vs Atividade Card' =
+			
+			SUMX( SUMMARIZE(Calendario, Calendario[Date], "sum", [# RH Escala Vs Atividade]), [sum] )+0
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: 9424c301-6c08-4afb-adad-dfe2e867608f
+
+		changedProperty = FormatString
+
+	measure '# RH Escala Vs Ponto Card' =
+			
+			SUMX( SUMMARIZE(Calendario, Calendario[Date], "sum", [# RH Escala Vs Ponto]), [sum] )+0
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: ebecc788-c523-4057-98e1-1a9158ea9a80
+
+		changedProperty = FormatString
+
+	measure '# RH Ponto Vs Execucao Card' =
+			
+			SUMX( SUMMARIZE(Calendario, Calendario[Date], "sum", [# RH Ponto Vs Execucao]), [sum] )+0
+		formatString: #,0
+		displayFolder: Controlo de RH
+		lineageTag: d5f5d985-4196-49ea-bb42-0267391e8534
+
+		changedProperty = FormatString
+
+	measure 'Color Sem Escala' = IF( [# RH Sem Escala] = BLANK(), 0, 1 )
+		formatString: 0
+		displayFolder: Controlo de RH
+		lineageTag: f18edfa0-c628-4a28-b54b-90f6b97133fc
+
+	measure 'Color Sem Ponto' = IF( [# RH Sem Ponto] = BLANK(), 0, 1 )
+		formatString: 0
+		displayFolder: Controlo de RH
+		lineageTag: 5822875f-1640-4035-92f2-baa3a26ed687
+
+	measure 'Color Sem Execução' = IF( [# RH Sem Execução e Com Atividade] = BLANK(), 0, 1 )
+		formatString: 0
+		displayFolder: Controlo de RH
+		lineageTag: 0b987262-d402-46cc-8f96-50c11cfdbea7
+
+	measure 'Total RH Plan e Sem Esc' = [RH Planeado_QTD] + [# RH Sem Escala]
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: 6d7164e6-7b3c-44a8-be87-b9bca6a7b6ce
+
+	measure 'Atividade Planeada Pessoas h' =
+			
+			VAR _MIN = MIN( Horarios[HoraInicio1] )
+			VAR _MAX = MAX( Horarios[Planeado | Hora Fim] )
+			VAR Duration = DATEDIFF( _MIN , _MAX , SECOND )
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			RETURN
+			abs(Hours)
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: 049aedae-1be5-4148-ab67-8c37005eb9cc
+
+	measure 'Atividade Planeada Pessoas (h) Balanço' =
+			
+			VAR _MIN = MIN( Horarios[HoraInicio1] )
+			VAR _MAX = MAX( Horarios[Planeado | Hora Fim] )
+			VAR Duration = DATEDIFF( _MIN , _MAX , SECOND )
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			RETURN
+			[Atividade Pessoas (h)]-Hours
+		displayFolder: Pessoas
+		lineageTag: 1fbcfa17-7bb5-4716-b6c9-f5aaf913ebd1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Atividade Planeada Meios h' =
+			
+			VAR Duration = SUM( Meios[Planeamento] )
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			RETURN
+			Hours
+		formatString: 0
+		displayFolder: Meios
+		lineageTag: f7dbb90b-126e-46ef-9d1f-4e05b01d8374
+
+	measure 'Atividade Planeada Meios (h) Balanço' =
+			
+			VAR Duration = SUM( Meios[Planeamento] )
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			RETURN
+			[Atividade Meios (h)]-Hours
+		displayFolder: Meios
+		lineageTag: 099d318b-876c-4916-832e-37868e5406a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dias Nec Pessoas_week' = ```
+			
+			VAR _2 = 
+			CALCULATE( 
+			    DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] )
+			    ,TREATAS( VALUES( Horarios[IdHorariosRefs] ) , Tarefas_Pessoas[IdHorarioRef] ) 
+			    --,USERELATIONSHIP( Horarios[IdHorariosRefs] , Tarefas_Pessoas[IdHorarioRef] ) 
+			)--, USERELATIONSHIP(Tarefas_Pessoas[IdProjeto], 'NecessidadesGantt Final'[IdProjeto] ) )
+			RETURN
+			IF( HASONEVALUE( Pessoas[nome] )
+			    ,BLANK()
+			    ,_2
+			)
+			```
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: 6ed214eb-50fe-44e8-acd7-c7effd00fc2e
+
+	measure 'Dias Nec Meios_week' =
+			
+			VAR _2 =
+			CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ) )
+			RETURN
+			IF( HASONEVALUE( Meios_Nome[nome] )
+			    ,BLANK()
+			    ,_2
+			)
+		formatString: 0
+		displayFolder: Necessidades
+		lineageTag: c155245f-6200-49b9-bac2-d227e4e35de2
+
+	measure 'Necessidades Pessoas_week' =
+			
+			VAR _1 =
+			SUMMARIZE('NecessidadesGantt Final', 'NecessidadesGantt Final'[WeekDay],'NecessidadesGantt Final'[IdCentroCusto], 'NecessidadesGantt Final'[NomeEtapa], [IdNecessidade] )
+			RETURN
+			SUMX( _1, CALCULATE( [Dias Nec Pessoas_week] * [Total Nec Pessoas] ) )
+		displayFolder: Necessidades
+		lineageTag: fb0aae2a-27e7-4d4b-ac8f-15c084155c2e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Necessidades Meios_week' =
+			
+			VAR _1 =
+			SUMMARIZE('NecessidadesGantt Final', 'NecessidadesGantt Final'[WeekDay],'NecessidadesGantt Final'[IdCentroCusto], 'NecessidadesGantt Final'[NomeEtapa], [IdNecessidade] )
+			RETURN
+			  SUMX( _1, CALCULATE( [Dias Nec Meios_week] * [Total Nec Meios] ) )
+		displayFolder: Necessidades
+		lineageTag: 8491474d-149f-4154-9e4e-182f0ad4b3c1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '# Pessoas' =
+			
+			CALCULATE( DISTINCTCOUNT( Tarefas_Pessoas[IdPessoa] ) )
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: d1e8a32c-b17e-42ce-ba39-e97763f853c3
+
+	measure '# Pessoas LM' = CALCULATE([# Pessoas], PREVIOUSMONTH(Calendario[Date]))
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: ab9db5d6-0d21-4255-b53b-e927dbaa0b4e
+
+	measure 'Δ Pessoas LM' = DIVIDE([# Pessoas]- [# Pessoas LM], [# Pessoas LM])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Pessoas
+		lineageTag: 8384e24d-c9eb-45ac-82f1-17cf0bbb15be
+
+	measure 'Δ Pessoas LM (h)' = DIVIDE([Atividade Pessoas (h)]- [Atividade Pessoas (h) LM], [Atividade Pessoas (h) LM])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Pessoas
+		lineageTag: dcb9ce88-772c-4e85-8cf3-efe62db4920f
+
+	measure 'Atividade Pessoas (h) LM' = CALCULATE([Atividade Pessoas (h)], PREVIOUSMONTH(Calendario[Date]))
+		displayFolder: Pessoas
+		lineageTag: 13f87853-0360-4a97-a8a6-05dbdb4198bd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '# Meios LM' = CALCULATE([# Meios], PREVIOUSMONTH(Calendario[Date]))
+		displayFolder: Meios
+		lineageTag: d8c3db43-227c-4b8e-b19b-8a3712590cc4
+
+	measure '# Meios' = CALCULATE( DISTINCTCOUNT( Meios[Id] ) )
+		formatString: 0
+		displayFolder: Meios
+		lineageTag: 63d74c3c-d064-4d4e-aaa2-d4d6d5c1c4d0
+
+	measure 'Atividade Meios (h) LM' = CALCULATE([Atividade Meios (h)], PREVIOUSMONTH(Calendario[Date]))
+		displayFolder: Meios
+		lineageTag: 4dfa6f5a-7875-46c6-b25b-14186965025c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Δ Meios LM' = DIVIDE([# Meios]- [# Meios LM], [# Meios LM])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Meios
+		lineageTag: ae8548b5-313b-4dcd-8290-2509c1775090
+
+	measure 'Δ Meios LM (h)' = DIVIDE([Atividade Meios (h)]- [Atividade Meios (h) LM], [Atividade Meios (h) LM])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Meios
+		lineageTag: 3cae73ac-fe0c-4df2-a36b-31446efe9a9b
+
+	measure Titulo =
+			
+			SWITCH (
+			    [Selected TituloParameter],
+			    1, SELECTEDVALUE(Titulos[Parameter]),
+			    2, SELECTEDVALUE(Titulos[Parameter]),
+			    3, SELECTEDVALUE(Titulos[Parameter]),
+			    4, SELECTEDVALUE(Titulos[Parameter]),
+			    5, SELECTEDVALUE(Titulos[Parameter]),
+			    6, SELECTEDVALUE(Titulos[Parameter]),
+			    7, SELECTEDVALUE(Titulos[Parameter]),
+			    8, SELECTEDVALUE(Titulos[Parameter]),
+			    9, SELECTEDVALUE(Titulos[Parameter]),
+			    10, SELECTEDVALUE(Titulos[Parameter]),
+			    11, SELECTEDVALUE(Titulos[Parameter]),
+			    12, SELECTEDVALUE(Titulos[Parameter]),
+			    13, SELECTEDVALUE(Titulos[Parameter]),
+			    14, SELECTEDVALUE(Titulos[Parameter]),
+			    15, SELECTEDVALUE(Titulos[Parameter]),
+			    16, SELECTEDVALUE(Titulos[Parameter]),
+			    17, SELECTEDVALUE(Titulos[Parameter]),
+			    18, SELECTEDVALUE(Titulos[Parameter]),
+			    19, SELECTEDVALUE(Titulos[Parameter]),
+			    20, SELECTEDVALUE(Titulos[Parameter]),
+			    21, SELECTEDVALUE(Titulos[Parameter]),
+			    22, SELECTEDVALUE(Titulos[Parameter]),
+			    23, SELECTEDVALUE(Titulos[Parameter]),
+			    24, SELECTEDVALUE(Titulos[Parameter]),
+			    25, SELECTEDVALUE(Titulos[Parameter]),
+			    41, SELECTEDVALUE(Titulos[Parameter]),
+			    42, SELECTEDVALUE(Titulos[Parameter]),
+			    43, SELECTEDVALUE(Titulos[Parameter])
+			    , ""
+			)
+		displayFolder: Outros
+		lineageTag: 95b994ff-4e0a-4312-9c3f-0926215f642d
+
+	measure 'Selected TituloParameter' =
+			
+			MIN ( Titulos[ID] )
+		formatString: 0
+		displayFolder: Outros
+		lineageTag: a1b276a1-bab9-40d9-b993-685b431ce691
+
+	measure 'QTD Nec Pessoas_Apoio' = ```
+			
+			CALCULATE( 
+			    AVERAGEX(VALUES(Calendario[Dia Semana])
+			        ,CALCULATE( MAX(Necessidades[Quantidade]) )
+			    ),TREATAS( VALUES( Horarios[IdHorariosRefs] ) , Tarefas_Pessoas[IdHorarioRef] ) 
+			    --,USERELATIONSHIP( Horarios[IdHorariosRefs] , Tarefas_Pessoas[IdHorarioRef] ) )
+			    --, USERELATIONSHIP(Tarefas_Pessoas[IdProjeto], 'NecessidadesGantt Final'[IdProjeto] ) )
+			)
+			```
+		displayFolder: Necessidades
+		lineageTag: d109e305-5c3d-4bda-a44c-98cb25622b74
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'QTD Recursos Necessidades Pessoas_Apoio' = ```
+			
+			SWITCH(
+			    TRUE()
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Extra Necessidades", 
+			        CALCULATE( 
+			            [Qtd Rec Nec_Apoio]
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,ISBLANK( Tarefas_Pessoas[ExtraNec] )
+			        )
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Necessidades", 
+			        CALCULATE( 
+			            [Qtd Rec Nec_Apoio]
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,NOT ISBLANK( Tarefas_Pessoas[ExtraNec] )
+			        )
+			)
+			```
+		displayFolder: Necessidades
+		lineageTag: b1ebee10-5946-4039-9d84-2b97ff2994d7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'QTD Nec Meios_Apoio' =
+			
+			CALCULATE( AVERAGEX(VALUES(Calendario[Dia Semana]), CALCULATE(MAX(Necessidades[Quantidade]))) )--, USERELATIONSHIP(Meios[IdProjeto], 'NecessidadesGantt Final'[IdProjeto] ) )
+		displayFolder: Necessidades
+		lineageTag: 94f7a02c-f19f-4066-a48a-7022f69df455
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'QTD Recursos Necessidades Meios_Apoio' = ```
+			
+			// CALCULATE(  
+			//     AVERAGEX( VALUES(meios[date])
+			//         ,CALCULATE( 
+			//             DISTINCTCOUNT( meios[Id] )
+			//         ) 
+			//     )
+			// )
+			SWITCH(
+			    TRUE()
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Extra Necessidades", 
+			        CALCULATE( 
+			            [Qtd Rec Nec_Meios_Apoio]
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,ISBLANK( Meios[ExtraNec] )
+			        )
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Necessidades", 
+			        CALCULATE( 
+			            [Qtd Rec Nec_Meios_Apoio]
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,NOT ISBLANK( Meios[ExtraNec] )
+			        )
+			)
+			```
+		displayFolder: Necessidades
+		lineageTag: 0fd48cc4-cf70-4ad9-8a8f-35c86c42d4d9
+
+	measure 'Plan vs Exec Inicio_CARD (d hh:mm)' =
+			
+			VAR Hour_Min = [Plan vs Exec Inicio(M)_tole] --[Plan vs Exec Inicio (M)]
+			VAR __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: 5a2e8279-27e1-41a0-86f7-3bd6fda48929
+
+	measure 'Plan vs Ativ Fim(H)_CARD (d hh:mm)' =
+			
+			VAR Hour_Min = [Plan vs Ativ Fim(M)_tole] --[Plan vs Ativ Fim(M)]
+			VAR __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: 05957594-ea1b-4eb1-986f-0fa67da4f646
+
+	measure 'Plan vs Ativ Inicio_CARD (d hh:mm)' =
+			
+			VAR Hour_Min = [Plan vs Ativ Inicio(M)_tole] --[Plan vs Ativ Inicio(M)]
+			VAR __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: 9932245b-fe79-4e8c-813e-dbd8fe23191e
+
+	measure 'Plan vs Exec Fim_CARD (d hh:mm)' =
+			
+			VAR Hour_Min = [Plan vs Exec Fim(M)_tole] --[Plan vs Exec Fim (M)]
+			Var __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: 54c7affd-5639-449f-8f14-4a1308b4d355
+
+	measure 'Pic vs Exec Inicio_CARD (d hh:mm)' =
+			
+			VAR Hour_Min = [Pic vs Exec Inicio(M)_tole] --[Pic vs Exec Inicio (M)]
+			Var __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: 179997d8-0fd4-4f36-a71d-e69c9dbe1ebd
+
+	measure 'Ativ vs Exec Fim_CARD(d hh:mm)' =
+			
+			VAR Hour_Min = [Ativ vs Exec Fim(M)_tole] --[Ativ vs Exec - Fim (M)]
+			Var __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: fdd2e14f-98f5-4eef-9908-23739266d30f
+
+	measure 'Ativ vs Exec Inicio_CARD(d hh:mm)' =
+			
+			VAR Hour_Min = [Ativ vs Exec Inicio(M)_tole] --[Ativ vs Exec - Inicio (M)]
+			Var __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: 17beb9a5-6175-4b5d-b606-8d1bf3636e6d
+
+	measure 'Plan vs Pic Fim(H)_CARD(d hh:mm)' =
+			
+			VAR Hour_Min = [Plan vs Pic Fim(M)_tole] --[Plan vs Pic Fim(M)]
+			Var __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: ea39a51e-17fe-4b03-8867-983e691e85b0
+
+	measure 'Plan vs Pic Inicio(H)_CARD(d hh:mm)' =
+			
+			VAR Hour_Min = [Plan vs Pic Inicio(M)_tole] --[Plan vs Pic Inicio(M)]
+			Var __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: 17071b4c-b120-4810-ae9e-ec0335c6296a
+
+	measure 'Pic vs Exec Fim_CARD(d hh:mm)' =
+			
+			VAR Hour_Min = [Pic vs Exec Fim(M)_tole] --[Pic vs Exec Fim (M)]
+			VAR __seg = Hour_Min * 60
+			VAR allseconds = __seg
+			VAR days = format(INT ( allseconds / 24 / 60 / 60 ),"00")
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			days &" d "& hours &":"& minutes
+		displayFolder: Controlo de Horas
+		lineageTag: 45461a0b-0b0b-41b3-a6be-fe60429ed756
+
+	measure 'Pic vs Exec Fim (M)' = IF.EAGER(AVERAGE( Apontamentos[Pic vs Exec Fim(M)]) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Pic vs Exec Fim(M)]))
+		displayFolder: Controlo de Horas
+		lineageTag: 57d37a7e-ec2f-4c97-bc20-49b233fad999
+
+	measure 'Pic vs Exec Inicio (M)' =
+			
+			IF.EAGER( AVERAGE( Apontamentos[Pic vs Exec - Inicio(M)] ) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Pic vs Exec - Inicio(M)] ) )
+		displayFolder: Controlo de Horas
+		lineageTag: c08df20d-bcc1-4fb4-8551-f6bbe92cfe8e
+
+	measure 'Plan vs Exec Fim (M)' =
+			
+			IF.EAGER( AVERAGE( Apontamentos[Plan vs Exec - Fim(M)] ) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Plan vs Exec - Fim(M)] ) )
+		displayFolder: Controlo de Horas
+		lineageTag: 0b9b5764-9e58-4845-8045-666abb579230
+
+	measure 'Plan vs Exec Inicio (M)' =
+			
+			IF.EAGER( AVERAGE( Apontamentos[Plan vs Exec - Inicio(M)] ) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Plan vs Exec - Inicio(M)] ) )
+		displayFolder: Controlo de Horas
+		lineageTag: 7710abb5-6a2d-42c5-8843-7bdb8a22dc7b
+
+	measure 'Plan vs Pic Inicio(M)' = IF.EAGER( AVERAGE( Apontamentos[Plan vs Pic - Inicio(M)] ) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Plan vs Pic - Inicio(M)] ) )
+		displayFolder: Controlo de Horas
+		lineageTag: 687a176e-a2ac-4c42-a187-d80824a79af8
+
+	measure 'Plan vs Ativ Fim(M)' = IF.EAGER( AVERAGE( Apontamentos[Plan vs Ativ - Fim(M)]) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Plan vs Ativ - Fim(M)] ) )
+		displayFolder: Controlo de Horas
+		lineageTag: 1a481fbb-54b3-48f5-984f-40abaa1a0874
+
+	measure 'Plan vs Ativ Inicio(M)' =
+			
+			IF.EAGER( AVERAGE( Apontamentos[Plan vs Ativ - Inicio(M)]) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Plan vs Ativ - Inicio(M)] ) )
+		displayFolder: Controlo de Horas
+		lineageTag: 041dc5a0-4fc4-467c-aac6-12fcb0741ae6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Plan vs Pic Fim(M)' =
+			
+			IF.EAGER( AVERAGE( Apontamentos[Plan vs Pic - Fim(M)] ) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Plan vs Pic - Fim(M)] ) )
+		displayFolder: Controlo de Horas
+		lineageTag: f05d11c8-e627-45b8-b9f0-94ef37784c96
+
+	measure 'Ativ vs Exec - Fim (M)' =
+			
+			IF.EAGER( AVERAGE( Apontamentos[Ativ vs Exec - Fim(M)] ) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Ativ vs Exec - Fim(M)] ) )
+		displayFolder: Controlo de Horas
+		lineageTag: aa200fec-31d3-4364-871d-b97af022f592
+
+	measure 'Ativ vs Exec - Inicio (M)' =
+			
+			IF.EAGER( AVERAGE( Apontamentos[Ativ vs Exec - Inicio(M)] ) < Simulador[Simulador Value], BLANK(), AVERAGE( Apontamentos[Ativ vs Exec - Inicio(M)] ))
+		displayFolder: Controlo de Horas
+		lineageTag: c7fe3521-f3c6-4ee1-b8d4-0c64a9f5b4f0
+
+	measure 'RH Planeado_QTD' =
+			
+			CALCULATE( DISTINCTCOUNT( Pessoas[Id] ), FILTER( Pessoas, Pessoas[Id] in VALUES(horarios[IdPessoaHorarios]) ) )
+		formatString: 0
+		displayFolder: Pessoas
+		lineageTag: 42782f05-11b6-4d87-bcf5-218f0ec01320
+
+	measure 'Plan vs Ativ Inicio (hh:mm)_Tolt' = ```
+			
+			VAR __seg = [Plan vs Ativ Inicio(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: afa603c0-a102-40ac-b538-d43b81cc0960
+
+	measure 'Plan vs Ativ Fim (hh:mm)_tolt' =
+			
+			VAR __seg = [Plan vs Ativ Fim(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: 15651495-5425-4f05-a0cd-4fa9b20a1edd
+
+	measure 'Plan vs exec Fim (hh:mm)_tolt' =
+			
+			VAR __seg = [Plan vs Exec Fim(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: 1dea8c93-862d-4c0c-abad-507a13cb73e1
+
+	measure 'Plan vs Exec Inicio (hh:mm)_tolt' = ```
+			
+			Var __seg = [Plan vs Exec Inicio(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )	
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 07ba196d-0ef0-428c-b5db-a9e0d0e6cf26
+
+	measure 'Plan vs Pic Fim(d hh:mm)_Tolt' =
+			
+			Var __seg =  [Plan vs Pic Fim(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: 8f47116f-94e2-465e-8b4c-da0cf152d6b1
+
+	measure 'Plan vs Pic Inicio (h:m)_tolt' =
+			
+			VAR __seg = [Plan vs Pic Inicio(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: d0166720-7dad-4b6c-b3c2-d3cef58a0c90
+
+	measure 'Pic vs Exec Inicio (h:m)_tolt' =
+			
+			VAR __seg = [Pic vs Exec Inicio(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: 579a739a-b1df-4630-b4ee-36bdf6ae31f3
+
+	measure 'Ativ vs Exec Inicio (h:m)_tolt' =
+			
+			VAR __seg = [Ativ vs Exec Inicio(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: 2422bb62-b386-41bc-88d1-ec21dfd59249
+
+	measure 'Ativ vs Exec Fim (h:m)_tolt' =
+			
+			VAR __seg = [Ativ vs Exec Fim(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: 0b2e94a0-1983-4138-9894-f74da47382e7
+
+	measure 'Pic vs Exec Fim (h:m)_tolt' =
+			
+			VAR __seg = [Pic vs Exec Fim(M)_tole]
+			VAR allseconds = __seg * 60
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			VAR parenteses =  INT ( allseconds / 60 )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes &" ("& parenteses &" min)"& BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: 8ef5faba-6a50-49b6-bd42-57e9e019cc63
+
+	measure 'Plan vs Ativ Fim (hh:mm)_Tabela' =
+			
+			VAR _ab = [Plan vs Ativ Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK())
+		displayFolder: Controlo de Horas
+		lineageTag: 8cfb0578-3c06-4d3d-bc0f-fd76f84d51f2
+
+	measure 'AVG_Plan vs Ativ Fim(M)' =
+			AVERAGEX(
+											Values(Apontamentos[IdPessoa])
+											, [Diff_Plan vs Ativ - Fim(M)]
+											)
+		displayFolder: Controlo de Horas
+		lineageTag: faac8997-1d74-407c-a49e-6a595fa3a6c0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG_Plan vs Ativ Inicio(M)' = ```
+			
+			AVERAGEX(
+			    Values(Apontamentos[IdPessoa])
+			    ,[Diff_Plan vs Ativ - Inicio(M)]
+			) 
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 30be3c2a-6e3f-4d20-84b4-57830eaab6e1
+
+	measure 'Plan vs Ativ Inicio (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Plan vs Ativ Inicio(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 0ef591d7-af6d-49cb-92fc-5df757f2dc29
+
+	measure 'Diff_Plan vs Ativ - Inicio(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			            MIN( Apontamentos[Planeado | Hora Inicio])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[HoraFim])
+			                        ,MIN( Apontamentos[HoraIni])
+			                    , MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MIN(Apontamentos[HoraIni]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MIN( Apontamentos[Planeado | Hora Inicio])
+			                        , MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MIN( Apontamentos[Planeado | Hora Inicio]) 
+			                            ,MIN(Apontamentos[HoraIni]) 
+			                        ,MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: bd826c1e-3af5-4b2f-bb90-3aeb2d2b92f9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Diff_Plan vs Exec - Fim(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			                MAX( Apontamentos[Planeado | Hora Fim])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[ExecucaoHoraFim])
+			                        ,MIN( Apontamentos[ExecucaoHoraInicio])
+			                    , MINUTE
+			                    )
+			                )
+			                    ,IF.EAGER( MAX(Apontamentos[ExecucaoHoraFim]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MIN( Apontamentos[Planeado | Hora Inicio])
+			                        , MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MAX(Apontamentos[ExecucaoHoraFim]) 
+			                        ,MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: b96dfe68-df04-44da-b97c-de23ea76cb98
+
+	measure 'Diff_Plan vs Exec - Inicio(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			                MIN( Apontamentos[Planeado | Hora Inicio])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[ExecucaoHoraFim])
+			                        ,MIN( Apontamentos[ExecucaoHoraInicio])
+			                    ,MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MIN(Apontamentos[ExecucaoHoraInicio]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MIN( Apontamentos[Planeado | Hora Inicio])
+			                        ,MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MIN( Apontamentos[Planeado | Hora Inicio]) 
+			                            ,MIN(Apontamentos[ExecucaoHoraInicio]) 
+			                        ,MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 68ca911b-fbb5-4b94-9b97-68045cd06c8e
+
+	measure 'Diff_Plan vs Pic - Inicio(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			                MIN( Apontamentos[Planeado | Hora Inicio])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[Picagem_Fim])
+			                        ,MIN( Apontamentos[PicagemInicio])
+			                    ,MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MIN(Apontamentos[PicagemInicio]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MIN( Apontamentos[Planeado | Hora Inicio])
+			                        ,MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MIN( Apontamentos[Planeado | Hora Inicio]) 
+			                            ,MIN(Apontamentos[PicagemInicio]) 
+			                        ,MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 422f21ee-12db-4dcd-99c8-cb180f10434a
+
+	measure 'Diff_Plan vs Pic - Fim(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			                MAX( Apontamentos[Planeado | Hora Fim] )  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+					                MAX( Apontamentos[Picagem_Fim] )
+					                ,MIN( Apontamentos[PicagemInicio] )
+			                    ,MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MAX(Apontamentos[Picagem_Fim]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MIN( Apontamentos[Planeado | Hora Inicio])
+			                        ,MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MAX(Apontamentos[Picagem_Fim]) 
+			                        ,MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 827cb2e3-7fec-4f48-a854-cda20af88ade
+
+	measure 'Diff_Pic vs Exec - Inicio(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			                MIN( Apontamentos[PicagemInicio])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[ExecucaoHoraFim])
+			                        ,MIN( Apontamentos[ExecucaoHoraInicio])
+			                    , MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MIN(Apontamentos[ExecucaoHoraInicio]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Picagem_Fim]) 
+			                            ,MIN( Apontamentos[PicagemInicio])
+			                        , MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MIN( Apontamentos[PicagemInicio]) 
+			                            ,MIN(Apontamentos[ExecucaoHoraInicio]) 
+			                        , MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 91742de2-ae08-4923-b726-ec5a72a91555
+
+	measure 'Diff_Pic vs Exec - Fim(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(MAX( Apontamentos[Picagem_Fim])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[ExecucaoHoraFim])
+			                        ,MIN( Apontamentos[ExecucaoHoraInicio])
+			                    , MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MAX(Apontamentos[ExecucaoHoraFim]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Picagem_Fim]) 
+			                            ,MIN( Apontamentos[PicagemInicio])
+			                        , MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Picagem_Fim]) 
+			                            ,MAX(Apontamentos[ExecucaoHoraFim]) 
+			                        , MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 9a7c84ca-5595-4c1c-b7b0-97980a8836e5
+
+	measure 'Diff_Ativ vs Exec - Fim(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			                MAX( Apontamentos[HoraFim])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[ExecucaoHoraFim])
+			                        ,MIN( Apontamentos[ExecucaoHoraInicio])
+			                    , MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MAX(Apontamentos[ExecucaoHoraFim]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF(
+			                            MAX( Apontamentos[HoraFim]) 
+			                            ,MIN( Apontamentos[HoraIni])
+			                        , MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[HoraFim]) 
+			                            ,MAX(Apontamentos[ExecucaoHoraFim]) 
+			                        , MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 9646422b-5dfd-49da-b46c-7ac524354485
+
+	measure 'Diff_Ativ vs Exec - Inicio(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			                MIN( Apontamentos[HoraIni])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[ExecucaoHoraFim])
+			                        ,MIN( Apontamentos[ExecucaoHoraInicio])
+			                    , MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MIN(Apontamentos[ExecucaoHoraInicio]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF(
+			                            MAX( Apontamentos[HoraFim]) 
+			                            ,MIN( Apontamentos[HoraIni])
+			                        , MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MIN( Apontamentos[HoraIni]) 
+			                            ,MIN(Apontamentos[ExecucaoHoraInicio]) 
+			                        , MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )       
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 001c5ef6-1087-480f-897b-187c5af972b1
+
+	measure 'AVG_Plan vs Exec Inicio(M)' = ```
+			AVERAGEX(
+												Values(Apontamentos[IdPessoa])
+												, [Diff_Plan vs Exec - Inicio(M)]
+												) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 23bcf721-e142-4f7a-91f9-6bacbab070ec
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG_Plan vs Pic Inicio(M)' = ```
+			AVERAGEX(
+												Values(Apontamentos[IdPessoa])
+												, [Diff_Plan vs Pic - Inicio(M)]
+												) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 0695cce1-8cef-40e6-85cf-b0fd8c287306
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG_Plan vs Pic Fim(M)' = ```
+			AVERAGEX(
+												Values(Apontamentos[IdPessoa])
+												, [Diff_Plan vs Pic - Fim(M)]
+												) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: f144e4d8-a9df-4216-b65f-36cbffa9d88b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG_Pic vs Exec Inicio(M)' = ```
+			AVERAGEX(
+												Values(Apontamentos[IdPessoa])
+												, [Diff_Pic vs Exec - Inicio(M)]
+												) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: a62109cc-be16-4e8a-a881-d1523284e24a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG_Pic vs Exec Fim(M)' =
+			AVERAGEX(
+												Values(Apontamentos[IdPessoa])
+												, [Diff_Pic vs Exec - Fim(M)]
+												)
+		displayFolder: Controlo de Horas
+		lineageTag: 55fabcff-34a6-4d73-a0c7-cdf8c78607ca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG_Ativ vs Exec Inicio(M)' = ```
+			AVERAGEX(
+												Values(Apontamentos[IdPessoa])
+												, [Diff_Ativ vs Exec - Inicio(M)]
+												) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 7321d2d4-a213-45c4-9716-aca6c4a56fc8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'AVG_Ativ vs Exec Fim(M)' = ```
+			AVERAGEX(
+												Values(Apontamentos[IdPessoa])
+												, [Diff_Ativ vs Exec - Fim(M)]
+												) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 08405456-d996-49cd-9c21-cebe2f600e09
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Plan vs Exec Inicio (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Plan vs Exec Inicio(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 8b331ddb-483c-475f-abad-6b6c5500bb28
+
+	measure 'Plan vs Exec Fim (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Plan vs Exec Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 5ac63443-2058-4af5-851b-cbd7272488d7
+
+	measure 'Plan vs Pic Inicio (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Plan vs Pic Inicio(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: bc8dab3f-ce53-43ea-92f3-b91c1dcbc7bc
+
+	measure 'Plan vs Pic Fim (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Plan vs Pic Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 1a9e2cbe-9ab7-44d8-ae3f-91ae54a35827
+
+	measure 'Pic vs Exec Inicio (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Pic vs Exec Inicio(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 9e186ce7-be91-42db-81fd-46f66827bc0a
+
+	measure 'Pic vs Exec Fim (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Pic vs Exec Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 6677278d-3c87-4442-84f5-0c2d41c62ca0
+
+	measure 'Ativ vs Exec Inicio (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Ativ vs Exec Inicio(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 05800545-43e3-44db-baa9-8460a5f99e13
+
+	measure 'Ativ vs Exec Fim (hh:mm)_Tabela' = ```
+			
+			VAR _ab = [Ativ vs Exec Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER(__seg > 0, hours &":"& minutes, BLANK()) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 0439879e-aca6-4113-9b57-d4ce0396bff9
+
+	measure 'Plan vs Ativ TOTAL (h:m)_Tabela' = ```
+			
+			VAR _ab = [Plan vs Ativ Inicio(M)_tole] + [Plan vs Ativ Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			--
+			VAR allseconds2 = __seg/2
+			VAR hours2 =  FORMAT( MOD ( INT ( allseconds2 / 60 / 60 ), 24 ),"00" )
+			VAR minutes2 = FORMAT( MOD ( INT ( allseconds2 / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER( 
+			    (MIN( Apontamentos[HoraIni]) = BLANK() && MAX(Apontamentos[HoraFim]) = BLANK() ) &&
+			    (MIN( Apontamentos[Planeado | Hora Inicio]) = BLANK() && MAX(Apontamentos[Planeado | Hora Fim]) = BLANK() ),
+			    BLANK()
+			,IF.EAGER( 
+			    (MIN( Apontamentos[HoraIni]) = BLANK() && MAX(Apontamentos[HoraFim]) = BLANK() ) ||
+			    (MIN( Apontamentos[Planeado | Hora Inicio]) = BLANK() && MAX(Apontamentos[Planeado | Hora Fim]) = BLANK() ),
+			    hours2 &":"& minutes2
+			,IF.EAGER(__seg > 0, hours &":"& minutes, BLANK())))
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 1b279fbf-0ce0-4835-8510-1dc8a17e95d3
+
+	measure 'Plan vs Exec TOTAL (h:m)_Tabela' = ```
+			
+			VAR _ab = [Plan vs Exec Inicio(M)_tole] + [Plan vs Exec Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			--
+			VAR allseconds2 = __seg/2
+			VAR hours2 =  FORMAT( MOD ( INT ( allseconds2 / 60 / 60 ), 24 ),"00" )
+			VAR minutes2 = FORMAT( MOD ( INT ( allseconds2 / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER( 
+			    (MIN( Apontamentos[ExecucaoHoraInicio]) = BLANK() && MAX(Apontamentos[ExecucaoHoraFim]) = BLANK() ) &&
+			    (MIN( Apontamentos[Planeado | Hora Inicio]) = BLANK() && MAX(Apontamentos[Planeado | Hora Fim]) = BLANK() ),
+			    BLANK()
+			,IF.EAGER( 
+			    (MIN( Apontamentos[ExecucaoHoraInicio]) = BLANK() && MAX(Apontamentos[ExecucaoHoraFim]) = BLANK() ) ||
+			    (MIN( Apontamentos[Planeado | Hora Inicio]) = BLANK() && MAX(Apontamentos[Planeado | Hora Fim]) = BLANK() ),
+			    hours2 &":"& minutes2
+			,IF.EAGER(__seg > 0, hours &":"& minutes, BLANK())))
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 33209e55-a5b1-4cc7-8c1f-4bba02242167
+
+	measure 'Plan vs Exec Inicio(M)_tole' = IF.EAGER( [AVG_Plan vs Exec Inicio(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Plan vs Exec Inicio(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: 292dc572-ec75-49fc-8674-9d896e54049d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Plan vs Pic TOTAL (h:m)_Tabela' = ```
+			
+			VAR _ab = [Plan vs Pic Inicio(M)_tole]+ [Plan vs Pic Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			--
+			VAR allseconds2 = __seg/2
+			VAR hours2 =  FORMAT( MOD ( INT ( allseconds2 / 60 / 60 ), 24 ),"00" )
+			VAR minutes2 = FORMAT( MOD ( INT ( allseconds2 / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER( 
+			    (MIN( Apontamentos[PicagemInicio]) = BLANK() && MAX(Apontamentos[Picagem_Fim]) = BLANK() ) &&
+			    (MIN( Apontamentos[Planeado | Hora Inicio]) = BLANK() && MAX(Apontamentos[Planeado | Hora Fim]) = BLANK() ),
+			    BLANK()
+			,IF.EAGER( 
+			    (MIN( Apontamentos[PicagemInicio]) = BLANK() && MAX(Apontamentos[Picagem_Fim]) = BLANK() ) ||
+			    (MIN( Apontamentos[Planeado | Hora Inicio]) = BLANK() && MAX(Apontamentos[Planeado | Hora Fim]) = BLANK() ),
+			    hours2 &":"& minutes2
+			,IF.EAGER(__seg > 0, hours &":"& minutes, BLANK())))
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 2c01cdac-afc3-43b8-93f8-9efbb20b0fa9
+
+	measure 'Pic vs Exec TOTAL (h:m)_Tabela' = ```
+			
+			VAR _ab = [Pic vs Exec Inicio(M)_tole] + [Pic vs Exec Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  FORMAT( MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00" )
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			--
+			VAR allseconds2 = __seg/2
+			VAR hours2 =  FORMAT( MOD ( INT ( allseconds2 / 60 / 60 ), 24 ),"00" )
+			VAR minutes2 = FORMAT( MOD ( INT ( allseconds2 / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER( 
+			    (MIN( Apontamentos[PicagemInicio]) = BLANK() && MAX(Apontamentos[Picagem_Fim]) = BLANK() ) &&
+			    (MIN( Apontamentos[ExecucaoHoraInicio]) = BLANK() && MAX(Apontamentos[ExecucaoHoraFim]) = BLANK() ),
+			    BLANK()
+			,IF.EAGER( 
+			    (MIN( Apontamentos[PicagemInicio]) = BLANK() && MAX(Apontamentos[Picagem_Fim]) = BLANK() ) ||
+			    (MIN( Apontamentos[ExecucaoHoraInicio]) = BLANK() && MAX(Apontamentos[ExecucaoHoraFim]) = BLANK() ),
+			    hours2 &":"& minutes2
+			,IF.EAGER(__seg > 0, hours &":"& minutes, BLANK())))
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 438713c5-3132-4605-8c84-e8acff2334cd
+
+	measure 'Ativ vs Exec TOTAL (h:m)_Tabela' = ```
+			
+			VAR _ab = [Ativ vs Exec Inicio(M)_tole]+ [Ativ vs Exec Fim(M)_tole]
+			VAR __seg = _ab * 60
+			VAR allseconds = __seg
+			VAR hours =  format(MOD ( INT ( allseconds / 60 / 60 ), 24 ),"00")
+			VAR minutes = FORMAT( MOD ( INT ( allseconds / 60 ), 60 ),"00" )
+			--
+			VAR allseconds2 = __seg/2
+			VAR hours2 =  FORMAT( MOD ( INT ( allseconds2 / 60 / 60 ), 24 ),"00" )
+			VAR minutes2 = FORMAT( MOD ( INT ( allseconds2 / 60 ), 60 ),"00" )
+			RETURN
+			IF.EAGER( 
+			    (MIN( Apontamentos[HoraIni]) = BLANK() && MAX(Apontamentos[HoraFim]) = BLANK() ) &&
+			    (MIN( Apontamentos[ExecucaoHoraInicio]) = BLANK() && MAX(Apontamentos[ExecucaoHoraFim]) = BLANK() ),
+			    BLANK()
+			,IF.EAGER( 
+			    (MIN( Apontamentos[HoraIni]) = BLANK() && MAX(Apontamentos[HoraFim]) = BLANK() ) ||
+			    (MIN( Apontamentos[ExecucaoHoraInicio]) = BLANK() && MAX(Apontamentos[ExecucaoHoraFim]) = BLANK() ),
+			    hours2 &":"& minutes2
+			,IF.EAGER(__seg > 0, hours &":"& minutes, BLANK())))
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: 8aabf89e-5673-47f1-8656-23143cc7c192
+
+	measure 'Plan vs Ativ Fim(M)_tole' = IF.EAGER( [AVG_Plan vs Ativ Fim(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Plan vs Ativ Fim(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: d03ae8c8-83aa-4008-8058-63503559140b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Plan vs Ativ Inicio(M)_tole' =
+			
+			IF.EAGER( [AVG_Plan vs Ativ Inicio(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Plan vs Ativ Inicio(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: 177a3e8f-13a2-415b-9365-492927f039e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Plan vs Exec Fim(M)_tole' = IF.EAGER( [AVG_Plan vs Exec Fim(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Plan vs Exec Fim(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: 9dd47a36-655a-4ca3-befa-1398ef99a023
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Plan vs Pic Inicio(M)_tole' = IF.EAGER( [AVG_Plan vs Pic Inicio(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Plan vs Pic Inicio(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: 5e4130cb-21ab-4028-921b-155ebd1ead88
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Plan vs Pic Fim(M)_tole' = IF.EAGER( [AVG_Plan vs Pic Fim(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Plan vs Pic Fim(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: b715a60a-8c63-44dd-88d2-b463186166df
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pic vs Exec Inicio(M)_tole' = IF.EAGER( [AVG_Pic vs Exec Inicio(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Pic vs Exec Inicio(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: 7d11e319-3120-4ac6-9860-0d9973b6a819
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pic vs Exec Fim(M)_tole' = IF.EAGER( [AVG_Pic vs Exec Fim(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Pic vs Exec Fim(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: a687a967-0d8f-4d63-b626-df9a1f55ae07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ativ vs Exec Inicio(M)_tole' = IF.EAGER( [AVG_Ativ vs Exec Inicio(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Ativ vs Exec Inicio(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: 12a7add1-3d9a-48ed-93cc-58ebd04b05b4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ativ vs Exec Fim(M)_tole' = IF.EAGER( [AVG_Ativ vs Exec Fim(M)] <= Simulador[Simulador Value], BLANK(), [AVG_Ativ vs Exec Fim(M)] )
+		displayFolder: Controlo de Horas
+		lineageTag: 3dc1b92e-3daf-4354-a990-46c5b8892888
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Titulo_translation =
+			
+			SWITCH (
+			    [Selected TituloParameter],
+			    1, SELECTEDVALUE('TranslationTable'[value translation]), -- SELECTEDVALUE(Titulos[Parameter]),
+			    2, SELECTEDVALUE('TranslationTable'[value translation]), -- SELECTEDVALUE(Titulos[Parameter]),
+			    3, SELECTEDVALUE('TranslationTable'[value translation]), --SELECTEDVALUE(Titulos[Parameter]),
+			    4, SELECTEDVALUE('TranslationTable'[value translation]), --SELECTEDVALUE(Titulos[Parameter]),
+			    5, SELECTEDVALUE('TranslationTable'[value translation]),--  SELECTEDVALUE(Titulos[Parameter]),
+			    6, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    7, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    8, SELECTEDVALUE('TranslationTable'[value translation]), --SELECTEDVALUE(Titulos[Parameter]),
+			    9, SELECTEDVALUE('TranslationTable'[value translation]),--  SELECTEDVALUE(Titulos[Parameter]),
+			    10, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    11, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    12, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    13, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    14, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    15, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    16, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    17, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    18, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    19, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    20, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    21, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    22, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    23, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    24, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    25, SELECTEDVALUE('TranslationTable'[value translation]),
+			    41, SELECTEDVALUE('TranslationTable'[value translation]),
+			    42, SELECTEDVALUE('TranslationTable'[value translation]),
+			    43, SELECTEDVALUE('TranslationTable'[value translation])
+			    , ""
+			)
+		displayFolder: Outros
+		lineageTag: 297c2090-c046-4e87-9627-e8d21be60298
+
+	measure Card_TName =
+			
+			SWITCH (
+			    [Selected TituloParameter],
+			    26, SELECTEDVALUE('TranslationTable'[value translation]), -- SELECTEDVALUE(Titulos[Parameter]),
+			    2, SELECTEDVALUE('TranslationTable'[value translation]), -- SELECTEDVALUE(Titulos[Parameter]),
+			    3, SELECTEDVALUE('TranslationTable'[value translation]), --SELECTEDVALUE(Titulos[Parameter]),
+			    4, SELECTEDVALUE('TranslationTable'[value translation]), --SELECTEDVALUE(Titulos[Parameter]),
+			    5, SELECTEDVALUE('TranslationTable'[value translation]),--  SELECTEDVALUE(Titulos[Parameter]),
+			    6, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    7, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    8, SELECTEDVALUE('TranslationTable'[value translation]), --SELECTEDVALUE(Titulos[Parameter]),
+			    9, SELECTEDVALUE('TranslationTable'[value translation]),--  SELECTEDVALUE(Titulos[Parameter]),
+			    10, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    11, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    12, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    13, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    14, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    15, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    16, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    17, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    18, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    19, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    20, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    21, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    22, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    23, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    24, SELECTEDVALUE('TranslationTable'[value translation]),-- SELECTEDVALUE(Titulos[Parameter]),
+			    25, SELECTEDVALUE('TranslationTable'[value translation])-- SELECTEDVALUE(Titulos[Parameter])
+			    , ""
+			)
+		displayFolder: Outros
+		lineageTag: 20bae5f9-7499-4f04-93ad-87151b18d606
+
+	measure 'Selected ChartParameter' =
+			
+			MIN ( Titulos[ID] )
+		displayFolder: Outros
+		lineageTag: c43e69bb-0f5f-49ff-9a21-9a9d261b697b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure FilterCompairProj = IF( SELECTEDVALUE(Calendario[Ano]) in VALUES(Projetos[Ano]), 1 , 0 )
+		formatString: 0
+		displayFolder: Filtro
+		lineageTag: 4250772e-85bc-4a63-a236-eb75e7f59696
+
+	measure 'Diff_Plan vs Ativ - Fim(M)' = ```
+			
+			SUMX(
+			    SUMMARIZE(
+			        Apontamentos,
+			        Apontamentos[Date]
+			        ,"soma"
+			        ,CALCULATE(
+			            IF.EAGER(
+			                MAX( Apontamentos[Planeado | Hora Fim])  = BLANK()
+			                ,ABS( 
+			                    DATEDIFF( 
+			                        MAX(Apontamentos[HoraFim])
+			                        ,MIN( Apontamentos[HoraIni])
+			                    , MINUTE
+			                    )
+			                )
+			                ,IF.EAGER( MAX(Apontamentos[HoraFim]) = BLANK()
+			                    ,ABS( 
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MIN( Apontamentos[Planeado | Hora Inicio])
+			                        , MINUTE
+			                        )
+			                    )
+			                    ,ABS(
+			                        DATEDIFF( 
+			                            MAX( Apontamentos[Planeado | Hora Fim]) 
+			                            ,MAX(Apontamentos[HoraFim]) 
+			                        , MINUTE 
+			                        )
+			                    )
+			                )
+			            )
+			        )
+			    )
+			    ,[soma] 
+			) / DISTINCTCOUNT( Apontamentos[Date] )
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 6a89a3c6-1c2e-4579-ab44-76b461566945
+
+	measure Dias = ```
+			
+			VAR CurrentHour = MAX( 'FichaPessoa_Horas'[Value] )
+			VAR CurrentDay = MAX( 'FichaPessoa_Dias'[Value] )
+			VAR CurrentMonth = MAX( 'FichaPessoa_Meses'[Value] )
+			-- Escala --
+			VAR _1_DaysEscala = ABS( DATEDIFF( MAX( Apontamentos[Planeado | Hora Fim] ), MIN( Apontamentos[Planeado | Hora Inicio] ), DAY ) )
+			VAR _1_DaysFromStartDate =  DAY(MIN( Apontamentos[Planeado | Hora Inicio] ) )
+			VAR _1_DaysFromEndDate = DAY(MAX( Apontamentos[Planeado | Hora FIM] ) )
+			VAR _1_HoursFromStartDate =  HOUR(MIN( Apontamentos[Planeado | Hora Inicio] ) )
+			VAR _1_HoursFromEndDate = HOUR(MAX( Apontamentos[Planeado | Hora FIM] ) )
+			VAR _1_MonthsFromStartDate =  MONTH(MIN( Apontamentos[Planeado | Hora Inicio] ) )
+			VAR _1_MonthsFromEndDate = MONTH(MAX( Apontamentos[Planeado | Hora FIM] ) )
+			-- Atividade --
+			VAR _2_DaysAtividade = ABS( DATEDIFF( MAX( Apontamentos[HoraFim] ), MIN( Apontamentos[HoraIni] ), DAY ) )
+			VAR _2_DaysFromStartDate =  DAY(MIN( Apontamentos[HoraIni] ) )
+			VAR _2_DaysFromEndDate = DAY(MAX( Apontamentos[HoraFIM] ) )
+			VAR _2_HoursFromStartDate =  HOUR(MIN( Apontamentos[HoraIni] ) )
+			VAR _2_HoursFromEndDate = HOUR(MAX( Apontamentos[HoraFIM] ) )
+			VAR _2_MonthsFromStartDate =  MONTH(MIN( Apontamentos[HoraIni] ) )
+			VAR _2_MonthsFromEndDate = MONTH(MAX( Apontamentos[HoraFIM] ) )
+			-- Ponto --
+			VAR _3_DaysPonto = ABS( DATEDIFF( MAX( Apontamentos[Picagem_Fim] ), MIN( Apontamentos[PicagemInicio] ), DAY ) )
+			VAR _3_DaysFromStartDate = DAY(MIN( Apontamentos[PicagemInicio] ) )
+			VAR _3_DaysFromEndDate = DAY(MAX( Apontamentos[Picagem_Fim] ) )
+			VAR _3_HoursFromStartDate = HOUR(MIN( Apontamentos[PicagemInicio] ) )
+			VAR _3_HoursFromEndDate = HOUR(MAX( Apontamentos[Picagem_Fim] ) )
+			VAR _3_MonthsFromStartDate = MONTH(MIN( Apontamentos[PicagemInicio] ) )
+			VAR _3_MonthsFromEndDate = MONTH(MAX( Apontamentos[Picagem_Fim] ) )
+			-- Execução --
+			VAR _4_DaysExecucao = ABS( DATEDIFF( MAX( Apontamentos[ExecucaoHoraFim] ), MIN( Apontamentos[ExecucaoHoraInicio] ), DAY ) )
+			VAR _4_DaysFromStartDate = DAY(MIN( Apontamentos[ExecucaoHoraInicio] ) )
+			VAR _4_DaysFromEndDate = DAY(MAX( Apontamentos[ExecucaoHoraFim] ) )
+			VAR _4_HoursFromStartDate = HOUR(MIN( Apontamentos[ExecucaoHoraInicio] ) )
+			VAR _4_HoursFromEndDate = HOUR(MAX( Apontamentos[ExecucaoHoraFim] ) )
+			VAR _4_MonthsFromStartDate = MONTH(MIN( Apontamentos[ExecucaoHoraInicio] ) )
+			VAR _4_MonthsFromEndDate = MONTH(MAX( Apontamentos[ExecucaoHoraFim] ) )
+			RETURN
+			SWITCH(
+			    TRUE()
+			-- Escala
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Escala" && _1_DaysEscala = 1,
+			        IF.EAGER(
+			            ( CurrentMonth = _1_MonthsFromStartDate && CurrentDay = _1_DaysFromStartDate && CurrentHour >= _1_HoursFromStartDate && CurrentHour <= 23 ) ||
+			            ( CurrentMonth = _1_MonthsFromEndDate && CurrentDay = _1_DaysFromEndDate && CurrentHour >= 0 && CurrentHour <= _1_HoursFromEndDate ) 
+			            ,1
+			            ,BLANK()
+			        )
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Escala" && _1_DaysEscala = 0 && CurrentMonth = _1_MonthsFromStartDate,
+			        IF.EAGER(
+			            ( CurrentDay >= _1_DaysFromStartDate && CurrentDay <= _1_DaysFromEndDate )
+			            && ( CurrentHour >= _1_HoursFromStartDate && CurrentHour <= _1_HoursFromEndDate )
+			            ,1
+			            ,BLANK()
+			        )
+			-- Atividade
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Atividade" && _2_DaysAtividade = 1,
+			        IF.EAGER(
+			            ( CurrentMonth = _2_MonthsFromStartDate && CurrentDay = _2_DaysFromStartDate && CurrentHour >= _2_HoursFromStartDate && CurrentHour <= 23 ) ||
+			            ( CurrentMonth = _2_MonthsFromEndDate && CurrentDay = _2_DaysFromEndDate && CurrentHour >= 0 && CurrentHour <= _2_HoursFromEndDate ) 
+			            ,2
+			            ,BLANK()
+			        )
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Atividade" && _2_DaysAtividade = 0 && CurrentMonth = _2_MonthsFromStartDate,
+			        IF.EAGER(
+			            ( CurrentDay >= _2_DaysFromStartDate && CurrentDay <= _2_DaysFromEndDate )
+			            && ( CurrentHour >= _2_HoursFromStartDate && CurrentHour <= _2_HoursFromEndDate ) 
+			            ,2
+			            ,BLANK()
+			        )
+			-- Ponto
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Ponto" && _3_DaysPonto = 1,
+			        IF.EAGER(
+			            ( CurrentMonth = _3_MonthsFromStartDate && CurrentDay = _3_DaysFromStartDate && CurrentHour >= _3_HoursFromStartDate && CurrentHour <= 23) ||
+			            ( CurrentMonth = _3_MonthsFromEndDate && CurrentDay = _3_DaysFromEndDate && CurrentHour >= 0 && CurrentHour <= _3_HoursFromEndDate ) 
+			            ,3
+			            ,BLANK()
+			        )
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Ponto" && _3_DaysPonto = 0 && CurrentMonth = _3_MonthsFromStartDate,
+			        IF.EAGER(
+			            ( CurrentDay >= _3_DaysFromStartDate && CurrentDay <= _3_DaysFromEndDate )
+			            && ( CurrentHour >= _3_HoursFromStartDate && CurrentHour <= _3_HoursFromEndDate )
+			            ,3
+			            ,BLANK()
+			        )
+			-- Execução
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Execução" && _4_DaysExecucao = 1,
+			        IF.EAGER(
+			            ( CurrentMonth = _4_MonthsFromStartDate && CurrentDay = _4_DaysFromStartDate && CurrentHour >= _4_HoursFromStartDate && CurrentHour <= 23 ) ||
+			            ( CurrentMonth = _4_MonthsFromEndDate && CurrentDay = _4_DaysFromEndDate && CurrentHour >= 0 && CurrentHour <= _4_HoursFromEndDate ) 
+			            ,4
+			            ,BLANK()
+			        )
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Execução" && _4_DaysExecucao = 0 && CurrentMonth = _4_MonthsFromStartDate,
+			        IF.EAGER(
+			            ( CurrentDay >= _4_DaysFromStartDate && CurrentDay <= _4_DaysFromEndDate )
+			            && ( CurrentHour >= _4_HoursFromStartDate && CurrentHour <= _4_HoursFromEndDate )
+			            ,4
+			            ,BLANK()
+			        )
+			    ,BLANK()
+			)
+			```
+		formatString: 0
+		displayFolder: Controlo de Horas
+		lineageTag: 2116d545-f1ac-479c-b24a-60d2b5cf9306
+
+	measure 'AVG_Plan vs Exec Fim(M)' = ```
+			AVERAGEX(
+												Values(Apontamentos[IdPessoa])
+												, [Diff_Plan vs Exec - Fim(M)]
+												) 
+			```
+		displayFolder: Controlo de Horas
+		lineageTag: d2c426ec-06a9-4d6b-871a-804ce7dc61bd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure valor_tipoProjeto = ```
+			
+			// IF( 
+			//     [Selected Type] = 1
+			//     ,[ProjetosRecorrentes]
+			//     ,IF( 
+			//         [Selected Type] = 2
+			//         ,[ProjetosNovos]
+			//         , BLANK()
+			//     )
+			// )
+			SWITCH(
+			 [Selected Type],
+			    1, SUMX( SUMMARIZE(Projetos, Projetos[ReferenciaProjectoMaster], "sum",  [ProjetosRecorrentes]), [Sum] ),
+			    2, SUMX( SUMMARIZE(Projetos, Projetos[ReferenciaProjectoMaster], "sum",   [ProjetosNovos]), [Sum] )
+			)
+			
+			```
+		displayFolder: Orçamentos
+		lineageTag: 65ce736b-2cb4-4459-9679-49d7fb0a565f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ProjetosNovos = ```
+			
+			// Var _LY = [Orç. Mensal LY] 
+			// Var _ACT =  [Orç. Mensal] 
+			// Return 
+			// IF.EAGER((_ACT > 0 && ( _LY = BLANK() || _LY <= 0)), _ACT , BLANK() )
+			
+			// VAR _1 = SELECTEDVALUE( Calendario[Ano] )
+			// VAR _2 = SELECTEDVALUE( Calendario[Ano] ) -1
+			VAR _11 = CALCULATE( [Orç. Mensal], FILTER( ALL( Calendario[Ano]), Calendario[Ano]<= MAX(Calendario[Ano])-1))
+			VAR _22 = CALCULATE( [Orç. Mensal], FILTER( ALL( Calendario[Ano] ), Calendario[Ano] = MAX(Calendario[Ano])))
+			
+			RETURN
+			--IF.EAGER((_11 > 0 && ( _22 = BLANK() || _22 <= 0)), _11 , BLANK() )
+			IF( (_11 = BLANK() || _11 = 0) && _22 > 0, [Orç. Mensal], BLANK()) //novos
+			
+			
+			// Novos Clientes = 
+			// VAR _1 = CALCULATE( [Valor] ,FILTER(ALL(Calendario[Ano]), Calendario[Ano]<=MAX(Calendario[Ano])-1)) //2020 para trás
+			// VAR _2 = CALCULATE( [Valor] ,FILTER(ALL(Calendario[Ano]), Calendario[Ano]=MAX(Calendario[Ano]))) //2021 MAX(Calendario[Date])=2022
+			// VAR _3 =
+			//     IF( (_1 = BLANK() || _1 = 0) && _2 > 0,[Valor], BLANK()) //novos
+			// Return
+			// _3
+			
+			```
+		displayFolder: Orçamentos
+		lineageTag: 6184864d-72e2-4eae-bfee-a61781cfc60d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ProjetosRecorrentes = ```
+			
+			Var _LY = CALCULATE( [Orç. Mensal] ,FILTER(ALL(Calendario[Ano]), Calendario[Ano]<=MAX(Calendario[Ano])-1)) -- [Orç. Mensal LY] 
+			Var _ACT = CALCULATE( [Orç. Mensal] ,FILTER(ALL(Calendario[Ano]), Calendario[Ano]=MAX(Calendario[Ano])))   -- [Orç. Mensal]
+			Var _4 =  IF( _LY > 0 && _ACT > 0, [Orç. Mensal], BLANK() )
+			
+			Return
+			 _4
+			--IF.EAGER((_ACT > 0 && ( _LY > _ACT)) || (_ACT > 0 && ( _ACT > _LY) && (_LY <> BLANK() || _LY <> 0)), _ACT ,BLANK()) 
+			
+			
+			
+			// Clientes Recorrentes = 
+			// VAR _1 = CALCULATE( [Valor] ,FILTER(ALL(Calendario[Ano]), Calendario[Ano]<=MAX(Calendario[Ano])-1)) 
+			// VAR _2 = CALCULATE( [Valor] ,FILTER(ALL(Calendario[Ano]), Calendario[Ano]=MAX(Calendario[Ano]))) 
+			// Var _4 =
+			//     IF( _1 > 0 && _2 > 0, [valor], BLANK() )
+			// Return
+			// _4
+			```
+		displayFolder: Orçamentos
+		lineageTag: e333d9cf-ae74-4721-88a8-3d349ef417fc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Utilizações = COUNT(Meios[TempoImputado] )
+		formatString: #,0
+		displayFolder: Meios
+		lineageTag: b2011e7a-4be9-4483-98bd-cb0d92364500
+
+		changedProperty = FormatString
+
+	measure 'QTD RH CalculoNecessidades' =
+			
+			-- Capacidade --
+			VAR _1_QTD = CALCULATE( DISTINCTCOUNT( Pessoas[id] ), FILTER( Horarios , NOT ISBLANK(Horarios[Diff_1]) || NOT ISBLANK(Horarios[Diff_2]) || NOT ISBLANK(Horarios[Diff_3]) ) )
+			-- Necessidades --
+			VAR _2_QTD = CALCULATE( [QTD Nec Pessoas], TREATAS( VALUES( Pessoas[IdCentroCusto] ), CentroCusto[Id] ) )
+			-- Escala --
+			VAR _3_QTD = CALCULATE( DISTINCTCOUNT( Apontamentos[IdPessoa] ), NOT ISBLANK( Apontamentos[Planeado | Hora Inicio] ) )
+			-- Atividade --
+			VAR _4_QTD = CALCULATE( DISTINCTCOUNT( Apontamentos[IdPessoa] ), NOT ISBLANK( Apontamentos[HoraIni] ) )
+			-- Execução --
+			VAR _5_QTD = CALCULATE( DISTINCTCOUNT( Apontamentos[IdPessoa] ), NOT ISBLANK( Apontamentos[ExecucaoHoraInicio] ) )
+			RETURN
+			SWITCH(
+			    TRUE()
+			-- Capacidade
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Capacidade", _1_QTD
+			-- Necessidades
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Necessidades", _2_QTD
+			-- Escala
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Escala", _3_QTD
+			-- Atividade
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Atividade", _4_QTD
+			-- Execução
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Execução", _5_QTD
+			-- else
+			    ,BLANK()
+			)
+		formatString: #,0
+		displayFolder: Necessidades
+		lineageTag: e5b33a68-19ff-4ca7-a913-4661891e554c
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Horas RH CalculoNecessidades' =
+			
+			-- Capacidade --
+			VAR _Duration_Cap = AVERAGEX( VALUES(Horarios[IdPessoaHorarios]), CALCULATE( SUM(Horarios[Capacidade_Planeamento] ) ) )
+			
+			VAR __seg_Cap = _Duration_Cap * 60
+			VAR allseconds_Cap = __seg_Cap
+			VAR days_Cap = FORMAT(INT ( allseconds_Cap / 24 / 60 / 60 ),"00")
+			VAR hours_Cap =  FORMAT(MOD ( INT ( allseconds_Cap / 60 / 60 ), 24 ),"00")
+			VAR minutes_Cap = FORMAT( MOD ( INT ( allseconds_Cap / 60 ), 60 ),"00" )
+			-- Necessidades --
+			--VAR _2_1_Horas = AVERAGEX( VALUES('NecessidadesGantt Final'[IdPessoa]), CALCULATE( [Necessidades Pessoas_week_Planeamento] ) )
+			VAR _2_1_Horas = AVERAGEX( 'NecessidadesGantt Final', CALCULATE( [DuracaoDia Nec Pessoas], TREATAS( VALUES( Pessoas[IdCentroCusto] ), CentroCusto[Id] ) ))
+			VAR _2_HORAS = _2_1_Horas * 60 --[Necessidades Pessoas_week_Planeamento] * 60
+			VAR _Duration_Nec = _2_HORAS
+			VAR __seg_Nec = _Duration_Nec * 60
+			VAR allseconds_Nec = __seg_Nec
+			VAR days_Nec = FORMAT(INT ( allseconds_Nec / 24 / 60 / 60 ),"00")
+			VAR hours_Nec =  FORMAT(MOD ( INT ( allseconds_Nec / 60 / 60 ), 24 ),"00")
+			VAR minutes_Nec = FORMAT( MOD ( INT ( allseconds_Nec / 60 ), 60 ),"00" )
+			-- Escala --
+			VAR _Duration_esc = AVERAGEX( VALUES(Apontamentos[IdPessoa]), CALCULATE( SUM(Apontamentos[Escala (m)] ) ) )
+			Var __seg_esc = _Duration_esc * 60
+			VAR allseconds_esc = __seg_esc
+			VAR days_esc = FORMAT(INT ( allseconds_esc / 24 / 60 / 60 ),"00")
+			VAR hours_esc =  FORMAT(MOD ( INT ( allseconds_esc / 60 / 60 ), 24 ),"00")
+			VAR minutes_esc = FORMAT( MOD ( INT ( allseconds_esc / 60 ), 60 ),"00" )
+			-- Atividade --
+			VAR _Duration_ativ = AVERAGEX( VALUES(Apontamentos[IdPessoa]), CALCULATE( SUM(Apontamentos[Atividade (m)] ) ) )
+			Var __seg_ativ = _Duration_ativ * 60
+			VAR allseconds_ativ = __seg_ativ
+			VAR days_ativ = FORMAT(INT ( allseconds_ativ / 24 / 60 / 60 ),"00")
+			VAR hours_ativ =  FORMAT(MOD ( INT ( allseconds_ativ / 60 / 60 ), 24 ),"00")
+			VAR minutes_ativ = FORMAT( MOD ( INT ( allseconds_ativ / 60 ), 60 ),"00" )
+			-- Execução --
+			VAR _Duration_exec = AVERAGEX( VALUES(Apontamentos[IdPessoa]), CALCULATE( SUM(Apontamentos[Execucao (m)] ) ) )
+			Var __seg_exec = _Duration_exec * 60
+			VAR allseconds_exec = __seg_exec
+			VAR days_exec = FORMAT(INT ( allseconds_exec / 24 / 60 / 60 ),"00")
+			VAR hours_exec =  FORMAT(MOD ( INT ( allseconds_exec / 60 / 60 ), 24 ),"00")
+			VAR minutes_exec = FORMAT( MOD ( INT ( allseconds_exec / 60 ), 60 ),"00" )
+			RETURN
+			SWITCH(
+			    TRUE()
+			-- Capacidade
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Capacidade", --_1_HORAS
+			        IF.EAGER(_Duration_Cap >= 1440, days_Cap &" d "& hours_Cap &":"& minutes_Cap, IF( _Duration_Cap = BLANK(), BLANK(), hours_Cap &":"& minutes_Cap) )
+			-- Necessidades
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Necessidades", --_2_HORAS
+			        IF.EAGER(_Duration_Nec >= 1440, days_Nec &" d "& hours_Nec &":"& minutes_Nec, IF( _Duration_Nec = BLANK(), BLANK(), hours_Nec &":"& minutes_Nec) )
+			-- Escala
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Escala",
+			        IF.EAGER(_Duration_esc >= 1440, days_esc &" d "& hours_esc &":"& minutes_esc, IF( _Duration_esc = BLANK(), BLANK(), hours_esc &":"& minutes_esc) )
+			-- Atividade
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Atividade",
+			        IF.EAGER(_Duration_ativ >= 1440, days_ativ &" d "& hours_ativ &":"& minutes_ativ, IF( _Duration_ativ = BLANK(), BLANK(), hours_ativ &":"& minutes_ativ) )
+			-- Execução
+			    ,SELECTEDVALUE( TiposHorario[Tipo] ) = "Execução",
+			        IF.EAGER(_Duration_exec >= 1440, days_exec &" d "& hours_exec &":"& minutes_exec, IF( _Duration_exec = BLANK(), BLANK(), hours_exec &":"& minutes_exec) )
+			-- else
+			    ,BLANK()
+			)
+		displayFolder: Necessidades
+		lineageTag: 00fae04a-6ff4-4a14-83ce-855328f7cff8
+
+	measure 'Necessidades Pessoas_week_Planeamento' =
+			
+			VAR _1 =
+			SUMMARIZE('NecessidadesGantt Final', 'NecessidadesGantt Final'[WeekDay],'NecessidadesGantt Final'[IdCentroCusto], 'NecessidadesGantt Final'[NomeEtapa], [IdNecessidade] )
+			RETURN
+			AVERAGEX( _1, CALCULATE( [Dias Nec Pessoas_week] * [Total Nec Pessoas] ) )
+		displayFolder: Necessidades
+		lineageTag: 2c3ef51c-b2ca-447c-8bd0-8f4db18bb653
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure _teste = USERPRINCIPALNAME()
+		lineageTag: 7417b83d-b888-420d-9cb0-a0bd9e424a13
+
+	measure 'QTD RH Necessidades FH Atividade' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNTNOBLANK(
+			        Necessidades_FH[IdPessoaTarefa]
+			    )
+			    ,Necessidades_FH[TipoNec] = "Atividade" 
+			)
+			```
+		formatString: 0
+		lineageTag: 72b4da61-4ec2-4c51-bbc0-130fbd26d3c7
+
+	measure 'QTD RH Necessidades FH Execucao' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNTNOBLANK(
+			        Necessidades_FH[IdPessoaTarefa]
+			    )
+			    ,Necessidades_FH[TipoNec] = "Execucao" 
+			)
+			```
+		formatString: 0
+		lineageTag: 298307f3-adf0-45bd-937c-49d6f098f382
+
+	measure 'Hrs RH Necessidades FH Atividade' = ```
+			
+			CALCULATE(
+			    AVERAGE(
+			        Necessidades_FH[Duration]
+			    )
+			    ,Necessidades_FH[TipoNec] = "Atividade" 
+			)
+			```
+		formatString: 0
+		lineageTag: 35826161-5176-4df9-b5f9-8a940dc84bad
+
+	measure 'QTD RH Necessidades FH' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNTNOBLANK(
+			        Necessidades_FH[IdPessoaNec]
+			    )
+			    ,Necessidades_FH[TipoNec] = "Atividade" 
+			)
+			```
+		formatString: 0
+		lineageTag: 83ed8ed2-8b16-4754-84c8-8e71fcaf5d9c
+
+	measure 'QTD Necessidades FH' = ```
+			
+			SUMX(
+			    VALUES( Necessidades_FH[Index] )
+			    ,    
+			    CALCULATE(
+			        SUM(
+			            Necessidades_FH[QuantidadeNec]
+			        )
+			        ,Necessidades_FH[TipoNec] = "Atividade" 
+			    )
+			)
+			```
+		formatString: 0
+		lineageTag: 297fbac9-069e-48bc-9c5c-bf91390e7199
+
+	measure 'Necessidades Pessoas LY' = CALCULATE( [Necessidades Pessoas], SAMEPERIODLASTYEAR(Calendario[Date]))
+		displayFolder: Necessidades
+		lineageTag: d631029c-7d31-4b00-94c6-44ea8ed4de04
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Necessidades Meios LY' = CALCULATE( [Necessidades Meios], SAMEPERIODLASTYEAR(Calendario[Date]))
+		displayFolder: Necessidades
+		lineageTag: 061fc47e-eb68-4805-b03e-33e658e3287f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Atividade Necessidades Pessoas (d)' =
+			
+			VAR _2 = SUMX( VALUES( 'NecessidadesGantt Final'[TipoNec] ), CALCULATE( [Atividade Necessidades Pessoas (d)_Apoio] ) )
+			RETURN
+			IF( HASONEVALUE( 'NecessidadesGantt Final'[TipoNec] ), _2, DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ) )
+			--CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ) )
+		lineageTag: 031ccf28-fded-4ea5-9a04-3242dfc30197
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Atividade Necessidades Pessoas_Apoio' = ```
+			
+			SWITCH(
+			    TRUE()
+			    // ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Extra Necessidades", 
+			        // CALCULATE( 
+			        //     SUM('NecessidadesGantt Final'[Quantidade] )
+			        //     ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			        //     ,'NecessidadesGantt Final'[TipoNec] = "Extra Necessidades"
+			        //     ,USERELATIONSHIP( Pessoas[Id], 'NecessidadesGantt Final'[IdPessoa] )
+			        // )
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Extra Necessidades", 
+			        CALCULATE( 
+			            [Atividade Pessoas (h)]
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,ISBLANK( Tarefas_Pessoas[ExtraNec] )
+			        )
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Necessidades", 
+			        CALCULATE( 
+			            [Atividade Pessoas (h)]
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,NOT ISBLANK( Tarefas_Pessoas[ExtraNec] )
+			        )
+			)
+			```
+		lineageTag: 60d24664-fe53-40bc-a99b-ee964c19c5eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Atividade Necessidades Pessoas (d)_Apoio' = ```
+			
+			SWITCH(
+			    TRUE()
+			    // ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Extra Necessidades", 
+			        // CALCULATE( 
+			        //     CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ) )
+			        //     ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			        //     ,'NecessidadesGantt Final'[TipoNec] = "Extra Necessidades"
+			        //     ,USERELATIONSHIP( Pessoas[Id], 'NecessidadesGantt Final'[IdPessoa] )
+			        // )
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Extra Necessidades", 
+			        CALCULATE( 
+			            CALCULATE( DISTINCTCOUNT( Tarefas_Pessoas[HoraInicio] ) )
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,ISBLANK( Tarefas_Pessoas[ExtraNec] )
+			        )
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Necessidades", 
+			        CALCULATE( 
+			            CALCULATE( DISTINCTCOUNT( Tarefas_Pessoas[HoraInicio] ) )
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,NOT ISBLANK( Tarefas_Pessoas[ExtraNec] )
+			        )
+			)
+			```
+		lineageTag: 89d3bfc5-dea9-498d-9159-b8e29526bbc9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Qtd Rec Nec_Apoio' = ```
+			
+			CALCULATE( 
+			    AVERAGEX( 
+			        VALUES( Tarefas_Pessoas[HoraInicio] )
+			        ,CALCULATE( 
+			            DISTINCTCOUNT( Tarefas_Pessoas[IdPessoa] )
+			        ) 
+			    )
+			)
+			```
+		lineageTag: 0a607824-d519-490e-b1c7-f973ad68a1c3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Atividade Necessidades Meios (d)' =
+			
+			VAR _2 = SUMX( VALUES( 'NecessidadesGantt Final'[TipoNec] ), CALCULATE( [Atividade Necessidades Meios (d)_Apoio] ) )
+			RETURN
+			IF( HASONEVALUE( 'NecessidadesGantt Final'[TipoNec] ), _2, DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ) )
+			--CALCULATE( DISTINCTCOUNT( 'NecessidadesGantt Final'[Datas] ) )
+		lineageTag: deee258c-f4eb-438a-83cf-a6376b94a093
+
+	measure 'Atividade Necessidades Meios (d)_Apoio' = ```
+			
+			SWITCH(
+			    TRUE()
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Extra Necessidades", 
+			        CALCULATE( 
+			            CALCULATE( DISTINCTCOUNT( Meios[Date] ) )
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,ISBLANK( Meios[ExtraNec] )
+			        )
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Necessidades", 
+			        CALCULATE( 
+			            CALCULATE( DISTINCTCOUNT( Meios[Date] ) )
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,NOT ISBLANK( Meios[ExtraNec] )
+			        )
+			)
+			```
+		formatString: 0
+		lineageTag: 8e509542-dc3c-4ea7-ac7a-cd8082996530
+
+	measure 'Atividade Necessidades Meios_Apoio' = ```
+			
+			SWITCH(
+			    TRUE()
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Extra Necessidades", 
+			        CALCULATE( 
+			            [Atividade Meios (h)]
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,ISBLANK( Meios[ExtraNec] )
+			        )
+			    ,SELECTEDVALUE( 'NecessidadesGantt Final'[TipoNec] ) = "Necessidades", 
+			        CALCULATE( 
+			            [Atividade Meios (h)]
+			            ,CROSSFILTER( Projetos[id], 'NecessidadesGantt Final'[IdProjeto], Both )
+			            ,NOT ISBLANK( Meios[ExtraNec] )
+			        )
+			)
+			```
+		lineageTag: 99ef201e-1a10-4bf5-b705-824bd6681c94
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Qtd Rec Nec_Meios_Apoio' = ```
+			
+			CALCULATE( 
+			    AVERAGEX( 
+			        VALUES( Meios[Date] )
+			        ,CALCULATE( 
+			            DISTINCTCOUNT( Meios[Id] )
+			        ) 
+			    )
+			)
+			```
+		lineageTag: 9f2f13d7-d4f6-4045-8e85-edbd3c1bdaa7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Coluna1
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 73b5f374-ea24-486f-bef4-673c0bc3e154
+		summarizeBy: sum
+		sourceColumn: Coluna1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Empty = " "
+		displayFolder: Filtro
+		lineageTag: d5dc3967-9cab-4d65-927d-a37370c74ebc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ~Measure-ed4858ed-1e81-4dd1-9128-4e6dd98fd374 = m
+		mode: import
+		queryGroup: Config
+		source =
+				let
+				    Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type text) meta [Serialized.Text = true]) in type table [Coluna1 = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Origem,{{"Coluna1", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_QueryRelationships = {"columnCount":1,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Measure/Tipo Alterado.{Coluna1,0}"],"ColumnCount":1,"KeyColumnNames":[],"ColumnIdentities":["Section1/Measure/Tipo Alterado.{Coluna1,0}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

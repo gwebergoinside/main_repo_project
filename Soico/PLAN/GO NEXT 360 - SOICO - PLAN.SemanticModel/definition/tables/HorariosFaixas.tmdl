@@ -1,0 +1,148 @@
+table HorariosFaixas
+	lineageTag: 4f8abdff-c4ba-41bc-95b1-756e16d34626
+
+	column IdHorarioRef
+		dataType: int64
+		formatString: 0
+		lineageTag: e60e6039-7d0e-45a2-ab51-9faefb604fad
+		summarizeBy: sum
+		sourceColumn: IdHorarioRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 979964b8-6e7a-4416-a440-3b50f8353741
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b2f17da6-dc9f-4dc7-8f1b-42998c4f078e
+		summarizeBy: none
+		sourceColumn: HoraInicio
+
+		variation Variação
+			isDefault
+			relationship: 9c9673ee-1f4d-4c7a-b95b-08fb2ae3a298
+			defaultHierarchy: LocalDateTable_6bd9b7c0-6ae3-4763-bb12-0091219ce137.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7d674228-b0b8-4ace-9665-4380e3f08bcc
+		summarizeBy: none
+		sourceColumn: HoraFim
+
+		variation Variação
+			isDefault
+			relationship: f526f2de-6351-414e-ac33-2157e1efe774
+			defaultHierarchy: LocalDateTable_928a9404-0b5a-4271-9a65-698a01f8b605.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixa
+		dataType: string
+		lineageTag: c3fe6f0a-a6c8-4ae5-8c74-604bf8fe9f03
+		summarizeBy: none
+		sourceColumn: Faixa
+
+		annotation SummarizationSetBy = Automatic
+
+	column InicioFaixa
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7af20460-b167-4bcb-aee3-99af5d2b74e5
+		summarizeBy: none
+		sourceColumn: InicioFaixa
+
+		variation Variação
+			isDefault
+			relationship: 1eee300f-07c2-4761-9edb-79604403c887
+			defaultHierarchy: LocalDateTable_721e3f59-6fc6-49da-9b9b-4d067b29af96.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column FimFaixa
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8af403b8-e9e4-43e1-8ca0-cf13d64b31f9
+		summarizeBy: none
+		sourceColumn: FimFaixa
+
+		variation Variação
+			isDefault
+			relationship: fe6902cd-dacd-4657-90dc-c82dbf79d0bb
+			defaultHierarchy: LocalDateTable_fb8e2416-95a4-4bf7-a5ec-db78e83c402c.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: f59d4eb9-ac37-4dd5-b429-cb2561db17f9
+		summarizeBy: none
+		sourceColumn: IdPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: 08b29a6e-9656-42d9-a8f3-ef6a93a8a837
+		summarizeBy: sum
+		sourceColumn: IdMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCentroCusto
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d76faa1-6a04-41e2-b32f-428ff2bf0ce6
+		summarizeBy: none
+		sourceColumn: IdCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Período =
+			
+			SWITCH(
+			    TRUE()
+			    ,HOUR(HorariosFaixas[Horainicio])>=0 && hour(HorariosFaixas[Horainicio])<6,"Madrugada"
+			    ,HOUR(HorariosFaixas[Horainicio])>=6 && hour(HorariosFaixas[Horainicio])<12,"Manhã"
+			    ,HOUR(HorariosFaixas[Horainicio])>=12 && hour(HorariosFaixas[Horainicio])<18,"Tarde"
+			    ,HOUR(HorariosFaixas[Horainicio])>=18 && hour(HorariosFaixas[Horainicio])<24,"Noite"
+			)
+		lineageTag: 7fda2ae4-1bcc-4db2-8bc5-3d232d005413
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column TrabalhoEfectivo
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ba5f8379-23d6-49cc-85b8-0b5997d0407e
+		summarizeBy: none
+		sourceColumn: TrabalhoEfectivo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HorariosFaixas-f8a4f01f-b55c-4e08-a2a3-d8da4399e6b8 = m
+		mode: import
+		queryGroup: Pessoas
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    Horarios.IdHorarioRef,#(lf)    Horarios.Data,#(lf)    IsNull(Horarios.HoraInicio1, IsNull(Horarios.HoraInicio2, Horarios.HoraInicio3)) HoraInicio,#(lf)    IsNull(Horarios.HoraFim3, IsNull(Horarios.HoraFim2, Horarios.HoraFim1)) HoraFim,#(lf)    Right('0' + Cast(vwFaixasHorarias.Hora % 24 As VARCHAR(2)), 2) + ':00' Faixa,#(lf)    DateAdd(hour, vwFaixasHorarias.Hora % 24, DateAdd(day, vwFaixasHorarias.Hora / 24, Horarios.Data)) InicioFaixa,#(lf)    DateAdd(second, -1, DateAdd(hour, 1, DateAdd(hour, vwFaixasHorarias.Hora % 24, DateAdd(day, vwFaixasHorarias.Hora /#(lf)    24, Horarios.Data)))) FimFaixa,#(lf)    Horarios.IdPessoa,#(lf)    Horarios.IdMeio,#(lf)    Pessoas_Valorizacoes_Mensais.IdCentroCusto,#(lf)    Horarios_Refs.TrabalhoEfectivo#(lf)From#(lf)    Horarios Left Join#(lf)    Pessoas_Valorizacoes_Mensais On Horarios.IdPessoa = Pessoas_Valorizacoes_Mensais.IdPessoa#(lf)            And Year(Horarios.Data) = Pessoas_Valorizacoes_Mensais.Ano#(lf)            And Month(Horarios.Data) = Pessoas_Valorizacoes_Mensais.Mes Join#(lf)    vwFaixasHorarias On vwFaixasHorarias.Hora Between DatePart(hour, IsNull(Horarios.HoraInicio1,#(lf)            IsNull(Horarios.HoraInicio2, Horarios.HoraInicio3))) And Ceiling(DateDiff(minute, Horarios.Data,#(lf)            IsNull(Horarios.HoraFim3, IsNull(Horarios.HoraFim2, Horarios.HoraFim1))) / 60.0) - 1 Inner Join#(lf)    Horarios_Refs On Horarios.IdHorarioRef = Horarios_Refs.Id#(lf)Where#(lf)    ((Horarios.HoraInicio1 Is Not Null And#(lf)            Horarios.HoraFim1 Is Not Null) Or#(lf)        (Horarios.HoraInicio2 Is Not Null And#(lf)            Horarios.HoraFim2 Is Not Null) Or#(lf)        (Horarios.HoraInicio3 Is Not Null And#(lf)            Horarios.HoraFim3 Is Not Null)) And#(lf)    Year(Horarios.Data) >= Year(GetDate()) - 3"])
+				in
+				    Source
+
+	annotation PBI_QueryRelationships = {"columnCount":11,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/HorariosFaixas/Source.{IdHorarioRef,0}","Section1/HorariosFaixas/Source.{Data,1}","Section1/HorariosFaixas/Source.{HoraInicio,2}","Section1/HorariosFaixas/Source.{HoraFim,3}","Section1/HorariosFaixas/Source.{Faixa,4}","Section1/HorariosFaixas/Source.{InicioFaixa,5}","Section1/HorariosFaixas/Source.{FimFaixa,6}","Section1/HorariosFaixas/Source.{IdPessoa,7}","Section1/HorariosFaixas/Source.{IdMeio,8}","Section1/HorariosFaixas/Source.{IdCentroCusto,9}","Section1/HorariosFaixas/Source.{TrabalhoEfectivo,10}"],"ColumnCount":11,"KeyColumnNames":[],"ColumnIdentities":["Section1/HorariosFaixas/Source.{IdHorarioRef,0}","Section1/HorariosFaixas/Source.{Data,1}","Section1/HorariosFaixas/Source.{HoraInicio,2}","Section1/HorariosFaixas/Source.{HoraFim,3}","Section1/HorariosFaixas/Source.{Faixa,4}","Section1/HorariosFaixas/Source.{InicioFaixa,5}","Section1/HorariosFaixas/Source.{FimFaixa,6}","Section1/HorariosFaixas/Source.{IdPessoa,7}","Section1/HorariosFaixas/Source.{IdMeio,8}","Section1/HorariosFaixas/Source.{IdCentroCusto,9}","Section1/HorariosFaixas/Source.{TrabalhoEfectivo,10}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,97 @@
+model Model
+	culture: pt-PT
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup LinkServer
+
+	annotation PBI_QueryGroupOrder = 0
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Areas","T_Contratos","T_Contratos_Estados","Distribuidores","moedas","Tipos_direitos","PlanoContrato_Direitos","Titulos","Catalogo","Medidas","Consumos","Contratos","PROGRAMAS_CASTS_DATAS","Custos","Objetivo","Canais","Org","BD","BD_Budget","Titulo","CanaisTitulos","OrcamentoCompras","Orcamento_Exibcao","TitulosRunsIlim","Icones","tipoConta","Compromissos","PeriodoExcecao","images","lista de imagem","logo header","PlanFormatos","Paises"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Areas
+ref table T_Contratos
+ref table Distribuidores
+ref table moedas
+ref table Tipos_direitos
+ref table Titulos
+ref table Catalogo
+ref table Date
+ref table Medidas
+ref table Consumos
+ref table Contratos
+ref table 'Date Exp'
+ref table PROGRAMAS_CASTS_DATAS
+ref table 'Date Cons'
+ref table PlanoContrato_Direitos
+ref table Custos
+ref table Objetivo
+ref table Calendario
+ref table DateTableTemplate_00c59ff1-96a7-4a02-bfd5-d15a976fbe00
+ref table LocalDateTable_b707ea22-483c-4bba-a975-021c73442687
+ref table LocalDateTable_87e8a65b-adf3-4770-b234-173a1713f4b9
+ref table LocalDateTable_9df85dc5-7cc4-48bb-8a1f-b1ffbebc3d4e
+ref table LocalDateTable_78c86295-7b3a-439e-b5fa-d860b4cbb93c
+ref table LocalDateTable_18e0b0c0-18ad-4c59-af9f-ce2908c7b833
+ref table LocalDateTable_79183c9a-c339-415b-bbe4-f60851632dec
+ref table LocalDateTable_7ccfff49-6bc2-4720-8486-f5ad4cd8e7c0
+ref table LocalDateTable_31b5190d-3e82-48c0-a88d-761dd5b9a7f8
+ref table LocalDateTable_45563d55-0c3b-4682-9d0d-049756149e44
+ref table LocalDateTable_3885aa9a-a27c-4f61-9212-9170aa16be56
+ref table Canais
+ref table LocalDateTable_d942518a-4d2d-4ac5-866e-378be9c0387d
+ref table T_Contratos_Estados
+ref table Titulo
+ref table CanaisTitulos
+ref table Faixa
+ref table OrcamentoCompras
+ref table 'Canal Compra'
+ref table 'Date Parcela'
+ref table TitulosRunsIlim
+ref table Icones
+ref table tipoConta
+ref table Contrato_Auxiliar
+ref table LocalDateTable_82d3aef1-caad-4e80-91e7-fd2f4fe88acf
+ref table Plano_Auxiliar
+ref table LocalDateTable_fac7d48a-ceb4-4a15-a62e-65dcaa55cc44
+ref table LocalDateTable_a70ecc83-4074-4673-aa4c-efbc27a13bc6
+ref table Orcamento_Exibcao
+ref table LocalDateTable_732dadee-ca89-43e7-bbcd-f8f73495d6da
+ref table LocalDateTable_b9bbd487-3b00-481e-b2b4-9ecfc99faeac
+ref table Processo_Auxiliar
+ref table LocalDateTable_f6858966-5fce-4b65-a284-a3dcd41106b3
+ref table Compromissos
+ref table LocalDateTable_7714158d-f21e-4b38-98d1-10e22c8e674b
+ref table LocalDateTable_52c082af-e79d-4775-b88b-28a452e2d37c
+ref table LocalDateTable_f8685bd6-6ad2-4462-9780-e2f1e50b8604
+ref table LocalDateTable_b8086c66-20c3-4173-b357-d235ec81ca43
+ref table LocalDateTable_9dfc61e4-b757-4bad-921e-2910ab3faec8
+ref table PeriodoExcecao
+ref table LocalDateTable_bd6d1c38-9cae-4466-a9c1-faf30f46d5be
+ref table LocalDateTable_b50d2966-0193-4589-8f93-9695713171ba
+ref table images
+ref table 'logo header'
+ref table PlanFormatos
+ref table LocalDateTable_2772902d-d07c-497e-922e-8931b0e3e335
+ref table Date_Existencias
+ref table LocalDateTable_1a34a73e-6ace-47ca-9db2-a45f03d463b3
+ref table LocalDateTable_e86d8f3f-fc28-489b-a3b5-3c93e018bee9
+ref table LocalDateTable_4f4aa587-3c15-418a-90f7-407219ea3279
+ref table LocalDateTable_5107ff97-2a86-4201-bf05-875381bad6db
+ref table 'Canais Existencias'
+ref table LocalDateTable_26859345-32e2-40b9-b967-f1bd31e85782
+ref table LocalDateTable_670ed1ae-73ef-499b-808c-c7b735f4e762
+ref table LocalDateTable_bb1ef926-a9b7-49a6-8311-c4c5ac8254e9
+ref table LocalDateTable_00a1f630-853a-485b-9202-f55dfeb837e3
+ref table Paises
+ref table LocalDateTable_17cd687d-a761-4546-a335-c6e02e27c0bf
+
+ref cultureInfo pt-PT
+

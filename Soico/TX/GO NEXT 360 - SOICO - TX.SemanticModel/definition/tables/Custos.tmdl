@@ -1,0 +1,215 @@
+table Custos
+	lineageTag: e030a98d-3e0e-4275-b995-5c78b121079c
+
+	column CodCanal
+		dataType: string
+		lineageTag: c50973a8-466c-4cad-a506-99c8e0b81169
+		summarizeBy: none
+		sourceColumn: CodCanal
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProgramaHoraSec
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f6e1ae0-2603-4c06-8d00-57f37e530475
+		summarizeBy: sum
+		sourceColumn: ProgramaHoraSec
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProgramaHora
+		dataType: string
+		lineageTag: 7425321b-0fa8-4a2f-b2aa-7548ade9717f
+		summarizeBy: none
+		sourceColumn: ProgramaHora
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProgramaDuracaoSec
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e3cf3c3-9e63-4b5d-9144-d5e66e70533b
+		summarizeBy: sum
+		sourceColumn: ProgramaDuracaoSec
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProgramaDuracao
+		dataType: string
+		lineageTag: 1492de03-52bd-454f-bd07-b61c3120d179
+		summarizeBy: none
+		sourceColumn: ProgramaDuracao
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumeroProcesso
+		dataType: string
+		lineageTag: a207cc65-0d46-416e-87f2-29f8750dd06d
+		summarizeBy: none
+		sourceColumn: NumeroProcesso
+
+		annotation SummarizationSetBy = Automatic
+
+	column Episodio
+		dataType: int64
+		formatString: 0
+		lineageTag: 49d81ed0-801e-471b-afb4-525b337105fe
+		summarizeBy: sum
+		sourceColumn: Episodio
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalValorDireitos
+		dataType: double
+		lineageTag: 678b568c-a128-457e-83d0-be777a84a9c5
+		summarizeBy: sum
+		sourceColumn: TotalValorDireitos
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalValorOutrosCustos
+		dataType: double
+		lineageTag: ea72985e-d7e0-43ba-8880-ef16a9a8f717
+		summarizeBy: sum
+		sourceColumn: TotalValorOutrosCustos
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FaixaDuracaoSec
+		dataType: int64
+		formatString: 0
+		lineageTag: 54a38720-3b68-436f-b811-654661a3dc92
+		summarizeBy: sum
+		sourceColumn: FaixaDuracaoSec
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaDuracao
+		dataType: string
+		lineageTag: a79243a3-8801-4a82-9fae-e08d38c5ea09
+		summarizeBy: none
+		sourceColumn: FaixaDuracao
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaValorDireitos
+		dataType: double
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: a1141bc7-44ef-4356-9196-4afcee6be8a2
+		summarizeBy: sum
+		sourceColumn: FaixaValorDireitos
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaValorOutrosCustos
+		dataType: double
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 3f3e129b-7594-41e5-bca8-a4a7cef59898
+		summarizeBy: sum
+		sourceColumn: FaixaValorOutrosCustos
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaHoraInicioSec
+		dataType: int64
+		formatString: 0
+		lineageTag: 81161286-3cb7-4e1c-891c-72c63ef7c658
+		summarizeBy: sum
+		sourceColumn: FaixaHoraInicioSec
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaHoraFimSec
+		dataType: int64
+		formatString: 0
+		lineageTag: 4611507d-d9a8-4548-a322-f7c37cc9945c
+		summarizeBy: sum
+		sourceColumn: FaixaHoraFimSec
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaHoraInicio
+		dataType: string
+		lineageTag: 9b817ea1-3342-4087-8a36-c243aeb4c001
+		summarizeBy: none
+		sourceColumn: FaixaHoraInicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaHoraFim
+		dataType: string
+		lineageTag: 7d3b04b6-3d65-43e5-9a3a-87226a37ef92
+		summarizeBy: none
+		sourceColumn: FaixaHoraFim
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixa
+		dataType: string
+		lineageTag: 616f4fd2-6f49-4456-9875-f098f9cca12a
+		summarizeBy: none
+		sourceColumn: Faixa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: 623edb10-e483-4674-92a2-c24c8844e658
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 07a8f439-965d-4f74-9d68-e6e218958e34
+		summarizeBy: none
+		sourceColumn: DATA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Descricao_Estado
+		dataType: string
+		lineageTag: 30eb6b29-3df9-4331-80ee-e4e5a3f3415e
+		summarizeBy: none
+		sourceColumn: Descricao_Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumeroProcessoEpisodio = Custos[NumeroProcesso] & FORMAT(Custos[Episodio],"000")
+		lineageTag: 2edba5d0-9190-4b74-a468-3d203ab9a62a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column codTitulo
+		dataType: int64
+		formatString: 0
+		lineageTag: 5cb4f6f6-631f-4554-9c73-a097491a5620
+		summarizeBy: none
+		sourceColumn: codTitulo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Custos-34c3d8ec-3735-47c8-bdb4-b6e2e656365e = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="SET dateformat dmy;#(lf)#(lf)#(lf)Select#(lf)    Plan_Formatos_Detalhe.cod_canal CodCanal,#(lf)    Plan_Formatos_Detalhe.Data DATA,#(lf)    Plan_Formatos_Detalhe.Hora ProgramaHoraSec,#(lf)    dbo.cSegundosHoras(Plan_Formatos_Detalhe.Hora) ProgramaHora,#(lf)    Plan_Formatos_Detalhe.Duracao ProgramaDuracaoSec,#(lf)    dbo.cSegundosHoras(Plan_Formatos_Detalhe.Duracao) ProgramaDuracao,#(lf)    Right('00000000' + Cast(Programas.numero_processo As VARCHAR), 8) As NumeroProcesso,#(lf)    Fichas_Videotape.episodio Episodio,#(lf)    IsNull(TitulosCustosRuns.Direitos, 0) TotalValorDireitos,#(lf)    IsNull(TitulosCustosRuns.OutrosCustos, 0) TotalValorOutrosCustos,#(lf)    Case#(lf)        When Plan_Formatos_Detalhe.Hora > Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)            Plan_Formatos_Detalhe.Duracao < Faixa.Hora_Fim#(lf)        Then Plan_Formatos_Detalhe.Duracao#(lf)        Else Case#(lf)                When Plan_Formatos_Detalhe.Hora > Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                    Plan_Formatos_Detalhe.Duracao > Faixa.Hora_Fim#(lf)                Then Faixa.Hora_Fim - Plan_Formatos_Detalhe.Hora + 1#(lf)                Else Case#(lf)                        When Plan_Formatos_Detalhe.Hora < Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                            Plan_Formatos_Detalhe.Duracao > Faixa.Hora_Fim + 1#(lf)                        Then Faixa.Hora_Fim - Faixa.Hora_Inicio + 1#(lf)                        Else Case#(lf)                                When Plan_Formatos_Detalhe.Hora < Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                                    Plan_Formatos_Detalhe.Duracao <= Faixa.Hora_Fim + 1#(lf)                                Then Plan_Formatos_Detalhe.Hora + Plan_Formatos_Detalhe.Duracao - Faixa.Hora_Inicio#(lf)                                Else 0#(lf)                            End#(lf)                    End#(lf)            End#(lf)    End FaixaDuracaoSec,#(lf)    dbo.Csegundoshoras(Case#(lf)        When Plan_Formatos_Detalhe.Hora > Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)            Plan_Formatos_Detalhe.Duracao < Faixa.Hora_Fim#(lf)        Then Plan_Formatos_Detalhe.Duracao#(lf)        Else Case#(lf)                When Plan_Formatos_Detalhe.Hora > Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                    Plan_Formatos_Detalhe.Duracao > Faixa.Hora_Fim#(lf)                Then Faixa.Hora_Fim - Plan_Formatos_Detalhe.Hora + 1#(lf)                Else Case#(lf)                        When Plan_Formatos_Detalhe.Hora < Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                            Plan_Formatos_Detalhe.Duracao > Faixa.Hora_Fim + 1#(lf)                        Then Faixa.Hora_Fim - Faixa.Hora_Inicio + 1#(lf)                        Else Case#(lf)                                When Plan_Formatos_Detalhe.Hora < Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                                    Plan_Formatos_Detalhe.Duracao <= Faixa.Hora_Fim + 1#(lf)                                Then Plan_Formatos_Detalhe.Hora + Plan_Formatos_Detalhe.Duracao - Faixa.Hora_Inicio#(lf)                                Else 0#(lf)                            End#(lf)                    End#(lf)            End#(lf)    End) FaixaDuracao,#(lf)    IsNull(IsNull(TitulosCustosRuns.Direitos, 0) * Case#(lf)        When Plan_Formatos_Detalhe.Hora > Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)            Plan_Formatos_Detalhe.Duracao < Faixa.Hora_Fim#(lf)        Then Plan_Formatos_Detalhe.Duracao#(lf)        Else Case#(lf)                When Plan_Formatos_Detalhe.Hora > Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                    Plan_Formatos_Detalhe.Duracao > Faixa.Hora_Fim#(lf)                Then Faixa.Hora_Fim - Plan_Formatos_Detalhe.Hora + 1#(lf)                Else Case#(lf)                        When Plan_Formatos_Detalhe.Hora < Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                            Plan_Formatos_Detalhe.Duracao > Faixa.Hora_Fim + 1#(lf)                        Then Faixa.Hora_Fim - Faixa.Hora_Inicio + 1#(lf)                        Else Case#(lf)                                When Plan_Formatos_Detalhe.Hora < Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                                    Plan_Formatos_Detalhe.Duracao <= Faixa.Hora_Fim + 1#(lf)                                Then Plan_Formatos_Detalhe.Hora + Plan_Formatos_Detalhe.Duracao - Faixa.Hora_Inicio#(lf)                                Else 0#(lf)                            End#(lf)                    End#(lf)            End#(lf)    End / NullIf(Plan_Formatos_Detalhe.Duracao, 0), 0) FaixaValorDireitos,#(lf)    IsNull(IsNull(TitulosCustosRuns.OutrosCustos, 0) * Case#(lf)        When Plan_Formatos_Detalhe.Hora > Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)            Plan_Formatos_Detalhe.Duracao < Faixa.Hora_Fim#(lf)        Then Plan_Formatos_Detalhe.Duracao#(lf)        Else Case#(lf)                When Plan_Formatos_Detalhe.Hora > Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                    Plan_Formatos_Detalhe.Duracao > Faixa.Hora_Fim#(lf)                Then Faixa.Hora_Fim - Plan_Formatos_Detalhe.Hora + 1#(lf)                Else Case#(lf)                        When Plan_Formatos_Detalhe.Hora < Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                            Plan_Formatos_Detalhe.Duracao > Faixa.Hora_Fim + 1#(lf)                        Then Faixa.Hora_Fim - Faixa.Hora_Inicio + 1#(lf)                        Else Case#(lf)                                When Plan_Formatos_Detalhe.Hora < Faixa.Hora_Inicio And Plan_Formatos_Detalhe.Hora +#(lf)                                    Plan_Formatos_Detalhe.Duracao <= Faixa.Hora_Fim + 1#(lf)                                Then Plan_Formatos_Detalhe.Hora + Plan_Formatos_Detalhe.Duracao - Faixa.Hora_Inicio#(lf)                                Else 0#(lf)                            End#(lf)                    End#(lf)            End#(lf)    End / NullIf(Plan_Formatos_Detalhe.Duracao, 0), 0) FaixaValorOutrosCustos,#(lf)    Faixa.Hora_Inicio FaixaHoraInicioSec,#(lf)    Faixa.Hora_Fim FaixaHoraFimSec,#(lf)    dbo.csegundoshoras(Faixa.Hora_Inicio) FaixaHoraInicio,#(lf)    dbo.csegundoshoras(Faixa.Hora_Fim) FaixaHoraFim,#(lf)    Left(dbo.csegundoshoras(Faixa.Hora_Inicio), 2) Faixa,#(lf)    'Previsto' Tipo,#(lf)    EstadosTitulos.Descricao As Descricao_Estado,#(lf)    Plan_Formatos_Detalhe.codTitulo#(lf)From#(lf)    Programas Inner Join#(lf)    Fichas_Videotape On Fichas_Videotape.numero_processo = Programas.numero_processo Inner Join#(lf)    Plan_Formatos_Detalhe On Plan_Formatos_Detalhe.Numero_Processo = Fichas_Videotape.numero_processo#(lf)            And Plan_Formatos_Detalhe.Episodio = Fichas_Videotape.episodio Inner Join#(lf)    Titulos On Titulos.CodTitulo = Plan_Formatos_Detalhe.codTitulo#(lf)            And Titulos.Numero_processo = Plan_Formatos_Detalhe.Numero_Processo#(lf)            And Titulos.NumEpisodio = Plan_Formatos_Detalhe.Episodio Left Join#(lf)    TitulosCustosRuns On TitulosCustosRuns.CodTitulo = Plan_Formatos_Detalhe.codTitulo#(lf)            And Plan_Formatos_Detalhe.numeroRun = TitulosCustosRuns.NumRun#(lf)            And Plan_Formatos_Detalhe.cod_canal = TitulosCustosRuns.cod_canal Inner Join#(lf)    Dias_Lms On Dias_Lms.Data = Plan_Formatos_Detalhe.Data#(lf)            And Dias_Lms.Cod_Canal = Plan_Formatos_Detalhe.cod_canal Inner Join#(lf)    Faixa On Plan_Formatos_Detalhe.Hora Between Faixa.Hora_Inicio And Faixa.Hora_Fim#(lf)            Or Plan_Formatos_Detalhe.Hora + Plan_Formatos_Detalhe.Duracao - 1 Between Faixa.Hora_Inicio And#(lf)            Faixa.Hora_Fim#(lf)            Or Faixa.Hora_Inicio Between Plan_Formatos_Detalhe.Hora And Plan_Formatos_Detalhe.Hora +#(lf)            Plan_Formatos_Detalhe.Duracao - 1 Inner Join#(lf)    EstadosTitulos On Titulos.Estado = EstadosTitulos.CodEstado#(lf)Where#(lf)    Dias_Lms.Estado Not In (17, 18, 20) And#(lf)    Year(Plan_Formatos_Detalhe.Data) >= Year(GetDate()) - 3#(lf)Union#(lf)Select#(lf)    Consumos.cod_canal CodCanal,#(lf)    Consumos.data DATA,#(lf)    Consumos.hora ProgramaHoraSec,#(lf)    dbo.cSegundosHoras(Consumos.hora) ProgramaHora,#(lf)    Consumos.duracao DuracaoProgramaSec,#(lf)    dbo.cSegundosHoras(Consumos.duracao) DuracaoPrograma,#(lf)    Right('00000000' + Cast(Programas.numero_processo As VARCHAR), 8) NumeroProcesso,#(lf)    Fichas_Videotape.episodio Episodio,#(lf)    (Consumos.valor_consumo_direitos) TotalValorDireitos,#(lf)    (Consumos.valor_consumo_outros) TotalValorOutrosCustos,#(lf)    Case#(lf)        When Consumos.hora > Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao < Faixa.Hora_Fim#(lf)        Then Consumos.duracao#(lf)        Else Case#(lf)                When Consumos.hora > Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao > Faixa.Hora_Fim#(lf)                Then Faixa.Hora_Fim - Consumos.hora + 1#(lf)                Else Case#(lf)                        When Consumos.hora < Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao > Faixa.Hora_Fim + 1#(lf)                        Then Faixa.Hora_Fim - Faixa.Hora_Inicio + 1#(lf)                        Else Case#(lf)                                When Consumos.hora < Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao <=#(lf)                                    Faixa.Hora_Fim + 1#(lf)                                Then Consumos.hora + Consumos.duracao - Faixa.Hora_Inicio#(lf)                                Else 0#(lf)                            End#(lf)                    End#(lf)            End#(lf)    End FaixaDuracaoSec,#(lf)    dbo.Csegundoshoras(Case#(lf)        When Consumos.hora > Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao < Faixa.Hora_Fim#(lf)        Then Consumos.duracao#(lf)        Else Case#(lf)                When Consumos.hora > Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao > Faixa.Hora_Fim#(lf)                Then Faixa.Hora_Fim - Consumos.hora + 1#(lf)                Else Case#(lf)                        When Consumos.hora < Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao > Faixa.Hora_Fim + 1#(lf)                        Then Faixa.Hora_Fim - Faixa.Hora_Inicio + 1#(lf)                        Else Case#(lf)                                When Consumos.hora < Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao <=#(lf)                                    Faixa.Hora_Fim + 1#(lf)                                Then Consumos.hora + Consumos.duracao - Faixa.Hora_Inicio#(lf)                                Else 0#(lf)                            End#(lf)                    End#(lf)            End#(lf)    End) FaixaDuracao,#(lf)    IsNull(IsNull(Consumos.valor_consumo_direitos, 0) * Case#(lf)        When Consumos.hora > Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao < Faixa.Hora_Fim#(lf)        Then Consumos.duracao#(lf)        Else Case#(lf)                When Consumos.hora > Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao > Faixa.Hora_Fim#(lf)                Then Faixa.Hora_Fim - Consumos.hora + 1#(lf)                Else Case#(lf)                        When Consumos.hora < Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao > Faixa.Hora_Fim + 1#(lf)                        Then Faixa.Hora_Fim - Faixa.Hora_Inicio + 1#(lf)                        Else Case#(lf)                                When Consumos.hora < Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao <=#(lf)                                    Faixa.Hora_Fim + 1#(lf)                                Then Consumos.hora + Consumos.duracao - Faixa.Hora_Inicio#(lf)                                Else 0#(lf)                            End#(lf)                    End#(lf)            End#(lf)    End / NullIf(Consumos.duracao, 0), 0) FaixaValorDireitos,#(lf)    IsNull(IsNull(Consumos.valor_consumo_outros, 0) * Case#(lf)        When Consumos.hora > Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao < Faixa.Hora_Fim#(lf)        Then Consumos.duracao#(lf)        Else Case#(lf)                When Consumos.hora > Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao > Faixa.Hora_Fim#(lf)                Then Faixa.Hora_Fim - Consumos.hora + 1#(lf)                Else Case#(lf)                        When Consumos.hora < Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao > Faixa.Hora_Fim + 1#(lf)                        Then Faixa.Hora_Fim - Faixa.Hora_Inicio + 1#(lf)                        Else Case#(lf)                                When Consumos.hora < Faixa.Hora_Inicio And Consumos.hora + Consumos.duracao <=#(lf)                                    Faixa.Hora_Fim + 1#(lf)                                Then Consumos.hora + Consumos.duracao - Faixa.Hora_Inicio#(lf)                                Else 0#(lf)                            End#(lf)                    End#(lf)            End#(lf)    End / NullIf(Consumos.duracao, 0), 0) FaixaValorOutrosCustos,#(lf)    Faixa.Hora_Inicio FaixaHoraInicioSec,#(lf)    Faixa.Hora_Fim FaixaHoraFimSec,#(lf)    dbo.csegundoshoras(Faixa.Hora_Inicio) FaixaHoraInicio,#(lf)    dbo.csegundoshoras(Faixa.Hora_Fim) FaixaHoraFim,#(lf)    Left(dbo.csegundoshoras(Faixa.Hora_Inicio), 2) Faixa,#(lf)    'Consumo' Tipo,#(lf)    EstadosTitulos.Descricao As Descricao_Estado,#(lf)    Titulos.CodTitulo#(lf)From#(lf)    Programas Inner Join#(lf)    Fichas_Videotape On Fichas_Videotape.numero_processo = Programas.numero_processo Inner Join#(lf)    Titulos On Titulos.Numero_processo = Fichas_Videotape.numero_processo#(lf)            And Titulos.NumEpisodio = Fichas_Videotape.episodio Inner Join#(lf)    Consumos On Consumos.id_titulo = Titulos.CodTitulo Inner Join#(lf)    Dias_Lms On Dias_Lms.Data = Consumos.data#(lf)            And Dias_Lms.Cod_Canal = Consumos.cod_canal Inner Join#(lf)    Faixa On Consumos.hora Between Faixa.Hora_Inicio And Faixa.Hora_Fim#(lf)            Or Consumos.hora + Consumos.duracao - 1 Between Faixa.Hora_Inicio And Faixa.Hora_Fim#(lf)            Or Faixa.Hora_Inicio Between Consumos.hora And Consumos.hora + Consumos.duracao - 1 Inner Join#(lf)    EstadosTitulos On Titulos.Estado = EstadosTitulos.CodEstado#(lf)Where#(lf)    Dias_Lms.Estado In (17, 18, 20) And#(lf)    Year(Consumos.data) >= Year(GetDate()) - 3#(lf)Order By#(lf)    DATA,#(lf)    NumeroProcesso,#(lf)    Episodio#(lf)"]),
+				    #"Filtered Rows" = Table.SelectRows(Origem, each ([Descricao_Estado] <> "Anulado")),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"DATA", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_QueryRelationships = {"columnCount":20,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Custos/Origem.{CodCanal,0}","Section1/Custos/Origem.{Data,1}","Section1/Custos/Origem.{ProgramaHoraSec,2}","Section1/Custos/Origem.{ProgramaHora,3}","Section1/Custos/Origem.{ProgramaDuracaoSec,4}","Section1/Custos/Origem.{ProgramaDuracao,5}","Section1/Custos/Origem.{NumeroProcesso,6}","Section1/Custos/Origem.{Episodio,7}","Section1/Custos/Origem.{TotalValorDireitos,8}","Section1/Custos/Origem.{TotalValorOutrosCustos,9}","Section1/Custos/Origem.{FaixaDuracaoSec,10}","Section1/Custos/Origem.{FaixaDuracao,11}","Section1/Custos/Origem.{FaixaValorDireitos,12}","Section1/Custos/Origem.{FaixaValorOutrosCustos,13}","Section1/Custos/Origem.{FaixaHoraInicioSec,14}","Section1/Custos/Origem.{FaixaHoraFimSec,15}","Section1/Custos/Origem.{FaixaHoraInicio,16}","Section1/Custos/Origem.{FaixaHoraFim,17}","Section1/Custos/Origem.{Faixa,18}","Section1/Custos/Origem.{Tipo,19}"],"ColumnCount":20,"KeyColumnNames":[],"ColumnIdentities":["Section1/Custos/Origem.{CodCanal,0}","Section1/Custos/Origem.{Data,1}","Section1/Custos/Origem.{ProgramaHoraSec,2}","Section1/Custos/Origem.{ProgramaHora,3}","Section1/Custos/Origem.{ProgramaDuracaoSec,4}","Section1/Custos/Origem.{ProgramaDuracao,5}","Section1/Custos/Origem.{NumeroProcesso,6}","Section1/Custos/Origem.{Episodio,7}","Section1/Custos/Origem.{TotalValorDireitos,8}","Section1/Custos/Origem.{TotalValorOutrosCustos,9}","Section1/Custos/Origem.{FaixaDuracaoSec,10}","Section1/Custos/Origem.{FaixaDuracao,11}","Section1/Custos/Origem.{FaixaValorDireitos,12}","Section1/Custos/Origem.{FaixaValorOutrosCustos,13}","Section1/Custos/Origem.{FaixaHoraInicioSec,14}","Section1/Custos/Origem.{FaixaHoraFimSec,15}","Section1/Custos/Origem.{FaixaHoraInicio,16}","Section1/Custos/Origem.{FaixaHoraFim,17}","Section1/Custos/Origem.{Faixa,18}","Section1/Custos/Origem.{Tipo,19}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

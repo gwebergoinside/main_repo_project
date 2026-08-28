@@ -1,0 +1,58 @@
+table DateTime
+	lineageTag: 969150d7-6373-476a-b6f4-3fa53e1bcfee
+
+	column Date
+		formatString: General Date
+		lineageTag: 7953a010-3e81-4a15-8c30-6c7e6c8834b3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 08408c91-115a-4b19-8670-aa04867df496
+			defaultHierarchy: LocalDateTable_efc94554-5830-40ec-b055-50d11e5e3cd1.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Time
+		formatString: Long Time
+		lineageTag: 488a6404-3e87-42cc-8165-9fdfb6998960
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Time]
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column DateTime
+		formatString: General Date
+		lineageTag: f3542842-07c1-433e-b8d5-0494bf42d526
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DateTime]
+
+		variation Variation
+			isDefault
+			relationship: cda984a3-02bb-4423-be46-7de857327fd7
+			defaultHierarchy: LocalDateTable_fa8feffa-2574-4b5c-9d54-ebf98ff5a791.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DateTime-db4ead1f-3391-4396-9823-351c29f59a96 = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS (
+				    CROSSJOIN (
+				        CALENDAR(DATE(2022,08,01),DATE(2022,08,31)),
+				        SELECTCOLUMNS(GENERATESERIES(0,23,1),"Time",TIME([Value],0,0))
+				    ),
+				    "DateTime", [Date] + [Time]
+				)
+
+	annotation PBI_Id = f1834ba4fd584a18b5ccbde711b77da0
+

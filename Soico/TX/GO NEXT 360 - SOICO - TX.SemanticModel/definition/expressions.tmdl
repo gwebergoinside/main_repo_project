@@ -1,0 +1,35 @@
+/// Enter the Server of the GMedia
+expression BD_Budget = "SOICO_GMediaAD" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 8d95f09a-0f2d-4766-b0f9-bb5cb240b86a
+	queryGroup: LinkServer
+
+	annotation PBI_ResultType = Text
+
+/// Enter the Server of the GMedia
+expression Org = "gmedia-saas-sql.chwk3oqgzb7x.eu-west-1.rds.amazonaws.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: c8d9e3ce-9497-487c-8296-037f857fd550
+	queryGroup: LinkServer
+
+	annotation PBI_ResultType = Text
+
+/// Enter the Server of the GMedia
+expression BD = "SOICO_GMediaTX" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: f9bf9141-2a5c-46c9-a1d2-468e31045a1f
+	queryGroup: LinkServer
+
+	annotation PBI_ResultType = Text
+
+expression 'lista de imagem' =
+		let
+		    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Logo", "Cliente "}),
+		    Nome = #"Removed Columns"[Nome]
+		in
+		    Nome
+	lineageTag: 475bea3d-95c2-45c4-976d-40baa3d1aac2
+	queryGroup: LinkServer
+

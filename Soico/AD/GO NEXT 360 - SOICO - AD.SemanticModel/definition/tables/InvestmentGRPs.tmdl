@@ -1,0 +1,339 @@
+table InvestmentGRPs
+	lineageTag: f4f3dcac-f04e-4699-9697-803d703823c8
+
+	measure Investimento =
+			
+			SUM([Investimento_apoio])/DISTINCTCOUNT(InvestmentGRPs[IdTarget])
+			--SUM([InvestimentoTemp])/DISTINCTCOUNT(InvestmentGRPs[IdTarget])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 33e6472f-6a85-476a-b2e9-a8c0da56d131
+
+	measure Count_grupo_Canal =
+			
+			--CALCULATE(DISTINCTCOUNT(InvestmentGRPs[Grupo Canais]),ALLEXCEPT(InvestmentGRPs,InvestmentGRPs[IdAdvertiser],InvestmentGRPs[Ano],InvestmentGRPs[Mês]),InvestmentGRPs[Grupo Canais]<>blank(),InvestmentGRPs[InvestimentoTemp]>0)
+			
+			CALCULATE(DISTINCTCOUNT(InvestmentGRPs[Grupo Canais]),ALLEXCEPT(InvestmentGRPs,Advertisers[Anunciante],Calendario[Ano],Calendario[Mes]),filter(InvestmentGRPs,InvestmentGRPs[InvestimentoTemp]>0))
+			--CALCULATE([SumInvestimento],ALLEXCEPT(InvestmentGRPs,Advertisers[Anunciante],Calendario[Ano],Calendario[Mes]))
+		formatString: 0
+		lineageTag: 7e2b7d0b-6547-4225-bfb6-9be9f67e3274
+
+	measure 'Investimento LY %' =
+			
+			VAR _LY = CALCULATE( [Investimento], SAMEPERIODLASTYEAR( Calendario[Date] ) )
+			RETURN
+			DIVIDE( [Investimento]-_LY, _LY )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 70903eb5-3d88-476c-a847-1ce91aa33b31
+
+	measure Ultimo_Carregamento = "Último Carregamento: "& CALCULATE( Format(Max(InvestmentGRPs[Data]), "dd/mm/yyyy", "pt-PT"), ALL( InvestmentGRPs ) )
+		lineageTag: 4c92acd8-8d58-4294-92f3-45105640f379
+
+	column IdAdvertiser
+		dataType: int64
+		formatString: 0
+		lineageTag: 91ad64e0-a5da-4e4a-80ab-7a4f913947b7
+		summarizeBy: none
+		sourceColumn: IdAdvertiser
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdSector
+		dataType: int64
+		formatString: 0
+		lineageTag: e881d827-523f-4139-b937-c8d98a1132c3
+		summarizeBy: none
+		sourceColumn: IdSector
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdMediaAgency
+		dataType: int64
+		formatString: 0
+		lineageTag: bdeb78e1-57c5-4ba7-a168-1a65f24357db
+		summarizeBy: none
+		sourceColumn: IdMediaAgency
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdChannel
+		dataType: int64
+		formatString: 0
+		lineageTag: f481d42a-8522-4694-bb87-3cb667b98306
+		summarizeBy: none
+		sourceColumn: IdChannel
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarget
+		dataType: int64
+		formatString: 0
+		lineageTag: 6d8e9851-323d-4af2-8957-177f043908aa
+		summarizeBy: none
+		sourceColumn: IdTarget
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo =
+			
+			SWITCH(
+			    TRUE()
+			    , [Horario_Minutos] >= 390  && [Horario_Minutos] < 480,  "Manhã 1"
+			    ,[Horario_Minutos] >= 480  && [Horario_Minutos] < 720,  "Manhã 2"
+			    ,[Horario_Minutos] >= 720  && [Horario_Minutos] < 870,  "Almoço"
+			    ,[Horario_Minutos] >= 870  && [Horario_Minutos] < 1080, "Tarde"
+			    ,[Horario_Minutos] >= 1080 && [Horario_Minutos] < 1200, "Acesso Prime"
+			    ,[Horario_Minutos] >= 1200 && [Horario_Minutos] < 1350, "Prime Time 1"
+			    ,[Horario_Minutos] >= 1350 && [Horario_Minutos] < 1440, "Prime Time 2"
+			    ,[Horario_Minutos] >= 1440 && [Horario_Minutos] < 1590, "Late Night"
+			    ,[Horario_Minutos] >= 1590 || [Horario_Minutos] < 390 , "Madrugada"
+			    ,"Outro"
+			)
+			//         if([Horario_Minutos]>=0 && [Hora]<8,"Manhã 1",
+			//         if([Hora]>=8 && [Hora]<12,"Manhã 2",
+			//         if([Hora]>=12 && [Hora]<=14,"Almoço", --14:29
+			//         if([Hora]>=14 && [Hora]<18,"Tarde",--14:30
+			//         if([Hora]>18 && [Hora]<20,"Acesso Prime",
+			//         if([Hora]>=20 && [Hora]<23,"Prime time 1",--22:29
+			//         if([Hora]>=24 && [Hora]<=26,"Prime time 2", --22:30 26:29
+			//         if([Hora]>24 && [Hora]<=26,"Late Night", --26:30
+			//         if([Hora]>26 && [Hora]<=6,"Madrugada" --
+			// )))))))))
+		lineageTag: 45f3d48b-8825-43cf-b57d-32d4b2b87d55
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora = LEFT(InvestmentGRPs[HoraInicio],2)
+		dataType: int64
+		formatString: 0
+		lineageTag: 48dbf898-dbaf-47b7-93cf-2c7c9d17432b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grupo Canais' =
+			
+			SWITCH(
+			    TRUE()
+			    ,InvestmentGRPs[IdChannel] = 15, "TVI"
+			    ,RELATED(GrupoCanais[Agrupador])
+			)
+		lineageTag: 3ecbbf0d-99c9-453e-9929-b65822eae827
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chave = RELATED(Channels[Canal])&InvestmentGRPs[Data]&InvestmentGRPs[HoraInicio]
+		lineageTag: 6830a4bd-5b4d-43f2-8a14-6121cba3aa80
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProgram
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 04574440-2094-4501-be14-5491138bb793
+		summarizeBy: none
+		sourceColumn: IdProgram
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdBrand
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 33a5f879-4494-4781-a88f-fe622ed24ff4
+		summarizeBy: none
+		sourceColumn: IdBrand
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAnuncianteAD =
+			
+			VAR _1 = --iferror(LOOKUPVALUE( 'Ligacao Inv-Map'[IdAnunciante],'Ligacao Inv-Map'[Anunciante], InvestmentGRPs[Anunciante] ),InvestmentGRPs[IdAdvertiser] + 99999999999999999)
+			CALCULATE (
+			    FIRSTNONBLANK ( 'Ligacao Inv-Map'[IdAnunciante], 1 ),
+			    FILTER ( ALL ( 'Ligacao Inv-Map' ), 'Ligacao Inv-Map'[Anunciante] = InvestmentGRPs[Anunciante] )
+			)
+			RETURN
+			IF.EAGER( _1 = BLANK(), InvestmentGRPs[IdAdvertiser] + 99999999999999999, _1 )
+		formatString: 0
+		lineageTag: 7c321683-6453-49d0-8e09-69e86ad02027
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Anunciante = LOOKUPVALUE( Advertisers[Anunciante],Advertisers[Id], InvestmentGRPs[IdAdvertiser] )
+		lineageTag: 80e12ae2-4b11-44d8-83f5-37067f6bb017
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Horario_Minutos = ```
+			
+			VAR Hours = 'InvestmentGRPs'[Hora]*60 --INT ( Duration / 3600)
+			VAR Minutes = FORMAT( MID( InvestmentGRPs[HoraInicio],4,2), "General Number")  -- INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds = FORMAT( RIGHT(InvestmentGRPs[HoraInicio],2), "General Number")/60  --'InvestmentGRPs'[Segundos] /60 --    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			
+			RETURN
+			Hours+ Minutes + Seconds
+			```
+		lineageTag: 68ddc980-fc62-419d-93e2-e6f255f6f8b1
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Periodo_Ordem =
+			
+			SWITCH(
+			    TRUE()
+			    ,InvestmentGRPs[Periodo] = "Manhã 1",  1
+			    ,InvestmentGRPs[Periodo] = "Manhã 2",2
+			    ,InvestmentGRPs[Periodo] = "Almoço",3
+			    ,InvestmentGRPs[Periodo] = "Tarde",4
+			    ,InvestmentGRPs[Periodo] = "Acesso Prime",5
+			    ,InvestmentGRPs[Periodo] = "Prime Time 1",6
+			    ,InvestmentGRPs[Periodo] = "Prime Time 2",7
+			    ,InvestmentGRPs[Periodo] = "Late Night",8
+			    ,InvestmentGRPs[Periodo] = "Madrugada",9
+			    ,InvestmentGRPs[Periodo] = "Outro",10
+			)
+		formatString: 0
+		lineageTag: 4b230e20-a624-4868-a916-478611f6b762
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Flag_Exclusivo = CALCULATE(DISTINCTCOUNT(InvestmentGRPs[Grupo Canais]),ALLEXCEPT(InvestmentGRPs,InvestmentGRPs[IdAdvertiser],InvestmentGRPs[Ano],InvestmentGRPs[Mês]),InvestmentGRPs[Grupo Canais]<>blank(),InvestmentGRPs[InvestimentoTemp]>0)
+		formatString: 0
+		lineageTag: c8c0412b-0691-459c-ae1e-bfb1aaf7a46a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountCanais = CALCULATE( DISTINCTCOUNT( InvestmentGRPs[IdChannel] ), ALLEXCEPT( InvestmentGRPs, InvestmentGRPs[Ano], InvestmentGRPs[Mês], InvestmentGRPs[IdAdvertiser] ) )
+		formatString: 0
+		lineageTag: 787ca70f-ec93-495c-8841-3c616b36bd4f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Investimento_apoio = ```
+			
+			VAR selected = InvestmentGRPs[Grupo Canais]
+			VAR soma = InvestmentGRPs[InvestimentoTemp]
+			VAR Result = 
+			SWITCH (
+			    selected,
+			    --20887, soma - (soma * [Valor Desconto %] ),
+			    "TVI", soma - (soma * descontotvi ),
+				"RTP", soma - (soma * descontortp ),
+				"CMTV", soma - (soma * descontocmtv ),
+				"SIC", soma - (soma * descontosic ),
+			    "Cartoon Network", soma - (soma * descontocartoonnetwork ),
+			    soma
+			    --,soma - (soma * 0.94 )
+			)
+			RETURN
+			Result
+			```
+		lineageTag: 8af39b2a-c5fe-43d7-80f7-8804a8f3ea65
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: b3a5c0e4-ca20-4f4b-9eb6-b81215efe92a
+		summarizeBy: sum
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1a8474c2-cbfb-4bd3-ae74-4cd5b7951e4f
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Duracao
+		dataType: int64
+		formatString: 0
+		lineageTag: 98813bb7-5c45-4f50-8e92-dd8b952609a4
+		summarizeBy: sum
+		sourceColumn: Duracao
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim
+		dataType: string
+		lineageTag: d7b39dda-b265-438b-ae3d-d6c286261847
+		summarizeBy: none
+		sourceColumn: HoraFim
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio
+		dataType: string
+		lineageTag: a9265783-b97d-4e8c-8109-c01ca5dea6ee
+		summarizeBy: none
+		sourceColumn: HoraInicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column InvestimentoTemp
+		dataType: double
+		lineageTag: 467b158a-b53a-47fc-aa84-8f01a9bbcbf8
+		summarizeBy: sum
+		sourceColumn: InvestimentoTemp
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Mês
+		dataType: int64
+		formatString: 0
+		lineageTag: 19099fbf-4996-41e3-90db-e11ff192e992
+		summarizeBy: sum
+		sourceColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: double
+		lineageTag: 2b67ee15-d553-42e3-ba36-dccc806797d1
+		summarizeBy: sum
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition InvestmentGRPs-beedf99d-465d-4c58-9d14-486feffc7527 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Ano = _t, Data = _t, Duracao = _t, HoraFim = _t, HoraInicio = _t, IdAdvertiser = _t, IdBrand = _t, IdChannel = _t, IdMediaAgency = _t, IdProgram = _t, IdSector = _t, IdTarget = _t, InvestimentoTemp = _t, Mês = _t, Valor = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Ano", Int64.Type}, {"Data", type date}, {"Duracao", Int64.Type}, {"IdAdvertiser", Int64.Type}, {"IdBrand", Int64.Type}, {"IdChannel", Int64.Type}, {"IdMediaAgency", Int64.Type}, {"IdProgram", Int64.Type}, {"IdSector", Int64.Type}, {"IdTarget", Int64.Type}, {"InvestimentoTemp", type number}, {"Mês", Int64.Type}, {"Valor", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

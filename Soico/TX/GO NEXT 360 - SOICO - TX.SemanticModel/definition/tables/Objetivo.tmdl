@@ -1,0 +1,113 @@
+table Objetivo
+	lineageTag: 8348e741-91c3-4d64-97ca-2b477a405f87
+
+	column utiId
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a912250-348a-4534-a445-b7bc6e49fd95
+		summarizeBy: count
+		sourceColumn: utiId
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: b0212f3c-9bcb-40fb-bc53-546756ac97b2
+		summarizeBy: count
+		sourceColumn: tipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 208dcbfa-e1ed-4c69-a697-f483cdfeed64
+		summarizeBy: sum
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column negObjTipo
+		dataType: string
+		lineageTag: 573c571c-501d-4f6d-92ba-cfdfc1dd3ec5
+		summarizeBy: none
+		sourceColumn: negObjTipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column negObjValor
+		dataType: double
+		lineageTag: ae616837-b317-4c26-9ca9-d590ad9359e6
+		summarizeBy: sum
+		sourceColumn: negObjValor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column negObjValorBruto
+		dataType: double
+		lineageTag: bcbe95af-cb6c-435f-bf50-7fda69150606
+		summarizeBy: sum
+		sourceColumn: negObjValorBruto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column negObjMes
+		dataType: int64
+		formatString: 0
+		lineageTag: a5a2d2a8-addf-48d9-a8ae-65ca47f90c79
+		summarizeBy: sum
+		sourceColumn: negObjMes
+
+		annotation SummarizationSetBy = Automatic
+
+	column negObjAno
+		dataType: int64
+		formatString: 0
+		lineageTag: a4805f5c-fb00-4ef1-bf15-552cfde73355
+		summarizeBy: sum
+		sourceColumn: negObjAno
+
+		annotation SummarizationSetBy = Automatic
+
+	column perId
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c886136-0e4e-42da-b45e-e6e226acc9a0
+		summarizeBy: count
+		sourceColumn: perId
+
+		annotation SummarizationSetBy = Automatic
+
+	column negObjId
+		dataType: int64
+		formatString: 0
+		lineageTag: 24a07bd3-69a6-4651-87e1-96937f20553f
+		summarizeBy: count
+		sourceColumn: negObjId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date = date(Objetivo[negObjAno],Objetivo[negObjMes],1)
+		formatString: General Date
+		lineageTag: 9828b0eb-db03-4a9b-841c-e3aefaed617c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Objetivo-b9dcde8a-d9d9-409d-9cfe-1030b579d662 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD_Budget, [Query="Select#(lf)    negociacaoObjectivos.utiId,#(lf)    negociacaoObjectivos.tipPubId,#(lf)    negociacaoObjectivos.canCodigo,#(lf)    negociacaoObjectivos.negObjTipo,#(lf)    negociacaoObjectivos.negObjValor,#(lf)    negociacaoObjectivos.negObjValorBruto,#(lf)    negociacaoObjectivos.negObjMes,#(lf)    negociacaoObjectivos.negObjAno,#(lf)    negociacaoObjectivos.perId,#(lf)    negociacaoObjectivos.negObjId#(lf)From#(lf)    negociacaoObjectivos#(lf)Where#(lf)    negociacaoObjectivos.negObjAno >= Year(GetDate()) - 3"])
+				in
+				    Origem
+
+	annotation PBI_QueryRelationships = {"columnCount":10,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Objetivo/Origem.{utiId,0}","Section1/Objetivo/Origem.{tipPubId,1}","Section1/Objetivo/Origem.{canCodigo,2}","Section1/Objetivo/Origem.{negObjTipo,3}","Section1/Objetivo/Origem.{negObjValor,4}","Section1/Objetivo/Origem.{negObjValorBruto,5}","Section1/Objetivo/Origem.{negObjMes,6}","Section1/Objetivo/Origem.{negObjAno,7}","Section1/Objetivo/Origem.{perId,8}","Section1/Objetivo/Origem.{negObjId,9}"],"ColumnCount":10,"KeyColumnNames":[],"ColumnIdentities":["Section1/Objetivo/Origem.{utiId,0}","Section1/Objetivo/Origem.{tipPubId,1}","Section1/Objetivo/Origem.{canCodigo,2}","Section1/Objetivo/Origem.{negObjTipo,3}","Section1/Objetivo/Origem.{negObjValor,4}","Section1/Objetivo/Origem.{negObjValorBruto,5}","Section1/Objetivo/Origem.{negObjMes,6}","Section1/Objetivo/Origem.{negObjAno,7}","Section1/Objetivo/Origem.{perId,8}","Section1/Objetivo/Origem.{negObjId,9}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

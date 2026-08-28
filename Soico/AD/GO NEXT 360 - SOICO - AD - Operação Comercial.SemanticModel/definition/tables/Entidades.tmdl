@@ -1,0 +1,31 @@
+table Entidades
+	lineageTag: 40bdc4ca-52c5-40a4-b658-6b383bb3a475
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 85358e51-929c-483b-95c5-9fa39f1ba186
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: de1657ba-bead-4fe4-b624-055719ff6b0e
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Entidades-b853a2c3-fa37-4fff-bd6e-060b8871e77b = m
+		mode: import
+		queryGroup: 'Operação Comercial'
+		source =
+				let
+				    Source = Sql.Database(Server, BD, [Query="Select#(lf)entId as Id,#(lf)entNome as Nome#(lf)from Entidades"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

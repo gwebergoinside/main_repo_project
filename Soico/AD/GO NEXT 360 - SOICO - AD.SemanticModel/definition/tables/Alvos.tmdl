@@ -1,0 +1,53 @@
+table Alvos
+	lineageTag: 83cf3fc8-4f8d-4ca3-a001-f9644a072f39
+
+	column cod_alvo
+		dataType: int64
+		formatString: 0
+		lineageTag: e2a5355d-9722-4c98-aa95-a81b35834305
+		summarizeBy: none
+		sourceColumn: cod_alvo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alvo
+		dataType: string
+		lineageTag: 7ce15d15-2c28-4b95-a282-f92234dc1a9f
+		summarizeBy: none
+		sourceColumn: Alvo
+
+		annotation SummarizationSetBy = Automatic
+
+	column AlvoPreenchido
+		dataType: string
+		lineageTag: a32082f8-179e-476c-a0a9-fffbec887e23
+		summarizeBy: none
+		sourceColumn: AlvoPreenchido
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Alvo Yummi'
+		dataType: string
+		lineageTag: c1da868e-8d66-4b6e-89b0-1ac85853e9c2
+		summarizeBy: none
+		sourceColumn: Alvo Yummi
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Alvos-8617abae-d9db-44c5-900d-87a5d2a612f9 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				Source = Sql.Database(ServerP, BD, [Query="Select#(lf) cod_alvo, abr_alvo, abr_alvo_old as [Alvo Yummi]#(lf)From#(lf) Aud_Alvos"]),
+				#"Renamed Columns" = Table.RenameColumns(Source,{{"abr_alvo", "Alvo"}}),
+				#"Coluna Condicional Adicionada" = Table.AddColumn(#"Renamed Columns", "Personalizado", each if [Alvo Yummi] = null or [Alvo Yummi] = "" then 0 else 1),
+				#"Colunas com Nome Mudado" = Table.RenameColumns(#"Coluna Condicional Adicionada",{{"Personalizado", "AlvoPreenchido"}}),
+				#"Personalizado Adicionado" = Table.AddColumn(#"Colunas com Nome Mudado", "AY", each if [Alvo Yummi] = null or [Alvo Yummi] = "" then [Alvo] else [Alvo Yummi]),
+				#"Colunas Removidas" = Table.RemoveColumns(#"Personalizado Adicionado",{"Alvo Yummi"}),
+				#"Colunas com Nome Mudado1" = Table.RenameColumns(#"Colunas Removidas",{{"AY", "Alvo Yummi"}})
+				in
+				#"Colunas com Nome Mudado1"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,31 @@
+table Plano_Auxiliar
+	lineageTag: a9e65e24-0a2c-45ba-bbf5-858292cdf957
+
+	column COD_CONTRATO_PLANO
+		formatString: 0
+		lineageTag: f0b5cab8-43e6-4461-b812-da0706ef04e0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Contratos[COD_CONTRATO_PLANO]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Plano_Auxiliar-713e560b-6267-48ea-beb8-1c0883541436 = calculated
+		mode: import
+		source = ```
+				
+				filter( 
+				    SUMMARIZE(Contratos
+				                    ,Contratos[cod_contrato_plano]
+				                    --,GMediaBI_Contratos[CodContrato]
+				                    --,"Parcela", MAX( PlanoContrato_Parcelas[Id_Parcela])
+				                )
+							, Contratos[cod_contrato_plano] <> BLANK()
+				             )
+				
+				
+				             --lookupvalue( MAX( PlanoContrato_Parcelas[Id_Parcela]),PlanoContrato_Parcelas[CodPlano], GMediaBI_Contratos[COD_CONTRATO_PLANO] )
+				```
+
+	annotation PBI_Id = e7d7f43e66c94e9abc5e99f7711bbe14
+

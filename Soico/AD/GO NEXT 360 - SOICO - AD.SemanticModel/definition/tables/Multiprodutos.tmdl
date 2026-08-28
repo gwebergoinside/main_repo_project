@@ -1,0 +1,198 @@
+table Multiprodutos
+	lineageTag: 1f36b69a-d5b3-4d96-8781-9ee62c0c5033
+
+	column encId
+		dataType: int64
+		formatString: 0
+		lineageTag: 4be75a94-108a-4ce8-9195-21e7a725bb5b
+		summarizeBy: count
+		sourceColumn: encId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordpubcodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 306522a0-6c0a-4ea6-bc6a-3a5a11bf5163
+		summarizeBy: sum
+		sourceColumn: ordpubcodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column camanunciante
+		dataType: int64
+		formatString: 0
+		lineageTag: a5f401bd-8bdd-4895-bacf-a815cc66ed79
+		summarizeBy: none
+		sourceColumn: camanunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column camdistribuidor
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a1badbd-9f1f-4f9e-938e-6a71b89d1417
+		summarizeBy: none
+		sourceColumn: camdistribuidor
+
+		annotation SummarizationSetBy = Automatic
+
+	column camvendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ea83b34-88c8-48ef-b85b-f372c96defe8
+		summarizeBy: none
+		sourceColumn: camvendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column cancodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: d9f93a30-eea5-41d3-bf58-36e853daab2d
+		summarizeBy: none
+		sourceColumn: cancodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: dce54a29-65dd-486e-9b7e-32740be588a2
+		summarizeBy: count
+		sourceColumn: tipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8e7c9f1f-4512-43dc-8b67-b87b929d133f
+		summarizeBy: none
+		sourceColumn: dia
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column negPerTipo
+		dataType: string
+		lineageTag: 918305a4-bf53-4009-87ea-3ecc37c026ab
+		summarizeBy: none
+		sourceColumn: negPerTipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column bonus
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b4ea1b7-f695-42dd-b51b-13b05e8ae214
+		summarizeBy: sum
+		sourceColumn: bonus
+
+		annotation SummarizationSetBy = Automatic
+
+	column encValorTabNeg
+		dataType: double
+		lineageTag: 9dc4540e-892c-47b9-9304-b9fd0453c2a5
+		summarizeBy: sum
+		sourceColumn: encValorTabNeg
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorTaxaPosicao
+		dataType: double
+		lineageTag: a058745c-c521-4beb-941a-8e2743c305c2
+		summarizeBy: sum
+		sourceColumn: valorTaxaPosicao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorTaxaMultiproduto
+		dataType: double
+		lineageTag: 83958fc9-5552-4be6-a798-ae86cb6c65ae
+		summarizeBy: sum
+		sourceColumn: valorTaxaMultiproduto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorDescontoExibicao
+		dataType: double
+		lineageTag: 704f387d-9e63-4d3b-8d17-9e5ae25ba466
+		summarizeBy: sum
+		sourceColumn: valorDescontoExibicao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorDescontoCampanha
+		dataType: double
+		lineageTag: 98f74541-74f6-485e-ab8f-bb0e8e5e98ee
+		summarizeBy: sum
+		sourceColumn: valorDescontoCampanha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorDescontoOP
+		dataType: double
+		lineageTag: ca445789-b9ab-4bc4-984c-09f186b879e4
+		summarizeBy: sum
+		sourceColumn: valorDescontoOP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorCustoMinimo
+		dataType: double
+		lineageTag: 658a2178-1fdf-46d7-baf4-242ffa7282b8
+		summarizeBy: sum
+		sourceColumn: valorCustoMinimo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column encValorBonus
+		dataType: double
+		lineageTag: a1858ac1-122b-413a-8a28-405524fb728b
+		summarizeBy: sum
+		sourceColumn: encValorBonus
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column encValorPub
+		dataType: double
+		lineageTag: 2c19c4e0-0a97-448d-af88-fff7bef37828
+		summarizeBy: sum
+		sourceColumn: encValorPub
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Multiprodutos-ab7499bb-5ae5-4cc6-8301-85b32c939cbb = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="select#(lf)    encId#(lf)    ,ordpubcodigo#(lf)    ,camanunciante#(lf)    ,camdistribuidor#(lf)    ,camvendedor#(lf)    ,cancodigo#(lf)    ,tipPubId#(lf)    ,'01-' + RIGHT('0' + cast(ordpubmes as varchar),2) + '-' + cast(ordpubano as varchar) as dia#(lf)    ,negPerTipo#(lf)    ,bonus#(lf)    ,encValorTabNeg#(lf)    ,valorTaxaPosicao=ROUND((encValorTabNeg*(encTaxaPosicao/100)),4)#(lf)    ,valorTaxaMultiproduto=ROUND((ROUND((encValorTabNeg*(1+(encTaxaPosicao/100))),4))*(ordPubSpoTaxaMultiproduto/100),4)#(lf)    ,valorDescontoExibicao=ROUND(encValorTabNeg*(encDescontoExibicao/100),4)#(lf)    ,valorDescontoCampanha=ROUND(encValorTabNeg+ROUND((encValorTabNeg*(encTaxaPosicao/100)),4)+ROUND((ROUND((encValorTabNeg*(1+encTaxaPosicao/100)),4))*(ordPubSpoTaxaMultiproduto/100),4)-ROUND(encValorTabNeg*(encDescontoExibicao/100),4),4)*(camDescontoGlobal/100)#(lf)    ,valorDescontoOP=ROUND((ROUND(encValorTabNeg+ROUND((encValorTabNeg*(encTaxaPosicao/100)),4)+ROUND((ROUND((encValorTabNeg*(1+(encTaxaPosicao/100))),4))*(ordPubSpoTaxaMultiproduto/100),4)-ROUND(encValorTabNeg*(encDescontoExibicao/100),4),4)-ROUND(ROUND( encValorTabNeg +ROUND((encValorTabNeg*(encTaxaPosicao/100)),4) +ROUND((ROUND((encValorTabNeg*(1+encTaxaPosicao/100)),4))*(ordPubSpoTaxaMultiproduto/100),4) -ROUND(encValorTabNeg*(encDescontoExibicao/100),4),4)*(camDescontoGlobal/100),4))*(ordPubDescontoGlobal/100),4)#(lf)    ,valorCustoMinimo=CASE WHEN parValMinId<>0 THEN encValorPub+encValorBonus-ROUND(ROUND(encValorTabNeg+ROUND((encValorTabNeg*(encTaxaPosicao/100)),4)+ROUND((ROUND((encValorTabNeg*(1+(encTaxaPosicao/100))),4))*(ordPubSpoTaxaMultiproduto/100),4)-ROUND(encValorTabNeg*(encDescontoExibicao/100),4),4)-ROUND(ROUND(encValorTabNeg+ROUND((encValorTabNeg*(encTaxaPosicao/100)),4)+ROUND((ROUND((encValorTabNeg*(1+encTaxaPosicao/100)),4))*(ordPubSpoTaxaMultiproduto/100),4)-ROUND(encValorTabNeg*(encDescontoExibicao/100),4),4)*(camDescontoGlobal/100),4)-ROUND((ROUND(encValorTabNeg+ROUND((encValorTabNeg*(encTaxaPosicao/100)),4)+ROUND((ROUND((encValorTabNeg*(1+(encTaxaPosicao/100))),4))*(ordPubSpoTaxaMultiproduto/100),4)-ROUND(encValorTabNeg*(encDescontoExibicao/100),4),4)-ROUND(ROUND(encValorTabNeg+ROUND((encValorTabNeg*(encTaxaPosicao/100)),4)+ROUND((ROUND((encValorTabNeg*(1+encTaxaPosicao/100)),4))*(ordPubSpoTaxaMultiproduto/100),4)-ROUND(encValorTabNeg*(encDescontoExibicao/100),4),4)*(camDescontoGlobal/100),4))*(ordPubDescontoGlobal/100),4),2) ELSE 0 END#(lf)    ,encValorBonus#(lf)    ,encValorPub#(lf)from (#(lf)    select#(lf)    encomendas.encId,#(lf)    encomendas.ordpubcodigo,#(lf)    campanhas.camanunciante,#(lf)    campanhas.camdistribuidor,#(lf)    campanhas.camvendedor,#(lf)    ordempub.ordpubano,#(lf)    ordempub.ordpubmes,#(lf)    ordempub.cancodigo,#(lf)    ordempub.tipPubId,#(lf)    isnull(bonus.flgValorizacao,1) as bonus,#(lf)    encomendas.parValMinId,#(lf)    globalParam.valor,#(lf)    CASE ordempub.ordpubflagfixo WHEN 2 THEN ISNULL(negPeriodos.negPerTipo,'') WHEN 1 then 'V' ELSE 'D' END as negPerTipo,#(lf)    encomendas.encValorTab,#(lf)    ROUND(#(lf)    CASE#(lf)    CASE ordempub.ordpubflagfixo WHEN 2 THEN ISNULL(negPeriodos.negPerTipo,'') WHEN 1 then 'V' ELSE 'D' END#(lf)    WHEN 'F' THEN#(lf)    encomendas.encValorTab#(lf)    *encomendasAudiencias.encIndice#(lf)    *encomendasAudiencias.encDescontoSup#(lf)    *encomendasAudiencias.encCusto_Indice_Rating#(lf)    WHEN 'G' THEN#(lf)    encomendasAudiencias.encRating#(lf)    *encomendasAudiencias.encIndice#(lf)    *encomendasAudiencias.encDescontoSup#(lf)    *encomendasAudiencias.encCusto_Indice_Rating#(lf)    *encomendas.encIndiceEq#(lf)    WHEN 'T' THEN#(lf)    encomendasAudiencias.encDescontoSup#(lf)    *encomendasAudiencias.encCusto_Indice_Rating#(lf)    *encomendas.encIndiceEq#(lf)    ELSE#(lf)    encomendas.encValorTab#(lf)    END#(lf)    ,2)#(lf)    as encValorTabNeg,#(lf)    encomendas.encValorBonus,#(lf)    encomendas.encValorPub,#(lf)    isnull(campanhas.camDescontoGlobal,0) as camDescontoGlobal,#(lf)    isnull(ordempub.ordPubDescontoGlobal,0) as ordPubDescontoGlobal,#(lf)    isnull(encomendas.encTaxaPosicao,0) as encTaxaPosicao,#(lf)    isnull(encomendas.encDescontoExibicao,0) as encDescontoExibicao,#(lf)    isnull(ordempubspots.ordPubSpoTaxaMultiproduto,isnull(spots.spoTaxaMultiproduto,0)) as ordPubSpoTaxaMultiproduto,#(lf)    isnull(encomendas.encIndiceEq,0) as encIndiceEq,#(lf)    isnull(encomendasAudiencias.encRating,0) as encRating,#(lf)    isnull(encomendasAudiencias.encDescontoSup,0) as encDescontoSup,#(lf)    isnull(encomendasAudiencias.encIndice,0) as encIndice,#(lf)    isnull(encomendasAudiencias.encCusto_Indice_Rating, 0) as encCusto_Indice_Rating#(lf)    from encomendas#(lf)    join ordempub on ordempub.ordpubcodigo=encomendas.ordpubcodigo#(lf)    join ordempubspots on#(lf)        ordempubspots.ordpubcodigo=encomendas.ordpubcodigo#(lf)        and ordempubspots.ordpubsponumero=encomendas.ordpubsponumero#(lf)    join campanhas on campanhas.camId=ordempub.camid#(lf)    join globalParam on globalParam.Chave='FormulaCalculoPublicidade'#(lf)    left outer join spots on spots.spoid=ordempubspots.spoid#(lf)    left outer join bonus on bonus.bonId=encomendas.bonId#(lf)    left outer join negPeriodos on negPeriodos.negPerId=ordempub.ordpubnegociacao#(lf)    left outer join encomendasAudiencias on encomendasAudiencias.encId=encomendas.encId#(lf)    Union all#(lf)    select#(lf)    encomendas.encId,#(lf)    encomendas.ordpubcodigo,#(lf)    campanhas.camanunciante,#(lf)    campanhas.camdistribuidor,#(lf)    campanhas.camvendedor,#(lf)    ordempub.ordpubano,#(lf)    ordempub.ordpubmes,#(lf)    ordempub.cancodigo,#(lf)    ordempub.tipPubId,#(lf)    isnull(bonus.flgValorizacao,1) as bonus,#(lf)    encomendas.parValMinId,#(lf)    globalParam.valor,#(lf)    CASE ordempub.ordpubflagfixo WHEN 2 THEN ISNULL(negPeriodos.negPerTipo,'') WHEN 1 then 'V' ELSE 'D' END as negPerTipo,#(lf)    encomendas.encValorTab,#(lf)    ROUND(#(lf)    CASE#(lf)    CASE ordempub.ordpubflagfixo WHEN 2 THEN ISNULL(negPeriodos.negPerTipo,'') WHEN 1 then 'V' ELSE 'D' END#(lf)    WHEN 'F' THEN#(lf)    encomendas.encValorTab#(lf)    *encomendasAudiencias.encIndice#(lf)    *encomendasAudiencias.encDescontoSup#(lf)    *encomendasAudiencias.encCusto_Indice_Rating#(lf)    WHEN 'G' THEN#(lf)    encomendasAudiencias.encRating#(lf)    *encomendasAudiencias.encIndice#(lf)    *encomendasAudiencias.encDescontoSup#(lf)    *encomendasAudiencias.encCusto_Indice_Rating#(lf)    *encomendas.encIndiceEq#(lf)    WHEN 'T' THEN#(lf)    encomendasAudiencias.encDescontoSup#(lf)    *encomendasAudiencias.encCusto_Indice_Rating#(lf)    *encomendas.encIndiceEq#(lf)    ELSE#(lf)    encomendas.encValorTab#(lf)    END#(lf)    ,2)#(lf)    as encValorTabNeg,#(lf)    encomendas.encValorBonus,#(lf)    encomendas.encValorPub,#(lf)    isnull(campanhas.camDescontoGlobal,0) as camDescontoGlobal,#(lf)    isnull(ordempub.ordPubDescontoGlobal,0) as ordPubDescontoGlobal,#(lf)    isnull(encomendas.encTaxaPosicao,0) as encTaxaPosicao,#(lf)    isnull(encomendas.encDescontoExibicao,0) as encDescontoExibicao,#(lf)    isnull(ordempubspots.ordPubSpoTaxaMultiproduto,isnull(spots.spoTaxaMultiproduto,0)) as ordPubSpoTaxaMultiproduto,#(lf)    isnull(encomendas.encIndiceEq,0) as encIndiceEq,#(lf)    isnull(encomendasAudiencias.encRating,0) as encRating,#(lf)    isnull(encomendasAudiencias.encDescontoSup,0) as encDescontoSup,#(lf)    isnull(encomendasAudiencias.encIndice,0) as encIndice,#(lf)    isnull(encomendasAudiencias.encCusto_Indice_Rating, 0) as encCusto_Indice_Rating#(lf)    from encomendasExibidas encomendas#(lf)    join ordempub on ordempub.ordpubcodigo=encomendas.ordpubcodigo#(lf)    join ordempubspots on#(lf)        ordempubspots.ordpubcodigo=encomendas.ordpubcodigo#(lf)        and ordempubspots.ordpubsponumero=encomendas.ordpubsponumero#(lf)    join campanhas on campanhas.camId=ordempub.camid#(lf)    join globalParam on globalParam.Chave='FormulaCalculoPublicidade'#(lf)    left outer join spots on spots.spoid=ordempubspots.spoid#(lf)    left outer join bonus on bonus.bonId=encomendas.bonId#(lf)    left outer join negPeriodos on negPeriodos.negPerId=ordempub.ordpubnegociacao#(lf)    left outer join encomendasAudiencias on encomendasAudiencias.encId=encomendas.encId#(lf)) x#(lf)where 1=1#(lf)    and ordpubano>= year(getdate())-4"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"dia", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

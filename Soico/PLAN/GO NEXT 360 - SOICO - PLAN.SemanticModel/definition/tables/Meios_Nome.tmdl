@@ -1,0 +1,84 @@
+table Meios_Nome
+	lineageTag: 571692c8-de6a-43ba-bb0d-1be100033f63
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6fdcb547-6d55-4ca9-9660-78f853f4e5d9
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: 25a10184-2cc9-4469-9eab-1a848557de9a
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column AtividadeNome
+		dataType: string
+		lineageTag: c56bb086-43d0-4e56-8430-4cafd26c77db
+		summarizeBy: none
+		sourceColumn: AtividadeNome
+
+		annotation SummarizationSetBy = Automatic
+
+	column AreasNome
+		dataType: string
+		lineageTag: 4de4b505-fe7c-4a91-84b3-1e70b5028a61
+		summarizeBy: none
+		sourceColumn: AreasNome
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoNome
+		dataType: string
+		lineageTag: 83522f81-2db3-4c87-9882-0c216ee9db43
+		summarizeBy: none
+		sourceColumn: TipoNome
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCentroCusto
+		dataType: int64
+		formatString: 0
+		lineageTag: 568b66a3-0498-469d-b349-52505d271941
+		summarizeBy: sum
+		sourceColumn: IdCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column RLS
+		dataType: string
+		lineageTag: 3bc8b910-9216-4ef7-8995-b41cf8d8b636
+		summarizeBy: none
+		sourceColumn: RLS
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAreasMeios
+		dataType: int64
+		formatString: 0
+		lineageTag: 85ebdfae-bd68-4cd8-a5d0-e8e326ee6ba8
+		summarizeBy: sum
+		sourceColumn: IdAreasMeios
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Meios_Nome-c4ac6edd-c539-4ed1-a904-eb3aac50cdc5 = m
+		mode: import
+		queryGroup: Meios
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    Meios.Id,#(lf)    Meios.Nome,#(lf)    Actividades_Meios.Nome As AtividadeNome,#(lf)    Areas_Meios.Nome As AreasNome,#(lf)    Tipos_Meio.Nome As TipoNome,#(lf)    Areas_Meios.Id As IdAreasMeios#(lf)From#(lf)    Meios Left Join#(lf)    Actividades_Meios On Meios.IdActividadeMeio = Actividades_Meios.Id Left Join#(lf)    Areas_Meios On Meios.IdAreaMeio = Areas_Meios.Id Left Join#(lf)    Tipos_Meio On Meios.IdTipoMeio = Tipos_Meio.Id"]),
+				    #"Merged Queries" = Table.NestedJoin(Origem, {"Id"}, CCMeio, {"IdMeio"}, "CCMeio", JoinKind.LeftOuter),
+				    #"Expanded CCMeio" = Table.ExpandTableColumn(#"Merged Queries", "CCMeio", {"IdCentroCusto"}, {"IdCentroCusto"}),
+				    #"Added Custom" = Table.AddColumn(#"Expanded CCMeio", "RLS", each "*")
+				in
+				    #"Added Custom"
+
+	annotation PBI_ResultType = Table
+

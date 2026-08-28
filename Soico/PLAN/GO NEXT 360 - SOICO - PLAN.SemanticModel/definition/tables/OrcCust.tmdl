@@ -1,0 +1,22 @@
+table OrcCust
+	lineageTag: a81eea2e-d1ee-4938-a40d-87588b2e8214
+
+	column Tipo
+		lineageTag: 6f1b2fa2-89ed-45a8-ba7b-fa7c4e15434a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tipo]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrcCust-81324231-bc20-4004-ae21-a6a48df016ee = calculated
+		mode: import
+		source = ```
+				DATATABLE("Tipo",STRING, 
+				    {
+				        { "Custo" },
+				        { "Orçamento" }
+				    }
+				)
+				```
+

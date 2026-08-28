@@ -1,0 +1,19 @@
+/// Período de atualização
+table DuracaoBase
+	lineageTag: 9510cf93-2012-401a-84d3-bc2790cfb701
+
+	column DuracaoBase
+		dataType: string
+		lineageTag: f3530f55-c355-489f-b649-0a7cab6e8f83
+		summarizeBy: none
+		sourceColumn: DuracaoBase
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DuracaoBase-b1930ce1-0f0a-4c93-92f5-aed07ae14bee = m
+		mode: import
+		queryGroup: BD
+		source = "20" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,36 @@
+table Faixa
+	isHidden
+	lineageTag: 9271f0ee-0172-4798-8cf5-2fed5ca1d65b
+
+	column Faixa
+		isHidden
+		lineageTag: a8c7070b-4c00-44ff-815a-5f6d6e4749ec
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Custos[Faixa]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixas
+		isHidden
+		lineageTag: 0a41ac04-ee66-421b-a577-9fedc2916875
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Faixas]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Faixa-7fbb80ec-34c9-4033-82dd-967ec174241d = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				UNION(
+				    SUMMARIZE( Custos, Custos[Faixa], "Faixas", Custos[Faixa] & ":00" ),
+				    SUMMARIZE( Consumos, Consumos[Faixa], "Faixas", Consumos[FAIXA] & ":00" )
+				)
+				RETURN
+				SUMMARIZE(_1, [Faixa], [Faixas] )
+
+	annotation PBI_Id = e3f044219311460290671165cb16a842
+

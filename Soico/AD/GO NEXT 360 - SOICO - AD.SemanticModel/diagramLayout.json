@@ -1,0 +1,838 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 1295.1243743199138,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 2594.5,
+            "y": 1622.6
+          },
+          "nodeIndex": "Advertisers",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 50
+        },
+        {
+          "location": {
+            "x": 1162.3,
+            "y": 936.2
+          },
+          "nodeIndex": "Alvos",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 2326.3,
+            "y": 1905.2
+          },
+          "nodeIndex": "Anunciante",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 1935.9,
+            "y": 1705.9
+          },
+          "nodeIndex": "Audiencias",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 1980.7,
+            "y": 1269.2
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 45
+        },
+        {
+          "location": {
+            "x": 1590.3,
+            "y": 1305.9
+          },
+          "nodeIndex": "Canais",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 2803.7,
+            "y": 947.3
+          },
+          "nodeIndex": "Channels",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 1155.1,
+            "y": 1955.7
+          },
+          "nodeIndex": "Encomendas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 54
+        },
+        {
+          "location": {
+            "x": 3584.5,
+            "y": 1588.5
+          },
+          "nodeIndex": "GRP Simulador",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 41
+        },
+        {
+          "location": {
+            "x": 3193.9333333333329,
+            "y": 1293.1333333333334
+          },
+          "nodeIndex": "GrupoCanais",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 2227.1,
+            "y": 0
+          },
+          "nodeIndex": "InvestmentGRPs",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 27
+        },
+        {
+          "location": {
+            "x": 3975,
+            "y": 1624.5
+          },
+          "nodeIndex": "Ligacao Inv-Map",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 4365.4,
+            "y": 1588.5
+          },
+          "nodeIndex": "Mapeamento",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 3194.1,
+            "y": 855.7
+          },
+          "nodeIndex": "MediaAgencies",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 2623.5,
+            "y": 2047.7
+          },
+          "nodeIndex": "Ocupacao",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 2326.3,
+            "y": 1591.2
+          },
+          "nodeIndex": "Propostas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 2511,
+            "y": 494
+          },
+          "nodeIndex": "Sectors",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 4755.8,
+            "y": 1600.5
+          },
+          "nodeIndex": "Simulador Exclusivos",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 2733.5,
+            "y": 1386
+          },
+          "nodeIndex": "Targets",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 2217.8,
+            "y": 1227.9
+          },
+          "nodeIndex": "Variacao Receita",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 52
+        },
+        {
+          "location": {
+            "x": 1995.2,
+            "y": 2144.2
+          },
+          "nodeIndex": "Vendedores",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 3107.2,
+            "y": 1708.6
+          },
+          "nodeIndex": "LigacaoINVMAP",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 1827.4,
+            "y": 812.8
+          },
+          "nodeIndex": "Objetivos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 38
+        },
+        {
+          "location": {
+            "x": 5146.2,
+            "y": 1612.5
+          },
+          "nodeIndex": "Alvos Var",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 39
+        },
+        {
+          "location": {
+            "x": 1887.7,
+            "y": 172
+          },
+          "nodeIndex": "Pub",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 40
+        },
+        {
+          "location": {
+            "x": 2803.7,
+            "y": 748.9
+          },
+          "nodeIndex": "Programs",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 43
+        },
+        {
+          "location": {
+            "x": 2851.1,
+            "y": 1172.5
+          },
+          "nodeIndex": "Brands",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 5536.6,
+            "y": 1636.5
+          },
+          "nodeIndex": "TipoCliente",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 5927,
+            "y": 1648.5
+          },
+          "nodeIndex": "Table",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 6317.4,
+            "y": 1636.5
+          },
+          "nodeIndex": "Titulos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 1545.5,
+            "y": 1758.3
+          },
+          "nodeIndex": "Tipo Publicidade",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 42
+        },
+        {
+          "location": {
+            "x": 1979.2,
+            "y": 456.4
+          },
+          "nodeIndex": "Calendario comparativo",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 44
+        },
+        {
+          "location": {
+            "x": 676.5,
+            "y": 2806.5
+          },
+          "nodeIndex": "Bonus",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 6707.8,
+            "y": 1648.5
+          },
+          "nodeIndex": "Centrais",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 2385.6,
+            "y": 2444.7
+          },
+          "nodeIndex": "Distribuidor",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 53
+        },
+        {
+          "location": {
+            "x": 1096,
+            "y": 2412.1
+          },
+          "nodeIndex": "Negociacao",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 46
+        },
+        {
+          "location": {
+            "x": 764.7,
+            "y": 2008.1
+          },
+          "nodeIndex": "OrdemPubClassificacao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 47
+        },
+        {
+          "location": {
+            "x": 2124.2,
+            "y": 2829.2
+          },
+          "nodeIndex": "Produtos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 1579.7,
+            "y": 3212.2
+          },
+          "nodeIndex": "TipoProduto",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 1612.4,
+            "y": 2471.4
+          },
+          "nodeIndex": "Faturação",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 56
+        },
+        {
+          "location": {
+            "x": 1199.9,
+            "y": 1255.3
+          },
+          "nodeIndex": "Outros Custos",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 533.3
+          },
+          "nodeIndex": "d_Neg_Característica",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 48
+        },
+        {
+          "location": {
+            "x": 780.8,
+            "y": 1057.6
+          },
+          "nodeIndex": "d_Neg_TaxaMultiProduto",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 404.6,
+            "y": 2292.5
+          },
+          "nodeIndex": "d_Neg_Cond_Neg",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1094.6,
+            "y": 603.8
+          },
+          "nodeIndex": "d_Neg_Posicoes",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 390.4,
+            "y": 887
+          },
+          "nodeIndex": "d_Neg_Audiencia",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 33.4,
+            "y": 1157.3
+          },
+          "nodeIndex": "d_Neg_EcrDescricao",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 51
+        },
+        {
+          "location": {
+            "x": 423.8,
+            "y": 1190.6
+          },
+          "nodeIndex": "d_Neg_Prioridade",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 2413.3,
+            "y": 778.4
+          },
+          "nodeIndex": "Multiprodutos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 49
+        },
+        {
+          "location": {
+            "x": 809.5,
+            "y": 1366
+          },
+          "nodeIndex": "NegDetalhe",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 58
+        },
+        {
+          "location": {
+            "x": 2716.7,
+            "y": 1803.3
+          },
+          "nodeIndex": "d_DayPart",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 419.1,
+            "y": 1528.1
+          },
+          "nodeIndex": "d_Neg_Descontos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 57
+        },
+        {
+          "location": {
+            "x": 7098.2,
+            "y": 1636.5
+          },
+          "nodeIndex": "Valor",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1724,
+            "y": 2927.8
+          },
+          "nodeIndex": "Central",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1222,
+            "y": 2707
+          },
+          "nodeIndex": "FlagFaturacao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 55
+        },
+        {
+          "location": {
+            "x": 2002.8,
+            "y": 2544.8
+          },
+          "nodeIndex": "TipoNeg",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 7488.7,
+            "y": 1562.5
+          },
+          "nodeIndex": "~Medidas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 7879.1,
+            "y": 1660.5
+          },
+          "nodeIndex": "DuracaoBase",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1655.2,
+            "y": 2015
+          },
+          "nodeIndex": "Rappel",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 59
+        },
+        {
+          "location": {
+            "x": 8269.5,
+            "y": 1636.5
+          },
+          "nodeIndex": "images",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8659.9,
+            "y": 1660.5
+          },
+          "nodeIndex": "logo header",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 9440.7,
+            "y": 1648.5
+          },
+          "nodeIndex": "TipoRappelComissao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 705.6,
+            "y": 2474.1
+          },
+          "nodeIndex": "Pacotes",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 9831.1,
+            "y": 1660.5
+          },
+          "nodeIndex": "DescontoCartoonNetwork",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10221.5,
+            "y": 1660.5
+          },
+          "nodeIndex": "DescontoCMTV",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10612,
+            "y": 1660.5
+          },
+          "nodeIndex": "DescontoRTP",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11002.4,
+            "y": 1660.5
+          },
+          "nodeIndex": "DescontoSIC",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11392.8,
+            "y": 1660.5
+          },
+          "nodeIndex": "DescontoTVI",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 11.146149181322015,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

@@ -1,0 +1,297 @@
+table Horarios
+	lineageTag: f057a4bc-fe25-404d-8acd-2b14cca55340
+
+	column HoraInicio1
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1ec8887e-0122-4521-aad5-16f77e99b261
+		summarizeBy: none
+		sourceColumn: HoraInicio1
+
+		variation Variation
+			isDefault
+			relationship: 417749f2-6182-4ed5-a8aa-c1323413b14d
+			defaultHierarchy: LocalDateTable_f35afae6-0033-4f28-8a27-8523ae37020d.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim1
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 66fb8bdc-d741-414b-97de-8cba1ed0d7e8
+		summarizeBy: none
+		sourceColumn: HoraFim1
+
+		variation Variação
+			isDefault
+			relationship: 1abd0d9e-f029-42e6-9b82-9664b14cf8ab
+			defaultHierarchy: LocalDateTable_a3d0c1e3-b7ee-4353-8465-30752ea95283.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0323c4b9-1136-4bd6-be62-2cda9613ac81
+		summarizeBy: none
+		sourceColumn: HoraInicio2
+
+		variation Variação
+			isDefault
+			relationship: 76f52cbb-3da2-4a46-8cda-90620269bfd9
+			defaultHierarchy: LocalDateTable_2f657d41-88c4-4c02-bea2-f1c239412905.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1b622793-a8aa-4854-b31f-f0696705ac72
+		summarizeBy: none
+		sourceColumn: HoraFim2
+
+		variation Variação
+			isDefault
+			relationship: ddd21b20-3988-4405-8697-a16ea55f22cf
+			defaultHierarchy: LocalDateTable_725a000b-9499-4471-9c0d-aca6a035a4c8.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio3
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 128f9aef-a12f-42ed-a4ff-967d65f20b49
+		summarizeBy: none
+		sourceColumn: HoraInicio3
+
+		variation Variação
+			isDefault
+			relationship: 94e788d1-0427-46ac-be5f-057ddc2be90d
+			defaultHierarchy: LocalDateTable_117811e0-118d-4b25-893f-3b1525c7b325.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim3
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 39917f49-3a86-409b-97e4-f7ef433452be
+		summarizeBy: none
+		sourceColumn: HoraFim3
+
+		variation Variação
+			isDefault
+			relationship: 9c5c6611-43f1-421f-a49a-5569b03ff49c
+			defaultHierarchy: LocalDateTable_1355d6d4-7984-4558-aef4-b6c2f8f98428.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diff_1 = DATEDIFF(Horarios[HoraInicio1],Horarios[HoraFim1],MINUTE)/60
+		formatString: 0
+		lineageTag: f68e9406-14c5-45f5-bb6c-60e6217b19f7
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diff_2 = DATEDIFF(Horarios[HoraInicio2],Horarios[HoraFim2],MINUTE)/60
+		formatString: 0
+		lineageTag: a1907e12-f780-43d4-8553-b46a56b9e841
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diff_3 = DATEDIFF(Horarios[HoraInicio3],Horarios[HoraFim3],MINUTE)/60
+		formatString: 0
+		lineageTag: d47b4989-ef1e-4008-a8fc-10b01cf889fc
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoaHorarios
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a771788-9515-4fd1-a586-da138cc2515e
+		summarizeBy: none
+		sourceColumn: IdPessoaHorarios
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 767d48e1-6891-444c-8ef7-4f859a46ffee
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 85bbb573-714e-42f5-bf24-c58811be9912
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column HorasDia
+		dataType: double
+		formatString: #,0
+		lineageTag: eadf0b75-8665-4ce2-8c90-18aee09085d5
+		summarizeBy: sum
+		sourceColumn: HorasDia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Capacidade
+		dataType: double
+		formatString: #,0
+		lineageTag: 14f26ccf-ef54-46d2-afcb-1dc9ce75761b
+		summarizeBy: sum
+		sourceColumn: Capacidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Descricao
+		dataType: string
+		lineageTag: 04c45c70-d787-47d0-8e18-fb5103da5d95
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdHorariosRefs
+		dataType: int64
+		formatString: 0
+		lineageTag: abaeccdb-0adf-46ff-b984-084e0d13daa5
+		summarizeBy: none
+		sourceColumn: IdHorariosRefs
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ausencia
+		dataType: double
+		lineageTag: 8936a037-6c05-444b-a599-1fb68f87d001
+		summarizeBy: sum
+		sourceColumn: Ausencia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Codigo
+		dataType: string
+		lineageTag: 9af145cb-4d18-4ca7-bd17-dbce093f18d6
+		summarizeBy: none
+		sourceColumn: Codigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodDesc
+		dataType: string
+		lineageTag: 65cf49d7-ad01-4feb-9b74-f7811063ef35
+		summarizeBy: none
+		sourceColumn: CodDesc
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinutosPausaNaoIdentificada
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a5d762f-d9c5-49cd-a88b-9f00a9455fd8
+		summarizeBy: sum
+		sourceColumn: MinutosPausaNaoIdentificada
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantidade
+		dataType: double
+		lineageTag: 604a4f1e-904f-4ec5-a4db-68e15e4d4991
+		summarizeBy: sum
+		sourceColumn: quantidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Planeado | Hora Fim' =
+			IF( Horarios[HoraFim3] > Horarios[HoraFim2] , Horarios[HoraFim3],
+			                      IF( Horarios[HoraFim2] > Horarios[HoraFim1], Horarios[HoraFim2], Horarios[HoraFim1] ) )
+		formatString: General Date
+		lineageTag: 0833c806-b3a0-4dd2-8976-e51118f6925c
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 806f305d-69b6-46eb-818c-641cd4db9a2d
+			defaultHierarchy: LocalDateTable_f065b5a1-109a-4a44-8023-9ebd229749dd.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chave = [IdPessoaHorarios]&[HoraInicio1]
+		lineageTag: 557227db-a0db-4064-a61a-5b6e83eb42ca
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diff_1_Min = DATEDIFF(Horarios[HoraInicio1],Horarios[HoraFim1],MINUTE)
+		formatString: 0
+		lineageTag: e3af95fe-b2de-4865-b12b-a7df59ede1f4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diff_2_Min = DATEDIFF(Horarios[HoraInicio2],Horarios[HoraFim2],MINUTE)
+		formatString: 0
+		lineageTag: 2d4a98fb-d96c-4d81-a0d8-632a117675c5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diff_3_Min = DATEDIFF(Horarios[HoraInicio3],Horarios[HoraFim3],MINUTE)
+		formatString: 0
+		lineageTag: 132c679a-81e0-4aee-87ca-a6c764e24834
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capacidade_Planeamento =
+			
+			IF.EAGER( Horarios[TrabalhoEfectivo] = TRUE(), Horarios[Diff_1_Min]+Horarios[Diff_2_Min]+Horarios[Diff_3_Min] - Horarios[MinutosPausaNaoIdentificada], BLANK() )
+		formatString: 0
+		lineageTag: 36e12ae5-8e38-45e0-968e-f9c056e167e0
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column TrabalhoEfectivo = LOOKUPVALUE( HorariosRefs[TrabalhoEfectivo], HorariosRefs[IdHorariosRefs], Horarios[IdHorariosRefs] )
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 000482eb-19fc-44e0-9fd6-ccb512260fb4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Horarios-1f311d38-9962-4bf9-a50d-b2b6a9e7decc = m
+		mode: import
+		queryGroup: Pessoas
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    h.HoraInicio1,#(lf)    h.HoraFim1,#(lf)    h.HoraInicio2,#(lf)    h.HoraFim2,#(lf)    h.HoraInicio3,#(lf)    h.HoraFim3,#(lf)    h.IdPessoa As IdPessoaHorarios,#(lf)    Centros_Custo.Id,#(lf)    h.Data,#(lf)    Pessoas.HorasDia,#(lf)    Pessoas_Horas_Mensais.Capacidade,#(lf)    Horarios_Refs.Descricao,#(lf)    Horarios_Refs.Id As IdHorariosRefs,#(lf)    Horarios_Refs.TrabalhoEfectivo,#(lf)    DateDiff(minute, aus.DataInicio, aus.DataFim) / 60.0 As Ausencia,#(lf)    Horarios_Refs.Codigo,#(lf)    h.MinutosPausaNaoIdentificada,#(lf)    Abonos_Calculados.quantidade#(lf)From#(lf)    Horarios h Inner Join#(lf)    Pessoas_Valorizacoes_Mensais pvm On pvm.Ano = Year(h.Data)#(lf)            And pvm.Mes = Month(h.Data)#(lf)            And pvm.IdPessoa = h.IdPessoa Inner Join#(lf)    Centros_Custo On Centros_Custo.Id = pvm.IdCentroCusto Inner Join#(lf)    Pessoas On h.IdPessoa = Pessoas.Id Left Join#(lf)    Pessoas_Horas_Mensais On h.Data = Pessoas_Horas_Mensais.Data#(lf)            And h.IdPessoa = Pessoas_Horas_Mensais.IdPessoa Inner Join#(lf)    Horarios_Refs On h.IdHorarioRef = Horarios_Refs.Id Left Join#(lf)    Ausencias aus On aus.IdHorario = h.Id Left Join#(lf)    Abonos_Calculados On Abonos_Calculados.IdHorario = h.Id#(lf)Where#(lf)    pvm.Ano >= Year(GetDate()) - 3"]),
+				    #"Added Custom" = Table.AddColumn(Source, "CodDesc", each [Codigo] &" ("&[Descricao] &")"),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"TrabalhoEfectivo"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_QueryRelationships = {"columnCount":20,"keyColumnNames":[],"queryRelationships":[{"keyColumnCount":1,"keyColumn":12,"otherKeyColumnIdentity":"Section1/HorarioRefAgrupador/Tipo Alterado.{Id,0}","KeyColumnCount":1}],"columnIdentities":["Section1/Horarios/Source.{HoraInicio1,0}","Section1/Horarios/Source.{HoraFim1,1}","Section1/Horarios/Source.{HoraInicio2,2}","Section1/Horarios/Source.{HoraFim2,3}","Section1/Horarios/Source.{HoraInicio3,4}","Section1/Horarios/Source.{HoraFim3,5}","Section1/Horarios/Source.{IdPessoaHorarios,6}","Section1/Horarios/Source.{Id,7}","Section1/Horarios/Source.{Data,8}","Section1/Horarios/Source.{HorasDia,9}","Section1/Horarios/Source.{Capacidade,10}","Section1/Horarios/Source.{Descricao,11}","Section1/Horarios/Source.{IdHorariosRefs,12}","Section1/Horarios/Source.{TrabalhoEfectivo,13}","Section1/Horarios/Source.{Ausencia,14}","Section1/Horarios/Source.{Codigo,15}","Section1/Horarios/Source.{MinutosPausaNaoIdentificada,16}","Section1/Horarios/Source.{quantidade,17}","Section1/Horarios/Added Custom.{CodDesc,18}","Section1/HorarioRefAgrupador/Tipo Alterado.{Agrupador,1}"],"ColumnCount":20,"KeyColumnNames":[],"ColumnIdentities":["Section1/Horarios/Source.{HoraInicio1,0}","Section1/Horarios/Source.{HoraFim1,1}","Section1/Horarios/Source.{HoraInicio2,2}","Section1/Horarios/Source.{HoraFim2,3}","Section1/Horarios/Source.{HoraInicio3,4}","Section1/Horarios/Source.{HoraFim3,5}","Section1/Horarios/Source.{IdPessoaHorarios,6}","Section1/Horarios/Source.{Id,7}","Section1/Horarios/Source.{Data,8}","Section1/Horarios/Source.{HorasDia,9}","Section1/Horarios/Source.{Capacidade,10}","Section1/Horarios/Source.{Descricao,11}","Section1/Horarios/Source.{IdHorariosRefs,12}","Section1/Horarios/Source.{TrabalhoEfectivo,13}","Section1/Horarios/Source.{Ausencia,14}","Section1/Horarios/Source.{Codigo,15}","Section1/Horarios/Source.{MinutosPausaNaoIdentificada,16}","Section1/Horarios/Source.{quantidade,17}","Section1/Horarios/Added Custom.{CodDesc,18}","Section1/HorarioRefAgrupador/Tipo Alterado.{Agrupador,1}"],"RelationshipInfo":[{"keyColumnCount":1,"keyColumn":12,"otherKeyColumnIdentity":"Section1/HorarioRefAgrupador/Tipo Alterado.{Id,0}","KeyColumnCount":1}]}
+
+	annotation PBI_ResultType = Table
+

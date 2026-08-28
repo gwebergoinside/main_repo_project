@@ -1,0 +1,35 @@
+table PlanFormatos
+	lineageTag: c774e33a-5953-470e-b5e5-1b85bdbf8819
+
+	column Data
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7c9e2354-2226-45dc-b1f0-3d7ac2041ccb
+		summarizeBy: none
+		sourceColumn: Data
+
+		variation Variação
+			isDefault
+			relationship: add520f9-4fa3-4b75-b170-2faf2a6a1baa
+			defaultHierarchy: LocalDateTable_2772902d-d07c-497e-922e-8931b0e3e335.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO_PROCESSO
+		dataType: string
+		lineageTag: 6a5c6fab-5dd6-4ace-b09a-e0f0ea59e292
+		summarizeBy: none
+		sourceColumn: NUMERO_PROCESSO
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PlanFormatos-e16e08b1-8d20-4fb6-8428-0cf3bf7d871c = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="#(lf)   Select#(lf)    Max(Plan_Formatos_Detalhe.Data) As Data,#(lf)#(tab)Right('00000000' + Cast(Plan_Formatos_Detalhe.Numero_Processo As VARCHAR), 8) As NUMERO_PROCESSO#(lf)#(lf)From#(lf)    Plan_Formatos_Detalhe#(lf)Where#(lf)    Plan_Formatos_Detalhe.Numero_Processo is not null#(lf)Group By#(lf)    Plan_Formatos_Detalhe.Numero_Processo"])
+				in
+				    Origem
+
+	annotation PBI_ResultType = Table
+

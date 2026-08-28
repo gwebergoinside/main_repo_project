@@ -1,0 +1,85 @@
+table f_Meios
+	isHidden
+	lineageTag: b10ea403-1067-4790-a337-c91533e22be9
+
+	column Id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 92a2a21e-998a-4679-95ba-0c47f1aea837
+		summarizeBy: count
+		sourceColumn: Id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Nome
+		dataType: string
+		isHidden
+		lineageTag: 505df100-16ce-42c7-ae92-d7f259b78328
+		summarizeBy: none
+		sourceColumn: Meio_Nome
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column activo
+		dataType: string
+		isHidden
+		lineageTag: 3d4b6b30-65ef-4cc8-8603-0b6e6b84c708
+		summarizeBy: none
+		sourceColumn: activo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Nome_Areas
+		dataType: string
+		isHidden
+		lineageTag: ba25acd1-46f0-49a8-89c6-5319771beacf
+		summarizeBy: none
+		sourceColumn: Meio_Nome_Areas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Tipo
+		dataType: string
+		isHidden
+		lineageTag: c2f1cd0b-984a-4fc3-ba75-3f9fae2e2632
+		summarizeBy: none
+		sourceColumn: Meio_Tipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio_Atividade
+		dataType: string
+		isHidden
+		lineageTag: f9209dfd-7fde-4c51-9d8d-a8f65a8d489d
+		summarizeBy: none
+		sourceColumn: Meio_Atividade
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_Meios-2ff9ba1b-12bd-4448-bd23-53c5e39cb98a = m
+		mode: import
+		queryGroup: Fatos
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="Select#(lf)m.Nome,#(lf)m.Id,#(lf)m.activo,#(lf)am.Nome As Meio_Nome_Areas,#(lf)tp.Nome As Meio_Tipo,#(lf)atm.Nome As Meio_Atividade#(lf)From#(lf)Meios m Left Join#(lf)Areas_Meios am On m.IdAreaMeio = am.Id Left Join#(lf)Tipos_Meio tp On m.IdTipoMeio = tp.Id Left Join#(lf)Actividades_Meios atm On m.IdActividadeMeio = atm.Id"]),
+				    #"Colunas com Nome Mudado" = Table.RenameColumns(Origem,{{"Nome", "Meio_Nome"}})
+				in
+				    #"Colunas com Nome Mudado"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

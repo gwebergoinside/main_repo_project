@@ -1,0 +1,98 @@
+table Catalogo
+	lineageTag: 3cb5dbcf-b0a1-4ceb-a81c-a719698a0539
+
+	column cod_catalogo
+		dataType: string
+		lineageTag: 381eef8b-a4e6-4af7-b99f-7ec531e1c702
+		summarizeBy: none
+		sourceColumn: cod_catalogo
+
+		annotation SummarizationSetBy = Automatic
+
+	column descricao_catalogo
+		dataType: string
+		lineageTag: 9056751b-6496-4125-a8f2-acbcb9d4a883
+		summarizeBy: none
+		sourceColumn: descricao_catalogo
+
+		annotation SummarizationSetBy = Automatic
+
+	column parente
+		dataType: string
+		lineageTag: 1fb0a741-634a-4adc-9df8-62e6076ebe13
+		summarizeBy: none
+		sourceColumn: parente
+
+		annotation SummarizationSetBy = Automatic
+
+	column nivel
+		dataType: string
+		lineageTag: 381ba5dd-ed96-417f-bfaa-59cc23f35977
+		summarizeBy: none
+		sourceColumn: nivel
+
+		annotation SummarizationSetBy = Automatic
+
+	column codigo_processo
+		dataType: string
+		lineageTag: 2ff55a7c-a49d-4c80-a422-a4579cba27eb
+		summarizeBy: none
+		sourceColumn: codigo_processo
+
+		annotation SummarizationSetBy = Automatic
+
+	column EventoID_Pub
+		dataType: int64
+		formatString: 0
+		lineageTag: d5b93138-575f-4bd3-bde9-dd32bb4e3d64
+		summarizeBy: none
+		sourceColumn: EventoID_Pub
+
+		annotation SummarizationSetBy = Automatic
+
+	column FlgModGeral
+		dataType: int64
+		formatString: 0
+		lineageTag: 5dc2ea11-b238-4e3c-9a94-7d941b2ae81d
+		summarizeBy: none
+		sourceColumn: FlgModGeral
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notas
+		dataType: string
+		lineageTag: 2dec2d03-6522-428d-882d-03a72fc15561
+		summarizeBy: none
+		sourceColumn: Notas
+
+		annotation SummarizationSetBy = Automatic
+
+	column extension
+		dataType: string
+		lineageTag: ac704c0d-48b7-4d78-a15e-03eade8e791b
+		summarizeBy: none
+		sourceColumn: extension
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: c5d86b56-3375-4b9c-8700-3621c2f001e0
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Catalogo-9ee173a3-f61a-446b-8cc8-348bbfc57740 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    *#(lf) From#(lf)    Catalogo"])
+				in
+				    Source
+
+	annotation PBI_QueryRelationships = {"columnCount":10,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Catalogo/Source.{cod_catalogo,0}","Section1/Catalogo/Source.{descricao_catalogo,1}","Section1/Catalogo/Source.{parente,2}","Section1/Catalogo/Source.{nivel,3}","Section1/Catalogo/Source.{codigo_processo,4}","Section1/Catalogo/Source.{EventoID_Pub,5}","Section1/Catalogo/Source.{FlgModGeral,6}","Section1/Catalogo/Source.{Notas,7}","Section1/Catalogo/Source.{extension,8}","Section1/Catalogo/Source.{ID,9}"],"ColumnCount":10,"KeyColumnNames":[],"ColumnIdentities":["Section1/Catalogo/Source.{cod_catalogo,0}","Section1/Catalogo/Source.{descricao_catalogo,1}","Section1/Catalogo/Source.{parente,2}","Section1/Catalogo/Source.{nivel,3}","Section1/Catalogo/Source.{codigo_processo,4}","Section1/Catalogo/Source.{EventoID_Pub,5}","Section1/Catalogo/Source.{FlgModGeral,6}","Section1/Catalogo/Source.{Notas,7}","Section1/Catalogo/Source.{extension,8}","Section1/Catalogo/Source.{ID,9}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

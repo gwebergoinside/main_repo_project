@@ -1,0 +1,309 @@
+table Tarefas_Pessoas
+	lineageTag: 6e61f1cd-b773-4c8e-8742-6d8f7d0b7724
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ef81cac-a92c-436f-888b-db10f521f894
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4c85af74-2d5d-4d40-8715-f4ab37c9868a
+		summarizeBy: none
+		sourceColumn: HoraInicio
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TempoImputado
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 8135dba6-2926-4e6d-971d-c1a442553a2f
+		summarizeBy: sum
+		sourceColumn: TempoImputado
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 350936e7-1b59-43b2-bce6-74108ada6953
+		summarizeBy: none
+		sourceColumn: IdPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefas
+		dataType: int64
+		formatString: 0
+		lineageTag: 996c339a-cefe-4264-9f98-597ac4b40e8d
+		summarizeBy: none
+		sourceColumn: IdTarefas
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo
+		dataType: string
+		lineageTag: cd4a4bb5-7b2a-4bfe-b444-4a7c99edcaa7
+		summarizeBy: none
+		sourceColumn: titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCC
+		dataType: int64
+		formatString: 0
+		lineageTag: a2087c73-aa33-430c-9a42-ffcc2d22cd5b
+		summarizeBy: none
+		sourceColumn: IdCC
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoActividadeApuradaTarefas
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b965d61-3ddb-4982-b9c0-25268ff27201
+		summarizeBy: sum
+		sourceColumn: TipoActividadeApuradaTarefas
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: 25e47ff3-a415-431e-bf09-2ec08d2a816b
+		summarizeBy: sum
+		sourceColumn: IdTipoProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdHorarioRef
+		dataType: int64
+		formatString: 0
+		lineageTag: 665d2f3a-45fe-4ad3-99f4-0fb87a2d167c
+		summarizeBy: none
+		sourceColumn: IdHorarioRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjeto
+		dataType: int64
+		formatString: 0
+		lineageTag: 1387d6be-639a-4498-919b-b6a871221b0c
+		summarizeBy: none
+		sourceColumn: IdProjeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d33a6305-1cc3-4ddb-8bf7-7165721b9f3c
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		variation Variation
+			isDefault
+			relationship: 1dfb97f1-3769-4d21-aeb0-9eb6013e3112
+			defaultHierarchy: LocalDateTable_80335f0d-2996-4045-bdd9-7422f65d6ced.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraIni
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d61e9fad-98fc-4b28-acc1-5e41dc003dff
+		summarizeBy: none
+		sourceColumn: HoraIni
+
+		variation Variation
+			isDefault
+			relationship: 6b82cdab-b5be-44f4-a30f-cd66005115d7
+			defaultHierarchy: LocalDateTable_3ad25bd7-0030-47be-8897-c60f07fdbbc1.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column NaoConsiderarParaCalculoCapacidadeAtividade
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0156febe-f072-40d0-a282-dee34a083c89
+		summarizeBy: none
+		sourceColumn: NaoConsiderarParaCalculoCapacidadeAtividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calculo Cap Ativ' = ```
+			
+			SWITCH(TRUE, 
+			    Tarefas_Pessoas[NaoConsiderarParaCalculoCapacidadeAtividade] = BLANK(), "Ativo",
+			    Tarefas_Pessoas[NaoConsiderarParaCalculoCapacidadeAtividade] = FALSE(), "Ativo",
+			    "Desativo"
+			)
+			```
+		lineageTag: 2146f0ae-5ae8-48c2-8680-147ec62a1fcb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdGrupoPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a891f45-048c-48c7-99a2-506ece55f014
+		summarizeBy: sum
+		sourceColumn: IdGrupoPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicioPlan
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 311ba13b-3aaa-4a4e-a6b2-1c4b1e4b589f
+		summarizeBy: none
+		sourceColumn: HoraInicioPlan
+
+		variation Variation
+			isDefault
+			relationship: 36a47902-3793-40fe-aaab-6cb361062199
+			defaultHierarchy: LocalDateTable_9bca1a46-6758-4490-9e0b-101e70893e9d.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicioPlan2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4d1b6a1c-5d60-4781-a483-b099ae935ec2
+		summarizeBy: none
+		sourceColumn: HoraInicioPlan2
+
+		variation Variation
+			isDefault
+			relationship: 40d7c036-a12c-4fb2-a0df-4e8856deb769
+			defaultHierarchy: LocalDateTable_431f6f3b-bcb7-462e-8ca3-a6325f9fb1ce.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicioPlan3
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9f2ab7eb-04f0-4ddc-bae0-91ae2aa0be7c
+		summarizeBy: none
+		sourceColumn: HoraInicioPlan3
+
+		variation Variation
+			isDefault
+			relationship: dffac991-e7d5-4945-9642-98c130f3c541
+			defaultHierarchy: LocalDateTable_b4275095-570f-457b-b548-4c5a9af685f6.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFiimPlan
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 512f9aa9-f351-4641-9f01-beb0571155e1
+		summarizeBy: none
+		sourceColumn: HoraFiimPlan
+
+		variation Variation
+			isDefault
+			relationship: c904eef8-0c75-4d01-ada2-7e705d8c12b8
+			defaultHierarchy: LocalDateTable_33474961-67b6-4431-bdf6-0f1353da5f67.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFiimPlan2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9e440b5c-ed15-48bf-96c5-9470504654a3
+		summarizeBy: none
+		sourceColumn: HoraFiimPlan2
+
+		variation Variation
+			isDefault
+			relationship: 62fe502c-ef72-4e86-94f8-045110fe9615
+			defaultHierarchy: LocalDateTable_93fa6803-56ca-4bc0-8a0d-0c9e3fff8552.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFiimPlan3
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: be151448-8637-4e36-9903-6246af391f4c
+		summarizeBy: none
+		sourceColumn: HoraFiimPlan3
+
+		variation Variation
+			isDefault
+			relationship: 992dfa80-402f-49b2-a5c8-fac70fae4096
+			defaultHierarchy: LocalDateTable_ddd7aa17-3ba0-4e03-9615-2369c9c138b1.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumFuncionario
+		dataType: string
+		lineageTag: 72769328-ad9a-4c9d-95fe-3129f3d9b78c
+		summarizeBy: none
+		sourceColumn: NumFuncionario
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tarifa
+		dataType: double
+		lineageTag: 0e99330a-e422-4944-b6cd-df136997234a
+		summarizeBy: sum
+		sourceColumn: Tarifa
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column keyAtividade = Tarefas_Pessoas[HoraInicio] & "-" & Tarefas_Pessoas[IdCC] & "-" & Tarefas_Pessoas[IdProjeto]
+		lineageTag: adde241d-10e8-4c99-a28d-cf1937cc29d3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExtraNec =
+			
+			CALCULATE(
+			    SUM( 'NecessidadesGantt Extra'[Index] )
+			    ,FILTER( ALL('NecessidadesGantt Extra'), Tarefas_Pessoas[keyAtividade] ='NecessidadesGantt Extra'[keyAtividade] )
+			    ,'NecessidadesGantt Extra'[Tipo] = "RH"
+			    )
+		formatString: 0
+		lineageTag: 63a6d7c3-306a-4407-b655-1f7ea9808e2e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Projeto = LOOKUPVALUE( Projetos[Projeto], Projetos[Id], Tarefas_Pessoas[IdProjeto] )
+		lineageTag: b13dee3b-66ef-4e3e-8216-845c6824c6f4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Tarefas_Pessoas-82766b52-9fab-4841-9742-8fcb2320c70f = m
+		mode: import
+		queryGroup: Pessoas
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    tp.TempoImputado,#(lf)    tp.IdPessoa,#(lf)    tp.Id As IdTarefas,#(lf)    Projectos.titulo,#(lf)    Convert(VARCHAR(10),tp.HoraInicio,103) As HoraInicio,#(lf)    cc.Id As IdCC,#(lf)    cc.TipoActividadeApurada As TipoActividadeApuradaTarefas,#(lf)    Pessoas.Id,#(lf)    Projectos.IdTipoProjecto,#(lf)    Horarios.IdHorarioRef,#(lf)    Projectos.Id As IdProjeto,#(lf)    tp.HoraInicio As HoraIni,#(lf)    Horarios.HoraInicio1 As HoraInicioPlan,#(lf)    Horarios.HoraInicio2 As HoraInicioPlan2,#(lf)    Horarios.HoraInicio3 As HoraInicioPlan3,#(lf)    Horarios.HoraFim1 As HoraFiimPlan,#(lf)    Horarios.HoraFim2 As HoraFiimPlan2,#(lf)    Horarios.HoraFim3 As HoraFiimPlan3,#(lf)    DateFromParts(Year(tp.HoraInicio), Month(tp.HoraInicio), 1) As [Start of Month],#(lf)    pvm.NaoConsiderarParaCalculoCapacidadeAtividade,#(lf)    IsNull((Select Top 1#(lf)         PH.IdGrupoPessoa#(lf)     From#(lf)         Pessoas_Historico PH#(lf)     Where#(lf)         PH.IdGrupoPessoa Is Not Null And#(lf)         PH.IdPessoa = tp.IdPessoa And#(lf)         Cast(PH.DataInicioGrupo As DATE) <= Cast(tp.HoraInicio As DATE) And#(lf)         (PH.DataFimGrupo Is Null Or#(lf)             Cast(PH.DataFimGrupo As DATE) >= Cast(tp.HoraInicio As DATE))#(lf)     Order By#(lf)         PH.DataInicioGrupo), Pessoas.IdGrupoPessoa) IdGrupoPessoa,#(lf)    Pessoas.NumFuncionario#(lf)From#(lf)    Tarefas_Pessoas tp Inner Join#(lf)    Tarefas On tp.IdTarefa = Tarefas.Id Inner Join#(lf)    Projectos On Tarefas.IdProjecto = Projectos.Id Left Join#(lf)    Centros_Custo cc On cc.Codigo = tp.CodCentroCusto Inner Join#(lf)    Pessoas On tp.IdPessoa = Pessoas.Id Left Join#(lf)    Horarios On Convert(VARCHAR(10),Horarios.Data,103) = Convert(VARCHAR(10),tp.HoraInicio,103)#(lf)            And Horarios.IdPessoa = tp.IdPessoa Left Join#(lf)    Pessoas_Valorizacoes_Mensais pvm On pvm.Ano = Year(tp.DataImputacao)#(lf)            And pvm.Mes = Month(tp.DataImputacao)#(lf)            And pvm.IdPessoa = tp.IdPessoa"]),
+				    #"Merged Queries" = Table.NestedJoin(Origem, {"Start of Month", "IdCC"}, Tarifa, {"Mes", "IdCentroCusto"}, "Tarifa", JoinKind.LeftOuter),
+				    #"Expanded Tarifa1" = Table.ExpandTableColumn(#"Merged Queries", "Tarifa", {"TarifaUnitaria"}, {"Tarifa"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Tarifa1",{{"HoraInicio", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_QueryRelationships = {"columnCount":18,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Tarefas_Pessoas/Origem.{TempoImputado,0}","Section1/Tarefas_Pessoas/Origem.{DataImputacao,1}","Section1/Tarefas_Pessoas/Origem.{AnoImput,2}","Section1/Tarefas_Pessoas/Origem.{MesImput,3}","Section1/Tarefas_Pessoas/Origem.{IdPessoa,4}","Section1/Tarefas_Pessoas/Origem.{IdTarefas,5}","Section1/Tarefas_Pessoas/Origem.{titulo,6}","Section1/Tarefas_Pessoas/Origem.{MesHoraInicio,7}","Section1/Tarefas_Pessoas/Origem.{AnoHoraInicio,8}","Section1/Tarefas_Pessoas/Origem.{HoraInicio,9}","Section1/Tarefas_Pessoas/Origem.{IdCC,10}","Section1/Tarefas_Pessoas/Origem.{TipoActividadeApuradaTarefas,11}","Section1/Tarefas_Pessoas/Origem.{Id,12}","Section1/Tarefas_Pessoas/Origem.{IdTipoProjecto,13}","Section1/Tarefas_Pessoas/Origem.{IdHorarioRef,14}","Section1/Tarefas_Pessoas/Origem.{IdProjeto,15}","Section1/Tarefas_Pessoas/Inserted Start of Month.{Start of Month,16}","Section1/Tarifa/Origem.{TarifaUnitaria,2}"],"ColumnCount":18,"KeyColumnNames":[],"ColumnIdentities":["Section1/Tarefas_Pessoas/Origem.{TempoImputado,0}","Section1/Tarefas_Pessoas/Origem.{DataImputacao,1}","Section1/Tarefas_Pessoas/Origem.{AnoImput,2}","Section1/Tarefas_Pessoas/Origem.{MesImput,3}","Section1/Tarefas_Pessoas/Origem.{IdPessoa,4}","Section1/Tarefas_Pessoas/Origem.{IdTarefas,5}","Section1/Tarefas_Pessoas/Origem.{titulo,6}","Section1/Tarefas_Pessoas/Origem.{MesHoraInicio,7}","Section1/Tarefas_Pessoas/Origem.{AnoHoraInicio,8}","Section1/Tarefas_Pessoas/Origem.{HoraInicio,9}","Section1/Tarefas_Pessoas/Origem.{IdCC,10}","Section1/Tarefas_Pessoas/Origem.{TipoActividadeApuradaTarefas,11}","Section1/Tarefas_Pessoas/Origem.{Id,12}","Section1/Tarefas_Pessoas/Origem.{IdTipoProjecto,13}","Section1/Tarefas_Pessoas/Origem.{IdHorarioRef,14}","Section1/Tarefas_Pessoas/Origem.{IdProjeto,15}","Section1/Tarefas_Pessoas/Inserted Start of Month.{Start of Month,16}","Section1/Tarifa/Origem.{TarifaUnitaria,2}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,246 @@
+table Calendario
+	lineageTag: 55b9f423-4ac7-447b-91d2-cb060f18fd57
+	dataCategory: Time
+
+	measure Ano_Classificação_Donut = ```
+			
+			var _2 = SELECTEDVALUE('Calendario'[Ano]) //Atual
+			Var _3 = _2 -1 //Anterior
+			RETURN
+			_3
+			
+			```
+		formatString: 0
+		lineageTag: e097d79c-4f24-4e69-b90d-32f2b332dd33
+
+	column Date
+		isKey
+		formatString: Short Date
+		lineageTag: b9c88aa3-ecf2-4901-9f5f-efefc2732338
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		changedProperty = FormatString
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Mes = SWITCH(MONTH(Calendario[Date]),1,"Jan",2,"Fev",3,"Mar",4,"Abr",5,"Mai",6,"Jun",7,"Jul",8,"Ago",9,"Set",10,"Out",11,"Nov",12,"Dez")
+		lineageTag: 716bccc6-474e-4de1-a7b0-c1f956e33e1d
+		summarizeBy: none
+		sortByColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês = MONTH(Calendario[Date])
+		formatString: 0
+		lineageTag: 58cbd9f2-4e10-415e-847b-82e40802a92a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Calendario","TableItemName":"Mês (posições armazéns)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column Trimestre = CONCATENATE("Trim. ",ROUNDUP(MONTH([date])/3,0))
+		lineageTag: d3ad9a57-49c3-49ea-ae5b-4b93cfaea16e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano = year(Calendario[Date])
+		dataType: int64
+		formatString: 0
+		lineageTag: bc6bcde5-dba3-417e-a6d3-2ef7db10382b
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia = day(Calendario[Date])
+		formatString: 0
+		lineageTag: 369fb21f-2078-43b2-b50d-3883e4ca2e00
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana' = SWITCH(WEEKDAY([Date]),1,"Dom",2,"Seg",3,"Ter",4,"Qua",5,"Qui",6,"Sex",7,"Sab")
+		lineageTag: dfb81b37-d5de-48af-b27f-18d29894c5a7
+		summarizeBy: none
+		sortByColumn: Weekday
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Calendario","TableItemName":"Periodo da Semana","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column 'Mês (posições armazéns)' =
+			IF(
+			  ISBLANK('Calendario'[Mês]),
+			  BLANK(),
+			  INT('Calendario'[Mês])
+			)
+		formatString: 0
+		lineageTag: 1caf432b-2535-4481-8e15-962ed89ff7dc
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Calendario"
+				          }
+				        },
+				        "Property": "Mês"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 1.0,
+				      "unit": 0
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"c","Entity":"Calendario"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"c"}},"Property":"Mês"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"c"}},"Property":"Mês"}},"Size":1.0}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weekday = WEEKDAY([Date],1)
+		formatString: 0
+		lineageTag: b7c211f5-8e27-4c09-9720-21db6869cdcf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month & Year' = DATE(Calendario[Ano],Calendario[Mês],01)
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ea1c909f-68cc-4226-b7ef-655b2cfe7a33
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Periodo da Semana' =
+			SWITCH(
+			  TRUE,
+			  ISBLANK('Calendario'[Dia Semana]),
+			  "(Blank)",
+			  'Calendario'[Dia Semana] IN {"Seg",
+			    "Ter",
+			    "Qua",
+			    "Qui",
+			    "Sex"},
+			  "Dia de Semana",
+			  'Calendario'[Dia Semana] IN {"Dom",
+			    "Sab"},
+			  "Fim de Semana",
+			  'Calendario'[Dia Semana]
+			)
+		lineageTag: 92579d6d-ade8-49ab-9c36-7b20ddb6badd
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Calendario"
+				          }
+				        },
+				        "Property": "Dia Semana"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"c","Entity":"Calendario"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"c"}},"Property":"Dia Semana"}}],"GroupItems":[{"DisplayName":"(Blank)","BlankDefaultPlaceholder":true},{"DisplayName":"Dia de Semana","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"c"}},"Property":"Dia Semana"}}],"Values":[[{"Literal":{"Value":"'Seg'"}}],[{"Literal":{"Value":"'Ter'"}}],[{"Literal":{"Value":"'Qua'"}}],[{"Literal":{"Value":"'Qui'"}}],[{"Literal":{"Value":"'Sex'"}}]]}}},{"DisplayName":"Fim de Semana","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"c"}},"Property":"Dia Semana"}}],"Values":[[{"Literal":{"Value":"'Dom'"}}],[{"Literal":{"Value":"'Sab'"}}]]}}}]}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes Completo' = SWITCH(MONTH(Calendario[Date]),1,"Janeiro",2,"Fevereiro",3,"Março",4,"Abril",5,"Maio",6,"Junho",7,"Julho",8,"Agosto",9,"Setembro",10,"Outubro",11,"Novembro",12,"Dezembro")
+		lineageTag: 709d3516-e68c-415e-8130-cbbc5c189c01
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month & Day' = Calendario[Dia]&"/"&Calendario[Mes]
+		lineageTag: bbb82b60-15f0-4101-a3f9-94f4b6c34250
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana LY' =
+			
+			VAR _day = WEEKDAY(DATE(YEAR(Calendario[Date])-1,MONTH(Calendario[Date]),DAY(Calendario[Date])))
+			RETURN
+			SWITCH(_day, 1,"Dom",2,"Seg",3,"Ter",4,"Qua",5,"Qui",6,"Sex",7,"Sab")
+		lineageTag: 71ae4274-68a0-41d4-adc6-1e14b1f04efc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weeks = ```
+			
+			VAR Week_start = FORMAT( Calendario[Date] - WEEKDAY('Calendario'[Date],2) +1, "dd/MM/yyyy" )
+			VAR Week_end = FORMAT(Calendario[Date] - WEEKDAY(Calendario[Date],2) + 7, "dd/MM/yyyy" )
+			RETURN
+			Week_start &" 
+			 "& Week_end
+			```
+		lineageTag: 0c37e169-6e55-4132-bb6b-847baa9f4b7c
+		summarizeBy: none
+		sortByColumn: 'Week Start'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Start' = Calendario[Date] - WEEKDAY('Calendario'[Date],2) +1
+		formatString: General Date
+		lineageTag: fd9ccb36-bcc9-45ea-8741-b0f941874740
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano_Classificação =
+			
+			var _2 = YEAR(now()) //Atual
+			Var _3 = YEAR(now())  -1 //Anterior
+			
+			Return
+			
+			        IF( 'Calendario'[Ano]> YEAR(NOW()), "Futuro", IF( 'Calendario'[Ano] = _2, "Corrente", IF( 'Calendario'[Ano] = _3, "Anterior", "Passado" ) ) )
+		lineageTag: f406c2e5-f54f-456e-9687-00c0e833261a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Mês Hierarquia'
+		lineageTag: 5e293c24-91e6-4671-866c-626b9f93a57e
+
+		level Mês
+			lineageTag: 31883483-6ace-4587-b4fd-473bf8630c62
+			column: Mês
+
+		level Mes
+			lineageTag: 0f508592-baec-4ce8-80d3-cb5b9cffceaf
+			column: Mes
+
+	partition Calendario-6a20f9c8-c72f-4130-81cb-d714fa5bff1f = calculated
+		mode: import
+		source = CALENDAR(DATE(year(now())-5, 1, 1), DATE(year(now()), 12, 31) )
+

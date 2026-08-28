@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "GO NEXT 360 - SOICO - PLAN"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4059cd29-c6a3-425f-a88b-258bc9d6ab4c"
+  }
+}

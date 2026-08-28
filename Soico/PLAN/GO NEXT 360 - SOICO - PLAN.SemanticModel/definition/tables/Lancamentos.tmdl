@@ -1,0 +1,119 @@
+table Lancamentos
+	lineageTag: 10536aaa-3dd9-4806-add8-b904e23014d5
+
+	column IdCC
+		formatString: 0
+		lineageTag: 073ae0bc-5dcc-4dee-9235-3b5283264580
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Tarefas_Pessoas[IdCC]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjeto
+		formatString: 0
+		lineageTag: 790630d8-2e8e-4dc4-bac5-e23060b9f51b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Tarefas_Pessoas[IdProjeto]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantidade
+		lineageTag: 5adbeb48-63b7-4581-97a9-3882447ff6c7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Quantidade]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Tipo
+		lineageTag: 2a6676a6-925f-4e3e-9dc4-5afb7830aabe
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tipo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoActividadeApuradaTarefas
+		formatString: 0
+		lineageTag: ac13b9d9-6327-4c18-b81a-54ede83c0018
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Tarefas_Pessoas[TipoActividadeApuradaTarefas]
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		lineageTag: 220465a9-5e20-447d-b604-5caa44e5ac15
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Valor]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Calculo Cap Ativ'
+		lineageTag: c19704de-7e36-43ad-aa79-2d0bb7b09d66
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Tarefas_Pessoas[Calculo Cap Ativ]
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio
+		formatString: General Date
+		lineageTag: 9812d3d0-ed5c-47da-ac3e-2d245026a277
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Tarefas_Pessoas[HoraInicio]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Lancamentos-0c6e86a4-c54a-4a01-a5ee-902217322f5a = calculated
+		mode: import
+		source = ```
+				
+				UNION(
+				    FILTER( SUMMARIZE(  
+				                Tarefas_Pessoas,
+				                Tarefas_Pessoas[HoraInicio],
+				                Tarefas_Pessoas[IdCC],
+				                Tarefas_Pessoas[IdProjeto],
+				                Tarefas_Pessoas[TipoActividadeApuradaTarefas],
+				                Tarefas_Pessoas[Calculo Cap Ativ],
+				                "Quantidade", SUM(Tarefas_Pessoas[TempoImputado]),
+				                "Valor", SUM(Tarefas_Pessoas[TempoImputado])*SUM(Tarefas_Pessoas[Tarifa]),
+				                "Tipo", "Automático"
+				    ), Tarefas_Pessoas[TipoActividadeApuradaTarefas] = 2 || Tarefas_Pessoas[TipoActividadeApuradaTarefas] = 0 ),
+				    FILTER( SUMMARIZE(  
+				                Meios,
+				                Meios[Date],
+				                Meios[IdCC],
+				                Meios[IdProjeto],
+				                Meios[TipoActividadeApurada],
+				                Meios[Calculo Cap Ativ],
+				                "Quantidade", SUM(Meios[TempoImputado]),
+				                "Valor", SUM(Meios[TempoImputado])*SUM(Meios[Tarifa]),
+				                "Tipo", "Automático"
+				    ), Meios[TipoActividadeApurada] = 1 || Meios[TipoActividadeApurada] = 0 ),
+				    SUMMARIZE(  LancManuais,
+				                LancManuais[Data],
+				                LancManuais[IdCC],
+				                LancManuais[IdProjeto],
+				                "Atividade", BLANK(),
+				                "Calculo Cap Ativ", "LancManual",
+				                "Quantidade", SUM(LancManuais[Quantidade]),
+				                "Valor", SUM(LancManuais[Valor]),
+				                "Tipo", "Manual"
+				    )
+				)
+				```
+
+	annotation PBI_Id = f9d302b9d5d54d94b119b61ded1c4648
+

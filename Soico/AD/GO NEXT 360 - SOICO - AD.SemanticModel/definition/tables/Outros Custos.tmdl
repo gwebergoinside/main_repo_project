@@ -1,0 +1,76 @@
+table 'Outros Custos'
+	lineageTag: 33c76a14-308d-43a4-96f6-a60ecfa026d1
+
+	column valor
+		dataType: double
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 5eb5d950-d636-479e-9a7c-0959b0718a43
+		summarizeBy: sum
+		sourceColumn: valor
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 0db01481-000e-4c63-b151-906bab566d5a
+		summarizeBy: sum
+		sourceColumn: ordPubCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: cdd0bf2e-8d06-4574-89bc-891508e37286
+		summarizeBy: none
+		sourceColumn: dia
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d73c867-c086-4ca6-b6bb-ccd1a135a2a1
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: b26adf52-42e5-4ee1-9333-2d44fe6d0151
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column camId
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b63834d-6d29-4eee-bd6e-80c784a545e6
+		summarizeBy: count
+		sourceColumn: camId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Outros Custos-cf797c06-6a23-4f30-a3c5-e6bc09848300' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    op.ordPubCodigo,#(lf)    op.ordPubDetFactValor As valor,#(lf)    '01-' + RIGHT('0' + cast(ordpubmes as varchar),2) + '-' + cast(ordpubano as varchar) as dia,#(lf)    ordemPub.canCodigo,#(lf)    ordemPub.tipPubId,#(lf)    ordemPub.camId#(lf)From#(lf)    ordemPubDetalheFact op Left Join#(lf)    ordemPub On op.ordPubCodigo = ordemPub.ordPubCodigo"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

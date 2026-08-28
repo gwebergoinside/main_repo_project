@@ -1,0 +1,21 @@
+/// Período de atualização
+table DescontoCartoonNetwork
+	lineageTag: c0723ab3-25c0-4d18-a6d6-d3da1aaec772
+
+	column DescontoCartoonNetwork
+		dataType: string
+		lineageTag: bf6f104b-757b-42e8-8e6a-40f50784d7f1
+		summarizeBy: none
+		sourceColumn: DescontoCartoonNetwork
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DescontoCartoonNetwork-a4dc154a-da78-45de-b39c-48e789b69287 = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

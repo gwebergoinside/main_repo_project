@@ -1,0 +1,52 @@
+table Necessidades_Exclusoes
+	lineageTag: 282e21b6-0ba2-4bcd-9c37-b39aa3b109a5
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e744216-42fd-4e99-9941-81fbca7861af
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTemplateNecessidades
+		dataType: int64
+		formatString: 0
+		lineageTag: d6b89367-7f06-45fa-b818-21b9acfae6b4
+		summarizeBy: sum
+		sourceColumn: IdTemplateNecessidades
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataExcluida
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6190207f-8c14-4547-ac01-81a74c7990d0
+		summarizeBy: none
+		sourceColumn: DataExcluida
+
+		variation Variação
+			isDefault
+			relationship: 1de33352-d41c-40b8-ae3b-4b78fc72e6a8
+			defaultHierarchy: LocalDateTable_b2c1cd53-f0ac-4dbd-a085-ea50f1425970.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key = Necessidades_Exclusoes[IdTemplateNecessidades] & "-" & Necessidades_Exclusoes[DataExcluida]
+		lineageTag: 3329ad19-7e0c-4704-b163-03994e726556
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Necessidades_Exclusoes-c2c8f3ba-a332-4a79-bb7a-0e5546609110 = m
+		mode: import
+		queryGroup: Necessidades
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    *#(lf)From#(lf)    Templates_Necessidades_DatasExcluidas tne"])
+				in
+				    Origem
+
+	annotation PBI_ResultType = Table
+

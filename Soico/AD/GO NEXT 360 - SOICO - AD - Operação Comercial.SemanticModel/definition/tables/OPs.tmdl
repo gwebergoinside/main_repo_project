@@ -1,0 +1,32 @@
+table OPs
+	lineageTag: 0a351260-b46e-454a-a6a5-0543509c0585
+
+	column OPs
+		formatString: 0
+		lineageTag: 3a74a6c0-d270-40b7-899f-6655fd724850
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [OPs]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OPs-ad49cb73-40e4-47ca-9104-7894181c6cc5 = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				SELECTCOLUMNS(
+				    Comercial,
+				    "OPs", Comercial[ordPubCodigo]
+				)
+				VAR _2 =
+				SELECTCOLUMNS(
+				    OPLog,
+				    "OPs", OPLog[ordPubCodigo]
+				)
+				VAR _3 = UNION( _1, _2)
+				RETURN
+				SUMMARIZE( _3, [OPs] )
+
+	annotation PBI_Id = 9630fa81abda4b75b07313f8af309632
+

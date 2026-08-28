@@ -1,0 +1,18 @@
+table 'logo header'
+	lineageTag: 7955d4c9-47a4-42be-857f-faf0bd6a130a
+
+	column 'logo header'
+		dataType: string
+		lineageTag: 26554ec7-295e-481c-be55-47b25ceee5c0
+		summarizeBy: none
+		sourceColumn: logo header
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'logo header-dbebb212-93c3-484d-ae0d-6bae6de389f4' = m
+		mode: import
+		queryGroup: BD
+		source = "SOICO" meta [IsParameterQuery=true, ExpressionIdentifier=#"lista de imagem", Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_ResultType = Text
+

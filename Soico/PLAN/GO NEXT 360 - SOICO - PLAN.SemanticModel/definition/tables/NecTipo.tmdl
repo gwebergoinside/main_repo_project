@@ -1,0 +1,22 @@
+table NecTipo
+	lineageTag: 53646d31-55d7-4ca5-84bb-27ce23e6e2f8
+
+	column Tipo
+		dataType: string
+		lineageTag: 012ca57a-3aeb-4bb8-ae68-d20b776215c3
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition NecTipo-40efc676-e146-493b-b321-f390c8667670 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45Wcq0oKUpU8EtNTi0uzkxJTElVitWJVkLhxwIA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Tipo = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Tipo", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

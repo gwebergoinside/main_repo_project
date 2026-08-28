@@ -1,0 +1,38 @@
+table TipoRappelComissao
+	lineageTag: 6137f0f4-33ab-4ca8-9075-63c3e1126677
+
+	column Tipo
+		dataType: string
+		lineageTag: 8371d783-99b6-442f-837a-a56333080e3a
+		summarizeBy: none
+		sourceColumn: Tipo
+		sortByColumn: Id
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: e69cb529-b0b3-479c-a9d6-06081c238509
+		summarizeBy: count
+		sourceColumn: Id
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoRappelComissao-68c60940-7a9e-4bdd-9b2c-c4c498730fef = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCkosKEjNUdJRMlKK1YlWcs7PzSwuPrw4X8Ex/fCqvOTMRKCUCVgKolLBJxIoYohDMUTWWCk2FgA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Tipo = _t, Id = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Tipo", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

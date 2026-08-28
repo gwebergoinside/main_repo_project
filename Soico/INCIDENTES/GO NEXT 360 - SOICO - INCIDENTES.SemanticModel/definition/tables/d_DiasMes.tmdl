@@ -1,0 +1,23 @@
+table d_DiasMes
+	lineageTag: 21dd0ed5-981b-45cd-a502-ccac18d4202b
+
+	column NumDias
+		dataType: int64
+		formatString: 0
+		lineageTag: 970dd317-6541-4cf4-aa2f-352237925bd1
+		summarizeBy: none
+		sourceColumn: NumDias
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_DiasMes-56281e37-0340-4e4b-88ed-20004e82dc8f = m
+		mode: import
+		source =
+				let
+				    Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMjJXitUBUhYQyhJMGRtAKEOl2FgA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [NumDias = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Origem,{{"NumDias", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

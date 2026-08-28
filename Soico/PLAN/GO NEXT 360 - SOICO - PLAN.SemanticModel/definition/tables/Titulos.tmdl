@@ -1,0 +1,32 @@
+table Titulos
+	lineageTag: 7b81f01c-c69c-4537-a6be-0222d82fcccc
+
+	column ID
+		dataType: double
+		lineageTag: 5e5394e7-354e-4526-9936-a433a8993c75
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Parameter
+		dataType: string
+		lineageTag: d3f51efd-e1db-43fc-9259-60f2f0a90622
+		summarizeBy: none
+		sourceColumn: Parameter
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Titulos-fca5b6d0-7221-480a-938f-82c9719fa208 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("hVK7TsNAEPyVkysjpcB5Qrm52+AjF5915wSQlSJlKqTQ0EYU+Q6+xT/G3sPBtojo7J3x7Mys6zrJklFi0G43OtmP6mRMr6XRz8grbVn6Vok7P5/QnOuigu5wSkN8Rb5tLs2X7gCzPrDBwoLyyJwQgRWoHFm7xwOLPwD3IIKG5zx4E5sSDJgryXrokSBQmkO7UUYgu+8jhlwZ24IuPVRyJwUIZAKHG7PYR2/muoCiOStp8arHUs5D+GwauzJaaQala40aiDmzWffr0MzA1LxnykfpqC+66kut17J4CoirR5H0JayLaq6ZSGOtXDi1a6ZEazUdtd1TkgCCaCmuHw4KC9GcjdRO4OosMFxBBXKSCXZ3H0xIS6HlUqoOb/Ivj6UviOuQcnyrQ5aaPFJmNym5NmDjL+oSrCTPgYWoYTpwHdJOBx7tb1Y6wOpw/Dyw/P3UfJ+OB1Lf/wA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ID = _t, Parameter = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Source,{{"ID", type number}, {"Parameter", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

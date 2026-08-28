@@ -1,0 +1,23 @@
+table 'Date Parcela'
+	lineageTag: 1fe88482-e636-4899-8a94-475489a89da7
+
+	column Date
+		formatString: General Date
+		lineageTag: 6f9fa639-efd0-40de-8f3e-ec93d377f038
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variação
+			isDefault
+			relationship: ce8c4d92-7fb0-49f3-be7b-3132b51dd902
+			defaultHierarchy: LocalDateTable_a70ecc83-4074-4673-aa4c-efbc27a13bc6.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Date Parcela-1674c6ef-ea78-4fb0-905c-5ddde714c81e' = calculated
+		mode: import
+		source = CALENDAR(DATE(year(now())-5, 1, 1), DATE(year(now()), 12, 31) )
+
+	annotation PBI_Id = f838614f3fff4807baeefeb92e0b53bf
+

@@ -1,0 +1,54 @@
+table Capacidade
+	lineageTag: 6626ab26-395a-4daa-9a13-a23f84870c4b
+
+	column Data
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ade8b261-387a-4700-af94-125c71771ec5
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: b13f2b1a-8161-481b-912c-f89d11652dbd
+		summarizeBy: sum
+		sourceColumn: IdMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capacidade
+		dataType: double
+		lineageTag: e1e03897-f703-4875-9f4e-c0c38f27be2d
+		summarizeBy: sum
+		sourceColumn: Capacidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Inatividade
+		dataType: double
+		lineageTag: 1ad2fe80-25ea-40e7-8009-ea0595ab9b08
+		summarizeBy: sum
+		sourceColumn: Inatividade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Capacidade-8646f4ba-6a4f-463e-8955-a5c8f2293479 = m
+		mode: import
+		queryGroup: Meios
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    mhm.Data,#(lf)    mhm.IdMeio,#(lf)    mhm.Capacidade,#(lf)    mhm.Inatividade#(lf)From#(lf)    Meios_Horas_Mensais As mhm#(lf)Where#(lf)    year(mhm.Data) >= Year(GetDate()) - 3 and Year(mhm.Data) <= Year(GetDate())"])
+				in
+				    Origem
+
+	annotation PBI_QueryRelationships = {"columnCount":4,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Capacidade/Origem.{Data,0}","Section1/Capacidade/Origem.{IdMeio,1}","Section1/Capacidade/Origem.{Capacidade,2}","Section1/Capacidade/Origem.{Inatividade,3}"],"ColumnCount":4,"KeyColumnNames":[],"ColumnIdentities":["Section1/Capacidade/Origem.{Data,0}","Section1/Capacidade/Origem.{IdMeio,1}","Section1/Capacidade/Origem.{Capacidade,2}","Section1/Capacidade/Origem.{Inatividade,3}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

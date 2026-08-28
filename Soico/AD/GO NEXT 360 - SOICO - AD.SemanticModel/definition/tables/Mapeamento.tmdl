@@ -1,0 +1,83 @@
+table Mapeamento
+	lineageTag: 002fd346-8f21-46c9-acbc-bf1c2d8c1128
+
+	column IdCanal_GMediaAD
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c2d2720-fde2-4367-86a3-8e0df083835d
+		summarizeBy: sum
+		sourceColumn: IdCanal_GMediaAD
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataMkt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0059cd21-80cc-496e-9139-eaa5c20cb609
+		summarizeBy: none
+		sourceColumn: DataMkt
+
+		variation Variation
+			isDefault
+			relationship: db85fc7b-5a1f-4722-93bd-83c72821ae52
+			defaultHierarchy: LocalDateTable_a6eef63c-d3f3-47a8-a8ee-ff49da6b1a02.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora
+		dataType: string
+		lineageTag: 245d09bb-7981-49ed-b4b4-b438664ea649
+		summarizeBy: none
+		sourceColumn: Hora
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAnunciante
+		dataType: int64
+		formatString: 0
+		lineageTag: e12650c4-6b65-41dc-bbf6-3fe3ba2337b9
+		summarizeBy: sum
+		sourceColumn: IdAnunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeAnunciante
+		dataType: string
+		lineageTag: 0d0a13e3-92d4-4fa2-86c7-4f6faad672be
+		summarizeBy: none
+		sourceColumn: NomeAnunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChaveMkt = Mapeamento[CanalMkt]&Mapeamento[DataMkt]&Mapeamento[Hora]
+		lineageTag: 6de87dad-c70b-4579-9f44-b8c817524547
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column CanalMkt
+		dataType: string
+		lineageTag: 0c0d3651-e0df-4b1a-ad14-cfd2ef99345f
+		summarizeBy: none
+		sourceColumn: CanalMkt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Mapeamento-d105c614-9155-4daa-9550-27b31cd34a5b = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="set dateformat dmy;#(lf)SELECT#(lf)    t.IdCanal_GMediaAD,#(lf)    t.IdCanal_MKT,#(lf)    t.Data,#(lf)    (left(right('000000' + CAST(MIN(aud_exib.hora_exib) AS VARCHAR),6),2) + ':' + left(right('000000' + CAST(MIN(aud_exib.hora_exib) AS VARCHAR),4),2) + ':' + left(right('000000' + CAST(MIN(aud_exib.hora_exib) AS VARCHAR),2),2)) as Hora,#(lf)    t.IdAnunciante,#(lf)    t.NomeAnunciante#(lf)FROM (#(lf)    SELECT#(lf)        encomendasExibidas.canCodigo as IdCanal_GMediaAD,#(lf)        canais.canLeitura as IdCanal_MKT,#(lf)        MAX(aud_exib.dia) as Data,#(lf)        --aud_exib.hora_exib as Hora,#(lf)        spots.entIdAnunciante as IdAnunciante,#(lf)        entidades.entNome as NomeAnunciante#(lf)    FROM#(lf)        encomendasExibidas WITH (NOLOCK)#(lf)        INNER JOIN canais WITH (NOLOCK) ON canais.canCodigo = encomendasExibidas.cancodigo#(lf)        INNER JOIN spots WITH (NOLOCK) ON encomendasExibidas.spoId = spots.spoId#(lf)        INNER JOIN entidades WITH (NOLOCK) ON entidades.entId = spots.entIdAnunciante#(lf)        INNER JOIN aud_alinhamento_publicidade WITH (NOLOCK) ON encomendasExibidas.encId = aud_alinhamento_publicidade.encId and ISNULL(aud_alinhamento_publicidade.spoAutId, 0) = 0#(lf)        INNER JOIN aud_rel_alinhamento_publicidade WITH (NOLOCK) ON aud_alinhamento_publicidade.id_pub = aud_rel_alinhamento_publicidade.id_pub#(lf)        INNER JOIN aud_exib WITH (NOLOCK) ON aud_rel_alinhamento_publicidade.id_pubreport = aud_exib.id_exib#(lf)    WHERE#(lf)        --encomendasExibidas.canCodigo=1#(lf)        YEAR(encomendasExibidas.encDataExibicao) >= Year(GetDate()) - 1#(lf)        and encomendasExibidas.encDataExibicao <= GetDate() - 300#(lf)        --and year(encomendasExibidas.encDataExibicao)>=2015#(lf)    GROUP BY#(lf)        encomendasExibidas.canCodigo,#(lf)        --aud_exib.hora_exib,#(lf)        canais.canLeitura,#(lf)        spots.entIdAnunciante,#(lf)        entidades.entNome#(lf)    ) t#(lf)INNER JOIN aud_exib on aud_exib.cod_canal=t.IdCanal_MKT and aud_exib.dia=t.Data#(lf)INNER JOIN aud_rel_alinhamento_publicidade WITH (NOLOCK) ON aud_rel_alinhamento_publicidade.id_pubreport=aud_exib.id_exib#(lf)INNER JOIN aud_alinhamento_publicidade WITH (NOLOCK) ON aud_alinhamento_publicidade.id_pub=aud_rel_alinhamento_publicidade.id_pub and ISNULL(aud_alinhamento_publicidade.spoAutId, 0) = 0#(lf)INNER JOIN spots WITH (NOLOCK) ON spots.spoId=aud_alinhamento_publicidade.spoId and spots.entIdAnunciante=t.IdAnunciante#(lf)GROUP BY#(lf)    t.IdCanal_GMediaAD,#(lf)    t.IdCanal_MKT,#(lf)    t.Data,#(lf)    t.IdAnunciante,#(lf)    t.NomeAnunciante"]),
+				    #"Valor Substituído" = Table.ReplaceValue(Source,"Panda BIGGS","BIGGS",Replacer.ReplaceText,{"IdCanal_MKT"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Valor Substituído",{{"IdCanal_MKT", "CanalMkt"}, {"Hora", "Hora"}, {"Data", "DataMkt"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"CanalMkt"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Columns", {"IdCanal_GMediaAD"}, Canais, {"canCodigo"}, "Canais", JoinKind.LeftOuter),
+				    #"Expanded Canais" = Table.ExpandTableColumn(#"Merged Queries", "Canais", {"Canal"}, {"CanalMkt"})
+				in
+				    #"Expanded Canais"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

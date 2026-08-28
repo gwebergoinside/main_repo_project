@@ -1,0 +1,155 @@
+table Rappel
+	lineageTag: 2aed5dac-81e0-406b-aeb3-33d6dabea74e
+
+	column Tipo
+		dataType: string
+		lineageTag: 46cf4789-419d-4313-bbf1-d551cbf542a2
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 001ebe94-4739-4e2f-9cf1-69bc56fc181b
+		summarizeBy: sum
+		sourceColumn: ordPubCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: 98138b6c-fa22-4633-a726-106636c569af
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column anuncianteId
+		dataType: int64
+		formatString: 0
+		lineageTag: 572e16dc-0aac-4e64-ab92-3c44207033f9
+		summarizeBy: none
+		sourceColumn: anuncianteId
+
+		annotation SummarizationSetBy = Automatic
+
+	column dataExib
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7b372ee9-56cb-4dec-aea2-477e4c45953f
+		summarizeBy: none
+		sourceColumn: dataExib
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fab5507-2284-45a6-b206-d70804fa99ff
+		summarizeBy: none
+		sourceColumn: proId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubNegociacao
+		dataType: int64
+		formatString: 0
+		lineageTag: 829f606e-ac2f-4503-9966-158d88e5ad6b
+		summarizeBy: none
+		sourceColumn: ordPubNegociacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column distribuidorid
+		dataType: int64
+		formatString: 0
+		lineageTag: 589c341e-faf9-4a78-802f-5d226a00a038
+		summarizeBy: none
+		sourceColumn: distribuidorid
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendedor
+		dataType: int64
+		formatString: 0
+		lineageTag: 34afd675-86e9-41da-8d81-90d0c7ed9442
+		summarizeBy: none
+		sourceColumn: vendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column valorRappel
+		dataType: double
+		lineageTag: 8be4e423-4c59-4f9c-8e50-7792a7db31fa
+		summarizeBy: sum
+		sourceColumn: valorRappel
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ordPubClaId
+		dataType: int64
+		formatString: 0
+		lineageTag: 17e06353-d27a-4f70-b102-518a1d0c248e
+		summarizeBy: none
+		sourceColumn: ordPubClaId
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: f2e50d2f-4568-4229-871e-58dc935228e5
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipo
+		dataType: string
+		lineageTag: 89e3bcec-b34e-4f84-ae72-4d5ce0293b6d
+		summarizeBy: none
+		sourceColumn: negPerTipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal = RELATED(Canais[Canal])
+		lineageTag: 498f8f55-c203-40c1-b48b-058a67e1a352
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column rapTipTaxId
+		dataType: int64
+		formatString: 0
+		lineageTag: 8baa143a-128a-44df-a8d2-5213716aed44
+		summarizeBy: count
+		sourceColumn: rapTipTaxId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFact
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c0e64017-9eeb-4875-ba9b-40f70b29acc9
+		summarizeBy: none
+		sourceColumn: DataFact
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Rappel-3b3ef0e5-5de1-4260-83c8-db8eb66d88a9 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select #(lf)    'FATURADO' as Tipo,#(lf)    RappelApuramentos.ordPubCodigo,#(lf)    RappelApuramentos.canCodigo,#(lf)    RappelApuramentos.anuncianteId As anuncianteId,#(lf)    Cast(Convert(VARCHAR,OrdemPub.ordPubAno) + '-' + Convert(VARCHAR,OrdemPub.OrdPubMes) + '-' + Convert(VARCHAR,1) As DATETIME) As dataExib,#(lf)    RappelDocs.data_doc_df as DataFact,#(lf)    ordempub.proId,#(lf)    Case#(lf)        When IsNull(ordemPub.ordPubNegociacao, 0) = 0#(lf)        Then ordemPub.ordPubFlagFixo#(lf)        Else ordemPub.ordPubNegociacao#(lf)    End As ordPubNegociacao,#(lf)    RappelApuramentos.distribuidorId As distribuidorid,#(lf)    campanhas.camVendedor As vendedor,#(lf)    rappeltipotaxas.rapTipTaxId,#(lf)    RappelApuramentos.valorApurado As valorRappel,#(lf)    ordemPub.ordPubClaId,#(lf)    ordemPub.tipPubId,#(lf)    Case ordemPub.ordPubFlagFixo#(lf)        When 2#(lf)        Then negPeriodos.negPerTipo#(lf)        When 1#(lf)        Then 'V'#(lf)        Else 'D'#(lf)    End As negPerTipo#(lf)From#(lf)    RappelDocs With(NoLock)#(lf)    join RappelApuramentos With(NoLock) on RappelApuramentos.rapDocId=RappelDocs.rapDocId#(lf)    join rappeltaxas With(NoLock) on rappeltaxas.rapId=RappelDocs.rapId and rappeltaxas.rapTaxId=RappelDocs.rapTaxId#(lf)    join RappelTipoTaxas With(NoLock) on RappelTipoTaxas.rapTipTaxId=rappeltaxas.rapTipTaxId#(lf)   join pedidos With(NoLock) on pedidos.pedidoId=RappelApuramentos.pedidoId#(lf)    join OrdemPub With(NoLock) on OrdemPub.ordpubcodigo=RappelApuramentos.ordpubcodigo#(lf)    join Campanhas With(NoLock) on Campanhas.camId=Ordempub.camId#(lf)    left outer join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao#(lf)Where#(lf)    year(pedidos.dataFact) >= year(getdate()) - 5#(lf)#(lf)UNION ALL#(lf)#(lf)select#(lf)    'FATURADO PROVISÓRIO' as Tipo,#(lf)    pedidos.ordPubCodigo,#(lf)    pedidos.canCodigo,#(lf)    pedidos.anuncianteId As anuncianteId,#(lf)    Cast(Convert(VARCHAR,pedidos.ordPubAno) + '-' + Convert(VARCHAR,pedidos.ordPubMes) + '-' + Convert(VARCHAR,1) As DATETIME) As dataExib,#(lf)    rappel.rapDataFim as DataFact,#(lf)    pedidos.proId,#(lf)    Case#(lf)        When IsNull(ordemPub.ordPubNegociacao, 0) = 0#(lf)        Then ordemPub.ordPubFlagFixo#(lf)        Else ordemPub.ordPubNegociacao#(lf)    End As ordPubNegociacao,#(lf)    pedidos.distribuidorId As distribuidorid,#(lf)    campanhas.camVendedor As vendedor,#(lf)NULL as rapTipTaxId,#(lf)SUM(#(lf)Round(#(lf)IsNull(Rappel.rapTaxaNegociada, 0.00)#(lf)* (#(lf)Round(#(lf)IsNull(pedidoReceitas.PUB, 0) #(lf)* (1 - (IsNull(campanhas.camDescontoAgencia, 0) / 100))#(lf),2)#(lf))#(lf)* (-1)#(lf),2)#(lf))#(lf)#(lf)As valorRappel,#(lf)    pedidos.ordPubClaId,#(lf)    pedidos.tipPubId,#(lf)    Case ordemPub.ordPubFlagFixo#(lf)        When 2#(lf)        Then negPeriodos.negPerTipo#(lf)        When 1#(lf)        Then 'V'#(lf)        Else 'D'#(lf)    End As negPerTipo#(lf)from pedidos With(NoLock)#(lf)    join pedidoReceitas With(NoLock) on pedidoReceitas.pedidoId=pedidos.pedidoId#(lf)    join campanhas With(NoLock) on campanhas.camId=pedidos.camId#(lf)    join ordempub With(NoLock) on ordempub.ordpubcodigo=pedidos.ordpubcodigo#(lf)    join rappel With(NoLock) on (rappel.entIdCliente=pedidos.entFactId or (campanhas.camCentralCompras=rappel.entIdCliente and IsNull(rappel.flgCentral,0)=1)) and (pedidos.dataFact between rappel.rapDataInicio and rappel.rapDataFim)#(lf)    join entidades e With(NoLock) on e.entId=rappel.entIdCliente#(lf)    left outer join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao#(lf)where 1=1#(lf)    and pedidos.Estado not in ('C','P1','P2','P3','SC','SS','X')#(lf)    and IsNull(pedidos.flgRappel,0)=1#(lf)    and year(pedidos.dataFact) >= year(getdate()) - 5#(lf)and month(pedidos.dataFact) <> 12#(lf)    and 1 in (select 1 from rappelDocs where RappelDocs.rapId = Rappel.rapId and Mes is null)#(lf)group by#(lf)    pedidos.ordPubCodigo,#(lf)    pedidos.canCodigo,#(lf)    pedidos.anuncianteId,#(lf)    pedidos.ordPubAno,#(lf)    pedidos.ordPubMes,#(lf)rappel.rapDataFim,#(lf)    pedidos.proId,#(lf)    ordemPub.ordPubNegociacao,#(lf)    ordemPub.ordPubFlagFixo,#(lf)    pedidos.distribuidorId,#(lf)    campanhas.camVendedor,#(lf)    pedidos.ordPubClaId,#(lf)    pedidos.tipPubId,#(lf)negPeriodos.negPerTipo#(lf)#(lf)UNION ALL#(lf)#(lf)select#(lf)    'PROVISÓRIO' as Tipo,#(lf)    pedidos.ordPubCodigo,#(lf)    pedidos.canCodigo,#(lf)    pedidos.anuncianteId As anuncianteId,#(lf)    Cast(Convert(VARCHAR,pedidos.ordPubAno) + '-' + Convert(VARCHAR,pedidos.ordPubMes) + '-' + Convert(VARCHAR,1) As DATETIME) As dataExib,#(lf)Cast(Convert(VARCHAR,pedidos.ordPubAno) + '-' + Convert(VARCHAR,pedidos.ordPubMes) + '-' + Convert(VARCHAR,1) As DATETIME) as DataFact,#(lf)    pedidos.proId,#(lf)    Case#(lf)        When IsNull(ordemPub.ordPubNegociacao, 0) = 0#(lf)        Then ordemPub.ordPubFlagFixo#(lf)        Else ordemPub.ordPubNegociacao#(lf)    End As ordPubNegociacao,#(lf)    pedidos.distribuidorId As distribuidorid,#(lf)    campanhas.camVendedor As vendedor,#(lf)NULL as rapTipTaxId,#(lf)SUM(#(lf)Round(#(lf)IsNull(Rappel.rapTaxaNegociada, 0.00)#(lf)* (#(lf)Round(#(lf)IsNull(pedidoReceitas.PUB, 0) #(lf)* (1 - (IsNull(campanhas.camDescontoAgencia, 0) / 100))#(lf), 2)#(lf)), #(lf)2)#(lf))#(lf)As valorRappel,#(lf)    pedidos.ordPubClaId,#(lf)    pedidos.tipPubId,#(lf)    Case ordemPub.ordPubFlagFixo#(lf)        When 2#(lf)        Then negPeriodos.negPerTipo#(lf)        When 1#(lf)        Then 'V'#(lf)        Else 'D'#(lf)    End As negPerTipo#(lf)from pedidos With(NoLock)#(lf)    join pedidoReceitas With(NoLock) on pedidoReceitas.pedidoId=pedidos.pedidoId#(lf)    join campanhas With(NoLock) on campanhas.camId=pedidos.camId#(lf)    join ordempub With(NoLock) on ordempub.ordpubcodigo=pedidos.ordpubcodigo#(lf)    join rappel With(NoLock) on (rappel.entIdCliente=pedidos.entFactId or (campanhas.camCentralCompras=rappel.entIdCliente and IsNull(rappel.flgCentral,0)=1)) and (pedidos.dataFact between rappel.rapDataInicio and rappel.rapDataFim)#(lf)    join entidades e With(NoLock) on e.entId=rappel.entIdCliente#(lf)    left outer join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao#(lf)where 1=1#(lf)    and pedidos.Estado not in ('C','P1','P2','P3','SC','SS','X')#(lf)    and IsNull(pedidos.flgRappel,0)=1#(lf)    and year(pedidos.dataFact) >= year(getdate()) - 5#(lf)and month(pedidos.dataFact) <> 12#(lf)    --and 1 not in (select 1 from rappelApuramentos where pedidoId=pedidos.pedidoId)#(lf)group by#(lf)    pedidos.ordPubCodigo,#(lf)    pedidos.canCodigo,#(lf)    pedidos.anuncianteId,#(lf)    pedidos.ordPubAno,#(lf)    pedidos.ordPubMes,#(lf)    pedidos.proId,#(lf)    ordemPub.ordPubNegociacao,#(lf)    ordemPub.ordPubFlagFixo,#(lf)    pedidos.distribuidorId,#(lf)    campanhas.camVendedor,#(lf)    pedidos.ordPubClaId,#(lf)    pedidos.tipPubId,#(lf)negPeriodos.negPerTipo"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"valorRappel", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

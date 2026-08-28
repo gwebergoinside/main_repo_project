@@ -1,0 +1,39 @@
+table Produtos
+	lineageTag: 6b9535bb-824f-4d66-b61a-50bef6c3b81c
+
+	column proId
+		dataType: int64
+		formatString: 0
+		lineageTag: 14317b1c-2943-4346-afad-a4a5de72af4d
+		summarizeBy: none
+		sourceColumn: proId
+
+		annotation SummarizationSetBy = Automatic
+
+	column proDescricao
+		dataType: string
+		lineageTag: 68b1c19e-69ad-4f1f-a0ca-d3272b8370c1
+		summarizeBy: none
+		sourceColumn: proDescricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipProId
+		dataType: string
+		lineageTag: a925b872-b036-411f-bd6d-442b6c99df20
+		summarizeBy: none
+		sourceColumn: TipProId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Produtos-4e7638eb-fbb2-450c-a360-7c64eed6d83b = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)proId,#(lf)proDescricao,#(lf)TipProId#(lf)    --tp.tipProId,#(lf)    --t.tipProDescricao as [Setor Atividade],#(lf)    --tp.tipProDescricao as [Sub-Setor]#(lf)From#(lf)    --tipoProduto t join tipoproduto tp on tp.tippropaiid = t.tipproid#(lf)Produtos"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

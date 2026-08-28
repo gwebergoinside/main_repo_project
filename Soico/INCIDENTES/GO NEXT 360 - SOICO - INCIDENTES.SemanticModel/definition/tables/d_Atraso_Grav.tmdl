@@ -1,0 +1,39 @@
+table d_Atraso_Grav
+	lineageTag: 49655c75-c86c-4a1d-a403-1d2fe9666ecd
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1681a2c4-24fb-4156-91d3-d22cf1c985cf
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Field
+		dataType: string
+		lineageTag: 0829a445-e324-4160-bf09-056b0280b39a
+		summarizeBy: none
+		sourceColumn: Field
+
+		annotation SummarizationSetBy = Automatic
+
+	column TextValue
+		dataType: string
+		lineageTag: 22ead332-f808-40e8-86c0-63d8a8762500
+		summarizeBy: none
+		sourceColumn: TextValue
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Atraso_Grav-fc7d07c0-1285-421b-a25f-0767b1d75a8b = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(#"@Org", BD, [Query="SELECT Inc.Id#(lf),EF.[Name] Field#(lf),EFV.TextValue#(lf)FROM Incidencias Inc#(lf)LEFT JOIN Global_ExtendedFieldsValues EFV ON Inc.Id = EFV.BusinessObject#(lf)LEFT JOIN Global_ExtendedFields EF ON EFV.ExtendedFieldId = EF.Id#(lf)LEFT JOIN Global_ExtendedFieldsContexts EFC ON EF.ContextId = EFC.Id#(lf)WHERE 1 = 1#(lf)AND EFC.EntityId = 7#(lf)AND EF.IsEnabled = 1"]),
+				    #"Linhas Filtradas" = Table.SelectRows(Origem, each ([Field] = "Atraso Gravação"))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_ResultType = Table
+

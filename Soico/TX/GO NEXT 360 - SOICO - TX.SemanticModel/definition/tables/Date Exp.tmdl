@@ -1,0 +1,99 @@
+table 'Date Exp'
+	lineageTag: 8556acae-07e6-4ac2-950b-706691a43263
+
+	column Date
+		formatString: General Date
+		lineageTag: 26414465-c4af-40d9-97a1-5012c7712423
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 38b62548-a971-47d3-9397-df5dc32ca251
+			defaultHierarchy: LocalDateTable_f6858966-5fce-4b65-a284-a3dcd41106b3.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		formatString: 0
+		lineageTag: 1bd52d13-5ffc-424a-834f-c0e49a31c598
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ano]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		lineageTag: 889af484-4ce4-47dd-a875-47142d33351c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mês]
+		sortByColumn: NºMês
+
+		annotation SummarizationSetBy = Automatic
+
+	column NºMês
+		formatString: 0
+		lineageTag: d4bf9f74-ae40-4d3a-a77f-40f8ec92b6f2
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [NºMês]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		lineageTag: d741f408-c4ef-4e63-bcbb-27374edad38a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana'
+		lineageTag: cb213f42-fc71-479b-bb3a-62b9807da34b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Dia Semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nº dia Semana'
+		formatString: 0
+		lineageTag: 983a3fbb-1bc8-4412-a634-658109195afd
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Nº dia Semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		formatString: 0
+		lineageTag: dd3dbd92-d379-463e-9950-2a2022652de0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Dia]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Date Exp-e4b9b5e7-f317-4412-8ffe-354938aaa325' = calculated
+		mode: import
+		source = ```
+				var a =year(min(Contratos[DATA_INICIO_TITULO]))
+				var b=YEAR(max(Contratos[DATA_FIM_TITULO]))
+				var dates=filter(CALENDARAUTO(),
+				year([Date])>=a && YEAR([Date])<=b)
+				
+				RETURN
+				    ADDCOLUMNS(
+				        Dates,
+				        "Ano", YEAR ( [Date] ),
+				        "Mês", SWITCH(MONTH([Date]),1,"Jan",2,"Feb",3,"Mar",4,"Apr",5,"May",6,"Jun",7,"Jul",8,"Aug",9,"Sep",10,"Oct",11,"Nov",12,"Dec"),
+				        "NºMês", MONTH ( [Date] ),
+				        "Trimestre",  CONCATENATE("Trimestre ",ROUNDUP(MONTH([date])/3,0)),
+						"Dia Semana" ,SWITCH(WEEKDAY([Date]),1,"Sunday",2,"Monday",3,"Tuesday",4,"Wednesday",5,"Thursday",6,"Friday",7,"Saturday"),
+						"Nº dia Semana",  WEEKDAY([Date]),
+						"Dia" , DAY([Date])		
+				)
+				```
+

@@ -1,0 +1,49 @@
+table TranslationTable
+	lineageTag: 93ff1ece-23b5-419f-a52f-5385a7dbb4b6
+
+	column ID
+		dataType: string
+		lineageTag: 780e37c5-8cb2-4af8-ba8e-1d54fd6122de
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Atribute
+		dataType: string
+		lineageTag: 6fa7f9cc-3b51-422b-a861-ada1ff089769
+		summarizeBy: none
+		sourceColumn: Atribute
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'value translation'
+		dataType: string
+		lineageTag: 8b4e35b8-5c05-481f-af49-da70c05b53d2
+		summarizeBy: none
+		sourceColumn: value translation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: 4157d89d-7e6b-4f57-8f47-f77f0808b85d
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TranslationTable-8cd81f9e-2600-40ca-a438-9499778291b6 = m
+		mode: import
+		queryGroup: Translation
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("lZXPTuMwEMZfxaq0UishxJ+WwtEkhgbSJIoDuyuEkNVGbLJAUFsQV8SB51jtYd9hj5sX23iS2I0dl3CLZ+b7eTz54lxd9XZ7W70oWd3FN4+3xWNI6MXUlw/XW1e9vWZJEPpnxIp8ivrfI3tQR2SAa/abGsv3IiwFjSUvHzbLyTdiXeTv+ZsvJFqIy0ZG2ZR4FLutMS48aAptEmF3QlB9NDUUlYMYb1bxB7vcSwesJznrUB3QNMAhDgWMakEe48qjphK7voXrAzqg00Jctrtj1IXFiEKqSkUU1IpPcORcOja2CbJJ89ymDFB0K0mhWqtYCHv5q+tQIvpCfcsamBPAGKpT9qLQd32EA+7AwhDwrqswaYRBPzL0UFqpMThTCjgHpunB+xEnaQuDfmw4x7Hvnzve6foZ6hDoFJe5RZfv5fmouoR6xVsVC9UdtYXghlC8FRBK/eIDrw8SFDsRbAOgNXcGSUApRrOwSzw7fw0dn+8pRrQpBRzFah6xio3L6V4uke3Q4l07x45b0z4oAOb+Z5io/5WQ80HnOtihg2FRP5wMDK4tc0AadSFN/BBTM6xKA49b2GKL+Q1A+an+/UXTOMmWKLhjDzGbF0+8QE+lMgeocQeUgVICDlVAOBHKtRVXlIIjVVBXI/6LWM7YHSt/WzvGwuclwqvkOZmzeSxEzSgQdjcRyEs8e1qVXUqCjAJhbxMhyB5WTXUZASX35+mCPf4Qovu4SKJ5jIJFNn/K/+S/szqXtiaBM9Q64Hsg9QRtUdCPVL2YkcYwZYCjeU5WVzNhxQe1LWRML0n1GkBrHpxki/zXIsmEkUDVpG3LwbclAax5sx0cJDN2G99r+VQUyNequVduLE6lQI0Vgjrcqc2CVhX2CzrOsp/Jwy16zBbcFGk8A7O1JGqKcl2fONYEo/KOV5dQb76WqbqEevOVS+WNX/wqT1jywlA1Szb4TCnsM1z7dOTFw8e4LbxmSqW1q4YjhRLEy2XGDJyWpCQddCLBO/2gXcM2ZqlsYtytCW4KGOoHO8o6oB92GLnGbu1WJR+tkRUe/1ir9rjITlizJjUUXV//Bw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ID = _t, Type = _t, #"PT-PT" = _t, #"PT-BR" = _t]),
+				    #"Anulação de Dinamização Apenas em Colunas Selecionadas" = Table.Unpivot(Source, {"PT-PT", "PT-BR"}, "Atributo", "Valor"),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Anulação de Dinamização Apenas em Colunas Selecionadas", each [Atributo] = Language),
+				    #"Colunas com Nome Mudado" = Table.RenameColumns(#"Linhas Filtradas",{{"Valor", "value translation"}, {"Atributo", "Atribute"}})
+				in
+				    #"Colunas com Nome Mudado"
+
+	annotation PBI_ResultType = Table
+

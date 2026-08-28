@@ -1,0 +1,23 @@
+table 'Simulador Exclusivos'
+	lineageTag: 4abd474d-dd72-4b6f-8381-5b92b4d9d249
+
+	measure 'Parâmetro Valor' = SELECTEDVALUE('Simulador Exclusivos'[Parâmetro])
+		lineageTag: ba7fca38-b99a-4596-b7ce-d4d6ff6272b9
+
+	column Parâmetro
+		formatString: 0%;-0%;0%
+		lineageTag: 72945621-10df-4eac-8149-42db4f79484e
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Simulador Exclusivos-b2fca4d3-2433-4815-8dba-01704a35d1e9' = calculated
+		mode: import
+		source = GENERATESERIES(0, 1, 0.1)
+

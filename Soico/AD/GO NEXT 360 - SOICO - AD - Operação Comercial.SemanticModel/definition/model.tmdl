@@ -1,0 +1,49 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Operação Comercial'
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup BD
+
+	annotation PBI_QueryGroupOrder = 1
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Comercial","OPLog","Canais","Utilizadores","Entidades","Server","BD","images","lista de imagem","logo header","Titulos"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table DateTableTemplate_4cc20a94-09e2-4929-a9d5-8240048e93fc
+ref table Calendario
+ref table LocalDateTable_e0275eac-e0e4-4617-b880-6cf037ee673c
+ref table LocalDateTable_40e49aed-7a2a-4133-acba-279ead422257
+ref table Comercial
+ref table LocalDateTable_67355890-bc3f-4496-82bd-c3a9e061dbc7
+ref table LocalDateTable_91206f6c-afe5-423e-96bc-99be7c51129a
+ref table LocalDateTable_437baecc-696c-40df-aca9-de2f025a1ad2
+ref table LocalDateTable_de5ec805-ad53-4669-8cc8-dc89bc44ee3b
+ref table OPLog
+ref table LocalDateTable_a3392157-db1c-47b4-911c-7f9d93f611e5
+ref table LocalDateTable_c16567ee-dbf7-4603-90ce-93aa6b47440e
+ref table LocalDateTable_437cf090-204c-417f-847d-369050a3cd4e
+ref table Canais
+ref table LocalDateTable_dabf4ed1-18e9-45e6-b60e-02b9970f2ea4
+ref table OPs
+ref table Utilizadores
+ref table Entidades
+ref table Distribuidor
+ref table Vendedor
+ref table Responsavel
+ref table images
+ref table 'logo header'
+ref table Titulos
+
+ref cultureInfo en-US
+

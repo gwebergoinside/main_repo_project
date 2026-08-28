@@ -1,0 +1,189 @@
+table Calendario
+	lineageTag: 7aa77116-2bf8-4789-a889-8cdc16c5eb3e
+
+	column Date
+		formatString: General Date
+		lineageTag: db3a9b12-aa56-409e-a2f8-2e6b2d646670
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 3a308b5c-5862-4048-8008-0f1e4b23bd88
+			defaultHierarchy: LocalDateTable_7ea6ede7-4580-4e26-a605-5296089a1445.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre = CONCATENATE("Trimestre ",ROUNDUP(MONTH(Calendario[Date])/3,0))
+		lineageTag: c0139fbf-4eff-400d-b92d-97a4a5826713
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana' = SWITCH(WEEKDAY([Date]),1,"Domingo",2,"Segunda-Feira",3,"Terça-Feira",4,"Quarta-Feira",5,"Quinta-Feira",6,"Sexta-Feira",7,"Sábado")
+		lineageTag: d7cd945e-3877-433d-b6a4-d8016fd66ed5
+		summarizeBy: none
+		sortByColumn: 'Numero Dia Semana'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Numero Dia Semana' = WEEKDAY( Calendario[Date],2 )
+		formatString: 0
+		lineageTag: 6a97bdf3-55be-4be5-80cc-91c7fbee9379
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês = MONTH( Calendario[Date] )
+		formatString: 0
+		lineageTag: cccd9738-24c1-473d-bd79-459ec99e26c5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês anterior' = MONTH(now())-1
+		formatString: 0
+		lineageTag: 55f30879-0438-4e9e-b570-5d6beb782f51
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Nome' = REPLACE(FORMAT(Calendario[Date],"MMMM") ,1,1,UPPER(LEFT(FORMAT(Calendario[Date],"MMMM") )))
+		lineageTag: 93ffa65e-f855-412c-9e7f-0b50b6e8982d
+		summarizeBy: none
+		sortByColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano = year(Calendario[Date])
+		formatString: 0
+		lineageTag: 561f131c-af7a-4863-aefa-3db2be0a5b8b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Semana = WEEKNUM(Calendario[Date])
+		formatString: 0
+		lineageTag: 7020444b-c4d8-4497-b77c-3badec345765
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Mes' = DAY( Calendario[Date] )
+		formatString: 0
+		lineageTag: 72a074bc-a564-4708-8f38-ae234eaf554f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Mais 1' = Calendario[Date]+1
+		formatString: General Date
+		lineageTag: aa70d86f-f84b-4c4c-8f44-cbbdef9999f4
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 3a112ecc-3851-453d-ae87-bd292d5d793d
+			defaultHierarchy: LocalDateTable_f79761a7-ab78-45e1-95ab-111ee4dbdde8.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week End' = Calendario[Date] - WEEKDAY(Calendario[Date],2) + 7
+		formatString: General Date
+		lineageTag: d63e6868-5346-4a81-9da1-35aa2f16b9e8
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 5bddafcd-3390-4c67-94a5-ec381753a294
+			defaultHierarchy: LocalDateTable_95d1eaee-a937-4a1d-976b-9f0f412d40de.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Start' = Calendario[Date] - WEEKDAY('Calendario'[Date],2) +1
+		formatString: General Date
+		lineageTag: 4aedaf75-26ab-4e7d-a4d1-a748f1e382b2
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 67029cfd-24f7-49b1-b101-793d215ccb31
+			defaultHierarchy: LocalDateTable_fbe0fffd-0dd3-4a4f-a0cd-48c6b46770e1.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weeks = [Week Start] &" - "& [Week End]
+		lineageTag: bbb69993-baa6-4392-9891-4bbbe0c0ef0f
+		summarizeBy: none
+		sortByColumn: 'Week Start'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes Abr' = REPLACE(FORMAT(Calendario[Date],"MMM") ,1,1,UPPER(LEFT(FORMAT(Calendario[Date],"MMM") )))
+		lineageTag: 17e2d074-90d5-43e3-8a08-1e7e6ed6911f
+		summarizeBy: none
+		sortByColumn: Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Nome' =
+			"Dia " & [Dia Mes] &
+			            " | " & [Dia Semana]
+		lineageTag: de7a2171-0991-49f6-a22c-caca33d617a5
+		summarizeBy: none
+		sortByColumn: 'Dia Mes'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Days =
+			
+			VAR _TY = FORMAT(Calendario[Date],"dd-mm-yy") & " ("& Calendario[Dia Semana Abre] &")"
+			VAR _LY = FORMAT(DATE(YEAR(Calendario[Date]),MONTH(Calendario[Date])-1,DAY(Calendario[Date])),"dd-mm-yy")& " ("& Calendario[Dia Semana DateLastMonth Abre] &")" /*FORMAT(DATE(YEAR(Calendario[Date]),MONTH(Calendario[Date])-1,DAY(Calendario[Date])) + IF(MOD(MONTH(Calendario[Date]),3) = 0, 2,1),"dd-mm-yy") & " ("& Calendario[Dia Semana DateLastMonth Abre] &")"*/
+			RETURN
+			_TY &"-"& _LY
+		lineageTag: 05d818a7-89b3-42cf-bd8a-75238f9e2d1a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana Abre' = SWITCH(WEEKDAY([Date]),1,"Dom",2,"Seg",3,"Ter",4,"Qua",5,"Qui",6,"Sex",7,"Sab")
+		lineageTag: 0eb5f351-3ffb-4a4a-aa31-c0e4541449bc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateLastMonth = ```
+			FORMAT(DATE(YEAR(Calendario[Date]),MONTH(Calendario[Date])-1,DAY(Calendario[Date])),"dd-mmm-YYYY") -- + IF(MOD(MONTH(Calendario[Date]),3) = 0,2,1),"dd-mmm") & " ("& Calendario[Dia Semana Abre] &")" 
+			            /*FORMAT(DATE(YEAR(Calendario[Date])-1,MONTH(Calendario[Date]),DAY(Calendario[Date])) + IF(MOD(YEAR(Calendario[Date]),4) = 0, 2,1),"dd-mmm") & " ("& Calendario[Weekday] &")"*/
+			```
+		lineageTag: 2ddb76dc-24c6-4a2a-bfb1-68491ee09102
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayMonthTY = FORMAT(Calendario[Date],"dd-mmm") & " ("& Calendario[Dia Semana Abre] &")"
+		lineageTag: 6d4d980f-e0f3-4d20-afae-e7e8138b9033
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayLastMonth = ```
+			FORMAT(DATE(YEAR(Calendario[Date]),MONTH(Calendario[Date])-1,DAY(Calendario[Date])),"dd-mmm")& " ("& Calendario[Dia Semana DateLastMonth Abre] &")"  -- + IF(MOD(MONTH(Calendario[Date]),3) = 0,2,1),"dd-mmm") & " ("& Calendario[Dia Semana Abre] &")" 
+			            /*FORMAT(DATE(YEAR(Calendario[Date])-1,MONTH(Calendario[Date]),DAY(Calendario[Date])) + IF(MOD(YEAR(Calendario[Date]),4) = 0, 2,1),"dd-mmm") & " ("& Calendario[Weekday] &")"*/
+			```
+		lineageTag: fab44c4b-a50a-40b9-a109-aaad78f63ebf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana DateLastMonth Abre' = SWITCH(WEEKDAY([DateLastMonth]),1,"Dom",2,"Seg",3,"Ter",4,"Qua",5,"Qui",6,"Sex",7,"Sab")
+		lineageTag: b495266c-6d05-4eb8-b04c-a9b5238142c3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendario-0f26eab5-1af5-4419-82c0-391dae385f8d = calculated
+		mode: import
+		source = CALENDAR(DATE(year(now())-3, 1, 1), DATE(year(now())+1, 12, 31) )
+

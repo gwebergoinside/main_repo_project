@@ -1,0 +1,137 @@
+relationship 49f3161e-e730-4d76-88bc-2a9a7b81e433
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.'Month & Year'
+	toColumn: LocalDateTable_e0275eac-e0e4-4617-b880-6cf037ee673c.Date
+
+relationship a82fe411-50d7-4050-9d10-feec285b2118
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Date
+	toColumn: LocalDateTable_40e49aed-7a2a-4133-acba-279ead422257.Date
+
+relationship 9ecf1c53-5276-48b0-9667-de041a585ef5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Comercial.DataCampanhas
+	toColumn: LocalDateTable_67355890-bc3f-4496-82bd-c3a9e061dbc7.Date
+
+relationship 2024d837-a394-4c8f-a45f-e0489495171a
+	fromColumn: Comercial.encLogData
+	toColumn: Calendario.Date
+
+relationship 4b74a9a7-e4bb-4820-a73f-3985fb68b8f7
+	isActive: false
+	fromColumn: Comercial.DataOrdPub
+	toColumn: Calendario.Date
+
+relationship 4dce3dcf-beb8-43cf-b8ea-fff58b2ccf94
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Comercial.ordPubData
+	toColumn: LocalDateTable_91206f6c-afe5-423e-96bc-99be7c51129a.Date
+
+relationship 27f716a2-dcf0-4a3f-88a1-80702befdaa7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Comercial.encDataExibicao
+	toColumn: LocalDateTable_437baecc-696c-40df-aca9-de2f025a1ad2.Date
+
+relationship 2a62b4f1-157e-49af-b3ec-5afdbd11a5a1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Comercial.encLogDataHora
+	toColumn: LocalDateTable_de5ec805-ad53-4669-8cc8-dc89bc44ee3b.Date
+
+relationship 073ad9bc-5207-4229-90ef-aa3702d7daa2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OPLog.ordPubData
+	toColumn: LocalDateTable_a3392157-db1c-47b4-911c-7f9d93f611e5.Date
+
+relationship c6ed2192-5d0e-40b8-8bb5-c112637ee58c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Comercial.camDataRegisto
+	toColumn: LocalDateTable_c16567ee-dbf7-4603-90ce-93aa6b47440e.Date
+
+relationship 2482d01d-0c45-4f15-9510-78b1a6c80e57
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OPLog.ordPubDate
+	toColumn: LocalDateTable_437cf090-204c-417f-847d-369050a3cd4e.Date
+
+relationship 205b38f6-1efd-4ebd-abdb-2f5210322ac9
+	isActive: false
+	fromColumn: Comercial.__campsDate
+	toColumn: Calendario.Date
+
+relationship 2b15e58c-1e54-4f60-a4dd-54cdf09912bd
+	fromColumn: OPLog.canCodigo
+	toColumn: Canais.CanCodigo
+
+relationship df3322f7-7941-4726-9c9c-5df8b4ee2d1f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: OPLog.Data
+	toColumn: LocalDateTable_dabf4ed1-18e9-45e6-b60e-02b9970f2ea4.Date
+
+relationship 3b538760-b549-4496-a684-d307e4ec2975
+	fromColumn: OPLog.ordPubCodigo
+	toColumn: OPs.OPs
+
+relationship 0ffb081a-7822-436f-a507-4ecda5109aad
+	fromColumn: Comercial.ordPubCodigo
+	toColumn: OPs.OPs
+
+relationship 7101ced8-16e4-48cd-a1e8-4c3015abb706
+	fromColumn: OPLog.camResponsavel
+	toColumn: Responsavel.Id
+
+relationship f93029f8-241f-48b2-91a2-93edb7160e85
+	fromColumn: OPLog.camDistribuidor
+	toColumn: Distribuidor.Id
+
+relationship bddd3196-22e9-4e46-b602-cb0c786bee6c
+	fromColumn: OPLog.camVendedor
+	toColumn: Vendedor.Id
+
+relationship 6b6d63d6-6d4d-4d4a-9d18-88f75704d23e
+	fromColumn: OPLog.ordPubAssistente
+	toColumn: Utilizadores.Id
+
+relationship 66c6dd85-bcbf-4f88-9101-5710adee81b8
+	fromColumn: OPLog.camAnunciante
+	toColumn: Entidades.Id
+
+relationship 862071ec-1732-42f4-85c0-59cc728cae6c
+	fromColumn: Comercial.IdDistribuidor
+	toColumn: Distribuidor.Id
+
+relationship d1d19519-2722-4036-8647-71996421a664
+	fromColumn: Comercial.IdResponsavel
+	toColumn: Responsavel.Id
+
+relationship e358afa6-336f-480d-8670-c0955e5886b8
+	fromColumn: Comercial.IdVendedor
+	toColumn: Vendedor.Id
+
+relationship 0019a0ba-2a8f-484d-9dc4-385841c3e33e
+	fromColumn: Comercial.IdAnunciante
+	toColumn: Entidades.Id
+
+relationship ebcab18e-e91c-480f-bbe3-5a66a1cb6086
+	fromColumn: Comercial.IdAssistente
+	toColumn: Utilizadores.Id
+
+relationship fbd19e37-0928-4828-8432-22451d8332b0
+	fromColumn: OPLog.'OrdPubData 00'
+	toColumn: Calendario.Date
+
+relationship 2f7dd63b-f71e-4326-87fa-d0ffb4218e4b
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Comercial.ordPubCodigo
+	toColumn: OPLog.ordPubCodigo
+
+relationship 42af881a-0578-453d-9f94-9fa8f9e4fe72
+	fromColumn: Comercial.canCodigo
+	toColumn: Canais.CanCodigo
+
+relationship d84d598e-5cca-4daf-8792-b155651de72a
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Titulos.ID
+	toColumn: Entidades.Id
+

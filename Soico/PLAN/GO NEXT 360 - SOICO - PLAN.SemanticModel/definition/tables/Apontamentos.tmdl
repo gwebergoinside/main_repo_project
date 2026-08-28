@@ -1,0 +1,873 @@
+table Apontamentos
+	lineageTag: 22d0af62-005f-40e7-bb35-10e84054ebad
+
+	column TempoImputado
+		dataType: double
+		lineageTag: 5cc4ef40-8d9f-4eed-981a-a81c8d348068
+		summarizeBy: sum
+		sourceColumn: TempoImputado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DataImputacao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1ec5cce5-dd03-463d-9126-4b05c6036541
+		summarizeBy: none
+		sourceColumn: DataImputacao
+
+		variation Variation
+			isDefault
+			relationship: bd3110d4-f323-41c1-9fd5-3c8c3cae06bc
+			defaultHierarchy: LocalDateTable_837005d5-bd06-435a-8451-dd2b5d2f7116.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column AnoImput
+		dataType: int64
+		formatString: 0
+		lineageTag: ccebc1c7-1e9f-44b4-8df0-cdde3a0dfc31
+		summarizeBy: sum
+		sourceColumn: AnoImput
+
+		annotation SummarizationSetBy = Automatic
+
+	column MesImput
+		dataType: int64
+		formatString: 0
+		lineageTag: 0532dbdd-17e1-4ec9-b484-b756f3e68401
+		summarizeBy: sum
+		sourceColumn: MesImput
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 2876ccc8-8736-478b-a857-e2dde6f30b91
+		summarizeBy: none
+		sourceColumn: IdPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefas
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d956453-788a-435a-90b2-e330bf555583
+		summarizeBy: sum
+		sourceColumn: IdTarefas
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo
+		dataType: string
+		lineageTag: 1757e6d5-1a65-453d-bbc9-2c2b2168ffd0
+		summarizeBy: none
+		sourceColumn: titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column MesHoraInicio
+		dataType: int64
+		formatString: 0
+		lineageTag: e59093af-2e13-4842-9d80-ffe785272042
+		summarizeBy: sum
+		sourceColumn: MesHoraInicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column AnoHoraInicio
+		dataType: int64
+		formatString: 0
+		lineageTag: 0374bfe1-e46a-445f-83a8-1053c0f6ea0e
+		summarizeBy: sum
+		sourceColumn: AnoHoraInicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6260a173-17bf-4e56-8b1a-60e28387e9f0
+		summarizeBy: none
+		sourceColumn: HoraInicio
+
+		variation Variation
+			isDefault
+			relationship: 418de73e-b005-4442-8825-3ccc7b8a2728
+			defaultHierarchy: LocalDateTable_4d8e8de0-fe88-411f-b9c3-7b297f327293.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IdCC
+		dataType: int64
+		formatString: 0
+		lineageTag: 6386186e-2007-494c-aef1-c8e8ade5c541
+		summarizeBy: none
+		sourceColumn: IdCC
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoActividadeApuradaTarefas
+		dataType: int64
+		formatString: 0
+		lineageTag: b0f72539-07fb-4c0d-b8d4-77b96d48a52c
+		summarizeBy: sum
+		sourceColumn: TipoActividadeApuradaTarefas
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 24597363-f0bb-42a3-9aa6-f0205c3e120f
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: e02306cc-3c13-489f-a73f-b35f7b19c38c
+		summarizeBy: sum
+		sourceColumn: IdTipoProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdHorarioRef
+		dataType: int64
+		formatString: 0
+		lineageTag: 9562f149-f778-41ad-a774-8cc5cf470aae
+		summarizeBy: sum
+		sourceColumn: IdHorarioRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjeto
+		dataType: int64
+		formatString: 0
+		lineageTag: 9419a05b-c430-4337-a430-760f5b2e3ad2
+		summarizeBy: none
+		sourceColumn: IdProjeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraIni
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6321409b-dfc3-4557-abc7-e40b28fae06a
+		summarizeBy: none
+		sourceColumn: HoraIni
+
+		variation Variation
+			isDefault
+			relationship: 80a2f6cb-f054-497d-b7d7-45bbf3826f5b
+			defaultHierarchy: LocalDateTable_e6519905-b748-4486-9371-1ac29814646b.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 58c90955-9c5e-4277-8719-47fa0920757f
+		summarizeBy: none
+		sourceColumn: HoraFim
+
+		variation Variation
+			isDefault
+			relationship: 393978e1-9544-4dc7-a41d-ecf79929bf5a
+			defaultHierarchy: LocalDateTable_81403bf3-d319-4f69-8ad1-e6d00285a273.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExecucaoHoraInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 60c2d44b-42ed-4b13-b3d6-6f45668e24e5
+		summarizeBy: none
+		sourceColumn: ExecucaoHoraInicio
+
+		variation Variation
+			isDefault
+			relationship: a19a9f10-ca7c-464a-96fc-5b2dc7419d97
+			defaultHierarchy: LocalDateTable_a1dd4c43-0411-477f-97b5-7763d813ec65.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExecucaoHoraFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ef9d5fb7-bb3a-45bd-b83a-610e4efc68dc
+		summarizeBy: none
+		sourceColumn: ExecucaoHoraFim
+
+		variation Variation
+			isDefault
+			relationship: 8264ce15-5650-4933-980e-49c64a706ebb
+			defaultHierarchy: LocalDateTable_32b150c5-01d8-41ae-9e0b-ff5d2ec48e56.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicioPlan
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 35c24861-19e7-4bcb-9d59-5c6470a1631b
+		summarizeBy: none
+		sourceColumn: HoraInicioPlan
+
+		variation Variation
+			isDefault
+			relationship: 95ce9dbb-f30b-43c1-9511-4d28d4cebaef
+			defaultHierarchy: LocalDateTable_f6a651da-f698-4ca3-81f6-08f8f14b7000.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicioPlan2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f53b28d4-6256-4595-a804-082f67db1536
+		summarizeBy: none
+		sourceColumn: HoraInicioPlan2
+
+		variation Variation
+			isDefault
+			relationship: d54735e1-ebbd-4fcf-992b-2f8b762cc349
+			defaultHierarchy: LocalDateTable_1b66909b-ade2-4d23-8e8a-721098443866.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicioPlan3
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: eed99d76-dd76-4464-9e8d-56bdf8b64136
+		summarizeBy: none
+		sourceColumn: HoraInicioPlan3
+
+		variation Variation
+			isDefault
+			relationship: 3300e913-0df1-451e-aaa5-9d73c87cff7d
+			defaultHierarchy: LocalDateTable_3b5d702f-6a18-4606-8027-6baf82815d6d.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFiimPlan
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5d0c97b2-f41f-48fa-8de4-d9378aaf0fdd
+		summarizeBy: none
+		sourceColumn: HoraFiimPlan
+
+		variation Variation
+			isDefault
+			relationship: 69aec9a8-d10c-432a-9941-4241da9146fa
+			defaultHierarchy: LocalDateTable_fc0013d3-1f46-4bb5-bfe8-eab7d325e8b5.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFiimPlan2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b46bb757-dbfa-4244-98b9-1de01633d906
+		summarizeBy: none
+		sourceColumn: HoraFiimPlan2
+
+		variation Variation
+			isDefault
+			relationship: 8489a652-56ae-4ae6-873c-f8ef35f03912
+			defaultHierarchy: LocalDateTable_1892eab5-9545-4fda-b6f9-fda605518e0b.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFiimPlan3
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f2b684c2-5801-42a2-9c7e-cceb62702f86
+		summarizeBy: none
+		sourceColumn: HoraFiimPlan3
+
+		variation Variation
+			isDefault
+			relationship: a2f0dead-d65d-455d-86b1-4680df710eb5
+			defaultHierarchy: LocalDateTable_8e10aa3f-cfdc-4556-8176-f1265c827cc3.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 709eb14f-416f-430d-aaf6-8513d3dd150b
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		variation Variation
+			isDefault
+			relationship: 2166ebce-f60b-4ab6-b3fc-a001b9bc1c07
+			defaultHierarchy: LocalDateTable_38f388d1-1410-4eb8-bc98-2fcd855bfbfd.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column NaoConsiderarParaCalculoCapacidadeAtividade
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d967773f-07f3-441c-80c3-ac7d881b0d46
+		summarizeBy: none
+		sourceColumn: NaoConsiderarParaCalculoCapacidadeAtividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdGrupoPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 82b66135-57fb-40ff-8f85-cc21d3ee4e64
+		summarizeBy: sum
+		sourceColumn: IdGrupoPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumFuncionario
+		dataType: string
+		lineageTag: 9bdc7403-35c2-4f75-aca5-6fca6bf6ce83
+		summarizeBy: none
+		sourceColumn: NumFuncionario
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d6c4f9d5-546d-4d2e-b3ac-590d99e91b94
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PicagemInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1278d8a8-1d8a-42ce-aac7-9c64904dcdb1
+		summarizeBy: none
+		sourceColumn: PicagemInicio
+
+		variation Variation
+			isDefault
+			relationship: a63a212a-1315-4eac-97f3-e987b8f85b78
+			defaultHierarchy: LocalDateTable_097d2138-795a-4be6-9068-39b1e83f8ed0.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Picagem_Fim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d96a0369-1581-43ed-bb36-211e277c136f
+		summarizeBy: none
+		sourceColumn: Picagem_Fim
+
+		variation Variation
+			isDefault
+			relationship: eabad3be-4146-4468-ad59-d748f3b74220
+			defaultHierarchy: LocalDateTable_d70768d6-fd83-4626-86ed-8108bb1816dc.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Planeado | Hora Inicio' = ```
+			
+			IF.EAGER( 
+			    Apontamentos[HoraInicioPlan] <  Apontamentos[HoraInicioPlan2], Apontamentos[HoraInicioPlan]
+			    , IF.EAGER( 
+			        Apontamentos[HoraInicioPlan3] < Apontamentos[HoraInicioPlan2], Apontamentos[HoraInicioPlan2]
+			        ,Apontamentos[HoraInicioPlan] ) 
+			)
+			```
+		formatString: General Date
+		lineageTag: ddbe79f2-aa11-4d9d-b528-826f5bc40d0f
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: a91f885c-94ad-4934-9915-3d4cb1132272
+			defaultHierarchy: LocalDateTable_6bfee7f8-3be1-4f32-91d1-e02dfaeac78b.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Planeado | Hora Fim' = ```
+			
+			IF( 
+			    Apontamentos[HoraFiimPlan3] > Apontamentos[HoraFiimPlan2], Apontamentos[HoraFiimPlan3]
+			    ,IF( 
+			        Apontamentos[HoraFiimPlan2] > Apontamentos[HoraFiimPlan], Apontamentos[HoraFiimPlan2]
+			        ,Apontamentos[HoraFiimPlan] 
+			    ) 
+			)
+			```
+		formatString: General Date
+		lineageTag: 27e076e2-422c-4636-90fb-29f6645421ca
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: a3af4b8f-122f-42c6-a70f-16947aa0f9b5
+			defaultHierarchy: LocalDateTable_3ac44c51-236a-4a39-840f-5d9599fd055d.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ativ vs Exec - Fim(M)' = ```
+			
+			IF.EAGER( Apontamentos[HoraFim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[ExecucaoHoraFim]
+					    ,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[ExecucaoHoraFim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF(
+					    Apontamentos[HoraFim]
+					    ,Apontamentos[HoraIni]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[HoraFim]
+						,Apontamentos[ExecucaoHoraFim]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: 783909f1-7117-43dd-9da3-e3a47aefef4d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ativ vs Exec - Inicio(M)' = ```
+			
+			IF.EAGER( Apontamentos[HoraIni]  = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[ExecucaoHoraFim]
+					    ,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[ExecucaoHoraInicio] = BLANK()
+			    ,ABS( 
+			        DATEDIFF(
+					    Apontamentos[HoraFim]
+					    ,Apontamentos[HoraIni]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[HoraIni]
+						,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: 05e022b9-5be2-444d-bad1-2d9ba63267d1
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pic vs Exec Fim(M)' = ```
+			
+			IF.EAGER( Apontamentos[Picagem_Fim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[ExecucaoHoraFim]
+					    ,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[ExecucaoHoraFim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Picagem_Fim]
+					    ,Apontamentos[PicagemInicio]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[Picagem_Fim]
+						,Apontamentos[ExecucaoHoraFim]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: 1f01bf2c-b94a-41d8-83c5-5ff9f65490de
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pic vs Exec - Inicio(M)' = ```
+			
+			IF.EAGER( Apontamentos[PicagemInicio]  = BLANK()
+			    ,ABS( 
+			        DATEDIFF(
+					    Apontamentos[ExecucaoHoraFim]
+					    ,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[ExecucaoHoraInicio] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Picagem_Fim]
+					    ,Apontamentos[PicagemInicio]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[PicagemInicio]
+						,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: 2826d5a8-5728-4fb7-ae32-3e3c72441a59
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Plan vs Ativ - Fim(M)' = ```
+			
+			IF.EAGER( Apontamentos[Planeado | Hora Fim]  = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[HoraFim]
+					    , Apontamentos[HoraIni]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[HoraFim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Planeado | Hora Fim] 
+					    ,Apontamentos[Planeado | Hora Inicio]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[Planeado | Hora Fim]
+						,Apontamentos[HoraFim]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: a9e795f7-bb10-47e7-9ab4-b7a5da1294ba
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Plan vs Ativ - Inicio(M)' = ```
+			
+			IF.EAGER( Apontamentos[Planeado | Hora Inicio]  = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[HoraFim]
+					    , Apontamentos[HoraIni]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[HoraIni] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Planeado | Hora Fim] 
+					    ,Apontamentos[Planeado | Hora Inicio]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+			            Apontamentos[Planeado | Hora Inicio] 
+			            ,Apontamentos[HoraIni]
+			        , MINUTE 
+			        )
+			    )
+			))
+			```
+		formatString: 0
+		lineageTag: 7fbfc277-e60a-4c5f-9245-b65a513c521f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Plan vs Exec - Fim(M)' = ```
+			
+			IF.EAGER( Apontamentos[Planeado | Hora Fim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[ExecucaoHoraFim]
+					    ,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[ExecucaoHoraFim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Planeado | Hora Fim]
+					    ,Apontamentos[Planeado | Hora Inicio]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[Planeado | Hora Fim]
+						,Apontamentos[ExecucaoHoraFim]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: 7fcf9a23-50db-49d6-8d38-6b0388feb8e5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Plan vs Exec - Inicio(M)' = ```
+			
+			IF.EAGER( Apontamentos[Planeado | Hora Inicio]  = BLANK()
+			    ,ABS( 
+			        DATEDIFF(
+					    Apontamentos[ExecucaoHoraFim]
+					    ,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[ExecucaoHoraInicio] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Planeado | Hora Fim]
+					    ,Apontamentos[Planeado | Hora Inicio]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[Planeado | Hora Inicio]
+						,Apontamentos[ExecucaoHoraInicio]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: 25c1cb8e-e153-43c0-a183-8ec7254bb847
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Plan vs Pic - Fim(M)' = ```
+			
+			IF.EAGER( Apontamentos[Planeado | Hora Fim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Picagem_Fim]
+					    ,Apontamentos[PicagemInicio]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[Picagem_Fim] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Planeado | Hora Fim]
+					    ,Apontamentos[Planeado | Hora Inicio]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[Planeado | Hora Fim]
+						,Apontamentos[Picagem_Fim]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: d220d718-af6a-4d09-a2df-d876c5a5a8f2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Plan vs Pic - Inicio(M)' = ```
+			
+			IF.EAGER( Apontamentos[Planeado | Hora Inicio]  = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Picagem_Fim]
+					    ,Apontamentos[PicagemInicio]
+			        , MINUTE
+			        )
+			    )
+			,IF.EAGER( Apontamentos[PicagemInicio] = BLANK()
+			    ,ABS( 
+			        DATEDIFF( 
+					    Apontamentos[Planeado | Hora Fim]
+					    ,Apontamentos[Planeado | Hora Inicio]
+			        , MINUTE
+			        )
+			    )
+			    ,ABS(
+			        DATEDIFF( 
+						Apontamentos[Planeado | Hora Inicio]
+						,Apontamentos[PicagemInicio]
+			        , MINUTE 
+			        )
+			    )
+			)
+			)
+			```
+		formatString: 0
+		lineageTag: c7993ec7-cd8f-4902-b4a1-b8df7200c9e8
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column URL
+		dataType: string
+		lineageTag: 37f95f26-a7f8-48bc-a885-77d26419bdc0
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: URL
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefa
+		dataType: int64
+		formatString: 0
+		lineageTag: f4db9e5a-ed9e-44b3-bc6f-abc41a5b423c
+		summarizeBy: sum
+		sourceColumn: IdTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Projeto =
+			
+			LOOKUPVALUE(
+			    Projetos[Projeto]
+			    ,Projetos[Id]
+			    ,Apontamentos[IdProjeto]
+			)
+		lineageTag: 07218f7e-fd6c-404b-947a-22253c67e001
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pessoa =
+			
+			LOOKUPVALUE(
+			    Pessoas[nome]
+			    ,Pessoas[Id]
+			    ,Apontamentos[IdPessoa]
+			)
+		dataType: string
+		lineageTag: 275723d1-9362-4bf9-ba42-e3f00f43f79b
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo =
+			
+			LOOKUPVALUE(
+			    Pessoas[Grupo]
+			    ,Pessoas[IdGrupo]
+			    ,Apontamentos[IdGrupoPessoa]
+			)
+		lineageTag: f983e702-dcd0-47c7-9db0-e6bf51d9a770
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unidade =
+			
+			LOOKUPVALUE(
+			    Pessoas[Unidade]
+			    ,Pessoas[Id]
+			    ,Apontamentos[IdPessoa]
+			)
+		lineageTag: 210e8ac2-3a8e-460b-a3f3-eaf5d6faf0b0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Escala (m)' =
+			
+			DATEDIFF( Apontamentos[Planeado | Hora Inicio], Apontamentos[Planeado | Hora Fim], MINUTE )
+		formatString: 0
+		lineageTag: 19826f39-27fb-4f03-aa38-0454adecde46
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Atividade (m)' =
+			
+			DATEDIFF( Apontamentos[HoraIni], Apontamentos[HoraFim], MINUTE )
+		formatString: 0
+		lineageTag: 06d15df2-1314-4326-9032-664c3ec134bb
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Execucao (m)' =
+			
+			DATEDIFF( Apontamentos[ExecucaoHoraInicio], Apontamentos[ExecucaoHoraFim], MINUTE )
+		formatString: 0
+		lineageTag: a8fe6451-0b7b-4b90-a82a-263ce9611233
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Apontamentos-6a686b51-4957-464e-8ba6-54e38aaf6924 = m
+		mode: import
+		queryGroup: Pessoas
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="------sTEP 1#(lf)#(lf)SELECT TP.Id IdTarefaPessoa, TP.HoraInicio, TP.HoraFim, TP.IdPessoa, IdTarefa, CodCentroCusto, DataImputacao, ExecucaoHoraInicio, ExecucaoHoraFim, TempoImputado#(lf)Into #TP#(lf)FROM Tarefas_Pessoas TP  WITH (NOLOCK)#(lf)WHERE YEAR(TP.HoraInicio) >= YEAR(GETDATE()) - 3#(lf)#(lf)Select H.Id, H.IdPessoa, H.HoraInicio1,HoraInicio2,HoraInicio3, H.HoraFim1,HoraFim2,HoraFim3 , [Data], IdHorarioRef#(lf)Into #H #(lf)FROM Horarios H  WITH (NOLOCK) #(lf)Where --Exists  (Select 1 from #TP TP Where TP.IdPessoa = H.IdPessoa)#(lf)YEAR(H.[Data]) >= YEAR(GETDATE()) - 3#(lf)#(lf)SELECT TP.IdTarefaPessoa #(lf)                ,(#(lf)                    SELECT TOP 1 H.Id#(lf)                    FROM #H H#(lf)                                  WHERE TP.IdPessoa = H.IdPessoa#(lf)                                    AND TP.HoraInicio <= H.HoraFim1#(lf)                                    AND TP.HoraFim >= H.HoraInicio1#(lf)                    --ORDER BY H.HoraInicio1#(lf)                    ) IdHorario#(lf)Into #TarefasPessoasHorarios#(lf)FROM #TP TP #(lf)WHERE YEAR(TP.HoraInicio) >= YEAR(GETDATE()) - 3#(lf)#(lf)--------step 2#(lf)#(lf)#(lf)Update TPH Set IdHorario = #(lf)                                                                                 (#(lf)                                                                                              SELECT TOP 1 H.Id#(lf)                                                                                              FROM #H H#(lf)                                                                                              WHERE 1 = 1#(lf)                                                                                                                         AND TP.IdPessoa = H.IdPessoa#(lf)                                                                                                                         AND (#(lf)                                                                                                                                       ABS(DATEDIFF(MINUTE, TP.HoraInicio, H.HoraFim1)) < 6 * 60#(lf)                                                                                                                                       OR ABS(DATEDIFF(MINUTE, TP.HoraFim, H.HoraInicio1)) < 6 * 60#(lf)                                                                                                                                )#(lf)                                                                                               ORDER BY CASE #(lf)                                                                                                              WHEN ABS(DATEDIFF(MINUTE, TP.HoraInicio, H.HoraFim1)) < ABS(DATEDIFF(MINUTE, TP.HoraFim, H.HoraInicio1))#(lf)                                                                                                                              THEN ABS(DATEDIFF(MINUTE, TP.HoraInicio, H.HoraFim1))#(lf)                                                                                                              ELSE ABS(DATEDIFF(MINUTE, TP.HoraFim, H.HoraInicio1))#(lf)                                                                                                              END#(lf)                                                                                              ) #(lf)From #TarefasPessoasHorarios TPH#(lf)       JOIN #TP TP ON TPH.IdTarefaPessoa = TP.IdTarefaPessoa#(lf)Where IdHorario Is  null#(lf)#(lf)#(lf)#(lf)----step 3#(lf)#(lf)Select * #(lf)from (#(lf)       SELECT TP.TempoImputado#(lf)                                  ,TP.DataImputacao#(lf)                                  ,YEAR(TP.DataImputacao) AS AnoImput#(lf)                                  ,MONTH(TP.DataImputacao) AS MesImput#(lf)                                  ,TP.IdPessoa#(lf)                                  ,TP.IdTarefaPessoa AS IdTarefas#(lf)                                  ,T.Id AS IdTarefa#(lf)                                  ,Proj.titulo#(lf)                                  ,MONTH(TP.HoraInicio) AS MesHoraInicio#(lf)                                  ,YEAR(TP.HoraInicio) AS AnoHoraInicio#(lf)                                  ,CONVERT(VARCHAR(10), TP.HoraInicio, 103) AS HoraInicio#(lf)                                  ,CC.Id AS IdCC#(lf)                                  ,CC.TipoActividadeApurada AS TipoActividadeApuradaTarefas#(lf)                                  ,P.Id#(lf)                                  ,Proj.IdTipoProjecto#(lf)                                  ,H.IdHorarioRef#(lf)                                  ,Proj.Id AS IdProjeto#(lf)                                  ,TP.HoraInicio AS HoraIni -- Atividade#(lf)                                  ,TP.HoraFim AS HoraFim -- Atividade#(lf)                                  ,TP.ExecucaoHoraInicio -- Execucao#(lf)                                  ,TP.ExecucaoHoraFim -- Execucao#(lf)                                  ,H.HoraInicio1 HoraInicioPlan -- Escala#(lf)                                  ,H.HoraInicio2 HoraInicioPlan2 -- Escala#(lf)                                  ,H.HoraInicio3 HoraInicioPlan3 -- Escala#(lf)                                  ,H.HoraFim1 AS HoraFiimPlan -- Escala#(lf)                                  ,H.HoraFim2 AS HoraFiimPlan2 -- Escala#(lf)                                  ,H.HoraFim3 AS HoraFiimPlan3 -- Escala#(lf)                                  ,DATEFROMPARTS(YEAR(TP.HoraInicio), MONTH(TP.HoraInicio), 1) AS [Start of Month]#(lf)                                  ,PVM.NaoConsiderarParaCalculoCapacidadeAtividade#(lf)                                  ,ISNULL((#(lf)                                                                 SELECT TOP 1 PH.IdGrupoPessoa#(lf)                                                                 FROM Pessoas_Historico PH  WITH (NOLOCK) #(lf)                                                                 WHERE 1 = 1#(lf)                                                                                 AND PH.IdGrupoPessoa IS NOT NULL#(lf)                                                                                 AND PH.IdPessoa = tp.IdPessoa#(lf)                                                                                 AND CAST(PH.DataInicioGrupo AS DATE) <= CAST(tp.HoraInicio AS DATE)#(lf)                                                                                 AND (#(lf)                                                                                                 PH.DataFimGrupo IS NULL#(lf)                                                                                                 OR CAST(PH.DataFimGrupo AS DATE) >= CAST(tp.HoraInicio AS DATE)#(lf)                                                                                                 )#(lf)                                                                 ORDER BY PH.DataInicioGrupo#(lf)                                                                 ), P.IdGrupoPessoa) IdGrupoPessoa#(lf)                                  ,P.NumFuncionario#(lf)       FROM #TarefasPessoasHorarios TPH#(lf)       JOIN #TP TP  ON TPH.IdTarefaPessoa = TP.IdTarefaPessoa#(lf)       JOIN Tarefas T  WITH (NOLOCK) ON TP.IdTarefa = T.Id#(lf)       JOIN Pessoas P  WITH (NOLOCK) ON TP.IdPessoa = P.Id#(lf)       JOIN Projectos Proj  WITH (NOLOCK) ON T.IdProjecto = Proj.Id#(lf)       LEFT JOIN Centros_Custo CC  WITH (NOLOCK) ON TP.CodCentroCusto = CC.Codigo#(lf)       LEFT JOIN Pessoas_Valorizacoes_Mensais PVM  WITH (NOLOCK) ON PVM.Ano = YEAR(TP.DataImputacao)#(lf)                                  AND PVM.Mes = MONTH(TP.DataImputacao)#(lf)                                  AND PVM.IdPessoa = TP.IdPessoa#(lf)       LEFT JOIN #H H ON TPH.IdHorario = H.Id#(lf)       UNION ALL#(lf)       SELECT NULL TempoImputado#(lf)                                  ,NULL DataImputacao#(lf)                                  ,NULL AnoImput#(lf)                                  ,NULL MesImput#(lf)                                  ,H.IdPessoa#(lf)                                  ,NULL IdTarefas#(lf)                                  ,NULL IdTarefa#(lf)                                  ,NULL titulo#(lf)                                  ,NULL MesHoraInicio#(lf)                                  ,NULL AnoHoraInicio#(lf)                                  ,NULL HoraInicio#(lf)                                  ,CC.Id AS IdCC#(lf)                                  ,CC.TipoActividadeApurada AS TipoActividadeApuradaTarefas#(lf)                                  ,P.Id#(lf)                                  ,NULL IdTipoProjecto#(lf)                                  ,H.IdHorarioRef#(lf)                                  ,NULL IdProjecto#(lf)                                  ,NULL HoraIni#(lf)                                  ,NULL HoraFim#(lf)                                  ,NULL ExecucaoHoraInicio#(lf)                                  ,NULL ExecucaoHoraFim#(lf)                                  ,H.HoraInicio1 HoraInicioPlan#(lf)                                  ,H.HoraInicio2 HoraInicioPlan2#(lf)                                  ,H.HoraInicio3 HoraInicioPlan3#(lf)                                  ,H.HoraFim1 AS HoraFiimPlan#(lf)                                  ,H.HoraFim2 AS HoraFiimPlan2#(lf)                                  ,H.HoraFim3 AS HoraFiimPlan3#(lf)                                  ,DATEFROMPARTS(YEAR(H.[Data]), MONTH(H.[Data]), 1) AS [Start of Month]#(lf)                                  ,NULL NaoConsiderarParaCalculoCapacidadeAtividade#(lf)                                  ,ISNULL((#(lf)                                                                 SELECT TOP 1 PH.IdGrupoPessoa#(lf)                                                                 FROM Pessoas_Historico PH  WITH (NOLOCK) #(lf)                                                                 WHERE 1 = 1#(lf)                                                                                 AND PH.IdGrupoPessoa IS NOT NULL#(lf)                                                                                 AND PH.IdPessoa = P.Id#(lf)                                                                                 AND CAST(PH.DataInicioGrupo AS DATE) <= CAST(H.HoraInicio1 AS DATE)#(lf)                                                                                 AND (#(lf)                                                                                                 PH.DataFimGrupo IS NULL#(lf)                                                                                                 OR CAST(PH.DataFimGrupo AS DATE) >= CAST(H.HoraInicio1 AS DATE)#(lf)                                                                                                 )#(lf)                                                                 ORDER BY PH.DataInicioGrupo#(lf)                                                                 ), P.IdGrupoPessoa) IdGrupoPessoa#(lf)                                  ,P.NumFuncionario#(lf)       FROM #H H#(lf)       JOIN Pessoas P  WITH (NOLOCK)  ON H.IdPessoa = P.Id#(lf)       LEFT JOIN Centros_Custo CC  WITH (NOLOCK)  ON P.CodCentroCusto = CC.Codigo#(lf)       WHERE 1 = 1#(lf)                                  AND YEAR(H.[Data]) >= YEAR(GETDATE()) - 3#(lf)                                  AND NOT EXISTS (#(lf)                                                         SELECT 1#(lf)                                                         FROM #TarefasPessoasHorarios TPHC#(lf)                                                         WHERE TPHC.IdHorario = H.Id#(lf)                                                         )#(lf)) Lista#(lf)#(lf)Drop table #TarefasPessoasHorarios#(lf)DROP TABLE #TP#(lf)DROP TABLE #H"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Origem,{{"HoraInicio", type date}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Changed Type", "HoraInicioPlan", "Date"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column",{{"Date", type date}}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Changed Type2", {"Date", "IdPessoa"}, Picagem, {"DataHorario", "Id"}, "Picagem", JoinKind.LeftOuter),
+				    #"Expanded Picagem" = Table.ExpandTableColumn(#"Merged Queries1", "Picagem", {"PicagemInicio", "Picagem_Fim"}, {"PicagemInicio", "Picagem_Fim"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Expanded Picagem",{{"Picagem_Fim", type datetime}}),
+				    Custom1 = Table.AddColumn(#"Changed Type1", "URL", each if [IdTarefa] = null then null else
+				 LinkTarefa&Number.ToText([IdTarefa]))
+				in
+				    Custom1
+
+	annotation PBI_ResultType = Exception
+

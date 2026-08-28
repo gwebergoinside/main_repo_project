@@ -1,0 +1,622 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 7283.9998372395839,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1502.4,
+            "y": 1181.9
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 2362.9,
+            "y": 1420.8
+          },
+          "nodeIndex": "Capacidade",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 1210.2,
+            "y": 1651.3
+          },
+          "nodeIndex": "CentroCusto",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 1406.7,
+            "y": 431.1
+          },
+          "nodeIndex": "Episodios",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 2063.8,
+            "y": 469.4
+          },
+          "nodeIndex": "ExecucaoMensalConta",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 41
+        },
+        {
+          "location": {
+            "x": 1831.5,
+            "y": 0
+          },
+          "nodeIndex": "ExecucaoMensalItem",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 403.4,
+            "y": 1546.8
+          },
+          "nodeIndex": "Horarios",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 770,
+            "y": 2233
+          },
+          "nodeIndex": "HorariosFaixas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 1626,
+            "y": 824.2
+          },
+          "nodeIndex": "LancManuais",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 1959.5,
+            "y": 1400
+          },
+          "nodeIndex": "Meios",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 2712.6,
+            "y": 1048
+          },
+          "nodeIndex": "MeiosHoras",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 638.3,
+            "y": 328.4
+          },
+          "nodeIndex": "Necessidades",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 27
+        },
+        {
+          "location": {
+            "x": 1219.2,
+            "y": 849.4
+          },
+          "nodeIndex": "NecessidadesAtividadesGantt",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 3116,
+            "y": 1286.9
+          },
+          "nodeIndex": "OrcCust",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 38
+        },
+        {
+          "location": {
+            "x": 71,
+            "y": 1475.4333333333329
+          },
+          "nodeIndex": "Pessoas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 1905.8,
+            "y": 938.8
+          },
+          "nodeIndex": "Projetos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 1699.1,
+            "y": 1570.4
+          },
+          "nodeIndex": "TarefasMeiosFaixas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 42
+        },
+        {
+          "location": {
+            "x": 806.8,
+            "y": 1746.5
+          },
+          "nodeIndex": "TarefasPessoasFaixas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 1173.4,
+            "y": 2092.7
+          },
+          "nodeIndex": "Tarefas_Pessoas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 2472.4,
+            "y": 1099.4
+          },
+          "nodeIndex": "Tipo_Tarefas_Meios",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 909.1,
+            "y": 834.9
+          },
+          "nodeIndex": "NecessidadesGantt Final",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 995.1,
+            "y": 99
+          },
+          "nodeIndex": "NecessidadesGanttUnpivot",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 3519.4,
+            "y": 1274.9
+          },
+          "nodeIndex": "Simulador",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 39
+        },
+        {
+          "location": {
+            "x": 2194.7,
+            "y": 2133.2
+          },
+          "nodeIndex": "Tarefas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 2309.2,
+            "y": 693.3
+          },
+          "nodeIndex": "Lancamentos",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 1791.3,
+            "y": 2039.8
+          },
+          "nodeIndex": "Meios_Nome",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 3922.8,
+            "y": 1334.9
+          },
+          "nodeIndex": "LinkNec",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 4326.2,
+            "y": 1334.9
+          },
+          "nodeIndex": "LinkProjeto",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 4729.6,
+            "y": 1322.9
+          },
+          "nodeIndex": "Titulos",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 296.8,
+            "y": 888.4
+          },
+          "nodeIndex": "GrupoUnidade",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 5133,
+            "y": 1556.3
+          },
+          "nodeIndex": "TranslationTable",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 5536.4,
+            "y": 1236.9
+          },
+          "nodeIndex": "~Measure",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 1103.6,
+            "y": 1204.9
+          },
+          "nodeIndex": "Apontamentos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 40
+        },
+        {
+          "location": {
+            "x": 5939.8,
+            "y": 1334.9
+          },
+          "nodeIndex": "LinkTarefa",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 6343.2,
+            "y": 1322.9
+          },
+          "nodeIndex": "TiposHorario",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 6746.7,
+            "y": 1322.9
+          },
+          "nodeIndex": "FichaPessoa_Meses",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 7150.1,
+            "y": 1322.9
+          },
+          "nodeIndex": "FichaPessoa_Horas",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 7553.5,
+            "y": 1286.9
+          },
+          "nodeIndex": "FichaPessoa_Dias",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 7956.9,
+            "y": 1310.9
+          },
+          "nodeIndex": "TipoProjeto",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 126.8,
+            "y": 1249.4
+          },
+          "nodeIndex": "Funcao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1855
+          },
+          "nodeIndex": "TipoPessoa",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 700.2,
+            "y": 1156.9
+          },
+          "nodeIndex": "Necessidades_FH",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 335.4,
+            "y": 2016.2
+          },
+          "nodeIndex": "RH Sem Escala",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 945,
+            "y": 2702.4
+          },
+          "nodeIndex": "HorariosRefs",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8749.3,
+            "y": 0
+          },
+          "nodeIndex": "DateTime",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 9100.3,
+            "y": 0
+          },
+          "nodeIndex": "NecTipo",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 9496.5,
+            "y": 0
+          },
+          "nodeIndex": "NecessidadesGantt Extra",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7492.5665039062487,
+            "y": 16.666666666666668
+          },
+          "nodeIndex": "Necessidades_Exclusoes",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 9859.7,
+            "y": 0
+          },
+          "nodeIndex": "images",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10222.9,
+            "y": 24
+          },
+          "nodeIndex": "logo header",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 60,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

@@ -1,0 +1,32 @@
+table T_Contratos
+	lineageTag: aa6aebf7-654a-4fff-b45e-5859a1b7eefa
+
+	column TipoContrato
+		dataType: int64
+		formatString: 0
+		lineageTag: ee4b5336-7eff-48c9-b652-c9513ce94480
+		summarizeBy: none
+		sourceColumn: TipoContrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descricao
+		dataType: string
+		lineageTag: 4d606985-5dc5-48a3-bdf5-d5b465016b58
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition T_Contratos-c9fc286f-3537-4964-8a82-4aa34ac638d2 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    T_Contratos.TipoContrato,#(lf)    T_Contratos.Descricao#(lf) From#(lf)    T_Contratos"])
+				in
+				    Source
+
+	annotation PBI_QueryRelationships = {"columnCount":2,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/T_Contratos/Source.{TipoContrato,0}","Section1/T_Contratos/Source.{Descricao,1}"],"ColumnCount":2,"KeyColumnNames":[],"ColumnIdentities":["Section1/T_Contratos/Source.{TipoContrato,0}","Section1/T_Contratos/Source.{Descricao,1}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

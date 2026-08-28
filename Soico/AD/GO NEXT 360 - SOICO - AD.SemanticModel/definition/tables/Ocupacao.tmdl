@@ -1,0 +1,577 @@
+table Ocupacao
+	lineageTag: d826b68a-aa14-4dff-a9d9-055b8556f6b4
+
+	column canCodigo
+		dataType: int64
+		formatString: 0
+		lineageTag: f6ada415-eeab-46df-b647-b316cd4c6c93
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column canDescricao
+		dataType: string
+		lineageTag: 96fab94d-840b-45a0-9571-ae7fb51d2938
+		summarizeBy: none
+		sourceColumn: canDescricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 97234dcd-2f7d-4db5-b044-57c2fb591841
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column FaixaHorariaFormatada
+		dataType: string
+		lineageTag: 971921bd-107d-49eb-b15c-3b78305d3ccc
+		summarizeBy: none
+		sourceColumn: FaixaHorariaFormatada
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Ocupacao","TableItemName":"FaixaHorariaFormatada (groups)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column FaixaHoraria
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1b47e379-ff32-4a35-a87a-29ba0789f438
+		summarizeBy: none
+		sourceColumn: FaixaHoraria
+
+		variation Variação
+			isDefault
+			relationship: 73a9211d-35f0-42c6-822b-e920af1ea897
+			defaultHierarchy: LocalDateTable_9d33ffac-dbe0-4a28-8540-db153444ba3d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Horas
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ee1eecf-1531-4bea-8845-ebad15a100a1
+		summarizeBy: sum
+		sourceColumn: Horas
+
+		annotation SummarizationSetBy = Automatic
+
+	column CanalMaxNormal
+		dataType: int64
+		formatString: 0
+		lineageTag: 85ccbc36-a2d2-4cbd-bba0-7e01a22e1915
+		summarizeBy: sum
+		sourceColumn: CanalMaxNormal
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrelhaMaxNormal
+		dataType: int64
+		formatString: 0
+		lineageTag: 413002f9-15d1-4594-bdbe-6ded30d5a8ec
+		summarizeBy: sum
+		sourceColumn: GrelhaMaxNormal
+
+		annotation SummarizationSetBy = Automatic
+
+	column OcupacaoNormal
+		dataType: int64
+		formatString: #,0
+		lineageTag: fc7223c4-070a-4a22-a7c2-30906872fbc7
+		summarizeBy: sum
+		sourceColumn: OcupacaoNormal
+
+		annotation SummarizationSetBy = Automatic
+
+	column OcupacaoExcepcoesNormal
+		dataType: int64
+		formatString: 0
+		lineageTag: c8e6632d-689b-454c-bab5-fa49bc250606
+		summarizeBy: sum
+		sourceColumn: OcupacaoExcepcoesNormal
+
+		annotation SummarizationSetBy = Automatic
+
+	column ValorExcepcoes
+		dataType: double
+		lineageTag: 4013e040-dc22-4103-86d7-f7401a47074f
+		summarizeBy: sum
+		sourceColumn: ValorExcepcoes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NumeroSpots
+		dataType: int64
+		formatString: #,0
+		lineageTag: df07df34-ca53-4e62-a5e4-a780d877fe98
+		summarizeBy: sum
+		sourceColumn: NumeroSpots
+
+		annotation SummarizationSetBy = Automatic
+
+	column Erro
+		dataType: string
+		lineageTag: ffdf3eb0-acdd-434a-b95a-c90dadbe0ad5
+		summarizeBy: none
+		sourceColumn: Erro
+
+		annotation SummarizationSetBy = Automatic
+
+	column Período
+		dataType: string
+		lineageTag: c08069c1-f78c-40f2-8c4c-c74a74147172
+		summarizeBy: none
+		sourceColumn: Período
+		sortByColumn: Ordenação
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordenação
+		dataType: string
+		lineageTag: 3f2c8b9a-7dac-4b99-b7ba-a7341b6b7e84
+		summarizeBy: none
+		sourceColumn: Ordenação
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FaixaHorariaFormatada (groups)' =
+			SWITCH(
+			  TRUE,
+			  ISBLANK('Ocupacao'[FaixaHorariaFormatada]),
+			  "(Blank)",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"00:00"},
+			  "00:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"01:00",
+			    "01:30"},
+			  "01:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"02:00",
+			    "02:30"},
+			  "02:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"03:00",
+			    "03:30"},
+			  "03:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"04:00",
+			    "04:30"},
+			  "04:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"05:00",
+			    "05:30"},
+			  "05:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"06:00",
+			    "06:30"},
+			  "06:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"07:00",
+			    "07:30"},
+			  "07:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"08:00",
+			    "08:30"},
+			  "08:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"09:00",
+			    "09:30"},
+			  "09:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"10:00",
+			    "10:30"},
+			  "10:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"11:00",
+			    "11:30"},
+			  "11:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"12:00",
+			    "12:30"},
+			  "12:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"13:00",
+			    "13:30"},
+			  "13:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"14:00",
+			    "14:30"},
+			  "14:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"15:00",
+			    "15:30"},
+			  "15:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"16:00",
+			    "16:30"},
+			  "16:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"17:00",
+			    "17:30"},
+			  "17:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"18:00",
+			    "18:30"},
+			  "18:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"19:00",
+			    "19:30"},
+			  "19:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"20:00",
+			    "20:30"},
+			  "20:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"21:00",
+			    "21:30"},
+			  "21:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"22:00",
+			    "22:30"},
+			  "22:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"23:00",
+			    "23:30"},
+			  "23:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"24:00",
+			    "24:30"},
+			  "24:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"25:00",
+			    "25:30"},
+			  "25:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"26:00",
+			    "26:30"},
+			  "26:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"27:00",
+			    "27:30"},
+			  "27:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"28:00",
+			    "28:30"},
+			  "28:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"29:00",
+			    "29:30",
+			    "29:59"},
+			  "29:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"30:00",
+			    "30:30",
+			    "30:59"},
+			  "30:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"31:00",
+			    "31:30",
+			    "31:59"},
+			  "31:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"32:00",
+			    "32:30",
+			    "32:59"},
+			  "32:00",
+			  'Ocupacao'[FaixaHorariaFormatada] IN {"33:00",
+			    "33:30"},
+			  "33:00",
+			  'Ocupacao'[FaixaHorariaFormatada]
+			)
+		lineageTag: 9e70eb29-aded-444e-9382-b01220b71c53
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Ocupacao"
+				          }
+				        },
+				        "Property": "FaixaHorariaFormatada"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"p","Entity":"Ocupacao"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"GroupItems":[{"DisplayName":"(Blank)","BlankDefaultPlaceholder":true},{"DisplayName":"00:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'00:00'"}}]]}}},{"DisplayName":"01:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'01:00'"}}],[{"Literal":{"Value":"'01:30'"}}]]}}},{"DisplayName":"02:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'02:00'"}}],[{"Literal":{"Value":"'02:30'"}}]]}}},{"DisplayName":"03:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'03:00'"}}],[{"Literal":{"Value":"'03:30'"}}]]}}},{"DisplayName":"04:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'04:00'"}}],[{"Literal":{"Value":"'04:30'"}}]]}}},{"DisplayName":"05:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'05:00'"}}],[{"Literal":{"Value":"'05:30'"}}]]}}},{"DisplayName":"06:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'06:00'"}}],[{"Literal":{"Value":"'06:30'"}}]]}}},{"DisplayName":"07:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'07:00'"}}],[{"Literal":{"Value":"'07:30'"}}]]}}},{"DisplayName":"08:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'08:00'"}}],[{"Literal":{"Value":"'08:30'"}}]]}}},{"DisplayName":"09:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'09:00'"}}],[{"Literal":{"Value":"'09:30'"}}]]}}},{"DisplayName":"10:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'10:00'"}}],[{"Literal":{"Value":"'10:30'"}}]]}}},{"DisplayName":"11:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'11:00'"}}],[{"Literal":{"Value":"'11:30'"}}]]}}},{"DisplayName":"12:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'12:00'"}}],[{"Literal":{"Value":"'12:30'"}}]]}}},{"DisplayName":"13:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'13:00'"}}],[{"Literal":{"Value":"'13:30'"}}]]}}},{"DisplayName":"14:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'14:00'"}}],[{"Literal":{"Value":"'14:30'"}}]]}}},{"DisplayName":"15:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'15:00'"}}],[{"Literal":{"Value":"'15:30'"}}]]}}},{"DisplayName":"16:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'16:00'"}}],[{"Literal":{"Value":"'16:30'"}}]]}}},{"DisplayName":"17:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'17:00'"}}],[{"Literal":{"Value":"'17:30'"}}]]}}},{"DisplayName":"18:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'18:00'"}}],[{"Literal":{"Value":"'18:30'"}}]]}}},{"DisplayName":"19:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'19:00'"}}],[{"Literal":{"Value":"'19:30'"}}]]}}},{"DisplayName":"20:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'20:00'"}}],[{"Literal":{"Value":"'20:30'"}}]]}}},{"DisplayName":"21:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'21:00'"}}],[{"Literal":{"Value":"'21:30'"}}]]}}},{"DisplayName":"22:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'22:00'"}}],[{"Literal":{"Value":"'22:30'"}}]]}}},{"DisplayName":"23:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'23:00'"}}],[{"Literal":{"Value":"'23:30'"}}]]}}},{"DisplayName":"24:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'24:00'"}}],[{"Literal":{"Value":"'24:30'"}}]]}}},{"DisplayName":"25:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'25:00'"}}],[{"Literal":{"Value":"'25:30'"}}]]}}},{"DisplayName":"26:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'26:00'"}}],[{"Literal":{"Value":"'26:30'"}}]]}}},{"DisplayName":"27:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'27:00'"}}],[{"Literal":{"Value":"'27:30'"}}]]}}},{"DisplayName":"28:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'28:00'"}}],[{"Literal":{"Value":"'28:30'"}}]]}}},{"DisplayName":"29:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'29:00'"}}],[{"Literal":{"Value":"'29:30'"}}],[{"Literal":{"Value":"'29:59'"}}]]}}},{"DisplayName":"30:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'30:00'"}}],[{"Literal":{"Value":"'30:30'"}}],[{"Literal":{"Value":"'30:59'"}}]]}}},{"DisplayName":"31:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'31:00'"}}],[{"Literal":{"Value":"'31:30'"}}],[{"Literal":{"Value":"'31:59'"}}]]}}},{"DisplayName":"32:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'32:00'"}}],[{"Literal":{"Value":"'32:30'"}}],[{"Literal":{"Value":"'32:59'"}}]]}}},{"DisplayName":"33:00","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"p"}},"Property":"FaixaHorariaFormatada"}}],"Values":[[{"Literal":{"Value":"'33:00'"}}],[{"Literal":{"Value":"'33:30'"}}]]}}}]}
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChavePrev = 'Ocupacao'[canDescricao]&'Ocupacao'[FaixaHorariaFormatada (groups)]&'Ocupacao'[Periodo]
+		lineageTag: b90f1986-d2ef-4afa-a49c-192858629590
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo = RELATED(Calendario[Periodo da Semana])
+		lineageTag: 83a8e8f5-ad36-418b-a146-625aa74ab198
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Espera
+		dataType: int64
+		formatString: 0
+		lineageTag: 4d4d0560-ddf9-4d1f-b75f-6d9e42132979
+		summarizeBy: sum
+		sourceColumn: Espera
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAnunciante
+		dataType: int64
+		formatString: 0
+		lineageTag: b69d3057-5c93-46c4-b768-8825cc08bb03
+		summarizeBy: none
+		sourceColumn: IdAnunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column Anunciante = RELATED(Anunciante[Anunciante])
+		lineageTag: 88ea91d9-f8b1-452e-83e5-36c13890de6e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipPubId
+		dataType: int64
+		formatString: 0
+		lineageTag: 51081c48-b0cc-4ad1-94d9-1d89af0ca17c
+		summarizeBy: none
+		sourceColumn: TipPubId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Ocupacao-71a0041f-a2dc-4772-ac50-99f3e67a7abe = m
+		mode: import
+		queryGroup: Encomendas
+		source = ```
+				let
+				    SQL_antiga = "Select#(lf)    v.canCodigo,#(lf)    v.canDescricao,#(lf)    v.Data,#(lf)    dbo.rhorastr(v.FaixaHoraria) As FaixaHorariaFormatada,#(lf)    DateAdd(hour, (v.FaixaHoraria / 60), v.Data) As FaixaHoraria,#(lf)    (v.FaixaHoraria / 60) As Horas,#(lf)    Case#(lf)        When Sum(v.GrelhaMaxNormal) = 0#(lf)        Then 0#(lf)        Else Sum(v.CanalMaxNormal)#(lf)    End As CanalMaxNormal,#(lf)    Sum(v.CanalMaxEspecial) As CanalMaxEspecial,#(lf)    Sum(v.CanalMaxPromocao) As CanalMaxPromocao,#(lf)    Sum(v.GrelhaMaxNormal) As GrelhaMaxNormal,#(lf)    Sum(v.GrelhaMaxEspecial) As GrelhaMaxEspecial,#(lf)    Sum(v.GrelhaMaxPromocao) As GrelhaMaxPromocao,#(lf)    Sum(v.OcupacaoNormal) As OcupacaoNormal,#(lf)    Sum(v.OcupacaoEspecial) As OcupacaoEspecial,#(lf)    Sum(v.OcupacaoPromocao) As OcupacaoPromocao,#(lf)    Sum(v.OcupacaoExcepcoesNormal) As OcupacaoExcepcoesNormal,#(lf)    Sum(v.OcupacaoExcepcoesEspecial) As OcupacaoExcepcoesEspecial,#(lf)    Sum(v.OcupacaoExcepcoesPromocao) As OcupacaoExcepcoesPromocao,#(lf)    Sum(v.ValorPublicidade) As ValorPublicidade,#(lf)    Sum(v.ValorExcepcoes) As ValorExcepcoes,#(lf)    Sum(v.quantidade) As NumeroSpots,#(lf)    Sum(v.quantidadeExcepcoes) As NumeroExepcoes,#(lf)    v.Erro,#(lf)    Sum(v.Espera) As Espera,#(lf)    v.IdAnunciante,#(lf)    v.TipPubId#(lf)From#(lf)    (Select#(lf)         c.canCodigo,#(lf)         c.canDescricao,#(lf)         sdc.dataDiaRef As Data,#(lf)         fs.faiSemHoraInicio As FaixaHoraria,#(lf)         c.canMaxDuracaoNormal As CanalMaxNormal,#(lf)         c.canMaxDuracaoEspecial As CanalMaxEspecial,#(lf)         c.canMaxDuracaoPromocao As CanalMaxPromocao,#(lf)         0 GrelhaMaxNormal,#(lf)         0 GrelhaMaxEspecial,#(lf)         0 GrelhaMaxPromocao,#(lf)         0 As OcupacaoNormal,#(lf)         0 As OcupacaoEspecial,#(lf)         0 As OcupacaoPromocao,#(lf)         0 As OcupacaoExcepcoesNormal,#(lf)         0 As OcupacaoExcepcoesEspecial,#(lf)         0 As OcupacaoExcepcoesPromocao,#(lf)         0 As ValorPublicidade,#(lf)         0 As ValorExcepcoes,#(lf)         0 As quantidade,#(lf)         0 As quantidadeExcepcoes,#(lf)         0 As Espera,#(lf)         Null As Erro,#(lf)         Null As IdAnunciante,#(lf)         Null As TipPubId#(lf)     From#(lf)         Canais c Join#(lf)         statusDiaCanal sdc On sdc.canCodigo = c.canCodigo Join#(lf)         faixaSemana fs On fs.canCodigo = c.canCodigo#(lf)                 And fs.diaSemId = DatePart(dw, sdc.dataDiaRef) + 1#(lf)                 And sdc.dataDiaRef Between fs.faiSemDataInicio And fs.faiSemDataFim#(lf)     Union All#(lf)     Select#(lf)         e.canCodigo,#(lf)         c.canDescricao,#(lf)         e.encDataExibicao As Data,#(lf)         fs.faiSemHoraInicio As FaixaHoraria,#(lf)         0 As CanalMaxNormal,#(lf)         0 As CanalMaxEspecial,#(lf)         0 As CanalMaxPromocao,#(lf)         0 GrelhaMaxNormal,#(lf)         0 GrelhaMaxEspecial,#(lf)         0 GrelhaMaxPromocao,#(lf)         0 As OcupacaoNormal,#(lf)         0 As OcupacaoEspecial,#(lf)         0 As OcupacaoPromocao,#(lf)         Sum(Case#(lf)             When tp.tipEcrIdOcupacao = 'N'#(lf)             Then e.encMaterialDuracaoEmissao#(lf)             Else 0#(lf)         End) As OcupacaoExcepcoesNormal,#(lf)         Sum(Case#(lf)             When tp.tipEcrIdOcupacao = 'E'#(lf)             Then e.encMaterialDuracaoEmissao#(lf)             Else 0#(lf)         End) As OcupacaoExcepcoesEspecial,#(lf)         Sum(Case#(lf)             When tp.tipEcrIdOcupacao = 'P'#(lf)             Then e.encMaterialDuracaoEmissao#(lf)             Else 0#(lf)         End) As OcupacaoExcepcoesPromocao,#(lf)         0 As ValorPublicidade,#(lf)         Sum(IsNull(e.encValorPub, 0)) As ValorExcepcoes,#(lf)         0 As quantidade,#(lf)         count(*) As quantidadeExcepcoes,#(lf)         Sum(IsNull(e.encMaterialDuracaoEmissao, 0)) As Espera,#(lf)         e.encExcDescricaoErro As Erro,#(lf)         entidades.entId As IdAnunciante,#(lf)         op.tipPubId#(lf)     From#(lf)         encomendasExcepcoes e Join#(lf)         Canais c On c.canCodigo = e.canCodigo Join#(lf)         ordemPub op On op.ordPubCodigo = e.ordPubCodigo Join#(lf)         tipoPublicidade tp On tp.tipPubId = op.tipPubId Join#(lf)         faixaSemana fs On fs.canCodigo = e.canCodigo#(lf)                 And fs.diaSemId = DatePart(dw, e.encDataExibicao) + 1#(lf)                 And e.encDataExibicao Between fs.faiSemDataInicio And fs.faiSemDataFim#(lf)                 And IsNull(e.greComHoraInicio, IsNull(e.encHoraInicio, 0)) Between fs.faiSemHoraInicio And#(lf)                 fs.faiSemHoraFim Left Join#(lf)         campanhas On op.camId = campanhas.camId Left Join#(lf)         entidades On campanhas.camAnunciante = entidades.entId#(lf)     Where#(lf)         Year(e.encDataExibicao) Between Year(GetDate()) - 2 And Year(GetDate())#(lf)     Group By#(lf)         e.canCodigo,#(lf)         c.canDescricao,#(lf)         e.encDataExibicao,#(lf)         fs.faiSemHoraInicio,#(lf)         e.encExcDescricaoErro,#(lf)         entidades.entId,#(lf)         op.tipPubId#(lf)     Union All#(lf)     Select#(lf)         e.canCodigo,#(lf)         c.canDescricao,#(lf)         e.encDataExibicao As Data,#(lf)         fs.faiSemHoraInicio As FaixaHoraria,#(lf)         0 As CanalMaxNormal,#(lf)         0 As CanalMaxEspecial,#(lf)         0 As CanalMaxPromocao,#(lf)         0 As GrelhaMaxNormal,#(lf)         0 As GrelhaMaxEspecial,#(lf)         0 As GrelhaMaxPromocao,#(lf)         Sum(Case#(lf)             When tp.tipEcrIdOcupacao = 'N'#(lf)             Then e.encMaterialDuracaoEmissao#(lf)             Else 0#(lf)         End) As OcupacaoNormal,#(lf)         Sum(Case#(lf)             When tp.tipEcrIdOcupacao = 'E'#(lf)             Then e.encMaterialDuracaoEmissao#(lf)             Else 0#(lf)         End) As OcupacaoEspecial,#(lf)         Sum(Case#(lf)             When tp.tipEcrIdOcupacao = 'P'#(lf)             Then e.encMaterialDuracaoEmissao#(lf)             Else 0#(lf)         End) As OcupacaoPromocao,#(lf)         0 As OcupacaoExcepcoesNormal,#(lf)         0 As OcupacaoExcepcoesEspecial,#(lf)         0 As OcupacaoExcepcoesPromocao,#(lf)         Sum(IsNull(e.encValorPub, 0)) As ValorPublicidade,#(lf)         0 As ValorExcepcoes,#(lf)         Sum(Case#(lf)             When tp.tipEcrIdOcupacao = 'N'#(lf)             Then 1#(lf)             Else 0#(lf)         End) As quantidade,#(lf)         0 As quantidadeExcepcoes,#(lf)         Sum(0) As Espera,#(lf)         Null As Erro,#(lf)         entidades.entId As IdAnunciante,#(lf)         op.tipPubId#(lf)     From#(lf)         encUNIONencExib e Join#(lf)         Canais c On c.canCodigo = e.canCodigo Join#(lf)         ordemPub op On op.ordPubCodigo = e.ordPubCodigo Join#(lf)         tipoPublicidade tp On tp.tipPubId = op.tipPubId Join#(lf)         faixaSemana fs On fs.canCodigo = e.canCodigo#(lf)                 And fs.diaSemId = DatePart(dw, e.encDataExibicao) + 1#(lf)                 And e.encDataExibicao Between fs.faiSemDataInicio And fs.faiSemDataFim#(lf)                 And IsNull(e.greComHoraInicio, IsNull(e.encHoraInicio, 0)) Between fs.faiSemHoraInicio And#(lf)                 fs.faiSemHoraFim Left Join#(lf)         campanhas On op.camId = campanhas.camId Left Join#(lf)         entidades On campanhas.camAnunciante = entidades.entId#(lf)     Where#(lf)         Year(e.encDataExibicao) Between Year(GetDate()) - 2 And Year(GetDate())#(lf)     Group By#(lf)         e.canCodigo,#(lf)         c.canDescricao,#(lf)         e.encDataExibicao,#(lf)         fs.faiSemHoraInicio,#(lf)         entidades.entId,#(lf)         op.tipPubId#(lf)     Union All#(lf)     Select#(lf)         g.canCodigo,#(lf)         c.canDescricao,#(lf)         g.greComData As Data,#(lf)         fs.faiSemHoraInicio As FaixaHoraria,#(lf)         0 As CanalMaxNormal,#(lf)         0 As CanalMaxEspecial,#(lf)         0 As CanalMaxPromocao,#(lf)         Sum(g.greComDuracaoNormal) As GrelhaMaxNormal,#(lf)         Sum(g.greComDuracaoEspecial) As GrelhaMaxEspecial,#(lf)         Sum(g.greComDuracaoPromocao) As GrelhaMaxPromocao,#(lf)         0 As OcupacaoNormal,#(lf)         0 As OcupacaoEspecial,#(lf)         0 As OcupacaoPromocao,#(lf)         0 As OcupacaoExcepcoesNormal,#(lf)         0 As OcupacaoExcepcoesEspecial,#(lf)         0 As OcupacaoExcepcoesPromocao,#(lf)         0 As ValorPublicidade,#(lf)         0 As ValorExcepcoes,#(lf)         0 As quantidade,#(lf)         0 As quantidadeExcepcoes,#(lf)         0 As Espera,#(lf)         Null As Erro,#(lf)         Null As IdAnunciante,#(lf)         Null As TipPubId#(lf)     From#(lf)         grelhaComercial g Join#(lf)         Canais c On c.canCodigo = g.canCodigo Join#(lf)         faixaSemana fs On fs.canCodigo = g.canCodigo#(lf)                 And fs.diaSemId = DatePart(dw, g.greComData) + 1#(lf)                 And g.greComData Between fs.faiSemDataInicio And fs.faiSemDataFim#(lf)                 And IsNull(g.greComHoraInicio, 0) Between fs.faiSemHoraInicio And fs.faiSemHoraFim#(lf)     Where#(lf)         Year(g.greComData) Between Year(GetDate()) - 2 And Year(GetDate())#(lf)     Group By#(lf)         g.canCodigo,#(lf)         c.canDescricao,#(lf)         g.greComData,#(lf)         fs.faiSemHoraInicio) v#(lf)Where#(lf)    Year(v.Data) Between Year(GetDate()) - 2 And Year(GetDate())#(lf)Group By#(lf)    v.canCodigo,#(lf)    v.canDescricao,#(lf)    v.Data,#(lf)    v.Erro,#(lf)    v.IdAnunciante,#(lf)    v.FaixaHoraria,#(lf)    Month(v.Data),#(lf)    v.TipPubId",
+				    SQL = "SELECT
+				            v.canCodigo,
+				            v.canDescricao,
+				            v.Data,
+				            RIGHT('0' + CAST(v.FaixaHoraria / 60 AS VARCHAR(3)), 2) + ':' +
+				                RIGHT('0' + CAST(v.FaixaHoraria % 60 AS VARCHAR(2)), 2)               AS FaixaHorariaFormatada,
+				            DATEADD(HOUR, (v.FaixaHoraria / 60), v.Data)                              AS FaixaHoraria,
+				            (v.FaixaHoraria / 60)                                                     AS Horas,
+				            CASE WHEN SUM(v.GrelhaMaxNormal) = 0 THEN 0 ELSE SUM(v.CanalMaxNormal) END AS CanalMaxNormal,
+				            SUM(v.CanalMaxEspecial)                                                   AS CanalMaxEspecial,
+				            SUM(v.CanalMaxPromocao)                                                   AS CanalMaxPromocao,
+				            SUM(v.GrelhaMaxNormal)                                                    AS GrelhaMaxNormal,
+				            SUM(v.GrelhaMaxEspecial)                                                  AS GrelhaMaxEspecial,
+				            SUM(v.GrelhaMaxPromocao)                                                  AS GrelhaMaxPromocao,
+				            SUM(v.OcupacaoNormal)                                                     AS OcupacaoNormal,
+				            SUM(v.OcupacaoEspecial)                                                   AS OcupacaoEspecial,
+				            SUM(v.OcupacaoPromocao)                                                   AS OcupacaoPromocao,
+				            SUM(v.OcupacaoExcepcoesNormal)                                            AS OcupacaoExcepcoesNormal,
+				            SUM(v.OcupacaoExcepcoesEspecial)                                          AS OcupacaoExcepcoesEspecial,
+				            SUM(v.OcupacaoExcepcoesPromocao)                                          AS OcupacaoExcepcoesPromocao,
+				            SUM(v.ValorPublicidade)                                                   AS ValorPublicidade,
+				            SUM(v.ValorExcepcoes)                                                     AS ValorExcepcoes,
+				            SUM(v.quantidade)                                                         AS NumeroSpots,
+				            SUM(v.quantidadeExcepcoes)                                                AS NumeroExepcoes,
+				            v.Erro,
+				            SUM(v.Espera)                                                             AS Espera,
+				            v.IdAnunciante,
+				            v.TipPubId
+				        FROM
+				        (
+				            -- Ramo 1: capacidade máxima por canal (grelha de referência do canal)
+				            SELECT
+				                c.canCodigo,
+				                c.canDescricao,
+				                sdc.dataDiaRef                     AS Data,
+				                fs.faiSemHoraInicio                AS FaixaHoraria,
+				                c.canMaxDuracaoNormal               AS CanalMaxNormal,
+				                c.canMaxDuracaoEspecial             AS CanalMaxEspecial,
+				                c.canMaxDuracaoPromocao             AS CanalMaxPromocao,
+				                0                                   AS GrelhaMaxNormal,
+				                0                                   AS GrelhaMaxEspecial,
+				                0                                   AS GrelhaMaxPromocao,
+				                0                                   AS OcupacaoNormal,
+				                0                                   AS OcupacaoEspecial,
+				                0                                   AS OcupacaoPromocao,
+				                0                                   AS OcupacaoExcepcoesNormal,
+				                0                                   AS OcupacaoExcepcoesEspecial,
+				                0                                   AS OcupacaoExcepcoesPromocao,
+				                0                                   AS ValorPublicidade,
+				                0                                   AS ValorExcepcoes,
+				                0                                   AS quantidade,
+				                0                                   AS quantidadeExcepcoes,
+				                0                                   AS Espera,
+				                NULL                                AS Erro,
+				                NULL                                AS IdAnunciante,
+				                NULL                                AS TipPubId
+				            FROM Canais c
+				                JOIN statusDiaCanal sdc
+				                    ON sdc.canCodigo = c.canCodigo
+				                JOIN faixaSemana fs
+				                    ON fs.canCodigo = c.canCodigo
+				                    AND fs.diaSemId = DATEPART(DW, sdc.dataDiaRef) + 1
+				                    AND sdc.dataDiaRef BETWEEN fs.faiSemDataInicio AND fs.faiSemDataFim
+				            WHERE YEAR(sdc.dataDiaRef) BETWEEN YEAR(GETDATE()) - 2 AND YEAR(GETDATE())
+				
+				            UNION ALL
+				
+				            -- Ramo 2: ocupação de exceções (spots fora da grelha comercial normal)
+				            SELECT
+				                e.canCodigo,
+				                c.canDescricao,
+				                e.encDataExibicao                  AS Data,
+				                fs.faiSemHoraInicio                AS FaixaHoraria,
+				                0                                   AS CanalMaxNormal,
+				                0                                   AS CanalMaxEspecial,
+				                0                                   AS CanalMaxPromocao,
+				                0                                   AS GrelhaMaxNormal,
+				                0                                   AS GrelhaMaxEspecial,
+				                0                                   AS GrelhaMaxPromocao,
+				                0                                   AS OcupacaoNormal,
+				                0                                   AS OcupacaoEspecial,
+				                0                                   AS OcupacaoPromocao,
+				                SUM(CASE WHEN tp.tipEcrIdOcupacao = 'N' THEN e.encMaterialDuracaoEmissao ELSE 0 END) AS OcupacaoExcepcoesNormal,
+				                SUM(CASE WHEN tp.tipEcrIdOcupacao = 'E' THEN e.encMaterialDuracaoEmissao ELSE 0 END) AS OcupacaoExcepcoesEspecial,
+				                SUM(CASE WHEN tp.tipEcrIdOcupacao = 'P' THEN e.encMaterialDuracaoEmissao ELSE 0 END) AS OcupacaoExcepcoesPromocao,
+				                0                                   AS ValorPublicidade,
+				                SUM(ISNULL(e.encValorPub, 0))       AS ValorExcepcoes,
+				                0                                   AS quantidade,
+				                COUNT(*)                            AS quantidadeExcepcoes,
+				                SUM(ISNULL(e.encMaterialDuracaoEmissao, 0)) AS Espera,
+				                e.encExcDescricaoErro               AS Erro,
+				                entidades.entId                     AS IdAnunciante,
+				                op.tipPubId                         AS TipPubId
+				            FROM encomendasExcepcoes e
+				                JOIN Canais c
+				                    ON c.canCodigo = e.canCodigo
+				                JOIN ordemPub op
+				                    ON op.ordPubCodigo = e.ordPubCodigo
+				                JOIN tipoPublicidade tp
+				                    ON tp.tipPubId = op.tipPubId
+				                JOIN faixaSemana fs
+				                    ON fs.canCodigo = e.canCodigo
+				                    AND fs.diaSemId = DATEPART(DW, e.encDataExibicao) + 1
+				                    AND e.encDataExibicao BETWEEN fs.faiSemDataInicio AND fs.faiSemDataFim
+				                    AND ISNULL(e.greComHoraInicio, ISNULL(e.encHoraInicio, 0)) BETWEEN fs.faiSemHoraInicio AND fs.faiSemHoraFim
+				                LEFT JOIN campanhas
+				                    ON op.camId = campanhas.camId
+				                LEFT JOIN entidades
+				                    ON campanhas.camAnunciante = entidades.entId
+				            WHERE YEAR(e.encDataExibicao) BETWEEN YEAR(GETDATE()) - 2 AND YEAR(GETDATE())
+				            GROUP BY
+				                e.canCodigo,
+				                c.canDescricao,
+				                e.encDataExibicao,
+				                fs.faiSemHoraInicio,
+				                e.encExcDescricaoErro,
+				                entidades.entId,
+				                op.tipPubId
+				
+				            UNION ALL
+				
+				            -- Ramo 3: ocupação normal (spots efetivamente emitidos)
+				            SELECT
+				                e.canCodigo,
+				                c.canDescricao,
+				                e.encDataExibicao                  AS Data,
+				                fs.faiSemHoraInicio                AS FaixaHoraria,
+				                0                                   AS CanalMaxNormal,
+				                0                                   AS CanalMaxEspecial,
+				                0                                   AS CanalMaxPromocao,
+				                0                                   AS GrelhaMaxNormal,
+				                0                                   AS GrelhaMaxEspecial,
+				                0                                   AS GrelhaMaxPromocao,
+				                SUM(CASE WHEN tp.tipEcrIdOcupacao = 'N' THEN e.encMaterialDuracaoEmissao ELSE 0 END) AS OcupacaoNormal,
+				                SUM(CASE WHEN tp.tipEcrIdOcupacao = 'E' THEN e.encMaterialDuracaoEmissao ELSE 0 END) AS OcupacaoEspecial,
+				                SUM(CASE WHEN tp.tipEcrIdOcupacao = 'P' THEN e.encMaterialDuracaoEmissao ELSE 0 END) AS OcupacaoPromocao,
+				                0                                   AS OcupacaoExcepcoesNormal,
+				                0                                   AS OcupacaoExcepcoesEspecial,
+				                0                                   AS OcupacaoExcepcoesPromocao,
+				                SUM(ISNULL(e.encValorPub, 0))       AS ValorPublicidade,
+				                0                                   AS ValorExcepcoes,
+				                SUM(CASE WHEN tp.tipEcrIdOcupacao = 'N' THEN 1 ELSE 0 END) AS quantidade,
+				                0                                   AS quantidadeExcepcoes,
+				                0                                   AS Espera,
+				                NULL                                AS Erro,
+				                entidades.entId                     AS IdAnunciante,
+				                op.tipPubId                         AS TipPubId
+				            FROM encUNIONencExib e
+				                JOIN Canais c
+				                    ON c.canCodigo = e.canCodigo
+				                JOIN ordemPub op
+				                    ON op.ordPubCodigo = e.ordPubCodigo
+				                JOIN tipoPublicidade tp
+				                    ON tp.tipPubId = op.tipPubId
+				                JOIN faixaSemana fs
+				                    ON fs.canCodigo = e.canCodigo
+				                    AND fs.diaSemId = DATEPART(DW, e.encDataExibicao) + 1
+				                    AND e.encDataExibicao BETWEEN fs.faiSemDataInicio AND fs.faiSemDataFim
+				                    AND ISNULL(e.greComHoraInicio, ISNULL(e.encHoraInicio, 0)) BETWEEN fs.faiSemHoraInicio AND fs.faiSemHoraFim
+				                LEFT JOIN campanhas
+				                    ON op.camId = campanhas.camId
+				                LEFT JOIN entidades
+				                    ON campanhas.camAnunciante = entidades.entId
+				            WHERE YEAR(e.encDataExibicao) BETWEEN YEAR(GETDATE()) - 2 AND YEAR(GETDATE())
+				            GROUP BY
+				                e.canCodigo,
+				                c.canDescricao,
+				                e.encDataExibicao,
+				                fs.faiSemHoraInicio,
+				                entidades.entId,
+				                op.tipPubId
+				
+				            UNION ALL
+				
+				            -- Ramo 4: capacidade máxima da grelha comercial
+				            SELECT
+				                g.canCodigo,
+				                c.canDescricao,
+				                g.greComData                       AS Data,
+				                fs.faiSemHoraInicio                AS FaixaHoraria,
+				                0                                   AS CanalMaxNormal,
+				                0                                   AS CanalMaxEspecial,
+				                0                                   AS CanalMaxPromocao,
+				                SUM(g.greComDuracaoNormal)          AS GrelhaMaxNormal,
+				                SUM(g.greComDuracaoEspecial)        AS GrelhaMaxEspecial,
+				                SUM(g.greComDuracaoPromocao)        AS GrelhaMaxPromocao,
+				                0                                   AS OcupacaoNormal,
+				                0                                   AS OcupacaoEspecial,
+				                0                                   AS OcupacaoPromocao,
+				                0                                   AS OcupacaoExcepcoesNormal,
+				                0                                   AS OcupacaoExcepcoesEspecial,
+				                0                                   AS OcupacaoExcepcoesPromocao,
+				                0                                   AS ValorPublicidade,
+				                0                                   AS ValorExcepcoes,
+				                0                                   AS quantidade,
+				                0                                   AS quantidadeExcepcoes,
+				                0                                   AS Espera,
+				                NULL                                AS Erro,
+				                NULL                                AS IdAnunciante,
+				                NULL                                AS TipPubId
+				            FROM grelhaComercial g
+				                JOIN Canais c
+				                    ON c.canCodigo = g.canCodigo
+				                JOIN faixaSemana fs
+				                    ON fs.canCodigo = g.canCodigo
+				                    AND fs.diaSemId = DATEPART(DW, g.greComData) + 1
+				                    AND g.greComData BETWEEN fs.faiSemDataInicio AND fs.faiSemDataFim
+				                    AND ISNULL(g.greComHoraInicio, 0) BETWEEN fs.faiSemHoraInicio AND fs.faiSemHoraFim
+				            WHERE YEAR(g.greComData) BETWEEN YEAR(GETDATE()) - 2 AND YEAR(GETDATE())
+				            GROUP BY
+				                g.canCodigo,
+				                c.canDescricao,
+				                g.greComData,
+				                fs.faiSemHoraInicio
+				        ) v
+				        GROUP BY
+				            v.canCodigo,
+				            v.canDescricao,
+				            v.Data,
+				            v.Erro,
+				            v.IdAnunciante,
+				            v.FaixaHoraria,
+				            v.TipPubId",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL,  CommandTimeout=#duration(6, 6, 0, 0)]),
+				    #"Added Custom" = Table.AddColumn(Source, "Período", each if [Horas]>=6 and [Horas] <12 then "Manhã" else 
+				        if [Horas]>=12 and [Horas]<15 then "Almoço" else 
+				        if [Horas]>=15 and [Horas]<18 then "Tarde" else 
+				        if [Horas]>=18 and [Horas]<20 then "Acesso Prime" else 
+				        if [Horas]>=20 and [Horas]<24 then "Prime-Time" else 
+				        if [Horas]>=24 and [Horas]<26 then "Late-Night" else 
+				        if [Horas]>=26 then "Madrugada" else 0),
+				    Custom1 = Table.AddColumn(#"Added Custom", "Ordenação", each if [Período] = "Manhã" then 1 else if [Período] = "Almoço" then 2 else if [Período] = "Tarde" then 3 else if [Período] = "Acesso Prime" then 4 else if [Período] = "Prime-Time" then 5 else if [Período] = "Late-Night" then 6 else if [Período] = "Madrugada" then 7 else 8),
+				    #"Removed Columns" = Table.RemoveColumns(Custom1,{"ValorPublicidade", "OcupacaoPromocao", "OcupacaoExcepcoesPromocao", "OcupacaoExcepcoesEspecial", "OcupacaoEspecial", "NumeroExepcoes", "GrelhaMaxPromocao", "GrelhaMaxEspecial", "CanalMaxPromocao", "CanalMaxEspecial"}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Removed Columns",{{"Data", type date}})
+				in
+				    #"Tipo Alterado"
+				```
+
+	annotation PBI_QueryRelationships = {"columnCount":25,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/PBI_Disponibilidade_e_Ocupacao/Source.{canCodigo,0}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{canDescricao,1}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{Data,2}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{FaixaHorariaFormatada,3}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{FaixaHoraria,4}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{Horas,5}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{CanalMaxNormal,6}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{CanalMaxEspecial,7}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{CanalMaxPromocao,8}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{GrelhaMaxNormal,9}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{GrelhaMaxEspecial,10}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{GrelhaMaxPromocao,11}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoNormal,12}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoEspecial,13}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoPromocao,14}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoExcepcoesNormal,15}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoExcepcoesEspecial,16}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoExcepcoesPromocao,17}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{ValorPublicidade,18}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{ValorExcepcoes,19}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{NumeroSpots,20}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{NumeroExepcoes,21}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{Erro,22}","Section1/PBI_Disponibilidade_e_Ocupacao/Added Custom.{Período,23}","Section1/PBI_Disponibilidade_e_Ocupacao/Custom1.{Ordenação,24}"],"ColumnCount":25,"KeyColumnNames":[],"ColumnIdentities":["Section1/PBI_Disponibilidade_e_Ocupacao/Source.{canCodigo,0}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{canDescricao,1}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{Data,2}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{FaixaHorariaFormatada,3}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{FaixaHoraria,4}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{Horas,5}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{CanalMaxNormal,6}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{CanalMaxEspecial,7}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{CanalMaxPromocao,8}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{GrelhaMaxNormal,9}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{GrelhaMaxEspecial,10}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{GrelhaMaxPromocao,11}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoNormal,12}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoEspecial,13}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoPromocao,14}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoExcepcoesNormal,15}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoExcepcoesEspecial,16}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{OcupacaoExcepcoesPromocao,17}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{ValorPublicidade,18}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{ValorExcepcoes,19}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{NumeroSpots,20}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{NumeroExepcoes,21}","Section1/PBI_Disponibilidade_e_Ocupacao/Source.{Erro,22}","Section1/PBI_Disponibilidade_e_Ocupacao/Added Custom.{Período,23}","Section1/PBI_Disponibilidade_e_Ocupacao/Custom1.{Ordenação,24}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

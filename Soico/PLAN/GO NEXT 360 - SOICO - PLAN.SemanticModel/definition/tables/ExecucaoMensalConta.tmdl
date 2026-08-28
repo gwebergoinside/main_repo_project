@@ -1,0 +1,189 @@
+table ExecucaoMensalConta
+	lineageTag: 3da620e8-16fc-448d-9339-3ee17c46078a
+
+	column DATE
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 438c30eb-1d3e-452e-8aba-23d8efc93131
+		summarizeBy: none
+		sourceColumn: DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetPurchaseValue
+		dataType: double
+		lineageTag: b43fc0ee-8a3b-4d45-85b9-46c22780de45
+		summarizeBy: sum
+		sourceColumn: BudgetPurchaseValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ProjectTitle
+		dataType: string
+		lineageTag: 87e941f1-dffd-4315-9b1b-a324d28572d5
+		summarizeBy: none
+		sourceColumn: ProjectTitle
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProjectReference
+		dataType: int64
+		formatString: 0
+		lineageTag: 30b3e291-5057-4c09-b838-7e0569e35b7d
+		summarizeBy: none
+		sourceColumn: ProjectReference
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 3fd6b9dd-f2fe-435c-9c07-f49e16ff93fe
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: c2ab08b4-af66-42be-84b5-e8b9edc32179
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetSellValue
+		dataType: double
+		lineageTag: 2eb1001f-39f4-4d1b-85a8-6cdd6e43de20
+		summarizeBy: sum
+		sourceColumn: BudgetSellValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Proj = RELATED(Projetos[IfProj])
+		lineageTag: 13a465f0-52ae-46b4-893c-06e50b9fdda1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Master Proj' = RELATED(Projetos[ProjectoMaster])
+		lineageTag: a00d1e6e-b8a5-4153-8ff1-94c2502b54f6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Projeto'
+		dataType: string
+		lineageTag: d448d2b8-2a8e-4c68-968a-2655eced5223
+		summarizeBy: none
+		sourceColumn: Tipo Projeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Estado Projeto' = IF( ExecucaoMensalConta[estado] in {"B", "P"} , "Em Aberto" , "Aprovado" )
+		lineageTag: 1a4e34d8-cec1-4c09-bec9-89ea34296d08
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column estado
+		dataType: string
+		lineageTag: a3988934-32e0-477f-a449-c54e79688798
+		summarizeBy: none
+		sourceColumn: estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Código Conta' =
+			
+			IF(
+				ISERROR( VALUE( ExecucaoMensalConta[AccountCode] ) ),
+				ExecucaoMensalConta[AccountCode],
+				CONCATENATE( VALUE(ExecucaoMensalConta[AccountCode]), "" )
+			)
+		lineageTag: 0c245289-0792-4f23-bb0f-8a5ef4f8383b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGrupado =
+			SWITCH( TRUE(),
+			ExecucaoMensalConta[AccountGroup1] = "Atividades" , "Estrutural",
+			ExecucaoMensalConta[AccountGroup1] = "ESTRUTURAL" , "Estrutural",
+			ExecucaoMensalConta[AccountGroup1] = "CUSTO DE PRODUÇÃO" , "Total Despesas Diretas",
+			ExecucaoMensalConta[AccountGroup1] = "ARTÍSTICO e EQUIPE PRODUÇÃO" , "Total Despesas Diretas",
+			ExecucaoMensalConta[AccountGroup1] = "MERCHANDISING" , "Total Despesas Diretas",
+			ExecucaoMensalConta[AccountGroup1] = "Total Despesas Diretas", "Total Despesas Diretas",
+			ExecucaoMensalConta[AccountGroup1] = "Despesas Financeiras", "Total Financeiras",
+			ExecucaoMensalConta[AccountGroup1] = "ADM DE PRODUÇÃO" , "Total Despesas Diretas",
+			ExecucaoMensalConta[AccountGroup1] = BLANK() , "Sem Correspondência",
+			ExecucaoMensalConta[AccountGroup1])
+		lineageTag: 545a0245-66b0-441a-b2a9-ccedd86a2b85
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountCode
+		dataType: string
+		lineageTag: e7335bcf-741d-454f-8cc8-2c3523a0f578
+		summarizeBy: none
+		sourceColumn: AccountCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo
+		dataType: string
+		lineageTag: 70509195-8f07-42f0-9f8b-231eb237e652
+		summarizeBy: none
+		sourceColumn: titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: e7682d7e-1a02-4f03-8f76-2a22b07d7f2a
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalCosts
+		dataType: double
+		lineageTag: 428b2c9d-f7c4-4a7f-9ec8-33c4793e00af
+		summarizeBy: sum
+		sourceColumn: TotalCosts
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AccountGroup1
+		dataType: string
+		lineageTag: 9793b358-47db-4746-b9f4-f986bbcecf33
+		summarizeBy: none
+		sourceColumn: AccountGroup1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ExecucaoMensalConta-0117d7be-01d6-46dc-8273-9603fa1c9e15 = m
+		mode: import
+		queryGroup: 'Execução Mensal'
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    ExecucaoMensal.ProjectReference,#(lf)    ExecucaoMensal.ProjectTitle,#(lf)    ExecucaoMensal.Year,#(lf)    ExecucaoMensal.Month,#(lf)    ExecucaoMensal.AccountCode,#(lf)    Sum(ExecucaoMensal.BudgetPurchaseValue) BudgetPurchaseValue,#(lf)    Sum(ExecucaoMensal.BudgetSellValue) BudgetSellValue,#(lf)    Cast(Convert(VARCHAR,ExecucaoMensal.Year) + '-' + Convert(VARCHAR,ExecucaoMensal.Month) + '-' + Convert(VARCHAR,1)#(lf)    As DATETIME) As DATE,#(lf)    Tipos_Projecto.Nome As [Tipo Projeto],#(lf)    Projectos.titulo,#(lf)    ExecucaoMensal.Id,#(lf)    ExecucaoMensal.estado#(lf)From#(lf)    (Select Distinct#(lf)         Year(o.DataExecucaoInicio) Year,#(lf)         Month(o.DataExecucaoInicio) Month,#(lf)         prj.Id ProjectReference,#(lf)         prj.titulo ProjectTitle,#(lf)         G.Id BudgetGroupReference,#(lf)         G.Nome BudgetGroupName,#(lf)         R.Id BudgetRubricReference,#(lf)         R.Nome BudgetRubricName,#(lf)         I.Id BudgetItemReference,#(lf)         I.Nome BudgetItemName,#(lf)         G.Ordem BudgetGroupOrder,#(lf)         I.tipo BudgetItemType,#(lf)         Replace(Str(IsNull(Contas.CodigoConta, ''), 12), Space(1), '0') AccountCode,#(lf)         IsNull(TOI.OrcamentoCompra, 0) BudgetPurchaseValue,#(lf)         IsNull(TOI.OrcamentoVenda, 0) BudgetSellValue,#(lf)         o.Id,#(lf)         o.estado#(lf)     From#(lf)         Orcamento_Items oi Inner Join#(lf)         Orcamentos o On oi.IdOrcamento = o.Id Inner Join#(lf)         Orc_Items As I On I.Id = oi.IdOrcItem Inner Join#(lf)         Orc_Rubricas As R On I.IdOrcRubrica = R.Id Inner Join#(lf)         Orc_Grupos As G On R.IdOrcGrupo = G.Id Inner Join#(lf)         Projectos prj On prj.Id = o.IdProjecto Left Outer Join#(lf)         (Select#(lf)              c.Codigo As CodigoConta,#(lf)              c.Descricao As DescricaoConta,#(lf)              p2.Id IdProjecto#(lf)          From#(lf)              Contas As c Inner Join#(lf)              Orc_Items As I On I.CodConta = c.Codigo Inner Join#(lf)              Orcamento_Items oi On oi.IdOrcItem = I.Id Inner Join#(lf)              Orcamentos o On oi.IdOrcamento = o.Id Inner Join#(lf)              Projectos p2 On p2.Id = o.IdProjecto#(lf)          Group By#(lf)              c.Codigo,#(lf)              c.Descricao,#(lf)              p2.Id) As Contas On Contas.CodigoConta = I.CodConta#(lf)                 And Contas.IdProjecto = prj.Id Left Outer Join#(lf)         (Select#(lf)              vwcip.IdOrcItem,#(lf)              vwcip.DataPedido,#(lf)              IsNull(Sum(IsNull(vwcip.Valor, 0)), 0) As ValorCED,#(lf)              p2.Id IdProjecto#(lf)          From#(lf)              vwComprasItemsProjecto vwcip Inner Join#(lf)              Projectos p2 On p2.Id = vwcip.IdProjecto#(lf)          Where#(lf)              vwcip.estado <> 4#(lf)          Group By#(lf)              vwcip.IdOrcItem,#(lf)              vwcip.DataPedido,#(lf)              p2.Id) As CED On CED.IdOrcItem = I.Id#(lf)                 And CED.IdProjecto = prj.Id#(lf)                 And CED.DataPedido >= o.DataExecucaoInicio#(lf)                 And CED.DataPedido <= o.DataExecucaoFim Left Outer Join#(lf)         (Select#(lf)              o.Id IdOrcamento,#(lf)              oi.IdOrcItem,#(lf)              Cast(IsNull(Sum(IsNull(oi.unidades, 0) * IsNull(oi.Quantidade, 0) * IsNull(oi.PrecoCompraUnidade, 0)),#(lf)              0) As NUMERIC(18,2)) As 'OrcamentoCompra',#(lf)              Cast(IsNull(Sum(IsNull(oi.unidades, 0) * IsNull(oi.Quantidade, 0) * IsNull(oi.PrecoVendaUnidade, 0) * (1 -#(lf)              Coalesce(oi.PrecoVendaDesconto / 100, 0))), 0) As NUMERIC(18,2)) As 'OrcamentoVenda',#(lf)              p2.Id IdProjecto#(lf)          From#(lf)              Orcamento_Items oi Inner Join#(lf)              Orcamentos o On oi.IdOrcamento = o.Id Inner Join#(lf)              Orc_Items As I On I.Id = oi.IdOrcItem Inner Join#(lf)              Orc_Rubricas As R On I.IdOrcRubrica = R.Id Inner Join#(lf)              Projectos p2 On p2.Id = o.IdProjecto#(lf)          Where#(lf)              o.estado In ('A', 'V', 'P', 'T', 'B', 'Q')#(lf)          Group By#(lf)              o.Id,#(lf)              oi.IdOrcItem,#(lf)              p2.Id) As TOI On TOI.IdOrcItem = oi.IdOrcItem#(lf)                 And o.Id = TOI.IdOrcamento#(lf)                 And TOI.IdProjecto = prj.Id Left Outer Join#(lf)         (Select#(lf)              vwcip.IdOrcItem,#(lf)              Sum(IsNull(vwcip.ValorComprometido, 0)) As ComprasComprometido,#(lf)              Sum(IsNull(vwcip.ValorEfectivo, 0)) As ComprasEfectivo,#(lf)              Sum(IsNull(vwcip.Valor, 0)) As ComprasValor,#(lf)              p2.Id IdProjecto#(lf)          From#(lf)              vwComprasItemsProjecto As vwcip Inner Join#(lf)              Projectos p2 On p2.Id = vwcip.IdProjecto#(lf)          Where#(lf)              vwcip.estado <> 4#(lf)          Group By#(lf)              vwcip.IdOrcItem,#(lf)              p2.Id) As TC On TC.IdOrcItem = I.Id#(lf)                 And TC.IdProjecto = prj.Id#(lf)     Where#(lf)         1 = 1 And#(lf)         o.Mensualizado = 1) ExecucaoMensal Full Join#(lf)    Projectos On Projectos.Id = ExecucaoMensal.ProjectReference Inner Join#(lf)    Tipos_Projecto On Projectos.IdTipoProjecto = Tipos_Projecto.Id#(lf)Group By#(lf)    ExecucaoMensal.ProjectReference,#(lf)    ExecucaoMensal.ProjectTitle,#(lf)    ExecucaoMensal.Year,#(lf)    ExecucaoMensal.Month,#(lf)    ExecucaoMensal.AccountCode,#(lf)    Tipos_Projecto.Nome,#(lf)    Projectos.titulo,#(lf)    ExecucaoMensal.Id,#(lf)    ExecucaoMensal.estado"]),
+				    Custom1 = Table.AddColumn(Origem, "TotalCosts", each [BudgetPurchaseValue]),
+				    Custom2 = Table.AddColumn(Custom1, "AccountGroup1", each null),
+				    #"Changed Type" = Table.TransformColumnTypes(Custom2,{{"TotalCosts", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_QueryRelationships = {"columnCount":15,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/ExecucaoMensalConta/Origem.{ProjectReference,0}","Section1/ExecucaoMensalConta/Origem.{ProjectTitle,1}","Section1/ExecucaoMensalConta/Origem.{Year,2}","Section1/ExecucaoMensalConta/Origem.{Month,3}","Section1/ExecucaoMensalConta/Origem.{AccountGroup1,4}","Section1/ExecucaoMensalConta/Origem.{AccountGroup2,5}","Section1/ExecucaoMensalConta/Origem.{AccountCode,6}","Section1/ExecucaoMensalConta/Origem.{AccountDescription,7}","Section1/ExecucaoMensalConta/Origem.{BudgetPurchaseValue,8}","Section1/ExecucaoMensalConta/Origem.{BudgetSellValue,9}","Section1/ExecucaoMensalConta/Origem.{TotalCosts,10}","Section1/ExecucaoMensalConta/Origem.{DATE,11}","Section1/ExecucaoMensalConta/Origem.{Id,12}","Section1/ExecucaoMensalConta/Origem.{Nome,13}","Section1/ExecucaoMensalConta/Origem.{titulo,14}"],"ColumnCount":15,"KeyColumnNames":[],"ColumnIdentities":["Section1/ExecucaoMensalConta/Origem.{ProjectReference,0}","Section1/ExecucaoMensalConta/Origem.{ProjectTitle,1}","Section1/ExecucaoMensalConta/Origem.{Year,2}","Section1/ExecucaoMensalConta/Origem.{Month,3}","Section1/ExecucaoMensalConta/Origem.{AccountGroup1,4}","Section1/ExecucaoMensalConta/Origem.{AccountGroup2,5}","Section1/ExecucaoMensalConta/Origem.{AccountCode,6}","Section1/ExecucaoMensalConta/Origem.{AccountDescription,7}","Section1/ExecucaoMensalConta/Origem.{BudgetPurchaseValue,8}","Section1/ExecucaoMensalConta/Origem.{BudgetSellValue,9}","Section1/ExecucaoMensalConta/Origem.{TotalCosts,10}","Section1/ExecucaoMensalConta/Origem.{DATE,11}","Section1/ExecucaoMensalConta/Origem.{Id,12}","Section1/ExecucaoMensalConta/Origem.{Nome,13}","Section1/ExecucaoMensalConta/Origem.{titulo,14}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

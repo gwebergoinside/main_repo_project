@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "GO NEXT 360 - SOICO - INCIDENTES"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bb91de2a-3258-4394-8839-f8cc17ffb862"
+  }
+}

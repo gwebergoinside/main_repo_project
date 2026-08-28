@@ -1,0 +1,31 @@
+table Distribuidor
+	lineageTag: 6270275f-2ef5-45d3-86f5-0083d3a0b8b3
+
+	column entId
+		dataType: int64
+		formatString: 0
+		lineageTag: c2253b57-42c0-46a6-9f0d-b5609320792f
+		summarizeBy: none
+		sourceColumn: entId
+
+		annotation SummarizationSetBy = Automatic
+
+	column entNome
+		dataType: string
+		lineageTag: 8f710855-8cda-41f8-bb35-47eb848b3156
+		summarizeBy: none
+		sourceColumn: entNome
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Distribuidor-a4b2e389-690e-4978-8814-f72ecc87f729 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)entId,#(lf)entNome#(lf)From#(lf)Entidades"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

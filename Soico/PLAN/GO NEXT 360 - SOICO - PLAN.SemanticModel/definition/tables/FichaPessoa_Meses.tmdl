@@ -1,0 +1,43 @@
+table FichaPessoa_Meses
+	lineageTag: 3bbf5075-5101-4a51-af44-e47a2c914c98
+
+	column Value
+		formatString: 0
+		lineageTag: 4bf47557-ade3-4f1e-a3b9-451291241e09
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes =
+			
+			SWITCH(
+			    TRUE()
+			    ,FichaPessoa_Meses[Value] = 1, "Jan"
+			    ,FichaPessoa_Meses[Value] = 2, "Fev"
+			    ,FichaPessoa_Meses[Value] = 3, "Mar"
+			    ,FichaPessoa_Meses[Value] = 4, "Abr"
+			    ,FichaPessoa_Meses[Value] = 5, "Mai"
+			    ,FichaPessoa_Meses[Value] = 6, "Jun"
+			    ,FichaPessoa_Meses[Value] = 7, "Jul"
+			    ,FichaPessoa_Meses[Value] = 8, "Ago"
+			    ,FichaPessoa_Meses[Value] = 9, "Set"
+			    ,FichaPessoa_Meses[Value] = 10, "Out"
+			    ,FichaPessoa_Meses[Value] = 11, "Nov"
+			    ,FichaPessoa_Meses[Value] = 12, "Dez"
+			)
+		lineageTag: e978dd75-66b3-471b-9a51-7d8b0949a899
+		summarizeBy: none
+		sortByColumn: Value
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FichaPessoa_Meses-977f6968-337f-456b-9c6f-95c9c29f3676 = calculated
+		mode: import
+		source = GENERATESERIES( 1, 12, 1)
+
+	annotation PBI_Id = 13ce8edf7f364b6488c0253eccbc19dd
+

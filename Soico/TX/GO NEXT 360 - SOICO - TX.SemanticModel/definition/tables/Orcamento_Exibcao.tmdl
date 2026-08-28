@@ -1,0 +1,238 @@
+table Orcamento_Exibcao
+	lineageTag: dcd14d40-ce6c-4769-97cf-6651b7c67085
+
+	column IdGrelha
+		dataType: int64
+		formatString: 0
+		lineageTag: 603d66f1-d0a2-4829-8217-3f1e08e8685b
+		summarizeBy: sum
+		sourceColumn: IdGrelha
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Grelha
+		dataType: string
+		lineageTag: 410ea089-b378-4f61-aa13-173f00ca58b5
+		summarizeBy: none
+		sourceColumn: Nome_Grelha
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Canal
+		dataType: string
+		lineageTag: 99dbcb6a-ac3c-455c-a577-723756c87348
+		summarizeBy: none
+		sourceColumn: Cod_Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data_Inicio_Grelha
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f3f1cbbc-1921-4507-83be-f2ca6d6cac11
+		summarizeBy: none
+		sourceColumn: Data_Inicio_Grelha
+
+		variation Variação
+			isDefault
+			relationship: 1628975c-75e6-43d4-b189-0f9363803fd6
+			defaultHierarchy: LocalDateTable_732dadee-ca89-43e7-bbcd-f8f73495d6da.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data_Fim_Grelha
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1adac2b3-9ab8-445b-996e-cb413dcd1df5
+		summarizeBy: none
+		sourceColumn: Data_Fim_Grelha
+
+		variation Variação
+			isDefault
+			relationship: a4341692-5a7c-4ddf-8cdf-41b23e2e536d
+			defaultHierarchy: LocalDateTable_b9bbd487-3b00-481e-b2b4-9ecfc99faeac.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo_Grelha
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f9c2933-39e8-473b-8765-1cdbcb146df4
+		summarizeBy: sum
+		sourceColumn: Tipo_Grelha
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_estado_Grelha
+		dataType: int64
+		formatString: 0
+		lineageTag: 45fefcba-5c96-4aec-ad46-b11aff2541f7
+		summarizeBy: sum
+		sourceColumn: Cod_estado_Grelha
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataEmissao
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 09fa14bd-40fc-4b46-8c78-aa8cc98e5b4d
+		summarizeBy: none
+		sourceColumn: DataEmissao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Duracao
+		dataType: int64
+		formatString: 0
+		lineageTag: eb1d3c10-a8a5-49ae-8917-6c7fffe7c6ae
+		summarizeBy: sum
+		sourceColumn: Duracao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descricao
+		dataType: string
+		lineageTag: a80b560e-160b-480a-aadb-a7ac169e93c5
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Emi_Tip
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b932082-b9b0-4769-afd7-c05e1cde4d3e
+		summarizeBy: sum
+		sourceColumn: Cod_Emi_Tip
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notas
+		dataType: string
+		lineageTag: 425ba95b-2853-4dc9-b49e-dff59f1bfa1e
+		summarizeBy: none
+		sourceColumn: Notas
+
+		annotation SummarizationSetBy = Automatic
+
+	column FlagContinuacao
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1819c706-9c18-4755-abb8-07c8f2de033b
+		summarizeBy: none
+		sourceColumn: FlagContinuacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column ValorMedioDireitos
+		dataType: double
+		lineageTag: 9c3191f4-ee8a-4c89-8f0d-26d9dac5909f
+		summarizeBy: sum
+		sourceColumn: ValorMedioDireitos
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ValorMedioOutrosCustosTotal
+		dataType: double
+		lineageTag: 7a740227-99e3-46b2-b4ce-4d76014c5ca5
+		summarizeBy: sum
+		sourceColumn: ValorMedioOutrosCustosTotal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ValorMedioOutrosCustos
+		dataType: double
+		lineageTag: e6a1a47f-3600-4aec-b09e-9a5581cd0746
+		summarizeBy: sum
+		sourceColumn: ValorMedioOutrosCustos
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ValorMedioProducaoExterna
+		dataType: double
+		lineageTag: d9f790f5-e249-428f-9c86-b7869a61adcd
+		summarizeBy: sum
+		sourceColumn: ValorMedioProducaoExterna
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ValorMedioProducaoInterna
+		dataType: double
+		lineageTag: 9ef74012-16ca-4f94-8996-442035d2aa39
+		summarizeBy: sum
+		sourceColumn: ValorMedioProducaoInterna
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Cod_Formato
+		dataType: int64
+		formatString: 0
+		lineageTag: 51958d40-e3bf-48e8-a0cc-67b63e8c8243
+		summarizeBy: sum
+		sourceColumn: Cod_Formato
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Formato
+		dataType: string
+		lineageTag: 49646148-dafd-461d-9f72-adc59246a04b
+		summarizeBy: none
+		sourceColumn: Nome_Formato
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Publico_Formato
+		dataType: string
+		lineageTag: 0f8cd40c-d9ed-48fb-bd56-e3113c3e5bb8
+		summarizeBy: none
+		sourceColumn: Nome_Publico_Formato
+
+		annotation SummarizationSetBy = Automatic
+
+	column Area
+		dataType: string
+		lineageTag: fffa35d7-0673-453b-b318-c71035b22b74
+		summarizeBy: none
+		sourceColumn: Area
+
+		annotation SummarizationSetBy = Automatic
+
+	column Origem
+		dataType: string
+		lineageTag: ce9a9916-92a4-4680-986d-35c3cc11ccb7
+		summarizeBy: none
+		sourceColumn: Origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Orçamento_Exib = Orcamento_Exibcao[ValorMedioOutrosCustosTotal] + Orcamento_Exibcao[ValorMedioDireitos]
+		lineageTag: 161eb89a-4f01-4cf7-8156-134f6a18a2cb
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Orcamento_Exibcao-1c8c2b72-272c-4375-add8-2425acdf9218 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select #(lf)GEG.Id IdGrelha,#(lf)GEG.Nome_Grelha,#(lf)GEG.Cod_Canal,#(lf)GEG.Data_Inicio_Grelha,#(lf)GEG.Data_Fim_Grelha,#(lf)GEG.Tipo_Grelha,#(lf)GEG.Cod_estado_Grelha,#(lf)GEOF.DataEmissao,#(lf)GEOF.Duracao,#(lf)GEOF.Descricao,#(lf)GEOF.Cod_Emi_Tip,#(lf)GEOF.Notas,#(lf)GEOF.FlagContinuacao,#(lf)GEOF.ValorMedioDireitos,#(lf)ISNULL(GEOF.ValorMedioOutrosCustos,0) + ISNULL(GEOF.ValorMedioProducaoExterna,0) + ISNULL(GEOF.ValorMedioProducaoInterna,0) ValorMedioOutrosCustosTotal,#(lf)GEOF.ValorMedioOutrosCustos,#(lf)GEOF.ValorMedioProducaoExterna,#(lf)GEOF.ValorMedioProducaoInterna,#(lf)GEF.Cod_Formato,#(lf)GEF.Nome_Formato,#(lf)GEF.Nome_Publico_Formato#(lf),#(lf)(Select TOP 1 GEFTCV.External_Id #(lf) from [GrelhaEstrategica_Formatos_tipos_classificacao_valores] GEFTCV #(lf)             Inner Join [GrelhaEstrategica_Formatos_Tipos_Classificacao] GEFTC on #(lf)                           GEFTC.ID = GEFTCV.Id_Formato_Classificacao  And GEFTC.External_Id = 'Areas'#(lf)             Inner Join [GrelhaEstrategica_Formatos_Classificacao] GEFC on #(lf)                                                             GEFC.Cod_Formato = GEF.Cod_Formato AND #(lf)                                                             GEFC.Id_Formato_Classificacao_valor = GEFTCV.ID) Area,#(lf)(Select TOP 1 GEFTCV.External_Id #(lf) from [GrelhaEstrategica_Formatos_tipos_classificacao_valores] GEFTCV #(lf)             Inner Join [GrelhaEstrategica_Formatos_Tipos_Classificacao] GEFTC on #(lf)                           GEFTC.ID = GEFTCV.Id_Formato_Classificacao  And GEFTC.External_Id = 't_origens'#(lf)             Inner Join [GrelhaEstrategica_Formatos_Classificacao] GEFC on #(lf)                                                             GEFC.Cod_Formato = GEF.Cod_Formato AND #(lf)                                                             GEFC.Id_Formato_Classificacao_valor = GEFTCV.ID) Origem#(lf)#(lf)From#(lf)       [dbo].[GrelhaEstrategica_Grelhas] GEG#(lf)       INNER JOIN [dbo].[GrelhaEstrategica_Orcamental_Formatos] GEOF ON GEG.ID = GEOF.Id_Versao_Grelhas#(lf)       Inner Join [GrelhaEstrategica_Formatos] GEF on GEOF.Cod_Formato = GEF.Cod_Formato#(lf)Where Tipo_Grelha = 0 And Id_Grelha_orcamental Is null#(lf)"]),
+				    #"Changed Type" = Table.TransformColumnTypes(Origem,{{"DataEmissao", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

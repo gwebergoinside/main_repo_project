@@ -1,0 +1,66 @@
+table d_Neg_EcrDescricao
+	lineageTag: 32969dc7-1181-4f6a-a393-6c207ccbfcb1
+
+	column tipEcrId
+		dataType: int64
+		formatString: 0
+		lineageTag: e72f3908-faba-43c6-9b44-2f3b1669ccea
+		summarizeBy: none
+		sourceColumn: tipEcrId
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrDescricao
+		dataType: string
+		lineageTag: 6d3bbc7b-cb77-42c1-9051-a69d3e495624
+		summarizeBy: none
+		sourceColumn: tipEcrDescricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrCodigo
+		dataType: string
+		lineageTag: dfbb061c-e976-4b68-a836-79f123247668
+		summarizeBy: none
+		sourceColumn: tipEcrCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrSigla
+		dataType: string
+		lineageTag: 29b7d2fe-6820-4990-866c-0cbc4264c4e1
+		summarizeBy: none
+		sourceColumn: tipEcrSigla
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrMancha
+		dataType: double
+		lineageTag: 434b9642-ae4b-4307-a56e-aef08695fe51
+		summarizeBy: none
+		sourceColumn: tipEcrMancha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tipEcrColor
+		dataType: string
+		lineageTag: cacb5c59-7443-4e4d-b4cd-fdc34adc0295
+		summarizeBy: none
+		sourceColumn: tipEcrColor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Neg_EcrDescricao-d3992721-fbc7-4c8c-977b-02a8bcc56b5c = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    *#(lf)From#(lf)    tiposEcra"]),
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"flgMensao"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

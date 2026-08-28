@@ -1,0 +1,25 @@
+table 'Canais Existencias'
+	lineageTag: 891caa58-3883-4078-923d-4739852d18c2
+
+	column codigo
+		lineageTag: a70d3c8d-e060-4df9-87c9-beb730954fdf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Canais[codigo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		lineageTag: 4394b843-742b-488c-98d7-33727e95e5c1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Canais[nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Canais Existencias-7f5d7d91-b6ac-40cf-a5fe-91e39391765d' = calculated
+		mode: import
+		source = Canais
+
+	annotation PBI_Id = 80afce78fc9e494f9bd69b4672ead844
+

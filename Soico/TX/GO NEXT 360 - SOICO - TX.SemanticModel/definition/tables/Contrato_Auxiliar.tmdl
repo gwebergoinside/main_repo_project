@@ -1,0 +1,47 @@
+table Contrato_Auxiliar
+	lineageTag: 7c460afb-58f4-4578-8e25-b752387c06c0
+
+	column COD_CONTRATO
+		formatString: 0
+		lineageTag: c61c3427-1047-4d7c-a984-43f77aabed99
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [COD_CONTRATO]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodContrato
+		lineageTag: 7c261457-54fe-4598-9eee-1a3449e89b34
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [CodContrato]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Contrato_Auxiliar-344e68a7-ebcf-4f56-b003-7c6375e8acc1 = calculated
+		mode: import
+		source = ```
+				
+				VAR _1 =
+				    SELECTCOLUMNS(
+				        Contratos
+				        ,"CodContrato",Contratos[CodContrato]
+				        ,"COD_CONTRATO",Contratos[COD_CONTRATO]
+				    )
+				VAR _2 =
+				    SELECTCOLUMNS(
+				        Consumos
+				        ,"CodContrato", Consumos[CodContrato]
+				        ,"COD_CONTRATO", Consumos[COD_CONTRATO]
+				    )
+				VAR RESULT = UNION( _1,FILTER( _2, [CodContrato] <> BLANK() ) )
+				RETURN
+				SUMMARIZE( 
+				    RESULT
+				    ,[CodContrato]
+				    ,[COD_CONTRATO]
+				)
+				```
+
+	annotation PBI_Id = a2dd51ee285646c79c284685dfdf7720
+

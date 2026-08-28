@@ -1,0 +1,31 @@
+table tipoConta
+	lineageTag: 4bfee3b2-23f4-4378-9ebb-ca42beeb6fd3
+
+	column Tipo
+		dataType: string
+		lineageTag: c8d71bb3-44f5-47c5-b061-8ca96abdb48e
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod
+		dataType: int64
+		formatString: 0
+		lineageTag: 88516039-dc33-4464-95ab-df61d8353fa2
+		summarizeBy: sum
+		sourceColumn: Cod
+
+		annotation SummarizationSetBy = Automatic
+
+	partition tipoConta-ec0d9666-8dd6-4ce9-b69c-1cc3798ba39d = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45Wcs7PLShKLFbSUTJUitUB8fOKS3PzQQJGYAHXisziksOr8pIzwaqMlWJjAQ==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Tipo = _t, Cod = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Tipo", type text}, {"Cod", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

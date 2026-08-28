@@ -1,0 +1,45 @@
+table TitulosRunsIlim
+	lineageTag: f311dd57-3bd1-4e6e-8e24-0377e43e620f
+
+	column codtitulo
+		dataType: int64
+		formatString: 0
+		lineageTag: 9620694c-fe40-47e0-8c21-e82e0d55ea94
+		summarizeBy: sum
+		sourceColumn: codtitulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column codCanal
+		dataType: string
+		lineageTag: 5ba4ad4c-699b-4a40-8249-5891758a9501
+		summarizeBy: none
+		sourceColumn: codCanal
+
+		annotation SummarizationSetBy = Automatic
+
+	column runsIlimitados
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 07431679-0cfa-4540-83e5-1c5e4a84eafa
+		summarizeBy: none
+		sourceColumn: runsIlimitados
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chave = TitulosRunsIlim[CODCANAL]&"-"&TitulosRunsIlim[CODTITULO]
+		lineageTag: e2a0d973-3a19-4a75-a131-32ffd1177968
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TitulosRunsIlim-9f1a7f7b-fbbb-4fdb-bb8c-a4a82f415967 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    Titulos_Runs.codtitulo,#(lf)    Titulos_RunsCanais.codCanal,#(lf)    Titulos_Runs.runsIlimitados#(lf)From#(lf)    Titulos_Runs Inner Join#(lf)    Titulos_RunsCanais On Titulos_RunsCanais.codigoRun = Titulos_Runs.codRun#(lf)Group By#(lf)    Titulos_Runs.codtitulo,#(lf)    Titulos_RunsCanais.codCanal,#(lf)    Titulos_Runs.runsIlimitados"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

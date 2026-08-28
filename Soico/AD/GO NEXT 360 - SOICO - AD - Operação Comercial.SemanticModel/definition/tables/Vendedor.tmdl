@@ -1,0 +1,26 @@
+table Vendedor
+	lineageTag: 8914221f-cb9a-4c1a-8ae9-c0d75cc542a0
+
+	column Id
+		formatString: 0
+		lineageTag: 90f12031-84a1-4d32-a3ef-61c850ddc324
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Utilizadores[Id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		lineageTag: 386d3156-8280-40da-8e12-a9ad46c956e5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Utilizadores[Nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Vendedor-78caf1ed-f9b1-44e6-b871-27774d566f57 = calculated
+		mode: import
+		source = Utilizadores
+
+	annotation PBI_Id = 1e10c78c20ca43708ba26bb025d8d74b
+

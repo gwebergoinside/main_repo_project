@@ -1,0 +1,41 @@
+table Titulo
+	isHidden
+	lineageTag: 42a42915-64b9-418c-b834-573f8d97bb02
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6448f1eb-9724-4c89-b6ef-f5056c7ed746
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parameter
+		dataType: string
+		isHidden
+		lineageTag: 09eaee68-3592-4d49-9a41-44c4545d772a
+		summarizeBy: none
+		sourceColumn: Parameter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Titulo-c1f10b14-33ec-4aab-af4b-29a2506b5608 = m
+		mode: import
+		queryGroup: LinkServer
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("bZFNTgMxDIWvEmUFUhekP7Qs3cS0FpNk5KRS1VEPg1gg9Qi9Ti5GfjpAB5b+nuO8Zw+DVHImtbc9Q5Dn2SDnP7UwGKHbY+WLzEP0+q1Wy7ESGthUtMoIrOdIJ0if6cNX+pypoRCZtgcynitcT+DdR5tqwEVMV+Obp5cy2qX3jgLmXsEH1wT1lJWe/Y7B/vpUlVCMLsKWOjJg2mQ1n1oUr55RQ4hNX/wbQS3/PHuw6AJ0j01f3RwzxJthVWL3yAaKXUOM9C2t7/IJPPbEMCZVm0nUegpvKYSxoywDj3l76eI0laudvwA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ID = _t, Parameter = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"ID", Int64.Type}, {"Parameter", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

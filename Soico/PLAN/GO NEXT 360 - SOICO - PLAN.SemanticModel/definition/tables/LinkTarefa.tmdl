@@ -1,0 +1,18 @@
+table LinkTarefa
+	lineageTag: 2d301f1e-3ae0-45f1-b591-2434b706a75e
+
+	column LinkTarefa
+		dataType: string
+		lineageTag: f1b657ec-9aa2-4454-8082-db2953dcd1ce
+		summarizeBy: none
+		sourceColumn: LinkTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LinkTarefa-5296cacc-ae1f-44d1-9c67-8b2073cae727 = m
+		mode: import
+		queryGroup: Config
+		source = "https://soico-gmediaplan.goinside.co/Tarefas/TarefaFicha.aspx?IdTarefa=" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_ResultType = Text
+

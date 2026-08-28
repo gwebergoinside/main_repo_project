@@ -1,0 +1,34 @@
+table Programs
+	lineageTag: 738d67e5-8eb4-4050-8ba9-e13183fd856c
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: a12026a3-53cd-4d91-86c2-0239bf595b33
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 498a0f31-aa71-41d7-ae20-164957ded904
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Programs-52168fa3-8f14-4939-9ffd-d9963fe9a977 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Name = _t, Id = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Name", type text}, {"Id", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

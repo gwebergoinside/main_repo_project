@@ -1,0 +1,751 @@
+relationship 1abd0d9e-f029-42e6-9b82-9664b14cf8ab
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Horarios.HoraFim1
+	toColumn: LocalDateTable_a3d0c1e3-b7ee-4353-8465-30752ea95283.Date
+
+relationship 76f52cbb-3da2-4a46-8cda-90620269bfd9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Horarios.HoraInicio2
+	toColumn: LocalDateTable_2f657d41-88c4-4c02-bea2-f1c239412905.Date
+
+relationship ddd21b20-3988-4405-8697-a16ea55f22cf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Horarios.HoraFim2
+	toColumn: LocalDateTable_725a000b-9499-4471-9c0d-aca6a035a4c8.Date
+
+relationship 94e788d1-0427-46ac-be5f-057ddc2be90d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Horarios.HoraInicio3
+	toColumn: LocalDateTable_117811e0-118d-4b25-893f-3b1525c7b325.Date
+
+relationship 9c5c6611-43f1-421f-a49a-5569b03ff49c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Horarios.HoraFim3
+	toColumn: LocalDateTable_1355d6d4-7984-4558-aef4-b6c2f8f98428.Date
+
+relationship 73d2eac3-56dd-4ded-b504-a6bf297b1fa8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasPessoasFaixas.HoraFim
+	toColumn: LocalDateTable_fbe983b4-bbd8-4839-8f99-7552ebb738f1.Date
+
+relationship 9a8d47b0-2d57-4eed-9f15-4fb6835d5d45
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasPessoasFaixas.FimFaixa
+	toColumn: LocalDateTable_fcb9606d-4d3c-4ed8-a606-f2005e6b73ce.Date
+
+relationship 9c9673ee-1f4d-4c7a-b95b-08fb2ae3a298
+	joinOnDateBehavior: datePartOnly
+	fromColumn: HorariosFaixas.HoraInicio
+	toColumn: LocalDateTable_6bd9b7c0-6ae3-4763-bb12-0091219ce137.Date
+
+relationship f526f2de-6351-414e-ac33-2157e1efe774
+	joinOnDateBehavior: datePartOnly
+	fromColumn: HorariosFaixas.HoraFim
+	toColumn: LocalDateTable_928a9404-0b5a-4271-9a65-698a01f8b605.Date
+
+relationship fe6902cd-dacd-4657-90dc-c82dbf79d0bb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: HorariosFaixas.FimFaixa
+	toColumn: LocalDateTable_fb8e2416-95a4-4bf7-a5ec-db78e83c402c.Date
+
+relationship 1eee300f-07c2-4761-9edb-79604403c887
+	joinOnDateBehavior: datePartOnly
+	fromColumn: HorariosFaixas.InicioFaixa
+	toColumn: LocalDateTable_721e3f59-6fc6-49da-9b9b-4d067b29af96.Date
+
+relationship 587d4af7-231c-4b51-a1a3-4a87ae12f7b7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasPessoasFaixas.HoraInicio
+	toColumn: LocalDateTable_14e258b5-6dff-4d0f-9d10-5ace8926077d.Date
+
+relationship 2dd62aec-cca6-4cd2-97f8-985c73e3c520
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasPessoasFaixas.InicioFaixa
+	toColumn: LocalDateTable_a38865fe-befb-424e-8d97-f09043fe463a.Date
+
+relationship 90fb6706-2c98-477f-b1c9-ee4f79e43213
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: MeiosHoras.IdMeio
+	toColumn: Meios.Id
+
+relationship 2d42e4fb-8b46-428d-a9ba-16cc0acefb4f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Meios.HoraInicio
+	toColumn: LocalDateTable_75d6e854-d306-4553-82b9-c8c7cfc1d25b.Date
+
+relationship d46e47d8-6043-4bd6-9d5f-8d778960af87
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasMeiosFaixas.HoraFim
+	toColumn: LocalDateTable_763b490a-0bc0-4801-a12c-391446b865b2.Date
+
+relationship 63cab59d-79a8-44a8-ae10-4b16bb4f01cf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasMeiosFaixas.InicioFaixa
+	toColumn: LocalDateTable_2a177033-9fe6-413c-994d-6e2aad715197.Date
+
+relationship e32df89d-869f-4cd4-b93e-b2c294b20c4a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasMeiosFaixas.FimFaixa
+	toColumn: LocalDateTable_1f8cd00e-4ef6-450e-a962-f8d0ca451fa0.Date
+
+relationship ff11fcbb-0a8e-418e-b8a9-777103b0a135
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasMeiosFaixas.HoraInicio
+	toColumn: LocalDateTable_dd1c291c-e46c-41f7-b455-540140810d36.Date
+
+relationship f504112b-b5ec-4653-b5e1-b9dbc6e17187
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Meios.Id
+	toColumn: TarefasMeiosFaixas.IdMeio
+
+relationship 653b44a1-97bd-488c-bb79-126a7416c412
+	fromColumn: Tarefas_Pessoas.IdCC
+	toColumn: CentroCusto.Id
+
+relationship 52deb75d-dbc5-48f2-90c9-1a0df1d45f81
+	fromColumn: Horarios.Id
+	toColumn: CentroCusto.Id
+
+relationship 6433c2d1-8439-4e33-93a6-31c8424bf609
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pessoas.DataNascimento
+	toColumn: LocalDateTable_0741b00c-0e25-41a3-9903-aa881a2d0c75.Date
+
+relationship 7c20a896-6133-4073-95ec-6aecd245f856
+	fromColumn: Tarefas_Pessoas.IdPessoa
+	toColumn: Pessoas.Id
+
+relationship d2bd0805-29fd-48d1-9b47-c77e5562180d
+	fromColumn: Horarios.IdPessoaHorarios
+	toColumn: Pessoas.Id
+
+relationship 35028938-a5a6-4cc4-a5b8-fa01c10d712b
+	fromColumn: HorariosFaixas.IdPessoa
+	toColumn: Pessoas.Id
+
+relationship 6749bd9d-4302-4dd7-997d-922095eb1e34
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Pessoas.DataAdmissao
+	toColumn: LocalDateTable_56e05e5e-2c8a-489f-a340-ce30dfa4dee2.Date
+
+relationship d8b78af1-92b7-43e4-be7e-fd33240c5991
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasPessoasFaixas.Date
+	toColumn: LocalDateTable_f715b96b-cc80-4581-83c6-811709ec93cf.Date
+
+relationship 622418d1-7689-40cd-8d73-46caec073d6d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Meios.DataImputacao
+	toColumn: LocalDateTable_f0099f37-7c02-4c12-9693-db37250daeed.Date
+
+relationship f0fada6e-d326-4fae-bf1a-de9c1df6cb2a
+	fromColumn: TarefasPessoasFaixas.IdPessoa
+	toColumn: Pessoas.Id
+
+relationship eeeb6caa-493e-401a-8fa5-d23a2f29b0e5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasPessoasFaixas.'DataInicio Tarefa'
+	toColumn: LocalDateTable_ac61bea9-4ddb-4dae-b72f-81216a30bf73.Date
+
+relationship da4f3bc0-5931-42e9-b08a-8242de6c28a9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TarefasPessoasFaixas.'DataFim Tarefa'
+	toColumn: LocalDateTable_699f8f65-9b4e-479f-9dd2-1e407df924fc.Date
+
+relationship 3c27f4e0-1235-4900-ae8d-9cc267ed4e17
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: HorariosFaixas.Faixa
+	toColumn: TarefasPessoasFaixas.Faixa
+
+relationship 585cf6c7-911b-4458-a7cb-47d1308ad03d
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Tarefas_Pessoas.IdPessoa
+	toColumn: TarefasPessoasFaixas.IdPessoa
+
+relationship c3b8dd81-3693-4469-9f46-a017eac1685f
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Capacidade.IdMeio
+	toColumn: Meios.Id
+
+relationship 44089169-7d9f-4c6c-b305-744b498373ec
+	fromColumn: HorariosFaixas.IdCentroCusto
+	toColumn: CentroCusto.Id
+
+relationship 21020485-1a4a-4b4e-8842-60c719e29de1
+	fromColumn: Tarefas_Pessoas.IdProjeto
+	toColumn: Projetos.Id
+
+relationship 703e5790-8d65-444c-8386-85d5b8accde7
+	fromColumn: TarefasPessoasFaixas.IdProjeto
+	toColumn: Projetos.Id
+
+relationship 095409f6-5881-4730-b77d-52dc37d9a8be
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Projetos.DataInicio
+	toColumn: LocalDateTable_39a59ee7-d6d7-452c-92d0-a6530520cee9.Date
+
+relationship ff229d7e-17b9-48e4-8aa2-b956c00d6e6d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Projetos.DataFim
+	toColumn: LocalDateTable_03ba8e4a-57d9-4b2e-8105-b50a3d3c1887.Date
+
+relationship c0db38cb-6fb4-4801-b991-8222439f2172
+	fromColumn: Meios.IdAreaTipoTarefa
+	toColumn: Tipo_Tarefas_Meios.Id
+
+relationship 37118ae7-ec70-4a13-851c-2fe44c30ca9c
+	fromColumn: Meios.IdProjeto
+	toColumn: Projetos.Id
+
+relationship ab7e1e48-2fad-4b6b-ac35-221b926d9e39
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Episodios.DataPrevistaEntrega
+	toColumn: LocalDateTable_ed00cf7c-caa8-4194-9e24-2b64ff468b9c.Date
+
+relationship e0d86b32-f206-4989-8839-80b223552cc3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Episodios.DataEntrega
+	toColumn: LocalDateTable_de24dd6a-f220-44c5-9a3c-8e0e62e886bc.Date
+
+relationship 591af992-824e-4092-b02c-44932664f10d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Episodios.DataPrevistaEmissao
+	toColumn: LocalDateTable_ed521de8-1d93-433f-92ea-4c6750c162e1.Date
+
+relationship 71dc16e5-8015-4fa4-b0de-076a93428f06
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Episodios.DataEmissao
+	toColumn: LocalDateTable_d700ac9d-b4c9-4087-8019-584294398f34.Date
+
+relationship 73e76fa2-91cd-4188-874d-9f811d92319e
+	fromColumn: Episodios.Id
+	toColumn: Projetos.Id
+
+relationship 1dfb97f1-3769-4d21-aeb0-9eb6013e3112
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas_Pessoas.'Start of Month'
+	toColumn: LocalDateTable_80335f0d-2996-4045-bdd9-7422f65d6ced.Date
+
+relationship eef22365-5adc-4fe0-9a77-a180625245ac
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Meios.'Start of Month'
+	toColumn: LocalDateTable_4bc87d34-296b-4142-8955-9e1dd00fe333.Date
+
+relationship c4853367-d86e-460c-b6ea-533bbf9e7cc2
+	fromColumn: ExecucaoMensalConta.ProjectReference
+	toColumn: Projetos.Id
+
+relationship 9a427642-341a-4ea4-8c1b-13a6e32f0468
+	fromColumn: ExecucaoMensalItem.ProjectReference
+	toColumn: Projetos.Id
+
+relationship 953bef7d-ca16-4446-a9c1-fc0f928268cb
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Calendario.Ano
+	toColumn: Projetos.Ano
+
+relationship ac2c1eeb-1a7d-44b6-9ba9-e758a1e2c0e2
+	fromColumn: LancManuais.IdCC
+	toColumn: CentroCusto.Id
+
+relationship 816118b3-bbda-4477-b112-40d348b27100
+	fromColumn: LancManuais.IdProjeto
+	toColumn: Projetos.Id
+
+relationship 4aae5ab0-c0fd-4d1f-af0e-ff039cc9ff10
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Necessidades.DataFim
+	toColumn: LocalDateTable_b6cf7be0-eeb5-42bf-9b3b-2bc693ee18b9.Date
+
+relationship 6efd3d79-fcc7-49f2-96b0-ca2ec3aac851
+	fromColumn: Meios.IdCC
+	toColumn: CentroCusto.Id
+
+relationship 3a112ecc-3851-453d-ae87-bd292d5d793d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.'Date Mais 1'
+	toColumn: LocalDateTable_f79761a7-ab78-45e1-95ab-111ee4dbdde8.Date
+
+relationship f742c77c-b925-4b1a-afd6-00d5bfc7c6f5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Necessidades.DataInicio
+	toColumn: LocalDateTable_a60bbfd7-3da0-4d9e-80ba-17c470de8b9f.Date
+
+relationship 5bddafcd-3390-4c67-94a5-ec381753a294
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.'Week End'
+	toColumn: LocalDateTable_95d1eaee-a937-4a1d-976b-9f0f412d40de.Date
+
+relationship 67029cfd-24f7-49b1-b101-793d215ccb31
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.'Week Start'
+	toColumn: LocalDateTable_fbe0fffd-0dd3-4a4f-a0cd-48c6b46770e1.Date
+
+relationship 6b82cdab-b5be-44f4-a30f-cd66005115d7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas_Pessoas.HoraIni
+	toColumn: LocalDateTable_3ad25bd7-0030-47be-8897-c60f07fdbbc1.Date
+
+relationship 806f305d-69b6-46eb-818c-641cd4db9a2d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Horarios.'Planeado | Hora Fim'
+	toColumn: LocalDateTable_f065b5a1-109a-4a44-8023-9ebd229749dd.Date
+
+relationship ee137789-8b32-47be-b15c-dc00d36e4e88
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas.DataInicio
+	toColumn: LocalDateTable_511a774a-1ff5-4b0c-8bb3-044209fe7911.Date
+
+relationship c67a4280-2f5e-4a03-a108-8f1ae897c7c6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas.DataFim
+	toColumn: LocalDateTable_73c7855d-3b20-4b11-8b89-306b002d8263.Date
+
+relationship 26ad620f-0e58-404e-8dd8-b22c4bb20a19
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas.DataPedido
+	toColumn: LocalDateTable_1293d353-6355-4f94-b7e3-4fbc2d137517.Date
+
+relationship a4055f07-2935-4b00-8d3d-efb955a5e77d
+	fromColumn: Tarefas_Pessoas.IdTarefas
+	toColumn: Tarefas.Id
+
+relationship e356758c-081b-47c7-a2e6-00c5bdf81123
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Projetos.'Ultima Data'
+	toColumn: LocalDateTable_b1223968-7ab1-4a80-a6e1-bc9cccab4534.Date
+
+relationship e38d1537-6797-4414-900c-b7016e8a8178
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Meios.HoraFim
+	toColumn: LocalDateTable_d196fbe6-ae1e-4c84-8673-917bb7d4b0b3.Date
+
+relationship fd1e0803-3386-4401-ad3e-03fbd6019079
+	crossFilteringBehavior: bothDirections
+	fromColumn: TarefasMeiosFaixas.IdTarefa
+	toColumn: Tarefas.Id
+
+relationship 3a308b5c-5862-4048-8008-0f1e4b23bd88
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Date
+	toColumn: LocalDateTable_7ea6ede7-4580-4e26-a605-5296089a1445.Date
+
+relationship 05f476a3-6673-42e3-9a99-1efa2f14371f
+	fromColumn: HorariosFaixas.Data
+	toColumn: Calendario.Date
+
+relationship d5c9882a-601a-43d3-9e43-38938541cccc
+	fromColumn: MeiosHoras.Data
+	toColumn: Calendario.Date
+
+relationship 4fec3391-7548-4b9b-866a-afba6816e23c
+	fromColumn: ExecucaoMensalConta.DATE
+	toColumn: Calendario.Date
+
+relationship 03d15f36-d4f4-4492-b29b-7e4f9ebdbe3b
+	fromColumn: TarefasMeiosFaixas.Date
+	toColumn: Calendario.Date
+
+relationship 72a717f9-8d2a-493c-96ee-c192c0d37652
+	fromColumn: Horarios.Data
+	toColumn: Calendario.Date
+
+relationship c6253700-de91-427b-9031-7880212f9419
+	fromColumn: TarefasPessoasFaixas.'Date Inicio Faixa'
+	toColumn: Calendario.Date
+
+relationship 4354434e-d0d4-4534-a490-00c07d01884a
+	fromColumn: Meios.Date
+	toColumn: Calendario.Date
+
+relationship 19faf657-7593-480f-a4bd-e29e26eb1ede
+	fromColumn: Capacidade.Data
+	toColumn: Calendario.Date
+
+relationship dab23b23-4ab3-4324-9270-5825d30ca6a6
+	fromColumn: ExecucaoMensalItem.DATE
+	toColumn: Calendario.Date
+
+relationship 6b4812ff-8c66-4b79-b279-cb57ff5c4e6c
+	fromColumn: LancManuais.Data
+	toColumn: Calendario.Date
+
+relationship 7dc9e82e-e1b3-4eeb-99fe-c0717357c582
+	fromColumn: Meios.Id
+	toColumn: Meios_Nome.Id
+
+relationship 417749f2-6182-4ed5-a8aa-c1323413b14d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Horarios.HoraInicio1
+	toColumn: LocalDateTable_f35afae6-0033-4f28-8a27-8523ae37020d.Date
+
+relationship 36a47902-3793-40fe-aaab-6cb361062199
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas_Pessoas.HoraInicioPlan
+	toColumn: LocalDateTable_9bca1a46-6758-4490-9e0b-101e70893e9d.Date
+
+relationship 40d7c036-a12c-4fb2-a0df-4e8856deb769
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas_Pessoas.HoraInicioPlan2
+	toColumn: LocalDateTable_431f6f3b-bcb7-462e-8ca3-a6325f9fb1ce.Date
+
+relationship dffac991-e7d5-4945-9642-98c130f3c541
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas_Pessoas.HoraInicioPlan3
+	toColumn: LocalDateTable_b4275095-570f-457b-b548-4c5a9af685f6.Date
+
+relationship c904eef8-0c75-4d01-ada2-7e705d8c12b8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas_Pessoas.HoraFiimPlan
+	toColumn: LocalDateTable_33474961-67b6-4431-bdf6-0f1353da5f67.Date
+
+relationship 62fe502c-ef72-4e86-94f8-045110fe9615
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas_Pessoas.HoraFiimPlan2
+	toColumn: LocalDateTable_93fa6803-56ca-4bc0-8a0d-0c9e3fff8552.Date
+
+relationship 992dfa80-402f-49b2-a5c8-fac70fae4096
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas_Pessoas.HoraFiimPlan3
+	toColumn: LocalDateTable_ddd7aa17-3ba0-4e03-9615-2369c9c138b1.Date
+
+relationship 65590cd1-172b-4ca2-a477-2d06540719ee
+	fromColumn: Pessoas.IdGrupo
+	toColumn: GrupoUnidade.IdGrupo
+
+relationship 320a8b9c-91b7-49eb-bf74-de7246b3f7e0
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: TranslationTable.ID
+	toColumn: Titulos.ID
+
+relationship bd3110d4-f323-41c1-9fd5-3c8c3cae06bc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.DataImputacao
+	toColumn: LocalDateTable_837005d5-bd06-435a-8451-dd2b5d2f7116.Date
+
+relationship 418de73e-b005-4442-8825-3ccc7b8a2728
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraInicio
+	toColumn: LocalDateTable_4d8e8de0-fe88-411f-b9c3-7b297f327293.Date
+
+relationship 80a2f6cb-f054-497d-b7d7-45bbf3826f5b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraIni
+	toColumn: LocalDateTable_e6519905-b748-4486-9371-1ac29814646b.Date
+
+relationship 393978e1-9544-4dc7-a41d-ecf79929bf5a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraFim
+	toColumn: LocalDateTable_81403bf3-d319-4f69-8ad1-e6d00285a273.Date
+
+relationship a19a9f10-ca7c-464a-96fc-5b2dc7419d97
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.ExecucaoHoraInicio
+	toColumn: LocalDateTable_a1dd4c43-0411-477f-97b5-7763d813ec65.Date
+
+relationship 8264ce15-5650-4933-980e-49c64a706ebb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.ExecucaoHoraFim
+	toColumn: LocalDateTable_32b150c5-01d8-41ae-9e0b-ff5d2ec48e56.Date
+
+relationship 95ce9dbb-f30b-43c1-9511-4d28d4cebaef
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraInicioPlan
+	toColumn: LocalDateTable_f6a651da-f698-4ca3-81f6-08f8f14b7000.Date
+
+relationship d54735e1-ebbd-4fcf-992b-2f8b762cc349
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraInicioPlan2
+	toColumn: LocalDateTable_1b66909b-ade2-4d23-8e8a-721098443866.Date
+
+relationship 3300e913-0df1-451e-aaa5-9d73c87cff7d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraInicioPlan3
+	toColumn: LocalDateTable_3b5d702f-6a18-4606-8027-6baf82815d6d.Date
+
+relationship 69aec9a8-d10c-432a-9941-4241da9146fa
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraFiimPlan
+	toColumn: LocalDateTable_fc0013d3-1f46-4bb5-bfe8-eab7d325e8b5.Date
+
+relationship 8489a652-56ae-4ae6-873c-f8ef35f03912
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraFiimPlan2
+	toColumn: LocalDateTable_1892eab5-9545-4fda-b6f9-fda605518e0b.Date
+
+relationship a2f0dead-d65d-455d-86b1-4680df710eb5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.HoraFiimPlan3
+	toColumn: LocalDateTable_8e10aa3f-cfdc-4556-8176-f1265c827cc3.Date
+
+relationship 2166ebce-f60b-4ab6-b3fc-a001b9bc1c07
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.'Start of Month'
+	toColumn: LocalDateTable_38f388d1-1410-4eb8-bc98-2fcd855bfbfd.Date
+
+relationship a63a212a-1315-4eac-97f3-e987b8f85b78
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.PicagemInicio
+	toColumn: LocalDateTable_097d2138-795a-4be6-9068-39b1e83f8ed0.Date
+
+relationship eabad3be-4146-4468-ad59-d748f3b74220
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.Picagem_Fim
+	toColumn: LocalDateTable_d70768d6-fd83-4626-86ed-8108bb1816dc.Date
+
+relationship 9f28031a-3d14-4bd4-abba-ff86f4b37e2d
+	fromColumn: Apontamentos.IdPessoa
+	toColumn: Pessoas.Id
+
+relationship 0a9e11ec-84d5-4136-800a-a803978c5a4e
+	fromColumn: Apontamentos.Date
+	toColumn: Calendario.Date
+
+relationship 87781dc4-c4fd-4c0d-81eb-8484dfb24fc2
+	fromColumn: Apontamentos.IdProjeto
+	toColumn: Projetos.Id
+
+relationship a91f885c-94ad-4934-9915-3d4cb1132272
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.'Planeado | Hora Inicio'
+	toColumn: LocalDateTable_6bfee7f8-3be1-4f32-91d1-e02dfaeac78b.Date
+
+relationship a3af4b8f-122f-42c6-a70f-16947aa0f9b5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Apontamentos.'Planeado | Hora Fim'
+	toColumn: LocalDateTable_3ac44c51-236a-4a39-840f-5d9599fd055d.Date
+
+relationship 7db246cf-6218-4af1-89cd-57575e9f4761
+	fromColumn: Tarefas_Pessoas.HoraInicio
+	toColumn: Calendario.Date
+
+relationship 187853e9-7831-455c-a0df-abf1f55e9f6e
+	fromColumn: NecessidadesAtividadesGantt.Data
+	toColumn: Calendario.Date
+
+relationship 06b1b174-ac5e-4f1d-a5e4-290b09505b1b
+	fromColumn: NecessidadesAtividadesGantt.IDProjeto
+	toColumn: Projetos.Id
+
+relationship 57b0a924-4b55-4477-a257-add90d75af67
+	fromColumn: NecessidadesAtividadesGantt.IDCC
+	toColumn: CentroCusto.Id
+
+relationship b0ed77a2-c5de-4600-9926-794966382aec
+	fromColumn: Lancamentos.IdCC
+	toColumn: CentroCusto.Id
+
+relationship 1a8b07d7-5d74-4489-a060-5cecb2e3e048
+	fromColumn: Lancamentos.IdProjeto
+	toColumn: Projetos.Id
+
+relationship 945f3cb2-8ca4-4ff9-a91a-be937e62290b
+	fromColumn: Lancamentos.HoraInicio
+	toColumn: Calendario.Date
+
+relationship dfa49842-12a9-4165-8c43-2d149f972b35
+	fromColumn: ExecucaoMensalConta.AccountCode
+	toColumn: CentroCusto.codigo
+
+relationship 26d1aa82-b8b2-437a-90cf-9959c3e025fc
+	fromColumn: Apontamentos.IdCC
+	toColumn: CentroCusto.Id
+
+relationship 30e4ab1b-9e90-463a-b24a-a29c1063442c
+	fromColumn: Pessoas.IdFuncao
+	toColumn: Funcao.Id
+
+relationship 5e1d28af-b00b-4046-8f45-93212e9de460
+	fromColumn: Pessoas.tipo
+	toColumn: TipoPessoa.Id
+
+relationship 4104fcd6-9f52-408d-ade8-8a8c66f3fec8
+	fromColumn: 'NecessidadesGantt Final'.TipoPessoa
+	toColumn: TipoPessoa.Id
+
+relationship 0854773b-c5c5-4310-8470-f511f2130b3b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Necessidades_FH.DataInicio
+	toColumn: LocalDateTable_6ef92e07-527f-4254-94ab-f659c420ee5f.Date
+
+relationship 6408aa1d-ac8f-499e-ab00-6abf19e310ab
+	fromColumn: Necessidades_FH.IdCentroCusto
+	toColumn: CentroCusto.Id
+
+relationship c9282814-1608-4579-b3dc-f401b834116b
+	fromColumn: Necessidades_FH.IdProjecto
+	toColumn: Projetos.Id
+
+relationship 56285465-057c-4916-bf86-e5d2c9f04dc0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Tarefas.Data
+	toColumn: LocalDateTable_d894d45f-6816-4dab-bb23-8e36bd06e4e4.Date
+
+relationship 18464158-cd2c-459f-8243-7d3b305c0911
+	fromColumn: TarefasMeiosFaixas.IdMeio
+	toColumn: Meios_Nome.Id
+
+relationship c2004437-bdae-4634-b4bd-1b3c3601779c
+	fromColumn: TarefasMeiosFaixas.IdProjecto
+	toColumn: Projetos.Id
+
+relationship 06b82098-7bce-4c61-9f71-4fcea719c8bd
+	fromColumn: TarefasPessoasFaixas.CodCentroCusto
+	toColumn: CentroCusto.codigo
+
+relationship a852219f-1e3d-4b60-a0bd-cfd2117dea1f
+	fromColumn: TarefasMeiosFaixas.IdCentroCusto
+	toColumn: CentroCusto.Id
+
+relationship 7e7d56c9-1ec4-4240-a366-e53b8200ed6f
+	isActive: false
+	fromColumn: Meios_Nome.IdCentroCusto
+	toColumn: CentroCusto.Id
+
+relationship 3bf22555-7ac4-4487-8d99-f96c050df946
+	fromColumn: 'RH Sem Escala'.idCC
+	toColumn: CentroCusto.Id
+
+relationship a0c8f00c-fb0f-4551-aaa4-645515fdfa34
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Pessoas.IdCentroCusto
+	toColumn: 'RH Sem Escala'.idCC
+
+relationship 29e17a15-d22b-42f6-aa57-01ccd369afde
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'RH Sem Escala'.Calendario
+	toColumn: LocalDateTable_daf24e58-08d9-4013-b670-0790217198ad.Date
+
+relationship e04057bb-d4a5-46eb-8bab-ed4c4be2e951
+	fromColumn: Horarios.IdHorariosRefs
+	toColumn: HorariosRefs.IdHorariosRefs
+
+relationship 24d9f09b-db9d-40c6-845d-8299a8520a35
+	fromColumn: Tarefas_Pessoas.IdHorarioRef
+	toColumn: HorariosRefs.IdHorariosRefs
+
+relationship 59e8f220-be4c-4bb3-a5a9-a715cadd29c2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Necessidades_FH.DataFim
+	toColumn: LocalDateTable_3c2beae8-fd70-4045-add3-b89178a0279e.Date
+
+relationship 08408c91-115a-4b19-8670-aa04867df496
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DateTime.Date
+	toColumn: LocalDateTable_efc94554-5830-40ec-b055-50d11e5e3cd1.Date
+
+relationship cda984a3-02bb-4423-be46-7de857327fd7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DateTime.DateTime
+	toColumn: LocalDateTable_fa8feffa-2574-4b5c-9d54-ebf98ff5a791.Date
+
+relationship b1f391b1-1ae3-4741-956f-03faba13b481
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Necessidades_FH.DataInicio_F
+	toColumn: LocalDateTable_abe25b04-3ca8-4f7e-a04b-d5817b44d927.Date
+
+relationship 67389691-6423-48d6-9798-e2de9b70c143
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Necessidades_FH.DataFim_F
+	toColumn: LocalDateTable_cb0ae344-354c-4370-b69e-8dff3f60cc55.Date
+
+relationship 9ec13d61-5283-415e-8ca7-8064887d69c0
+	fromColumn: Necessidades_FH.DataFinal
+	toColumn: Calendario.Date
+
+relationship 82b327b1-64f0-4f45-8f3e-e937add198a8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Necessidades_FH.Data
+	toColumn: LocalDateTable_9e41bd99-c7f8-44db-aef6-1b70bfa7f656.Date
+
+relationship 534a27fe-0e55-4bbb-b259-b5d72f0fd35b
+	fromColumn: Necessidades_FH.IdFuncaoPessoa
+	toColumn: Funcao.Id
+
+relationship 79157ad8-5ccd-4d1e-b0df-03c877c69564
+	fromColumn: Necessidades_FH.IdGrupoPessoa
+	toColumn: GrupoUnidade.IdGrupo
+
+relationship 1de33352-d41c-40b8-ae3b-4b78fc72e6a8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Necessidades_Exclusoes.DataExcluida
+	toColumn: LocalDateTable_b2c1cd53-f0ac-4dbd-a085-ea50f1425970.Date
+
+relationship 886c4dd7-0002-407c-8964-17673ec3f0f5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'NecessidadesGantt Extra'.Datas
+	toColumn: LocalDateTable_898cdb10-851b-466b-aeb5-6c5c087e3143.Date
+
+relationship 7fcfca64-837d-4c20-bcdd-34891ca730cb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'NecessidadesGantt Extra'.DataInicio
+	toColumn: LocalDateTable_1c139b89-9b4a-467e-8ee5-c0f7de727dad.Date
+
+relationship fa0e5ec5-23af-4635-bb17-08dc91c2e71a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'NecessidadesGantt Extra'.DataFim
+	toColumn: LocalDateTable_c99c8a15-0e37-496b-a606-5aa02e6957aa.Date
+
+relationship 2737d575-5f46-4b03-bd7e-9c96e1900ba4
+	fromColumn: 'NecessidadesGantt Final'.Datas
+	toColumn: Calendario.Date
+
+relationship c2df44de-45ee-4920-a260-7ec817f770e2
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'NecessidadesGantt Final'.Key
+	toColumn: NecessidadesGanttUnpivot.Key
+
+relationship a8066310-2675-44dc-a8cb-9d9203d7572f
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'NecessidadesGantt Final'.Index
+	toColumn: Necessidades.Index
+
+relationship bddd233b-abc0-436e-ad6e-5b89c6c44949
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'NecessidadesGantt Final'.DataInicio
+	toColumn: LocalDateTable_2d14ca2f-2b5b-4f4b-b276-60655ba3d688.Date
+
+relationship 30fc7a4f-3b97-4fb4-8300-5d2925bd4226
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'NecessidadesGantt Final'.DataFim
+	toColumn: LocalDateTable_19f50fab-a000-4806-8da2-2fbb8cb7ce69.Date
+
+relationship 1d688d84-7b9b-4f41-b1c0-23e345dd5a2a
+	fromColumn: 'NecessidadesGantt Final'.IdCentroCusto
+	toColumn: CentroCusto.Id
+
+relationship 39867907-603a-4fbe-be80-9e7b749e4f74
+	fromColumn: 'NecessidadesGantt Final'.IdProjeto
+	toColumn: Projetos.Id
+
+relationship 1ca9cc72-8f15-4325-a031-1c542b38f5a3
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: NecessidadesAtividadesGantt.IDProjeto
+	toColumn: 'NecessidadesGantt Final'.IdProjeto
+
+relationship 24d7a025-d310-44b0-94cf-48deb32d4d29
+	isActive: false
+	fromColumn: 'NecessidadesGantt Final'.IdPessoa
+	toColumn: Pessoas.Id
+
+relationship 67aae82c-3ad6-4d97-9e7a-4f9acbf33553
+	fromColumn: 'NecessidadesGantt Final'.Funcao
+	toColumn: Funcao.Id
+

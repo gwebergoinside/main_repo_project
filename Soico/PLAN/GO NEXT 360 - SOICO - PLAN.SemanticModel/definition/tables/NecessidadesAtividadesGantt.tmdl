@@ -1,0 +1,66 @@
+table NecessidadesAtividadesGantt
+	lineageTag: 0e4622e1-b055-4092-9e93-7919e7819485
+
+	column Data
+		formatString: General Date
+		lineageTag: b3b8c743-4ec8-4fdd-bec7-2c88ebdd1526
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Data]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDProjeto
+		formatString: 0
+		lineageTag: 341a2386-f966-484a-b112-0bdbd40aef24
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IDProjeto]
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDCC
+		formatString: 0
+		lineageTag: 5bb9dca0-ff77-457a-92d8-6f4785b84d44
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IDCC]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		formatString: 0
+		lineageTag: 018804bd-bae0-49f4-a9a3-ab82a3402f6a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition NecessidadesAtividadesGantt-70362e5f-b282-416e-8dee-5f65505ae7ee = calculated
+		mode: import
+		source = ```
+				
+				    VAR _P =
+				        SELECTCOLUMNS(
+				            Tarefas_Pessoas,
+				            "IDProjeto", Tarefas_Pessoas[IdProjeto],
+				            "IDCC", Tarefas_Pessoas[IdCC],
+				            "Data", Tarefas_Pessoas[HoraInicio],
+				            "Tempo", SUM(Tarefas_Pessoas[TempoImputado])
+				        )
+				    VAR _M =
+				        SELECTCOLUMNS(
+				            Meios,
+				            "IDProjeto", Meios[IdProjeto],
+				            "IDCC", Meios[IdCC],
+				            "Data", Meios[Date],
+				            "Tempo", SUM(Meios[TempoImputado])
+				        )   
+				    VAR Result = UNION(_P,_M)
+				    RETURN
+				    SUMMARIZE(Result, [IDProjeto], [IDCC], [Data], "Value", IF( COUNTX(Result, [Tempo]) > 0, 1 , BLANK() ) )
+				```
+
+	annotation PBI_Id = 06b43cf13e8b47a98d588fbfad19dfb4
+

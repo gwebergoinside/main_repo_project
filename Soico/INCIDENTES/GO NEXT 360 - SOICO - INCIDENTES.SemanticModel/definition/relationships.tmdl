@@ -1,0 +1,122 @@
+relationship f3562472-dda3-48dc-8dc1-31d22b824194
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_Incidencias.DataFim
+	toColumn: LocalDateTable_339326d7-9172-4356-b6d9-1b93d1bcf1bd.Date
+
+relationship d6634d65-5959-4603-b6ac-86541566ce3a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_Incidencias.DataInicioExecucao
+	toColumn: LocalDateTable_dbef7fc7-3899-4e35-a475-8e4cad23ed2a.Date
+
+relationship d7b5cc62-77b5-4a4a-a90a-1a181884e86f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_Incidencias.DataFimExecucao
+	toColumn: LocalDateTable_8c2822d5-fb05-4a5b-aebb-d1daec9cfa1e.Date
+
+relationship 5ac34e9b-66ee-4064-a264-d4ff928429b6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Projectos.DataFim
+	toColumn: LocalDateTable_7c4a2029-44f1-4246-8296-b3530a5d7385.Date
+
+relationship 79bebdc9-f3f9-480e-813d-a08c2d60df9d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Projectos.DataInicio
+	toColumn: LocalDateTable_bcd68107-fe5f-4b75-a6d8-d1318cd36577.Date
+
+relationship 38396a16-2fcd-4950-bdf1-efc225723fcc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Date
+	toColumn: LocalDateTable_7c186134-cea0-4078-9976-0800ded3e6bf.Date
+
+relationship 1b07750b-14cd-4224-8fe1-f68881625fba
+	fromColumn: f_Incidencias.IdProjecto
+	toColumn: d_Projectos.id
+
+relationship baf32f12-c8f3-46dd-be05-a6052bd2fba9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_Incidencias.DataInicio
+	toColumn: LocalDateTable_2f2bd226-0535-4970-867b-bdeee23e647b.Date
+
+relationship 6ceeab89-b360-4ef4-b44f-86c050ca695b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Pessoas_Incid.DataInicio
+	toColumn: LocalDateTable_a9e37b17-aa9e-4a78-a1fe-779c4f6973f9.Date
+
+relationship f3245fc9-421b-4cce-8d9c-ed64e124c550
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Pessoas_Incid.DataFim
+	toColumn: LocalDateTable_a962502b-8b04-4c1c-90bc-57c15bfce53f.Date
+
+relationship c324baef-c480-4ecd-b206-99f7c5b4da2e
+	fromColumn: f_Incidencias.ID_Incidencias
+	toColumn: d_Status.Id
+
+relationship 8fd2d2f3-e482-49ca-9513-bd21a1c0254a
+	fromColumn: f_Incidencias.DataInicioExecucao_Calc
+	toColumn: Calendario.Date
+
+relationship cd71c183-0168-47b1-ae07-b073eec2222f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_Incidencias.DataInicio2
+	toColumn: LocalDateTable_084e2f2d-332a-4ba0-8c54-470d0bfdcb04.Date
+
+relationship 9f4ce225-849d-441c-aad5-9b8329dec65d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_Incidencias.DataFim2
+	toColumn: LocalDateTable_a64473a8-6728-4f7a-b37a-e71b2d971691.Date
+
+relationship 252975c8-6d6d-4490-a4fb-28005dd3c075
+	fromColumn: f_Incidencias.ID_Incidencias
+	toColumn: d_Captacao.Id
+
+relationship 9c0239f4-92d2-4737-962a-c036649c4c84
+	crossFilteringBehavior: bothDirections
+	fromColumn: d_Pessoas_Incid.IdIncidencia
+	toColumn: f_Incidencias.ID_Incidencias
+
+relationship 5ff25f66-3df8-4785-a141-b926075abcd7
+	fromColumn: f_Incidencias.ID_Incidencias
+	toColumn: d_Atraso_Grav.Id
+
+relationship 1d8b1bbb-1af3-443e-8a62-a1fa220a6bad
+	fromColumn: f_Incidencias.IdClassificacao
+	toColumn: d_Classificação.Id
+
+relationship eb376807-15c6-48dc-8b17-67913a62f30b
+	fromColumn: Calendario.QntDiasMes
+	toColumn: d_DiasMes.NumDias
+
+relationship a14ef331-e4a3-4bdc-b9e1-f6ae216ba923
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: f_Incidencias.ID_Incidencias
+	toColumn: d_User.Id_Incidencia
+
+relationship 11bdca71-509a-4a72-abf5-a9ad14703790
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_Tarefas_Meios.HoraFim
+	toColumn: LocalDateTable_7315bd77-32b5-4ee4-9f67-293be2d181a8.Date
+
+relationship d0367e53-c101-4b9d-b1d0-8d9211d18fd3
+	crossFilteringBehavior: bothDirections
+	fromColumn: f_Tarefas_Meios.IdProjecto
+	toColumn: d_Projectos.id
+
+relationship 4ea27411-db97-405b-8778-d734bd8ea213
+	fromColumn: f_Tarefas_Meios.Data
+	toColumn: Calendario.Date
+
+relationship daed32c1-a2b8-4c43-b77d-a6fa2ea088c4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: f_Tarefas_Meios.HoraInicio
+	toColumn: LocalDateTable_09ce35a7-1f6b-4d80-98ca-e32e8d565ef9.Date
+
+relationship 139d1f80-55fe-48ac-8ee9-f4024d46f4db
+	fromColumn: f_Tarefas_Meios.IdMeio
+	toColumn: d_Meios.Id
+
+relationship aabd5a9f-2960-4bd6-a34c-bb1eef7e888e
+	crossFilteringBehavior: bothDirections
+	fromColumn: d_Meios_Incid.IdIncidencia
+	toColumn: f_Incidencias.ID_Incidencias
+

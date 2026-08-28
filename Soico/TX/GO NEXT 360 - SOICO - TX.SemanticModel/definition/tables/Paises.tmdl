@@ -1,0 +1,38 @@
+table Paises
+	lineageTag: 44d76d29-125e-49fa-ab73-3cc3a84cf06c
+
+	column codigo_pais
+		dataType: string
+		lineageTag: e2d0aa3e-c271-45b5-9cb7-b0a7c161dfe8
+		summarizeBy: none
+		sourceColumn: codigo_pais
+
+		annotation SummarizationSetBy = Automatic
+
+	column descricao_pais
+		dataType: string
+		lineageTag: 140814a9-0e03-4f15-a085-0faa2636f8f6
+		summarizeBy: none
+		sourceColumn: descricao_pais
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod2
+		dataType: string
+		lineageTag: 3bd728ff-3563-47e4-b6fe-ae801be04e8e
+		summarizeBy: none
+		sourceColumn: cod2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Paises-eae8ab32-da06-42f0-a2ae-4c227e51e9d9 = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    tp.codigo_pais#(lf)    ,tp.descricao_pais#(lf)    ,tp.cod2#(lf)From#(lf)    t_Paises tp"]),
+				    #"Uppercased Text" = Table.TransformColumns(Origem,{{"codigo_pais", Text.Upper, type text}, {"cod2", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	annotation PBI_ResultType = Table
+

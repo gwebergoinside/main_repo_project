@@ -1,0 +1,104 @@
+table Date
+	lineageTag: e6e238df-6fa5-466e-9b23-a101f3beab9f
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: Short Date
+		lineageTag: 37564fc2-e847-4e42-a739-d5e3c749d043
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano
+		formatString: 0
+		lineageTag: 739c118e-7640-433a-b426-e81360ef4874
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ano]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		lineageTag: 0a179289-9d6a-42e4-aa72-7f9090f45bcf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Mês]
+		sortByColumn: NºMês
+
+		annotation SummarizationSetBy = Automatic
+
+	column NºMês
+		formatString: 0
+		lineageTag: f9bbe450-153d-4a60-8853-dba60e6c50f5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [NºMês]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		lineageTag: 81d534ef-59ba-4aae-9a94-c0dad456a396
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Trimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana'
+		lineageTag: 9a4b1d06-046b-4550-a7d1-5e6e14a3e832
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Dia Semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nº dia Semana'
+		formatString: 0
+		lineageTag: ca1dbe45-f777-4ab3-b4a6-8e9fa4906e63
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Nº dia Semana]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		formatString: 0
+		lineageTag: 1bcb0d73-2c54-4e09-9307-422c529605fd
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Dia]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date-8d523701-f9c5-46e8-b726-2892a1387686 = calculated
+		mode: import
+		source = ```
+				var a =year(min(Contratos[DATA_COMPRA]))
+				var b=YEAR(max(Contratos[DATA_COMPRA]))
+				var dates=filter(CALENDARAUTO(),
+				year([Date])>=a && YEAR([Date])<=b)
+				
+				RETURN
+				    ADDCOLUMNS(
+				        Dates,
+				        "Ano", YEAR ( [Date] ),
+				        "Mês", SWITCH(MONTH([Date]),1,"Jan",2,"Fev",3,"Mar",4,"Abr",5,"Mai",6,"Jun",7,"Jul",8,"Ago",9,"Set",10,"Out",11,"Nov",12,"Dez"),
+				        "NºMês", MONTH ( [Date] ),
+				        "Trimestre",  CONCATENATE("Trimestre ",ROUNDUP(MONTH([date])/3,0)),
+						"Dia Semana" ,SWITCH(WEEKDAY([Date]),1,"Sunday",2,"Monday",3,"Tuesday",4,"Wednesday",5,"Thursday",6,"Friday",7,"Saturday"),
+						"Nº dia Semana",  WEEKDAY([Date]),
+						"Dia" , DAY([Date])
+						
+				)
+				
+				```
+

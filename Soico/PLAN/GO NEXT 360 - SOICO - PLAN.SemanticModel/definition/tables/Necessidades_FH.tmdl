@@ -1,0 +1,295 @@
+table Necessidades_FH
+	lineageTag: f928079e-72c1-43f8-93b7-c0f81399e94f
+
+	column Tipo
+		dataType: string
+		lineageTag: d5078b29-4964-4f0f-b41d-42ee710ac278
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeEtapa
+		dataType: string
+		lineageTag: 53d0bd72-2402-416b-826f-43f3ac1ca1d0
+		summarizeBy: none
+		sourceColumn: NomeEtapa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdActividade
+		dataType: int64
+		formatString: 0
+		lineageTag: 19997ecf-50ca-4840-a3b2-05e0bdadc5b1
+		summarizeBy: sum
+		sourceColumn: IdActividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeActividade
+		dataType: string
+		lineageTag: 0b959143-4274-4c9d-b84d-0b36f1ec4a19
+		summarizeBy: none
+		sourceColumn: NomeActividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoEvProd
+		dataType: string
+		lineageTag: b8106995-c2a0-4872-8835-d3e7e0ac1634
+		summarizeBy: none
+		sourceColumn: TipoEvProd
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoTarefa
+		dataType: string
+		lineageTag: c1338fd5-ebe1-4fb6-9430-0f59a6fdcbda
+		summarizeBy: none
+		sourceColumn: TipoTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCentroCusto
+		dataType: int64
+		formatString: 0
+		lineageTag: 9fd7ee97-916a-4f0c-a364-5e7ad95c7eb2
+		summarizeBy: none
+		sourceColumn: IdCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: 575fde09-6bac-43d2-b4a3-ae6f6b8a7e93
+		summarizeBy: none
+		sourceColumn: IdProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 17264897-c89a-403c-ad2c-0db32b3fde77
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		variation Variation
+			isDefault
+			relationship: 0854773b-c5c5-4310-8470-f511f2130b3b
+			defaultHierarchy: LocalDateTable_6ef92e07-527f-4254-94ab-f659c420ee5f.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1b80f8d9-25f4-47c0-bf7d-8a39274d1540
+		summarizeBy: none
+		sourceColumn: Data
+
+		variation Variation
+			isDefault
+			relationship: 82b327b1-64f0-4f45-8f3e-e937add198a8
+			defaultHierarchy: LocalDateTable_9e41bd99-c7f8-44db-aef6-1b70bfa7f656.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DataFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a1b45efe-9c03-4cfa-9ebf-7a40ba566d1e
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variation
+			isDefault
+			relationship: 59e8f220-be4c-4bb3-a5a9-a715cadd29c2
+			defaultHierarchy: LocalDateTable_3c2beae8-fd70-4045-add3-b89178a0279e.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoaTarefa
+		dataType: int64
+		formatString: 0
+		lineageTag: 76ef138c-acc3-4619-87d6-77cbeede4d4b
+		summarizeBy: sum
+		sourceColumn: IdPessoaTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefaPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 1524e775-57dc-4a71-a0e3-6ef7ecad5cc6
+		summarizeBy: sum
+		sourceColumn: IdTarefaPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio_F
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 16464cd9-a871-4e06-a403-230edf97531a
+		summarizeBy: none
+		sourceColumn: DataInicio_F
+
+		variation Variation
+			isDefault
+			relationship: b1f391b1-1ae3-4741-956f-03faba13b481
+			defaultHierarchy: LocalDateTable_abe25b04-3ca8-4f7e-a04b-d5817b44d927.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim_F
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 84527d2c-d926-40b4-b5a3-1b705e9b006e
+		summarizeBy: none
+		sourceColumn: DataFim_F
+
+		variation Variation
+			isDefault
+			relationship: 67389691-6423-48d6-9798-e2de9b70c143
+			defaultHierarchy: LocalDateTable_cb0ae344-354c-4370-b69e-8dff3f60cc55.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 097b6ff7-90ac-4293-8f31-5a71dd23ae9a
+		summarizeBy: sum
+		sourceColumn: Duration
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column List
+		dataType: string
+		lineageTag: be3e4fcd-c254-4cf1-ab59-4d741a06f951
+		summarizeBy: none
+		sourceColumn: List
+
+		annotation SummarizationSetBy = Automatic
+
+	column FaixaH
+		dataType: string
+		lineageTag: 61a457d1-8b3d-4d31-b34b-dca48a31ba80
+		summarizeBy: none
+		sourceColumn: FaixaH
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFinal
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 191e35ab-c355-4bf0-b7b2-a3bfbc0a8d43
+		summarizeBy: none
+		sourceColumn: DataFinal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IdPessoaNec
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a249b9c-6298-45cb-a174-05bb6bf2f014
+		summarizeBy: sum
+		sourceColumn: IdPessoaNec
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuantidadeNec
+		dataType: int64
+		formatString: 0
+		lineageTag: 760a7aa6-cf22-4172-bfdc-531eab50aa70
+		summarizeBy: sum
+		sourceColumn: QuantidadeNec
+
+		annotation SummarizationSetBy = Automatic
+
+	column DuracaoNec
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ab70525-9315-4ee0-9dc0-f81e935aa452
+		summarizeBy: sum
+		sourceColumn: DuracaoNec
+
+		annotation SummarizationSetBy = Automatic
+
+	column FH
+		dataType: string
+		lineageTag: 40a9031f-ab9b-464e-9b43-aeca7fd6ec63
+		summarizeBy: none
+		sourceColumn: FH
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdFuncaoPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 194cdcf2-9ee2-4aa4-ae42-94b1e98a36de
+		summarizeBy: none
+		sourceColumn: IdFuncaoPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdGrupoPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f1373ec-4894-4ba2-9c70-b95a110cf5c7
+		summarizeBy: none
+		sourceColumn: IdGrupoPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoNec
+		dataType: string
+		lineageTag: 14477a8e-85bc-49d5-b7b9-23c7da703b41
+		summarizeBy: none
+		sourceColumn: TipoNec
+
+		annotation SummarizationSetBy = Automatic
+
+	column Index
+		dataType: string
+		lineageTag: f2c69919-de79-47ff-ae85-c274ea8bbeee
+		summarizeBy: none
+		sourceColumn: Index
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Necessidades_FH-e6d0f7df-6ae8-4c0e-8a5d-bf6c1cc2eaa8 = m
+		mode: import
+		queryGroup: Necessidades
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    'RH' As Tipo,#(lf)    s.Nome As NomeEtapa,#(lf)    ap.Id As IdActividade,#(lf)    ap.Nome As NomeActividade,#(lf)    tt.Nome As TipoEvProd,#(lf)    'RH' As TipoTarefa,#(lf)    tnp.IdPessoa As IdPessoaNec,#(lf)    tnp.Quantidade As QuantidadeNec,#(lf)    tnp.Duracao As DuracaoNec,#(lf)    t.IdProjecto,#(lf)    t.DataInicio,#(lf)    t.DataFim,#(lf)    Right('0' + Cast(DatePart(HOUR, t.DataInicio) As VARCHAR), 2) + ':00' As FH,#(lf)    tp.IdPessoa As IdPessoaTarefa,#(lf)    tp.Id As IdTarefaPessoa,#(lf)    cc.Id As IdCentroCusto,#(lf)    Pessoas.IdFuncaoPessoa,#(lf)    Pessoas.IdGrupoPessoa,#(lf)    'Atividade' As TipoNec#(lf)From#(lf)    Segmentos s Right Join#(lf)    Tarefas t On t.IdSegmento = s.Id Left Join#(lf)    Tipos_Tarefas tt On t.IdTipoTarefa = tt.Id Left Join#(lf)    Tarefas_Necessidades_Pessoas tnp On tnp.IdTarefa = t.Id Inner Join#(lf)    Tarefas_Pessoas tp On tp.IdTarefa = t.Id Left Join#(lf)    Centros_Custo cc On cc.Codigo = tp.CodCentroCusto Left Join#(lf)    Actividades_Pessoas ap On ap.Id = tp.IdActividadePessoa Inner Join#(lf)    Pessoas On tp.IdPessoa = Pessoas.Id#(lf)Where#(lf)    Year(t.DataInicio) >= Year(Getdate())-3"]),
+				    #"Added Index" = Table.AddIndexColumn(Origem, "Index", 1, 1, Int64.Type),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Added Index", "DataInicio", "DataInicio_F"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column1",{{"Index", type text}}),
+				    #"Calculated Start of Hour" = Table.TransformColumns(#"Changed Type2",{{"DataInicio_F", Time.StartOfHour, type datetime}}),
+				    #"Duplicated Column2" = Table.DuplicateColumn(#"Calculated Start of Hour", "DataFim", "DataFim_F"),
+				    #"Calculated Start of Hour1" = Table.TransformColumns(#"Duplicated Column2",{{"DataFim_F", Time.StartOfHour, type datetime}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Calculated Start of Hour1",null,"SEM NOME",Replacer.ReplaceValue,{"NomeActividade"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Replaced Value1",null,"SEM NOME",Replacer.ReplaceValue,{"NomeEtapa"}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Replaced Value", "DataInicio", "Data"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data", type date}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type", "Duration", each Duration.TotalMinutes([DataFim_F]-[DataInicio_F]) / 60),
+				    #"Added Custom" = Table.AddColumn(#"Added Custom1", "List", each List.DateTimes([DataInicio_F],[Duration]+1,#duration(0, 0, 60, 0))),
+				    #"Expanded List" = Table.ExpandListColumn(#"Added Custom", "List"),
+				    #"Inserted Text Between Delimiters" = Table.AddColumn(#"Expanded List", "FaixaH", each Text.BetweenDelimiters(Text.From([List], "pt-PT"), " ", ":", 0, 1), type text),
+				    #"Duplicated Column3" = Table.DuplicateColumn(#"Inserted Text Between Delimiters", "List", "DataFinal"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Duplicated Column3",{{"DataFinal", type date}}),
+				    #"Appended Query" = Table.Combine({#"Changed Type1", Necessidades_FH_Execucao})
+				in
+				    #"Appended Query"
+
+	annotation PBI_ResultType = Table
+

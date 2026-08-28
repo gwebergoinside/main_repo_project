@@ -1,0 +1,21 @@
+/// Período de atualização
+table DescontoCMTV
+	lineageTag: 1efdf6e4-204a-4ae9-8798-c919b3f670dd
+
+	column DescontoCMTV
+		dataType: string
+		lineageTag: 5ca821b0-8fb5-46a8-be38-52e9047564f9
+		summarizeBy: none
+		sourceColumn: DescontoCMTV
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DescontoCMTV-86960e42-5b30-4478-afbe-a145f9fca995 = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

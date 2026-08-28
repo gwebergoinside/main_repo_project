@@ -1,0 +1,197 @@
+table Tarefas
+	lineageTag: e55b4524-767b-42d4-9bff-547672219cf4
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 09cc11ec-6d2c-41bc-99fd-c05c8fe96e2c
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2c0d9e48-810b-415c-a4f8-0af98090a6f9
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		variation Variation
+			isDefault
+			relationship: ee137789-8b32-47be-b15c-dc00d36e4e88
+			defaultHierarchy: LocalDateTable_511a774a-1ff5-4b0c-8bb3-044209fe7911.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 436af501-3b81-49ef-9d7b-f8cb048502ff
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variation
+			isDefault
+			relationship: c67a4280-2f5e-4a03-a108-8f1ae897c7c6
+			defaultHierarchy: LocalDateTable_73c7855d-3b20-4b11-8b89-306b002d8263.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataPedido
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5b1cb269-4aa4-4ddc-a3bc-d188eb09351a
+		summarizeBy: none
+		sourceColumn: DataPedido
+
+		variation Variation
+			isDefault
+			relationship: 26ad620f-0e58-404e-8dd8-b22c4bb20a19
+			defaultHierarchy: LocalDateTable_1293d353-6355-4f94-b7e3-4fbc2d137517.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResponsavelPedido
+		dataType: string
+		lineageTag: c6bd5d0a-4f9c-4d33-b3f1-b53e83a2a7a2
+		summarizeBy: none
+		sourceColumn: ResponsavelPedido
+
+		annotation SummarizationSetBy = Automatic
+
+	column Titulo
+		dataType: string
+		lineageTag: e6742a2b-a8d9-4a47-b94d-2d04ed5dd5a5
+		summarizeBy: none
+		sourceColumn: Titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: c5369ddf-8378-47f2-b98e-a5e5322d3869
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Concluida
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 75ff8c1c-ee95-45cd-8343-4b90d58ed672
+		summarizeBy: none
+		sourceColumn: Concluida
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: 02721c50-8b18-4d96-9f3a-fa18f893c177
+		summarizeBy: sum
+		sourceColumn: IdProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoTarefa
+		dataType: int64
+		formatString: 0
+		lineageTag: 22b59fa2-ba10-4fba-a07d-316e43b7330d
+		summarizeBy: sum
+		sourceColumn: IdTipoTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observacoes
+		dataType: string
+		lineageTag: 968eb1e4-e18a-4787-a3d2-b91acc3d1599
+		summarizeBy: none
+		sourceColumn: Observacoes
+
+		annotation SummarizationSetBy = Automatic
+
+	column Projeto
+		dataType: string
+		lineageTag: d9d38b56-f207-4108-9302-f7f635b4d058
+		summarizeBy: none
+		sourceColumn: Projeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: e5b7e6c9-d125-4895-84a8-f973e961012a
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 9968dd51-21af-48be-bf2f-cd9932dbe4a0
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 689ca033-139a-4007-8ce1-da3dc7df0058
+		summarizeBy: none
+		sourceColumn: Data
+
+		variation Variation
+			isDefault
+			relationship: 56285465-057c-4916-bf86-e5d2c9f04dc0
+			defaultHierarchy: LocalDateTable_d894d45f-6816-4dab-bb23-8e36bd06e4e4.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano = YEAR( Tarefas[Data] )
+		formatString: 0
+		lineageTag: 3e762f4e-f74d-4438-9124-72df5716c0df
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês = REPLACE(FORMAT(Tarefas[Data],"MMMM") ,1,1,UPPER(LEFT(FORMAT(Tarefas[Data],"MMMM") )))
+		lineageTag: cbfefe9a-7335-41dc-8c00-6d6a6abf3710
+		summarizeBy: none
+		sortByColumn: 'Mês Nº'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Nº' = MONTH( Tarefas[Data] )
+		formatString: 0
+		lineageTag: e3aafe8d-1db2-4270-aa57-14302c0fe8d8
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia = DAY( Tarefas[Data] )
+		formatString: 0
+		lineageTag: 76b4a2e6-4127-439b-b316-073358675777
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Tarefas-cc17834a-0e7b-433d-a084-3eccc92903ea = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    t.Id,#(lf)    t.DataInicio,#(lf)    t.DataFim,#(lf)    t.DataPedido,#(lf)    t.ResponsavelPedido,#(lf)    t.Titulo,#(lf)    t.Observacoes,#(lf)    t.Estado,#(lf)    t.Concluida,#(lf)    t.IdTipoTarefa,#(lf)    p.titulo As Projeto,#(lf)    t.IdProjecto,#(lf)    tt.Nome As Tipo#(lf)From#(lf)    Tarefas t Left Join#(lf)    Projectos p On t.IdProjecto = p.Id Left Join#(lf)    Tipos_Tarefas tt On t.IdTipoTarefa = tt.Id"]),
+				    #"Duplicated Column" = Table.DuplicateColumn(Source, "DataInicio", "Data"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data", type date}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"Estado"}, TarefasCodigo, {"StringValue"}, "TarefasCodigo", JoinKind.LeftOuter),
+				    #"Expanded TarefasCodigo" = Table.ExpandTableColumn(#"Merged Queries", "TarefasCodigo", {"Name"}, {"Name"})
+				in
+				    #"Expanded TarefasCodigo"
+
+	annotation PBI_ResultType = Table
+

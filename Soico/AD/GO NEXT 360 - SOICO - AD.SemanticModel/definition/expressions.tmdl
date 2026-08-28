@@ -1,0 +1,61 @@
+expression 'Classificação de Canais' =
+		let
+		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUQoOCQOS7ql5qUWJOZnFJYlAHlgIImEIx7E60UpGEHEFv/ySw2uTMxOLgXzPvLT8otzEw8sPL85H1WuEotcYJO7mC1KSmnt4YUlmcj5Ie9DhhSmZ+XA5Y6g+I7AeEyDLyz/Iz9FHwcXT3TMESPsrBDge7g3GtNg/LyczLxVDA1DABGquMdhMU6gf/P18PP1c0Z0DNwVFiSnUBBOwCWYgdRBnEDIFQ5kZ1CRTpdhYAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [CanCodigo = _t, Nome = _t, Tipo = _t, Meio = _t, Agrupador = _t, #"Ord Tipo" = _t, #"Ord Meio" = _t, #"Ord Agrupador" = _t]),
+		    #"Changed Type" = Table.TransformColumnTypes(Source,{{"CanCodigo", Int64.Type}, {"Nome", type text}, {"Tipo", type text}, {"Meio", type text}, {"Agrupador", type text}, {"Ord Tipo", Int64.Type}, {"Ord Meio", Int64.Type}, {"Ord Agrupador", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 49b043af-ae1f-4e95-bd15-cd49e2ecfdd9
+	queryGroup: Manual
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+/// BD do AD
+expression BD = "SOICO_GMediaAD" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 7ef836ac-eeeb-4db0-a191-22008c154987
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+/// BD do AD
+expression AlvoPadrao = "2" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 13ba8373-d27f-4f31-b181-a1f055949c9b
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+/// Período de atualização
+expression AnoUpdate = "1" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 0c2849d1-6d95-44d9-af26-cb6498ea53bd
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression 'lista de imagem' =
+		let
+		    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Logo", "Cliente "}),
+		    Nome = #"Removed Columns"[Nome]
+		in
+		    Nome
+	lineageTag: 9b0e5ddd-0ff8-4496-8c94-ba6c1660d643
+	queryGroup: BD
+
+/// Servidor do AD
+expression ServerP = "gmedia-saas-sql.chwk3oqgzb7x.eu-west-1.rds.amazonaws.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 43c7cdc9-1197-4d7d-8be5-cb8ccf45edd4
+	queryGroup: BD
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

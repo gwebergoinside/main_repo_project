@@ -1,0 +1,373 @@
+table Necessidades
+	lineageTag: cbbbbb0f-1941-4b9e-b406-fe33e51eaf7f
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 39351eb4-69e1-4156-a349-7c9d2c047dab
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: 5f5a1925-232a-4b9e-b1ae-c09e14d85e74
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: d3afc689-40d4-4e1a-affe-8c9ba6703f67
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: d7130c0a-9274-4bc9-8837-6c38be20676a
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		variation Variation
+			isDefault
+			relationship: f742c77c-b925-4b1a-afd6-00d5bfc7c6f5
+			defaultHierarchy: LocalDateTable_a60bbfd7-3da0-4d9e-80ba-17c470de8b9f.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column DataFim
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: f55845bd-8c7c-4e88-8f22-ef60f60428f0
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variation
+			isDefault
+			relationship: 4aae5ab0-c0fd-4d1f-af0e-ff039cc9ff10
+			defaultHierarchy: LocalDateTable_b6cf7be0-eeb5-42bf-9b3b-2bc693ee18b9.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Quantidade
+		dataType: int64
+		formatString: 0
+		lineageTag: d218c5fb-5973-491f-8d99-4fd51b53fa7f
+		summarizeBy: sum
+		sourceColumn: Quantidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column DuracaoDia
+		dataType: double
+		lineageTag: f36703c8-e232-48ee-bab9-1f02e663f721
+		summarizeBy: sum
+		sourceColumn: DuracaoDia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IdCentroCusto
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c614485-1653-494a-a649-c743382b3a35
+		summarizeBy: sum
+		sourceColumn: IdCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdNecessidade
+		dataType: int64
+		formatString: 0
+		lineageTag: d17a9727-3af7-451c-970c-4d11857487f7
+		summarizeBy: sum
+		sourceColumn: IdNecessidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segunda
+		dataType: string
+		lineageTag: 06a243a1-a878-4722-b5b9-ebe498db5b42
+		summarizeBy: none
+		sourceColumn: Segunda
+
+		annotation SummarizationSetBy = Automatic
+
+	column Terca
+		dataType: string
+		lineageTag: 0f990088-f810-4f63-bf9d-f43fb595252d
+		summarizeBy: none
+		sourceColumn: Terca
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarta
+		dataType: string
+		lineageTag: f83ad128-47d4-412d-9e72-57435d23df6c
+		summarizeBy: none
+		sourceColumn: Quarta
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quinta
+		dataType: string
+		lineageTag: e207f20f-7acb-4fe4-818a-1e3cde8db402
+		summarizeBy: none
+		sourceColumn: Quinta
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sexta
+		dataType: string
+		lineageTag: d433afdd-d1e2-4118-a9df-471da6b43c20
+		summarizeBy: none
+		sourceColumn: Sexta
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sabado
+		dataType: string
+		lineageTag: 10e89c96-c98e-4000-b093-415256867e84
+		summarizeBy: none
+		sourceColumn: Sabado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Domingo
+		dataType: string
+		lineageTag: 170a0fb6-6cee-41a9-9915-50c1940935f3
+		summarizeBy: none
+		sourceColumn: Domingo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Days =
+			--COMBINEVALUES(", ",[Segunda],[Terca],[Quarta],[Quinta],[Sexta],[Sabado],[Domingo])
+			var __seg = IF( [Segunda] = "true" , "Seg", BLANK() )
+			var __ter = IF( [Terca] = "true" , "Ter", BLANK() )
+			var __qua = IF( [Quarta] = "true", "Qua", BLANK() )
+			var __qui = IF( [Quinta] = "true" , "Qui", BLANK() )
+			var __sex = IF( [Sexta] = "true" , "Sext", BLANK() )
+			var __sab = IF( [Sabado] = "true" , "Sab", BLANK() )
+			var __dom = IF( [Domingo] = "true", "Dom", BLANK() )
+			
+			Return
+			 COMBINEVALUES ( " ", __seg,__ter,__qua,__qui,__sex,__sab,__dom)
+		lineageTag: b0e2f6a1-c19b-4fc0-81b4-c4da8ca4be70
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Funcao
+		dataType: string
+		lineageTag: 9b3773f9-96ed-4f65-9402-89320fd123ac
+		summarizeBy: none
+		sourceColumn: Funcao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Index
+		dataType: int64
+		formatString: 0
+		lineageTag: 10abaaf8-5b59-421d-91ec-18d5a3e97a4e
+		summarizeBy: none
+		sourceColumn: Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: db87a40b-2bcc-4c05-9f79-f780386ec65c
+		summarizeBy: sum
+		sourceColumn: IdProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdSegmento
+		dataType: int64
+		formatString: 0
+		lineageTag: a2f985f2-c6a3-49fe-987a-d541fa06ba90
+		summarizeBy: sum
+		sourceColumn: IdSegmento
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdActividade
+		dataType: int64
+		formatString: 0
+		lineageTag: 8bb1c9fb-0700-4fec-b19e-aeda3426b91d
+		summarizeBy: sum
+		sourceColumn: IdActividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeActividade
+		dataType: string
+		lineageTag: 5e4513c3-339f-4a6b-8cc9-c1b09790d243
+		summarizeBy: none
+		sourceColumn: NomeActividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: be60a707-92e7-482f-9fb3-067c87fa133e
+		summarizeBy: sum
+		sourceColumn: IdTipoProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoPrograma
+		dataType: int64
+		formatString: 0
+		lineageTag: e44aacba-4a54-4599-92a3-894abdcba83a
+		summarizeBy: sum
+		sourceColumn: IdTipoPrograma
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeEtapa
+		dataType: string
+		lineageTag: 869c4aa4-f9c2-4908-93dc-55e9b28e8f1e
+		summarizeBy: none
+		sourceColumn: NomeEtapa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Projeto
+		dataType: string
+		lineageTag: 5ab0a2ee-d7ef-4fee-9a63-362222c272b8
+		summarizeBy: none
+		sourceColumn: Projeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoCalculo
+		dataType: int64
+		formatString: 0
+		lineageTag: f0e03f66-c823-4787-a40f-ef8e1d4b611e
+		summarizeBy: sum
+		sourceColumn: TipoCalculo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Calculo' = ```
+			
+			SWITCH(
+			    TRUE()
+			    , Necessidades[TipoCalculo] = 0, "Diário" 
+			    , Necessidades[TipoCalculo] = 1, "Semanal" 
+			    , Necessidades[TipoCalculo] = 2, "Quinzenal"
+			    , Necessidades[TipoCalculo] = 3, "Mensal"
+			)
+			```
+		lineageTag: e79da214-7000-445a-a4a3-6dae230ea423
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuantidadeDias
+		dataType: int64
+		formatString: 0
+		lineageTag: 02446b96-718e-4069-8314-5d7e33ccff86
+		summarizeBy: sum
+		sourceColumn: QuantidadeDias
+
+		annotation SummarizationSetBy = Automatic
+
+	column QTDDiasSemana =
+			
+			var __seg = IF( [Segunda] = "true" , 1, BLANK() )
+			var __ter = IF( [Terca] = "true" , 1, BLANK() )
+			var __qua = IF( [Quarta] = "true", 1, BLANK() )
+			var __qui = IF( [Quinta] = "true" , 1, BLANK() )
+			var __sex = IF( [Sexta] = "true" , 1, BLANK() )
+			var __sab = IF( [Sabado] = "true" , 1, BLANK() )
+			var __dom = IF( [Domingo] = "true", 1, BLANK() )
+			
+			Return
+			__seg+__ter+__qua+__qui+__sex+__sab+__dom
+		formatString: 0
+		lineageTag: b221ae79-b875-4a29-a085-486aedc4d9f4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoEvProd
+		dataType: string
+		lineageTag: 383b9e67-ff65-4b4a-94d7-0c36bbef204b
+		summarizeBy: none
+		sourceColumn: TipoEvProd
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoTarefa
+		dataType: string
+		lineageTag: 973a227d-b1a7-4be8-8bde-eb0042fd92ce
+		summarizeBy: none
+		sourceColumn: TipoTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdMeio
+		dataType: int64
+		formatString: 0
+		lineageTag: 6cdabbdb-81a2-48e7-afb4-586b1d1b021c
+		summarizeBy: sum
+		sourceColumn: IdMeio
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: bf76018b-4d8c-4714-94c3-6e1ea0d02725
+		summarizeBy: sum
+		sourceColumn: IdPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Template'
+		dataType: string
+		lineageTag: e20c0bfc-2200-41f9-bf28-7ad17560c5d3
+		summarizeBy: none
+		sourceColumn: Status Template
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Nec'
+		dataType: string
+		lineageTag: ed096e42-5140-406d-a9d4-096fd333b9ec
+		summarizeBy: none
+		sourceColumn: Status Nec
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Necessidades-774e70a0-9930-4506-85b0-8f68927013d4 = m
+		mode: import
+		queryGroup: Necessidades
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    tt.Id,#(lf)    tt.Nome,#(lf)    'Meios' As Tipo,#(lf)    tt.DataInicio,#(lf)    tt.DataFim,#(lf)    tt.IdSegmento,#(lf)    s.Nome As NomeEtapa,#(lf)    am.Id As IdActividade,#(lf)    am.Nome As NomeActividade,#(lf)    ttnm.Quantidade,#(lf)    Cast((Case#(lf)        When ttnm.Duracao Is Not Null#(lf)        Then ttnm.Duracao#(lf)        Else DateDiff(SECOND, ttnm.HoraInicio, ttnm.HoraFim)#(lf)    End) / 3600.0 As DECIMAL(18,2)) As DuracaoDia,#(lf)    ttnm.IdCentroCusto,#(lf)    ttnm.Id As IdNecessidade,#(lf)    'Meios' As Funcao,#(lf)    Cast(Case#(lf)        When ttnm.DiasSemana & Power(2, 0) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Segunda,#(lf)    Cast(Case#(lf)        When ttnm.DiasSemana & Power(2, 1) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Terca,#(lf)    Cast(Case#(lf)        When ttnm.DiasSemana & Power(2, 2) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Quarta,#(lf)    Cast(Case#(lf)        When ttnm.DiasSemana & Power(2, 3) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Quinta,#(lf)    Cast(Case#(lf)        When ttnm.DiasSemana & Power(2, 4) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Sexta,#(lf)    Cast(Case#(lf)        When ttnm.DiasSemana & Power(2, 5) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Sabado,#(lf)    Cast(Case#(lf)        When ttnm.DiasSemana & Power(2, 6) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Domingo,#(lf)    tt.IdProjecto,#(lf)    p.IdTipoProjecto,#(lf)    p.IdTipoPrograma,#(lf)    p.titulo As Projeto,#(lf)    tt.TipoCalculo,#(lf)    dbo.GetNumberOfWeekDaysInPeriod(ttnm.DiasSemana, tt.DataInicio, tt.DataFim, tt.TipoCalculo, tt.DayAmount,#(lf)    Stuff((Select Distinct#(lf)         ';' + Convert(VARCHAR,e.DataExcluida,103)#(lf)     From#(lf)         Templates_Necessidades_DatasExcluidas e#(lf)     Where#(lf)         e.IdTemplateNecessidades = tt.Id#(lf)     For Xml Path('')), 1, 1, '')) QuantidadeDias,#(lf)    tp.Nome As TipoEvProd,#(lf)    att.Nome As TipoTarefa,#(lf)    Meios.Id As IdMeio,#(lf)    '' As IdPessoa,#(lf)#(tab)Case#(lf)        When tt.Ativo = 1#(lf)#(tab)#(tab)Then 'Ativo'#(lf)        Else 'Inativo'#(lf)    End As [Status Template],#(lf)#(tab)Case#(lf)        When ttnm.Ativo = 1#(lf)#(tab)#(tab)Then 'Ativo'#(lf)        Else 'Inativo'#(lf)    End As [Status Nec]#(lf)From#(lf)    Templates_Tarefas tt  Join#(lf)    Templates_Tarefas_Necessidades_Meios ttnm On ttnm.IdTemplate = tt.Id Join#(lf)    Projectos p  On tt.IdProjecto = p.Id Left Join#(lf)    Tipos_Tarefas tp  On tt.IdTipoEventoProducao = tp.Id Left Join#(lf)    Segmentos s  On tt.IdSegmento = s.Id Left Join#(lf)    Areas_Tipo_Tarefas att On ttnm.IdAreaTipoTarefa = att.Id Left Join#(lf)    Actividades_Meios am  On ttnm.IdActividadeMeio = am.Id Left Join#(lf)    Meios On ttnm.IdMeio = Meios.Id#(lf)#(lf)Union All#(lf)Select#(lf)    tt.Id,#(lf)    tt.Nome,#(lf)    'RH' As Tipo,#(lf)    tt.DataInicio,#(lf)    tt.DataFim,#(lf)    tt.IdSegmento,#(lf)    s.Nome As NomeEtapa,#(lf)    ap.Id As IdActividade,#(lf)    ap.Nome As NomeActividade,#(lf)    ttnp.Quantidade,#(lf)    Cast((Case#(lf)        When ttnp.Duracao Is Not Null#(lf)        Then ttnp.Duracao#(lf)        Else DateDiff(SECOND, ttnp.HoraInicio, ttnp.HoraFim)#(lf)    End) / 3600.0 As DECIMAL(18,2)) As DuracaoDia,#(lf)    ttnp.IdCentroCusto,#(lf)    ttnp.Id As IdNecessidade,#(lf)    'Pessoas' As Funcao,#(lf)    Cast(Case#(lf)        When ttnp.DiasSemana & Power(2, 0) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Segunda,#(lf)    Cast(Case#(lf)        When ttnp.DiasSemana & Power(2, 1) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Terca,#(lf)    Cast(Case#(lf)        When ttnp.DiasSemana & Power(2, 2) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Quarta,#(lf)    Cast(Case#(lf)        When ttnp.DiasSemana & Power(2, 3) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Quinta,#(lf)    Cast(Case#(lf)        When ttnp.DiasSemana & Power(2, 4) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Sexta,#(lf)    Cast(Case#(lf)        When ttnp.DiasSemana & Power(2, 5) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Sabado,#(lf)    Cast(Case#(lf)        When ttnp.DiasSemana & Power(2, 6) = 0#(lf)        Then 0#(lf)        Else 1#(lf)    End As BIT) Domingo,#(lf)    tt.IdProjecto,#(lf)    p.IdTipoProjecto,#(lf)    p.IdTipoPrograma,#(lf)    p.titulo As Projeto,#(lf)    tt.TipoCalculo,#(lf)    dbo.GetNumberOfWeekDaysInPeriod(ttnp.DiasSemana, tt.DataInicio, tt.DataFim, tt.TipoCalculo, tt.DayAmount,#(lf)    Stuff((Select Distinct#(lf)         ';' + Convert(VARCHAR,e.DataExcluida,103)#(lf)     From#(lf)         Templates_Necessidades_DatasExcluidas e#(lf)     Where#(lf)         e.IdTemplateNecessidades = tt.Id#(lf)     For Xml Path('')), 1, 1, '')) QuantidadeDias,#(lf)    tp.Nome As TipoEvProd,#(lf)    'RH' As TipoTarefa,#(lf)    Pessoas.Id As IdPessoa,#(lf)    '' As idMeio,#(lf)#(tab)Case#(lf)        When tt.Ativo = 1#(lf)#(tab)#(tab)Then 'Ativo'#(lf)        Else 'Inativo'#(lf)    End As [Status Template],#(lf)#(tab)Case#(lf)        When ttnp.Ativo = 1#(lf)#(tab)#(tab)Then 'Ativo'#(lf)        Else 'Inativo'#(lf)    End As [Status Nec]#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)#(tab)  #(lf)From#(lf)    Templates_Tarefas tt Join#(lf)    Templates_Tarefas_Necessidades_Pessoas ttnp On ttnp.IdTemplate = tt.Id Join#(lf)    Projectos p On tt.IdProjecto = p.Id Left Join#(lf)    Tipos_Tarefas tp On tt.IdTipoEventoProducao = tp.Id Left Join#(lf)    Segmentos s On tt.IdSegmento = s.Id Left Join#(lf)    Actividades_Pessoas ap On ttnp.IdActividadePessoa = ap.Id Left Join#(lf)    Pessoas On ttnp.IdPessoa = Pessoas.Id"]),
+				    Custom1 = Table.TransformColumnTypes(Origem,{{"Segunda", type text}, {"Terca", type text}, {"Quarta", type text}, {"Quinta", type text}, {"Sexta", type text}, {"Sabado", type text}, {"Domingo", type text}}),
+				    #"Added Index" = Table.AddIndexColumn(Custom1, "Index", 1, 1, Int64.Type),
+				    #"Replaced Value" = Table.ReplaceValue(#"Added Index",null,"SEM NOME",Replacer.ReplaceValue,{"NomeEtapa"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value",null,"SEM NOME",Replacer.ReplaceValue,{"NomeActividade"}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Replaced Value1",{{"IdPessoa", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

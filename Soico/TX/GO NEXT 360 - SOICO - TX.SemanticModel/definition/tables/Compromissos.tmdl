@@ -1,0 +1,450 @@
+table Compromissos
+	lineageTag: d8012455-726a-4438-8f44-def1e925c7de
+
+	column VAL_ORCAMENTO_MOEDALOCAL = DIVIDE( Compromissos[VAL_ORCAMENTO], Compromissos[Cambio_Orcamento])
+		lineageTag: cb169e4e-589c-4f19-b420-046d6ff7af37
+		summarizeBy: sum
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_COMPROMISSO
+		dataType: int64
+		formatString: 0
+		lineageTag: a1a4fe12-76ac-4d6d-ba9e-ece2d3e8e39e
+		summarizeBy: sum
+		sourceColumn: COD_COMPROMISSO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_COMPROMISSO_EXECUCAO
+		dataType: int64
+		formatString: 0
+		lineageTag: 77be55bd-c03a-430f-9481-bc827d29874c
+		summarizeBy: sum
+		sourceColumn: COD_COMPROMISSO_EXECUCAO
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO_PEDIDO_COMPRA
+		dataType: string
+		lineageTag: 7850fbab-3e83-4458-9bc9-72d8225fef0f
+		summarizeBy: none
+		sourceColumn: NUMERO_PEDIDO_COMPRA
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO_PROCESSO
+		dataType: string
+		lineageTag: 955c7fa9-f15a-4f92-b7ee-c4dc58c401fc
+		summarizeBy: none
+		sourceColumn: NUMERO_PROCESSO
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMERO_PROCESSO_EPISODIO
+		dataType: string
+		lineageTag: 63a7bb1a-e389-45d2-9834-9102c47df53e
+		summarizeBy: none
+		sourceColumn: NUMERO_PROCESSO_EPISODIO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_CONTRATO
+		dataType: int64
+		formatString: 0
+		lineageTag: c05bc6be-d141-4c85-b365-fbfc86060e9e
+		summarizeBy: sum
+		sourceColumn: COD_CONTRATO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_CONTRATO_ESTADO
+		dataType: int64
+		formatString: 0
+		lineageTag: a12895c2-0fb2-42ce-9c30-8405d00c0275
+		summarizeBy: sum
+		sourceColumn: COD_CONTRATO_ESTADO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_TIPO_CONTRATO
+		dataType: int64
+		formatString: 0
+		lineageTag: bb07bdaa-9f2c-4afe-92f8-19837dcf53c3
+		summarizeBy: sum
+		sourceColumn: COD_TIPO_CONTRATO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_ORIGEM
+		dataType: string
+		lineageTag: 27f2c37a-ce4b-4d0d-a947-c24a353b5acf
+		summarizeBy: none
+		sourceColumn: COD_ORIGEM
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_CONTRATO_PLANO
+		dataType: int64
+		formatString: 0
+		lineageTag: 234a8562-09fb-4575-8606-57717a4f2cbf
+		summarizeBy: sum
+		sourceColumn: COD_CONTRATO_PLANO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_GENERO
+		dataType: string
+		lineageTag: 8e0436dc-5207-4472-87b8-97351e65f22d
+		summarizeBy: none
+		sourceColumn: COD_GENERO
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Titulo
+		dataType: int64
+		formatString: 0
+		lineageTag: d98bc89d-25d9-437a-af87-15929e94c62b
+		summarizeBy: none
+		sourceColumn: Cod_Titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Titulo_Estado
+		dataType: int64
+		formatString: 0
+		lineageTag: a1c3c5fc-c41f-40d0-9124-0435b18cf7f6
+		summarizeBy: sum
+		sourceColumn: Cod_Titulo_Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_DEPARTAMENTO
+		dataType: string
+		lineageTag: dc6ce301-5ca7-4537-a998-fa26b87e4b29
+		summarizeBy: none
+		sourceColumn: COD_DEPARTAMENTO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_CONTAS_POC
+		dataType: string
+		lineageTag: 224720a3-fc1f-4649-90b7-300c72677eaf
+		summarizeBy: none
+		sourceColumn: COD_CONTAS_POC
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_COMPROMISSO_TERCEIROS
+		dataType: int64
+		formatString: 0
+		lineageTag: 14212d4f-2f35-493c-800c-cdab6765c1fa
+		summarizeBy: sum
+		sourceColumn: COD_COMPROMISSO_TERCEIROS
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_MOEDA
+		dataType: string
+		lineageTag: 4ded80ed-4887-42cb-8672-376a304c2713
+		summarizeBy: none
+		sourceColumn: COD_MOEDA
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_COMPROMISSO_ESTADO
+		dataType: int64
+		formatString: 0
+		lineageTag: 188a4f6a-5e1e-497f-acfd-631bca808e11
+		summarizeBy: sum
+		sourceColumn: COD_COMPROMISSO_ESTADO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_AREA
+		dataType: string
+		lineageTag: 9735f064-e20d-493a-b165-eff16f70beac
+		summarizeBy: none
+		sourceColumn: COD_AREA
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_pais_facturacao_contrato
+		dataType: string
+		lineageTag: d93062b4-295c-4478-af3b-cac4fe56bc1f
+		summarizeBy: none
+		sourceColumn: cod_pais_facturacao_contrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_PAIS_FORMATO
+		dataType: string
+		lineageTag: 183e1236-93ee-46be-9592-2b959752ebb8
+		summarizeBy: none
+		sourceColumn: COD_PAIS_FORMATO
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_pais_producao_episodio
+		dataType: string
+		lineageTag: 9cbee117-05be-4d83-be75-047b3444c20a
+		summarizeBy: none
+		sourceColumn: cod_pais_producao_episodio
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_CANAL
+		dataType: string
+		lineageTag: fee91465-1f6f-4683-bdf4-aac38071a2be
+		summarizeBy: none
+		sourceColumn: COD_CANAL
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_ESTADO_APROVACAO
+		dataType: string
+		lineageTag: b815a89f-8679-4853-9765-357c2903262a
+		summarizeBy: none
+		sourceColumn: COD_ESTADO_APROVACAO
+
+		annotation SummarizationSetBy = Automatic
+
+	column UTILIZADOR_APROVACAO
+		dataType: string
+		lineageTag: dc5a783f-69a7-4c46-bd64-413c990183e2
+		summarizeBy: none
+		sourceColumn: UTILIZADOR_APROVACAO
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_REGISTO
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1ce2bae7-5b8b-4087-9462-d204f6f6397c
+		summarizeBy: none
+		sourceColumn: DATA_REGISTO
+
+		variation Variation
+			isDefault
+			relationship: a0b5a10c-2358-46c8-90fd-4a7c87333971
+			defaultHierarchy: LocalDateTable_7714158d-f21e-4b38-98d1-10e22c8e674b.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_COMPROMISSO
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 198a1724-0332-4151-af3e-1e5eb7321416
+		summarizeBy: none
+		sourceColumn: DATA_COMPROMISSO
+
+		variation Variation
+			isDefault
+			relationship: 82499f0d-777e-43dd-98ee-b61b70258666
+			defaultHierarchy: LocalDateTable_52c082af-e79d-4775-b88b-28a452e2d37c.'Hierarquia de Datas'
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DATA_APROVACAO
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f9166916-123c-49b4-a28a-d42d85384b22
+		summarizeBy: none
+		sourceColumn: DATA_APROVACAO
+
+		variation Variation
+			isDefault
+			relationship: 467d9ba7-0720-4225-bc9c-f8a60a08a82a
+			defaultHierarchy: LocalDateTable_f8685bd6-6ad2-4462-9780-e2f1e50b8604.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_CONCLUSAO
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2d082f8b-3b47-4d4e-9dcc-7041356491d8
+		summarizeBy: none
+		sourceColumn: DATA_CONCLUSAO
+
+		variation Variation
+			isDefault
+			relationship: ee75908e-da66-45d1-8314-ff195cbb8ad0
+			defaultHierarchy: LocalDateTable_b8086c66-20c3-4173-b357-d235ec81ca43.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_EXECUCAO
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 5d047afd-98da-4c5d-9c5f-41f8ec183898
+		summarizeBy: none
+		sourceColumn: DATA_EXECUCAO
+
+		variation Variation
+			isDefault
+			relationship: 96de7e25-a551-4473-8d18-d247a8479b8b
+			defaultHierarchy: LocalDateTable_9dfc61e4-b757-4bad-921e-2910ab3faec8.'Hierarquia de Datas'
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column VAL_COMPROMISSO
+		dataType: double
+		lineageTag: 782f45e5-e5f6-4d3e-8faf-6f95f0049589
+		summarizeBy: sum
+		sourceColumn: VAL_COMPROMISSO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CAMBIO
+		dataType: double
+		lineageTag: 15b8430c-cca9-4a2f-bf93-52bff68ad295
+		summarizeBy: sum
+		sourceColumn: CAMBIO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column VAL_ORCAMENTO
+		dataType: double
+		lineageTag: 5ce942e0-9763-48de-979a-e8f11eb6b116
+		summarizeBy: sum
+		sourceColumn: VAL_ORCAMENTO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column VAL_COMPROMISSO_EXECUCAO
+		dataType: double
+		lineageTag: 65b7791f-5342-4a5e-9c6e-4b4442982bc9
+		summarizeBy: sum
+		sourceColumn: VAL_COMPROMISSO_EXECUCAO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NUMERO_EPISODIO
+		dataType: int64
+		formatString: 0
+		lineageTag: d953238b-cae0-4898-85d4-b7684f9e62da
+		summarizeBy: sum
+		sourceColumn: NUMERO_EPISODIO
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_DEP_Departamento
+		dataType: string
+		lineageTag: c816beda-8772-4452-b45e-4ff1dc917803
+		summarizeBy: none
+		sourceColumn: Cod_DEP_Departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Desc_Departamento
+		dataType: string
+		lineageTag: 5947c35b-bdee-43e0-b21b-116a587a2604
+		summarizeBy: none
+		sourceColumn: Desc_Departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Desc_Conta_POC
+		dataType: string
+		lineageTag: 2fa8b691-6479-40d3-be63-9bf53d2cb2b4
+		summarizeBy: none
+		sourceColumn: Desc_Conta_POC
+
+		annotation SummarizationSetBy = Automatic
+
+	column DESC__COMPROMISSO_TERCEIROS
+		dataType: string
+		lineageTag: 833a7f86-5f4e-4299-b151-dbf3762611e6
+		summarizeBy: none
+		sourceColumn: DESC__COMPROMISSO_TERCEIROS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descricao
+		dataType: string
+		lineageTag: 275ca9e5-246f-4881-bce1-cc9fb083d5d2
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column DESC_COMPROMISSO_ESTADO
+		dataType: string
+		lineageTag: bfd73b3e-bf76-4b66-8995-70e4e2dd5607
+		summarizeBy: none
+		sourceColumn: DESC_COMPROMISSO_ESTADO
+
+		annotation SummarizationSetBy = Automatic
+
+	column VAL_COMPROMISSO_MOEDALOCAL = DIVIDE( Compromissos[VAL_COMPROMISSO],[Cambio])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: a713448f-b603-4e7d-8431-dbd730398ed9
+		summarizeBy: sum
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column VAL_COMPROMISSO_EXECUCAO_MOEDALOCAL = divide( Compromissos[VAL_COMPROMISSO_EXECUCAO],Compromissos[CAMBIO])
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 2cd4c610-c05c-432b-8f9c-d20f10d0ac5d
+		summarizeBy: sum
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Cambio_Orcamento
+		dataType: double
+		lineageTag: 9fe32bea-b965-4cdf-a760-271a875e4e7d
+		summarizeBy: sum
+		sourceColumn: Cambio_Orcamento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column VAL_DIFERENCA_CAMBIAL = DIVIDE(Compromissos[VAL_COMPROMISSO], Compromissos[CAMBIO]) - DIVIDE(Compromissos[VAL_ORCAMENTO],Compromissos[Cambio_Orcamento])
+		lineageTag: 17c301f7-7852-4f1d-b784-798adc378acf
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Compromissos-2f93b593-ce80-480a-8660-e956daaf8a8a = m
+		mode: import
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="SELECT #(lf)#(tab)isnull([Compromissos].[id_comp],0) AS COD_COMPROMISSO,#(lf)#(tab)isnull(Compromissos_Execucao.id,0) AS COD_COMPROMISSO_EXECUCAO,#(lf)#(tab)[Compromissos].codExterno AS NUMERO_PEDIDO_COMPRA,#(lf)#(tab)RIGHT('00000000' + CAST([processo] AS VARCHAR),8) AS NUMERO_PROCESSO,#(lf)#(tab)[Compromissos_linha].[episodio] AS NUMERO_EPISODIO,#(lf)#(tab)RIGHT('00000000' + CAST([processo] AS VARCHAR),8) + RIGHT('000' + CAST([Compromissos_linha].[episodio] AS VARCHAR),3) AS NUMERO_PROCESSO_EPISODIO,#(lf)#(tab)isnull(planocontrato.NumContrato,0) AS COD_CONTRATO,#(lf)#(tab)isnull(Contratos.Estado,0) AS COD_CONTRATO_ESTADO,#(lf)#(tab)isnull(Contratos.TipoContrato,0) AS COD_TIPO_CONTRATO, #(lf)#(tab)isnull(Programas.origem,'00') AS COD_ORIGEM,#(lf)#(tab)isnull(planocontrato.CodPlano,0) AS COD_CONTRATO_PLANO,#(lf)#(tab)RTRIM(isnull(fichas_videotape.codgenero,'00')) AS COD_GENERO,#(lf)#(tab)isnull(titulos.[codtitulo],0) AS Cod_Titulo,#(lf)#(tab)isnull(titulos.Estado,0) AS Cod_Titulo_Estado,#(lf)#(tab)(CASE WHEN PlanoContrato.Departamento='' THEN 'N' ELSE isnull(PlanoContrato.Departamento, 'N') END) AS COD_DEPARTAMENTO,#(lf)#(tab)T_Departamentos.Codigo AS Cod_DEP_Departamento,#(lf)#(tab)T_Departamentos.Nome AS Desc_Departamento,#(lf)#(tab)isnull([Compromissos].[conta_poc],0) AS COD_CONTAS_POC,#(lf)#(tab)Contas_POC.Descricao As Desc_Conta_POC,#(lf)#(tab)isnull([Compromissos].[id_terceiro],0) AS COD_COMPROMISSO_TERCEIROS,#(lf)#(tab)T_Terceiros.nome AS DESC__COMPROMISSO_TERCEIROS,#(lf)#(tab)[Compromissos].descricao AS Descricao,#(lf)#(tab)isnull([Compromissos].[cod_moeda],0) AS COD_MOEDA,#(lf)#(tab)[Compromissos].[Cambio] AS CAMBIO,#(lf)#(tab)Compromissos.[estado] as COD_COMPROMISSO_ESTADO,#(lf)#(tab)Compromissos_Estados.descricao_estado_compromisso AS DESC_COMPROMISSO_ESTADO,#(lf)#(tab)isnull(programas.[area],0) AS COD_AREA,#(tab)#(lf)#(tab)upper(case when tp3.cod2='' or tp3.cod2 is null then '0' else tp3.cod2 end) AS cod_pais_facturacao_contrato,#(lf)#(tab)upper(case when tp2.cod2='' or tp2.cod2 is null then '0' else tp2.cod2 end) AS COD_PAIS_FORMATO,#(lf)#(tab)upper(case when tp.cod2='' or tp.cod2 is null then '0' else tp.cod2 end) AS cod_pais_producao_episodio,#(tab)#(lf)#(tab)RTRIM(compromissos.[cod_canal]) AS COD_CANAL,#(lf)#(tab)[aprovEstado] AS COD_ESTADO_APROVACAO,#(lf)#(tab)[aprovPor] AS UTILIZADOR_APROVACAO,#(lf)#(tab)[data] AS DATA_REGISTO,#(lf)#(tab)[data_compromisso] AS DATA_COMPROMISSO,#(lf)#(tab)[aprovData] AS DATA_APROVACAO,#(lf)#(tab)[dataConclusao] AS DATA_CONCLUSAO,#(lf)#(tab)dataExecucao AS DATA_EXECUCAO,#(lf)#(tab)--(CASE WHEN [data] IS NULL THEN CAST('1-1-1990' AS DATETIME) ELSE [data] END) AS DATA_REGISTO,#(lf)#(tab)--(CASE WHEN [data_compromisso] IS NULL THEN CAST('1-1-1990' AS DATETIME) ELSE [data_compromisso] END) AS DATA_COMPROMISSO,#(lf)#(tab)--(CASE WHEN [aprovData] IS NULL THEN CAST('1-1-1990' AS DATETIME) ELSE [aprovData] END) AS DATA_APROVACAO,#(lf)#(tab)--(CASE WHEN [dataConclusao] IS NULL THEN CAST('1-1-1990' AS DATETIME) ELSE [dataConclusao] END) AS DATA_CONCLUSAO,#(lf)#(tab)--(CASE WHEN dataExecucao IS NULL THEN CAST('1-1-1990' AS DATETIME) ELSE dataExecucao END) AS DATA_EXECUCAO,#(lf)#(tab)[Compromissos_linha].[valor] AS VAL_COMPROMISSO,#(lf)#(tab)--cast([Compromissos_linha].[valor]/[Compromissos].[Cambio] as decimal(18,2)) AS VAL_COMPROMISSO_MOEDALOCAL, --calcular #(lf)#(tab)isnull([Compromissos_Execucao_linha].valorexecutado,0) AS VAL_COMPROMISSO_EXECUCAO,#(lf)#(tab)--isnull(cast([Compromissos_Execucao_linha].valorexecutado/[Compromissos].[Cambio] as decimal(18,2)),0) AS VAL_COMPROMISSO_EXECUCAO_MOEDALOCAL, -- calcular#(lf)#(tab)OT.Valor as VAL_ORCAMENTO,#(lf)#(tab)OT.Cambio as Cambio_Orcamento#(lf)--#(tab)isnull(cast(OT.Valor/OT.Cambio as decimal(18,2)),0) as VAL_ORCAMENTO_MOEDALOCAL, --calcular #(lf)--#(tab)isnull(cast([Compromissos_linha].[valor]/[Compromissos].[Cambio] as decimal(18,2))-cast(OT.Valor/OT.Cambio as decimal(18,2)),0) AS VAL_DIFERENCA_CAMBIAL --calcular#(lf)FROM #(lf)Compromissos #(lf)#(tab)INNER JOIN Compromissos_linha ON [Compromissos].[id_comp]=[Compromissos_linha].[id_comp] #(lf)#(tab)INNER JOIN Compromissos_Estados On Compromissos.estado = Compromissos_Estados.estado_compromisso#(lf)#(tab)Inner Join T_Departamentos On Compromissos.departamento = T_Departamentos.Codigo#(lf)#(tab)Inner Join Contas_POC On Compromissos.conta_poc = Contas_POC.Conta_POC#(lf)#(tab)Inner Join T_Terceiros On Compromissos.id_terceiro = T_Terceiros.id_terceiro#(lf)#(tab)LEFT OUTER JOIN Compromissos_Execucao ON [Compromissos].[id_comp]=[Compromissos_Execucao].id_compromisso #(lf)#(tab)LEFT OUTER JOIN Compromissos_Execucao_Linha ON [Compromissos_Execucao].id=[Compromissos_Execucao_Linha].id_Execucao and [Compromissos_Execucao_Linha].episodio=[Compromissos_linha].episodio#(lf)#(tab)inner join titulos ON titulos.numero_processo=processo and titulos.numepisodio=Compromissos_linha.episodio#(lf)#(tab)inner join planocontrato on planocontrato.codplano=titulos.codplano#(lf)#(tab)inner join contratos on contratos.numcontrato=PlanoContrato.numcontrato#(lf)#(tab)inner join fichas_videotape on fichas_videotape.numero_processo=titulos.numero_processo and fichas_videotape.episodio=titulos.numepisodio#(lf)#(tab)inner join programas on programas.numero_processo = fichas_videotape.numero_processo#(lf)#(tab)LEFT OUTER JOIN T_PAISES TP ON  TP.Codigo_pais=Fichas_Videotape.Pais#(lf)#(tab)LEFT OUTER JOIN T_PAISES TP2 ON TP2.Codigo_pais=Programas.cod_pais_formato#(lf)#(tab)LEFT OUTER JOIN T_PAISES TP3 ON TP3.Codigo_pais=contratos.cod_pais_facturacao #(lf)#(tab)LEFT OUTER JOIN#(lf)#(tab)(select CodTitulo,Max(Cambio) as Cambio,SUM(Valor) AS Valor#(lf)#(tab)from titulosOrcamento,Custos_Rubricas#(lf)#(tab)where conta_Poc=codigo AND FlagConsumo=1#(lf)#(tab)group by CodTitulo) AS OT on OT.CodTitulo=titulos.codtitulo --and OT.conta_Poc=Compromissos.conta_Poc#(lf)#(tab)--#(tab)#(tab)INNER JOIN Custos_Rubricas CR ON OT.conta_Poc=CR.codigo AND CR.FlagConsumo=1#(lf)WHERE (YEAR(DATA_COMPROMISSO)>= year(getdate())-4 AND (YEAR(DATA_COMPROMISSO)<=YEAR(GETDATE()))) AND #(lf)#(tab)upper(isnull(RIGHT(contratos.cod_pais_facturacao,2),0))<>'1'#(lf)#(lf)--#(tab)and Compromissos.COD_MOEDA <> 'EUR'#(lf)--and [Compromissos_linha].numero_processo_episodio = 17715013002#(lf)#(lf)#(tab)--and [Compromissos].[id_comp]= 117761"])
+				in
+				    Origem
+
+	annotation PBI_ResultType = Table
+

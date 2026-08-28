@@ -1,0 +1,40 @@
+table Titulos
+	lineageTag: d427bc03-0f01-4b1c-83f9-e411a4df3065
+
+	measure 'Selected TituloParameter' =
+			
+			MIN ( Titulos[ID] )
+		formatString: 0
+		lineageTag: 6a686300-ae0c-4ac6-bc9d-b78e1b123908
+
+	column Parameter
+		dataType: string
+		lineageTag: dc09fbc5-3ec6-4f8b-8adb-8b763822c31c
+		summarizeBy: none
+		sourceColumn: Parameter
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: c4599604-df20-402c-a6d5-21c1dcd39b0c
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Titulos-9059e468-da2d-42dc-8854-2077005228dd = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8g9wDXI83H642V/B2d/XNcjZ09FHSUfJUClWJ1rJxTXE0cfDFcg3UoqNBQA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Titulo = _t, ID = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Titulo", type text}, {"ID", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Titulo", "Parameter"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

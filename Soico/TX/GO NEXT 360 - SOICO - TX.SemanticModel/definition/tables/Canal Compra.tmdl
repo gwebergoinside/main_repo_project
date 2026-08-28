@@ -1,0 +1,25 @@
+table 'Canal Compra'
+	lineageTag: c4851a69-2b02-4665-bbcf-9e1e19bdb90e
+
+	column codigo
+		lineageTag: 95365839-3485-4110-9f83-15b6027aebc3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Canais[codigo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		lineageTag: 2307e259-0026-4b56-85cc-65de05014370
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Canais[nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Canal Compra-15f5382b-0486-4184-a14f-0ed7c0a7041e' = calculated
+		mode: import
+		source = Canais
+
+	annotation PBI_Id = cd44d1e2ae5148cbab216673376da881
+

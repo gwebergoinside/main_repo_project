@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "GO NEXT 360 - SOICO - TX"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d2128692-88d1-42f8-843f-d27bb844fb4f"
+  }
+}

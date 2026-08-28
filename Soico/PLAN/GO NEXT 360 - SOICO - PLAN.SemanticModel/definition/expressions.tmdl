@@ -1,0 +1,242 @@
+expression Ausencias =
+		let
+		    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    aus.IdHorario,#(lf)    DateDiff(minute, aus.DataInicio, aus.DataFim) / 60.0 As Ausencia#(lf)From#(lf)    Ausencias aus#(lf)Where#(lf)    year(aus.DataInicio) >= Year(GetDate()) - 3"])
+		in
+		    Origem
+	lineageTag: c166fab8-70ea-4c21-a99b-c6b2a3cbf32f
+	queryGroup: Pessoas
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression Documentos = "http://soico-gmediaplan.goinside.co/Projectos/Programas/DocumentosPrograma.aspx" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 9bf8a3d7-c09a-420f-85c5-94a44a554143
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression Tarifa =
+		let
+		    Origem = Sql.Database(Org, BD, [Query="Select#(lf)IdCentroCusto,#(lf)Mes,#(lf)TarifaUnitaria#(lf)From#(lf)IndicesEstatisticos_CentrosCusto#(lf)where#(lf)TarifaUnitaria is not null and #(lf)#(lf)    Year(Mes) >= Year(GetDate()) - 3"])
+		in
+		    Origem
+	lineageTag: 92a253b5-ded8-4d69-9bae-706c3708e633
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+/// Link para as Fotos das pessoas e Documentos dos episódios.
+expression Fotos = "http://soico-gmediaplan.goinside.co/CustomFiles/Documents/" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 61b4ec0c-57ad-4947-88ed-9378403aad74
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression TarefasCodigo =
+		let
+		    Source = Sql.Database(Org, BD, [Query="SELECT DISTINCT t.p.value('(Name)[1]', 'varchar(max)') [Name]#(lf)    ,t.p.value('(StringValue)[1]', 'varchar(max)') StringValue#(lf)    ,t.p.value('(IntegerValue)[1]', 'int') IntegerValue#(lf)    ,t.p.value('(Color)[1]', 'varchar(max)') Color#(lf)    ,t.p.value('(FgColor)[1]', 'varchar(max)') FgColor#(lf)    ,t.p.value('(Prefix)[1]', 'varchar(max)') Prefix#(lf)    ,t.p.value('(Image)[1]', 'varchar(max)') [Image]#(lf)    ,t.p.value('(IsBuiltIn)[1]', 'bit') IsBuiltIn#(lf)    ,t.p.value('(IsEnabled)[1]', 'bit') IsEnabled#(lf)    ,t.p.value('(CanBeDisabled)[1]', 'bit') CanBeDisabled#(lf)    ,t.p.value('(Highlighted)[1]', 'bit') Highlighted#(lf)FROM Configuracoes_Estados#(lf)CROSS APPLY Valor.nodes('/ArrayOfState/State') t(p)#(lf)WHERE Tipo = 'TaskStateMachine'"]),
+		    #"Removed Columns" = Table.RemoveColumns(Source,{"IntegerValue", "Color", "FgColor", "Prefix", "Image", "IsBuiltIn", "IsEnabled", "CanBeDisabled", "Highlighted"})
+		in
+		    #"Removed Columns"
+	lineageTag: 8bd1b1fa-071a-4dcc-8f59-4dc9d4f7c08c
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+/// Enter the Server of the GMedia
+expression Org = "gmedia-saas-sql.chwk3oqgzb7x.eu-west-1.rds.amazonaws.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: fafb6ae5-1450-4566-aaca-82639d7ef1f9
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression CentroCustoAgrupador =
+		let
+		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("lZE7DsIwEESvglJT4F/iLRGfFgo6RGEgAhfEyBYHQhScgBPkYkQQJBoPS5m82dXO83pdTFeLYlgsznV07b191Kn7qoQqJRWbYR4ribHCWGNsMC4xrjC2EOsRxri3xr017q1xMY2LaVxMiS88aw51c3TRu54ahai1iNIIbpZwM8HN8Cr6trmKrkknn1J7Cx8uEDdWEOZS/uDv68bn4MNgGcP+0gl/0dev9xWmKlmpipWyrBRxUlZwUsTq2L/Er5RhpVi+iOWLWL4o62vuttHv3GBSN+01+pA+huXfE1mP2Yms0+xE1m9ugroemyc=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Grupo = _t, SubGrupo = _t, Cod_CC = _t]),
+		    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Grupo", type text}, {"SubGrupo", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: c2e79a67-4a5d-415a-8f26-c76e4ce6889f
+	queryGroup: Agrupadores
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Picagem =
+		let
+		    Source = Sql.Database(Org, BD, [Query="Select#(lf)    Pessoas.Id,#(lf)    Horarios_Picagens.DataPicagem,#(lf)    Horarios_Picagens.DataHorario#(lf)From#(lf)    Horarios_Picagens Inner Join#(lf)    Pessoas On Pessoas.NumFuncionario = Horarios_Picagens.NumFuncionario#(lf)Where#(lf)    Year(Horarios_Picagens.DataPicagem) >= Year(GetDate()) - 2 And#(lf)    Pessoas.activo = 's'"]),
+		    #"Grouped Rows" = Table.Group(Source, {"Id", "DataHorario"}, {{"PicagemInicio", each List.Min([DataPicagem]), type datetime}, {"PicagemFim", each List.Max([DataPicagem]), type datetime}}),
+		    #"Added Conditional Column" = Table.AddColumn(#"Grouped Rows", "Picagem_Fim", each if [PicagemInicio] = [PicagemFim] then null else [PicagemFim]),
+		    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"PicagemFim"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"DataHorario", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: 41250e64-a30c-40b7-b478-6c723e935af3
+	queryGroup: Pessoas
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Language = "PT-PT" meta [IsParameterQuery=true, List={"PT-PT", "PT-BR"}, DefaultValue="PT-PT", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 0e655222-4ee8-482f-9886-0c42226a595f
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression 'Translation table' =
+		let
+		    Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("lVTLTsMwEPwVK6dG4gCUtnA09pa4TePIDi9VFeoBoUpIIODAteLQ7+Bb8mPYmyapnRrKzZ7dmfXuTjKfRyfRUVSsPp4fH16fzFGBvp7J9rA4mkenbkqu5ARYITXp3Rc8rpEWsJy+y2EyK2hLcK42/cxNhztg1+Wm/JINpQNZ2iBIm0GmaboXs8ShS+RQ0DQBUrfmQ0U1iNHvLHvgVa2uwG7Qap37A5rlVFHViOkOaDHLvHCZNJWM1g0K5HUgSzs5DvKUGZHSPrVBke35hBbiRnDKgXBw+w5FUKVrpZbo53oWolm5ToWG5l2kx1gcDqDGmT/lrFAylYTm1oHGELjrLQwOjPxB4A2VlZzBhUKoMwxND/fTdLIPRv4o0MellFORXe32UEPI81yWmlduqv60f8V8z1tbLVK/aB+EfwjPWzloLc0HXjeSm0pAOQrsjU0wiFKe0RhNIePlWglpazYj+i2EOp7VMmCmcDXdm3fChTa7FpcirdX+SEDN/n80Se8WYBofnIcVDjAs6akkDri2iqHS4BClRCqqw2LbMP6hvb2MBUsoqZbpXzE/PH/tXzE/PFvdrtZ8E+Pl6nNJkpe38vtttYz/k7pY/AA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ID = _t, Entity = _t, #"PT-PT" = _t, #"PT-BR" = _t]),
+		    #"Tipo Alterado" = Table.TransformColumnTypes(Origem,{{"ID", Int64.Type}, {"PT-PT", type text}, {"PT-BR", type text}}),
+		    #"Colunas Reordenadas" = Table.ReorderColumns(#"Tipo Alterado",{"Entity", "ID", "PT-PT", "PT-BR"}),
+		    #"Colunas Removidas" = Table.RemoveColumns(#"Colunas Reordenadas",{"ID"}),
+		    #"Outras Colunas Convertidas Em Valores" = Table.UnpivotOtherColumns(#"Colunas Removidas", {"Entity"}, "Atributo", "Valor"),
+		    #"Linhas Filtradas" = Table.SelectRows(#"Outras Colunas Convertidas Em Valores", each [Atributo] = Language)
+		in
+		    #"Linhas Filtradas"
+	lineageTag: aa1c292b-b1fe-4289-82bb-8ded69c8c213
+	queryGroup: Translation
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression BD = "GMP_Soico_Prd" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 414aafa7-61c6-4fe4-806f-39b47492ada4
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression CCMeio =
+		let
+		    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    pvm.IdMeio,#(lf)    pvm.IdCentroCusto#(lf)From#(lf)    Meios_Valorizacoes_Mensais pvm#(lf)Where#(lf)    pvm.IdCentroCusto Is Not Null And#(lf)    --pvm.IdPessoa = 478 And#(lf)    pvm.Mes = Month(GetDate()) And#(lf)    pvm.Ano = Year(GetDate())#(lf)Group By#(lf)    pvm.IdMeio,#(lf)    pvm.IdCentroCusto"])
+		in
+		    Origem
+	lineageTag: 9bc622fb-2734-497e-928c-81756c05131c
+	queryGroup: Meios
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression CCPessoas =
+		let
+		    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    pvm.IdPessoa,#(lf)    pvm.IdCentroCusto#(lf)From#(lf)    Pessoas_Valorizacoes_Mensais pvm#(lf)Where#(lf)    pvm.IdCentroCusto Is Not Null And#(lf)    --pvm.IdPessoa = 478 And#(lf)    pvm.Mes = Month(GetDate()) And#(lf)    pvm.Ano = Year(GetDate())#(lf)Group By#(lf)    pvm.IdPessoa,#(lf)    pvm.IdCentroCusto"])
+		in
+		    Origem
+	lineageTag: a526d1ce-ff91-4a58-9163-965cb0b94195
+	queryGroup: Pessoas
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression Necessidades_FH_Execucao =
+		let
+		    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    'RH' As Tipo,#(lf)    s.Nome As NomeEtapa,#(lf)    ap.Id As IdActividade,#(lf)    ap.Nome As NomeActividade,#(lf)    tt.Nome As TipoEvProd,#(lf)    'RH' As TipoTarefa,#(lf)    tnp.IdPessoa As IdPessoaNec,#(lf)    tnp.Quantidade As QuantidadeNec,#(lf)    tnp.Duracao As DuracaoNec,#(lf)    t.IdProjecto,#(lf)    tp.ExecucaoHoraInicio As DataInicio,#(lf)    tp.ExecucaoHoraFim As DataFim,#(lf)    Right('0' + Cast(DatePart(HOUR, tp.ExecucaoHoraInicio) As VARCHAR), 2) + ':00' As FH,#(lf)    tp.IdPessoa As IdPessoaTarefa,#(lf)    tp.Id As IdTarefaPessoa,#(lf)    cc.Id As IdCentroCusto,#(lf)    Pessoas.IdFuncaoPessoa,#(lf)    Pessoas.IdGrupoPessoa,#(lf)    'Execucao' As TipoNec#(lf)From#(lf)    Segmentos s Right Join#(lf)    Tarefas t On t.IdSegmento = s.Id Left Join#(lf)    Tipos_Tarefas tt On t.IdTipoTarefa = tt.Id Left Join#(lf)    Tarefas_Necessidades_Pessoas tnp On tnp.IdTarefa = t.Id Inner Join#(lf)    Tarefas_Pessoas tp On tp.IdTarefa = t.Id Left Join#(lf)    Centros_Custo cc On cc.Codigo = tp.CodCentroCusto Left Join#(lf)    Actividades_Pessoas ap On ap.Id = tp.IdActividadePessoa Inner Join#(lf)    Pessoas On tp.IdPessoa = Pessoas.Id#(lf)Where#(lf)    Year(tp.ExecucaoHoraInicio) >= Year(Getdate())-3"]),
+		    #"Added Index" = Table.AddIndexColumn(Origem, "Index1", 1, 1, Int64.Type),
+		    #"Duplicated Column1" = Table.DuplicateColumn(#"Added Index", "DataInicio", "DataInicio_F"),
+		    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column1",{{"Index1", type text}}),
+		    #"Inserted Merged Column" = Table.AddColumn(#"Changed Type2", "Index", each Text.Combine({"E-", Text.From([Index1], "pt-PT")}), type text),
+		    #"Removed Columns" = Table.RemoveColumns(#"Inserted Merged Column",{"Index1"}),
+		    #"Calculated Start of Hour" = Table.TransformColumns(#"Removed Columns",{{"DataInicio_F", Time.StartOfHour, type datetime}}),
+		    #"Duplicated Column2" = Table.DuplicateColumn(#"Calculated Start of Hour", "DataFim", "DataFim_F"),
+		    #"Calculated Start of Hour1" = Table.TransformColumns(#"Duplicated Column2",{{"DataFim_F", Time.StartOfHour, type datetime}}),
+		    #"Replaced Value1" = Table.ReplaceValue(#"Calculated Start of Hour1",null,"SEM NOME",Replacer.ReplaceValue,{"NomeActividade"}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Replaced Value1",null,"SEM NOME",Replacer.ReplaceValue,{"NomeEtapa"}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Replaced Value", "DataInicio", "Data"),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data", type date}}),
+		    #"Added Custom1" = Table.AddColumn(#"Changed Type", "Duration", each Duration.TotalMinutes([DataFim_F]-[DataInicio_F]) / 60),
+		    #"Added Custom" = Table.AddColumn(#"Added Custom1", "List", each List.DateTimes([DataInicio_F],[Duration]+1,#duration(0, 0, 60, 0))),
+		    #"Expanded List" = Table.ExpandListColumn(#"Added Custom", "List"),
+		    #"Inserted Text Between Delimiters" = Table.AddColumn(#"Expanded List", "FaixaH", each Text.BetweenDelimiters(Text.From([List], "pt-PT"), " ", ":", 0, 1), type text),
+		    #"Duplicated Column3" = Table.DuplicateColumn(#"Inserted Text Between Delimiters", "List", "DataFinal"),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Duplicated Column3",{{"DataFinal", type date}})
+		in
+		    #"Changed Type1"
+	lineageTag: 1753c820-50df-4150-b047-d6681c46cfcb
+	queryGroup: Necessidades
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression RLS_Projeto =
+		let
+		    Source = Sql.Database(Org, BD, [Query="-- user permissions#(lf)Select#(lf)    Permissoes.Id,#(lf)    Permissoes.Nome,#(lf)    Permissoes.Utilizador,#(lf)    Permissoes.StampData,#(lf)    Permissoes.StampUser,#(lf)    Permissoes.IdUnidadeNegocio,#(lf)    Permissoes.IdRole,#(lf)    Permissoes.IdUtilizador,#(lf)    Null 'RoleName',#(lf)    Utilizadores.AzureADUserName#(lf)From#(lf)    Permissoes Inner Join#(lf)    Utilizadores On Permissoes.IdUtilizador = Utilizadores.IdUtilizador#(lf)Union#(lf)Select#(lf)    p.Id,#(lf)    p.Nome,#(lf)    u.Utilizador,#(lf)    p.StampData,#(lf)    p.StampUser,#(lf)    p.IdUnidadeNegocio,#(lf)    p.IdRole,#(lf)    p.IdUtilizador,#(lf)    r.Nome 'RoleName',#(lf)    u.AzureADUserName#(lf)From#(lf)    Utilizadores u Inner Join#(lf)    Global_RolesUtilizadores ru On ru.IdUtilizador = u.IdUtilizador Inner Join#(lf)    Global_Roles r On r.Id = ru.IdRole Inner Join#(lf)    Permissoes p On p.IdRole = r.Id#(lf)Union#(lf)Select#(lf)    gp.Id,#(lf)    Case#(lf)        When Not pur.ContextValueId Is Null#(lf)        Then Replace(gp.Name, '*', pur.ContextValueId)#(lf)        Else gp.Name#(lf)    End As 'Name',#(lf)    u.Utilizador,#(lf)    pur.StampData,#(lf)    pur.StampUser,#(lf)    pur.IdUnidadeNegocio,#(lf)    ru.IdRole,#(lf)    u.IdUtilizador,#(lf)    r.Nome 'RoleName',#(lf)    u.AzureADUserName#(lf)From#(lf)    Utilizadores u Inner Join#(lf)    Global_RolesUtilizadores ru On u.IdUtilizador = ru.IdUtilizador Inner Join#(lf)    Global_Roles r On ru.IdRole = r.Id Inner Join#(lf)    Global_PermissionsUtilizadoresRoles pur On r.Id = pur.IdRole Inner Join#(lf)    Global_Permissions gp On pur.IdPermission = gp.Id"]),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Nome", "Utilizador", "IdUnidadeNegocio", "IdUtilizador", "AzureADUserName"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([IdUnidadeNegocio] = 2) and ([AzureADUserName] <> null)),
+		    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each Text.StartsWith([Nome], "Projectos-C")),
+		    #"Split Column by Delimiter" = Table.SplitColumn(#"Filtered Rows1", "Nome", Splitter.SplitTextByEachDelimiter({"-"}, QuoteStyle.Csv, true), {"Tipo", "Projeto"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Tipo", type text}, {"Projeto", type text}}),
+		    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"Projeto"}, Projetos, {"RLS"}, "Projetos", JoinKind.LeftOuter),
+		    #"Expanded Projetos" = Table.ExpandTableColumn(#"Merged Queries", "Projetos", {"Id"}, {"Id"}),
+		    #"Added Conditional Column" = Table.AddColumn(#"Expanded Projetos", "IdProjeto", each if [Id] = null then [Projeto] else [Id]),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Added Conditional Column",{"IdProjeto", "Utilizador", "AzureADUserName"}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Other Columns1",{{"IdProjeto", Int64.Type}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Changed Type1")
+		in
+		    #"Removed Duplicates"
+	lineageTag: effd4cbf-a3f0-4681-9422-35168b5e0b07
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression RLS_Meios =
+		let
+		    Source = Sql.Database(Org, BD, [Query="-- user permissions#(lf)Select#(lf)    Permissoes.Id,#(lf)    Permissoes.Nome,#(lf)    Permissoes.Utilizador,#(lf)    Permissoes.StampData,#(lf)    Permissoes.StampUser,#(lf)    Permissoes.IdUnidadeNegocio,#(lf)    Permissoes.IdRole,#(lf)    Permissoes.IdUtilizador,#(lf)    Null 'RoleName',#(lf)    Utilizadores.AzureADUserName#(lf)From#(lf)    Permissoes Inner Join#(lf)    Utilizadores On Permissoes.IdUtilizador = Utilizadores.IdUtilizador#(lf)Union#(lf)Select#(lf)    p.Id,#(lf)    p.Nome,#(lf)    u.Utilizador,#(lf)    p.StampData,#(lf)    p.StampUser,#(lf)    p.IdUnidadeNegocio,#(lf)    p.IdRole,#(lf)    p.IdUtilizador,#(lf)    r.Nome 'RoleName',#(lf)    u.AzureADUserName#(lf)From#(lf)    Utilizadores u Inner Join#(lf)    Global_RolesUtilizadores ru On ru.IdUtilizador = u.IdUtilizador Inner Join#(lf)    Global_Roles r On r.Id = ru.IdRole Inner Join#(lf)    Permissoes p On p.IdRole = r.Id#(lf)Union#(lf)Select#(lf)    gp.Id,#(lf)    Case#(lf)        When Not pur.ContextValueId Is Null#(lf)        Then Replace(gp.Name, '*', pur.ContextValueId)#(lf)        Else gp.Name#(lf)    End As 'Name',#(lf)    u.Utilizador,#(lf)    pur.StampData,#(lf)    pur.StampUser,#(lf)    pur.IdUnidadeNegocio,#(lf)    ru.IdRole,#(lf)    u.IdUtilizador,#(lf)    r.Nome 'RoleName',#(lf)    u.AzureADUserName#(lf)From#(lf)    Utilizadores u Inner Join#(lf)    Global_RolesUtilizadores ru On u.IdUtilizador = ru.IdUtilizador Inner Join#(lf)    Global_Roles r On ru.IdRole = r.Id Inner Join#(lf)    Global_PermissionsUtilizadoresRoles pur On r.Id = pur.IdRole Inner Join#(lf)    Global_Permissions gp On pur.IdPermission = gp.Id"]),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Nome", "Utilizador", "IdUnidadeNegocio", "IdUtilizador", "AzureADUserName"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([IdUnidadeNegocio] = 2) and ([AzureADUserName] <> null)),
+		    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each Text.StartsWith([Nome], "Meios-C")),
+		    #"Split Column by Delimiter" = Table.SplitColumn(#"Filtered Rows1", "Nome", Splitter.SplitTextByEachDelimiter({"-"}, QuoteStyle.Csv, true), {"Tipo", "Meio"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Tipo", type text}, {"Meio", type text}}),
+		    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"Meio"}, Meios_Nome, {"RLS"}, "Projetos", JoinKind.LeftOuter),
+		    #"Expanded Projetos" = Table.ExpandTableColumn(#"Merged Queries", "Projetos", {"IdAreasMeios"}, {"IdAreasMeios"}),
+		    #"Added Conditional Column" = Table.AddColumn(#"Expanded Projetos", "IdMeio", each if [IdAreasMeios] = null then [Meio] else [IdAreasMeios]),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Added Conditional Column",{"IdMeio", "Utilizador", "AzureADUserName"}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Other Columns1",{{"IdMeio", Int64.Type}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Changed Type1")
+		in
+		    #"Removed Duplicates"
+	lineageTag: 9e945cff-05fa-4e67-8fcd-a10cc86f460c
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression RLS_Unidade =
+		let
+		    Source = Sql.Database(Org, BD, [Query="-- user permissions#(lf)Select#(lf)    Permissoes.Id,#(lf)    Permissoes.Nome,#(lf)    Permissoes.Utilizador,#(lf)    Permissoes.StampData,#(lf)    Permissoes.StampUser,#(lf)    Permissoes.IdUnidadeNegocio,#(lf)    Permissoes.IdRole,#(lf)    Permissoes.IdUtilizador,#(lf)    Null 'RoleName',#(lf)    Utilizadores.AzureADUserName#(lf)From#(lf)    Permissoes Inner Join#(lf)    Utilizadores On Permissoes.IdUtilizador = Utilizadores.IdUtilizador#(lf)Union#(lf)Select#(lf)    p.Id,#(lf)    p.Nome,#(lf)    u.Utilizador,#(lf)    p.StampData,#(lf)    p.StampUser,#(lf)    p.IdUnidadeNegocio,#(lf)    p.IdRole,#(lf)    p.IdUtilizador,#(lf)    r.Nome 'RoleName',#(lf)    u.AzureADUserName#(lf)From#(lf)    Utilizadores u Inner Join#(lf)    Global_RolesUtilizadores ru On ru.IdUtilizador = u.IdUtilizador Inner Join#(lf)    Global_Roles r On r.Id = ru.IdRole Inner Join#(lf)    Permissoes p On p.IdRole = r.Id#(lf)Union#(lf)Select#(lf)    gp.Id,#(lf)    Case#(lf)        When Not pur.ContextValueId Is Null#(lf)        Then Replace(gp.Name, '*', pur.ContextValueId)#(lf)        Else gp.Name#(lf)    End As 'Name',#(lf)    u.Utilizador,#(lf)    pur.StampData,#(lf)    pur.StampUser,#(lf)    pur.IdUnidadeNegocio,#(lf)    ru.IdRole,#(lf)    u.IdUtilizador,#(lf)    r.Nome 'RoleName',#(lf)    u.AzureADUserName#(lf)From#(lf)    Utilizadores u Inner Join#(lf)    Global_RolesUtilizadores ru On u.IdUtilizador = ru.IdUtilizador Inner Join#(lf)    Global_Roles r On ru.IdRole = r.Id Inner Join#(lf)    Global_PermissionsUtilizadoresRoles pur On r.Id = pur.IdRole Inner Join#(lf)    Global_Permissions gp On pur.IdPermission = gp.Id"]),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Nome", "Utilizador", "IdUnidadeNegocio", "IdUtilizador", "AzureADUserName"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([IdUnidadeNegocio] = 2) and ([AzureADUserName] <> null)),
+		    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each Text.StartsWith([Nome], "HorariosUni-")),
+		    #"Split Column by Delimiter" = Table.SplitColumn(#"Filtered Rows1", "Nome", Splitter.SplitTextByEachDelimiter({"-"}, QuoteStyle.Csv, true), {"Tipo", "Unidade"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Tipo", type text}, {"Unidade", type text}}),
+		    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"Unidade"}, GrupoUnidade, {"RLS"}, "Projetos", JoinKind.LeftOuter),
+		    #"Expanded Projetos" = Table.ExpandTableColumn(#"Merged Queries", "Projetos", {"IdUnidade"}, {"IdUnidade2"}),
+		    #"Added Conditional Column" = Table.AddColumn(#"Expanded Projetos", "IdUnidade", each if [IdUnidade2] = null then [Unidade] else [IdUnidade2]),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Added Conditional Column",{"IdUnidade", "Utilizador", "AzureADUserName"}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Other Columns1",{{"IdUnidade", Int64.Type}}),
+		    #"Removed Duplicates" = Table.Distinct(#"Changed Type1"),
+		    #"Sorted Rows" = Table.Sort(#"Removed Duplicates",{{"Utilizador", Order.Ascending}})
+		in
+		    #"Sorted Rows"
+	lineageTag: 31ae7cc2-d97d-4668-b258-4b382da08b40
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression 'lista de imagem' =
+		let
+		    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Logo", "Cliente "}),
+		    Nome = #"Removed Columns"[Nome]
+		in
+		    Nome
+	lineageTag: 9bcdb9f6-69a1-4864-b5d6-dd2712d0e517
+	queryGroup: Config
+
+	annotation PBI_ResultType = List
+

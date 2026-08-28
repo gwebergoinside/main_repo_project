@@ -1,0 +1,274 @@
+table TarefasPessoasFaixas
+	lineageTag: 99565823-35f1-4bee-9bde-c08d188f5eef
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: d980b3ae-d961-40c5-80b2-90ecb0d05d86
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3ffd7d9e-5717-4d84-8aa2-29fd6ef43abe
+		summarizeBy: none
+		sourceColumn: HoraInicio
+
+		variation Variação
+			isDefault
+			relationship: 587d4af7-231c-4b51-a1a3-4a87ae12f7b7
+			defaultHierarchy: LocalDateTable_14e258b5-6dff-4d0f-9d10-5ace8926077d.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: aad2cbe3-1ef2-4097-b797-2db46901af4c
+		summarizeBy: none
+		sourceColumn: HoraFim
+
+		variation Variação
+			isDefault
+			relationship: 73d2eac3-56dd-4ded-b504-a6bf297b1fa8
+			defaultHierarchy: LocalDateTable_fbe983b4-bbd8-4839-8f99-7552ebb738f1.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixa
+		dataType: string
+		lineageTag: fc60a802-e1b5-44ab-91fc-1a73a088a071
+		summarizeBy: none
+		sourceColumn: Faixa
+
+		annotation SummarizationSetBy = Automatic
+
+	column InicioFaixa
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 38dd652f-4a8c-4bf8-8b75-0bc4467a6eda
+		summarizeBy: none
+		sourceColumn: InicioFaixa
+
+		variation Variação
+			isDefault
+			relationship: 2dd62aec-cca6-4cd2-97f8-985c73e3c520
+			defaultHierarchy: LocalDateTable_a38865fe-befb-424e-8d97-f09043fe463a.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column FimFaixa
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e79b88a1-db1e-4dc7-924f-d3d8f216bfb1
+		summarizeBy: none
+		sourceColumn: FimFaixa
+
+		variation Variação
+			isDefault
+			relationship: 9a8d47b0-2d57-4eed-9f15-4fb6835d5d45
+			defaultHierarchy: LocalDateTable_fcb9606d-4d3c-4ed8-a606-f2005e6b73ce.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCentroCusto
+		dataType: int64
+		formatString: 0
+		lineageTag: d6c21aec-192d-45a8-b28c-bc88e959ad15
+		summarizeBy: sum
+		sourceColumn: IdCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodCentroCusto
+		dataType: string
+		lineageTag: a8af77d6-fd50-4499-939d-4ba12087a59d
+		summarizeBy: none
+		sourceColumn: CodCentroCusto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefa
+		dataType: int64
+		formatString: 0
+		lineageTag: 04cd66c1-8e43-4c3e-8cec-b5cd13fa2f15
+		summarizeBy: sum
+		sourceColumn: IdTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdPessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: 95f3aeef-b86d-4c94-9bd7-a7f0fb5459a2
+		summarizeBy: none
+		sourceColumn: IdPessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdActividadePessoa
+		dataType: int64
+		formatString: 0
+		lineageTag: cd64024a-5ffd-4bc8-a103-5bddaad24752
+		summarizeBy: sum
+		sourceColumn: IdActividadePessoa
+
+		annotation SummarizationSetBy = Automatic
+
+	column SemPeriodoDefinido
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4edfadb9-69c5-4dda-9eda-72cf58dd45d9
+		summarizeBy: none
+		sourceColumn: SemPeriodoDefinido
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinutosPausa
+		dataType: int64
+		formatString: 0
+		lineageTag: e065a482-7d38-4c24-a7ec-066c1894c4c6
+		summarizeBy: sum
+		sourceColumn: MinutosPausa
+
+		annotation SummarizationSetBy = Automatic
+
+	column TarefaEstado
+		dataType: string
+		lineageTag: 3cc7746b-3acf-4e8f-978c-c867cf788e32
+		summarizeBy: none
+		sourceColumn: TarefaEstado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Período =
+			
+			SWITCH(
+			    TRUE()
+			    ,HOUR(TarefasPessoasFaixas[Horainicio])>=0 && hour(TarefasPessoasFaixas[Horainicio])<6,"Madrugada"
+			    ,HOUR(TarefasPessoasFaixas[Horainicio])>=6 && hour(TarefasPessoasFaixas[Horainicio])<12,"Manhã"
+			    ,HOUR(TarefasPessoasFaixas[Horainicio])>=12 && hour(TarefasPessoasFaixas[Horainicio])<18,"Tarde"
+			    ,HOUR(TarefasPessoasFaixas[Horainicio])>=18 && hour(TarefasPessoasFaixas[Horainicio])<24,"Noite"
+			)
+		lineageTag: dd917266-e072-4fa3-a2cb-a61ae5313b10
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Inicio Faixa' = DATE(year(TarefasPessoasFaixas[HoraInicio]),MONTH(TarefasPessoasFaixas[HoraInicio]),DAY(TarefasPessoasFaixas[HoraInicio]))
+		formatString: General Date
+		lineageTag: 0f63322d-7f1a-443c-9d03-e5683948bac1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo
+		dataType: string
+		lineageTag: 9a806a12-dd1c-4efa-af64-581b309eb177
+		summarizeBy: none
+		sourceColumn: titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 51e436eb-b67e-4ca4-b95d-72e3731f1f17
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: d8b78af1-92b7-43e4-be7e-fd33240c5991
+			defaultHierarchy: LocalDateTable_f715b96b-cc80-4581-83c6-811709ec93cf.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IdTipoProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: 91a4d828-aa57-4b76-beb6-9f4e7f412a80
+		summarizeBy: sum
+		sourceColumn: IdTipoProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fim = LEFT(RIGHT(TarefasPessoasFaixas[FimFaixa],8),5)
+		lineageTag: 34cf14fd-e643-48d6-ab24-532ad96f2522
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Titulo Tarefa'
+		dataType: string
+		lineageTag: c6f95658-0fcd-4a41-a0b9-fd47d929c606
+		summarizeBy: none
+		sourceColumn: Titulo Tarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DataInicio Tarefa'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e843b08e-24b3-4279-9204-14311fdb7966
+		summarizeBy: none
+		sourceColumn: DataInicio Tarefa
+
+		variation Variation
+			isDefault
+			relationship: eeeb6caa-493e-401a-8fa5-d23a2f29b0e5
+			defaultHierarchy: LocalDateTable_ac61bea9-4ddb-4dae-b72f-81216a30bf73.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DataFim Tarefa'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 35f686e3-9892-47b3-99f1-f1b1f7003909
+		summarizeBy: none
+		sourceColumn: DataFim Tarefa
+
+		variation Variation
+			isDefault
+			relationship: da4f3bc0-5931-42e9-b08a-8242de6c28a9
+			defaultHierarchy: LocalDateTable_699f8f65-9b4e-479f-9dd2-1e407df924fc.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdHorarioRef
+		dataType: int64
+		formatString: 0
+		lineageTag: f30463de-7e54-4dd1-b804-fe344f831850
+		summarizeBy: sum
+		sourceColumn: IdHorarioRef
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdProjeto
+		dataType: int64
+		formatString: 0
+		lineageTag: f3bb6bef-cec0-4036-85d5-76e55c433095
+		summarizeBy: none
+		sourceColumn: IdProjeto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TarefasPessoasFaixas-e8f8a793-79a6-4ba1-8484-37589c8d9ef3 = m
+		mode: import
+		queryGroup: Pessoas
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="Select#(lf)    tp.Id,#(lf)    tp.HoraInicio,#(lf)    tp.HoraFim,#(lf)    Right('0' + Cast(fh.Hora % 24 As VARCHAR(2)), 2) + ':00' Faixa,#(lf)    DateAdd(hour, fh.Hora % 24, DateAdd(day, fh.Hora / 24, Cast(Cast(tp.HoraInicio As DATE) As DATETIME))) InicioFaixa,#(lf)    DateAdd(second, -1, DateAdd(hour, 1, DateAdd(hour, fh.Hora % 24, DateAdd(day, fh.Hora / 24, Cast(Cast(tp.HoraInicio#(lf)    As DATE) As DATETIME))))) FimFaixa,#(lf)    cc.Id IdCentroCusto,#(lf)    tp.CodCentroCusto,#(lf)    tp.IdTarefa,#(lf)    tp.IdPessoa,#(lf)    tp.IdActividadePessoa,#(lf)    tp.SemPeriodoDefinido,#(lf)    IsNull(tp.MinutosPausa, 0) MinutosPausa,#(lf)    t.Estado TarefaEstado,#(lf)    Projectos.titulo,#(lf)    Projectos.IdTipoProjecto,#(lf)    t.Titulo As [Titulo Tarefa],#(lf)    t.DataInicio As [DataInicio Tarefa],#(lf)    t.DataFim As [DataFim Tarefa],#(lf)    Horarios.IdHorarioRef,#(lf)    Projectos.Id As IdProjeto#(lf)From#(lf)    Tarefas_Pessoas tp Join#(lf)    Tarefas t On tp.IdTarefa = t.Id Left Join#(lf)    Centros_Custo cc On tp.CodCentroCusto = cc.Codigo Join#(lf)    vwFaixasHorarias fh On (tp.SemPeriodoDefinido = 0#(lf)                And fh.Hora Between DatePart(hour, tp.HoraInicio) And Ceiling(DateDiff(minute, Cast(Cast(tp.HoraInicio#(lf)                As DATE) As DATETIME), tp.HoraFim) / 60.0) - 1)#(lf)            Or (tp.SemPeriodoDefinido = 1#(lf)                And fh.Hora Between 0 And 23) Inner Join#(lf)    Projectos On t.IdProjecto = Projectos.Id Left Join#(lf)    Horarios On Horarios.IdPessoa = tp.IdPessoa#(lf)            And Convert(varchar(10),Horarios.Data,103) = Convert(varchar(10),tp.HoraInicio,103)#(lf)Where#(lf)    Year(tp.HoraInicio) >= Year(GetDate()) - 3"]),
+				    date = Table.AddColumn(Origem, "Date", each DateTime.Date([HoraInicio]), type date)
+				in
+				    date
+
+	annotation PBI_QueryRelationships = {"columnCount":22,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/TarefasPessoasFaixas/Origem.{Id,0}","Section1/TarefasPessoasFaixas/Origem.{HoraInicio,1}","Section1/TarefasPessoasFaixas/Origem.{HoraFim,2}","Section1/TarefasPessoasFaixas/Origem.{Faixa,3}","Section1/TarefasPessoasFaixas/Origem.{InicioFaixa,4}","Section1/TarefasPessoasFaixas/Origem.{FimFaixa,5}","Section1/TarefasPessoasFaixas/Origem.{IdCentroCusto,6}","Section1/TarefasPessoasFaixas/Origem.{CodCentroCusto,7}","Section1/TarefasPessoasFaixas/Origem.{IdTarefa,8}","Section1/TarefasPessoasFaixas/Origem.{IdPessoa,9}","Section1/TarefasPessoasFaixas/Origem.{IdActividadePessoa,10}","Section1/TarefasPessoasFaixas/Origem.{SemPeriodoDefinido,11}","Section1/TarefasPessoasFaixas/Origem.{MinutosPausa,12}","Section1/TarefasPessoasFaixas/Origem.{TarefaEstado,13}","Section1/TarefasPessoasFaixas/Origem.{titulo,14}","Section1/TarefasPessoasFaixas/Origem.{IdTipoProjecto,15}","Section1/TarefasPessoasFaixas/Origem.{Titulo Tarefa,16}","Section1/TarefasPessoasFaixas/Origem.{DataInicio Tarefa,17}","Section1/TarefasPessoasFaixas/Origem.{DataFim Tarefa,18}","Section1/TarefasPessoasFaixas/Origem.{IdHorarioRef,19}","Section1/TarefasPessoasFaixas/Origem.{IdProjeto,20}","Section1/TarefasPessoasFaixas/date.{Date,21}"],"ColumnCount":22,"KeyColumnNames":[],"ColumnIdentities":["Section1/TarefasPessoasFaixas/Origem.{Id,0}","Section1/TarefasPessoasFaixas/Origem.{HoraInicio,1}","Section1/TarefasPessoasFaixas/Origem.{HoraFim,2}","Section1/TarefasPessoasFaixas/Origem.{Faixa,3}","Section1/TarefasPessoasFaixas/Origem.{InicioFaixa,4}","Section1/TarefasPessoasFaixas/Origem.{FimFaixa,5}","Section1/TarefasPessoasFaixas/Origem.{IdCentroCusto,6}","Section1/TarefasPessoasFaixas/Origem.{CodCentroCusto,7}","Section1/TarefasPessoasFaixas/Origem.{IdTarefa,8}","Section1/TarefasPessoasFaixas/Origem.{IdPessoa,9}","Section1/TarefasPessoasFaixas/Origem.{IdActividadePessoa,10}","Section1/TarefasPessoasFaixas/Origem.{SemPeriodoDefinido,11}","Section1/TarefasPessoasFaixas/Origem.{MinutosPausa,12}","Section1/TarefasPessoasFaixas/Origem.{TarefaEstado,13}","Section1/TarefasPessoasFaixas/Origem.{titulo,14}","Section1/TarefasPessoasFaixas/Origem.{IdTipoProjecto,15}","Section1/TarefasPessoasFaixas/Origem.{Titulo Tarefa,16}","Section1/TarefasPessoasFaixas/Origem.{DataInicio Tarefa,17}","Section1/TarefasPessoasFaixas/Origem.{DataFim Tarefa,18}","Section1/TarefasPessoasFaixas/Origem.{IdHorarioRef,19}","Section1/TarefasPessoasFaixas/Origem.{IdProjeto,20}","Section1/TarefasPessoasFaixas/date.{Date,21}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

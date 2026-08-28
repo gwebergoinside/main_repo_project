@@ -1,0 +1,410 @@
+table Meios
+	lineageTag: cfb125d9-eb5e-4959-b38e-aff29c9859a9
+
+	column 'Areas Nome'
+		dataType: string
+		lineageTag: c5251b37-3fbe-4550-adea-12a94d4b459f
+		summarizeBy: none
+		sourceColumn: Areas Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataImputacao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2f07ab12-acd7-4be8-9814-788853149df4
+		summarizeBy: none
+		sourceColumn: DataImputacao
+
+		variation Variation
+			isDefault
+			relationship: 622418d1-7689-40cd-8d73-46caec073d6d
+			defaultHierarchy: LocalDateTable_f0099f37-7c02-4c12-9693-db37250daeed.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column TempoImputado
+		dataType: double
+		formatString: #,0
+		lineageTag: 9e4d8a11-4d8f-4761-9cf8-316f369cdb66
+		summarizeBy: sum
+		sourceColumn: TempoImputado
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Projectos Titulo'
+		dataType: string
+		lineageTag: a1e5592f-dcd7-4ca1-bd83-c03126e303d7
+		summarizeBy: none
+		sourceColumn: Projectos Titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: 635c6ac0-b3a6-4983-89eb-6e07f3dfa02d
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 97ab6a52-c697-400f-9de8-9f283ecd7277
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefaMeios
+		dataType: int64
+		formatString: 0
+		lineageTag: f4ebffcf-dd87-4851-99e7-f8c3da64ef35
+		summarizeBy: sum
+		sourceColumn: IdTarefaMeios
+
+		annotation SummarizationSetBy = Automatic
+
+	column AnoDataImputacao
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b7fa250-59a9-4196-a557-ab658c1c5c2e
+		summarizeBy: sum
+		sourceColumn: AnoDataImputacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column MesDataImputacao
+		dataType: int64
+		formatString: 0
+		lineageTag: 22477ced-40cf-4962-a725-3af660598528
+		summarizeBy: sum
+		sourceColumn: MesDataImputacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column activo
+		dataType: string
+		lineageTag: dc4b26f9-3144-40bf-821c-5c6563e79dcf
+		summarizeBy: none
+		sourceColumn: activo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Centro Custo'
+		dataType: string
+		lineageTag: 9e2959ac-9e0c-4081-bbcb-355794fb3264
+		summarizeBy: none
+		sourceColumn: Nome Centro Custo
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoActividadeApurada
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b8f4713-a891-4c29-9944-41891eeabb1f
+		summarizeBy: sum
+		sourceColumn: TipoActividadeApurada
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraInicio
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4604ead8-7e5e-482e-b6cd-f31f3284337d
+		summarizeBy: none
+		sourceColumn: HoraInicio
+
+		variation Variation
+			isDefault
+			relationship: 2d42e4fb-8b46-428d-a9ba-16cc0acefb4f
+			defaultHierarchy: LocalDateTable_75d6e854-d306-4553-82b9-c8c7cfc1d25b.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 74004b39-bef1-46a3-8bd6-00c713f57d97
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column anoInicio
+		dataType: int64
+		formatString: 0
+		lineageTag: 8efced77-08bc-4de8-a136-7f980736f627
+		summarizeBy: sum
+		sourceColumn: anoInicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column mesInicio
+		dataType: int64
+		formatString: 0
+		lineageTag: 3111757d-e9e2-4919-a544-0785fd2ce104
+		summarizeBy: sum
+		sourceColumn: mesInicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTarefas_Meios
+		dataType: int64
+		formatString: 0
+		lineageTag: 6845b2e1-4bb2-4260-bf07-80a2e6555012
+		summarizeBy: sum
+		sourceColumn: IdTarefas_Meios
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Semana' = SWITCH(WEEKDAY(Meios[Date]),1,"Domingo",2,"Segunda-Feira",3,"Terça-Feira",4,"Quarta-Feira",5,"Quinta-Feira",6,"Sexta-Feira",7,"Sábado")
+		lineageTag: ace48b0c-596d-4d1b-86e2-b62c893f3ae9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdTipoProjecto
+		dataType: int64
+		formatString: 0
+		lineageTag: e1ba7d3b-d5b2-4a65-b12d-87e2cd8027a7
+		summarizeBy: sum
+		sourceColumn: IdTipoProjecto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia = DAY(Meios[Date])
+		formatString: 0
+		lineageTag: 0ef96a10-f7f3-4425-bae6-fa667bd1ce72
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês = MONTH(Meios[Date])
+		formatString: 0
+		lineageTag: 20f16ceb-44d4-4313-b09c-c4b318e0c4f8
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano = YEAR(Meios[Date])
+		formatString: 0
+		lineageTag: 44cb218c-2575-4e88-92c8-c9a1ceadfa2e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Capacidade
+		dataType: double
+		lineageTag: c215f8db-b089-48a9-9226-6c58c004c210
+		summarizeBy: sum
+		sourceColumn: Capacidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IdProjeto
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a359ca4-9a62-46dc-84ec-faecb951bfb5
+		summarizeBy: none
+		sourceColumn: IdProjeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAreaTipoTarefa
+		dataType: int64
+		formatString: 0
+		lineageTag: edc8220c-0dcb-45e5-8e55-9979ee4d6364
+		summarizeBy: none
+		sourceColumn: IdAreaTipoTarefa
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdCC
+		dataType: int64
+		formatString: 0
+		lineageTag: fa4fb08b-44fb-45f1-8751-3d3230f737ad
+		summarizeBy: none
+		sourceColumn: IdCC
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4316b78e-f997-4bc4-a622-ce8459fd9130
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		variation Variation
+			isDefault
+			relationship: eef22365-5adc-4fe0-9a77-a180625245ac
+			defaultHierarchy: LocalDateTable_4bc87d34-296b-4142-8955-9e1dd00fe333.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: d8211eed-5dc5-4893-af89-afd9aff57b5f
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estados =
+			SWITCH( TRUE(),
+			Meios[Estado] = "A", "Disponivel",
+			Meios[Estado] = "C", "Cancelado",
+			Meios[Estado] = "R", "Previsão",
+			Meios[Estado] = "L", "Alteração",
+			Meios[Estado] = "N", "Novo",
+			Meios[Estado] = "P", "Planeamento",
+			Meios[Estado] = "Z", "Não Realizado",
+			Meios[Estado] = "X", "Cancelado < 48horas" )
+		lineageTag: 16950d3d-1991-42f0-aa5c-276b711d6242
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ativ. Apurada (CC)' = ```
+			SWITCH(
+			    TRUE(), 
+			    Meios[TipoActividadeApurada] = 0, "Nenhuma",
+			    Meios[TipoActividadeApurada] = 1, "Meios", 
+			    Meios[TipoActividadeApurada] = 2, "Pessoas", 
+			    "Não Definido"
+			    )
+			```
+		lineageTag: cea53045-6d8b-4528-959e-9624396a0368
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo
+		dataType: string
+		lineageTag: 2979ef84-10c1-4d33-838f-c1be1584766e
+		summarizeBy: none
+		sourceColumn: Codigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Código Conta' =
+			
+			IF(
+				ISERROR( VALUE( Meios[Codigo] ) ),
+				Meios[Codigo],
+				CONCATENATE( VALUE(Meios[Codigo]), "" )
+			)
+		lineageTag: 6f53abc4-7a21-494c-aa01-cce16eca6810
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column NaoConsiderarParaCalculoCapacidadeAtividade
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 84fe5711-cc22-4c55-ab35-c8d6ecc0e6db
+		summarizeBy: none
+		sourceColumn: NaoConsiderarParaCalculoCapacidadeAtividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calculo Cap Ativ' = ```
+			
+			SWITCH(TRUE, 
+			    Meios[NaoConsiderarParaCalculoCapacidadeAtividade] = BLANK(), "Ativo",
+			    Meios[NaoConsiderarParaCalculoCapacidadeAtividade] = FALSE(), "Ativo",
+			    "Desativo"
+			)
+			```
+		lineageTag: be36c86b-7980-4c41-9d28-f806a3ed32f9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column HoraFim
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ff25dd18-a95e-4876-918b-729e9a0813ef
+		summarizeBy: none
+		sourceColumn: HoraFim
+
+		variation Variation
+			isDefault
+			relationship: e38d1537-6797-4414-900c-b7016e8a8178
+			defaultHierarchy: LocalDateTable_d196fbe6-ae1e-4c84-8673-917bb7d4b0b3.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: bce4c118-3b6b-4060-85b9-d2534160a3db
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Atividade
+		dataType: string
+		lineageTag: 3bddfd3e-efc3-4e57-9253-6093697e11ea
+		summarizeBy: none
+		sourceColumn: Atividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tarifa
+		dataType: double
+		lineageTag: ad8b740c-659f-41e1-9e42-b4f04d9a299b
+		summarizeBy: sum
+		sourceColumn: Tarifa
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Planeamento = DATEDIFF( Meios[HoraInicio], Meios[HoraFim], SECOND )
+		formatString: 0
+		lineageTag: fb31698d-42d3-4177-8f00-c92ce9d10049
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExtraNec =
+			
+			CALCULATE(
+			    SUM( 'NecessidadesGantt Extra'[Index] )
+			    ,FILTER( ALL('NecessidadesGantt Extra'), Meios[keyAtividade] ='NecessidadesGantt Extra'[keyAtividade] )
+			    ,'NecessidadesGantt Extra'[Tipo] = "Meios"
+			)
+		lineageTag: 7fd120b8-ff53-4dbc-bfcc-8b739f2b76c3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyAtividade = Meios[Date] & "-" & Meios[IdCC] & "-" & Meios[IdProjeto]
+		lineageTag: d5fc43b9-84c7-42d2-a4b0-c53fe4b28c73
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Meios-e63535be-923e-4035-87f4-91a114bcb094 = m
+		mode: import
+		queryGroup: Meios
+		source =
+				let
+				    Origem = Sql.Database(Org, BD, [Query="With#(lf)    me As (#(lf)     Select#(lf)         am.Nome As [Areas Nome],#(lf)         m.Nome,#(lf)         tm.DataImputacao,#(lf)         tm.TempoImputado As TempoImputado,#(lf)         p.titulo As [Projectos Titulo],#(lf)         m.Id,#(lf)         tm.Id As IdTarefaMeios,#(lf)         Year(tm.DataImputacao) As AnoDataImputacao,#(lf)         Month(tm.DataImputacao) As MesDataImputacao,#(lf)         m.activo,#(lf)         tm.HoraInicio,#(lf)         cc.Nome As [Nome Centro Custo],#(lf)         cc.TipoActividadeApurada,#(lf)         Year(tm.HoraInicio) As anoInicio,#(lf)         Month(tm.HoraInicio) As mesInicio,#(lf)         tm.IdMeio As IdTarefas_Meios,#(lf)         p.IdTipoProjecto,#(lf)         p.Id As IdProjeto,#(lf)         tm.IdAreaTipoTarefa,#(lf)         cc.Id As IdCC,#(lf)         t.Estado,#(lf)         cc.Codigo,#(lf)         DateFromParts(Year(tm.HoraInicio), Month(tm.HoraInicio), Day(tm.HoraInicio)) Date,#(lf)         DateFromParts(Year(tm.HoraInicio), Month(tm.HoraInicio), 1) As [Start of Month],#(lf)         mvm.NaoConsiderarParaCalculoCapacidadeAtividade,#(lf)         tm.HoraFim,#(lf)         Tipos_Meio.Nome As Nome1,#(lf)         Actividades_Meios.Nome As Nome2#(lf)     From#(lf)         Meios m Inner Join#(lf)         Tarefas_Meios tm On tm.IdMeio = m.Id Inner Join#(lf)         Areas_Meios am On m.IdAreaMeio = am.Id Inner Join#(lf)         Tarefas t On tm.IdTarefa = t.Id Inner Join#(lf)         Projectos p On t.IdProjecto = p.Id Left Join#(lf)         Centros_Custo cc On cc.Codigo = tm.CodCentroCusto Left Join#(lf)         Meios_Valorizacoes_Mensais mvm On mvm.Ano = Year(tm.DataImputacao)#(lf)                 And mvm.Mes = Month(tm.DataImputacao)#(lf)                 And mvm.IdMeio = tm.IdMeio Left Join#(lf)         Tipos_Meio On m.IdTipoMeio = Tipos_Meio.Id Left Join#(lf)         Actividades_Meios On m.IdActividadeMeio = Actividades_Meios.Id#(lf)    )#(lf)Select#(lf)    mhm.Capacidade,#(lf)    me.Id,#(lf)    me.[Areas Nome],#(lf)    me.Nome,#(lf)    me.TempoImputado As TempoImputado,#(lf)    me.[Projectos Titulo],#(lf)    me.AnoDataImputacao,#(lf)    me.MesDataImputacao,#(lf)    me.activo,#(lf)    me.HoraInicio,#(lf)    me.[Nome Centro Custo],#(lf)    me.TipoActividadeApurada,#(lf)    me.anoInicio,#(lf)    me.mesInicio,#(lf)    me.IdTarefas_Meios,#(lf)    me.DataImputacao,#(lf)    me.IdTarefaMeios,#(lf)    me.IdTipoProjecto,#(lf)    me.IdProjeto,#(lf)    me.IdAreaTipoTarefa,#(lf)    me.IdCC,#(lf)    me.Estado,#(lf)    me.Codigo,#(lf)    me.NaoConsiderarParaCalculoCapacidadeAtividade,#(lf)    me.Date,#(lf)    me.[Start of Month],#(lf)    me.HoraFim,#(lf)    me.Nome1 As Tipo,#(lf)    me.Nome2 As Atividade#(lf)From#(lf)    Meios_Horas_Mensais mhm Right Join#(lf)    me On mhm.Data = me.DataImputacao#(lf)            And mhm.IdMeio = me.Id#(lf)Where#(lf)    me.anoInicio >= Year(GetDate()) - 3#(lf)Group By#(lf)    mhm.Capacidade,#(lf)    me.Id,#(lf)    me.[Areas Nome],#(lf)    me.Nome,#(lf)    me.TempoImputado,#(lf)    me.[Projectos Titulo],#(lf)    me.AnoDataImputacao,#(lf)    me.MesDataImputacao,#(lf)    me.activo,#(lf)    me.HoraInicio,#(lf)    me.[Nome Centro Custo],#(lf)    me.TipoActividadeApurada,#(lf)    me.anoInicio,#(lf)    me.mesInicio,#(lf)    me.IdTarefas_Meios,#(lf)    me.DataImputacao,#(lf)    me.IdTarefaMeios,#(lf)    me.IdTipoProjecto,#(lf)    me.IdProjeto,#(lf)    me.IdAreaTipoTarefa,#(lf)    me.IdCC,#(lf)    me.Estado,#(lf)    me.Codigo,#(lf)    me.NaoConsiderarParaCalculoCapacidadeAtividade,#(lf)    me.Date,#(lf)    me.[Start of Month],#(lf)    me.HoraFim,#(lf)    me.Nome1,#(lf)    me.Nome2"]),
+				    #"Merged Queries" = Table.NestedJoin(Origem, {"Start of Month", "IdCC"}, Tarifa, {"Mes", "IdCentroCusto"}, "Tarifa", JoinKind.LeftOuter),
+				    #"Expanded Tarifa1" = Table.ExpandTableColumn(#"Merged Queries", "Tarifa", {"TarifaUnitaria"}, {"Tarifa.TarifaUnitaria"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded Tarifa1",{{"Tarifa.TarifaUnitaria", "Tarifa"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_QueryRelationships = {"columnCount":24,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Meios/Origem.{Capacidade,0}","Section1/Meios/Origem.{Id,1}","Section1/Meios/Origem.{Areas Nome,2}","Section1/Meios/Origem.{Nome,3}","Section1/Meios/Origem.{TempoImputado,4}","Section1/Meios/Origem.{Projectos Titulo,5}","Section1/Meios/Origem.{AnoDataImputacao,6}","Section1/Meios/Origem.{MesDataImputacao,7}","Section1/Meios/Origem.{activo,8}","Section1/Meios/Origem.{HoraInicio,9}","Section1/Meios/Origem.{Nome Centro Custo,10}","Section1/Meios/Origem.{TipoActividadeApurada,11}","Section1/Meios/Origem.{anoInicio,12}","Section1/Meios/Origem.{mesInicio,13}","Section1/Meios/Origem.{IdTarefas_Meios,14}","Section1/Meios/Origem.{DataImputacao,15}","Section1/Meios/Origem.{IdTarefaMeios,16}","Section1/Meios/Origem.{IdTipoProjecto,17}","Section1/Meios/Origem.{IdProjeto,18}","Section1/Meios/Origem.{IdAreaTipoTarefa,19}","Section1/Meios/Origem.{IdCC,20}","Section1/Meios/Inserted Date.{Date,21}","Section1/Meios/Inserted Start of Month.{Start of Month,22}","Section1/Tarifa/Origem.{TarifaUnitaria,2}"],"ColumnCount":24,"KeyColumnNames":[],"ColumnIdentities":["Section1/Meios/Origem.{Capacidade,0}","Section1/Meios/Origem.{Id,1}","Section1/Meios/Origem.{Areas Nome,2}","Section1/Meios/Origem.{Nome,3}","Section1/Meios/Origem.{TempoImputado,4}","Section1/Meios/Origem.{Projectos Titulo,5}","Section1/Meios/Origem.{AnoDataImputacao,6}","Section1/Meios/Origem.{MesDataImputacao,7}","Section1/Meios/Origem.{activo,8}","Section1/Meios/Origem.{HoraInicio,9}","Section1/Meios/Origem.{Nome Centro Custo,10}","Section1/Meios/Origem.{TipoActividadeApurada,11}","Section1/Meios/Origem.{anoInicio,12}","Section1/Meios/Origem.{mesInicio,13}","Section1/Meios/Origem.{IdTarefas_Meios,14}","Section1/Meios/Origem.{DataImputacao,15}","Section1/Meios/Origem.{IdTarefaMeios,16}","Section1/Meios/Origem.{IdTipoProjecto,17}","Section1/Meios/Origem.{IdProjeto,18}","Section1/Meios/Origem.{IdAreaTipoTarefa,19}","Section1/Meios/Origem.{IdCC,20}","Section1/Meios/Inserted Date.{Date,21}","Section1/Meios/Inserted Start of Month.{Start of Month,22}","Section1/Tarifa/Origem.{TarifaUnitaria,2}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+

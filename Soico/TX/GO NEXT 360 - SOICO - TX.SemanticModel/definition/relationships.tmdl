@@ -1,0 +1,421 @@
+relationship b2363461-7a2a-44eb-bcd1-89c423ee8d55
+	fromColumn: Contratos.COD_MOEDA
+	toColumn: moedas.cod_moeda
+
+relationship 113c58cb-2f3c-41b9-8340-92a424a09e16
+	fromColumn: Contratos.COD_DISTRIBUIDOR
+	toColumn: Distribuidores.CodDistribuidor
+
+relationship a61e1fda-1648-475f-84c8-cb0a6382bd15
+	fromColumn: Contratos.COD_AREA
+	toColumn: Areas.codigo
+
+relationship 5fc51b67-c92c-4ec1-8d45-312f5181dfd1
+	fromColumn: Contratos.COD_CONTRATO_TIPO
+	toColumn: T_Contratos.TipoContrato
+
+relationship 2f6c5a8d-c0af-453b-868f-45053df6ec1a
+	fromColumn: PlanoContrato_Direitos.cod_direito
+	toColumn: Tipos_direitos.Cod_direito
+
+relationship 7b0fb5c1-5f87-45cb-b3d0-79bbed1209ff
+	toCardinality: many
+	fromColumn: Contratos.COD_CONTRATO_PLANO
+	toColumn: PlanoContrato_Direitos.codPlano
+
+relationship 20ab24fe-e5bd-4658-a220-263d1edd4bc3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Distribuidores.Status_Date
+	toColumn: LocalDateTable_b707ea22-483c-4bba-a975-021c73442687.Date
+
+relationship 13315fc1-707c-4c42-9b6d-d39dd0bda496
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Consumos.DATA_CONTRATO
+	toColumn: LocalDateTable_87e8a65b-adf3-4770-b234-173a1713f4b9.Date
+
+relationship 58fd4ece-c353-4cfe-a553-00d241832741
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.DATA_REGISTO
+	toColumn: LocalDateTable_9df85dc5-7cc4-48bb-8a1f-b1ffbebc3d4e.Date
+
+relationship 32c67772-0f30-448d-873e-6da9f2434048
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.DATA_APROVACAO
+	toColumn: LocalDateTable_78c86295-7b3a-439e-b5fa-d860b4cbb93c.Date
+
+relationship dc9da1ae-be0a-4021-8de1-9e28ec3f7ce9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.DATA_FIM_ACONTECIMENTO
+	toColumn: LocalDateTable_18e0b0c0-18ad-4c59-af9f-ce2908c7b833.Date
+
+relationship c0f89ae4-027b-4843-af04-5c76034900a6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.Data_Inicio_Contrato
+	toColumn: LocalDateTable_79183c9a-c339-415b-bbe4-f60851632dec.Date
+
+relationship 9aecc09d-b88c-43e7-ae85-5de498a5fc93
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.Data_Final_Contrato
+	toColumn: LocalDateTable_7ccfff49-6bc2-4720-8486-f5ad4cd8e7c0.Date
+
+relationship 3d058aab-d8df-42a5-9bcf-8819ec098f77
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.DATA_INICIO_TITULO
+	toColumn: LocalDateTable_31b5190d-3e82-48c0-a88d-761dd5b9a7f8.Date
+
+relationship 78d612bb-c9c6-4e87-998c-b844b1a90244
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PlanoContrato_Direitos.data_inicio
+	toColumn: LocalDateTable_45563d55-0c3b-4682-9d0d-049756149e44.Date
+
+relationship 5e043274-e688-46f3-ad63-665a87b22724
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PlanoContrato_Direitos.data_fim
+	toColumn: LocalDateTable_3885aa9a-a27c-4f61-9212-9170aa16be56.Date
+
+relationship c7838710-4e0c-4c10-b1da-1aa028337a62
+	fromColumn: Custos.CodCanal
+	toColumn: Canais.codigo
+
+relationship a0864e06-b91d-43ac-93fb-bff8c0dc8229
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.DATA_INICIO_ACONTECIMENTO
+	toColumn: LocalDateTable_d942518a-4d2d-4ac5-866e-378be9c0387d.Date
+
+relationship 30442b28-20ab-46a7-898b-bc7af3c7ae8b
+	fromColumn: Contratos.DATA_COMPRA
+	toColumn: Date.Date
+
+relationship 00e32fd0-2dab-48fc-bc20-9ebf4b74c307
+	fromColumn: Consumos.DATA_CONSUMO
+	toColumn: 'Date Cons'.Date
+
+relationship ec88851c-c28f-4a95-a48c-f65835ce3a0f
+	fromColumn: Consumos.COD_TITULO
+	toColumn: Titulos.CodTitulo
+
+relationship f5ef78e4-ce04-41da-b5a2-1a0d7f8728b9
+	fromColumn: Consumos.COD_CANAL
+	toColumn: Canais.codigo
+
+relationship 66650b28-5a27-4d0d-a3e3-cb8fcd750520
+	fromColumn: Contratos.COD_CONTRATO_ESTADO
+	toColumn: T_Contratos_Estados.CodEstado
+
+relationship 5024c666-d278-4539-813f-ddc635f8d2d6
+	fromColumn: CanaisTitulos.codtitulo
+	toColumn: Contratos.COD_TITULO
+
+relationship 487ece1f-9c3e-4742-86df-36be35621e9a
+	fromColumn: CanaisTitulos.nome
+	toColumn: Canais.nome
+
+relationship 85cfec5f-ef56-45c9-bef9-1200a83e5da7
+	fromColumn: Custos.Faixa
+	toColumn: Faixa.Faixa
+
+relationship 8c2d6a06-0e17-4ff0-869e-cad072907a64
+	fromColumn: Consumos.FAIXA
+	toColumn: Faixa.Faixa
+
+relationship f3c161e6-ea8f-4138-9fb9-649057edfd1f
+	fromColumn: OrcamentoCompras.codigo
+	toColumn: Areas.codigo
+
+relationship dfa5efa0-6831-4242-a384-c30e3a1bab10
+	fromColumn: OrcamentoCompras.Data
+	toColumn: Date.Date
+
+relationship 8f85b54e-8cc6-411d-aee7-2b0a6acc7fc2
+	fromColumn: Contratos.COD_CANAL
+	toColumn: 'Canal Compra'.codigo
+
+relationship 1a214760-251d-4412-87ba-a3f889325ebd
+	fromColumn: OrcamentoCompras.cod_canal
+	toColumn: 'Canal Compra'.codigo
+
+relationship 605f67b3-7df7-4569-acd3-308cd54ed797
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Mes-Ano
+	toColumn: LocalDateTable_82d3aef1-caad-4e80-91e7-fd2f4fe88acf.Date
+
+relationship bd6fbe63-754e-466a-9000-224cd3cb688c
+	fromColumn: Contratos.COD_CONTRATO_PLANO
+	toColumn: Plano_Auxiliar.COD_CONTRATO_PLANO
+
+relationship fb6620ea-f2f4-4cbf-b56e-f42fb3dbbaf3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Date
+	toColumn: LocalDateTable_fac7d48a-ceb4-4a15-a62e-65dcaa55cc44.Date
+
+relationship 172bb244-0397-4837-b895-e93bb98364d0
+	fromColumn: Objetivo.Date
+	toColumn: Calendario.Date
+
+relationship 350aca14-9258-4022-8847-3a67ccbe0976
+	fromColumn: Consumos.DATA_CONSUMO
+	toColumn: Calendario.Date
+
+relationship 7c9f8a1a-5525-41a7-9ad2-a2b7db2b7a2f
+	fromColumn: Custos.DATA
+	toColumn: Calendario.Date
+
+relationship ce8c4d92-7fb0-49f3-be7b-3132b51dd902
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Date Parcela'.Date
+	toColumn: LocalDateTable_a70ecc83-4074-4673-aa4c-efbc27a13bc6.Date
+
+relationship 1628975c-75e6-43d4-b189-0f9363803fd6
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Orcamento_Exibcao.Data_Inicio_Grelha
+	toColumn: LocalDateTable_732dadee-ca89-43e7-bbcd-f8f73495d6da.Date
+
+relationship a4341692-5a7c-4ddf-8cdf-41b23e2e536d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Orcamento_Exibcao.Data_Fim_Grelha
+	toColumn: LocalDateTable_b9bbd487-3b00-481e-b2b4-9ecfc99faeac.Date
+
+relationship 300a2f20-28aa-49a6-8faa-a74c97e96845
+	fromColumn: Orcamento_Exibcao.DataEmissao
+	toColumn: 'Date Cons'.Date
+
+relationship ed29a7c5-9cb5-474b-80e9-47bcf313f1c7
+	fromColumn: Orcamento_Exibcao.Cod_Canal
+	toColumn: Canais.codigo
+
+relationship d074c98f-5497-43d6-941a-05e339b19409
+	fromColumn: Orcamento_Exibcao.Area
+	toColumn: Areas.codigo
+
+relationship ac4632dc-b026-4a0c-8f1e-997fa2522ee8
+	fromColumn: Contratos.NUMERO_PROCESSO
+	toColumn: Processo_Auxiliar.Processo
+
+relationship dc1f2070-3927-4d17-826c-80803e9e73b7
+	fromColumn: Consumos.NUMERO_PROCESSO
+	toColumn: Processo_Auxiliar.Processo
+
+relationship 38b62548-a971-47d3-9397-df5dc32ca251
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Date Exp'.Date
+	toColumn: LocalDateTable_f6858966-5fce-4b65-a284-a3dcd41106b3.Date
+
+relationship 60b14b3d-b407-40cc-ade5-e557144f54ad
+	fromColumn: Contratos.DATA_FIM_TITULO
+	toColumn: 'Date Exp'.Date
+
+relationship a0b5a10c-2358-46c8-90fd-4a7c87333971
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Compromissos.DATA_REGISTO
+	toColumn: LocalDateTable_7714158d-f21e-4b38-98d1-10e22c8e674b.Date
+
+relationship 82499f0d-777e-43dd-98ee-b61b70258666
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Compromissos.DATA_COMPROMISSO
+	toColumn: LocalDateTable_52c082af-e79d-4775-b88b-28a452e2d37c.Date
+
+relationship 467d9ba7-0720-4225-bc9c-f8a60a08a82a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Compromissos.DATA_APROVACAO
+	toColumn: LocalDateTable_f8685bd6-6ad2-4462-9780-e2f1e50b8604.Date
+
+relationship ee75908e-da66-45d1-8314-ff195cbb8ad0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Compromissos.DATA_CONCLUSAO
+	toColumn: LocalDateTable_b8086c66-20c3-4173-b357-d235ec81ca43.Date
+
+relationship 96de7e25-a551-4473-8d18-d247a8479b8b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Compromissos.DATA_EXECUCAO
+	toColumn: LocalDateTable_9dfc61e4-b757-4bad-921e-2910ab3faec8.Date
+
+relationship 951eb59f-af23-4c0e-9951-da3889d3c5ab
+	fromColumn: Compromissos.COD_MOEDA
+	toColumn: moedas.cod_moeda
+
+relationship 9a98e8d9-aa7b-401b-b6a6-3a708e98c3a1
+	fromColumn: Compromissos.COD_CANAL
+	toColumn: Canais.codigo
+
+relationship e3f0d5a4-808c-4b92-ae03-fa4a7321d254
+	fromColumn: Compromissos.COD_AREA
+	toColumn: Areas.codigo
+
+relationship 70d914bd-db13-436b-9faf-971324a59c17
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PeriodoExcecao.DataInicio
+	toColumn: LocalDateTable_bd6d1c38-9cae-4466-a9c1-faf30f46d5be.Date
+
+relationship 68f32266-c6ce-441a-9558-bb96f8c63227
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PeriodoExcecao.DataFim
+	toColumn: LocalDateTable_b50d2966-0193-4589-8f93-9695713171ba.Date
+
+relationship a96a2a4a-8f19-46e8-9903-29fa59af9589
+	fromColumn: PeriodoExcecao.codTitulo
+	toColumn: Titulos.CodTitulo
+
+relationship 5fdbbfae-1645-4a09-8aae-08534ca7df88
+	fromColumn: PeriodoExcecao.Cod_Canal
+	toColumn: Canais.codigo
+
+relationship add520f9-4fa3-4b75-b170-2faf2a6a1baa
+	joinOnDateBehavior: datePartOnly
+	fromColumn: PlanFormatos.Data
+	toColumn: LocalDateTable_2772902d-d07c-497e-922e-8931b0e3e335.Date
+
+relationship 334eeef8-0577-4d94-826e-25080155f720
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.DATA_CONTRATO
+	toColumn: LocalDateTable_1a34a73e-6ace-47ca-9db2-a45f03d463b3.Date
+
+relationship 19cb40eb-3d0d-496a-94bb-160ca2a0a00f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Consumos.data_compra
+	toColumn: LocalDateTable_e86d8f3f-fc28-489b-a3b5-3c93e018bee9.Date
+
+relationship c3b71c98-b207-4c5a-9b43-61ed9c313d23
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Date Cons'.Date
+	toColumn: LocalDateTable_4f4aa587-3c15-418a-90f7-407219ea3279.Date
+
+relationship f4ece1f2-a4c4-499c-9c94-919eb3865b3d
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Date.Date
+	toColumn: Calendario.Date
+
+relationship 805d1eae-41ee-4da2-9ce7-74723f16f047
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Consumos.'Data inicio_titulo'
+	toColumn: LocalDateTable_5107ff97-2a86-4201-bf05-875381bad6db.Date
+
+relationship a57547f0-8129-492b-bd71-34758cd8a2e8
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Date_Existencias.Date
+	toColumn: 'Date Cons'.Date
+
+relationship f297f6dc-a64e-4152-9c96-5c7861d1ed5c
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Date_Existencias.Date
+	toColumn: Date.Date
+
+relationship b836bba8-2bd5-4add-ac61-a6896f275ed0
+	fromColumn: Contratos.COD_CANAL
+	toColumn: 'Canais Existencias'.codigo
+
+relationship bcf011ba-4e49-43f7-aab1-978fcef4dd83
+	fromColumn: Consumos.Cod_Area
+	toColumn: Areas.codigo
+
+relationship 36d4399d-c364-4152-a20d-6bfeed838505
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Titulos.data_inicio_acontecimento
+	toColumn: LocalDateTable_26859345-32e2-40b9-b967-f1bd31e85782.Date
+
+relationship 828b4c57-b038-42da-aef3-7ba47758a65a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Titulos.data_fim_acontecimento
+	toColumn: LocalDateTable_670ed1ae-73ef-499b-808c-c7b735f4e762.Date
+
+relationship 35e8323a-3ecd-4147-a070-3440d6aa95f8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Titulos.data_cria
+	toColumn: LocalDateTable_bb1ef926-a9b7-49a6-8311-c4c5ac8254e9.Date
+
+relationship 24d3e7fc-a002-478e-8886-38ce4f960034
+	fromColumn: Contratos.COD_TITULO
+	toColumn: Titulos.CodTitulo
+
+relationship 55b0df75-85ed-4bca-b9d3-dc50bfedbdbe
+	fromColumn: Titulos.genero
+	toColumn: Catalogo.cod_catalogo
+
+relationship 043b57b5-8b9a-4903-b2e2-522ee4b22ffa
+	fromColumn: Compromissos.Cod_Titulo
+	toColumn: Titulos.CodTitulo
+
+relationship 659cfa8b-fa94-49aa-921a-83bbbf2962df
+	isActive: false
+	fromColumn: Custos.NumeroProcesso
+	toColumn: Processo_Auxiliar.Processo
+
+relationship 036fcbd5-807e-4372-9485-35c566ca97c7
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: PlanFormatos.NUMERO_PROCESSO
+	toColumn: Processo_Auxiliar.Processo
+
+relationship 665bf9f4-592e-4142-a3f6-30c750b11b87
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: PROGRAMAS_CASTS_DATAS.Numero_Processo
+	toColumn: Processo_Auxiliar.Processo
+
+relationship 0fcdc4b6-273a-4370-a1fc-c1a44137767c
+	fromColumn: Contratos.DATA_COMPRA
+	toColumn: 'Date Cons'.Date
+
+relationship a990666d-432c-4f15-bac1-c61ddc214b02
+	fromColumn: Consumos.Cod_Distribuidor
+	toColumn: Distribuidores.CodDistribuidor
+
+relationship 336b820c-7bc1-4b94-affb-d62b58ed7fa3
+	fromColumn: Consumos.COD_CONTRATO
+	toColumn: Contrato_Auxiliar.COD_CONTRATO
+
+relationship 3aa9389e-b372-4133-82ed-b94db7688dc1
+	fromColumn: Contratos.COD_CONTRATO
+	toColumn: Contrato_Auxiliar.COD_CONTRATO
+
+relationship 35230e12-91a6-4a36-9220-28081106c9c4
+	fromColumn: Consumos.Cod_Contrato_Plano
+	toColumn: Plano_Auxiliar.COD_CONTRATO_PLANO
+
+relationship 3f54fcaa-dad1-4820-8950-4500471d43d9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Contratos.'Ultima Exibicao'
+	toColumn: LocalDateTable_00a1f630-853a-485b-9202-f55dfeb837e3.Date
+
+relationship 084fc188-5aa5-4a6f-8c1b-f43f0ead17dc
+	fromColumn: Consumos.Cod_canal_compra
+	toColumn: 'Canal Compra'.codigo
+
+relationship 0583228a-c997-495d-b7c7-887190ab7031
+	fromColumn: Consumos.'Data fim_titulo'
+	toColumn: 'Date Exp'.Date
+
+relationship 3d3fc746-ae97-44f9-a912-98366dd2fb6c
+	fromColumn: Consumos.Cod_canal_compra
+	toColumn: 'Canais Existencias'.codigo
+
+relationship 2aeb353b-dcdf-4c62-87c0-b1ca8c088faa
+	isActive: false
+	fromColumn: Consumos.COD_CANAL
+	toColumn: 'Canais Existencias'.codigo
+
+relationship fa0c8920-d6db-4729-b7b1-900c56ec8609
+	fromColumn: Consumos.Cod_Contrato_Tipo
+	toColumn: T_Contratos.TipoContrato
+
+relationship 76f2eba7-ca64-4660-a1a7-62793435b4fc
+	fromColumn: Contratos.descricao_pais
+	toColumn: Paises.descricao_pais
+
+relationship 8a15cf3d-b646-485f-b9d4-5e9bda3c53a7
+	fromColumn: Consumos.descricao_pais
+	toColumn: Paises.descricao_pais
+
+relationship c79bf66a-cec8-4923-951d-f6647e332074
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Titulos.DataFim
+	toColumn: LocalDateTable_17cd687d-a761-4546-a335-c6e02e27c0bf.Date
+
+relationship 8c19d4d7-5861-4fe2-ab80-35aa84beddee
+	fromColumn: Custos.codTitulo
+	toColumn: Titulos.CodTitulo
+

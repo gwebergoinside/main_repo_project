@@ -1,0 +1,31 @@
+table Utilizadores
+	lineageTag: dbf92df4-0977-4a59-a4bd-eeffbdb1b38d
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: c4053b27-b8da-48f6-b275-d4f392d38da7
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: e3f36f20-328a-44ca-87e4-c6a653b31eba
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Utilizadores-545cdf08-2e13-48dc-b664-9d0381e9439a = m
+		mode: import
+		queryGroup: 'Operação Comercial'
+		source =
+				let
+				    Source = Sql.Database(Server, BD, [Query="Select#(lf)utiId as Id,#(lf)UtiNome as Nome#(lf)from utilizadores"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

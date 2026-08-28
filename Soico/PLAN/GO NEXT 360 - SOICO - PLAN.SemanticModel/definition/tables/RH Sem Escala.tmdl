@@ -1,0 +1,93 @@
+table 'RH Sem Escala'
+	lineageTag: f00835da-2c18-4da1-ba39-614fe70de660
+
+	column idPessoa
+		formatString: 0
+		lineageTag: 1f9cd685-7e39-4f88-b9af-8efa12ec6ef4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [idPessoa]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Calendario
+		formatString: General Date
+		lineageTag: 141fb69f-c375-4ade-a78e-334fe475699c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Calendario]
+
+		variation Variation
+			isDefault
+			relationship: 29e17a15-d22b-42f6-aa57-01ccd369afde
+			defaultHierarchy: LocalDateTable_daf24e58-08d9-4013-b670-0790217198ad.'Hierarquia de Datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column idref
+		formatString: 0
+		lineageTag: 79b8b6c2-4480-4b74-aa17-cf6f7a0a781b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [idref]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Result
+		lineageTag: 1b9b61e7-61d5-4d08-84c7-e5b70822e569
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Result]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinutosPlaneados
+		formatString: 0
+		lineageTag: cae2eb81-3f0f-4ea3-a755-bcaed1e297c1
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MinutosPlaneados]
+
+		annotation SummarizationSetBy = Automatic
+
+	column idCC = LOOKUPVALUE( Pessoas[IdCentroCusto], Pessoas[Id], 'RH Sem Escala'[IdPessoa] )
+		formatString: 0
+		lineageTag: 0fb904dd-0b54-4fac-9a5b-5d1fc66c87d2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'RH Sem Escala-0546c32a-02fc-4660-a145-0f87a0a68903' = calculated
+		mode: import
+		source = ```
+				
+				FILTER(
+				ADDCOLUMNS
+				            (NATURALLEFTOUTERJOIN(
+				                SELECTCOLUMNS(
+				                        CROSSJOIN(SUMMARIZECOLUMNS('Horarios'[IdPessoaHorarios]),'Calendario') ,
+				                        "idPessoa" , 'Horarios'[IdPessoaHorarios] ,
+				                        "Calendario" , DATE(YEAR('Calendario'[Date]),MONTH('Calendario'[Date]),DAY('Calendario'[Date]))
+				                        )
+				                ,
+				                SELECTCOLUMNS(
+							'Horarios'
+							,"idPessoa",[IdPessoaHorarios]				
+							,"Calendario", DATE(YEAR([Data]),MONTH([Data]),DAY([Data]))
+				            ,"idref",[IdHorariosRefs]
+				            ,"MinutosPlaneados", [Diff_1_Min]+[Diff_2_Min]+[Diff_3_Min]
+				            --,"idCC", [id] // Com coluna de LookupValue
+							)                    
+				                    ),
+				             "Result",
+				             IF(
+				                ISBLANK( [MinutosPlaneados] ) && ( ISBLANK([idref]) || [idref] = 1 ) ,
+				                 "Sem Escala",
+				                 "OK")
+				                ),
+				                ISBLANK( [MinutosPlaneados] ) && ( ISBLANK([idref]) || [idref] = 1 )
+				)
+				```
+
+	annotation PBI_Id = f15595b7b6cf4893be9dba36819bd046
+
