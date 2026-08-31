@@ -91,7 +91,7 @@ git commit -m "update: descrição da alteração"
 
 # 5. Enviar para o repositório remoto
 git push origin master
-```/groups/752cd79a-ea1a-49af-9a79-c2e4fc1e2353/datasets/f7390f47-daa3-4b2c-8ccb-8c690fd6e343
+```
 
 ---
 
