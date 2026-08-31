@@ -1,0 +1,69 @@
+table 'Agencia Meios'
+	lineageTag: 6270275f-2ef5-45d3-86f5-0083d3a0b8b3
+
+	column entId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c2253b57-42c0-46a6-9f0d-b5609320792f
+		summarizeBy: none
+		sourceColumn: entId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agencia Meios'
+		dataType: string
+		lineageTag: 8f710855-8cda-41f8-bb35-47eb848b3156
+		summarizeBy: none
+		sourceColumn: Agencia Meios
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agência Meios C/ Encomendas' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    YEAR( MAX( Encomendas[Data Exibição] ) )
+			    ,FILTER(
+			        ALL( Encomendas )
+			        ,Encomendas[AgenciaMeiosId] = 'Agencia Meios'[entId]
+			    )
+			)
+			// LOOKUPVALUE( 
+			//     Encomendas[UltimaEncomenda]
+			//     ,Encomendas[AgenciaMeiosId]
+			//     ,'Agencia Meios'[entId]
+			// )
+			VAR _2 =
+			IF( _1 = BLANK(), 0, _1 )
+			RETURN
+			IF( _2 = 0, "OUTROS", 'Agencia Meios'[Agencia Meios] )
+			```
+		isHidden
+		lineageTag: 54751ab1-f9c6-4fa8-9c9f-c944ca4ebc18
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agência de Meios' = IF( 'Agencia Meios'[Agencia Meios] = "NO APLICA", "DIRECTOS", 'Agencia Meios'[Agencia Meios] )
+		lineageTag: 40a87bb1-16e5-4acf-bc7b-899cd7413a42
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Agencia Meios-a4b2e389-690e-4978-8814-f72ecc87f729' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)entId,#(lf)entNome#(lf)From#(lf)Entidades"]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"entNome", "Agencia Meios"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

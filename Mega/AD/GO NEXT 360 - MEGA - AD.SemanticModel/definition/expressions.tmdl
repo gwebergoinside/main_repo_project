@@ -1,0 +1,53 @@
+expression 'Classificação de Canais' =
+		let
+		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [CanCodigo = _t, Nome = _t, Tipo = _t, Meio = _t, Agrupador = _t, #"Ord Tipo" = _t, #"Ord Meio" = _t, #"Ord Agrupador" = _t]),
+		    #"Changed Type" = Table.TransformColumnTypes(Source,{{"CanCodigo", Int64.Type}, {"Nome", type text}, {"Tipo", type text}, {"Meio", type text}, {"Agrupador", type text}, {"Ord Tipo", Int64.Type}, {"Ord Meio", Int64.Type}, {"Ord Agrupador", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 49b043af-ae1f-4e95-bd15-cd49e2ecfdd9
+	queryGroup: Manual
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression BD = "gonextad" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 7ef836ac-eeeb-4db0-a191-22008c154987
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+expression 'lista de imagem' =
+		let
+		    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Logo", "Cliente "}),
+		    Nome = #"Removed Columns"[Nome]
+		in
+		    Nome
+	lineageTag: 9b0e5ddd-0ff8-4496-8c94-ba6c1660d643
+	queryGroup: BD
+
+expression ServerP = "mega-producao.c6upqumvij3c.sa-east-1.rds.amazonaws.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 43c7cdc9-1197-4d7d-8be5-cb8ccf45edd4
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+expression Objetivo_Temp =
+		let
+		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("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", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [canCodigo = _t, tipPubId = _t, negObjMes = _t, negObjAno = _t, #"Objetivo Liquido" = _t, #"Objetivo Bruto" = _t, Data = _t]),
+		    #"Changed Type" = Table.TransformColumnTypes(Source,{{"canCodigo", Int64.Type}, {"tipPubId", Int64.Type}, {"negObjMes", Int64.Type}, {"negObjAno", Int64.Type}, {"Objetivo Liquido", Int64.Type}, {"Objetivo Bruto", Int64.Type}, {"Data", type date}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Data"})
+		in
+		    #"Removed Columns"
+	lineageTag: 05a6df73-bc75-4b60-a811-949d92a32663
+	queryGroup: Manual
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

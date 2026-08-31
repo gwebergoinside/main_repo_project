@@ -1,0 +1,54 @@
+table OrdemPubClassificacao
+	lineageTag: 06df223e-e6bc-42af-9ee9-d0483279e960
+
+	column ordPubClaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3c542606-fd8e-4adf-a006-5119cdd3a318
+		summarizeBy: none
+		sourceColumn: ordPubClaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubClaDescricao
+		dataType: string
+		lineageTag: 18d1f0c9-f1d2-4a63-8225-1b00942aeb76
+		summarizeBy: none
+		sourceColumn: ordPubClaDescricao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubClaColuna1
+		dataType: string
+		lineageTag: a624ad76-a8ab-4bac-bb35-3bf4ce1af09d
+		summarizeBy: none
+		sourceColumn: ordPubClaColuna1
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubClaColuna2
+		dataType: string
+		lineageTag: 7f27f16e-75f6-4147-a775-2b25eca0c18b
+		summarizeBy: none
+		sourceColumn: ordPubClaColuna2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OrdemPubClassificacao-3b779a0f-653f-4aa7-875b-8c52b65638d4 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)ordPubClaId,#(lf)ordPubClaDescricao,#(lf)ordPubClaColuna1,#(lf)ordPubClaColuna2#(lf)From#(lf)OrdemPubClassificacao"])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

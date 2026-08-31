@@ -1,0 +1,57 @@
+table dim_via
+	lineageTag: 14757235-e80b-488c-acd9-bebb7d4ed897
+
+	column via
+		dataType: string
+		lineageTag: 30b4ab8e-7411-4842-a6ca-18ceef6faeaf
+		summarizeBy: none
+		sourceColumn: via
+
+		annotation SummarizationSetBy = Automatic
+
+	column descricao_via
+		dataType: string
+		lineageTag: f95ec032-cddc-453c-a8c9-9c6c4941210e
+		summarizeBy: none
+		sourceColumn: descricao_via
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_via
+		dataType: int64
+		formatString: 0
+		lineageTag: f2e5c76b-3aa1-4157-a9f5-31e77578fd5a
+		summarizeBy: none
+		sourceColumn: flag_via
+
+		annotation SummarizationSetBy = Automatic
+
+	column ViaAsRun
+		dataType: string
+		lineageTag: 44491283-f737-4b0f-9ffa-cf29f45556f2
+		summarizeBy: none
+		sourceColumn: ViaAsRun
+
+		annotation SummarizationSetBy = Automatic
+
+	column ViaAsRunBackUp
+		dataType: string
+		lineageTag: 1bf189b5-313c-4842-997c-074e907fadd9
+		summarizeBy: none
+		sourceColumn: ViaAsRunBackUp
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_via = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT cod_via via, descricao_via, flag_via, ViaAsRun, ViaAsRunBackUp FROM vias",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

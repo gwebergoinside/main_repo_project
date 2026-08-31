@@ -1,0 +1,50 @@
+table Valor
+	isHidden
+	lineageTag: 19716a34-f1d3-48d4-bec1-ada32798747a
+
+	measure 'Selected SalesParameter' =
+			
+			MIN ( 'Valor'[ID] )
+		formatString: 0
+		isHidden
+		lineageTag: 4c24aa61-285a-4856-ae80-7958704bf7e3
+
+		changedProperty = IsHidden
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ca9df490-6898-47b2-851a-7b8a69abe3b8
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parameter
+		dataType: string
+		isHidden
+		lineageTag: 6378d3ce-8fb1-4370-aa4f-842c8d384327
+		summarizeBy: none
+		sourceColumn: Parameter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Valor-7e338088-2fec-4dd4-bd56-cb32b019b6ef = m
+		mode: import
+		queryGroup: Manual
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlTSUQpLzFFwKiotyVeK1YlWMoKK+GQWlmamQMSMoWJuiSWlRYmHlx9eDBE3wRRXSM7PVXDOLypKRSgzxaKsOBVVWSwA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ID = _t, Parameter = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"ID", Int64.Type}, {"Parameter", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

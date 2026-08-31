@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
+  "version": "4.0",
+  "datasetReference": {
+    "byConnection": {
+      "connectionString": "Data Source=\"powerbi://api.powerbi.com/v1.0/myorg/GO NEXT 360 - MEGA\";initial catalog=\"GO NEXT 360 - MEGA - AD\";access mode=readonly;integrated security=ClaimsToken;semanticmodelid=c8d08ddf-dafd-4c19-8a4a-ed9a2a04a2f2"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+table AnoUpdate
+	isHidden
+	lineageTag: 0467ac77-998b-4203-8cbd-e7e0d9f78d5b
+
+	column AnoUpdate
+		dataType: string
+		isHidden
+		lineageTag: de89f32e-22f0-4f84-8120-2cee3e4def27
+		summarizeBy: none
+		sourceColumn: AnoUpdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AnoUpdate-2f2305c3-5979-45c4-ab5b-43a87156e94b = m
+		mode: import
+		queryGroup: BD
+		source = "5" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+

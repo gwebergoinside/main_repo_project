@@ -514,5 +514,5 @@ table f_Incidencias
 				in
 				    #"Changed Type2"
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 

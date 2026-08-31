@@ -1,0 +1,63 @@
+expression fat_vGrelha_Lms4bi = ```
+		let
+		    Texto = "SELECT 
+		              *
+		            , YEAR(Data) * 10000 + MONTH(Data) * 100 + DAY(Data) AS sk_tempo  
+			    FROM vGrelha_Lms4bi
+		        WHERE Data > DATEADD(YEAR, -3, DATEFROMPARTS(YEAR(GETDATE()), 1, 1))
+		        ORDER BY Data DESC",
+		    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto]),
+		    #"Remover Data" = Table.RemoveColumns(Fonte,{"Data"}),
+		    #"Duplicar Horários" = Table.DuplicateColumn(Table.DuplicateColumn(
+		        #"Remover Data"
+		            , "Hora", "Hora Frames")
+		            , "duracao", "duracao Frames"),
+		    Horarios = let FPS_num = Number.FromText(FPS) in Table.TransformColumns(#"Duplicar Horários", {{"Hora", each Time.From(Number.From(#duration(0, 0, 0, Value.Divide(_, FPS_num)))), Time.Type}, {"duracao", each Time.From(Number.From(#duration(0, 0, 0, Value.Divide(_, FPS_num)))), Time.Type}}),
+		    #"Add DayPart" = Table.AddColumn(Horarios, "daypart", each
+		            if [Hora] <= #time(6,0,0) then "Overnight" else
+		            if [Hora] <= #time(9,0,0) then "Early Morning" else
+		            if [Hora] <= #time(12,0,0) then "Morning Daytime" else
+		            if [Hora] <= #time(18,0,0) then "Afternoon Daytime" else
+		            if [Hora] <= #time(20,0,0) then "Early Fringe" else
+		            if [Hora] <= #time(23,0,0) then "Prime Time" else
+		            "Late Night", type text)
+		in
+		    #"Add DayPart"
+		```
+	lineageTag: fe454a97-6848-4da4-999b-17e23e9b4716
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression Servidor =
+		let
+		    Fonte = "sql.saas.goinside.co,1439" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text]
+		in
+		    Fonte
+	lineageTag: 6fb7556b-f959-4b78-9a70-d166bdab0003
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+
+expression Databasee =
+		let
+		    Fonte = "gmediatx" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text]
+		in
+		    Fonte
+	lineageTag: e0b3425b-cb55-4a1c-badf-685685dc2366
+
+	annotation PBI_ResultType = Text
+
+expression FPS =
+		let
+		    Fonte = "60" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text]
+		in
+		    Fonte
+	lineageTag: cfe54469-9619-4100-b69c-f7a8a1df4bef
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+

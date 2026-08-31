@@ -1,0 +1,54 @@
+table d_Neg_TaxaMultiProduto
+	isHidden
+	lineageTag: 7b5da83e-29b3-44cc-b520-9e35c0201871
+
+	column negPerId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 128e0b2e-8afd-4717-9f9e-f79faae6b2d0
+		summarizeBy: none
+		sourceColumn: negPerId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column multiProTaxa
+		dataType: double
+		isHidden
+		lineageTag: 9cb79a67-50e6-4b3c-b016-29624378adcd
+		summarizeBy: none
+		sourceColumn: multiProTaxa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column multiProQuantidade
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 565988b6-853e-4195-8948-f9de5055e6c0
+		summarizeBy: none
+		sourceColumn: multiProQuantidade
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Neg_TaxaMultiProduto-71599c71-ade9-4ffe-b1ad-f114f9c8d4a6 = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    negPeriodosTaxaMultiProduto.negPerId,#(lf)    negPeriodosTaxaMultiProduto.multiProTaxa,#(lf)    negPeriodosTaxaMultiProduto.multiProQuantidade#(lf)From#(lf)    negPeriodosTaxaMultiProduto"])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

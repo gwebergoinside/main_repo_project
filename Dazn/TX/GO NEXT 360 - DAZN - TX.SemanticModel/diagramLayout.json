@@ -1,0 +1,165 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 917.8414922807566,
+        "y": 75.550912292861412
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 750,
+            "y": 81.530017978404658
+          },
+          "nodeIndex": "dim_areas",
+          "nodeLineageTag": "63abda47-da7f-4d1d-bf3a-202ca0e1aafd",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 2171.7137638179756,
+            "y": 815.37789970396238
+          },
+          "nodeIndex": "dim_calendario",
+          "nodeLineageTag": "2818acc5-f583-447b-8778-0093dac8ddc5",
+          "size": {
+            "height": 240,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 419.92681170228536,
+            "y": 831.47120611891137
+          },
+          "nodeIndex": "dim_catalogo",
+          "nodeLineageTag": "babdca1c-c921-476b-89f8-97f2e82e0b2a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1305.739218132127,
+            "y": 95.042884963467486
+          },
+          "nodeIndex": "dim_emissao_tipo",
+          "nodeLineageTag": "bff012ba-d31d-411e-bb1e-cafd18a07e35",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1073.5046680374196,
+            "y": 355.70155670394803
+          },
+          "nodeIndex": "dim_Plan_Formatos",
+          "nodeLineageTag": "9bd62051-c396-494d-bde5-5c3bc1316765",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 993.3172135975127,
+            "y": 630.71263475063938
+          },
+          "nodeIndex": "dim_Programas",
+          "nodeLineageTag": "4f24a262-25d1-4ae7-8fc4-7c775d03bde3",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1729.9358704947047,
+            "y": 936.628904330487
+          },
+          "nodeIndex": "dim_T_Canais",
+          "nodeLineageTag": "c9f931ae-55de-4954-a2cd-88bb29661edc",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 2176.1071279082594,
+            "y": 160.98551708789151
+          },
+          "nodeIndex": "dim_Tipo_Item",
+          "nodeLineageTag": "6883a4bb-e50c-4af8-a22d-0c19d95dfb1d",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1735.9839625996819,
+            "y": 10.643331585145294
+          },
+          "nodeIndex": "dim_via",
+          "nodeLineageTag": "14757235-e80b-488c-acd9-bebb7d4ed897",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1509.9721724125741,
+            "y": 493.04416889514471
+          },
+          "nodeIndex": "fat_vGrelha_Lms",
+          "nodeLineageTag": "35fb7c42-e75c-45e2-ba1f-d09fc12493b7",
+          "size": {
+            "height": 310,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 69.813348393128081
+          },
+          "nodeIndex": "Metricas",
+          "nodeLineageTag": "ad25ceda-2a6a-4d37-892f-feb989cf62e0",
+          "size": {
+            "height": 165.18725759886559,
+            "width": 234
+          },
+          "zIndex": 9
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 78.35775765812042,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

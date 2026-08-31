@@ -1,0 +1,305 @@
+table d_Neg_Característica
+	isHidden
+	lineageTag: b71d6a14-8843-4d93-91b9-98aebf5a7883
+
+	column negId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: de02f974-76f2-48fb-bb91-d5bba862546d
+		summarizeBy: count
+		sourceColumn: negId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column carHoraInicio
+		dataType: string
+		isHidden
+		lineageTag: 795a7e44-31b6-4ae5-8eba-0485204705a2
+		summarizeBy: none
+		sourceColumn: carHoraInicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column carHoraFim
+		dataType: string
+		isHidden
+		lineageTag: 3367adf4-dd17-4a36-bd2d-da07077baacc
+		summarizeBy: none
+		sourceColumn: carHoraFim
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column carValor
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: a19cc9f2-35ec-4550-8ed6-7d334d9029d1
+		summarizeBy: sum
+		sourceColumn: carValor
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column carTipoItem
+		dataType: string
+		isHidden
+		lineageTag: b91ac3b2-f559-4dbe-b91f-bed14874e082
+		summarizeBy: none
+		sourceColumn: carTipoItem
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column carDias
+		dataType: string
+		isHidden
+		lineageTag: 5bef539a-cd8b-4d5c-914a-219312dcab78
+		summarizeBy: none
+		sourceColumn: carDias
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column carDataInicio
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 555ec678-fa7b-41d9-b496-7ac510c66bbc
+		summarizeBy: none
+		sourceColumn: carDataInicio
+
+		variation Variation
+			isDefault
+			relationship: 677eaa90-c72e-4ceb-8441-0e8bc44c5015
+			defaultHierarchy: LocalDateTable_1f0842dc-60c0-4465-8dfc-2960fbdffd18.'Date Hierarchy'
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column carDataFim
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: e010715a-36f7-4f9c-88c3-950c53f52fed
+		summarizeBy: none
+		sourceColumn: carDataFim
+
+		variation Variation
+			isDefault
+			relationship: 0f4e3a9d-0854-482e-a302-164aff5d99fa
+			defaultHierarchy: LocalDateTable_e9564673-7ccd-464f-85e9-50938f65ee86.'Date Hierarchy'
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 64973ef5-6eab-464b-8e4a-cc0cf6986669
+		summarizeBy: count
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: dd327971-1cff-4175-83c7-c312765e0ac4
+		summarizeBy: none
+		sourceColumn: tipEcrId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column carEcrCodigo
+		dataType: string
+		isHidden
+		lineageTag: 6382ac2a-d047-4ebc-9868-d05a4dc6df6d
+		summarizeBy: none
+		sourceColumn: carEcrCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column priId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6356d4fa-287b-4d8c-97c0-4f5738dadfe0
+		summarizeBy: none
+		sourceColumn: priId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora_inicio-Formatada = ```
+			
+			VAR Duration = 'd_Neg_Característica'[carHoraInicio] *60
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		isHidden
+		lineageTag: 55915e7a-3b06-46c4-bc14-67b8eb2e80dd
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dias_format = ```
+			
+			var _seg=   If(  SEARCH("2",'d_Neg_Característica'[carDias],,0)>0, "2ª")
+			var _ter=   If(  SEARCH("3",'d_Neg_Característica'[carDias],,0)>0, "3ª")
+			var _qua=   If(  SEARCH("4",'d_Neg_Característica'[carDias],,0)>0, "4ª")
+			var _qui=   If(  SEARCH("5",'d_Neg_Característica'[carDias],,0)>0, "5ª")
+			var _sex=   If(  SEARCH("6",'d_Neg_Característica'[carDias],,0)>0, "6ª")
+			var _sab = If(SEARCH("S",'d_Neg_Característica'[carDias],,0)>0,"Sáb")
+			var _dom = If(SEARCH("D",'d_Neg_Característica'[carDias],,0)>0,"Dom")
+			
+			Return 
+			 Trim (COMBINEVALUES ( " ", _seg,_ter,_qua,_qui,_sex,_sab,_dom))
+			```
+		isHidden
+		lineageTag: 85dcb583-5fa5-4876-9eb6-932eb51d1ecc
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora_fim-Formatada = ```
+			
+			VAR Duration = 'd_Neg_Característica'[carHoraFim] *60
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		isHidden
+		lineageTag: 34630282-cb77-44fa-acfa-be2943b42b3a
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoItem_Desc =
+			SWITCH(
+			    TRUE(),
+			    'd_Neg_Característica'[carTipoItem] = "F", "Período Horário",
+			    'd_Neg_Característica'[carTipoItem] = "T", "Totalizador",
+			    'd_Neg_Característica'[carTipoItem] = "B", "Break",
+			    'd_Neg_Característica'[carTipoItem] = "I", "Índice",
+			     "Outro" )
+		isHidden
+		lineageTag: c7680f65-aca5-4079-901a-4b078f2ddba2
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1dbf7304-5daf-48ba-8bd5-43ea406d748e
+		summarizeBy: none
+		sourceColumn: negPerId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Neg_Característica-8b019737-da17-4b51-a766-e943cef075fb = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    caracteristica.negId,#(lf)    caracteristica.carHoraInicio,#(lf)    caracteristica.carHoraFim,#(lf)    caracteristica.carValor,#(lf)    caracteristica.carTipoItem,#(lf)    caracteristica.carDias,#(lf)    caracteristica.carDataInicio,#(lf)    caracteristica.carDataFim,#(lf)    caracteristica.tipPubId,#(lf)    caracteristica.tipEcrId,#(lf)    caracteristica.carEcrCodigo,#(lf)    caracteristica.priId,#(lf)    negociacao.negPerId#(lf)From#(lf)    caracteristica Inner Join#(lf)    negociacao On caracteristica.negId = negociacao.negId"])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

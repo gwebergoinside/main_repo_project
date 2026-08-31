@@ -1,0 +1,1233 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 1031.9999694824219,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1767.6665618794707,
+            "y": 2244.9457540512462
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 62
+        },
+        {
+          "location": {
+            "x": 1297.743021802323,
+            "y": 1724.5807535194886
+          },
+          "nodeIndex": "Canais",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 53
+        },
+        {
+          "location": {
+            "x": 3601.2050512747037,
+            "y": 1486.4694914666029
+          },
+          "nodeIndex": "GRP Simulador",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 74
+        },
+        {
+          "location": {
+            "x": 1440.3120441329966,
+            "y": 2181.373521265702
+          },
+          "nodeIndex": "GrupoCanais",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 54
+        },
+        {
+          "location": {
+            "x": 3990.2907505750341,
+            "y": 1486.4694914666029
+          },
+          "nodeIndex": "Mapeamento",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 56
+        },
+        {
+          "location": {
+            "x": 2162.4593296256844,
+            "y": 2646.168501669541
+          },
+          "nodeIndex": "Ocupacao",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 57
+        },
+        {
+          "location": {
+            "x": 2017.9477285332807,
+            "y": 1784.1529863050328
+          },
+          "nodeIndex": "Propostas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 58
+        },
+        {
+          "location": {
+            "x": 1866.4508925984439,
+            "y": 1456.3523470328953
+          },
+          "nodeIndex": "Variacao Receita",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 68
+        },
+        {
+          "location": {
+            "x": 2406.6291501501487,
+            "y": 2244.9457540512462
+          },
+          "nodeIndex": "Objetivos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 60
+        },
+        {
+          "location": {
+            "x": 5157.547848476026,
+            "y": 1510.4694914666029
+          },
+          "nodeIndex": "Alvos Var",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 75
+        },
+        {
+          "location": {
+            "x": 5935.7192470766877,
+            "y": 1534.4694914666029
+          },
+          "nodeIndex": "TipoCliente",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 49
+        },
+        {
+          "location": {
+            "x": 7881.1477435783418,
+            "y": 1546.4694914666029
+          },
+          "nodeIndex": "Table",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 50
+        },
+        {
+          "location": {
+            "x": 6324.8049463770185,
+            "y": 1534.4694914666029
+          },
+          "nodeIndex": "Titulos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 51
+        },
+        {
+          "location": {
+            "x": 1981.1055411063689,
+            "y": 1165.1335180451078
+          },
+          "nodeIndex": "Calendario comparativo",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 61
+        },
+        {
+          "location": {
+            "x": 394.79276774621349,
+            "y": 658.6145572647481
+          },
+          "nodeIndex": "Bonus",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 46
+        },
+        {
+          "location": {
+            "x": 1689.1158922248474,
+            "y": 0
+          },
+          "nodeIndex": "Negociacao",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 63
+        },
+        {
+          "location": {
+            "x": 394.79276774621349,
+            "y": 1051.160540617363
+          },
+          "nodeIndex": "OrdemPubClassificacao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 64
+        },
+        {
+          "location": {
+            "x": 1481.3631117569225,
+            "y": 550.17736358038485
+          },
+          "nodeIndex": "Produtos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 48
+        },
+        {
+          "location": {
+            "x": 1214.1803497873607,
+            "y": 1323.3602185588193
+          },
+          "nodeIndex": "Outros Custos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 79
+        },
+        {
+          "location": {
+            "x": 2428.2408849278304,
+            "y": 410.60665142928059
+          },
+          "nodeIndex": "d_Neg_Característica",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 65
+        },
+        {
+          "location": {
+            "x": 2428.2408849278304,
+            "y": 188.71579572107203
+          },
+          "nodeIndex": "d_Neg_TaxaMultiProduto",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 42
+        },
+        {
+          "location": {
+            "x": 440.2291650517991,
+            "y": 1783.0283477224689
+          },
+          "nodeIndex": "d_Neg_Cond_Neg",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 43
+        },
+        {
+          "location": {
+            "x": 2823.0336526740439,
+            "y": 1315.9864658826723
+          },
+          "nodeIndex": "d_Neg_Posicoes",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 44
+        },
+        {
+          "location": {
+            "x": 2656.0364280908711,
+            "y": 1792.5276934513015
+          },
+          "nodeIndex": "d_Neg_Audiencia",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 45
+        },
+        {
+          "location": {
+            "x": 2428.2408849278304,
+            "y": 914.35219239359617
+          },
+          "nodeIndex": "d_Neg_EcrDescricao",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 67
+        },
+        {
+          "location": {
+            "x": 1102.9889808593366,
+            "y": 553.97638079358148
+          },
+          "nodeIndex": "Multiprodutos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 66
+        },
+        {
+          "location": {
+            "x": 2033.4481171816167,
+            "y": 460.7927677462136
+          },
+          "nodeIndex": "d_Neg_Descontos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 70
+        },
+        {
+          "location": {
+            "x": 6713.8906456773493,
+            "y": 1534.4694914666029
+          },
+          "nodeIndex": "Valor",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 40
+        },
+        {
+          "location": {
+            "x": 859.34382076957979,
+            "y": 519.07918865859824
+          },
+          "nodeIndex": "Central",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 41
+        },
+        {
+          "location": {
+            "x": 454.27704619676229,
+            "y": 837.4267798011133
+          },
+          "nodeIndex": "FlagFaturacao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 69
+        },
+        {
+          "location": {
+            "x": 1496.0186244743204,
+            "y": 1202.7108062244067
+          },
+          "nodeIndex": "TipoNeg",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 78
+        },
+        {
+          "location": {
+            "x": 3212.1193519743738,
+            "y": 1460.4694914666029
+          },
+          "nodeIndex": "~Medidas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 39
+        },
+        {
+          "location": {
+            "x": 1243.8625816891895,
+            "y": 1014.769148539795
+          },
+          "nodeIndex": "Rappel",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 72
+        },
+        {
+          "location": {
+            "x": 5546.6335477763569,
+            "y": 1522.4694914666029
+          },
+          "nodeIndex": "images",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 8659.3191421790034,
+            "y": 1546.4694914666029
+          },
+          "nodeIndex": "TipoRappelComissao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 424.59481429493371,
+            "y": 1572.8664953629604
+          },
+          "nodeIndex": "Pacotes",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 38
+        },
+        {
+          "location": {
+            "x": 7102.97634497768,
+            "y": 1534.4694914666029
+          },
+          "nodeIndex": "Tipo_Taxas",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 76
+        },
+        {
+          "location": {
+            "x": 9048.4048414793342,
+            "y": 1558.4694914666029
+          },
+          "nodeIndex": "AlvoPadrao",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 9437.490540779665,
+            "y": 1558.4694914666029
+          },
+          "nodeIndex": "logo header",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 9826.5762400799958,
+            "y": 1558.4694914666029
+          },
+          "nodeIndex": "DuracaoBase",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 835.0219327980127,
+            "y": 2091.0817964757475
+          },
+          "nodeIndex": "Audiencias",
+          "nodeLineageTag": "22869a1e-2169-498c-8734-622956bb0ce8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 77
+        },
+        {
+          "location": {
+            "x": 10215.661939380325,
+            "y": 1558.4694914666029
+          },
+          "nodeIndex": "AlvoPadraoInvest",
+          "nodeLineageTag": "fa4d6133-9a25-4bfd-9495-dbd07c96d55b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 1580.9471273688882,
+            "y": 1784.1529863050328
+          },
+          "nodeIndex": "Encomendas",
+          "nodeLineageTag": "487f0557-de7d-46f9-9c81-8186b7bd6a9d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 819.3875820411472,
+            "y": 1630.2890287295338
+          },
+          "nodeIndex": "Executivos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 181.71638049859212,
+            "y": 249.6491447401369
+          },
+          "nodeIndex": "DayPart",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 576.50914824480583,
+            "y": 399.07918865859818
+          },
+          "nodeIndex": "Categoria",
+          "nodeLineageTag": "752e4a87-a3dc-4073-aaad-cd9f9593af0a",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 81
+        },
+        {
+          "location": {
+            "x": 2083.9086599710608,
+            "y": 26.471296144160846
+          },
+          "nodeIndex": "SectorAtividade",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 1638.655349435403,
+            "y": 893.45949411373067
+          },
+          "nodeIndex": "Faturacao",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 703.06709679328287,
+            "y": 230.28642091238459
+          },
+          "nodeIndex": "Entidade_Faturar",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 80
+        },
+        {
+          "location": {
+            "x": 176.59028368027293,
+            "y": 1620.8664953629604
+          },
+          "nodeIndex": "Agencia",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 171.70921667662606,
+            "y": 1909.6592631091739
+          },
+          "nodeIndex": "Descricao_Campanhas",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 548.80845678762307,
+            "y": 1341.49626098332
+          },
+          "nodeIndex": "FaixaHoraria",
+          "nodeLineageTag": "5c6bd435-c40f-4c73-9ae3-086a63c95d3c",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10604.747638680656,
+            "y": 1558.4694914666029
+          },
+          "nodeIndex": "AnoUpdate",
+          "nodeLineageTag": "0467ac77-998b-4203-8cbd-e7e0d9f78d5b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 789.58553549242708,
+            "y": 1026.9900233786527
+          },
+          "nodeIndex": "Agencia Meios",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 849.06981394297588,
+            "y": 807.87195640481173
+          },
+          "nodeIndex": "Alvo",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1586.3127733601552,
+            "y": 1435.7879857732751
+          },
+          "nodeIndex": "Anunciante",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 154.01568904140959,
+            "y": 1139.9268964208102
+          },
+          "nodeIndex": "Codigo Break",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4379.3764498753644,
+            "y": 1498.4694914666029
+          },
+          "nodeIndex": "Simulador % Ocupação",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7492.0620442780109,
+            "y": 1534.4694914666029
+          },
+          "nodeIndex": "Duracao",
+          "nodeLineageTag": "c2c4c9ec-bc70-404f-8e0d-21af4ba4c3aa",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10993.833337980986,
+            "y": 1558.4694914666029
+          },
+          "nodeIndex": "DuracaoBaseOther",
+          "nodeLineageTag": "667aefaa-a900-468b-bec0-8b5238f183c9",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4768.4621491756952,
+            "y": 1498.4694914666029
+          },
+          "nodeIndex": "Simulador Dur Ocupação",
+          "nodeLineageTag": "8f36c095-7168-491a-afbf-f36e98185536",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 927.14713157916333,
+            "y": 1323.315364515654
+          },
+          "nodeIndex": "Grupo",
+          "nodeLineageTag": "90d10fe1-3016-4aef-a06f-530628db8253",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1890.8113922205339,
+            "y": 1024.2160419921429
+          },
+          "nodeIndex": "Negociacao Detalhe",
+          "nodeLineageTag": "e16149a5-4a32-43f2-9c1e-33df20012b61",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 942.47001063106677
+          },
+          "nodeIndex": "Impressões",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11382.919037281317,
+            "y": 1558.4694914666029
+          },
+          "nodeIndex": "Tipo Anunciante",
+          "nodeLineageTag": "0ce83464-90a1-4cf5-a3b1-c8fd686dc61f",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1166.6021417956485,
+            "y": 2181.373521265702
+          },
+          "nodeIndex": "TipoPublicidade",
+          "nodeLineageTag": "05dd3c40-9175-4cbe-978a-1fa4cd0a9d6a",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11666.919037281317,
+            "y": 0
+          },
+          "nodeIndex": "Tipo Formato Faixa",
+          "nodeLineageTag": "8f295d2a-5fda-44d2-84b1-aa5355073d5c",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 12234.919037281317,
+            "y": 0
+          },
+          "nodeIndex": "Localized Labels",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 12518.919037281317,
+            "y": 0
+          },
+          "nodeIndex": "Translated Localized Labels",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 12802.919037281317,
+            "y": 0
+          },
+          "nodeIndex": "SetUserCulture",
+          "nodeLineageTag": "11d92905-1d04-47c3-83ce-f448bb80ab67",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 10,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 26
+          },
+          "nodeIndex": "GRP Simulador",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 774.1,
+            "y": 26
+          },
+          "nodeIndex": "Mapeamento",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1548.2,
+            "y": 50
+          },
+          "nodeIndex": "Alvos Var",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1935.3,
+            "y": 74
+          },
+          "nodeIndex": "TipoCliente",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2322.4,
+            "y": 86
+          },
+          "nodeIndex": "Table",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3096.5,
+            "y": 74
+          },
+          "nodeIndex": "Titulos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3483.5,
+            "y": 74
+          },
+          "nodeIndex": "Valor",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3870.6,
+            "y": 74
+          },
+          "nodeIndex": "images",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4257.7,
+            "y": 0
+          },
+          "nodeIndex": "~Medidas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4644.7,
+            "y": 86
+          },
+          "nodeIndex": "TipoRappelComissao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5031.8,
+            "y": 74
+          },
+          "nodeIndex": "Tipo_Taxas",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1161.2,
+            "y": 38
+          },
+          "nodeIndex": "Simulador % Ocupação",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Tabelas sem ligação",
+      "zoomValue": 28.915395694080281,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1441.1794878577907,
+            "y": 632.72823583481306
+          },
+          "nodeIndex": "d_Neg_Audiencia",
+          "nodeLineageTag": "06ad1012-fc50-42ec-95ec-e78d05ed9563",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 10,
+            "y": 437.9124307588329
+          },
+          "nodeIndex": "d_Neg_Característica",
+          "nodeLineageTag": "b71d6a14-8843-4d93-91b9-98aebf5a7883",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 590.6062573570058,
+            "y": 343.73965309395908
+          },
+          "nodeIndex": "d_Neg_Cond_Neg",
+          "nodeLineageTag": "cf3ccf06-e6a7-4d9e-af1e-6bfeb5a9d345",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 299.90510483118555,
+            "y": 220.04366156630522
+          },
+          "nodeIndex": "d_Neg_Descontos",
+          "nodeLineageTag": "387f2dc5-e485-425d-92a7-55732bea1a32",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1153.3726175117665,
+            "y": 601.81227351121345
+          },
+          "nodeIndex": "d_Neg_EcrDescricao",
+          "nodeLineageTag": "32969dc7-1181-4f6a-a393-6c207ccbfcb1",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1216.8932636793909,
+            "y": 1190.2706091600649
+          },
+          "nodeIndex": "d_Neg_Posicoes",
+          "nodeLineageTag": "e52484f3-f9d8-4a3a-a9b4-381e37c54468",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 562.32138097302379,
+            "y": 900.11105422334253
+          },
+          "nodeIndex": "d_Neg_TaxaMultiProduto",
+          "nodeLineageTag": "7b5da83e-29b3-44cc-b520-9e35c0201871",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 1506.7577556169229,
+            "y": 1047.3285880300079
+          },
+          "nodeIndex": "Canais",
+          "nodeLineageTag": "c55745c7-4e33-4134-92fe-f6e59eee06d2",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 589.75400328848264,
+            "y": -10
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "55b9f423-4ac7-447b-91d2-cb060f18fd57",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 864.62811618634123,
+            "y": 620.12783525653333
+          },
+          "nodeIndex": "Negociacao",
+          "nodeLineageTag": "cfea3ff2-908a-44fb-9f91-7eaa000d87e7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1729.7604821962948,
+            "y": 863.93031282933657
+          },
+          "nodeIndex": "Anunciante",
+          "nodeLineageTag": "13a9293c-7f1e-4f15-b2ee-c9a5046012b1",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 210.93775859975221,
+            "y": 793.53998345012019
+          },
+          "nodeIndex": "TipoNeg",
+          "nodeLineageTag": "1f4b0eca-3548-4daa-8a9d-655d68a1b965",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1264.6051966996824,
+            "y": 419.55218509531494
+          },
+          "nodeIndex": "Negociacao Detalhe",
+          "nodeLineageTag": "e16149a5-4a32-43f2-9c1e-33df20012b61",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 239.12649600188547,
+            "y": 1325.5462961788744
+          },
+          "nodeIndex": "TipoPublicidade",
+          "nodeLineageTag": "05dd3c40-9175-4cbe-978a-1fa4cd0a9d6a",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Negociações",
+      "zoomValue": 64.482234930600086,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

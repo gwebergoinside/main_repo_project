@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "GO NEXT 360 - MEGA - AD - Resumo"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "26a40ec4-6a61-420e-93f8-1082fec3abc7"
+  }
+}

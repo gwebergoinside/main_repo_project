@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "GO NEXT 360 - DAZN - TX"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3d3fa62c-199e-4205-8bf9-15b2a641cd86"
+  }
+}

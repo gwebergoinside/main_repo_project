@@ -1,0 +1,565 @@
+cultureInfo pt-PT
+	translations
+		model Model
+			table Encomendas
+				caption: Encomendas
+				column 'Valor Publicidade Bruto'
+					caption: Valor Publicidade Bruto
+				column 'Valor Tabela'
+					caption: Valor Tabela
+				column 'Valor Bonus Bruto'
+					caption: Valor Bonus Bruto
+				column 'Duracao Emissao'
+					caption: Duracao Emissao
+				column 'Nº ordem pub'
+					caption: Nº ordem pub
+				column 'Tipo de Encomenda'
+					caption: Tipo de Encomenda
+				column 'Tipo de Ocupacao'
+					caption: Tipo de Ocupacao
+				column 'Marcações Emitidas'
+					caption: Marcações Emitidas
+				column 'Data Exibição'
+					caption: Data Exibição
+				column Impressoes
+					caption: Impressoes
+				column Desconto
+					caption: Desconto
+				column ValorDifusao
+					caption: ValorDifusao
+				column Observacoes
+					caption: Observacoes
+				column ObservacoesFatura
+					caption: ObservacoesFatura
+			table Canais
+				caption: Canais
+				column Canal
+					caption: Canal
+				column Canal2
+					caption: Canal2
+				column Canal3
+					caption: Canal3
+				column Canal4
+					caption: Canal4
+			table Executivos
+				caption: Executivos
+				column Executivo
+					caption: Executivo
+				column VendedorStatus
+					caption: VendedorStatus
+			table Anunciante
+				caption: Anunciante
+			table ~Medidas
+				caption: ~Medidas
+				measure Receita
+					caption: Receita
+				measure Bonus
+					caption: Bonus
+				measure 'Valor Tabela'
+					caption: Valor Tabela
+				measure Objetivo
+					caption: Objetivo
+				measure 'Objetivo YTD'
+					caption: Objetivo YTD
+				measure 'Receita LY'
+					caption: Receita LY
+				measure 'Receita YTD'
+					caption: Receita YTD
+				measure 'Bonus LY'
+					caption: Bonus LY
+				measure 'Receita LY YTD'
+					caption: Receita LY YTD
+				measure 'Receita % YTD (AY-LY Atual Month)'
+					caption: Receita % YTD (AY-LY Atual Month)
+				measure 'Objetivo % (Receita-Objetivo)'
+					caption: Objetivo % (Receita-Objetivo)
+				measure 'Valor Segundo'
+					caption: Valor Segundo
+				measure 'Taxa Ocupação'
+					caption: Taxa Ocupação
+				measure 'Ocupação Normal'
+					caption: Ocupação Normal
+				measure 'Grelha Max Normal'
+					caption: Grelha Max Normal
+				measure 'Canal Max Normal'
+					caption: Canal Max Normal
+				measure 'Taxa de Potencial'
+					caption: Taxa de Potencial
+				measure 'QTD Spots'
+					caption: QTD Spots
+				measure 'Taxa Ocupação Max'
+					caption: Taxa Ocupação Max
+				measure 'Taxa Ocupação Max AY'
+					caption: Taxa Ocupação Max AY
+				measure 'Taxa Ocupação Max LY'
+					caption: Taxa Ocupação Max LY
+				measure 'Taxa Ocupação LY'
+					caption: Taxa Ocupação LY
+				measure 'Taxa Ocupação AY'
+					caption: Taxa Ocupação AY
+				measure 'Ocupação Normal LY'
+					caption: Ocupação Normal LY
+				measure 'Desconto Tabela % (Valor Pub)'
+					caption: Desconto Tabela % (Valor Pub)
+				measure 'Duração Emissão LY (HH:MM:SS)'
+					caption: Duração Emissão LY (HH:MM:SS)
+				measure 'Receita % (AY-LY)'
+					caption: Receita % (AY-LY)
+				measure 'Objetivo Anunciante'
+					caption: Objetivo Anunciante
+				measure 'Objetivo Negociação'
+					caption: Objetivo Negociação
+				measure 'Objetivo % YTD (Receita-Objetivo)'
+					caption: Objetivo % YTD (Receita-Objetivo)
+				measure 'Ocupação (HH:MM:SS)'
+					caption: Ocupação (HH:MM:SS)
+				measure 'Ocupação Exceção (HH:MM:SS)'
+					caption: Ocupação Exceção (HH:MM:SS)
+				measure 'Duração Emissão (HH:MM:SS)'
+					caption: Duração Emissão (HH:MM:SS)
+				measure 'Receita (Com Exceções)'
+					caption: Receita (Com Exceções)
+				measure 'Valor Tipo de Cliente (Ganhos e Perdidos)'
+					caption: Valor Tipo de Cliente (Ganhos e Perdidos)
+				measure 'Valor Receita YTD (AY-LY Actual Month)'
+					caption: Valor Receita YTD (AY-LY Actual Month)
+				measure 'Receita % YTD (AY-LY)'
+					caption: Valor Receita YTD % (AY-LY Actual Month)
+				measure 'Valor Receita YTD LY (Actual Month)'
+					caption: Valor Receita YTD LY (Actual Month)
+				measure 'Valor Receita YTD (Actual Month)'
+					caption: Valor Receita YTD (Actual Month)
+				measure 'Valor Rappel'
+					caption: Valor Rappel
+				measure 'Valor Rappel LY'
+					caption: Valor Rappel LY
+				measure 'Receita Liquida LY'
+					caption: Receita Liquida LY
+				measure 'Desconto Tabela % LY (Valor Pub)'
+					caption: Desconto Tabela % LY (Valor Pub)
+				measure 'Objetivo Liquido'
+					caption: Objetivo Liquido
+				measure 'Objetivo Liquido YTD'
+					caption: Objetivo Liquido YTD
+				measure 'Valor Faturado Total'
+					caption: Valor Faturado Total
+				measure 'Valor Outros Custos'
+					caption: Valor Outros Custos
+				measure 'Valor Desconto Exibição'
+					caption: Valor Desconto Exibição
+				measure 'Valor Desconto OP'
+					caption: Valor Desconto OP
+				measure 'Valor Taxa Multiproduto'
+					caption: Valor Taxa Multiproduto
+				measure 'Valor Taxa Posição'
+					caption: Valor Taxa Posição
+				measure 'Valor Pub (Multiproduto)'
+					caption: Valor Pub (Multiproduto)
+				measure 'Valor Tabela (Multiproduto)'
+					caption: Valor Tabela (Multiproduto)
+				measure 'Valor Desconto Campanha'
+					caption: Valor Desconto Campanha
+				measure 'Valor Custo Minimo'
+					caption: Valor Custo Minimo
+				measure 'Valor Bonus (Multiproduto)'
+					caption: Valor Bonus (Multiproduto)
+				measure 'Valor Faturado Total LY'
+					caption: Valor Faturado Total LY
+				measure 'Valor Faturado % (AY-LY)'
+					caption: Valor Faturado % (AY-LY)
+				measure 'Valor Faturado % YTD (AY-LY)'
+					caption: Valor Faturado % YTD (AY-LY)
+				measure 'Valor Faturado Correção'
+					caption: Valor Faturado Correção
+				measure 'Valor Faturado sem Correção'
+					caption: Valor Faturado sem Correção
+				measure 'Objetivo Bruto'
+					caption: Objetivo Bruto
+				measure 'Filtro Simulador % Ocup Faixa'
+					caption: Filtro Simulador % Ocup Faixa
+				measure 'Taxa Ocupação Simulador Faixa'
+					caption: Taxa Ocupação Simulador Faixa
+				measure 'QTD Spots (Simulador Faixa)'
+					caption: QTD Spots (Simulador Faixa)
+				measure 'Ocupação (HH:MM:SS - Simulador Faixa )'
+					caption: Ocupação (HH:MM:SS - Simulador Faixa )
+				measure 'Ocupação Exceção (HH:MM:SS - Simulador Banda)'
+					caption: Ocupação Exceção (HH:MM:SS - Simulador Banda)
+				measure 'Desconto das Taxas'
+					caption: Desconto das Taxas
+				measure 'Qtd Marcações'
+					caption: Qtd Marcações
+				measure 'Receita (Previous Day)'
+					caption: Receita (Previous Day)
+				measure 'Desconto Tabela % (Valor Bonus)'
+					caption: Desconto Tabela % (Valor Bonus)
+				measure 'Ocupação Normal AY - LY'
+					caption: Ocupação Normal AY - LY
+				measure 'Taxa Ocupação AY - LY'
+					caption: Taxa Ocupação AY - LY
+				measure 'Taxa Ocupação Max AY - LY'
+					caption: Taxa Ocupação Max AY - LY
+				measure 'Filtro Simulador % Ocup Banda'
+					caption: Filtro Simulador % Ocup Banda
+				measure 'Taxa Ocupação Simulador Banda'
+					caption: Taxa Ocupação Simulador Banda
+				measure 'Ocupação (HH:MM:SS - Simulador Banda)'
+					caption: Ocupação (HH:MM:SS - Simulador Banda)
+				measure 'Taxa Ocupação Max Simulador Faixa'
+					caption: Taxa Ocupação Max Simulador Faixa
+				measure 'Taxa Ocupação Max Simulador Banda'
+					caption: Taxa Ocupação Max Simulador Banda
+				measure 'Ocupação Exceção (HH:MM:SS - Simulador Faixa)'
+					caption: Ocupação Exceção (HH:MM:SS - Simulador Faixa)
+				measure 'QTD Spots (Simulador Banda)'
+					caption: QTD Spots (Simulador Banda)
+				measure 'Filtro Simulador Dur Ocup Banda'
+					caption: Filtro Simulador Dur Ocup Banda
+				measure 'Filtro Simulador Dur Ocup Faixa'
+					caption: Filtro Simulador Dur Ocup Faixa
+				measure 'Qtd Marcações Emitidas'
+					caption: Qtd Marcações Emitidas
+				measure 'Ocupação Total (Normal+Especial)'
+					caption: Ocupação Total (Normal+Especial)
+				measure 'Ocupação Especial'
+					caption: Ocupação Especial
+				measure 'Grelha Max Especial'
+					caption: Grelha Max Especial
+				measure 'Grelha Max Total (Normal+Especial)'
+					caption: Grelha Max Total (Normal+Especial)
+				measure 'Taxa Ocupação Total (Normal+Especial)'
+					caption: Taxa Ocupação Total (Normal+Especial)
+				measure 'Canal Max Especial'
+					caption: Canal Max Especial
+				measure 'Canal Max Total (Normal+Especial)'
+					caption: Canal Max Total (Normal+Especial)
+				measure 'Taxa Ocupação Max Total (Normal+Especial)'
+					caption: Taxa Ocupação Max Total (Normal+Especial)
+				measure 'Contagem Banda Horaria'
+					caption: Contagem Banda Horaria
+				measure 'Contagem Faixa Horaria'
+					caption: Contagem Faixa Horaria
+				measure 'Valor Negociação'
+					caption: Valor Negociação
+				measure 'Saldo Negociação (Valor)'
+					caption: Saldo Negociação (Valor)
+				measure 'Saldo Negociação (%)'
+					caption: Saldo Negociação (%)
+				measure 'Ocupação Normal (HH:MM:SS)'
+					caption: Ocupação Normal (HH:MM:SS)
+				measure 'Ocupação Normal LY (HH:MM:SS)'
+					caption: Ocupação Normal LY (HH:MM:SS)
+				measure 'Ocupação Normal (MM:SS)'
+					caption: Ocupação Normal (MM:SS)
+				measure 'Ocupação Normal LY (MM:SS)'
+					caption: Ocupação Normal LY (MM:SS)
+				measure 'Grelha Max Normal (HH:MM:SS)'
+					caption: Grelha Max Normal (HH:MM:SS)
+				measure 'Média Ocupação Normal (MM:SS)'
+					caption: Média Ocupação Normal (MM:SS)
+			table Objetivos
+				caption: Objetivos
+				column 'Objetivo Liquido'
+					caption: Objetivo Liquido
+				column 'Objetivo Bruto'
+					caption: Objetivo Bruto
+			table Calendario
+				caption: Calendario
+				column Data
+					caption: Data
+				column 'Mês (nome)'
+					caption: Mês (nome)
+				column 'Mês (número)'
+					caption: Mês (número)
+				column Trimestre
+					caption: Trimestre
+				column Ano
+					caption: Ano
+				column 'Dia mês (número)'
+					caption: Dia mês (número)
+				column 'Dia Semana (nome)'
+					caption: Dia Semana (nome)
+				column 'Dia Semana (número)'
+					caption: Dia Semana (número)
+				column 'Mês e Ano'
+					caption: Mês e Ano
+				column 'Periodo da Semana'
+					caption: Periodo da Semana
+				column 'Mês (nome completo)'
+					caption: Mês (nome completo)
+				column 'Dia e Mês'
+					caption: Dia e Mês
+				column Semana
+					caption: Semana
+				column Quadrimestre
+					caption: Quadrimestre
+				column Semestre
+					caption: Semestre
+			table Propostas
+				caption: Propostas
+				column StatusProduto
+					caption: StatusProduto
+				column Status
+					caption: Status
+				column ValorPubProposta
+					caption: ValorPubProposta
+			table 'Variacao Receita'
+				caption: Variacao Receita
+				column DataCarregamento
+					caption: DataCarregamento
+				column Mes
+					caption: Mes
+				column Ano
+					caption: Ano
+				column ValorPub
+					caption: ValorPub
+				column ValorTab
+					caption: ValorTab
+				column ValorBonus
+					caption: ValorBonus
+				column ordPubCodigo
+					caption: ordPubCodigo
+			table Ocupacao
+				caption: Ocupacao
+				column FaixaHoraria
+					caption: FaixaHoraria
+				column GrelhaMaxNormal
+					caption: GrelhaMaxNormal
+				column OcupacaoExcecoesNormal
+					caption: OcupacaoExcecoesNormal
+				column ValorExcecoes
+					caption: ValorExcecoes
+				column NumeroSpots
+					caption: NumeroSpots
+				column 'Tipo de Exceção'
+					caption: Tipo de Exceção
+				column 'DayPart Ocupação'
+					caption: DayPart Ocupação
+				column Exceção
+					caption: Exceção
+				column BandaHoraria
+					caption: BandaHoraria
+				column GrelhaMaxEspecial
+					caption: GrelhaMaxEspecial
+				column GrelhaMaxPromocao
+					caption: GrelhaMaxPromocao
+				column OcupacaoPromocao
+					caption: OcupacaoPromocao
+				column OcupacaoExcecoesEspecial
+					caption: OcupacaoExcecoesEspecial
+				column OcupacaoExcecoesPromocao
+					caption: OcupacaoExcecoesPromocao
+				column Difusao
+					caption: Difusao
+				column CanalMaxEspecial
+					caption: CanalMaxEspecial
+				column CanalMaxPromocao
+					caption: CanalMaxPromocao
+			table Alvo
+				caption: Alvo
+				column 'Alvo (negociação)'
+					caption: Alvo (negociação)
+			table Produtos
+				caption: Produtos
+				column Produto
+					caption: Produto
+			table OrdemPubClassificacao
+				caption: OrdemPubClassificacao
+				column ordPubClaDescricao
+					caption: ordPubClaDescricao
+				column ordPubClaColuna1
+					caption: ordPubClaColuna1
+				column ordPubClaColuna2
+					caption: ordPubClaColuna2
+			table Bonus
+				caption: Bonus
+			table 'Agencia Meios'
+				caption: Agencia Meios
+			table SectorAtividade
+				caption: SectorAtividade
+				column 'Setor Atividade'
+					caption: Setor Atividade
+				column 'Tipo de Produto'
+					caption: Tipo de Produto
+			table Faturacao
+				caption: Faturacao
+				column DataDocumento
+					caption: DataDocumento
+				column 'Valor Faturado (Correção)'
+					caption: Valor Faturado (Correção)
+				column 'Nº ordem pub'
+					caption: Nº ordem pub
+				column DataEmissao
+					caption: DataEmissao
+				column DataVencimento
+					caption: DataVencimento
+				column Descricao
+					caption: Descricao
+				column DataCorrecao
+					caption: DataCorrecao
+				column Correcao
+					caption: Correcao
+				column DescricaoCampanhas
+					caption: DescricaoCampanhas
+				column 'Valor Comissao Agencia Faturado'
+					caption: Valor Comissao Agencia Faturado
+				column 'Valor Tabela (Faturado)'
+					caption: Valor Tabela (Faturado)
+			table Negociacao
+				caption: Negociacao
+				column DataInicio
+					caption: DataInicio
+				column DataFim
+					caption: DataFim
+				column NegociacaoValor
+					caption: NegociacaoValor
+			table Categoria
+				caption: Categoria
+			table DayPart
+				caption: DayPart
+				column 'DayPart (negociação)'
+					caption: DayPart (negociação)
+				column 'DayPart (negociação) Faixas'
+					caption: DayPart (negociação) Faixas
+			table TipoNeg
+				caption: TipoNeg
+				column 'Tipo Negociação'
+					caption: Tipo Negociação
+			table Rappel
+				caption: Rappel
+				column valorRappel
+					caption: valorRappel
+				column Status
+					caption: Status
+			table Pacotes
+				caption: Pacotes
+				column Pacote
+					caption: Pacote
+				column 'Tipo Pacote'
+					caption: Tipo Pacote
+				column 'Produto Comercial'
+					caption: Produto Comercial
+			table Entidade_Faturar
+				caption: Entidade_Faturar
+				column 'Entidade Faturar'
+					caption: Entidade Faturar
+			table Central
+				caption: Central
+				column 'Central de Compras'
+					caption: Central de Compras
+			table Agencia
+				caption: Agencia
+			table Descricao_Campanhas
+				caption: Descricao_Campanhas
+				column 'Descricao Campanha'
+					caption: Descricao Campanha
+			table FaixaHoraria
+				caption: FaixaHoraria
+				column Hora
+					caption: Hora
+			table 'Codigo Break'
+				caption: Codigo Break
+				column 'Descrição Cod_Break'
+					caption: Descrição Cod_Break
+				column 'Tipo Break'
+					caption: Tipo Break
+			table Grupo
+				caption: Grupo
+				column 'Grupo Detalhe'
+					caption: Grupo Detalhe
+			table 'Negociacao Detalhe'
+				caption: Negociacao Detalhe
+				column 'Negociação Nome'
+					caption: Negociação Nome
+			table 'Tipo Anunciante'
+				caption: Tipo Anunciante
+			table TipoPublicidade
+				caption: TipoPublicidade
+				column 'Tipo Publicidade'
+					caption: Tipo Publicidade
+			table 'Tipo Formato Faixa'
+				caption: Tipo Formato Faixa
+			table 'Localized Labels'
+				measure 'Agência de Comunicação'
+					caption: Agência de Comunicação
+				measure 'Agência de Meios'
+					caption: Agência de Meios
+				measure 'Análise por Faixa Horária'
+					caption: Análise por Faixa Horária
+				measure Anunciante
+					caption: Anunciante
+				measure Canal
+					caption: Canal
+				measure 'Central de Compras'
+					caption: Central de Compras
+				measure 'Classificação de Cliente'
+					caption: Classificação de Cliente
+				measure Crescimento
+					caption: Crescimento
+				measure Directo
+					caption: Directo
+				measure 'Ev. Receita'
+					caption: Ev. Receita
+				measure Novos
+					caption: Novos
+				measure 'Ocupação Normal Vs Taxa de Ocupação por Dia'
+					caption: Ocupação Normal Vs Taxa de Ocupação por Dia
+				measure 'Ocupação Normal Vs Taxa de Ocupação por Período'
+					caption: Ocupação Normal Vs Taxa de Ocupação por Período
+				measure Pacote
+					caption: Pacote
+				measure Perdidos
+					caption: Perdidos
+				measure 'Produto Comercial'
+					caption: Produto Comercial
+				measure Queda
+					caption: Queda
+				measure 'Receita Diária'
+					caption: Receita Diária
+				measure 'Receita Faixa Horária'
+					caption: Receita Faixa Horária
+				measure 'Receita por Agência de Meios'
+					caption: Receita por Agência de Meios
+				measure 'Receita por Anunciante'
+					caption: Receita por Anunciante
+				measure 'Receita por Canal'
+					caption: Receita por Canal
+				measure 'Receita por Mês'
+					caption: Receita por Mês
+				measure 'Receita por Periodo Semana'
+					caption: Receita por Periodo Semana
+				measure 'Receita por Trimestre'
+					caption: Receita por Trimestre
+				measure 'Receita Semanal'
+					caption: Receita Semanal
+				measure 'Receita Valor'
+					caption: Receita Valor
+				measure 'Receita Vs Objetivo (Acum.)'
+					caption: Receita Vs Objetivo (Acum.)
+				measure 'Receita Vs Objetivo'
+					caption: Receita Vs Objetivo
+				measure 'Taxa de Ocupação e de Ocupação Max por Faixa Horaria Vs Ano Anterior'
+					caption: Taxa de Ocupação e de Ocupação Max por Faixa Horaria Vs Ano Anterior
+				measure 'Taxa de Ocupação e de Ocupação Max por Mês Vs Ano Anterior'
+					caption: Taxa de Ocupação e de Ocupação Max por Mês Vs Ano Anterior
+				measure 'Taxa de Ocupação'
+					caption: Taxa de Ocupação
+				measure 'Taxa de Ocupação por Mês e Período'
+					caption: Taxa de Ocupação por Mês e Período
+				measure 'Tipo de Bónus'
+					caption: Tipo de Bónus
+				measure 'Tipo de Negociação'
+					caption: Tipo de Negociação
+				measure 'Tipo de Publicidade'
+					caption: Tipo de Publicidade
+				measure 'Tipo Formato Faixa'
+					caption: Tipo Formato Faixa
+				measure 'Valor de Receita'
+					caption: Valor de Receita
+				measure 'Valor de Receita Ytd'
+					caption: Valor de Receita Ytd
+				measure 'Valor por Segundo'
+					caption: Valor Segundo
+				measure 'Valor Segundo e Duração Média por Produto'
+					caption: Valor Segundo e Duração Média por Produto
+

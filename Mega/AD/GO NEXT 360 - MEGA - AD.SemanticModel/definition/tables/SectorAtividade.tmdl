@@ -1,0 +1,45 @@
+table SectorAtividade
+	lineageTag: be3ebb4e-cc89-4b9d-9a24-44ac31b4a856
+
+	column tipProId
+		dataType: string
+		isHidden
+		lineageTag: 2846bd6e-8810-4eba-bb18-82cd27db6568
+		summarizeBy: none
+		sourceColumn: tipProId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Setor Atividade'
+		dataType: string
+		lineageTag: c17dd88e-a8b3-488d-9516-8e60e9b65b03
+		summarizeBy: none
+		sourceColumn: Setor Atividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de Produto'
+		dataType: string
+		lineageTag: f9267814-76ea-435f-80cb-ccf50c09d76d
+		summarizeBy: none
+		sourceColumn: Tipo de Produto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SectorAtividade-95bed59c-9690-4462-bb0f-dc4c1222a6b7 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				Source = Sql.Database(ServerP, BD, [Query="select#(lf)    isnull(tp3.tipProId,isnull(tp2.tipProId, tp1.tipProId)) as tipProId,#(lf)    ltrim(rtrim(tp1.tipProdescricao)) as tipProNivel1,#(lf)    ltrim(rtrim(tp2.tipProdescricao)) as tipProNivel2,#(lf)    ltrim(rtrim(tp3.tipProdescricao)) as tipProNivel3#(lf)from tipoProduto tp1#(lf)    left outer join tipoProduto tp2 on tp2.tipProPaiId=tp1.tipProId#(lf)    left outer join tipoProduto tp3 on tp3.tipProPaiId=tp2.tipProId#(lf)where#(lf)    tp1.tipProPaiId is null#(lf)#(lf)#(lf)#(lf)union all#(lf)#(lf)#(lf)#(lf)select#(lf)    tp1.tipProId as tipProId,#(lf)    ltrim(rtrim(tp1.tipProdescricao)) as tipProNivel1,#(lf)    NULL as tipProNivel2,#(lf)    NULL as tipProNivel3#(lf)from tipoProduto tp1#(lf)where#(lf)    tp1.tipProPaiId is null#(lf)    --and tp1.tipProdescricao like '%COMERCIO%'#(lf)    and tp1.tipProId in (select tipPropaiid from tipoProduto)#(lf)#(lf)#(lf)#(lf)union all#(lf)#(lf)#(lf)#(lf)select#(lf)    tp2.tipProId as tipProId,#(lf)    ltrim(rtrim(tp1.tipProdescricao)) as tipProNivel1,#(lf)    ltrim(rtrim(tp2.tipProdescricao)) as tipProNivel2,#(lf)    NULL as tipProNivel3#(lf)from tipoProduto tp1#(lf)    left outer join tipoProduto tp2 on tp2.tipProPaiId=tp1.tipProId#(lf)where#(lf)    tp1.tipProPaiId is null#(lf)    and tp2.tipProId in (select tipPropaiid from tipoProduto)#(lf)#(lf)#(lf)#(lf)order by 1"]),
+				    #"Added Conditional Column" = Table.AddColumn(Source, "Nivel2", each if [tipProNivel2] = null then "COMERCIO" else [tipProNivel2], type text),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"tipProNivel2", "tipProNivel3"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"Nivel2", "tipProNivel2"}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Renamed Columns1",{{"tipProNivel1", "Setor Atividade"}, {"tipProNivel2", "Tipo de Produto"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

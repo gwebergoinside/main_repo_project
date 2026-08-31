@@ -1,0 +1,37 @@
+table 'Tipo Formato Faixa'
+	lineageTag: 8f295d2a-5fda-44d2-84b1-aa5355073d5c
+
+	column tipForFaixaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b1cd5033-1ba7-4f48-a1ea-c9024a3d0b12
+		summarizeBy: none
+		sourceColumn: tipForFaixaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Formato'
+		dataType: string
+		lineageTag: e1d785f7-006b-4762-9292-18c97d6bcbc4
+		summarizeBy: none
+		sourceColumn: Tipo Formato
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Tipo Formato Faixa' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				Source = Sql.Database(ServerP, BD, [Query="Select#(lf)*#(lf)From#(lf)TipoFormatoFaixa"]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"tipForFaixaDescricao", "Tipo Formato Faixa"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"tipForFaixaId", "Tipo Formato Faixa"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{"Tipo Formato Faixa", "Tipo Formato"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,33 @@
+table dim_emissao_tipo
+	lineageTag: bff012ba-d31d-411e-bb1e-cafd18a07e35
+
+	column cod_emi_tip
+		dataType: int64
+		formatString: 0
+		lineageTag: a2963107-ba8a-4c06-939b-95f75b02852f
+		summarizeBy: none
+		sourceColumn: cod_emi_tip
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_emissao
+		dataType: string
+		lineageTag: 164c8916-c4b5-4080-afcc-00635ea3c75b
+		summarizeBy: none
+		sourceColumn: desc_emissao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_emissao_tipo = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT cod_emissao cod_emi_tip, desc_emissao FROM emissao_tipo",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

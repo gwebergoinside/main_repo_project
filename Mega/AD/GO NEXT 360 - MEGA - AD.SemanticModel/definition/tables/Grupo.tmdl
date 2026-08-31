@@ -1,0 +1,42 @@
+table Grupo
+	lineageTag: 90d10fe1-3016-4aef-a06f-530628db8253
+
+	column camGrupoId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8fc32dbe-0b7c-4383-9c74-ee06ac7db3a3
+		summarizeBy: none
+		sourceColumn: camGrupoId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		dataType: string
+		lineageTag: c0b0926a-b5fd-45bc-8d6b-c4eaf3c45291
+		summarizeBy: none
+		sourceColumn: Grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grupo Detalhe'
+		dataType: string
+		lineageTag: 1cf168ab-afab-4685-8502-bf5921eaa810
+		summarizeBy: none
+		sourceColumn: Grupo Detalhe
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Grupo = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				Source = Sql.Database(ServerP, BD, [Query="SELECT#(lf)    gruId as camGrupoId#(lf)    ,gruDescricao as Grupo#(lf)    ,gruCodigo + '-' + gruDescricao as [Grupo Detalhe]#(lf)FROM#(lf)    Grupos"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

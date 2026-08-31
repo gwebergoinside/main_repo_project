@@ -1,0 +1,62 @@
+table dim_Tipo_Item
+	lineageTag: 6883a4bb-e50c-4af8-a22d-0c19d95dfb1d
+
+	column tipo_evento
+		dataType: string
+		lineageTag: 090ae06c-0ed0-48b0-b59d-36caedb47180
+		summarizeBy: none
+		sourceColumn: tipo_evento
+
+		annotation SummarizationSetBy = Automatic
+
+	column descricao
+		dataType: string
+		lineageTag: 6077eb45-841c-47a6-9ea5-dcff972ea789
+		summarizeBy: none
+		sourceColumn: descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column flag_item
+		dataType: string
+		lineageTag: d5f5bc09-f4ee-4c2b-85a6-f97a32d9aff5
+		summarizeBy: none
+		sourceColumn: flag_item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Abreviatura
+		dataType: string
+		lineageTag: 216d4c30-a523-4d47-b6fb-937dbdb209dd
+		summarizeBy: none
+		sourceColumn: Abreviatura
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmetacao = ```
+			
+			    SWITCH( TRUE(),
+			        dim_Tipo_Item[tipo_evento] IN {"H","U"}, "FILLER",
+			        LEFT(dim_Tipo_Item[descricao], 3) = "SEP", "SEPARATORS",
+			        dim_Tipo_Item[tipo_evento] IN {"PRE", "F11", "HALF", "F", "X", "POST", "F10", "F09", "CFE", "CAE", "F01"}, "ADVERTISING",
+			        dim_Tipo_Item[tipo_evento] = "2", "PROMOTION",
+			        "OTHERS")
+			```
+		lineageTag: 37903b03-dd1f-424c-8637-ca741c4ad6b7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Tipo_Item = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT tipo_item tipo_evento, descricao, flag_item, Abreviatura FROM Tipo_Item",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

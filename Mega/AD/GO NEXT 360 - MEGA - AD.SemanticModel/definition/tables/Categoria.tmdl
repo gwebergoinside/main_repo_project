@@ -1,0 +1,98 @@
+table Categoria
+	lineageTag: 752e4a87-a3dc-4073-aaad-cd9f9593af0a
+
+	column PriId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fa6b1eaa-53e6-40f6-a511-b83a9ff5f4b1
+		summarizeBy: none
+		sourceColumn: PriId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		dataType: string
+		lineageTag: b0b2fea2-42c7-4f2a-81df-44957b4c33e1
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PriNivel
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 13adf349-9b35-40bf-a23a-9d25ac5957bd
+		summarizeBy: sum
+		sourceColumn: PriNivel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column priCondicionada
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0e36a212-9ac6-42ee-a33e-0657df02abbb
+		summarizeBy: sum
+		sourceColumn: priCondicionada
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column priCodigoExt
+		dataType: string
+		isHidden
+		lineageTag: e374864e-119b-472b-8889-8ff24939e775
+		summarizeBy: none
+		sourceColumn: priCodigoExt
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column priContabilizaPosicao
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d2d73274-55e8-44b7-a890-88eeba604cce
+		summarizeBy: sum
+		sourceColumn: priContabilizaPosicao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdUnidadeNegocio
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 994fc214-aeb2-4cb9-a92f-06bd5d89fd74
+		summarizeBy: sum
+		sourceColumn: IdUnidadeNegocio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Categoria-c6a25e69-e6d5-4d18-90b7-6f8043e667e4 = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    *#(lf)From#(lf)    Prioridade"]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"PriDescricao", "Categoria"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

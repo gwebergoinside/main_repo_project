@@ -1,0 +1,20 @@
+table SetUserCulture
+	lineageTag: 11d92905-1d04-47c3-83ce-f448bb80ab67
+
+	column SetUserCulture
+		dataType: string
+		lineageTag: 3c4ff68d-40ff-4bb9-b649-f425f3f14b79
+		summarizeBy: none
+		sourceColumn: SetUserCulture
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SetUserCulture = m
+		mode: import
+		queryGroup: BD
+		source = "es-ES" meta [IsParameterQuery=true, ExpressionIdentifier=#"lista de imagem", Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

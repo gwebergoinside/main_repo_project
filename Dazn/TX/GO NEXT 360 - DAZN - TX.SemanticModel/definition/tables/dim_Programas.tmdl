@@ -1,0 +1,83 @@
+table dim_Programas
+	lineageTag: 4f24a262-25d1-4ae7-8fc4-7c775d03bde3
+
+	column numero_processo
+		dataType: int64
+		formatString: 0
+		lineageTag: 12d04b3b-3b87-461d-816a-ba1a32931892
+		summarizeBy: none
+		sourceColumn: numero_processo
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo_original
+		dataType: string
+		lineageTag: 005b60a9-21a8-4863-b42f-62832ed93d85
+		summarizeBy: none
+		sourceColumn: titulo_original
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulo
+		dataType: string
+		lineageTag: 75cc107d-855e-48fb-b28c-6c51bb604672
+		summarizeBy: none
+		sourceColumn: titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column numero_de_episodios
+		dataType: int64
+		formatString: 0
+		lineageTag: b983b714-48b9-4be7-bf53-d7369311b24b
+		summarizeBy: sum
+		sourceColumn: numero_de_episodios
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano
+		dataType: int64
+		formatString: 0
+		lineageTag: b2dca472-2bdf-4afa-9f15-f38cc07e1982
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column genero
+		dataType: string
+		lineageTag: 2fa40b0f-1ab0-42dc-8aae-2152c1f67493
+		summarizeBy: none
+		sourceColumn: genero
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem
+		dataType: string
+		lineageTag: 17fc8a29-e151-419b-9523-ffe01350dcd9
+		summarizeBy: none
+		sourceColumn: origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column pais
+		dataType: string
+		lineageTag: 39ca4b61-92da-4691-888c-d11d17b4f9d8
+		summarizeBy: none
+		sourceColumn: pais
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Programas = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT numero_processo, titulo_original, titulo, numero_de_episodios, ano, genero, origem, pais FROM Programas",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

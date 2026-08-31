@@ -1,0 +1,127 @@
+table Metricas
+	lineageTag: ad25ceda-2a6a-4d37-892f-feb989cf62e0
+
+	measure sum_duracao = ```
+			
+			    VAR FPS = 24
+			    RETURN DIVIDE( SUM( fat_vGrelha_Lms[duracao Frames] ), FPS * 60 * 60 )
+			```
+		lineageTag: 479dac4d-1108-4478-b4cd-f4ec864bf162
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure sum_duracao_ytd_DIRECT =
+			// CALCULATE( [sum_duracao_ytd], dim_emissao_tipo[cod_emi_tip] = 1 ) // Direto
+			    VAR calculo = CALCULATE( [sum_duracao], dim_emissao_tipo[cod_emi_tip] = 1 ) // Direto
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT((calculo - Horas) * 60)
+			    VAR Segundos = (calculo - Horas - DIVIDE(Minutos, 60)) * 3600
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+		lineageTag: 96ff1007-6b3a-443f-8297-064952469da4
+
+	measure sum_duracao_ytd = TOTALYTD( [sum_duracao], fat_vGrelha_Lms[Data])
+		formatString: General Date
+		lineageTag: 2944c2e5-a1a0-4ecd-a6d0-6fbfee99ce8d
+
+	measure sum_duracao_ytd_RECORD = ```
+			
+			    VAR calculo = CALCULATE( [sum_duracao], dim_emissao_tipo[cod_emi_tip] = 2 ) // Gravado
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT(MOD(calculo, 3600) / 60)
+			    VAR Segundos = MOD(calculo, 60)
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+			```
+		lineageTag: f23e8783-ae91-4365-afe5-d70638149e90
+
+	measure sum_duracao_ytd_DIRECT_RECORD =
+			// CALCULATE( [sum_duracao_ytd], dim_emissao_tipo[cod_emi_tip] IN {1, 2}) // Direto + Gravado
+			    VAR calculo = CALCULATE( [sum_duracao], dim_emissao_tipo[cod_emi_tip] IN {1, 2}) // Direto + Gravado
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT((calculo - Horas) * 60)
+			    VAR Segundos = (calculo - Horas - DIVIDE(Minutos, 60)) * 3600
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+		lineageTag: 46689b55-3a65-49d1-9e23-42fa7a5864bf
+
+	measure sum_duracao_ytd_FILLER = ```
+			
+			    VAR calculo = CALCULATE( [sum_duracao], dim_Tipo_Item[segmetacao] = "FILLER" )
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT((calculo - Horas) * 60)
+			    VAR Segundos = (calculo - Horas - DIVIDE(Minutos, 60)) * 3600
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+			```
+		lineageTag: c0bd3152-cda1-4dba-9e8a-e749b0f0bbe1
+
+	measure sum_duracao_ytd_SEPARADORES = ```
+			
+			    VAR calculo = CALCULATE( [sum_duracao], dim_Tipo_Item[segmetacao] = "SEPARATORS" )
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT((calculo - Horas) * 60)
+			    VAR Segundos = (calculo - Horas - DIVIDE(Minutos, 60)) * 3600
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+			```
+		lineageTag: 5c57a298-a1ab-43b9-ad8a-f6277dde9855
+
+	measure sum_duracao_ytd_PUBLICIDADE = ```
+			
+			    VAR calculo = CALCULATE( [sum_duracao], dim_Tipo_Item[segmetacao] = "ADVERTISING" )
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT((calculo - Horas) * 60)
+			    VAR Segundos = (calculo - Horas - DIVIDE(Minutos, 60)) * 3600
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+			```
+		lineageTag: 8b2e880a-ada2-46c9-91ca-1ca7a2591389
+
+	measure sum_duracao_ytd_PROMOCAO = ```
+			
+			    VAR calculo = CALCULATE( [sum_duracao], dim_Tipo_Item[segmetacao] = "PROMOTION" )
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT((calculo - Horas) * 60)
+			    VAR Segundos = (calculo - Horas - DIVIDE(Minutos, 60)) * 3600
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+			```
+		lineageTag: 801fec05-f3eb-4ad7-9345-13e212b7da8b
+
+	measure sum_duracao_ytd_OUTROS = ```
+			
+			    VAR calculo = CALCULATE( [sum_duracao], dim_Tipo_Item[segmetacao] = "OTHERS" )
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT((calculo - Horas) * 60)
+			    VAR Segundos = (calculo - Horas - DIVIDE(Minutos, 60)) * 3600
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+			```
+		lineageTag: f4c5e47a-eae4-4983-993a-e4841b05e529
+
+	measure sum_duracao_ytd_TOTAL = ```
+			
+			    VAR calculo = [sum_duracao]
+			    VAR Horas = INT(calculo)
+			    VAR Minutos = INT((calculo - Horas) * 60)
+			    VAR Segundos = (calculo - Horas - DIVIDE(Minutos, 60)) * 3600
+			    RETURN FORMAT(Horas, "00") & ":" & FORMAT(Minutos, "00") & ":" & FORMAT(Segundos, "00")
+			```
+		lineageTag: 8d95f117-1636-4280-badf-c8ede31fbbf6
+
+	column Metricas
+		dataType: string
+		isHidden
+		lineageTag: 745d96e5-0da8-4929-89f5-92973ad9d867
+		summarizeBy: none
+		sourceColumn: Metricas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metricas = m
+		mode: import
+		source =
+				let
+				    Fonte = ""
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+

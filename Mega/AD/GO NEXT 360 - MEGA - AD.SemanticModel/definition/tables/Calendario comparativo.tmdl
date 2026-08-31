@@ -1,0 +1,66 @@
+table 'Calendario comparativo'
+	isHidden
+	lineageTag: 5b2f5456-aeb6-494a-bfea-d5993d87518d
+
+	column Date
+		isHidden
+		formatString: Short Date
+		lineageTag: 1d3b3ae7-f694-4270-86c2-ea8caadbe77d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 40e64624-d15e-4b69-b278-daefbce69cfd
+			defaultHierarchy: LocalDateTable_65ea416e-d8fe-4601-a5fe-4c2b38e6ab7c.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano = YEAR('Calendario comparativo'[Date])
+		isHidden
+		formatString: 0
+		lineageTag: a700e1c6-0a4c-40e0-bb6b-877c9c9ac3bb
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes = MONTH('Calendario comparativo'[Date])
+		isHidden
+		formatString: 0
+		lineageTag: 402c6a3b-e1bd-46de-a950-20239f0b758b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia = DAY('Calendario comparativo'[Date])
+		isHidden
+		formatString: 0
+		lineageTag: 38d2a2a8-7978-4410-b695-abe919b7b0fc
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes_desc = SWITCH(MONTH('Calendario comparativo'[Date]),1,"Jan",2,"Fev",3,"Mar",4,"Abr",5,"Mai",6,"Jun",7,"Jul",8,"Ago",9,"Set",10,"Out",11,"Nov",12,"Dez")
+		isHidden
+		lineageTag: 82f8719e-b509-4969-acb2-332f2c2808cc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Calendario comparativo-078f402c-86c8-4d54-b075-94e057ff3294' = calculated
+		mode: import
+		source =
+				CALENDAR(
+				    min('Variacao Receita'[DataCarregamento])
+				    , max('Variacao Receita'[DataCarregamento])
+				)
+
+	annotation PBI_Id = 0e80dafd668a4042a2bbdaa20edd400b
+

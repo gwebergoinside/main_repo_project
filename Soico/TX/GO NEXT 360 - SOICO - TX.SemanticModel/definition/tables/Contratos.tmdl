@@ -914,7 +914,134 @@ table Contratos
 		mode: import
 		source =
 				let
-				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    PlanoContrato.cod_canal As COD_CANAL,#(lf)    Contratos.CodProposta,#(lf)    Contratos.NumContrato As COD_CONTRATO,#(lf)    Right('00000000' + Cast(Programas.numero_processo As VARCHAR), 8) As NUMERO_PROCESSO,#(lf)    Right('00000000' + Cast(Programas.numero_processo As VARCHAR), 8) + Right('000' + Cast(Fichas_Videotape.episodio As#(lf)    VARCHAR), 3) As NUMERO_PROCESSO_EPISODIO,#(lf)    Right('000' + Cast(Fichas_Videotape.episodio As VARCHAR), 3) As EPISODIO,#(lf)    Contratos.Estado As COD_CONTRATO_ESTADO,#(lf)    Contratos.TipoContrato As COD_CONTRATO_TIPO,#(lf)    Contratos.origem As COD_ORIGEM,#(lf)    Contratos.CodDistribuidor As COD_DISTRIBUIDOR,#(lf)    Contratos.coddistribuidor_facturacao As COD_ENTIDADE_FACTURACAO,#(lf)    PlanoContrato.CodPlano As COD_CONTRATO_PLANO,#(lf)    Programas.area As COD_AREA,#(lf)    Fichas_Videotape.codgenero As COD_GENERO,#(lf)    PlanoContrato.tipo_conteudo As COD_TIPO_CONTEUDO,#(lf)    Titulos.CodTitulo As COD_TITULO,#(lf)    Titulos.Estado As COD_TITULO_ESTADO,#(lf)    Contratos.moeda As COD_MOEDA,#(lf)    Upper(TP3.cod2) As COD_PAIS_FACTURACAO,#(lf)    Upper(TP2.cod2) As COD_PAIS_FORMATO,#(lf)    Upper(TP2.descricao_pais) As DESC_PAIS_FORMATO,#(lf)    Upper(TP.cod2) As COD_PAIS_PRODUCAO,#(lf)    PlanoContrato.departamento As COD_DEPARTAMENTO,#(lf)    PlanoContrato.CCAnalitico COD_CC_ORCAMENTO,#(lf)    Contratos.DataRegisto As DATA_REGISTO,#(lf)    Contratos.DataContrato As DATA_CONTRATO,#(lf)    Contratos.DataAprovacao As DATA_APROVACAO,#(lf)    Contratos.ValorContrato,#(lf)    Contratos.ValorOutros,#(lf)    PlanoContrato.numero_de_episodios As Total_Episodios_Plano,#(lf)    PlanoContrato.Data_inicio_acontecimento As DATA_INICIO_ACONTECIMENTO,#(lf)    PlanoContrato.data_fim_acontecimento As DATA_FIM_ACONTECIMENTO,#(lf)    PlanoContrato.data_compra DATA_COMPRA,#(lf)    (Select#(lf)         Min(Titulos.DataInicio) As Expr1#(lf)     From#(lf)         Titulos Inner Join#(lf)         PlanoContrato As PC2 On PC2.CodPlano = Titulos.CodPlano#(lf)     Where#(lf)         PC2.NumContrato = PlanoContrato.NumContrato) As Data_Inicio_Contrato,#(lf)    (Select#(lf)         Max(Titulos_2.DataInicio) As Expr1#(lf)     From#(lf)         Titulos As Titulos_2 Inner Join#(lf)         PlanoContrato As PC2 On PC2.CodPlano = Titulos_2.CodPlano#(lf)     Where#(lf)         PC2.NumContrato = PlanoContrato.NumContrato) As Data_Final_Contrato,#(lf)    Titulos.DataInicio As DATA_INICIO_TITULO,#(lf)    Titulos.DataFim As DATA_FIM_TITULO,#(lf)    Titulos.flagDataIlimitada,#(lf)    Titulos.NumRun NUMERO_DE_RUNS,#(lf)    IsNull(Titulos.RunsConsumidos, 0) NUMERO_DE_RUNS_CONSUMIDOS,#(lf)    Cast(((Titulos.DuracaoMinima + Titulos.DuracaoMaxima) / 2) As decimal(18,2)) / 60 DURACAO_MEDIA_TITULO_HORAS,#(lf)    Cast((Titulos.DuracaoMinima + Titulos.DuracaoMaxima) / 2 As decimal(18,2)) DURACAO_MEDIA_TITULO_MINUTOS,#(lf)    Consumos.amortizacao As PERCENTAGEM_AMORTIZADA,#(lf)    EstadosTitulos.Situacao As SITUACAO_ESTADO_TITULO,#(lf)    PlanoContrato.Cambio CAMBIO,#(lf)    Cast(IsNull(Titulos.TotalCustos, 0) As DEcimal(18,2)) VALOR_DIREITOS,#(lf)    Cast(IsNull(Titulos.TotalOutrosCustos, 0) As DEcimal(18,2)) VALOR_OUTROS_CUSTOS,#(lf)    Cast(IsNull(Titulos.TotalCustos_moeda_original, 0) As DEcimal(18,2)) VALOR_DIREITOS_MOEDA_ORIGINAL,#(lf)    Cast(IsNull(Titulos.CustosConsumidos, 0) As DEcimal(18,2)) VALOR_DIREITOS_CONSUMIDOS,#(lf)    Cast(IsNull(Titulos.OutrosCustosConsumidos, 0) As DEcimal(18,2)) VALOR_OUTROS_CUSTOS_CONSUMIDOS,#(lf)    Cast(IsNull(Cast(((IsNull(Titulos.CustosConsumidos, 0) * PlanoContrato.Cambio) * (Consumos.amortizacao /#(lf)    100.00)) As decimal(18,2)), 0) As DEcimal(18,2)) VALOR_DIREITOS_CONSUMIDOS_MOEDA_ORIGINAL,#(lf)    Cast(IsNull(Titulos.TotalCustos, 0) - IsNull(Titulos.CustosConsumidos, 0) As decimal(18,2))#(lf)    VALOR_DIREITOS_EXISTENCIAS,#(lf)    Cast(IsNull(Titulos.TotalOutrosCustos, 0) - IsNull(Titulos.OutrosCustosConsumidos, 0) As DEcimal(18,2))#(lf)    VALOR_OUTROS_CUSTOS_EXISTENCIAS,#(lf)    Cast(IsNull(Titulos.TotalCustos_moeda_original, 0) - IsNull(Cast(((IsNull(Titulos.CustosConsumidos, 0) *#(lf)    PlanoContrato.Cambio) * (Consumos.amortizacao / 100.00)) As decimal(18,2)), 0) As DEcimal(18,2))#(lf)    VALOR_DIREITOS_EXISTENCIAS_MOEDA_ORIGINAL,#(lf)    (Case#(lf)        When (Titulos.flagDataIlimitada = 1 Or#(lf)            Titulos.DataFim > GetDate()) And Titulos.NumRun - Titulos.RunsConsumidos > 0 And EstadosTitulos.Situacao =#(lf)            'C'#(lf)        Then 1#(lf)        Else 0#(lf)    End) As IN_STOCK,#(lf)    Contratos.CodContrato,#(lf)    (Select#(lf)         Min(Propostas_Detalhe.ID_Plano) Id_Plano#(lf)     From#(lf)         Propostas_Detalhe#(lf)     Where#(lf)         Propostas_Detalhe.CodPlano = PlanoContrato.CodPlano) IDPlano,#(lf)    IsNull((Select#(lf)         efv.TextValue#(lf)     From#(lf)         SharedServices.dbo.ExtendedFieldValue efv#(lf)     Where#(lf)         efv.ExtendedFieldId = 39 And#(lf)         efv.BusinessObject = PlanoContrato.CodPlano), 'DEFINIR'),#(lf)    Contratos.Referencia,#(lf)    Contratos.Direitos_cedidos,#(lf)    Contratos.Outras_condicoes,#(lf)    Contratos.n_proposta,#(lf)    PlanoContrato.CodAlvo,#(lf)    PlanoContrato.FaixaHoraria,#(lf)    ContratosEstados.*,#(lf)    Contratos.Descricao,#(lf)    Distribuidores.Nome As Desc_Distribuidor,#(lf)    T_Origens.descricao_origem As Desc_Origem,#(lf)    TP2.descricao_pais,#(lf)    EstadosTitulos.Descricao As Descricao_Estado#(lf)From#(lf)    Contratos Inner Join#(lf)    PlanoContrato On Contratos.NumContrato = PlanoContrato.NumContrato Inner Join#(lf)    Titulos As Titulos On PlanoContrato.CodPlano = Titulos.CodPlano Inner Join#(lf)    EstadosTitulos On EstadosTitulos.CodEstado = Titulos.Estado Inner Join#(lf)    Fichas_Videotape On Fichas_Videotape.numero_processo = Titulos.Numero_processo#(lf)            And Fichas_Videotape.episodio = Titulos.NumEpisodio Inner Join#(lf)    Programas On Programas.numero_processo = Fichas_Videotape.numero_processo Left Outer Join#(lf)    t_Paises TP On TP.codigo_pais = Fichas_Videotape.Pais Left Outer Join#(lf)    t_Paises TP2 On TP2.codigo_pais = Programas.Cod_Pais_Formato Left Outer Join#(lf)    t_Paises TP3 On TP3.codigo_pais = Contratos.cod_pais_facturacao Left Outer Join#(lf)    (Select#(lf)         Consumos.id_titulo,#(lf)         Sum(Consumos.amortizacao) amortizacao#(lf)     From#(lf)         Consumos#(lf)     Group By#(lf)         Consumos.id_titulo) As Consumos On Consumos.id_titulo = Titulos.CodTitulo Inner Join#(lf)    ContratosEstados On Contratos.Estado = ContratosEstados.CodEstado Inner Join#(lf)    Distribuidores On Contratos.CodDistribuidor = Distribuidores.CodDistribuidor Inner Join#(lf)    T_Origens On Contratos.origem = T_Origens.codigo_origem"]),
+				    SQL = "Select
+				    PlanoContrato.cod_canal As COD_CANAL,
+				    Contratos.CodProposta,
+				    Contratos.NumContrato As COD_CONTRATO,
+				    Right('00000000' + Cast(Programas.numero_processo As VARCHAR), 8) As NUMERO_PROCESSO,
+				    Right('00000000' + Cast(Programas.numero_processo As VARCHAR), 8) + Right('000' + Cast(Fichas_Videotape.episodio As
+				    VARCHAR), 3) As NUMERO_PROCESSO_EPISODIO,
+				    Right('000' + Cast(Fichas_Videotape.episodio As VARCHAR), 3) As EPISODIO,
+				    Contratos.Estado As COD_CONTRATO_ESTADO,
+				    Contratos.TipoContrato As COD_CONTRATO_TIPO,
+				    Contratos.origem As COD_ORIGEM,
+				    Contratos.CodDistribuidor As COD_DISTRIBUIDOR,
+				    Contratos.coddistribuidor_facturacao As COD_ENTIDADE_FACTURACAO,
+				    PlanoContrato.CodPlano As COD_CONTRATO_PLANO,
+				    Programas.area As COD_AREA,
+				    Fichas_Videotape.codgenero As COD_GENERO,
+				    PlanoContrato.tipo_conteudo As COD_TIPO_CONTEUDO,
+				    Titulos.CodTitulo As COD_TITULO,
+				    Titulos.Estado As COD_TITULO_ESTADO,
+				    Contratos.moeda As COD_MOEDA,
+				    Upper(TP3.cod2) As COD_PAIS_FACTURACAO,
+				    Upper(TP2.cod2) As COD_PAIS_FORMATO,
+				    Upper(TP2.descricao_pais) As DESC_PAIS_FORMATO,
+				    Upper(TP.cod2) As COD_PAIS_PRODUCAO,
+				    PlanoContrato.departamento As COD_DEPARTAMENTO,
+				    PlanoContrato.CCAnalitico COD_CC_ORCAMENTO,
+				    Contratos.DataRegisto As DATA_REGISTO,
+				    Contratos.DataContrato As DATA_CONTRATO,
+				    Contratos.DataAprovacao As DATA_APROVACAO,
+				    Contratos.ValorContrato,
+				    Contratos.ValorOutros,
+				    PlanoContrato.numero_de_episodios As Total_Episodios_Plano,
+				    PlanoContrato.Data_inicio_acontecimento As DATA_INICIO_ACONTECIMENTO,
+				    PlanoContrato.data_fim_acontecimento As DATA_FIM_ACONTECIMENTO,
+				    PlanoContrato.data_compra DATA_COMPRA,
+				    (Select
+				         Min(Titulos.DataInicio) As Expr1
+				     From
+				         Titulos Inner Join
+				         PlanoContrato As PC2 On PC2.CodPlano = Titulos.CodPlano
+				     Where
+				         PC2.NumContrato = PlanoContrato.NumContrato) As Data_Inicio_Contrato,
+				    (Select
+				         Max(Titulos_2.DataInicio) As Expr1
+				     From
+				         Titulos As Titulos_2 Inner Join
+				         PlanoContrato As PC2 On PC2.CodPlano = Titulos_2.CodPlano
+				     Where
+				         PC2.NumContrato = PlanoContrato.NumContrato) As Data_Final_Contrato,
+				    Titulos.DataInicio As DATA_INICIO_TITULO,
+				    Titulos.DataFim As DATA_FIM_TITULO,
+				    Titulos.flagDataIlimitada,
+				    Titulos.NumRun NUMERO_DE_RUNS,
+				    IsNull(Titulos.RunsConsumidos, 0) NUMERO_DE_RUNS_CONSUMIDOS,
+				    Cast(((Titulos.DuracaoMinima + Titulos.DuracaoMaxima) / 2) As decimal(18,2)) / 60 DURACAO_MEDIA_TITULO_HORAS,
+				    Cast((Titulos.DuracaoMinima + Titulos.DuracaoMaxima) / 2 As decimal(18,2)) DURACAO_MEDIA_TITULO_MINUTOS,
+				    Consumos.amortizacao As PERCENTAGEM_AMORTIZADA,
+				    EstadosTitulos.Situacao As SITUACAO_ESTADO_TITULO,
+				    PlanoContrato.Cambio CAMBIO,
+				    Cast(IsNull(Titulos.TotalCustos, 0) As DEcimal(18,2)) VALOR_DIREITOS,
+				    Cast(IsNull(Titulos.TotalOutrosCustos, 0) As DEcimal(18,2)) VALOR_OUTROS_CUSTOS,
+				    Cast(IsNull(Titulos.TotalCustos_moeda_original, 0) As DEcimal(18,2)) VALOR_DIREITOS_MOEDA_ORIGINAL,
+				    Cast(IsNull(Titulos.CustosConsumidos, 0) As DEcimal(18,2)) VALOR_DIREITOS_CONSUMIDOS,
+				    Cast(IsNull(Titulos.OutrosCustosConsumidos, 0) As DEcimal(18,2)) VALOR_OUTROS_CUSTOS_CONSUMIDOS,
+				    Cast(IsNull(Cast(((IsNull(Titulos.CustosConsumidos, 0) * PlanoContrato.Cambio) * (Consumos.amortizacao /
+				    100.00)) As decimal(18,2)), 0) As DEcimal(18,2)) VALOR_DIREITOS_CONSUMIDOS_MOEDA_ORIGINAL,
+				    Cast(IsNull(Titulos.TotalCustos, 0) - IsNull(Titulos.CustosConsumidos, 0) As decimal(18,2))
+				    VALOR_DIREITOS_EXISTENCIAS,
+				    Cast(IsNull(Titulos.TotalOutrosCustos, 0) - IsNull(Titulos.OutrosCustosConsumidos, 0) As DEcimal(18,2))
+				    VALOR_OUTROS_CUSTOS_EXISTENCIAS,
+				    Cast(IsNull(Titulos.TotalCustos_moeda_original, 0) - IsNull(Cast(((IsNull(Titulos.CustosConsumidos, 0) *
+				    PlanoContrato.Cambio) * (Consumos.amortizacao / 100.00)) As decimal(18,2)), 0) As DEcimal(18,2))
+				    VALOR_DIREITOS_EXISTENCIAS_MOEDA_ORIGINAL,
+				    (Case
+				        When (Titulos.flagDataIlimitada = 1 Or
+				            Titulos.DataFim > GetDate()) And Titulos.NumRun - Titulos.RunsConsumidos > 0 And EstadosTitulos.Situacao =
+				            'C'
+				        Then 1
+				        Else 0
+				    End) As IN_STOCK,
+				    Contratos.CodContrato,
+				    (Select
+				         Min(Propostas_Detalhe.ID_Plano) Id_Plano
+				     From
+				         Propostas_Detalhe
+				     Where
+				         Propostas_Detalhe.CodPlano = PlanoContrato.CodPlano) IDPlano,
+				    IsNull((Select
+				         efv.TextValue
+				     From
+				         SOICO_SharedServices.dbo.ExtendedFieldValue efv
+				     Where
+				         efv.ExtendedFieldId = 39 And
+				         efv.BusinessObject = PlanoContrato.CodPlano), 'DEFINIR'),
+				    Contratos.Referencia,
+				    Contratos.Direitos_cedidos,
+				    Contratos.Outras_condicoes,
+				    Contratos.n_proposta,
+				    PlanoContrato.CodAlvo,
+				    PlanoContrato.FaixaHoraria,
+				    ContratosEstados.*,
+				    Contratos.Descricao,
+				    Distribuidores.Nome As Desc_Distribuidor,
+				    T_Origens.descricao_origem As Desc_Origem,
+				    TP2.descricao_pais,
+				    EstadosTitulos.Descricao As Descricao_Estado
+				From
+				    Contratos Inner Join
+				    PlanoContrato On Contratos.NumContrato = PlanoContrato.NumContrato Inner Join
+				    Titulos As Titulos On PlanoContrato.CodPlano = Titulos.CodPlano Inner Join
+				    EstadosTitulos On EstadosTitulos.CodEstado = Titulos.Estado Inner Join
+				    Fichas_Videotape On Fichas_Videotape.numero_processo = Titulos.Numero_processo
+				            And Fichas_Videotape.episodio = Titulos.NumEpisodio Inner Join
+				    Programas On Programas.numero_processo = Fichas_Videotape.numero_processo Left Outer Join
+				    t_Paises TP On TP.codigo_pais = Fichas_Videotape.Pais Left Outer Join
+				    t_Paises TP2 On TP2.codigo_pais = Programas.Cod_Pais_Formato Left Outer Join
+				    t_Paises TP3 On TP3.codigo_pais = Contratos.cod_pais_facturacao Left Outer Join
+				    (Select
+				         Consumos.id_titulo,
+				         Sum(Consumos.amortizacao) amortizacao
+				     From
+				         Consumos
+				     Group By
+				         Consumos.id_titulo) As Consumos On Consumos.id_titulo = Titulos.CodTitulo Inner Join
+				    ContratosEstados On Contratos.Estado = ContratosEstados.CodEstado Inner Join
+				    Distribuidores On Contratos.CodDistribuidor = Distribuidores.CodDistribuidor Inner Join
+				    T_Origens On Contratos.origem = T_Origens.codigo_origem",
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
 				    #"Renamed Columns" = Table.RenameColumns(Source,{{"", "Flag_TipoAmortizacao"}}),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"DATA_COMPRA", type date}, {"DATA_APROVACAO", type date}, {"DATA_CONTRATO", type date}, {"DATA_REGISTO", type date}, {"DATA_INICIO_ACONTECIMENTO", type date}, {"DATA_FIM_ACONTECIMENTO", type date}, {"Data_Inicio_Contrato", type date}, {"Data_Final_Contrato", type date}, {"DATA_INICIO_TITULO", type date}}),
 				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"Descricao", "Desc_Estado"}}),
@@ -925,4 +1052,6 @@ table Contratos
 	annotation PBI_QueryRelationships = {"columnCount":53,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/GMediaBI_Contratos/Source.{COD_CANAL,0}","Section1/GMediaBI_Contratos/Source.{COD_CONTRATO,1}","Section1/GMediaBI_Contratos/Source.{NUMERO_PROCESSO,2}","Section1/GMediaBI_Contratos/Source.{NUMERO_PROCESSO_EPISODIO,3}","Section1/GMediaBI_Contratos/Source.{EPISODIO,4}","Section1/GMediaBI_Contratos/Source.{COD_CONTRATO_ESTADO,5}","Section1/GMediaBI_Contratos/Source.{COD_CONTRATO_TIPO,6}","Section1/GMediaBI_Contratos/Source.{COD_ORIGEM,7}","Section1/GMediaBI_Contratos/Source.{COD_DISTRIBUIDOR,8}","Section1/GMediaBI_Contratos/Source.{COD_ENTIDADE_FACTURACAO,9}","Section1/GMediaBI_Contratos/Source.{COD_CONTRATO_PLANO,10}","Section1/GMediaBI_Contratos/Source.{COD_AREA,11}","Section1/GMediaBI_Contratos/Source.{COD_GENERO,12}","Section1/GMediaBI_Contratos/Source.{COD_TIPO_CONTEUDO,13}","Section1/GMediaBI_Contratos/Source.{COD_TITULO,14}","Section1/GMediaBI_Contratos/Source.{COD_TITULO_ESTADO,15}","Section1/GMediaBI_Contratos/Source.{COD_MOEDA,16}","Section1/GMediaBI_Contratos/Source.{COD_PAIS_FACTURACAO,17}","Section1/GMediaBI_Contratos/Source.{COD_PAIS_FORMATO,18}","Section1/GMediaBI_Contratos/Source.{COD_PAIS_PRODUCAO,19}","Section1/GMediaBI_Contratos/Source.{COD_DEPARTAMENTO,20}","Section1/GMediaBI_Contratos/Source.{COD_CC_ORCAMENTO,21}","Section1/GMediaBI_Contratos/Source.{DATA_REGISTO,22}","Section1/GMediaBI_Contratos/Source.{DATA_CONTRATO,23}","Section1/GMediaBI_Contratos/Source.{DATA_APROVACAO,24}","Section1/GMediaBI_Contratos/Source.{ValorContrato,25}","Section1/GMediaBI_Contratos/Source.{ValorOutros,26}","Section1/GMediaBI_Contratos/Source.{Total_Episodios_Plano,27}","Section1/GMediaBI_Contratos/Source.{DATA_INICIO_ACONTECIMENTO,28}","Section1/GMediaBI_Contratos/Source.{DATA_FIM_ACONTECIMENTO,29}","Section1/GMediaBI_Contratos/Source.{DATA_COMPRA,30}","Section1/GMediaBI_Contratos/Source.{Data_Inicio_Contrato,31}","Section1/GMediaBI_Contratos/Source.{Data_Final_Contrato,32}","Section1/GMediaBI_Contratos/Source.{DATA_INICIO_TITULO,33}","Section1/GMediaBI_Contratos/Source.{DATA_FIM_TITULO,34}","Section1/GMediaBI_Contratos/Source.{flagDataIlimitada,35}","Section1/GMediaBI_Contratos/Source.{NUMERO_DE_RUNS,36}","Section1/GMediaBI_Contratos/Source.{NUMERO_DE_RUNS_CONSUMIDOS,37}","Section1/GMediaBI_Contratos/Source.{DURACAO_MEDIA_TITULO_HORAS,38}","Section1/GMediaBI_Contratos/Source.{DURACAO_MEDIA_TITULO_MINUTOS,39}","Section1/GMediaBI_Contratos/Source.{PERCENTAGEM_AMORTIZADA,40}","Section1/GMediaBI_Contratos/Source.{SITUACAO_ESTADO_TITULO,41}","Section1/GMediaBI_Contratos/Source.{CAMBIO,42}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS,43}","Section1/GMediaBI_Contratos/Source.{VALOR_OUTROS_CUSTOS,44}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_MOEDA_ORIGINAL,45}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_CONSUMIDOS,46}","Section1/GMediaBI_Contratos/Source.{VALOR_OUTROS_CUSTOS_CONSUMIDOS,47}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_CONSUMIDOS_MOEDA_ORIGINAL,48}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_EXISTENCIAS,49}","Section1/GMediaBI_Contratos/Source.{VALOR_OUTROS_CUSTOS_EXISTENCIAS,50}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_EXISTENCIAS_MOEDA_ORIGINAL,51}","Section1/GMediaBI_Contratos/Source.{IN_STOCK,52}"],"ColumnCount":53,"KeyColumnNames":[],"ColumnIdentities":["Section1/GMediaBI_Contratos/Source.{COD_CANAL,0}","Section1/GMediaBI_Contratos/Source.{COD_CONTRATO,1}","Section1/GMediaBI_Contratos/Source.{NUMERO_PROCESSO,2}","Section1/GMediaBI_Contratos/Source.{NUMERO_PROCESSO_EPISODIO,3}","Section1/GMediaBI_Contratos/Source.{EPISODIO,4}","Section1/GMediaBI_Contratos/Source.{COD_CONTRATO_ESTADO,5}","Section1/GMediaBI_Contratos/Source.{COD_CONTRATO_TIPO,6}","Section1/GMediaBI_Contratos/Source.{COD_ORIGEM,7}","Section1/GMediaBI_Contratos/Source.{COD_DISTRIBUIDOR,8}","Section1/GMediaBI_Contratos/Source.{COD_ENTIDADE_FACTURACAO,9}","Section1/GMediaBI_Contratos/Source.{COD_CONTRATO_PLANO,10}","Section1/GMediaBI_Contratos/Source.{COD_AREA,11}","Section1/GMediaBI_Contratos/Source.{COD_GENERO,12}","Section1/GMediaBI_Contratos/Source.{COD_TIPO_CONTEUDO,13}","Section1/GMediaBI_Contratos/Source.{COD_TITULO,14}","Section1/GMediaBI_Contratos/Source.{COD_TITULO_ESTADO,15}","Section1/GMediaBI_Contratos/Source.{COD_MOEDA,16}","Section1/GMediaBI_Contratos/Source.{COD_PAIS_FACTURACAO,17}","Section1/GMediaBI_Contratos/Source.{COD_PAIS_FORMATO,18}","Section1/GMediaBI_Contratos/Source.{COD_PAIS_PRODUCAO,19}","Section1/GMediaBI_Contratos/Source.{COD_DEPARTAMENTO,20}","Section1/GMediaBI_Contratos/Source.{COD_CC_ORCAMENTO,21}","Section1/GMediaBI_Contratos/Source.{DATA_REGISTO,22}","Section1/GMediaBI_Contratos/Source.{DATA_CONTRATO,23}","Section1/GMediaBI_Contratos/Source.{DATA_APROVACAO,24}","Section1/GMediaBI_Contratos/Source.{ValorContrato,25}","Section1/GMediaBI_Contratos/Source.{ValorOutros,26}","Section1/GMediaBI_Contratos/Source.{Total_Episodios_Plano,27}","Section1/GMediaBI_Contratos/Source.{DATA_INICIO_ACONTECIMENTO,28}","Section1/GMediaBI_Contratos/Source.{DATA_FIM_ACONTECIMENTO,29}","Section1/GMediaBI_Contratos/Source.{DATA_COMPRA,30}","Section1/GMediaBI_Contratos/Source.{Data_Inicio_Contrato,31}","Section1/GMediaBI_Contratos/Source.{Data_Final_Contrato,32}","Section1/GMediaBI_Contratos/Source.{DATA_INICIO_TITULO,33}","Section1/GMediaBI_Contratos/Source.{DATA_FIM_TITULO,34}","Section1/GMediaBI_Contratos/Source.{flagDataIlimitada,35}","Section1/GMediaBI_Contratos/Source.{NUMERO_DE_RUNS,36}","Section1/GMediaBI_Contratos/Source.{NUMERO_DE_RUNS_CONSUMIDOS,37}","Section1/GMediaBI_Contratos/Source.{DURACAO_MEDIA_TITULO_HORAS,38}","Section1/GMediaBI_Contratos/Source.{DURACAO_MEDIA_TITULO_MINUTOS,39}","Section1/GMediaBI_Contratos/Source.{PERCENTAGEM_AMORTIZADA,40}","Section1/GMediaBI_Contratos/Source.{SITUACAO_ESTADO_TITULO,41}","Section1/GMediaBI_Contratos/Source.{CAMBIO,42}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS,43}","Section1/GMediaBI_Contratos/Source.{VALOR_OUTROS_CUSTOS,44}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_MOEDA_ORIGINAL,45}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_CONSUMIDOS,46}","Section1/GMediaBI_Contratos/Source.{VALOR_OUTROS_CUSTOS_CONSUMIDOS,47}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_CONSUMIDOS_MOEDA_ORIGINAL,48}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_EXISTENCIAS,49}","Section1/GMediaBI_Contratos/Source.{VALOR_OUTROS_CUSTOS_EXISTENCIAS,50}","Section1/GMediaBI_Contratos/Source.{VALOR_DIREITOS_EXISTENCIAS_MOEDA_ORIGINAL,51}","Section1/GMediaBI_Contratos/Source.{IN_STOCK,52}"],"RelationshipInfo":[]}
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
 

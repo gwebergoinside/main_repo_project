@@ -1,0 +1,35 @@
+table TipoPublicidade
+	lineageTag: 05dd3c40-9175-4cbe-978a-1fa4cd0a9d6a
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fdb50614-d8e7-4a52-8422-42d9406fc92f
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Publicidade'
+		dataType: string
+		lineageTag: 8e52fa95-c06f-4f1e-bb18-8f2262a0121b
+		summarizeBy: none
+		sourceColumn: Tipo Publicidade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoPublicidade = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				Source = Sql.Database(ServerP, BD, [Query="Select#(lf)tipPubId,#(lf)tipPubDescricao#(lf)From#(lf)TipoPublicidade"]),
+				    #"Renamed Columns3" = Table.RenameColumns(Source,{{"tipPubDescricao", "Tipo Publicidade"}})
+				in
+				    #"Renamed Columns3"
+
+	annotation PBI_ResultType = Table
+

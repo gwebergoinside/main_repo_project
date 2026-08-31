@@ -1,0 +1,63 @@
+table 'Codigo Break'
+	lineageTag: f7bffef3-f1e2-45d1-a4de-43099783732e
+
+	column greComId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 378b52fa-5c63-457f-ad02-aaa6cab535a7
+		summarizeBy: none
+		sourceColumn: greComId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Codigo Break'
+		dataType: string
+		lineageTag: 08bf3d3a-e33c-4939-8b61-597ebe9390c4
+		summarizeBy: none
+		sourceColumn: Codigo Break
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Descrição Cod_Break'
+		dataType: string
+		lineageTag: 6d940cf0-696c-495d-890e-32f3860f7794
+		summarizeBy: none
+		sourceColumn: Descrição Cod_Break
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Break'
+		dataType: string
+		lineageTag: 0f55ed76-3de8-4cfc-a48b-5d31057f0844
+		summarizeBy: none
+		sourceColumn: Tipo Break
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Codigo Break-34964ec2-bc2f-4568-b53d-f84ba3f45caf' = m
+		mode: import
+		queryGroup: Encomendas
+		source = ```
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="
+				SELECT
+				greComId
+				,ecrCodigo As Cod_Break
+				,ecrDescricao Desc_Break
+				,TiposEcra.tipEcrDescricao As Desc_TipoBreak
+				FROM
+				Grelhacomercial Inner Join
+				    TiposEcra On GrelhaComercial.tipEcrId = TiposEcra.tipEcrId
+				where 
+				Year(grecomdata) >= Year(GetDate()) - "&AnoUpdate&"
+				"]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"Cod_Break", "Codigo Break"}, {"Desc_Break", "Descrição Cod_Break"}, {"Desc_TipoBreak", "Tipo Break"}})
+				in
+				    #"Renamed Columns"
+				```
+
+	annotation PBI_ResultType = Table
+

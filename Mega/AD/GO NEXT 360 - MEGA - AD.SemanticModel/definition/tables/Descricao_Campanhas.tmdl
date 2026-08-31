@@ -1,0 +1,47 @@
+table Descricao_Campanhas
+	lineageTag: 26a09223-ea2f-44bf-9018-9a672a1c4f67
+
+	column 'Descricao Campanha'
+		lineageTag: f50edb18-8c7d-437a-9e40-8358430077ee
+		summarizeBy: none
+		sourceColumn: [DescricaoCampanhas]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Descricao_Campanhas-80d2e7cc-5c5c-4bd7-a5d7-8203923e027e = calculated
+		mode: import
+		source = ```
+				
+				VAR _enc = filteR(
+				    SELECTCOLUMNS(
+				        Encomendas
+				        ,"DescricaoCampanhas", Encomendas[DescricaoCampanhas]), [DescricaoCampanhas] <> BLANK()
+				    )
+				VAR _fat = 
+				    SELECTCOLUMNS(
+				        Faturacao
+				        ,"DescricaoCampanhas", Faturacao[DescricaoCampanhas]
+				    )
+				VAR _rap = 
+				    SELECTCOLUMNS(
+				        Rappel
+				        ,"DescricaoCampanhas", Rappel[DescricaoCampanhas]
+				    )
+				VAR _out = 
+				    SELECTCOLUMNS(
+				        'Outros Custos'
+				        ,"DescricaoCampanhas", 'Outros Custos'[DescricaoCampanhas]
+				    )
+				VAR _mul = 
+				    SELECTCOLUMNS(
+				        Multiprodutos
+				        ,"DescricaoCampanhas", Multiprodutos[DescricaoCampanhas]
+				    )
+				VAR _Union = UNION(_enc,_fat,_rap,_out,_mul)
+				VAR Result = SUMMARIZE(_Union, [DescricaoCampanhas] )
+				RETURN
+				Result
+				```
+
+	annotation PBI_Id = 88cc010d96394c8aa4386ad75abddcf8
+

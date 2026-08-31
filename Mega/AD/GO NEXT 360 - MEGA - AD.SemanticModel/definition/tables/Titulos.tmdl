@@ -1,0 +1,70 @@
+table Titulos
+	isHidden
+	lineageTag: 18698a75-e1bd-448c-86df-d63482814ea9
+
+	measure 'Selected TituloParameter' =
+			
+			MIN ( Titulos[ID] )
+		formatString: 0
+		isHidden
+		lineageTag: c1f99f92-828a-499e-874b-3c2f5567c9d7
+
+		changedProperty = IsHidden
+
+	measure TitulosCulture =
+			
+			SWITCH(USERCULTURE(),
+			   "es-ES", SELECTEDVALUE(Titulos[es-ES]),
+			   "pt-PT", SELECTEDVALUE(Titulos[Parameter]),
+			   SELECTEDVALUE(Titulos[Parameter])
+			)
+		isHidden
+		lineageTag: a80f897d-0f0e-4378-b8e2-83d272c36c8e
+
+		changedProperty = IsHidden
+
+	column Parameter
+		dataType: string
+		isHidden
+		lineageTag: b32a17ee-1e8b-47fb-80ff-3699669e8081
+		summarizeBy: none
+		sourceColumn: Parameter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c402387e-71fd-4f0c-a7fc-b440e4f6def2
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column es-ES
+		dataType: string
+		lineageTag: b5fd6220-d1d2-40cc-8496-a9891eb264f7
+		summarizeBy: none
+		sourceColumn: es-ES
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Titulos-a649cce7-3124-4bb9-b0e4-652ab19e6891 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("nVTBbtNAEP0VK+ceiENaekwTSosIRCFCqqIeVvYoWcndDbveqHxOxQGBxAnxBf6xzpu1HTsEIXHYKJ73ZnZn5s2s14Ml+fBgB2eDIR/5IDO4P1sPPm6VoySnZE4uUzkoKZ9psKXqmsF9/ZgVweu99cwY8ekYgC8pI81uM109Oa2Y8JLPrdk48tazWTl9RJ2T8apg1rjLhDWogvrcW5NrvIU5TD4Xh9aCtzb+Pa+71YyZF93wMIEyJVM6pWvfPflSc1lK1OAVaiBwEWNP7cPOqRh6sql+mEzj9VpqcclnsiGxSc3yJs83ymz5RkoW5HKdC3v4gn8Y4If75MsBAR8wWhSdlwt8ox/4C9NV9csECYL6X1lT+01MwO2mlNoMUfeu6YiSrBxn6ktHII/75BZsG9AFZ1SqYit+6IB8FiKg4/umnGHR5V/0+YLHPPk262KVTQndDFH/jjkQ7OB+Yg2p6lv11QKomwwP9EDATHON/pDDwtmd9aVCeVI0AIZAYolxC75rXn3n1snTtDCHElUgNLV9N53yKjTVDUjTE34NDMeVelTJhyzs6lxYXjxoWkYhRWtXyouWhBNTOnBiU6qnQntqSScCRRkIL6r8r9FORej0Lh33e/dfcZK9T97dIdr5v6PVZMR8TxubSdN/x+JCSLUx09Y0euNVVJLzSX8WUhnlBjuhUx4tns9JyHU91dc3cLuMU8cDCogaJGqJ9tojx4P+RlFTAE7q70aTU+5zkLU4gqzeRkP1Mwp7ap2jNseRLGGYsk6KzeJpNlIwvP6k2nAZHbZQjyCVFf+Z5nhlXN/QRvsNcK52orhrVQZ3iIrOH6AMWB3w/hk=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Titulo = _t, ID = _t, #"es-ES" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Titulo", type text}, {"ID", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Titulo", "Parameter"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

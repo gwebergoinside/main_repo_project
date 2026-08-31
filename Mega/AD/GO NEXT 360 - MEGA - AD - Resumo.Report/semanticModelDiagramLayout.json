@@ -1,0 +1,764 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 3758.3498211410129,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {},
+          "nodeIndex": "~Medidas",
+          "nodeLineageTag": "990b436c-ad8f-404f-b743-871182f2fd81",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Translated Localized Labels",
+          "nodeLineageTag": "82a7699a-0918-4428-9cc9-3cbf27775af8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Agencia",
+          "nodeLineageTag": "b22d771a-7005-41d7-bdbf-39e0073165bb",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Agencia Meios",
+          "nodeLineageTag": "6270275f-2ef5-45d3-86f5-0083d3a0b8b3",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Alvo",
+          "nodeLineageTag": "83cf3fc8-4f8d-4ca3-a001-f9644a072f39",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "AlvoPadrao",
+          "nodeLineageTag": "771980e5-755d-405d-8952-b3ddd8111fda",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "AlvoPadraoInvest",
+          "nodeLineageTag": "fa4d6133-9a25-4bfd-9495-dbd07c96d55b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Alvos Var",
+          "nodeLineageTag": "fddaaab4-5fac-4509-b4a3-a4e901e660d3",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "AnoUpdate",
+          "nodeLineageTag": "0467ac77-998b-4203-8cbd-e7e0d9f78d5b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Anunciante",
+          "nodeLineageTag": "13a9293c-7f1e-4f15-b2ee-c9a5046012b1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Audiencias",
+          "nodeLineageTag": "22869a1e-2169-498c-8734-622956bb0ce8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Bonus",
+          "nodeLineageTag": "69940185-b820-4549-8437-f3e91a92c516",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "55b9f423-4ac7-447b-91d2-cb060f18fd57",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Calendario comparativo",
+          "nodeLineageTag": "5b2f5456-aeb6-494a-bfea-d5993d87518d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Canais",
+          "nodeLineageTag": "c55745c7-4e33-4134-92fe-f6e59eee06d2",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Categoria",
+          "nodeLineageTag": "752e4a87-a3dc-4073-aaad-cd9f9593af0a",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Central",
+          "nodeLineageTag": "30cb5f0c-e4ed-42c6-b6ef-4cd7ed5d2456",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Codigo Break",
+          "nodeLineageTag": "f7bffef3-f1e2-45d1-a4de-43099783732e",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "d_Neg_Audiencia",
+          "nodeLineageTag": "06ad1012-fc50-42ec-95ec-e78d05ed9563",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "d_Neg_Característica",
+          "nodeLineageTag": "b71d6a14-8843-4d93-91b9-98aebf5a7883",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "d_Neg_Cond_Neg",
+          "nodeLineageTag": "cf3ccf06-e6a7-4d9e-af1e-6bfeb5a9d345",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "d_Neg_Descontos",
+          "nodeLineageTag": "387f2dc5-e485-425d-92a7-55732bea1a32",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "d_Neg_EcrDescricao",
+          "nodeLineageTag": "32969dc7-1181-4f6a-a393-6c207ccbfcb1",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "d_Neg_Posicoes",
+          "nodeLineageTag": "e52484f3-f9d8-4a3a-a9b4-381e37c54468",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "d_Neg_TaxaMultiProduto",
+          "nodeLineageTag": "7b5da83e-29b3-44cc-b520-9e35c0201871",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "DayPart",
+          "nodeLineageTag": "b0c4e365-e8ce-4157-b7e3-eb777f1599b1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Descricao_Campanhas",
+          "nodeLineageTag": "26a09223-ea2f-44bf-9018-9a672a1c4f67",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Duracao",
+          "nodeLineageTag": "c2c4c9ec-bc70-404f-8e0d-21af4ba4c3aa",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "DuracaoBase",
+          "nodeLineageTag": "0e1e46b7-9237-46fe-b09a-71a2812fd201",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "DuracaoBaseOther",
+          "nodeLineageTag": "667aefaa-a900-468b-bec0-8b5238f183c9",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Encomendas",
+          "nodeLineageTag": "487f0557-de7d-46f9-9c81-8186b7bd6a9d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Entidade_Faturar",
+          "nodeLineageTag": "e8775ed2-a796-4017-ae40-f64d0ebf3b73",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Executivos",
+          "nodeLineageTag": "36e5eba4-e9d1-43c8-b44a-6098b1b6f2ae",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "FaixaHoraria",
+          "nodeLineageTag": "5c6bd435-c40f-4c73-9ae3-086a63c95d3c",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Faturacao",
+          "nodeLineageTag": "fa78c712-6172-4c1c-8633-2902466405c1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "FlagFaturacao",
+          "nodeLineageTag": "982cb99e-b0c2-40e1-96f2-7eab3267ccdf",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "GRP Simulador",
+          "nodeLineageTag": "1d7fe140-ae4d-4d4a-8991-a720de404fd0",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Grupo",
+          "nodeLineageTag": "90d10fe1-3016-4aef-a06f-530628db8253",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "GrupoCanais",
+          "nodeLineageTag": "0ace9b27-7877-490c-961d-f6cc12385c35",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "images",
+          "nodeLineageTag": "38115ccc-a83d-4870-86ab-57c108656ecc",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Impressões",
+          "nodeLineageTag": "bf463274-eca3-46de-bd05-2a75fa37f869",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Localized Labels",
+          "nodeLineageTag": "a4964435-7700-4f4a-9da3-1c5717b039d9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "logo header",
+          "nodeLineageTag": "5da3ae61-3823-4b0a-a38e-610c5503be6b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Mapeamento",
+          "nodeLineageTag": "002fd346-8f21-46c9-acbc-bf1c2d8c1128",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Multiprodutos",
+          "nodeLineageTag": "1f36b69a-d5b3-4d96-8781-9ee62c0c5033",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Negociacao",
+          "nodeLineageTag": "cfea3ff2-908a-44fb-9f91-7eaa000d87e7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Negociacao Detalhe",
+          "nodeLineageTag": "e16149a5-4a32-43f2-9c1e-33df20012b61",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Objetivos",
+          "nodeLineageTag": "155385dc-42ec-42f0-a0bd-52c4a0905d09",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Ocupacao",
+          "nodeLineageTag": "d826b68a-aa14-4dff-a9d9-055b8556f6b4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "OrdemPubClassificacao",
+          "nodeLineageTag": "06df223e-e6bc-42af-9ee9-d0483279e960",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Outros Custos",
+          "nodeLineageTag": "33c76a14-308d-43a4-96f6-a60ecfa026d1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Pacotes",
+          "nodeLineageTag": "8ff12605-d5e8-4456-8803-7a2bbf66b6d6",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Produtos",
+          "nodeLineageTag": "6b9535bb-824f-4d66-b61a-50bef6c3b81c",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Propostas",
+          "nodeLineageTag": "c111d297-2afc-470e-a859-364aa15a523e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Rappel",
+          "nodeLineageTag": "2aed5dac-81e0-406b-aeb3-33d6dabea74e",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "SectorAtividade",
+          "nodeLineageTag": "be3ebb4e-cc89-4b9d-9a24-44ac31b4a856",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "SetUserCulture",
+          "nodeLineageTag": "11d92905-1d04-47c3-83ce-f448bb80ab67",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Simulador % Ocupação",
+          "nodeLineageTag": "4abd474d-dd72-4b6f-8381-5b92b4d9d249",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Simulador Dur Ocupação",
+          "nodeLineageTag": "8f36c095-7168-491a-afbf-f36e98185536",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Table",
+          "nodeLineageTag": "0b0d920d-52ab-47c7-8fe4-3a43bf245d12",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Tipo Anunciante",
+          "nodeLineageTag": "0ce83464-90a1-4cf5-a3b1-c8fd686dc61f",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Tipo Formato Faixa",
+          "nodeLineageTag": "8f295d2a-5fda-44d2-84b1-aa5355073d5c",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Tipo_Taxas",
+          "nodeLineageTag": "3b2247ed-c700-415d-8bfe-42c27a9eef51",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "TipoCliente",
+          "nodeLineageTag": "7b32d478-772e-417b-83c7-fb179e753e97",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "TipoNeg",
+          "nodeLineageTag": "1f4b0eca-3548-4daa-8a9d-655d68a1b965",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "TipoPublicidade",
+          "nodeLineageTag": "05dd3c40-9175-4cbe-978a-1fa4cd0a9d6a",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "TipoRappelComissao",
+          "nodeLineageTag": "6137f0f4-33ab-4ca8-9075-63c3e1126677",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Titulos",
+          "nodeLineageTag": "18698a75-e1bd-448c-86df-d63482814ea9",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Valor",
+          "nodeLineageTag": "19716a34-f1d3-48d4-bec1-ada32798747a",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Variacao Receita",
+          "nodeLineageTag": "4fe62b0e-3fcf-45c5-b327-b048af7cd238",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 61.755826638174895,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [],
+      "name": "Layout 3",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 3,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [],
+      "name": "Layout 2",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 2",
+  "defaultDiagram": "Todas as tabelas"
+}

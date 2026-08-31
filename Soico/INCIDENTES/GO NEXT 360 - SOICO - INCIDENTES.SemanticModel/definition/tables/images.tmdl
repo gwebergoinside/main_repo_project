@@ -25,6 +25,14 @@ table images
 
 		annotation SummarizationSetBy = Automatic
 
+	column LogoBase64
+		dataType: string
+		lineageTag: 8faefbca-c50b-4cbc-b7a6-cfcee6c198ec
+		summarizeBy: none
+		sourceColumn: LogoBase64
+
+		annotation SummarizationSetBy = Automatic
+
 	partition images-d673568e-6bcc-4edc-a7b8-5c4350f19b65 = m
 		mode: import
 		queryGroup: BD

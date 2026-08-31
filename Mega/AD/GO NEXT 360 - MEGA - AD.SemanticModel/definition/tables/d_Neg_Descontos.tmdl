@@ -1,0 +1,327 @@
+table d_Neg_Descontos
+	isHidden
+	lineageTag: 387f2dc5-e485-425d-92a7-55732bea1a32
+
+	column desId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2b5e0175-33f9-45fa-84dd-59264778af01
+		summarizeBy: count
+		sourceColumn: desId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column perId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 966c97e5-eaa2-4f11-8c98-b09448718f1f
+		summarizeBy: count
+		sourceColumn: perId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desDescricao
+		dataType: string
+		isHidden
+		lineageTag: bcea1f1f-5de4-499d-a5a8-85e718ef1c94
+		summarizeBy: none
+		sourceColumn: desDescricao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5f49c560-5e39-4ab4-8230-d4ce99068314
+		summarizeBy: none
+		sourceColumn: proId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desDesconto
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 2a5ced88-5623-4f78-b501-b41bed43d568
+		summarizeBy: sum
+		sourceColumn: desDesconto
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desDataInicio
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: c35864c1-9608-4c8a-b32f-fd1169885081
+		summarizeBy: none
+		sourceColumn: desDataInicio
+
+		variation Variation
+			isDefault
+			relationship: df621e3a-8e52-4559-8c52-a504c9657706
+			defaultHierarchy: LocalDateTable_5f362b0c-0471-4922-9d15-01d535154cde.'Date Hierarchy'
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desDataFim
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: b68f71f6-1b24-4e06-afeb-0f23b301810e
+		summarizeBy: none
+		sourceColumn: desDataFim
+
+		variation Variation
+			isDefault
+			relationship: 85732c62-6f23-47f6-ba10-1cb523a0c797
+			defaultHierarchy: LocalDateTable_609519f8-358f-473e-a07a-cfb8ce7f1385.'Date Hierarchy'
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1173aba9-299c-4c79-96d6-189d78bc2de0
+		summarizeBy: none
+		sourceColumn: negPerId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desHoraInicio
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b6fb646d-61b4-4035-a3a2-53c0ca49939d
+		summarizeBy: sum
+		sourceColumn: desHoraInicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desHoraFim
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0d77558b-8c72-4d18-b9ea-af7661cc3dd4
+		summarizeBy: sum
+		sourceColumn: desHoraFim
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desDias
+		dataType: string
+		isHidden
+		lineageTag: 00b565ea-9f71-4a8c-a41f-a4f3e371b410
+		summarizeBy: none
+		sourceColumn: desDias
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desEcrBreak
+		dataType: string
+		isHidden
+		lineageTag: 26c6dbff-978b-4413-b3a3-6b0db604dc72
+		summarizeBy: none
+		sourceColumn: desEcrBreak
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 17d79a3d-1bbb-420f-8906-9c1eb72d2108
+		summarizeBy: count
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column priId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9fba046a-4d47-4e95-8379-324e8d07cd22
+		summarizeBy: count
+		sourceColumn: priId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2a83cf44-9104-4c06-864f-7c2dc5121f7c
+		summarizeBy: count
+		sourceColumn: tipEcrId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column desDias_format = ```
+			
+			var _seg=   If(SEARCH("2",'d_Neg_Descontos'[desDias],,0)>0, "2ª")
+			var _ter=   If(SEARCH("3",'d_Neg_Descontos'[desDias],,0)>0, "3ª")
+			var _qua=   If(SEARCH("4",'d_Neg_Descontos'[desDias],,0)>0, "4ª")
+			var _qui=   If(SEARCH("5",'d_Neg_Descontos'[desDias],,0)>0, "5ª")
+			var _sex=   If(SEARCH("6",'d_Neg_Descontos'[desDias],,0)>0, "6ª")
+			var _sab =  If(SEARCH("S",'d_Neg_Descontos'[desDias],,0)>0,"Sáb")
+			var _dom =  If(SEARCH("D",'d_Neg_Descontos'[desDias],,0)>0,"Dom")
+			
+			Return 
+			 Trim (COMBINEVALUES ( " ", _seg,_ter,_qua,_qui,_sex,_sab,_dom))
+			```
+		isHidden
+		lineageTag: 92091a1e-9e9e-4cde-b5aa-a9f97a9b4690
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora_inicio-Formatada = ```
+			
+			VAR Duration = 'd_Neg_Descontos'[desHoraInicio] *60
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		isHidden
+		lineageTag: 505b1dbe-c77f-4bfe-8746-05b34ac3a7dc
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora_Fim-Formatada = ```
+			
+			VAR Duration = 'd_Neg_Descontos'[desHoraFim] *60
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		isHidden
+		lineageTag: f0267c82-1836-4912-8d49-715568157d05
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdUnidadeNegocio
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d39a8abb-07ff-4513-bd26-b453672fb5dd
+		summarizeBy: sum
+		sourceColumn: IdUnidadeNegocio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Neg_Descontos-0ae185cd-def8-46ac-a39a-c496b5d376d6 = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    *#(lf)From descontos"])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

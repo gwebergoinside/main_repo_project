@@ -1,0 +1,598 @@
+relationship 7bbaefd4-b6bd-4478-bbf9-d3991658b42b
+	fromColumn: Objetivos.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship 60fd3c4d-e849-4854-83d7-7623777dc4e4
+	fromColumn: Encomendas.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship dd50a9cf-27a4-4cea-99fb-42bcb42defb8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Propostas.proDataInicio
+	toColumn: LocalDateTable_d7dbf4d4-47f4-4530-9576-115d27ca723d.Date
+
+relationship 728934cb-af5e-458e-9ae5-0d313200c680
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Propostas.proDataCria
+	toColumn: LocalDateTable_ef8293a3-2ca0-491a-a1b2-b4178b43a7c6.Date
+
+relationship e5128b03-5d7d-43d9-8d69-ef9e94177f39
+	fromColumn: Encomendas.anuncianteId
+	toColumn: Anunciante.entId
+
+relationship 596dec98-2ea9-4384-9def-16247ddd0c85
+	fromColumn: Propostas.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship 5be33038-b4e1-499a-ac68-0c96d57c5403
+	fromColumn: Propostas.vendedorId
+	toColumn: Executivos.UtiId
+
+relationship 8157fece-6d4e-4770-b728-fa2bdd4f68b9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Propostas.accNegDataInicio
+	toColumn: LocalDateTable_59dbc8da-6956-43ed-ba11-ad4b8a28ac86.Date
+
+relationship c1d2b783-a260-40b2-8449-5ce7fa777b2b
+	fromColumn: Propostas.proANId
+	toColumn: Anunciante.entId
+
+relationship 449d76a1-0248-4c97-ae8f-837cf8d3a180
+	fromColumn: Encomendas.vendedor
+	toColumn: Executivos.UtiId
+
+relationship 73a9211d-35f0-42c6-822b-e920af1ea897
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Ocupacao.DataFaixaHoraria
+	toColumn: LocalDateTable_9d33ffac-dbe0-4a28-8540-db153444ba3d.Date
+
+relationship f1d67fff-7918-489a-bd58-49ae8c3d4bbb
+	fromColumn: Ocupacao.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship fa8662d9-b746-4b14-92df-128c6c6bdcdb
+	fromColumn: Objetivos.anuId
+	toColumn: Anunciante.entId
+
+relationship db85fc7b-5a1f-4722-93bd-83c72821ae52
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Mapeamento.DataMkt
+	toColumn: LocalDateTable_a6eef63c-d3f3-47a8-a8ee-ff49da6b1a02.Date
+
+relationship 5d0d243c-ce82-4d60-9006-5f0b4aa363ce
+	fromColumn: Encomendas.Canal
+	toColumn: GrupoCanais.Canal
+
+relationship 935d4baf-fe22-436e-a851-419f56793096
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Variacao Receita'.Data
+	toColumn: LocalDateTable_3c67d549-5f20-49aa-a857-cc198ae6b70e.Date
+
+relationship 1d1531cb-6456-4010-9e1f-af2e1d180676
+	fromColumn: 'Variacao Receita'.anuncianteId
+	toColumn: Anunciante.entId
+
+relationship a77edcbe-eb59-4fe8-ac23-17d5e7204818
+	fromColumn: 'Variacao Receita'.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship 19251418-5f58-4a84-a70c-f9dca0aa5e87
+	fromColumn: Ocupacao.IdAnunciante
+	toColumn: Anunciante.entId
+
+relationship b201eaed-17cd-4887-b499-bc72d6546d52
+	fromColumn: Encomendas.bonId
+	toColumn: Bonus.bonId
+
+relationship f59c5e55-ca93-4fc0-b57c-2c2dcb4bf9e5
+	fromColumn: Encomendas.proId
+	toColumn: Produtos.proId
+
+relationship a6467f77-a92c-4143-8262-9c6049f378f7
+	fromColumn: Encomendas.ordPubClaId
+	toColumn: OrdemPubClassificacao.ordPubClaId
+
+relationship aceb0990-7c44-4eb1-a51f-8df9ce3be3d4
+	fromColumn: Produtos.TipProId
+	toColumn: SectorAtividade.tipProId
+
+relationship 40e64624-d15e-4b69-b278-daefbce69cfd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Calendario comparativo'.Date
+	toColumn: LocalDateTable_65ea416e-d8fe-4601-a5fe-4c2b38e6ab7c.Date
+
+relationship 677eaa90-c72e-4ceb-8441-0e8bc44c5015
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Neg_Característica.carDataInicio
+	toColumn: LocalDateTable_1f0842dc-60c0-4465-8dfc-2960fbdffd18.Date
+
+relationship 0f4e3a9d-0854-482e-a302-164aff5d99fa
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Neg_Característica.carDataFim
+	toColumn: LocalDateTable_e9564673-7ccd-464f-85e9-50938f65ee86.Date
+
+relationship 87245228-a220-469d-861b-49ab2c3c7b27
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Negociacao.DataFim
+	toColumn: LocalDateTable_5d3ec3d0-2d11-48c4-9e3a-0db9fe0a9ea1.Date
+
+relationship c62a1a8e-432a-4a1b-9b82-caa87b4ef870
+	fromColumn: Negociacao.Cod_Canal
+	toColumn: Canais.canCodigo
+
+relationship 60577d7e-25ac-4a75-869c-463ac437a43e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Neg_Posicoes.locPerDataInicio
+	toColumn: LocalDateTable_077f7a2a-a344-4e3b-bf6e-4131d46bffb2.Date
+
+relationship b5979c75-d4b0-4060-b2a8-d7afaa329f0e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Neg_Posicoes.locPerDataFim
+	toColumn: LocalDateTable_37529e72-ed85-47da-9d39-214bf7ae2632.Date
+
+relationship 7513b12e-848a-490d-8eb5-e17404fa643e
+	crossFilteringBehavior: bothDirections
+	fromColumn: d_Neg_Posicoes.negPerId
+	toColumn: Negociacao.negPerId
+
+relationship 4a35b315-5eb0-4ef3-8b20-9a20457de739
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Neg_Audiencia.AudPaiDataInicio
+	toColumn: LocalDateTable_4f834c8c-1cb9-4352-b792-76ce28b6a8ae.Date
+
+relationship 1d090e11-5677-45c8-b8df-c6e4cd4e707d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Neg_Audiencia.AudPaiDataFim
+	toColumn: LocalDateTable_1068e344-4b63-4a28-b724-074bbbb65cae.Date
+
+relationship 692645d3-60b9-47f0-83f3-3fe1aa101f64
+	crossFilteringBehavior: bothDirections
+	fromColumn: Negociacao.audPaiId
+	toColumn: d_Neg_Audiencia.AudPaiId
+
+relationship 5a822f18-6e2e-469e-975a-e15979c041dc
+	crossFilteringBehavior: bothDirections
+	fromColumn: d_Neg_Característica.tipEcrId
+	toColumn: d_Neg_EcrDescricao.tipEcrId
+
+relationship 66bb6a29-c9fa-403f-9675-28301a5f0a46
+	fromColumn: d_Neg_Característica.priId
+	toColumn: Categoria.PriId
+
+relationship d6c2ac58-ce35-434e-b62d-aa8950eeb35b
+	crossFilteringBehavior: bothDirections
+	fromColumn: Negociacao.negPerId
+	toColumn: d_Neg_Cond_Neg.negPerId
+
+relationship 75e34883-fc65-489f-ae27-266b4d99d71a
+	crossFilteringBehavior: bothDirections
+	fromColumn: Negociacao.negPerId
+	toColumn: d_Neg_TaxaMultiProduto.negPerId
+
+relationship 07f1879f-9daf-48c7-93f8-553e913a4ed2
+	fromColumn: 'Outros Custos'.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship df621e3a-8e52-4559-8c52-a504c9657706
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Neg_Descontos.desDataInicio
+	toColumn: LocalDateTable_5f362b0c-0471-4922-9d15-01d535154cde.Date
+
+relationship 85732c62-6f23-47f6-ba10-1cb523a0c797
+	joinOnDateBehavior: datePartOnly
+	fromColumn: d_Neg_Descontos.desDataFim
+	toColumn: LocalDateTable_609519f8-358f-473e-a07a-cfb8ce7f1385.Date
+
+relationship b45bae86-14a3-4a39-9176-0235055733f2
+	crossFilteringBehavior: bothDirections
+	fromColumn: d_Neg_Descontos.negPerId
+	toColumn: Negociacao.negPerId
+
+relationship 7a7f56e4-7c86-45ff-8c1e-a6ea7f9a39ad
+	fromColumn: Faturacao.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship 7187627d-1cc2-4bd9-8aa1-190d914db74e
+	fromColumn: Faturacao.anuncianteId
+	toColumn: Anunciante.entId
+
+relationship 0e5f44ce-2b86-49f0-9526-21d6cdc89ae8
+	fromColumn: Faturacao.proId
+	toColumn: Produtos.proId
+
+relationship cde5f804-eb0e-46c8-9b13-50a17fbaf8ea
+	fromColumn: Faturacao.vendedorId
+	toColumn: Executivos.UtiId
+
+relationship e950cd4c-3d43-4118-ab02-ef56b444c8cd
+	fromColumn: Encomendas.ordPubFlagValorBrutoVendas
+	toColumn: FlagFaturacao.ID
+
+relationship a6d2bea3-fa79-4391-88e0-e37efee44628
+	fromColumn: Faturacao.ordPubFlagValorBrutoVendas
+	toColumn: FlagFaturacao.ID
+
+relationship edf5fb51-a1c7-48b1-9726-99d308e64e11
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Faturacao.DataEmissao
+	toColumn: LocalDateTable_202571d0-8c17-419a-b101-4f7e8d669940.Date
+
+relationship b4caebc5-3fab-4992-bb6f-7825023a2a94
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Faturacao.DataVencimento
+	toColumn: LocalDateTable_08c6cf5d-373a-4f47-83ce-6f7d7595bb04.Date
+
+relationship ad9a3c4b-be5d-4da5-99ab-a668a71b51f8
+	crossFilteringBehavior: bothDirections
+	fromColumn: d_Neg_Característica.negPerId
+	toColumn: Negociacao.negPerId
+
+relationship ff62dbe9-4672-411c-8f77-5a799c9375bb
+	fromColumn: Rappel.ordPubClaId
+	toColumn: OrdemPubClassificacao.ordPubClaId
+
+relationship de5a0b5f-1e41-4339-81b0-4e8f96d04e9c
+	fromColumn: Rappel.vendedor
+	toColumn: Executivos.UtiId
+
+relationship e52a5889-c908-477a-a16c-6318144ee34d
+	fromColumn: Rappel.proId
+	toColumn: Produtos.proId
+
+relationship 8d88b27d-2350-42d9-babe-385c3b2ce674
+	fromColumn: Rappel.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship 141b819b-67a1-416d-874b-f667ef7e7c4f
+	fromColumn: Rappel.anuncianteId
+	toColumn: Anunciante.entId
+
+relationship 5ae78f91-9d77-4e90-88ee-9d29e7ca6c6c
+	fromColumn: Rappel.Canal
+	toColumn: GrupoCanais.Canal
+
+relationship 66ce5a56-b74f-4d9d-a91b-206ea0a78d36
+	fromColumn: Encomendas.pacId
+	toColumn: Pacotes.pacId
+
+relationship a94b8e41-8108-406c-a928-0fa2977cc93e
+	fromColumn: Faturacao.pacId
+	toColumn: Pacotes.pacId
+
+relationship 03eb8f89-3d3b-4ee9-9c57-c737e21953e3
+	isActive: false
+	toCardinality: many
+	fromColumn: Audiencias.'Dia da Semana'
+	toColumn: Calendario.'Dia Semana (número)'
+
+relationship 51fa80fb-cb7e-4a0a-a447-a5dd59224bed
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Encomendas.ChavePrev
+	toColumn: Audiencias.Chave
+
+relationship f21562b1-379e-4248-a0c5-c9838956182b
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Ocupacao.ChavePrev
+	toColumn: Audiencias.Chave
+
+relationship 0612e9c8-6591-4889-83ca-8c68419d8a69
+	fromColumn: 'Outros Custos'.camVendedor
+	toColumn: Executivos.UtiId
+
+relationship fba62000-6f3e-43e2-a3ec-7f574679ff89
+	fromColumn: 'Outros Custos'.camAnunciante
+	toColumn: Anunciante.entId
+
+relationship ed4fbe82-c25a-4710-a497-4e976b99e92a
+	fromColumn: Audiencias.Canal
+	toColumn: GrupoCanais.Canal
+
+relationship 293decf4-42e1-4514-af19-ae9f10e1e0cd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Variacao Receita'.data_job
+	toColumn: LocalDateTable_1c9563a2-766e-4aab-a96d-75d41d618153.Date
+
+relationship 1c1961eb-13e6-4781-855c-429aecf5b315
+	fromColumn: Encomendas.PrioridadeId
+	toColumn: Categoria.PriId
+
+relationship 7b253f0d-aabb-4602-a663-bf9084107a19
+	fromColumn: Encomendas.EntidadeFacturarId
+	toColumn: Entidade_Faturar.IdEntidadeFaturar
+
+relationship 1e0ed901-8606-40f1-b6f0-c06e1654ea52
+	fromColumn: d_Neg_Descontos.proId
+	toColumn: Produtos.proId
+
+relationship d4c2e02e-8b41-e68d-655f-55d1891ae942
+	fromColumn: Faturacao.AgenciaMeiosId
+	toColumn: 'Agencia Meios'.entId
+
+relationship 987935cb-b19d-ba01-fd69-a4a1e6fecb8a
+	fromColumn: Encomendas.AgenciaMeiosId
+	toColumn: 'Agencia Meios'.entId
+
+relationship a7c4a6b5-eb5b-4977-9408-afe5a2c86256
+	fromColumn: Faturacao.EntidadeFacturarId
+	toColumn: Entidade_Faturar.IdEntidadeFaturar
+
+relationship 9a87cdd8-464c-4717-9de9-5175bd15c90f
+	fromColumn: Rappel.AgenciaMeiosId
+	toColumn: 'Agencia Meios'.entId
+
+relationship f54a3dfa-95db-42e5-a660-5ca4ffad81a8
+	fromColumn: 'Outros Custos'.AgenciaMeiosId
+	toColumn: 'Agencia Meios'.entId
+
+relationship 863042e5-62ab-482d-9f09-4f23e7353288
+	fromColumn: Rappel.EntidadeFacturarId
+	toColumn: Entidade_Faturar.IdEntidadeFaturar
+
+relationship 16aff928-7b89-4e91-9624-a360d54fe987
+	fromColumn: Rappel.PrioridadeId
+	toColumn: Categoria.PriId
+
+relationship a63ef797-f63d-47f2-bfaf-073842742f03
+	fromColumn: Faturacao.priId
+	toColumn: Categoria.PriId
+
+relationship 0df046a0-dc00-4660-8639-0b56ae9135ee
+	fromColumn: Encomendas.greComId
+	toColumn: 'Codigo Break'.greComId
+
+relationship 0c5c7449-6c17-49ed-ad7a-e2043151981b
+	fromColumn: Audiencias.IdChannel
+	toColumn: Canais.canCodigo
+
+relationship c9a18e38-b356-4227-9c0d-dcead50609a4
+	fromColumn: Encomendas.DayPart
+	toColumn: DayPart.'DayPart (negociação) Faixas'
+
+relationship c1ce1337-186e-4ada-b299-a142882b65e8
+	fromColumn: 'Outros Custos'.pacId
+	toColumn: Pacotes.pacId
+
+relationship 21167a1d-ed9c-47c9-9dc9-10f5bcd91702
+	fromColumn: Multiprodutos.pacId
+	toColumn: Pacotes.pacId
+
+relationship d1f388d2-e55a-40b1-b6d0-d02f355ac145
+	fromColumn: Faturacao.codAlvo
+	toColumn: Alvo.cod_alvo
+
+relationship cb8cf4d2-7783-463e-a97d-040bb3d8bef3
+	fromColumn: Multiprodutos.canCodigo
+	toColumn: Canais.canCodigo
+
+relationship db9943e9-6197-432d-b256-e003292eed9f
+	fromColumn: Faturacao.ordPubClaId
+	toColumn: OrdemPubClassificacao.ordPubClaId
+
+relationship 26fa0962-86bf-4fea-a7e7-5368d05661d7
+	fromColumn: Faturacao.camGrupoId
+	toColumn: Grupo.camGrupoId
+
+relationship 6eef9d2b-42d7-4e67-88a6-cccb47f89d97
+	fromColumn: 'Outros Custos'.camGrupoId
+	toColumn: Grupo.camGrupoId
+
+relationship aa6e8be1-f662-4c85-819f-74ceb2248c66
+	fromColumn: Multiprodutos.camGrupoId
+	toColumn: Grupo.camGrupoId
+
+relationship 6d68a0ac-aa15-4419-81cd-551142afec00
+	fromColumn: Rappel.camGrupoId
+	toColumn: Grupo.camGrupoId
+
+relationship 9a661f43-069c-4923-b64d-395f0f8ca8ee
+	fromColumn: Encomendas.camGrupoId
+	toColumn: Grupo.camGrupoId
+
+relationship 0e3d052b-f3fa-440c-ace0-a8332d8f9f12
+	fromColumn: 'Outros Custos'.codAlvo
+	toColumn: Alvo.cod_alvo
+
+relationship d829925d-1076-43af-80cd-9f98734197d9
+	fromColumn: Negociacao.AnuncianteId
+	toColumn: Anunciante.entId
+
+relationship 92d5cbb2-df91-40d4-845c-5c5396c5dc26
+	fromColumn: Negociacao.negPerId
+	toColumn: 'Negociacao Detalhe'.Id
+
+relationship 2c721781-1894-42ad-83ca-da6e58d7e59c
+	fromColumn: Encomendas.ordPubNegociacao
+	toColumn: 'Negociacao Detalhe'.Id
+
+relationship 93fb9f0c-8681-46c7-b503-c1bf81d1be5f
+	fromColumn: Rappel.ordPubNegociacao
+	toColumn: 'Negociacao Detalhe'.Id
+
+relationship f4d68da5-dc41-40da-86c5-ada2572157ca
+	fromColumn: Faturacao.ordPubNegociacao
+	toColumn: 'Negociacao Detalhe'.Id
+
+relationship f865396f-017d-400a-87f8-28f1ca18e52b
+	fromColumn: 'Variacao Receita'.negperid
+	toColumn: 'Negociacao Detalhe'.Id
+
+relationship caa3c5c6-91af-4af2-b7db-934b606299be
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Encomendas.'Data Exibição'
+	toColumn: LocalDateTable_a24fc558-4ea4-43bf-957d-14fa0d85810f.Date
+
+relationship 4937cb72-1eb3-4334-ab91-576245621b7c
+	fromColumn: Ocupacao.Faixa_Horaria
+	toColumn: FaixaHoraria.Hora
+
+relationship 55e50634-c198-42e4-8c38-81d1b8ad286d
+	fromColumn: Audiencias.Faixa_Horaria
+	toColumn: FaixaHoraria.Hora
+
+relationship 320329ae-6d4e-443f-a009-87ce554e1835
+	fromColumn: Encomendas.Faixa_Horaria
+	toColumn: FaixaHoraria.Hora
+
+relationship 0c153589-bcb2-4051-87d1-5c288a59ea0a
+	fromColumn: Encomendas.DescricaoCampanhas
+	toColumn: Descricao_Campanhas.'Descricao Campanha'
+
+relationship 69f321c1-d45c-4d9b-be3e-28256a439b94
+	fromColumn: Rappel.DescricaoCampanhas
+	toColumn: Descricao_Campanhas.'Descricao Campanha'
+
+relationship adfd83f0-5a9f-4247-9664-178dcfa467eb
+	fromColumn: Faturacao.DescricaoCampanhas
+	toColumn: Descricao_Campanhas.'Descricao Campanha'
+
+relationship aaa0247d-5b24-47b5-b6b7-ebbed90917ee
+	isActive: false
+	fromColumn: Calendario.Data
+	toColumn: 'Calendario comparativo'.Date
+
+relationship a853ca11-3ef1-482d-8252-5f8fa8b78e0c
+	fromColumn: Encomendas.diaExib
+	toColumn: Calendario.Data
+
+relationship e1103b4c-181b-4a25-8519-11a8600ad167
+	fromColumn: Objetivos.DateNegoc
+	toColumn: Calendario.Data
+
+relationship 2f13f0b9-da1c-4ff4-8c42-88d6d0af0567
+	fromColumn: Ocupacao.Data
+	toColumn: Calendario.Data
+
+relationship 882a3f17-c5eb-426d-b216-b2879fe80c35
+	fromColumn: 'Variacao Receita'.DataCarregamento
+	toColumn: Calendario.Data
+
+relationship 0bfdb892-ed3b-4dbc-8c11-c964827b48d5
+	fromColumn: Faturacao.DataDocumento
+	toColumn: Calendario.Data
+
+relationship 7340d6d2-4b52-4419-9fac-c144985a168f
+	fromColumn: Negociacao.DataInicio
+	toColumn: Calendario.Data
+
+relationship 5de8cbe2-613d-4494-b743-6b761cdea84a
+	fromColumn: 'Outros Custos'.dia
+	toColumn: Calendario.Data
+
+relationship ddda7d0a-9579-46cb-a7c7-70153f55ea8b
+	fromColumn: Multiprodutos.dia
+	toColumn: Calendario.Data
+
+relationship f4f47fa3-cac2-498c-a04e-2ec0b1280844
+	isActive: false
+	fromColumn: Faturacao.DataCorrecao
+	toColumn: Calendario.Data
+
+relationship acaed23f-8d49-4a1f-92c3-9acba0640f83
+	isActive: false
+	fromColumn: Rappel.dataExib
+	toColumn: Calendario.Data
+
+relationship fa758079-b04b-48ea-866c-7a8a90a5c1ac
+	fromColumn: Rappel.DataFact
+	toColumn: Calendario.Data
+
+relationship 8bc49f20-20fe-40d1-a81d-babe214bc47b
+	fromColumn: Encomendas.tipPubId
+	toColumn: TipoPublicidade.tipPubId
+
+relationship ef3037e2-1064-489c-a515-cded7f9ff55a
+	fromColumn: Ocupacao.TipPubId
+	toColumn: TipoPublicidade.tipPubId
+
+relationship 91c34c9f-3a7f-4fd0-b1be-0f6be6ae9ad7
+	fromColumn: Multiprodutos.tipPubId
+	toColumn: TipoPublicidade.tipPubId
+
+relationship 2520d061-7922-4983-af53-0fd9df9a386e
+	fromColumn: Rappel.tipPubId
+	toColumn: TipoPublicidade.tipPubId
+
+relationship ccb53dc6-631b-42d4-b165-c14019b20824
+	fromColumn: Faturacao.tipPubId
+	toColumn: TipoPublicidade.tipPubId
+
+relationship ed49fd38-6ebf-4127-97dd-c02fe45adb91
+	fromColumn: Objetivos.tipPubId
+	toColumn: TipoPublicidade.tipPubId
+
+relationship 85acee73-f725-4ab2-9309-47a5d9830e4d
+	fromColumn: 'Variacao Receita'.tipoPubId
+	toColumn: TipoPublicidade.tipPubId
+
+relationship 7e0e6dbd-16ce-5af4-ef63-99dde695d63e
+	fromColumn: 'Outros Custos'.tipPubId
+	toColumn: TipoPublicidade.tipPubId
+
+relationship 15efdc60-1770-4b3b-aa9b-90014ad7c2a0
+	fromColumn: Encomendas.negPerTipo
+	toColumn: TipoNeg.negPerTipo
+
+relationship 267091c7-dab3-424f-8b77-1d889568f2d7
+	fromColumn: Faturacao.negPerTipo
+	toColumn: TipoNeg.negPerTipo
+
+relationship d0ee2abf-d783-4b5d-b3be-1ccbe8f46507
+	fromColumn: Rappel.negPerTipo
+	toColumn: TipoNeg.negPerTipo
+
+relationship d94cd549-077e-9bd1-23e2-36af74855f09
+	fromColumn: 'Outros Custos'.negPerTipo
+	toColumn: TipoNeg.negPerTipo
+
+relationship b5559340-15e9-47f6-bfa1-1c15b8a63d6f
+	fromColumn: Negociacao.Tipo
+	toColumn: TipoNeg.negPerTipo
+
+relationship ff318127-bde6-4068-8d0c-0028ec040e39
+	fromColumn: Multiprodutos.negPerTipo
+	toColumn: TipoNeg.negPerTipo
+
+relationship AutoDetected_1f64341c-a256-470a-8039-10dac9288f3e
+	fromColumn: Encomendas.tipForFaixaId
+	toColumn: 'Tipo Formato Faixa'.tipForFaixaId
+
+relationship f9cd631d-8447-1561-b42c-6aaa22713447
+	fromColumn: Ocupacao.greComId
+	toColumn: 'Codigo Break'.greComId
+
+relationship a6da5a32-6c7f-4388-9531-d45e4538a4b4
+	fromColumn: Encomendas.CentralComprasId
+	toColumn: Central.IdCentralCompras
+
+relationship 77b4e933-d96a-4568-bb90-c50145ac8ed2
+	fromColumn: Faturacao.centralComprasId
+	toColumn: Central.IdCentralCompras
+
+relationship 18196ed9-4671-41a0-bc82-45eee4dfc0ce
+	fromColumn: Rappel.CentralComprasId
+	toColumn: Central.IdCentralCompras
+
+relationship fce51e42-92df-4872-9619-579451ae8bc8
+	fromColumn: 'Outros Custos'.CentralComprasId
+	toColumn: Central.IdCentralCompras
+
+relationship 78e65a7c-9e80-4348-b684-ede53d3a4b24
+	fromColumn: Multiprodutos.CentralComprasId
+	toColumn: Central.IdCentralCompras
+
+relationship bda75670-2488-4e06-af1c-36ebf0fa5ff8
+	fromColumn: Encomendas.AgenciaId
+	toColumn: Agencia.AgenciaId
+
+relationship c03ccc2c-7166-4710-98b1-a34450d2e5d3
+	fromColumn: Faturacao.AgenciaId
+	toColumn: Agencia.AgenciaId
+
+relationship 3ec44325-c8bc-49ee-b0b3-57a929ae851d
+	fromColumn: Rappel.AgenciaId
+	toColumn: Agencia.AgenciaId
+

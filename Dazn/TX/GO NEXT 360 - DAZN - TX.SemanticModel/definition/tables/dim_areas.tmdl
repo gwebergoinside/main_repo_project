@@ -1,0 +1,41 @@
+table dim_areas
+	lineageTag: 63abda47-da7f-4d1d-bf3a-202ca0e1aafd
+
+	column areas
+		dataType: string
+		lineageTag: 9ea116ee-202c-422c-9e86-bf65432beb62
+		summarizeBy: none
+		sourceColumn: areas
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: e48aae7c-221f-4241-8427-3081e29f4997
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		lineageTag: 17aaa70f-a68a-415f-9e1f-d26eb38db4ca
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_areas = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT codigo areas, ID, nome FROM areas",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

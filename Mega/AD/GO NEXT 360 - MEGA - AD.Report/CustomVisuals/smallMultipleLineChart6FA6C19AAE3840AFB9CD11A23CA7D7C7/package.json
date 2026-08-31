@@ -1,0 +1,29 @@
+{
+  "version": "2.1.0.130",
+  "author": {
+    "name": "Daniel Marsh-Patrick",
+    "email": "daniel@coacervo.co"
+  },
+  "resources": [
+    {
+      "resourceId": "rId0",
+      "sourceType": 5,
+      "file": "resources/smallMultipleLineChart6FA6C19AAE3840AFB9CD11A23CA7D7C7.pbiviz.json"
+    }
+  ],
+  "visual": {
+    "guid": "smallMultipleLineChart6FA6C19AAE3840AFB9CD11A23CA7D7C7",
+    "name": "smallMultipleLineChart",
+    "displayName": "Small Multiple Line Chart",
+    "version": "2.1.0.130",
+    "description": "Provides the ability to plot a line chart with small multiples.",
+    "supportUrl": "http://bit.ly/powerbi-smlc",
+    "gitHubUrl": "http://bit.ly/powerbi-smlc",
+    "visualClassName": "Visual"
+  },
+  "metadata": {
+    "pbivizjson": {
+      "resourceId": "rId0"
+    }
+  }
+}

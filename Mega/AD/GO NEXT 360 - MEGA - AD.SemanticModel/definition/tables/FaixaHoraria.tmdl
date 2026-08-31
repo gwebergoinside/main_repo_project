@@ -1,0 +1,66 @@
+table FaixaHoraria
+	lineageTag: 5c6bd435-c40f-4c73-9ae3-086a63c95d3c
+
+	column Hora
+		lineageTag: 46f17e08-6ce7-4121-a4db-00df2351d6a9
+		summarizeBy: none
+		sourceColumn: [FH]
+		sortByColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e550490b-b37b-4852-b868-43b82dc6299f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FaixaHoraria-6e8c35ff-11e7-422c-ac2a-c3e2084f4038 = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				SELECTCOLUMNS(
+				    Encomendas
+				    ,"FH", Encomendas[Faixa_Horaria]
+				    ,"Order", FORMAT( Encomendas[Faixa_Horaria], "General Number" )
+				)
+				VAR _2 =
+				SELECTCOLUMNS(
+				    Audiencias
+				    ,"FH", Audiencias[Faixa_Horaria]
+				    ,"Order", FORMAT( Audiencias[Faixa_Horaria], "General Number" )
+				)
+				// VAR _3 =
+				// SELECTCOLUMNS(
+				//     Yumi_Valores
+				//     ,"FH", Yumi_Valores[Faixa_Horaria]
+				//     ,"Order", FORMAT( Yumi_Valores[Faixa_Horaria], "General Number" )
+				// )
+				// VAR _4 =
+				// SELECTCOLUMNS(
+				//     'Yumi_Exibição'
+				//     ,"FH", 'Yumi_Exibição'[Faixa_Horaria]
+				//     ,"Order", FORMAT( 'Yumi_Exibição'[Faixa_Horaria], "General Number" )
+				// )
+				VAR _5 =
+				SELECTCOLUMNS(
+				    Ocupacao
+				    ,"FH", Ocupacao[Faixa_Horaria]
+				    ,"Order", FORMAT( Ocupacao[Faixa_Horaria], "General Number" )
+				)
+				
+				VAR _UN =
+				UNION(_1, _2)--, _3, _4)
+				VAR Result =
+				FILTER( SUMMARIZE( _UN,[FH], [Order] ), [FH] <> BLANK() )
+				RETURN
+				Result
+
+	annotation PBI_Id = c215e1804ee64599a7e010a356bbb4fc
+

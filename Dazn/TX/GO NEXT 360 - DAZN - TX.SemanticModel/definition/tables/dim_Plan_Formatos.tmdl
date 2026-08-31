@@ -1,0 +1,49 @@
+table dim_Plan_Formatos
+	lineageTag: 9bd62051-c396-494d-bde5-5c3bc1316765
+
+	column Codigo_Formato
+		dataType: int64
+		formatString: 0
+		lineageTag: 52f5791f-dea3-4fbb-9b2f-f9cc4e8663da
+		summarizeBy: none
+		sourceColumn: Codigo_Formato
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Formato
+		dataType: string
+		lineageTag: b6ee3ac8-21e4-4826-a2c0-43bd288b1534
+		summarizeBy: none
+		sourceColumn: Nome_Formato
+
+		annotation SummarizationSetBy = Automatic
+
+	column Genero
+		dataType: string
+		lineageTag: f41ddbfe-f7c8-47b4-b440-57362728d1fe
+		summarizeBy: none
+		sourceColumn: Genero
+
+		annotation SummarizationSetBy = Automatic
+
+	column areas
+		dataType: string
+		lineageTag: 43989b26-d900-4305-ab25-4da07b278ee7
+		summarizeBy: none
+		sourceColumn: areas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Plan_Formatos = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT Cod_Formato Codigo_Formato, Nome_Formato, Area areas, Genero FROM Plan_Formatos",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

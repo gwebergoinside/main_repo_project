@@ -1,0 +1,20 @@
+table 'Alvos Var'
+	isHidden
+	lineageTag: fddaaab4-5fac-4509-b4a3-a4e901e660d3
+
+	column 'Alvo (negociação)'
+		lineageTag: dab79007-af2c-4437-8383-297bf401ab91
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Alvo[Alvo (negociação)]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Alvos Var-76692673-eb3f-441e-ac5b-d141a4f316fc' = calculated
+		mode: import
+		source =
+				
+				filter( UNION ( VALUES ( Alvo[Alvo (negociação)] ), ROW ( "Total", "Total" ) ), Alvo[Alvo (negociação)] <> BLANK())
+
+	annotation PBI_Id = 13db0ab78a5244569a863647ec14291f
+

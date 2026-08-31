@@ -1,0 +1,68 @@
+table Impressões
+	isHidden
+	lineageTag: bf463274-eca3-46de-bd05-2a75fa37f869
+
+	column Impressões
+		isHidden
+		formatString: #,0
+		lineageTag: 249ad58d-070e-4eb1-aee3-5e78ebafd6af
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Impressões]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Id
+		isHidden
+		lineageTag: 6273e356-a01e-4b2d-80db-3631329778e8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Id]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Impressões = calculated
+		mode: import
+		source = ```
+				
+				// VAR _1 =
+				// SELECTCOLUMNS(
+				//     Encomendas
+				//     ,"Id", Encomendas[Id]
+				//     ,"Impressões", Encomendas[Impressoes]
+				// )
+				// VAR _2 =
+				// SUMMARIZE(
+				//     _1
+				//     ,[Id]
+				//     ,[Impressões]
+				// )
+				// RETURN
+				// _2
+				
+				VAR _1 =
+				    FILTER(
+				        Encomendas,
+				        Encomendas[Tipo] <> "X"
+				    )
+				VAR _2 =
+				    SELECTCOLUMNS(
+				        _1,
+				        "Id", Encomendas[Id],
+				        "Impressões", Encomendas[Impressoes]
+				    )
+				VAR _3 =
+				    SUMMARIZE(
+				        _2,
+				        [Id],
+				        [Impressões]
+				    )
+				RETURN
+				    _3
+				
+				```
+
+	annotation PBI_Id = 5d8e7aa0b29143848c45f637190bf29d
+

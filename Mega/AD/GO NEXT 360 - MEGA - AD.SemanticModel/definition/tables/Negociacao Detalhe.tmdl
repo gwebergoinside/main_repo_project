@@ -1,0 +1,36 @@
+table 'Negociacao Detalhe'
+	lineageTag: e16149a5-4a32-43f2-9c1e-33df20012b61
+
+	column Id
+		isHidden
+		formatString: 0
+		lineageTag: d08c0e7b-5385-4c1b-92cd-ad3278c31491
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Negociação Nome'
+		lineageTag: 960a4bcf-25c3-44ef-80ef-4196ea691cee
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Negociação Nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Negociacao Detalhe' = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				SELECTCOLUMNS(
+				    Negociacao
+				    ,"Id", Negociacao[negPerId]
+				    ,"Negociação Nome", Negociacao[Nome Negociacao]
+				)
+				RETURN
+				SUMMARIZE(_1, [Id], [Negociação Nome])
+
+	annotation PBI_Id = 7e484796c21d4da0b1a6b95a1990ff5c
+

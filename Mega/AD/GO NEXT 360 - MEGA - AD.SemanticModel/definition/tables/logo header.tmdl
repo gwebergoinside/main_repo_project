@@ -1,0 +1,24 @@
+table 'logo header'
+	isHidden
+	lineageTag: 5da3ae61-3823-4b0a-a38e-610c5503be6b
+
+	column 'logo header'
+		dataType: string
+		isHidden
+		lineageTag: 46abd3df-9899-4533-a115-203828c03758
+		summarizeBy: none
+		sourceColumn: logo header
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'logo header-87e4dd2b-6c48-4365-bbdf-59f309a206d8' = m
+		mode: import
+		queryGroup: BD
+		source = "mega" meta [IsParameterQuery=true, ExpressionIdentifier=#"lista de imagem", Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+

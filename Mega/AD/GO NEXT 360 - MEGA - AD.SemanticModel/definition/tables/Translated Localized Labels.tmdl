@@ -1,0 +1,345 @@
+table 'Translated Localized Labels'
+	lineageTag: 82a7699a-0918-4428-9cc9-3cbf27775af8
+
+	measure 'Agência de Comunicação Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Agencia de Comunicación",
+			   "pt-PT", "Agência de Comunicação",
+			   "Agência de Comunicação"
+			)
+		lineageTag: b8b1680c-5272-4433-b160-40eca628d738
+
+	measure 'Agência de Meios Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Agencia de Medios",
+			   "pt-PT", "Agência de Meios",
+			   "Agência de Meios"
+			)
+		lineageTag: 98487d7e-2455-4bdc-8c66-6163b0edb9a6
+
+	measure 'Análise por Faixa Horária Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Análisis por Franja Horaria",
+			   "pt-PT", "Análise por Faixa Horária",
+			   "Análise por Faixa Horária"
+			)
+		lineageTag: ccfc58d9-64fd-44f4-92ed-b3248d327e23
+
+	measure 'Anunciante Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Anunciante",
+			   "pt-PT", "Anunciante",
+			   "Anunciante"
+			)
+		lineageTag: 7b70ff95-584e-46f4-935d-a0c0eecd348d
+
+	measure 'Canal Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Canal",
+			   "pt-PT", "Canal",
+			   "Canal"
+			)
+		lineageTag: b92dd490-483c-415c-8860-977866dd7d28
+
+	measure 'Central de Compras Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Central de Compras",
+			   "pt-PT", "Central de Compras",
+			   "Central de Compras"
+			)
+		lineageTag: fb17302b-a3c2-4a2c-a1bf-7134e3d7c081
+
+	measure 'Classificação de Cliente Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Clasificación de Cliente",
+			   "pt-PT", "Classificação de Cliente",
+			   "Classificação de Cliente"
+			)
+		lineageTag: a5690602-1554-4d34-89ba-67827a14c8f2
+
+	measure 'Crescimento Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Crecimiento",
+			   "pt-PT", "Crescimento",
+			   "Crescimento"
+			)
+		lineageTag: 2d372467-4550-492d-bb8f-ec3caa7565ea
+
+	measure 'Directo Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Directo",
+			   "pt-PT", "Directo",
+			   "Directo"
+			)
+		lineageTag: 2501b2e4-ee36-4df6-bf67-af428e7c988b
+
+	measure 'Ev. Receita Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ev. Ingresos",
+			   "pt-PT", "Ev. Receita",
+			   "Ev. Receita"
+			)
+		lineageTag: e7e71982-0cb3-4b38-b350-8f1d08d5ca28
+
+	measure 'Novos Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Nuevos",
+			   "pt-PT", "Novos",
+			   "Novos"
+			)
+		lineageTag: b154b5b6-3a33-47d5-a529-7989870530aa
+
+	measure 'Ocupação Normal Vs Taxa de Ocupação por Dia Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ocupación Normal vs Tasa de Ocupación por Día",
+			   "pt-PT", "Ocupação Normal Vs Taxa de Ocupação por Dia",
+			   "Ocupação Normal Vs Taxa de Ocupação por Dia"
+			)
+		lineageTag: 921ae5dd-c3cf-42af-af09-208d01c44efd
+
+	measure 'Ocupação Normal Vs Taxa de Ocupação por Período Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ocupación Normal vs Tasa de Ocupación por Período",
+			   "pt-PT", "Ocupação Normal Vs Taxa de Ocupação por Período",
+			   "Ocupação Normal Vs Taxa de Ocupação por Período"
+			)
+		lineageTag: 8c0b9f22-d043-48fb-88fc-4fba0757e380
+
+	measure 'Pacote Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Paquete",
+			   "pt-PT", "Pacote",
+			   "Pacote"
+			)
+		lineageTag: d5492351-547f-4cd3-9024-2de47799598a
+
+	measure 'Perdidos Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Perdidos",
+			   "pt-PT", "Perdidos",
+			   "Perdidos"
+			)
+		lineageTag: 20eb3406-cbed-48be-a021-b52e8ff53445
+
+	measure 'Produto Comercial Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Producto Comercial",
+			   "pt-PT", "Produto Comercial",
+			   "Produto Comercial"
+			)
+		lineageTag: fed5fcef-5394-4d13-a576-678d1ecba49f
+
+	measure 'Queda Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Caída",
+			   "pt-PT", "Queda",
+			   "Queda"
+			)
+		lineageTag: 938da451-725e-48d8-9c78-82c7d75b2835
+
+	measure 'Receita Diária Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos Diarios",
+			   "pt-PT", "Receita Diária",
+			   "Receita Diária"
+			)
+		lineageTag: 5c426156-9174-4c75-b707-172c7e696d62
+
+	measure 'Receita Faixa Horária Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos por Franja Horaria",
+			   "pt-PT", "Receita Faixa Horária",
+			   "Receita Faixa Horária"
+			)
+		lineageTag: f08e5735-ed97-40cc-9b2c-0ad492bb3f28
+
+	measure 'Receita por Agência de Meios Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos por Agencia de Medios",
+			   "pt-PT", "Receita por Agência de Meios",
+			   "Receita por Agência de Meios"
+			)
+		lineageTag: ec1e47a6-5d6b-4ef2-91ea-4a55745e978a
+
+	measure 'Receita por Anunciante Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos por Anunciante",
+			   "pt-PT", "Receita por Anunciante",
+			   "Receita por Anunciante"
+			)
+		lineageTag: 3d05ae11-6d20-4b68-8ad5-436a6e441c10
+
+	measure 'Receita por Canal Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos por Canal",
+			   "pt-PT", "Receita por Canal",
+			   "Receita por Canal"
+			)
+		lineageTag: 408109c4-3b5a-443d-b49f-392cd0d78756
+
+	measure 'Receita por Mês Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos por Mes",
+			   "pt-PT", "Receita por Mês",
+			   "Receita por Mês"
+			)
+		lineageTag: 10b6f58b-5c12-4207-8cd6-1a032b79fd88
+
+	measure 'Receita por Periodo Semana Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos por Periodo Semana",
+			   "pt-PT", "Receita por Periodo Semana",
+			   "Receita por Periodo Semana"
+			)
+		lineageTag: 66188f45-686d-44d4-b6e2-11c7988b339d
+
+	measure 'Receita por Trimestre Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos por Trimestre",
+			   "pt-PT", "Receita por Trimestre",
+			   "Receita por Trimestre"
+			)
+		lineageTag: fa6b8ff7-dc64-421c-8842-c3c020a365f4
+
+	measure 'Receita Semanal Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos Semanales",
+			   "pt-PT", "Receita Semanal",
+			   "Receita Semanal"
+			)
+		lineageTag: 85a051f7-ba0d-4afd-8baa-ea0d4e28e85c
+
+	measure 'Receita Valor Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos",
+			   "pt-PT", "Receita",
+			   "Receita"
+			)
+		lineageTag: 38a187e8-69d8-40bd-89ff-38cc5e7447ed
+
+	measure 'Receita Vs Objetivo (Acum.) Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos vs Objetivo (Acum.)",
+			   "pt-PT", "Receita Vs Objetivo (Acum.)",
+			   "Receita Vs Objetivo (Acum.)"
+			)
+		lineageTag: fea9d9d8-1ece-4238-9652-3f4fc365184b
+
+	measure 'Receita Vs Objetivo Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos vs Objetivo",
+			   "pt-PT", "Receita Vs Objetivo",
+			   "Receita Vs Objetivo"
+			)
+		lineageTag: 479c133e-d263-4a17-85b2-9c8a297b1775
+
+	measure 'Taxa de Ocupação e de Ocupação Max por Faixa Horaria Vs Ano Anterior Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Tasa de Ocupación y de Ocupación Máxima por Franja Horaria vs Año Anterior",
+			   "pt-PT", "Taxa de Ocupação e de Ocupação Max por Faixa Horaria Vs Ano Anterior",
+			   "Taxa de Ocupação e de Ocupação Max por Faixa Horaria Vs Ano Anterior"
+			)
+		lineageTag: e40b81b5-b307-4e26-9a94-36919ca5420e
+
+	measure 'Taxa de Ocupação e de Ocupação Max por Mês Vs Ano Anterior Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Tasa de Ocupación y de Ocupación Máxima por Mes vs Año Anterior",
+			   "pt-PT", "Taxa de Ocupação e de Ocupação Max por Mês Vs Ano Anterior",
+			   "Taxa de Ocupação e de Ocupação Max por Mês Vs Ano Anterior"
+			)
+		lineageTag: 9f4ed760-db5a-4e31-b74e-c38b3e5ebac3
+
+	measure 'Taxa de Ocupação Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Tasa de Ocupación",
+			   "pt-PT", "Taxa de Ocupação",
+			   "Taxa de Ocupação"
+			)
+		lineageTag: 37293b6b-187b-454a-8f4a-c19357734f87
+
+	measure 'Taxa de Ocupação por Mês e Período Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Tasa de Ocupación por Mes y Período",
+			   "pt-PT", "Taxa de Ocupação por Mês e Período",
+			   "Taxa de Ocupação por Mês e Período"
+			)
+		lineageTag: 289573f0-07a4-4e90-9efe-39d7e1329f36
+
+	measure 'Tipo de Bónus Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Tipo de Bonificación",
+			   "pt-PT", "Tipo de Bónus",
+			   "Tipo de Bónus"
+			)
+		lineageTag: d4cadbff-424d-43c4-abd8-bd8587a04d8b
+
+	measure 'Tipo de Negociação Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Tipo de Negociación",
+			   "pt-PT", "Tipo de Negociação",
+			   "Tipo de Negociação"
+			)
+		lineageTag: 14e4518d-f106-4f43-ba7f-b8ca208ffb14
+
+	measure 'Tipo de Publicidade Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Tipo de Publicidad",
+			   "pt-PT", "Tipo de Publicidade",
+			   "Tipo de Publicidade"
+			)
+		lineageTag: 1a6dae55-0c49-490e-9d41-795601455b97
+
+	measure 'Tipo Formato Faixa Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Tipo de Formato Franja",
+			   "pt-PT", "Tipo Formato Faixa",
+			   "Tipo Formato Faixa"
+			)
+		lineageTag: dd4a1bf7-8ac9-408e-9aa3-af92f99c3608
+
+	measure 'Valor de Receita Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Ingresos",
+			   "pt-PT", "Receita",
+			   "Receita"
+			)
+		lineageTag: 387bd55d-6e27-46c3-ba14-4122e856b94e
+
+	measure 'Valor de Receita Ytd Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Valor de Ingresos YTD",
+			   "pt-PT", "Valor de Receita Ytd",
+			   "Valor de Receita Ytd"
+			)
+		lineageTag: 803c8933-c018-4fa1-8fc9-774b8ee9fc95
+
+	measure 'Valor por Segundo Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Valor Segundo",
+			   "pt-PT", "Valor Segundo",
+			   "Valor Segundo"
+			)
+		lineageTag: a2e99619-1edb-4d45-a3e4-e0ab6d579f37
+
+	measure 'Valor Segundo e Duração Média por Produto Label' =
+			SWITCH(USERCULTURE(),
+			   "es-ES", "Valor por Segundo y Duración Media por Producto",
+			   "pt-PT", "Valor Segundo e Duração Média por Produto",
+			   "Valor Segundo e Duração Média por Produto"
+			)
+		lineageTag: 9847dcd2-15d0-4908-8913-c326b3a0dbfd
+
+	column unused
+		isHidden
+		displayFolder: unused
+		lineageTag: ebf2adc0-14ae-4719-bcba-481a8088d7b7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [unused]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Partition = calculated
+		mode: import
+		source = DATATABLE("unused", STRING, {{"This is a table automatically generated by Translations Builder"}})
+

@@ -1,0 +1,44 @@
+table DayPart
+	lineageTag: b0c4e365-e8ce-4157-b7e3-eb777f1599b1
+
+	column 'DayPart (id)'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 43fcf181-ca8d-47fc-a41f-efb11bce4a4d
+		summarizeBy: none
+		sourceColumn: DayPart (id)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart (negociação)'
+		dataType: string
+		lineageTag: 149cfabe-a42a-48c8-9d1d-5ada0cc299ce
+		summarizeBy: none
+		sourceColumn: DayPart (negociação)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart (negociação) Faixas'
+		dataType: string
+		lineageTag: bf2d2165-6049-4b4c-98a1-efdadf8b72c6
+		summarizeBy: none
+		sourceColumn: DayPart (negociação) Faixas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DayPart-8734ac4e-b1dd-4654-a43f-0906c53dfe07 = m
+		mode: import
+		queryGroup: Manual
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("hZG7CoMwGIVfJThbSGK8xK17bTu4iUOookKt4OWJOvRBfLHmqBF7o0Mi4Xz+OZ8miRWpWzneCbNsC4t6oUPJjlA/dKWV2ivAdYhFg5ACYMwA+2vdjI9GZw6G8CUXIZ/zWLVZrhOBVMzjWbC+fcm7riHntqoBeYDkMkIaaEpJjA0lA3ShM6SfnxCKMgqKLRQ31EH1OTlWRdlPZcE4C+OZxpHK2qFQmZoaAzFfZUVOQ99Cmbl6mw9bV3fr6v9w9QEFf1zl1pWb699dQep0uk/7fHXF3+HixTV9Ag==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [DayPart = _t, ID = _t, #"DayPart Faixas" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"DayPart", type text}, {"ID", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"DayPart", "DayPart (negociação)"}, {"DayPart Faixas", "DayPart (negociação) Faixas"}, {"ID", "DayPart (id)"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

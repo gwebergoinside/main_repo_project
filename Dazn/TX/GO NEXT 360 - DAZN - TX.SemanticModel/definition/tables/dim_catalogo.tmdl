@@ -1,0 +1,66 @@
+table dim_catalogo
+	lineageTag: babdca1c-c921-476b-89f8-97f2e82e0b2a
+
+	column genero
+		dataType: string
+		lineageTag: 1e25cf1d-a4b8-4833-9675-d805d7e052dc
+		summarizeBy: none
+		sourceColumn: genero
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: db23e5c3-bf5e-443c-b56e-b72b2c3359e3
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column descricao_catalogo
+		dataType: string
+		lineageTag: f82d8ac9-c6f1-4e6b-8be5-748178fcc456
+		summarizeBy: none
+		sourceColumn: descricao_catalogo
+
+		annotation SummarizationSetBy = Automatic
+
+	column parente
+		dataType: string
+		lineageTag: 2a6acaf8-3bc1-4bce-b4a9-8c01b9fc13f6
+		summarizeBy: none
+		sourceColumn: parente
+
+		annotation SummarizationSetBy = Automatic
+
+	column nivel
+		dataType: string
+		lineageTag: 37bf4919-e454-446f-9fdd-b1e2663dfa2d
+		summarizeBy: none
+		sourceColumn: nivel
+
+		annotation SummarizationSetBy = Automatic
+
+	column FlgModGeral
+		dataType: int64
+		formatString: 0
+		lineageTag: 62336b16-3860-4d22-9f3f-79297dbaf0d5
+		summarizeBy: none
+		sourceColumn: FlgModGeral
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_catalogo = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT cod_catalogo genero, ID, descricao_catalogo, parente, nivel, FlgModGeral FROM catalogo",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

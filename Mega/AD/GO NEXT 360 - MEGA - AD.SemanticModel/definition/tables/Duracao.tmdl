@@ -1,0 +1,51 @@
+table Duracao
+	isHidden
+	lineageTag: c2c4c9ec-bc70-404f-8e0d-21af4ba4c3aa
+
+	column Duracao
+		dataType: string
+		isHidden
+		lineageTag: 4f577ad5-162f-451a-a07d-749489c13a3d
+		summarizeBy: none
+		sourceColumn: Duracao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parametro
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d4e4462a-029e-4dc4-a14d-f79f8834bbdc
+		summarizeBy: sum
+		sourceColumn: Parametro
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duração
+		dataType: string
+		isHidden
+		lineageTag: 55e2c7bf-9818-4f89-8cf9-bda38ba76d38
+		summarizeBy: none
+		sourceColumn: Duração
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Duracao = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WciktSkxOzHdKLE5V0lEyBGKQyOHlhxfnKxgZxJQaGBiZQ0ilWB0U5f4lGalFQPVGKHqM0fTEAgA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Duracao = _t, Parametro = _t, Duração = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Duracao", type text}, {"Parametro", Int64.Type}, {"Duração", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

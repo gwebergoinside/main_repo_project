@@ -1,0 +1,58 @@
+table dim_T_Canais
+	lineageTag: c9f931ae-55de-4954-a2cd-88bb29661edc
+
+	column cod_canal
+		dataType: string
+		lineageTag: 86c63e21-6aa6-4d68-99a5-36da5a58e1f7
+		summarizeBy: none
+		sourceColumn: cod_canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		lineageTag: bcaf89e7-cacc-4272-9da0-6eb4f386bb82
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_canal_comercial
+		dataType: int64
+		formatString: 0
+		lineageTag: 00c888ef-3a47-4a7b-ba18-6c859d5c5893
+		summarizeBy: none
+		sourceColumn: cod_canal_comercial
+
+		annotation SummarizationSetBy = Automatic
+
+	column FlagConsumosCanal
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: de1dd218-14bf-43cb-9582-330733e9af3e
+		summarizeBy: none
+		sourceColumn: FlagConsumosCanal
+
+		annotation SummarizationSetBy = Automatic
+
+	column SiglaClip
+		dataType: string
+		lineageTag: aaa88719-08f0-44bb-92a2-e9780e3d486a
+		summarizeBy: none
+		sourceColumn: SiglaClip
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_T_Canais = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT codigo cod_canal, nome, cod_canal_comercial, FlagConsumosCanal, SiglaClip FROM T_Canais",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

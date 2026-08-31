@@ -1,0 +1,50 @@
+table TipoNeg
+	lineageTag: 1f4b0eca-3548-4daa-8a9d-655d68a1b965
+
+	column negPerTipo
+		isHidden
+		lineageTag: 38ed0939-09eb-4ec6-b576-776934d1afa6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Encomendas[negPerTipo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Negociação' =
+			
+			SWITCH(
+			    TRUE()
+			    ,SetUserCulture = "pt-PT",
+			
+			SWITCH(
+			    TRUE()
+			    ,[negPerTipo] = "F" , "Desconto"
+			    ,[negPerTipo] = "G" , "GRP"
+			    ,[negPerTipo] = "T" , "Tabela"
+			    ,[negPerTipo] = "D" , "Desconto"
+			    ,[negPerTipo] = "V" , "Valor Fixo"
+			    ,[negPerTipo] = BLANK(), "Outros"
+			)
+			
+			    ,SetUserCulture = "es-ES",
+			
+			SWITCH(
+			    TRUE()
+			    ,[negPerTipo] = "F" , "Descuento"
+			    ,[negPerTipo] = "G" , "GRP"
+			    ,[negPerTipo] = "T" , "Tabla"
+			    ,[negPerTipo] = "D" , "Descuento"
+			    ,[negPerTipo] = "V" , "Valor Fijo"
+			    ,[negPerTipo] = BLANK(), "Otros"
+			))
+		lineageTag: a5813d52-c416-4bfa-8e22-3e266df8b6c8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoNeg-1f099ba6-131f-478e-a379-a0983f31c1a7 = calculated
+		mode: import
+		source = FILTER( SUMMARIZE(Encomendas, Encomendas[negPerTipo]), Encomendas[negPerTipo] <> BLANK() )
+
+	annotation PBI_Id = 4b534c6e6d85457f842e98f785e77b7b
+

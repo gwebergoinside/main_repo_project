@@ -1,0 +1,284 @@
+table Negociacao
+	lineageTag: cfea3ff2-908a-44fb-9f91-7eaa000d87e7
+
+	column Cod_Canal
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a55e9f00-600a-4de2-b2d3-916ab11946d2
+		summarizeBy: none
+		sourceColumn: Cod_Canal
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Negociacao'
+		dataType: string
+		isHidden
+		lineageTag: 5d10c93b-6a8c-4afe-9393-c4f4cc2dea42
+		summarizeBy: none
+		sourceColumn: Nome Negociacao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8a3c66dc-35c6-4d82-bacc-6a2896c1a5e0
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DataFim
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c917841f-1416-42f9-9259-61acd4a71ee9
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		variation Variation
+			isDefault
+			relationship: 87245228-a220-469d-861b-49ab2c3c7b27
+			defaultHierarchy: LocalDateTable_5d3ec3d0-2d11-48c4-9e3a-0db9fe0a9ea1.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Tipo
+		dataType: string
+		isHidden
+		lineageTag: 248772aa-9b43-4e31-877c-40b10be8b71d
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipValor
+		dataType: string
+		isHidden
+		lineageTag: 5541693d-3e33-40e8-b396-dcc0f44df45c
+		summarizeBy: none
+		sourceColumn: negPerTipValor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Alvo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2058d5d3-9aa3-4acc-a619-1bd27232e328
+		summarizeBy: sum
+		sourceColumn: Cod_Alvo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column audPaiId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 578a7621-fc6e-4195-81b3-fa3776d62ffe
+		summarizeBy: none
+		sourceColumn: audPaiId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IndEquiv.'
+		dataType: string
+		isHidden
+		lineageTag: 9022e260-792b-48d4-a8fb-6aed185218dc
+		summarizeBy: none
+		sourceColumn: IndEquiv.
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Responsavel
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7ca813e8-89b8-416c-906b-a46b153625d8
+		summarizeBy: sum
+		sourceColumn: Responsavel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observacoes
+		dataType: string
+		isHidden
+		lineageTag: ada64240-cadc-431e-8303-3edd21fc8671
+		summarizeBy: none
+		sourceColumn: Observacoes
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4037eda0-98ae-406b-a631-57641ea2a719
+		summarizeBy: none
+		sourceColumn: negPerId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoNegociacao =
+			SWITCH(
+			    TRUE(),
+			    'Negociacao'[Tipo] = "F", "Desconto",
+			    'Negociacao'[Tipo] = "G", "GRP",
+			    'Negociacao'[Tipo] = "T", "Tabela",
+			     "Outro" )
+		isHidden
+		lineageTag: 9e2e924d-2b3f-43eb-94fe-50afc480f693
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Responsavel = LOOKUPVALUE(Executivos[Executivo], Executivos[utiId], Negociacao[Responsavel])
+		isHidden
+		lineageTag: 52c8dd6d-1872-45e6-bb1c-a8353fa68dc7
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column canais_Desc = LOOKUPVALUE(Canais[Canal], Canais[canCodigo], Negociacao[Cod_Canal])
+		isHidden
+		lineageTag: 7b4ab685-c074-4dee-b085-408241d61237
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0f338524-3080-4864-9b33-244cec2ca7b4
+		summarizeBy: count
+		sourceColumn: negId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alvo_desc = LOOKUPVALUE(Alvo[Alvo (negociação)], Alvo[cod_alvo], Negociacao[Cod_Alvo])
+		isHidden
+		lineageTag: bc6a0341-f9da-49c2-88c2-6c607c692405
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NegociacaoValor
+		dataType: double
+		lineageTag: 7df38615-c1e3-41a1-92a9-2e6d30bbe9c3
+		summarizeBy: sum
+		sourceColumn: NegociacaoValor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AnuncianteId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: efd74d56-4b4a-4003-9fc2-a5cdb50b4950
+		summarizeBy: none
+		sourceColumn: AnuncianteId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Negociacao-cf9c104c-5096-4892-b80d-87b387236f37 = m
+		mode: import
+		queryGroup: Negociações
+		source = ```
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="
+				Select
+				         negPeriodos.canCodigo As Cod_Canal,
+				         negPeriodos.negPerId,
+				         negPeriodos.negPerDescricao As Descricao,
+				         negPeriodos.negPerDataInicio As DataInicio,
+				         negPeriodos.negPerDataFim As DataFim,
+				         negPeriodos.negPerTipo As Tipo,
+				         negPeriodos.negPerTipValor,
+				         negPeriodos.codAlvo As Cod_Alvo,
+				         negPeriodos.audPaiId,
+				         negPeriodos.negPerIndEq As [IndEquiv.],
+				         negPeriodos.negPerResponsavel As Responsavel,
+				         negPeriodos.negPerObservacoes As Observacoes,
+				         negociacao.negId,
+				         Sum(negociacao.negValor) As negValor
+				         ,perfil_cc.anuId As AnuncianteId
+				     From
+				         negPeriodos 
+						 Join negociacao On negociacao.negPerId = negPeriodos.negPerId
+						 Left Join perfil_cc On perfil_cc.perId = negPeriodos.perId 
+				     Group By
+				         negPeriodos.canCodigo,
+				         negPeriodos.negPerId,
+				         negPeriodos.negPerDescricao,
+				         negPeriodos.negPerDataInicio,
+				         negPeriodos.negPerDataFim,
+				         negPeriodos.negPerTipo,
+				         negPeriodos.negPerTipValor,
+				         negPeriodos.codAlvo,
+				         negPeriodos.audPaiId,
+				         negPeriodos.negPerIndEq,
+				         negPeriodos.negPerResponsavel,
+				         negPeriodos.negPerObservacoes,
+				         negociacao.negId
+				         ,perfil_cc.anuId
+				"]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"Descricao", "Nome Negociacao"}, {"negValor", "NegociacaoValor"}})
+				in
+				    #"Renamed Columns"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

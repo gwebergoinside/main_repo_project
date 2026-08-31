@@ -1,0 +1,291 @@
+table fat_vGrelha_Lms
+	lineageTag: 35fb7c42-e75c-45e2-ba1f-d09fc12493b7
+
+	column tipo_item
+		dataType: string
+		lineageTag: 61f8710e-9f70-4e5c-80d9-7c9926bed87f
+		summarizeBy: none
+		sourceColumn: tipo_item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Canal
+		dataType: string
+		lineageTag: 4b047e78-9b82-44e7-82d2-f73382ca4218
+		summarizeBy: none
+		sourceColumn: Cod_Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column sk_tempo
+		dataType: int64
+		formatString: 0
+		lineageTag: 7447afd9-137a-46cc-935f-be311addf0d2
+		summarizeBy: none
+		sourceColumn: sk_tempo
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_promo
+		dataType: string
+		lineageTag: 850b9b0c-2093-4d67-897c-070a77d01b41
+		summarizeBy: none
+		sourceColumn: nome_promo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 1e883736-cbce-4d3e-9d19-5924e5a55baa
+		summarizeBy: none
+		sourceColumn: Hora
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column duracao
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 6ae356e9-d005-4d27-bf65-a759e51637db
+		summarizeBy: none
+		sourceColumn: duracao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column numero_processo
+		dataType: int64
+		formatString: 0
+		lineageTag: 9105702f-9740-4051-baa0-b6dbeb1cfcf1
+		summarizeBy: none
+		sourceColumn: numero_processo
+
+		annotation SummarizationSetBy = Automatic
+
+	column emissao
+		dataType: string
+		lineageTag: 57c593d5-64a3-406b-aea9-b9fadfdb161e
+		summarizeBy: none
+		sourceColumn: emissao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sequencia
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d5d3380-0b01-4c03-9606-b51afbcc8a25
+		summarizeBy: sum
+		sourceColumn: Sequencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ea99eba-314d-4c95-b8f8-ab02a5810324
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_detalhe
+		dataType: int64
+		formatString: 0
+		lineageTag: 813977f9-5bb3-49cc-a6cf-b26f94a5a84f
+		summarizeBy: sum
+		sourceColumn: cod_detalhe
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_break
+		dataType: string
+		lineageTag: aa9354df-a369-4c36-9d93-24eb2dc2976c
+		summarizeBy: none
+		sourceColumn: cod_break
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_evento
+		dataType: string
+		lineageTag: 62053f85-b740-41c3-b69c-f8cd916a5de8
+		summarizeBy: none
+		sourceColumn: tipo_evento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Codigo_Formato
+		dataType: string
+		lineageTag: 8daada24-9a30-44ab-96c9-3b82aa75b60c
+		summarizeBy: none
+		sourceColumn: Codigo_Formato
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_programa
+		dataType: string
+		lineageTag: a11ba0cd-251f-41d5-afa7-3debb3014dc5
+		summarizeBy: none
+		sourceColumn: nome_programa
+
+		annotation SummarizationSetBy = Automatic
+
+	column codTitulo
+		dataType: int64
+		formatString: 0
+		lineageTag: 42eb8a31-3e11-4488-9568-0d2a4db32e0e
+		summarizeBy: sum
+		sourceColumn: codTitulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descricao_Evento
+		dataType: string
+		lineageTag: f2135386-0be5-49bf-b462-f009028402e7
+		summarizeBy: none
+		sourceColumn: Descricao_Evento
+
+		annotation SummarizationSetBy = Automatic
+
+	column episodio
+		dataType: int64
+		formatString: 0
+		lineageTag: a1f70bfe-dee1-4138-b534-c76a6fd4b151
+		summarizeBy: sum
+		sourceColumn: episodio
+
+		annotation SummarizationSetBy = Automatic
+
+	column MediaId
+		dataType: string
+		lineageTag: a10ed18c-55f3-46ac-b175-ac7aa741ec3c
+		summarizeBy: none
+		sourceColumn: MediaId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Observacoes
+		dataType: string
+		lineageTag: 41e5100d-2616-4b93-a6b3-9228faf8045a
+		summarizeBy: none
+		sourceColumn: Observacoes
+
+		annotation SummarizationSetBy = Automatic
+
+	column flagContinuacao
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c5b99a30-bb2f-4735-ac08-1538f9fa11e3
+		summarizeBy: none
+		sourceColumn: flagContinuacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column daypart
+		dataType: string
+		lineageTag: 7183fe0b-ec4a-443d-a156-01d4b8a1d1fe
+		summarizeBy: none
+		sourceColumn: daypart
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_emi_tip
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ff22167-a020-4b31-acee-e4327e6ecaef
+		summarizeBy: none
+		sourceColumn: cod_emi_tip
+
+		annotation SummarizationSetBy = Automatic
+
+	column via
+		dataType: string
+		lineageTag: 4ee42bec-a46d-4900-9641-444a6ef532ae
+		summarizeBy: none
+		sourceColumn: via
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data = RELATED(dim_calendario[Data])
+		formatString: General Date
+		lineageTag: 11ff3030-56ce-4b54-be83-7ff3f128e656
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 6476c0a2-91fa-47c0-b7c9-0babe28d4e07
+			defaultHierarchy: LocalDateTable_8f06fc0f-c909-4ed6-929b-71e47f05e5af.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hora Frames'
+		dataType: int64
+		formatString: 0
+		lineageTag: 005ceca9-9b6e-4e91-b94e-9605e3fce79e
+		summarizeBy: sum
+		sourceColumn: Hora Frames
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'duracao Frames'
+		dataType: int64
+		formatString: 0
+		lineageTag: 57e28334-703b-4cd9-a1fc-fd2b710efe5c
+		summarizeBy: sum
+		sourceColumn: duracao Frames
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fat_vGrelha_Lms = m
+		mode: import
+		source =
+				let
+				    Texto = "SELECT
+				              tipo_item
+				            , Cod_Canal
+				            , CAST(FORMAT(Data, 'yyyyMMdd') AS INT) as sk_tempo
+				            , nome_promo
+				            , Hora
+				            , duracao
+				            , numero_processo
+				            , emissao
+				            , Sequencia
+				            , Id
+				            , cod_detalhe
+				            , cod_break
+				            , tipo_item AS tipo_evento
+				            , codigo_programa AS Codigo_Formato
+				            , nome_programa
+				            , codTitulo
+				            , nome_episodio AS Descricao_Evento
+				            , episodio
+				            , suporte AS MediaId
+				            , Observacoes
+				            , flagContinuacao
+				            , cod_emi_tip
+				            , via
+					    FROM vGrelha_Lms
+				        WHERE Data > DATEADD(YEAR, -3, DATEFROMPARTS(YEAR(GETDATE()), 1, 1))
+				        ORDER BY Data DESC",
+				    Fonte = Sql.Database(Servidor, Databasee, [Query = Texto]),
+				    #"Duplicar Horários" = Table.DuplicateColumn(Table.DuplicateColumn(
+				        Fonte
+				        , "Hora", "Hora Frames")
+				        , "duracao", "duracao Frames"),
+				    Horarios = let FPS_num = Number.FromText(FPS) in Table.TransformColumns(#"Duplicar Horários", {{"Hora", each Time.From(Number.From(#duration(0, 0, 0, Value.Divide(_, FPS_num)))), Time.Type}, {"duracao", each Time.From(Number.From(#duration(0, 0, 0, Value.Divide(_, FPS_num)))), Time.Type}}),
+				    #"Add DayPart" = Table.AddColumn(Horarios, "daypart", each if [Hora] <= #time(6,0,0) then "Overnight" else
+				        if [Hora] <= #time(9,0,0) then "Early Morning" else
+				        if [Hora] <= #time(12,0,0) then "Morning Daytime" else
+				        if [Hora] <= #time(18,0,0) then "Afternoon Daytime" else
+				        if [Hora] <= #time(20,0,0) then "Early Fringe" else
+				        if [Hora] <= #time(23,0,0) then "Prime Time" else
+				        "Late Night", type text)
+				in
+				    #"Add DayPart"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

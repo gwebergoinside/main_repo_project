@@ -1,0 +1,25 @@
+/// Target da Azure
+table AlvoPadraoInvest
+	isHidden
+	lineageTag: fa4d6133-9a25-4bfd-9495-dbd07c96d55b
+
+	column AlvoPadraoInvest
+		dataType: string
+		isHidden
+		lineageTag: a5cb4f9c-8afc-445b-a495-c2ce85d26258
+		summarizeBy: none
+		sourceColumn: AlvoPadraoInvest
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AlvoPadraoInvest-91238679-bbe8-439b-b0bf-5c2eb7397a66 = m
+		mode: import
+		queryGroup: BD
+		source = "11" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+

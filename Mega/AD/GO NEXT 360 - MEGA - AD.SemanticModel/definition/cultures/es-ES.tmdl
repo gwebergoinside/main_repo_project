@@ -1,0 +1,565 @@
+cultureInfo es-ES
+	translations
+		model Model
+			table Encomendas
+				caption: Pedidos
+				column 'Valor Publicidade Bruto'
+					caption: Valor Publicidad Bruto
+				column 'Valor Tabela'
+					caption: Valor Tabla
+				column 'Valor Bonus Bruto'
+					caption: Valor Bono Bruto
+				column 'Duracao Emissao'
+					caption: Duración Emisión
+				column 'Nº ordem pub'
+					caption: Nº orden pub
+				column 'Tipo de Encomenda'
+					caption: Tipo de Pedido
+				column 'Tipo de Ocupacao'
+					caption: Tipo de Ocupación
+				column 'Marcações Emitidas'
+					caption: Marcaciones Emitidas
+				column 'Data Exibição'
+					caption: Fecha Exhibición
+				column Impressoes
+					caption: Impresiones
+				column Desconto
+					caption: Descuento
+				column ValorDifusao
+					caption: Valor Difusión
+				column Observacoes
+					caption: Observaciones
+				column ObservacoesFatura
+					caption: Observaciones Factura
+			table Canais
+				caption: Canales
+				column Canal
+					caption: Canal
+				column Canal2
+					caption: Canal2
+				column Canal3
+					caption: Canal3
+				column Canal4
+					caption: Canal4
+			table Executivos
+				caption: Ejecutivos
+				column Executivo
+					caption: Ejecutivo
+				column VendedorStatus
+					caption: Estado Vendedor
+			table Anunciante
+				caption: Anunciante
+			table ~Medidas
+				caption: ~Medidas
+				measure Receita
+					caption: Ingresos
+				measure Bonus
+					caption: Bonificación
+				measure 'Valor Tabela'
+					caption: Valor Tabla
+				measure Objetivo
+					caption: Objetivo
+				measure 'Objetivo YTD'
+					caption: Objetivo YTD
+				measure 'Receita LY'
+					caption: Ingresos LY
+				measure 'Receita YTD'
+					caption: Ingresos YTD
+				measure 'Bonus LY'
+					caption: Bono LY
+				measure 'Receita LY YTD'
+					caption: Ingresos LY YTD
+				measure 'Receita % YTD (AY-LY Atual Month)'
+					caption: Ingresos % YTD (AY-LY Mes Actual)
+				measure 'Objetivo % (Receita-Objetivo)'
+					caption: Objetivo % (Ingresos-Objetivo)
+				measure 'Valor Segundo'
+					caption: Valor Segundo
+				measure 'Taxa Ocupação'
+					caption: Tasa de Ocupación
+				measure 'Ocupação Normal'
+					caption: Ocupación Normal
+				measure 'Grelha Max Normal'
+					caption: Parrilla Max Normal
+				measure 'Canal Max Normal'
+					caption: Canal Max Normal
+				measure 'Taxa de Potencial'
+					caption: Tasa de Potencial
+				measure 'QTD Spots'
+					caption: QTD Spots
+				measure 'Taxa Ocupação Max'
+					caption: Tasa de Ocupación Max
+				measure 'Taxa Ocupação Max AY'
+					caption: Tasa de Ocupación Max
+				measure 'Taxa Ocupação Max LY'
+					caption: Tasa de Ocupación Max LY
+				measure 'Taxa Ocupação LY'
+					caption: Tasa de Ocupación LY
+				measure 'Taxa Ocupação AY'
+					caption: Tasa de Ocupación
+				measure 'Ocupação Normal LY'
+					caption: Ocupación Normal LY
+				measure 'Desconto Tabela % (Valor Pub)'
+					caption: Descuento Tarifa % (Valor Pub)
+				measure 'Duração Emissão LY (HH:MM:SS)'
+					caption: Duración Emisión LY (HH:MM)
+				measure 'Receita % (AY-LY)'
+					caption: Ingresos % (AY-LY)
+				measure 'Objetivo Anunciante'
+					caption: Objetivo Anunciante
+				measure 'Objetivo Negociação'
+					caption: Objetivo Negociación
+				measure 'Objetivo % YTD (Receita-Objetivo)'
+					caption: Objetivo % YTD (Ingresos-Objetivo)
+				measure 'Ocupação (HH:MM:SS)'
+					caption: Ocupación (HH:MM)
+				measure 'Ocupação Exceção (HH:MM:SS)'
+					caption: Ocupación Excepción (HH:MM)
+				measure 'Duração Emissão (HH:MM:SS)'
+					caption: Duración Emisión (HH:MM)
+				measure 'Receita (Com Exceções)'
+					caption: Ingresos (Con Excepciones)
+				measure 'Valor Tipo de Cliente (Ganhos e Perdidos)'
+					caption: Valor Tipo de Cliente (Ganados y Perdidos)
+				measure 'Valor Receita YTD (AY-LY Actual Month)'
+					caption: Ingresos YTD (AY-LY)
+				measure 'Receita % YTD (AY-LY)'
+					caption: Ingresos % YTD (AY-LY)
+				measure 'Valor Receita YTD LY (Actual Month)'
+					caption: Valor Ingresos YTD LY (Mes Actual)
+				measure 'Valor Receita YTD (Actual Month)'
+					caption: Valor Ingresos YTD (Mes Actual)
+				measure 'Valor Rappel'
+					caption: Valor Rappel
+				measure 'Valor Rappel LY'
+					caption: Valor Rappel LY
+				measure 'Receita Liquida LY'
+					caption: Ingresos Netos LY
+				measure 'Desconto Tabela % LY (Valor Pub)'
+					caption: Descuento Tarifa % LY (Valor Pub)
+				measure 'Objetivo Liquido'
+					caption: Objetivo Neto
+				measure 'Objetivo Liquido YTD'
+					caption: Objetivo Neto YTD
+				measure 'Valor Faturado Total'
+					caption: Valor Facturado Total
+				measure 'Valor Outros Custos'
+					caption: Valor Otros Costos
+				measure 'Valor Desconto Exibição'
+					caption: Valor Descuento Exhibición
+				measure 'Valor Desconto OP'
+					caption: Valor Descuento OP
+				measure 'Valor Taxa Multiproduto'
+					caption: Valor Tasa Multiproducto
+				measure 'Valor Taxa Posição'
+					caption: Valor Tasa Posición
+				measure 'Valor Pub (Multiproduto)'
+					caption: Valor Pub (Multiproducto)
+				measure 'Valor Tabela (Multiproduto)'
+					caption: Valor Tarifa (Multiproducto)
+				measure 'Valor Desconto Campanha'
+					caption: Valor Descuento Campaña
+				measure 'Valor Custo Minimo'
+					caption: Valor Costo Mínimo
+				measure 'Valor Bonus (Multiproduto)'
+					caption: Valor Bonificación (Multiproducto)
+				measure 'Valor Faturado Total LY'
+					caption: Valor Facturado Total LY
+				measure 'Valor Faturado % (AY-LY)'
+					caption: Valor Facturado % (AY-LY)
+				measure 'Valor Faturado % YTD (AY-LY)'
+					caption: Valor Facturado % YTD (AY-LY)
+				measure 'Valor Faturado Correção'
+					caption: Valor Facturado Corrección
+				measure 'Valor Faturado sem Correção'
+					caption: Valor Facturado sin Corrección
+				measure 'Objetivo Bruto'
+					caption: Objetivo Bruto
+				measure 'Filtro Simulador % Ocup Faixa'
+					caption: Filtro Simulador % Ocupación Franja
+				measure 'Taxa Ocupação Simulador Faixa'
+					caption: Tasa Ocupación Simulador Franja
+				measure 'QTD Spots (Simulador Faixa)'
+					caption: QTD Spots (Simulador Franja)
+				measure 'Ocupação (HH:MM:SS - Simulador Faixa )'
+					caption: Ocupación (HH:MM - Simulador Franja)
+				measure 'Ocupação Exceção (HH:MM:SS - Simulador Banda)'
+					caption: Ocupación Excepción (HH:MM - Simulador Banda)
+				measure 'Desconto das Taxas'
+					caption: Descuento de las Tasas
+				measure 'Qtd Marcações'
+					caption: Cantidad marcaciones
+				measure 'Receita (Previous Day)'
+					caption: Ingresos (Día Anterior)
+				measure 'Desconto Tabela % (Valor Bonus)'
+					caption: Descuento Tarifa % (Valor Bono)
+				measure 'Ocupação Normal AY - LY'
+					caption: Ocupación Normal AY - LY
+				measure 'Taxa Ocupação AY - LY'
+					caption: Tasa Ocupación AY - LY
+				measure 'Taxa Ocupação Max AY - LY'
+					caption: Tasa Ocupación Max AY - LY
+				measure 'Filtro Simulador % Ocup Banda'
+					caption: Filtro Simulador % Ocupación Banda
+				measure 'Taxa Ocupação Simulador Banda'
+					caption: Tasa Ocupación Simulador Banda
+				measure 'Ocupação (HH:MM:SS - Simulador Banda)'
+					caption: Ocupación (HH:MM - Simulador Banda)
+				measure 'Taxa Ocupação Max Simulador Faixa'
+					caption: Tasa Ocupación Max Simulador Franja
+				measure 'Taxa Ocupação Max Simulador Banda'
+					caption: Tasa Ocupación Max Simulador Banda
+				measure 'Ocupação Exceção (HH:MM:SS - Simulador Faixa)'
+					caption: Ocupación Excepción (HH:MM - Simulador Franja)
+				measure 'QTD Spots (Simulador Banda)'
+					caption: QTD Spots (Simulador Banda)
+				measure 'Filtro Simulador Dur Ocup Banda'
+					caption: Filtro Simulador Duración Ocupación Banda
+				measure 'Filtro Simulador Dur Ocup Faixa'
+					caption: Filtro Simulador Duración Ocupación Franja
+				measure 'Qtd Marcações Emitidas'
+					caption: Cantidad Reservas Emitidas
+				measure 'Ocupação Total (Normal+Especial)'
+					caption: Ocupación Total (Normal+Especial)
+				measure 'Ocupação Especial'
+					caption: Ocupación Especial
+				measure 'Grelha Max Especial'
+					caption: Parrilla Max Especial
+				measure 'Grelha Max Total (Normal+Especial)'
+					caption: Parrilla Max Total (Normal+Especial)
+				measure 'Taxa Ocupação Total (Normal+Especial)'
+					caption: Tasa Ocupación Total (Normal+Especial)
+				measure 'Canal Max Especial'
+					caption: Canal Max Especial
+				measure 'Canal Max Total (Normal+Especial)'
+					caption: Canal Max Total (Normal+Especial)
+				measure 'Taxa Ocupação Max Total (Normal+Especial)'
+					caption: Tasa Ocupación Max Total (Normal+Especial)
+				measure 'Contagem Banda Horaria'
+					caption: Conteo Banda Horaria
+				measure 'Contagem Faixa Horaria'
+					caption: Conteo Franja Horaria
+				measure 'Valor Negociação'
+					caption: Valor Negociación
+				measure 'Saldo Negociação (Valor)'
+					caption: Saldo Negociación (Valor)
+				measure 'Saldo Negociação (%)'
+					caption: Saldo Negociación (%)
+				measure 'Ocupação Normal (HH:MM:SS)'
+					caption: Ocupación Promedio (MM:SS)
+				measure 'Ocupação Normal LY (HH:MM:SS)'
+					caption: Ocupación Promedio LY (MM:SS)
+				measure 'Ocupação Normal (MM:SS)'
+					caption: Ocupación Normal (MM:SS)
+				measure 'Ocupação Normal LY (MM:SS)'
+					caption: Ocupación Normal LY (MM:SS)
+				measure 'Grelha Max Normal (HH:MM:SS)'
+					caption: Parrilla Max Normal (HH:MM:SS)
+				measure 'Média Ocupação Normal (MM:SS)'
+					caption: Promedio Ocupación Normal (MM:SS)
+			table Objetivos
+				caption: Objetivos
+				column 'Objetivo Liquido'
+					caption: Objetivo Neto
+				column 'Objetivo Bruto'
+					caption: Objetivo Bruto
+			table Calendario
+				caption: Calendario
+				column Data
+					caption: Fecha
+				column 'Mês (nome)'
+					caption: Mes (nombre)
+				column 'Mês (número)'
+					caption: Mes (número)
+				column Trimestre
+					caption: Trimestre
+				column Ano
+					caption: Año
+				column 'Dia mês (número)'
+					caption: Día mes (número)
+				column 'Dia Semana (nome)'
+					caption: Día Semana (nombre)
+				column 'Dia Semana (número)'
+					caption: Día Semana (número)
+				column 'Mês e Ano'
+					caption: Mes y Año
+				column 'Periodo da Semana'
+					caption: Periodo de la Semana
+				column 'Mês (nome completo)'
+					caption: Mes (nombre completo)
+				column 'Dia e Mês'
+					caption: Día y Mes
+				column Semana
+					caption: Semana
+				column Quadrimestre
+					caption: Cuatrimestre
+				column Semestre
+					caption: Semestre
+			table Propostas
+				caption: Propuestas
+				column StatusProduto
+					caption: Estado Producto
+				column Status
+					caption: Estado
+				column ValorPubProposta
+					caption: Valor Pub Propuesta
+			table 'Variacao Receita'
+				caption: Variación Ingresos
+				column DataCarregamento
+					caption: Fecha Carga
+				column Mes
+					caption: Mes
+				column Ano
+					caption: Año
+				column ValorPub
+					caption: Valor Pub
+				column ValorTab
+					caption: Valor Tarifa
+				column ValorBonus
+					caption: Valor Bono
+				column ordPubCodigo
+					caption: Código Orden Pub
+			table Ocupacao
+				caption: Ocupación
+				column FaixaHoraria
+					caption: Franja Horaria
+				column GrelhaMaxNormal
+					caption: Parrilla Max Normal
+				column OcupacaoExcecoesNormal
+					caption: Ocupación Excepciones Normal
+				column ValorExcecoes
+					caption: Valor Excepciones
+				column NumeroSpots
+					caption: Número Spots
+				column 'Tipo de Exceção'
+					caption: Tipo de Excepción
+				column 'DayPart Ocupação'
+					caption: DayPart Ocupación
+				column Exceção
+					caption: Excepción
+				column BandaHoraria
+					caption: Banda Horaria
+				column GrelhaMaxEspecial
+					caption: Parrilla Max Especial
+				column GrelhaMaxPromocao
+					caption: Parrilla Max Promoción
+				column OcupacaoPromocao
+					caption: Ocupación Promoción
+				column OcupacaoExcecoesEspecial
+					caption: Ocupación Excepciones Especial
+				column OcupacaoExcecoesPromocao
+					caption: Ocupación Excepciones Promoción
+				column Difusao
+					caption: Difusión
+				column CanalMaxEspecial
+					caption: Canal Max Especial
+				column CanalMaxPromocao
+					caption: Canal Max Promoción
+			table Alvo
+				caption: Objetivo
+				column 'Alvo (negociação)'
+					caption: Objetivo (negociación)
+			table Produtos
+				caption: Productos
+				column Produto
+					caption: Producto
+			table OrdemPubClassificacao
+				caption: Clasificación Orden Pub
+				column ordPubClaDescricao
+					caption: Descripción Clasificación Orden Pub
+				column ordPubClaColuna1
+					caption: Columna 1 Clasificación Orden Pub
+				column ordPubClaColuna2
+					caption: Columna 2 Clasificación Orden Pub
+			table Bonus
+				caption: Bonificación
+			table 'Agencia Meios'
+				caption: Agencia de Medios
+			table SectorAtividade
+				caption: Sector Actividad
+				column 'Setor Atividade'
+					caption: Sector Actividad
+				column 'Tipo de Produto'
+					caption: Tipo de Producto
+			table Faturacao
+				caption: Facturación
+				column DataDocumento
+					caption: Fecha Documento
+				column 'Valor Faturado (Correção)'
+					caption: Valor Facturado (Corrección)
+				column 'Nº ordem pub'
+					caption: Nº orden pub
+				column DataEmissao
+					caption: Fecha Emisión
+				column DataVencimento
+					caption: Fecha Vencimiento
+				column Descricao
+					caption: Descripción
+				column DataCorrecao
+					caption: Fecha Corrección
+				column Correcao
+					caption: Corrección
+				column DescricaoCampanhas
+					caption: Descripción Campañas
+				column 'Valor Comissao Agencia Faturado'
+					caption: Valor Comisión Agencia Facturado
+				column 'Valor Tabela (Faturado)'
+					caption: Valor Tarifa (Facturado)
+			table Negociacao
+				caption: Negociación
+				column DataInicio
+					caption: Fecha Inicio
+				column DataFim
+					caption: Fecha Fin
+				column NegociacaoValor
+					caption: Valor Negociación
+			table Categoria
+				caption: Categoría
+			table DayPart
+				caption: DayPart
+				column 'DayPart (negociação)'
+					caption: DayPart (negociación)
+				column 'DayPart (negociação) Faixas'
+					caption: DayPart (negociación) Franjas
+			table TipoNeg
+				caption: Tipo Negociación
+				column 'Tipo Negociação'
+					caption: Tipo Negociación
+			table Rappel
+				caption: Rappel
+				column valorRappel
+					caption: valor Rappel
+				column Status
+					caption: Estado
+			table Pacotes
+				caption: Paquetes
+				column Pacote
+					caption: Paquete
+				column 'Tipo Pacote'
+					caption: Tipo Paquete
+				column 'Produto Comercial'
+					caption: Producto Comercial
+			table Entidade_Faturar
+				caption: Entidad a Facturar
+				column 'Entidade Faturar'
+					caption: Entidad a Facturar
+			table Central
+				caption: Central
+				column 'Central de Compras'
+					caption: Central de Compras
+			table Agencia
+				caption: Agencia
+			table Descricao_Campanhas
+				caption: Descripción Campañas
+				column 'Descricao Campanha'
+					caption: Descripción Campaña
+			table FaixaHoraria
+				caption: Franja Horaria
+				column Hora
+					caption: Hora
+			table 'Codigo Break'
+				caption: Código Break
+				column 'Descrição Cod_Break'
+					caption: Descripción Código Break
+				column 'Tipo Break'
+					caption: Tipo Break
+			table Grupo
+				caption: Grupo
+				column 'Grupo Detalhe'
+					caption: Detalle Grupo
+			table 'Negociacao Detalhe'
+				caption: Detalle Negociación
+				column 'Negociação Nome'
+					caption: Nombre Negociación
+			table 'Tipo Anunciante'
+				caption: Tipo Anunciante
+			table TipoPublicidade
+				caption: Tipo Publicidad
+				column 'Tipo Publicidade'
+					caption: Tipo Publicidad
+			table 'Tipo Formato Faixa'
+				caption: Tipo Formato Franja
+			table 'Localized Labels'
+				measure 'Agência de Comunicação'
+					caption: Agencia de Comunicación
+				measure 'Agência de Meios'
+					caption: Agencia de Medios
+				measure 'Análise por Faixa Horária'
+					caption: Análisis por Franja Horaria
+				measure Anunciante
+					caption: Anunciante
+				measure Canal
+					caption: Canal
+				measure 'Central de Compras'
+					caption: Central de Compras
+				measure 'Classificação de Cliente'
+					caption: Clasificación de Cliente
+				measure Crescimento
+					caption: Crecimiento
+				measure Directo
+					caption: Directo
+				measure 'Ev. Receita'
+					caption: Ev. Ingresos
+				measure Novos
+					caption: Nuevos
+				measure 'Ocupação Normal Vs Taxa de Ocupação por Dia'
+					caption: Ocupación Normal vs Tasa de Ocupación por Día
+				measure 'Ocupação Normal Vs Taxa de Ocupação por Período'
+					caption: Ocupación Normal vs Tasa de Ocupación por Período
+				measure Pacote
+					caption: Paquete
+				measure Perdidos
+					caption: Perdidos
+				measure 'Produto Comercial'
+					caption: Producto Comercial
+				measure Queda
+					caption: Caída
+				measure 'Receita Diária'
+					caption: Ingresos Diarios
+				measure 'Receita Faixa Horária'
+					caption: Ingresos por Franja Horaria
+				measure 'Receita por Agência de Meios'
+					caption: Ingresos por Agencia de Medios
+				measure 'Receita por Anunciante'
+					caption: Ingresos por Anunciante
+				measure 'Receita por Canal'
+					caption: Ingresos por Canal
+				measure 'Receita por Mês'
+					caption: Ingresos por Mes
+				measure 'Receita por Periodo Semana'
+					caption: Ingresos por Periodo Semana
+				measure 'Receita por Trimestre'
+					caption: Ingresos por Trimestre
+				measure 'Receita Semanal'
+					caption: Ingresos Semanales
+				measure 'Receita Valor'
+					caption: Valor de Ingresos
+				measure 'Receita Vs Objetivo (Acum.)'
+					caption: Ingresos vs Objetivo (Acum.)
+				measure 'Receita Vs Objetivo'
+					caption: Ingresos vs Objetivo
+				measure 'Taxa de Ocupação e de Ocupação Max por Faixa Horaria Vs Ano Anterior'
+					caption: Tasa de Ocupación y de Ocupación Máxima por Franja Horaria vs Año Anterior
+				measure 'Taxa de Ocupação e de Ocupação Max por Mês Vs Ano Anterior'
+					caption: Tasa de Ocupación y de Ocupación Máxima por Mes vs Año Anterior
+				measure 'Taxa de Ocupação'
+					caption: Tasa de Ocupación
+				measure 'Taxa de Ocupação por Mês e Período'
+					caption: Tasa de Ocupación por Mes y Período
+				measure 'Tipo de Bónus'
+					caption: Tipo de Bonificación
+				measure 'Tipo de Negociação'
+					caption: Tipo de Negociación
+				measure 'Tipo de Publicidade'
+					caption: Tipo de Publicidad
+				measure 'Tipo Formato Faixa'
+					caption: Tipo de Formato
+				measure 'Valor de Receita'
+					caption: Valor de Ingresos
+				measure 'Valor de Receita Ytd'
+					caption: Valor de Ingresos YTD
+				measure 'Valor por Segundo'
+					caption: Valor Segundo
+				measure 'Valor Segundo e Duração Média por Produto'
+					caption: Valor por Segundo y Duración Media por Producto
+

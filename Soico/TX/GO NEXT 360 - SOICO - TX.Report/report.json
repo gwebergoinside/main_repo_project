@@ -202,50 +202,11 @@
         "disabled": false,
         "items": [
           {
-            "path": "advancedtoggleswitch.pbiviz.json",
-            "type": 5
-          }
-        ],
-        "name": "advancedtoggleswitch",
-        "type": 0
-      }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
             "path": "calendarVisual74934D05B71F4C31B0F79D925EE89638.pbiviz.json",
             "type": 5
           }
         ],
         "name": "calendarVisual74934D05B71F4C31B0F79D925EE89638",
-        "type": 0
-      }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
-            "path": "CardBrowser8D7CFFDA2E7E400C9474F41B9EDBBA58.pbiviz.json",
-            "type": 5
-          }
-        ],
-        "name": "CardBrowser8D7CFFDA2E7E400C9474F41B9EDBBA58",
-        "type": 0
-      }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
-            "path": "KPIStatusWithHistory1446562283967.pbiviz.json",
-            "type": 5
-          }
-        ],
-        "name": "KPIStatusWithHistory1446562283967",
         "type": 0
       }
     },
@@ -267,50 +228,11 @@
         "disabled": false,
         "items": [
           {
-            "path": "payPalKPIDonutChart55A431AB15A540ED924ACD72ED8D259F.pbiviz.json",
-            "type": 5
-          }
-        ],
-        "name": "payPalKPIDonutChart55A431AB15A540ED924ACD72ED8D259F",
-        "type": 0
-      }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
-            "path": "simpleImageEBC4593F96F1425FB3D84C5BF02B5075.pbiviz.json",
-            "type": 5
-          }
-        ],
-        "name": "simpleImageEBC4593F96F1425FB3D84C5BF02B5075",
-        "type": 0
-      }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
             "path": "SmartFilterProByOKVizD1BDC613512BBCDFAE7AC48F53CCE40B.pbiviz.json",
             "type": 5
           }
         ],
         "name": "SmartFilterProByOKVizD1BDC613512BBCDFAE7AC48F53CCE40B",
-        "type": 0
-      }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
-            "path": "textFilter25A4896A83E0487089E2B90C9AE57C8A.pbiviz.json",
-            "type": 5
-          }
-        ],
-        "name": "textFilter25A4896A83E0487089E2B90C9AE57C8A",
         "type": 0
       }
     }

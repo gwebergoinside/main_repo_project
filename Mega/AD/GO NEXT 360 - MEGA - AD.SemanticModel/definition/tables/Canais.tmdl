@@ -1,0 +1,69 @@
+table Canais
+	lineageTag: c55745c7-4e33-4134-92fe-f6e59eee06d2
+
+	column canCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 16534e1a-c47a-4567-b680-f6af887abe69
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: 9ca5e717-1584-4077-a8e1-ddfa35b9aa18
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal2
+		dataType: string
+		lineageTag: 6711c611-0301-4fd3-bc69-469f903530e5
+		summarizeBy: none
+		sourceColumn: Canal2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal3
+		dataType: string
+		lineageTag: 2d87ea70-864d-4c38-b09f-6a87f37b201b
+		summarizeBy: none
+		sourceColumn: Canal3
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal4
+		dataType: string
+		lineageTag: 8914ed13-5b48-4858-a968-a8a4bb21f1d7
+		summarizeBy: none
+		sourceColumn: Canal4
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Canais-8e69a97c-f717-4cb5-985a-3d249ae7f22d = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Source = Sql.Database(ServerP, BD, [Query="Select#(lf)    Canais.canDescricao,#(lf)    Canais.canCodigo#(lf)From#(lf)    Canais"]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"canDescricao", "Canal"}}),
+				    Custom2 = Table.TransformColumns(#"Renamed Columns",{{"Canal", Text.Trim, type text}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(Custom2, "Canal", Splitter.SplitTextByDelimiter("/", QuoteStyle.Csv), {"Canal", "Canal.2", "Canal.3", "Canal.4"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Split Column by Delimiter", "Canal2", each if [Canal.2] = null then [Canal] else [Canal.2], type text),
+				    Custom1 = Table.AddColumn(#"Added Conditional Column", "Canal3", each if [Canal.3] = null then [Canal2] else [Canal.3], type text),
+				    Custom3 = Table.AddColumn(Custom1, "Canal4", each if [Canal.4] = null then [Canal3] else [Canal.4], type text),
+				    #"Removed Other Columns" = Table.SelectColumns(Custom3,{"canCodigo", "Canal", "Canal2", "Canal3", "Canal4"}),
+				  #"Renamed Columns 1" = Table.RenameColumns(#"Removed Other Columns", {{"Canal", "Meio"}}),
+				  #"Renamed Columns 2" = Table.RenameColumns(#"Renamed Columns 1", {{"Meio", "Canal"}})
+				in
+				    #"Renamed Columns 2"
+
+	annotation PBI_QueryRelationships = {"columnCount":8,"keyColumnNames":[],"queryRelationships":[{"keyColumnCount":1,"keyColumn":1,"otherKeyColumnIdentity":"Section1/Classificação de Canais/Changed Type.{CanCodigo,3}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":4,"otherKeyColumnIdentity":"Section1/Ordenação Agrupador/Uppercased Text.{Agrupador,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":3,"otherKeyColumnIdentity":"Section1/Ordenação Tipo/Changed Type.{Tipo,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":2,"otherKeyColumnIdentity":"Section1/Ordenação Meio/Changed Type.{Meio,0}","KeyColumnCount":1}],"columnIdentities":["Section1/Canais/Source.{canDescricao,0}","Section1/Canais/Source.{canCodigo,1}","Section1/Classificação de Canais/Changed Type.{Meio,0}","Section1/Classificação de Canais/Changed Type.{Tipo,1}","Section1/Canais/Uppercased Text.{Agrupador,4}","Section1/Ordenação Agrupador/Changed Type.{Ord Agrupador,1}","Section1/Ordenação Tipo/Changed Type.{Ord Tipo,1}","Section1/Ordenação Meio/Changed Type.{Ord Meio,1}"],"ColumnCount":8,"KeyColumnNames":[],"ColumnIdentities":["Section1/Canais/Source.{canDescricao,0}","Section1/Canais/Source.{canCodigo,1}","Section1/Classificação de Canais/Changed Type.{Meio,0}","Section1/Classificação de Canais/Changed Type.{Tipo,1}","Section1/Canais/Uppercased Text.{Agrupador,4}","Section1/Ordenação Agrupador/Changed Type.{Ord Agrupador,1}","Section1/Ordenação Tipo/Changed Type.{Ord Tipo,1}","Section1/Ordenação Meio/Changed Type.{Ord Meio,1}"],"RelationshipInfo":[{"keyColumnCount":1,"keyColumn":1,"otherKeyColumnIdentity":"Section1/Classificação de Canais/Changed Type.{CanCodigo,3}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":4,"otherKeyColumnIdentity":"Section1/Ordenação Agrupador/Uppercased Text.{Agrupador,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":3,"otherKeyColumnIdentity":"Section1/Ordenação Tipo/Changed Type.{Tipo,0}","KeyColumnCount":1},{"keyColumnCount":1,"keyColumn":2,"otherKeyColumnIdentity":"Section1/Ordenação Meio/Changed Type.{Meio,0}","KeyColumnCount":1}]}
+
+	annotation PBI_ResultType = Table
+

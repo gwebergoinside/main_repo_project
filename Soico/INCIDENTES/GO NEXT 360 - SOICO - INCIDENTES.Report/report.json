@@ -60,32 +60,6 @@
         "name": "RegisteredResources",
         "type": 1
       }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
-            "path": "simpleImageEBC4593F96F1425FB3D84C5BF02B5075.pbiviz.json",
-            "type": 5
-          }
-        ],
-        "name": "simpleImageEBC4593F96F1425FB3D84C5BF02B5075",
-        "type": 0
-      }
-    },
-    {
-      "resourcePackage": {
-        "disabled": false,
-        "items": [
-          {
-            "path": "Tachometer1474636471549.pbiviz.json",
-            "type": 5
-          }
-        ],
-        "name": "Tachometer1474636471549",
-        "type": 0
-      }
     }
   ],
   "sections": [

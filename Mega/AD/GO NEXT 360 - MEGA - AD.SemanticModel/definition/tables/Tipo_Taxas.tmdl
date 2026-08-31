@@ -1,0 +1,53 @@
+table Tipo_Taxas
+	isHidden
+	lineageTag: 3b2247ed-c700-415d-8bfe-42c27a9eef51
+
+	column Taxas
+		dataType: string
+		isHidden
+		lineageTag: c773abb1-b3df-471d-92f7-03ffb4770255
+		summarizeBy: none
+		sourceColumn: Taxas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a9870f27-f154-47c3-aa2c-c5e3bb03e532
+		summarizeBy: sum
+		sourceColumn: id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TaxasABR
+		dataType: string
+		isHidden
+		lineageTag: 6cf25d2f-3f4d-436d-afa9-312b4c706536
+		summarizeBy: none
+		sourceColumn: TaxasABR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Tipo_Taxas-e11de7d0-2f94-4363-821a-0b93d402e6da = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    Origem = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45Wcq1IzinNLFLwLy0pyi9WcC4tLslX0lEyBGIUoVgdhFqwiILv4bV5mbkgxUZAjCqGrDqkQsG3NKcks6AoP6UUbLgxEKMIoSkPyC/OPLz88GKQWhMgRvBBCj3zoArzUxKLFYAoJLEisRiozBSI0QRjYwE=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Taxas = _t, id = _t, TaxasABR = _t]),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(Origem,{{"id", Int64.Type}}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Tipo Alterado1",{{"Taxas", type text}})
+				in
+				    #"Tipo Alterado"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

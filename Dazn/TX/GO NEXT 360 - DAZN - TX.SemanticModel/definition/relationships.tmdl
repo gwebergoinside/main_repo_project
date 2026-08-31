@@ -1,0 +1,46 @@
+relationship 8710b23c-b95c-4a31-816c-bd90d549aec9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_calendario.Data
+	toColumn: LocalDateTable_9fbdd147-ef4c-40f0-9a42-5eb703a7428c.Date
+
+relationship AutoDetected_761ba8b3-cd63-4d84-a1bb-ffd30ba3121a
+	fromColumn: fat_vGrelha_Lms.Cod_Canal
+	toColumn: dim_T_Canais.cod_canal
+
+relationship AutoDetected_55aba60f-9a6d-403d-8d7e-2ce593bb2564
+	fromColumn: fat_vGrelha_Lms.sk_tempo
+	toColumn: dim_calendario.sk_tempo
+
+relationship AutoDetected_ad5f0132-7205-49cf-852c-9febb42ecc1e
+	fromColumn: fat_vGrelha_Lms.numero_processo
+	toColumn: dim_Programas.numero_processo
+
+relationship AutoDetected_a0c5424b-8643-4641-bf75-1dd162c6451e
+	fromColumn: fat_vGrelha_Lms.tipo_evento
+	toColumn: dim_Tipo_Item.tipo_evento
+
+relationship AutoDetected_bc9d9cd5-404d-4335-83c4-09adeedb8c0b
+	fromColumn: dim_Programas.genero
+	toColumn: dim_catalogo.genero
+
+relationship AutoDetected_07cd69c1-cf42-407b-9c51-9203eab0fa14
+	fromColumn: fat_vGrelha_Lms.cod_emi_tip
+	toColumn: dim_emissao_tipo.cod_emi_tip
+
+relationship AutoDetected_9dfa7154-ddaf-460a-86ae-2eefc8f6a925
+	fromColumn: fat_vGrelha_Lms.via
+	toColumn: dim_via.via
+
+relationship AutoDetected_1f436498-d6d9-4b6b-9bad-95f0ea9a5599
+	fromColumn: dim_Plan_Formatos.areas
+	toColumn: dim_areas.areas
+
+relationship 6476c0a2-91fa-47c0-b7c9-0babe28d4e07
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fat_vGrelha_Lms.Data
+	toColumn: LocalDateTable_8f06fc0f-c909-4ed6-929b-71e47f05e5af.Date
+
+relationship 07a1e170-67d1-f373-6264-07bba62a8caa
+	fromColumn: fat_vGrelha_Lms.Codigo_Formato
+	toColumn: dim_Plan_Formatos.Codigo_Formato
+

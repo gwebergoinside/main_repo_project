@@ -1,0 +1,31 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Servidor","Databasee","FPS","Metricas","fat_vGrelha_Lms","fat_vGrelha_Lms4bi","dim_Tipo_Item","dim_Programas","dim_Plan_Formatos","dim_calendario","dim_T_Canais","dim_emissao_tipo","dim_via","dim_areas","dim_catalogo"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table fat_vGrelha_Lms
+ref table dim_Tipo_Item
+ref table dim_Programas
+ref table dim_Plan_Formatos
+ref table dim_calendario
+ref table DateTableTemplate_67f2e2d3-2935-48f7-b35c-9ea35014fbb5
+ref table LocalDateTable_9fbdd147-ef4c-40f0-9a42-5eb703a7428c
+ref table dim_T_Canais
+ref table dim_emissao_tipo
+ref table dim_via
+ref table dim_areas
+ref table dim_catalogo
+ref table Metricas
+ref table LocalDateTable_8f06fc0f-c909-4ed6-929b-71e47f05e5af
+
+ref cultureInfo pt-BR
+
