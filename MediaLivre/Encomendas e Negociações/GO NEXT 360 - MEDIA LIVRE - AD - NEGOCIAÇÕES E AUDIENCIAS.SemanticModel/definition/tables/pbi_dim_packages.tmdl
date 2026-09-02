@@ -50,6 +50,15 @@ table pbi_dim_packages
 
 		annotation SummarizationSetBy = Automatic
 
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fe406a67-7cf0-4ddb-8f76-f2a0117558b0
+		summarizeBy: none
+		sourceColumn: dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_dim_packages = m
 		mode: import
 		source =

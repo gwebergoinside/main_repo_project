@@ -119,6 +119,15 @@ table pbi_vw_invoices
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e0cd12a6-23fa-492b-a83e-963ba2de3f34
+		summarizeBy: none
+		sourceColumn: dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_vw_invoices = m
 		mode: import
 		source = ```

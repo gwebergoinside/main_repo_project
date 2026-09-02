@@ -44,6 +44,15 @@ table pbi_dim_products_sectors
 
 		annotation SummarizationSetBy = Automatic
 
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 758d96c3-d80c-42ec-9df8-dc8629065de8
+		summarizeBy: none
+		sourceColumn: dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_dim_products_sectors = m
 		mode: import
 		source = fx_dbricks("select * from medialivre.pbi_out.pbi_dim_products_sectors")

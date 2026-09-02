@@ -37,6 +37,15 @@ table pbi_dim_channels
 
 		annotation SummarizationSetBy = Automatic
 
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d57f655a-e0ad-49f3-a22e-fdce9744c642
+		summarizeBy: none
+		sourceColumn: dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_dim_channels-partition = m
 		mode: import
 		source =

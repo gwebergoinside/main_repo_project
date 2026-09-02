@@ -4,14 +4,14 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 220.69869052402908,
+        "x": 0,
         "y": 0
       },
       "nodes": [
         {
           "location": {
-            "x": 3599.4129259606161,
-            "y": 614.5263247629523
+            "x": 3513.2845119679714,
+            "y": 950.73365883694214
           },
           "nodeIndex": "~Medidas",
           "nodeLineageTag": "990b436c-ad8f-404f-b743-871182f2fd81",
@@ -23,8 +23,8 @@
         },
         {
           "location": {
-            "x": 1401.87602028358,
-            "y": 824.23231934611078
+            "x": 1563.8127931743729,
+            "y": 924.30949212706548
           },
           "nodeIndex": "dim_tempo",
           "nodeLineageTag": "4b4e55cf-5aff-4e63-9598-5ed72d965311",
@@ -36,21 +36,21 @@
         },
         {
           "location": {
-            "x": 1110.4593417708106,
-            "y": 606.19093100632858
+            "x": 1826.8676103770372,
+            "y": 1335.5884183975504
           },
           "nodeIndex": "dim_daypart",
           "nodeLineageTag": "e3aab360-6e14-41d9-99da-29d852fad810",
           "size": {
-            "height": 272,
+            "height": 300,
             "width": 234
           },
           "zIndex": 33
         },
         {
           "location": {
-            "x": 2504.462720808976,
-            "y": 399.15966557193713
+            "x": 652.54699783907722,
+            "y": 566.25377737992289
           },
           "nodeIndex": "pbi_vw_negotiations",
           "nodeLineageTag": "'tbl-negotiations'",
@@ -62,8 +62,8 @@
         },
         {
           "location": {
-            "x": 818.49323710320141,
-            "y": 573.71300759996132
+            "x": 1858.6435061417992,
+            "y": 709.19618124166391
           },
           "nodeIndex": "pbi_vw_ad_insertion",
           "nodeLineageTag": "'tbl-ad-insertion'",
@@ -75,8 +75,8 @@
         },
         {
           "location": {
-            "x": 1403.2893939000271,
-            "y": 408.67919458642086
+            "x": 1252.9440427489199,
+            "y": 905.97467096452374
           },
           "nodeIndex": "pbi_dim_campaigns",
           "nodeLineageTag": "'tbl-dim-campaigns'",
@@ -88,8 +88,8 @@
         },
         {
           "location": {
-            "x": 973.40560758833976,
-            "y": 338.70449485390907
+            "x": 1116.505923226438,
+            "y": 1480.1578245435899
           },
           "nodeIndex": "pbi_dim_channels",
           "nodeLineageTag": "'tbl-dim-channels'",
@@ -101,8 +101,8 @@
         },
         {
           "location": {
-            "x": 629.61716011629551,
-            "y": 387.46602804585893
+            "x": 2131.2093103643956,
+            "y": 1344.0764523361065
           },
           "nodeIndex": "pbi_dim_programs",
           "nodeLineageTag": "'tbl-dim-programs'",
@@ -114,8 +114,8 @@
         },
         {
           "location": {
-            "x": 2262.77566565746,
-            "y": 757.26607093682378
+            "x": 351.8418493294696,
+            "y": 493.47776702466012
           },
           "nodeIndex": "pbi_dim_accounts_agency",
           "nodeLineageTag": "ca42a891-1749-4872-a62c-9890aec82ba8",
@@ -127,8 +127,8 @@
         },
         {
           "location": {
-            "x": 2536.4216890567004,
-            "y": 941.1784965320179
+            "x": 795.89866260815256,
+            "y": 347.04812494403131
           },
           "nodeIndex": "pbi_dim_accounts_client",
           "nodeLineageTag": "'tbl-dim-accounts'",
@@ -140,8 +140,8 @@
         },
         {
           "location": {
-            "x": 2797.4129259606161,
-            "y": 339.05708887338005
+            "x": 50,
+            "y": 678.36894595499962
           },
           "nodeIndex": "pbi_dim_packages",
           "nodeLineageTag": "b7a63f7f-90bd-4f30-8c3f-3e2c14bf12ce",
@@ -153,8 +153,8 @@
         },
         {
           "location": {
-            "x": 2061.657259024586,
-            "y": -50
+            "x": 428.39119455073569,
+            "y": 934.16336807107064
           },
           "nodeIndex": "pbi_vw_targets",
           "nodeLineageTag": "4452db66-2b4b-436d-b377-4a63788f7d14",
@@ -166,8 +166,8 @@
         },
         {
           "location": {
-            "x": 50,
-            "y": 525.31853918633988
+            "x": 3797.2845119679714,
+            "y": 1012.7336588369421
           },
           "nodeIndex": "pbi_vw_targets_simulado",
           "nodeLineageTag": "f7d2f1e5-e772-44bf-acef-4c432dceb80a",
@@ -179,8 +179,8 @@
         },
         {
           "location": {
-            "x": 3883.4129259606161,
-            "y": 688.5263247629523
+            "x": 4081.2845119679714,
+            "y": 1024.7336588369421
           },
           "nodeIndex": "pmt_parameters_column",
           "nodeLineageTag": "119873b2-5350-48f2-b800-b857c5ccc986",
@@ -192,8 +192,8 @@
         },
         {
           "location": {
-            "x": 4167.4129259606161,
-            "y": 676.5263247629523
+            "x": 4365.2845119679714,
+            "y": 1012.7336588369421
           },
           "nodeIndex": "pbi_vw_targets_var",
           "nodeLineageTag": "81dd1f22-4544-4428-932a-5947ce121216",
@@ -205,8 +205,8 @@
         },
         {
           "location": {
-            "x": 654.81636702376727,
-            "y": 972.5852057854446
+            "x": 2184.9537139218874,
+            "y": 716.30252476195437
           },
           "nodeIndex": "pbi_dim_materials",
           "nodeLineageTag": "27ad997c-79d7-441d-9739-8049b49a3d48",
@@ -218,8 +218,8 @@
         },
         {
           "location": {
-            "x": 653.54206114346164,
-            "y": 1279.0526495259044
+            "x": 2711.2845119679714,
+            "y": 753.64710519980486
           },
           "nodeIndex": "pbi_dim_products_sectors",
           "nodeLineageTag": "b6d4c92f-a773-4b74-a75e-bcd9c43acdf7",
@@ -231,8 +231,8 @@
         },
         {
           "location": {
-            "x": 4451.4129259606161,
-            "y": 700.5263247629523
+            "x": 4649.2845119679714,
+            "y": 1036.7336588369421
           },
           "nodeIndex": "pmt_adults_GRP",
           "size": {
@@ -243,8 +243,8 @@
         },
         {
           "location": {
-            "x": 3365.4129259606161,
-            "y": 590.5263247629523
+            "x": 3279.2845119679714,
+            "y": 926.73365883694214
           },
           "nodeIndex": "pmt_types_targets_calc",
           "nodeLineageTag": "e5f23030-7f7a-47d4-8bcd-26e23e3e5ffd",
@@ -256,8 +256,8 @@
         },
         {
           "location": {
-            "x": 4735.4129259606161,
-            "y": 712.5263247629523
+            "x": 4933.2845119679714,
+            "y": 1048.7336588369421
           },
           "nodeIndex": "pbi_last_data_updated",
           "nodeLineageTag": "aa1d8380-14f7-4c2b-b7f6-ab86b9825d68",
@@ -269,8 +269,8 @@
         },
         {
           "location": {
-            "x": 5019.4129259606161,
-            "y": 700.5263247629523
+            "x": 5217.2845119679714,
+            "y": 1036.7336588369421
           },
           "nodeIndex": "until_last_updated",
           "size": {
@@ -281,8 +281,8 @@
         },
         {
           "location": {
-            "x": 5303.4129259606161,
-            "y": 712.5263247629523
+            "x": 5501.2845119679714,
+            "y": 1048.7336588369421
           },
           "nodeIndex": "pbi_vw_max_date_indicators",
           "size": {
@@ -293,8 +293,8 @@
         },
         {
           "location": {
-            "x": 5587.4129259606161,
-            "y": 700.5263247629523
+            "x": 5785.2845119679714,
+            "y": 1036.7336588369421
           },
           "nodeIndex": "pmt_duration_equivancy",
           "size": {
@@ -305,8 +305,8 @@
         },
         {
           "location": {
-            "x": 3081.4129259606161,
-            "y": 650.5263247629523
+            "x": 2995.2845119679714,
+            "y": 986.73365883694214
           },
           "nodeIndex": "pmt_types_targets_calc_dimention",
           "size": {
@@ -317,8 +317,8 @@
         },
         {
           "location": {
-            "x": 5871.4129259606161,
-            "y": 700.5263247629523
+            "x": 6069.2845119679714,
+            "y": 1036.7336588369421
           },
           "nodeIndex": "tp_agencies",
           "size": {
@@ -329,21 +329,21 @@
         },
         {
           "location": {
-            "x": 1971.4062485692784,
-            "y": 896.38129598720013
+            "x": 1254.0931900815008,
+            "y": 614.25467199512923
           },
           "nodeIndex": "pbi_vw_projected_revenue",
           "nodeLineageTag": "b42a2772-59b7-42d9-ba0f-b8ee5a733783",
           "size": {
-            "height": 176,
+            "height": 200,
             "width": 234
           },
           "zIndex": 37
         },
         {
           "location": {
-            "x": 1784.2473872305147,
-            "y": 185.01344292903877
+            "x": 1526.318667697652,
+            "y": 1634.5350199755694
           },
           "nodeIndex": "pbi_vw_media_investment",
           "nodeLineageTag": "605487e1-5393-4657-b7c9-ae8986616303",
@@ -355,8 +355,8 @@
         },
         {
           "location": {
-            "x": 6155.4129259606161,
-            "y": 652.5263247629523
+            "x": 6353.2845119679714,
+            "y": 988.73365883694214
           },
           "nodeIndex": "pmt_discount_investment",
           "size": {
@@ -367,8 +367,8 @@
         },
         {
           "location": {
-            "x": 6439.4129259606161,
-            "y": 712.5263247629523
+            "x": 6637.2845119679714,
+            "y": 1048.7336588369421
           },
           "nodeIndex": "pbi_vw_max_media_investment",
           "nodeLineageTag": "a158a9c3-2278-4ab7-bf8d-7d2cc3e1fd36",
@@ -380,8 +380,8 @@
         },
         {
           "location": {
-            "x": 6723.4129259606161,
-            "y": 664.5263247629523
+            "x": 6921.2845119679714,
+            "y": 1000.7336588369421
           },
           "nodeIndex": "pmt_slicer_investment",
           "size": {
@@ -392,8 +392,8 @@
         },
         {
           "location": {
-            "x": 7007.4129259606161,
-            "y": 700.5263247629523
+            "x": 7205.2845119679714,
+            "y": 1036.7336588369421
           },
           "nodeIndex": "is_MediaLivre_advertiser",
           "size": {
@@ -404,8 +404,8 @@
         },
         {
           "location": {
-            "x": 7291.4129259606161,
-            "y": 700.5263247629523
+            "x": 7489.2845119679714,
+            "y": 1036.7336588369421
           },
           "nodeIndex": "pmt_exclude_position_tax",
           "size": {
@@ -416,8 +416,8 @@
         },
         {
           "location": {
-            "x": 7575.4129259606161,
-            "y": 640.5263247629523
+            "x": 7773.2845119679714,
+            "y": 976.73365883694214
           },
           "nodeIndex": "pmt_types_targets_calc_media_investment",
           "size": {
@@ -428,8 +428,8 @@
         },
         {
           "location": {
-            "x": 7859.4129259606161,
-            "y": 700.5263247629523
+            "x": 8057.2845119679714,
+            "y": 1036.7336588369421
           },
           "nodeIndex": "pmt_exclude_multiproduct_tax",
           "size": {
@@ -440,8 +440,8 @@
         },
         {
           "location": {
-            "x": 1694.705672937966,
-            "y": 542.73265896117209
+            "x": 1417.0533848187722,
+            "y": 1277.7462744644481
           },
           "nodeIndex": "pbi_vw_invoices",
           "nodeLineageTag": "4ea9d796-10df-4258-85a9-835739a19724",
@@ -453,8 +453,8 @@
         },
         {
           "location": {
-            "x": 8143.4129259606161,
-            "y": 688.5263247629523
+            "x": 8341.2845119679714,
+            "y": 1024.7336588369421
           },
           "nodeIndex": "pmt_values_KPI",
           "size": {
@@ -465,8 +465,8 @@
         },
         {
           "location": {
-            "x": 946.55927120349133,
-            "y": 995.65187597202657
+            "x": 2413.316105868621,
+            "y": 979.2388655128683
           },
           "nodeIndex": "pbi_vw_ad_units",
           "nodeLineageTag": "ac0fde43-2c95-498f-9022-11db3cf218ab",
@@ -478,33 +478,33 @@
         },
         {
           "location": {
-            "x": 8377.4129259606161,
-            "y": 652.52632476295219
+            "x": 952.4531693660108,
+            "y": 835.2804123985286
           },
           "nodeIndex": "Ficheiros Negociações",
           "size": {
-            "height": 224,
+            "height": 300,
             "width": 234
           },
           "zIndex": 0
         },
         {
           "location": {
-            "x": 8945.4129259606161,
-            "y": 638.52632476295219
+            "x": 1097.5672627189047,
+            "y": 85.85700606688988
           },
           "nodeIndex": "Ambição",
           "nodeLineageTag": "a6fecd9e-a4ed-4001-aad5-3f4759bf40db",
           "size": {
-            "height": 152,
+            "height": 200,
             "width": 234
           },
           "zIndex": 0
         },
         {
           "location": {
-            "x": 8661.4129259606161,
-            "y": 650.52632476295219
+            "x": 795.86640523938786,
+            "y": -50
           },
           "nodeIndex": "Relação Ambição",
           "nodeLineageTag": "6facb0b8-97af-446e-baa2-5055f082d915",
@@ -516,20 +516,20 @@
         },
         {
           "location": {
-            "x": 9179.4129259606161,
-            "y": 664.52632476295219
+            "x": 8625.2845119679714,
+            "y": 1036.7336588369421
           },
           "nodeIndex": "pmt_add_projections",
           "size": {
-            "height": 200,
+            "height": 128,
             "width": 234
           },
           "zIndex": 0
         },
         {
           "location": {
-            "x": 9463.4129259606161,
-            "y": 616.52632476295219
+            "x": 1930.8283942504497,
+            "y": 225.9354764587722
           },
           "nodeIndex": "pbi_vw_indicators",
           "nodeLineageTag": "aa0757a3-2d5f-47d0-bc0a-42032a5a08eb",
@@ -541,8 +541,8 @@
         },
         {
           "location": {
-            "x": 9747.4129259606161,
-            "y": 688.52632476295219
+            "x": 1302.2399252835289,
+            "y": 1999.4673176738843
           },
           "nodeIndex": "pbi_vw_media_investment_GRP",
           "nodeLineageTag": "e16adb2b-0605-4576-9fbb-9bca532abf1a",
@@ -554,20 +554,20 @@
         },
         {
           "location": {
-            "x": 10031.412925960616,
-            "y": 652.52632476295219
+            "x": 2659.4340677671976,
+            "y": 1429.9419958861163
           },
           "nodeIndex": "pbi_vw_ad_break_units",
           "nodeLineageTag": "9e285fd8-1134-4c0e-97d9-fd86df6e057a",
           "size": {
-            "height": 224,
+            "height": 248,
             "width": 234
           },
           "zIndex": 0
         }
       ],
       "name": "Todas as tabelas",
-      "zoomValue": 49.539639594989318,
+      "zoomValue": 17.44732030160721,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

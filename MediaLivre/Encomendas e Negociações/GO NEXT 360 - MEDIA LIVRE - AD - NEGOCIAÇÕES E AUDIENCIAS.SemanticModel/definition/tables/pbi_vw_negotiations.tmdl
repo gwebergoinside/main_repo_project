@@ -237,6 +237,15 @@ table pbi_vw_negotiations
 
 		annotation SummarizationSetBy = Automatic
 
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 63c3b593-3b71-45fc-acbf-6d2b42646cf7
+		summarizeBy: none
+		sourceColumn: dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_vw_negotiations-partition = m
 		mode: import
 		source =

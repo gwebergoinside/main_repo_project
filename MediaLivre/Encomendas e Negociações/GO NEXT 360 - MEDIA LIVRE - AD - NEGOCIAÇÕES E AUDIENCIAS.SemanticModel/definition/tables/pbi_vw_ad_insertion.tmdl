@@ -222,17 +222,6 @@ table pbi_vw_ad_insertion
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	column dt_emission
-		dataType: dateTime
-		formatString: Short Date
-		lineageTag: 13784952-7b53-41e9-89d3-bdd37a00eade
-		summarizeBy: none
-		sourceColumn: dt_emission
-
-		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
-
 	column nm_buy_unit
 		dataType: string
 		lineageTag: c71e4950-150d-4f9d-995e-aff51614c774
@@ -366,6 +355,15 @@ table pbi_vw_ad_insertion
 		lineageTag: 21f4a2a1-5860-4afc-bf30-38aad527ce4f
 		summarizeBy: none
 		sourceColumn: ts_time_break
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3ce9e944-7fa3-4b1a-82de-9fd26053b200
+		summarizeBy: none
+		sourceColumn: dt_modified_on
 
 		annotation SummarizationSetBy = Automatic
 

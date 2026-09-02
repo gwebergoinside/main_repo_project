@@ -19,6 +19,15 @@ table pbi_dim_programs
 
 		changedProperty = IsHidden
 
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b9637a8a-85f7-418c-a709-62d5b4f5e049
+		summarizeBy: none
+		sourceColumn: dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_dim_programs-partition = m
 		mode: import
 		source =

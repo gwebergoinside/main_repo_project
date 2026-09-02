@@ -171,6 +171,15 @@ table pbi_vw_ad_units
 
 		annotation SummarizationSetBy = Automatic
 
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c71ede33-b92b-4c57-a3b1-8821b4b2a851
+		summarizeBy: none
+		sourceColumn: dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_vw_ad_units = m
 		mode: import
 		source = ```

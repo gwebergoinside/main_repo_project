@@ -140,12 +140,7 @@ relationship 79560f08-964b-2fde-fd7d-689a4279de6b
 	fromColumn: pbi_dim_accounts_client.cd_account_agency
 	toColumn: 'Relação Ambição'.cd_account_agency
 
-relationship 55efcb11-5cf1-dd3e-8958-d4f1f853a2d9
-	fromColumn: pbi_vw_ad_insertion.dt_emission
-	toColumn: dim_tempo.data
-
 relationship AutoDetected_dfecd7d3-1dc2-42c2-b44e-c5cc17343b05
-	toCardinality: many
 	fromColumn: pbi_vw_indicators.cd_ad_insertion
 	toColumn: pbi_vw_ad_insertion.cd_ad_insertion
 
@@ -160,4 +155,12 @@ relationship 7882a036-05ee-b139-1238-0cfd18a2fd1f
 relationship b4b6919e-66f2-a7fb-ba50-2520b85abc11
 	fromColumn: pbi_vw_ad_break_units.cd_ad_unit
 	toColumn: pbi_vw_ad_units.cd_ad_unit
+
+relationship 429f22f8-fdce-bd8b-acb9-850682274ef3
+	fromColumn: pbi_vw_ad_insertion.dt_air
+	toColumn: dim_tempo.data
+
+relationship 3e874d9d-b4bf-02d8-4668-7717dc9c10ec
+	fromColumn: pbi_vw_ad_break_units.dt_air
+	toColumn: dim_tempo.data
 

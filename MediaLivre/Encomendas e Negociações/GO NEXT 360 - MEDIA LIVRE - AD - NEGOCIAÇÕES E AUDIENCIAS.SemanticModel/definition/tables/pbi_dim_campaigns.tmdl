@@ -143,6 +143,15 @@ table pbi_dim_campaigns
 
 		annotation SummarizationSetBy = Automatic
 
+	column dt_modified_on
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4b1f596e-9f34-4e92-a47c-59931c0f96e1
+		summarizeBy: none
+		sourceColumn: dt_modified_on
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_dim_campaigns-partition = m
 		mode: import
 		source =
