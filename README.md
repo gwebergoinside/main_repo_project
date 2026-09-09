@@ -48,13 +48,6 @@ Arquivos de cache gerados automaticamente pelo Power BI **não são versionados*
 **/.pbi/*.abf
 ```
 
-Documentos técnicos com informação sensível (nomes de servidor, credenciais, referências a Key Vault) também não são versionados:
-
-```
-Soico/pedido-powerbi-soico.md
-MediaLivre/dashboard-web/api/.env
-```
-
 Estado local de ferramentas (worktrees, sessões) também fica de fora:
 
 ```
