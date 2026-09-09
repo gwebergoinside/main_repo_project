@@ -1,0 +1,37 @@
+table Yumi_Setor
+	lineageTag: c3c31a1e-39f3-4857-a576-31c304f1ca26
+
+	column Yumi_Setor
+		dataType: string
+		lineageTag: 53a53555-b316-4400-8d58-af15c412421d
+		summarizeBy: none
+		sourceColumn: Yumi_Setor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_Setor_Key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 318d93ed-2d9a-4030-b68f-bedb56c500f9
+		summarizeBy: none
+		sourceColumn: Yumi_Setor_Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_Setor-779bed8b-dad3-4d07-9e04-1c7179ee6d3d = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_sector"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(Source, {{"SECTOR_NAME", "Yumi_Setor"}, {"SECTOR_KEY", "Yumi_Setor_Key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

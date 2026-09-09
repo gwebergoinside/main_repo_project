@@ -1,0 +1,759 @@
+table Multiprodutos
+	isHidden
+	lineageTag: 1f36b69a-d5b3-4d96-8781-9ee62c0c5033
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: dce54a29-65dd-486e-9b7e-32740be588a2
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 8e7c9f1f-4512-43dc-8b67-b87b929d133f
+		summarizeBy: none
+		sourceColumn: dia
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipo
+		dataType: string
+		isHidden
+		lineageTag: 918305a4-bf53-4009-87ea-3ecc37c026ab
+		summarizeBy: none
+		sourceColumn: negPerTipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column bonus
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1b4ea1b7-f695-42dd-b51b-13b05e8ae214
+		summarizeBy: sum
+		sourceColumn: bonus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column encValorTabNeg
+		dataType: double
+		isHidden
+		lineageTag: 9dc4540e-892c-47b9-9304-b9fd0453c2a5
+		summarizeBy: sum
+		sourceColumn: encValorTabNeg
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorTaxaPosicao
+		dataType: double
+		isHidden
+		lineageTag: a058745c-c521-4beb-941a-8e2743c305c2
+		summarizeBy: sum
+		sourceColumn: valorTaxaPosicao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorTaxaMultiproduto
+		dataType: double
+		isHidden
+		lineageTag: 83958fc9-5552-4be6-a798-ae86cb6c65ae
+		summarizeBy: sum
+		sourceColumn: valorTaxaMultiproduto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorDescontoExibicao
+		dataType: double
+		isHidden
+		lineageTag: 704f387d-9e63-4d3b-8d17-9e5ae25ba466
+		summarizeBy: sum
+		sourceColumn: valorDescontoExibicao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorDescontoCampanha
+		dataType: double
+		isHidden
+		lineageTag: 98f74541-74f6-485e-ab8f-bb0e8e5e98ee
+		summarizeBy: sum
+		sourceColumn: valorDescontoCampanha
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorDescontoOP
+		dataType: double
+		isHidden
+		lineageTag: ca445789-b9ab-4bc4-984c-09f186b879e4
+		summarizeBy: sum
+		sourceColumn: valorDescontoOP
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorCustoMinimo
+		dataType: double
+		isHidden
+		lineageTag: 658a2178-1fdf-46d7-baf4-242ffa7282b8
+		summarizeBy: sum
+		sourceColumn: valorCustoMinimo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column encValorBonus
+		dataType: double
+		isHidden
+		lineageTag: a1858ac1-122b-413a-8a28-405524fb728b
+		summarizeBy: sum
+		sourceColumn: encValorBonus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column encValorPub
+		dataType: double
+		isHidden
+		lineageTag: 2c19c4e0-0a97-448d-af88-fff7bef37828
+		summarizeBy: sum
+		sourceColumn: encValorPub
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CentralComprasId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: df062dbd-5c2a-4355-8092-f8e7c6bbe620
+		summarizeBy: none
+		sourceColumn: CentralComprasId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d1e11132-f13c-493e-b565-662fcfadaab0
+		summarizeBy: none
+		sourceColumn: pacId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaMeiosId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f8c7cf87-3ea7-4bf0-a603-ced4bc5f8ef1
+		summarizeBy: none
+		sourceColumn: AgenciaMeiosId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EntidadeFacturarId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 510921da-476e-4730-857c-6c89af7054d2
+		summarizeBy: none
+		sourceColumn: EntidadeFacturarId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 36256b6c-4dfd-4e78-aa65-1b1d83fa7ea3
+		summarizeBy: none
+		sourceColumn: AgenciaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescricaoCampanhas
+		dataType: string
+		isHidden
+		lineageTag: abfb11bd-0f21-455c-894d-a29ecf8d9aa2
+		summarizeBy: none
+		sourceColumn: DescricaoCampanhas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrioridadeId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 26376640-8429-43f6-a583-e3a85c38c48d
+		summarizeBy: none
+		sourceColumn: PrioridadeId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayPart =
+			
+			SWITCH(
+			        TRUE()
+			        , CONTAINSSTRING( RELATED( 'Codigo Break'[Codigo Break] ), "*INFO13*"), "INFO13"
+			        , CONTAINSSTRING( RELATED( 'Codigo Break'[Codigo Break] ), "*INFO20*"), "INFO20"
+			        ,Multiprodutos[MinutosExib] >= 390  && Multiprodutos[MinutosExib] < 480,  "06:30 - 07:59"
+			        ,Multiprodutos[MinutosExib] >= 480  && Multiprodutos[MinutosExib] < 720,  "08:00 - 11:59"
+			        ,Multiprodutos[MinutosExib] >= 720  && Multiprodutos[MinutosExib] < 870,  "12:00 - 14:29"
+			        ,Multiprodutos[MinutosExib] >= 870  && Multiprodutos[MinutosExib] < 1140, "14:30 - 18:59"
+			        ,Multiprodutos[MinutosExib] >= 1140 && Multiprodutos[MinutosExib] < 1200, "19:00 - 19:59"
+			        ,Multiprodutos[MinutosExib] >= 1200 && Multiprodutos[MinutosExib] < 1260, "20:00 - 20:59"
+			        ,Multiprodutos[MinutosExib] >= 1260 && Multiprodutos[MinutosExib] < 1380, "21:00 - 22:59"
+			        ,Multiprodutos[MinutosExib] >= 1380 && Multiprodutos[MinutosExib] < 1590, "23:00 - 26:29"
+			        ,Multiprodutos[MinutosExib] >= 1590 || Multiprodutos[MinutosExib] < 390 , "26:30 - 06:29"
+			        ,"Outro"
+			)
+		isHidden
+		lineageTag: fb63c9a6-4837-48d4-8b43-b3495bcc07e1
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column encid
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 26ead6a7-479e-4afc-a429-528926886f37
+		summarizeBy: sum
+		sourceColumn: encid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f8b9ab34-6a3c-44da-b0d9-b33df773740e
+		summarizeBy: none
+		sourceColumn: ordPubCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column camAnunciante
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5283e749-1743-424a-898b-b748d843af0b
+		summarizeBy: none
+		sourceColumn: camAnunciante
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column camVendedor
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a2edbf71-5bb6-475d-ac75-018697deb131
+		summarizeBy: none
+		sourceColumn: camVendedor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: dd2ca83d-2a71-4f4f-b256-e0e219cca343
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column camGrupoId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 88156e07-4788-4bc0-95f0-255193ac1495
+		summarizeBy: none
+		sourceColumn: camGrupoId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column codAlvo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3575eabd-33a0-4a3d-bab4-804f23431086
+		summarizeBy: sum
+		sourceColumn: codAlvo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinutosExib
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 46f97628-55eb-4afb-876a-259dff6dada0
+		summarizeBy: sum
+		sourceColumn: MinutosExib
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column horaExib = ROUNDDOWN( Multiprodutos[MinutosExib] / 60, 0 )
+		isHidden
+		lineageTag: cd6777e4-cf86-48ac-9b58-47399c1e7f97
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ordPubNegociacao
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 701f6a50-fb7f-4876-a740-7a13a9357ce5
+		summarizeBy: none
+		sourceColumn: ordPubNegociacao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart Antigo' =
+			
+			SWITCH(
+			        TRUE()
+			        ,Multiprodutos[MinutosExib] >= 390  && Multiprodutos[MinutosExib] < 480,  "06:30 - 07:59"
+			        ,Multiprodutos[MinutosExib] >= 480  && Multiprodutos[MinutosExib] < 720,  "08:00 - 11:59"
+			        ,Multiprodutos[MinutosExib] >= 720  && Multiprodutos[MinutosExib] < 870,  "12:00 - 14:29"
+			        ,Multiprodutos[MinutosExib] >= 870  && Multiprodutos[MinutosExib] < 1080, "14:30 - 17:59"
+			        ,Multiprodutos[MinutosExib] >= 1080 && Multiprodutos[MinutosExib] < 1200, "18:00 - 19:59"
+			        ,Multiprodutos[MinutosExib] >= 1200 && Multiprodutos[MinutosExib] < 1350, "20:00 - 22:29"
+			        ,Multiprodutos[MinutosExib] >= 1350 && Multiprodutos[MinutosExib] < 1440, "22:30 - 23:59"
+			        ,Multiprodutos[MinutosExib] >= 1440 && Multiprodutos[MinutosExib] < 1590, "24:00 - 26:29"
+			        ,Multiprodutos[MinutosExib] >= 1590 || Multiprodutos[MinutosExib] < 390 , "26:30 - 06:29"
+			        ,"Outro"
+			    )
+		isHidden
+		lineageTag: 9679a445-647d-46ff-86e4-47126c14878f
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoEncomenda = ```
+			
+			// // VAR _1 =
+			// LOOKUPVALUE( Encomendas[tipo], Encomendas[encid], Multiprodutos[encid] )
+			// RETURN
+			CALCULATE( 
+			    MAX( Encomendas[tipo] )
+			    ,FILTER( 
+			        ALL( Encomendas )
+			        , Encomendas[encid] = Multiprodutos[encid]
+			    )
+			    , Encomendas[tipo] <> "X"
+			)
+			```
+		isHidden
+		lineageTag: 99392b59-e2c6-4954-a4fa-57d4752e8efa
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alvo =
+			
+			IF( Multiprodutos[codAlvo] = BLANK(), CONVERT( AlvoPadrao,INTEGER ), Multiprodutos[codAlvo] )
+			--LOOKUPVALUE(Encomendas[cod_alvo], Encomendas[encid], Multiprodutos[encId])
+		isHidden
+		formatString: 0
+		lineageTag: cf845a7e-e90f-4770-bbf2-9e75d7e71d16
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		dataType: int64
+		formatString: 0
+		lineageTag: dd18fdd4-e725-469c-9075-1b04d004d666
+		summarizeBy: none
+		sourceColumn: proId
+
+		annotation SummarizationSetBy = Automatic
+
+	column greComId
+		dataType: int64
+		formatString: 0
+		lineageTag: 32f852ae-386f-4e99-a4e4-e39c2a333fb2
+		summarizeBy: none
+		sourceColumn: greComId
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Taxa Posição %'
+		dataType: double
+		lineageTag: a54c60b4-2e70-4b04-8558-5779f7de7821
+		summarizeBy: sum
+		sourceColumn: Taxa Posição %
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Multiprodutos-ab7499bb-5ae5-4cc6-8301-85b32c939cbb = m
+		mode: import
+		queryGroup: Encomendas
+		source = ```
+				let
+				    SQL = "Select
+				        x.encid,
+				        x.ordPubCodigo,
+				        x.camAnunciante,
+				        x.camDistribuidor As AgenciaMeiosId,
+				        x.camVendedor,
+				        x.camEntidadeFacturar As EntidadeFacturarId,
+				        x.camCentralCompras As CentralComprasId,
+				        x.camAgencia As AgenciaId,
+				        x.camDescricao As DescricaoCampanhas,
+				        x.priId As PrioridadeId,
+				        x.canCodigo,
+				        x.greComId,
+				        x.tipPubId,
+				        DATEFROMPARTS(x.ordPubAno, x.ordPubMes, 1) As dia,
+				        x.negPerTipo,
+				        x.bonus,
+				        x.encValorTabNeg,
+				        valorTaxaPosicao =
+				            ROUND( x.encValorTabNeg
+				                *   ( 1 - COALESCE(x.encDescontoExibicao, 0) / 100.0)
+				                *   ( 1 - COALESCE(x.ordPubDescontoGlobal, 0) / 100.0)
+				                *   ( COALESCE(x.encTaxaPosicao, 0) / 100.0)
+				                , 4 ),
+				    --  valorTaxaPosicao = Round((x.encValorTabNeg * (x.encTaxaPosicao / 100)), 4),
+				    --  valorTaxaPosicao =
+				    --      ROUND(
+				    --            ( x.encValorTabNeg
+				    --          -   ( x.encValorTabNeg * (x.encDescontoExibicao / 100 ) ) 
+				    --          -   ( x.encValorTabNeg * ( 1 - (x.encDescontoExibicao / 100) ) )
+				    --          *   ( x.ordPubDescontoGlobal / 100 ) 
+				    --             ) * ( x.encTaxaPosicao / 100 ), 4 ),
+				        valorTaxaMultiproduto =
+				            ROUND(
+				                    ( x.encValorTabNeg
+				                -   ( x.encValorTabNeg * (x.encDescontoExibicao / 100 ) ) 
+				                -   ( x.encValorTabNeg * (1 - (x.encDescontoExibicao / 100) ) )
+				                *   ( x.ordPubDescontoGlobal / 100 )
+				                    ) * (x.ordPubSpoTaxaMultiproduto / 100) , 4),
+				    --  valorTaxaMultiproduto = Round( (Round( (x.encValorTabNeg * (1 + (x.encTaxaPosicao / 100))), 4)) * (x.ordPubSpoTaxaMultiproduto / 100), 4),
+				        valorDescontoExibicao =
+				            ROUND( x.encValorTabNeg * ( x.encDescontoExibicao / 100 ), 4 ),
+				    --    valorDescontoCampanha = Round(x.encValorTabNeg + Round((x.encValorTabNeg * (x.encTaxaPosicao / 100)), 4) +
+				    --    Round((Round((x.encValorTabNeg * (1 + x.encTaxaPosicao / 100)), 4)) * (x.ordPubSpoTaxaMultiproduto / 100),
+				    --    4) - Round(x.encValorTabNeg * (x.encDescontoExibicao / 100), 4), 4) * (x.camDescontoGlobal / 100),
+				        valorDescontoCampanha =
+				            ROUND(
+				                x.encValorTabNeg *
+				                ( (1 + COALESCE(x.encTaxaPosicao, 0) / 100.0 )
+				                * ( 1 + COALESCE(x.ordPubSpoTaxaMultiproduto, 0 ) / 100.0)
+				                - ( COALESCE(x.encDescontoExibicao, 0) / 100.0)
+				                ), 4) * ( COALESCE(x.camDescontoGlobal, 0) / 100.0 ),
+				    --   valorDescontoOP = Round((Round(x.encValorTabNeg + Round((x.encValorTabNeg * (x.encTaxaPosicao / 100)), 4) +
+				    --   Round((Round((x.encValorTabNeg * (1 + (x.encTaxaPosicao / 100))), 4)) * (x.ordPubSpoTaxaMultiproduto / 100), 4) -
+				    --   Round(x.encValorTabNeg * (x.encDescontoExibicao / 100), 4), 4) - Round(Round(x.encValorTabNeg +
+				    --   Round((x.encValorTabNeg * (x.encTaxaPosicao / 100)), 4) + Round((Round((x.encValorTabNeg * (1 + x.encTaxaPosicao /
+				    --   100)), 4)) * (x.ordPubSpoTaxaMultiproduto / 100), 4) - Round(x.encValorTabNeg * (x.encDescontoExibicao / 100), 4),
+				    --   4) * (x.camDescontoGlobal / 100), 4)) * (x.ordPubDescontoGlobal / 100), 4),
+				        valorDescontoOP = Round( ( x.encValorTabNeg * (1 - (x.encDescontoExibicao / 100) ) ) * ( x.ordPubDescontoGlobal / 100 ),4 ) ,
+				        valorCustoMinimo = Case
+				            When x.parValMinId <> 0
+				            Then x.encValorPub + x.encValorBonus - Round(Round(x.encValorTabNeg + Round((x.encValorTabNeg *
+				                (x.encTaxaPosicao / 100)), 4) + Round((Round((x.encValorTabNeg * (1 + (x.encTaxaPosicao / 100))), 4)) *
+				                (x.ordPubSpoTaxaMultiproduto / 100), 4) - Round(x.encValorTabNeg * (x.encDescontoExibicao / 100), 4), 4) -
+				                Round(Round(x.encValorTabNeg + Round((x.encValorTabNeg * (x.encTaxaPosicao / 100)), 4) +
+				                Round((Round((x.encValorTabNeg * (1 + x.encTaxaPosicao / 100)), 4)) * (x.ordPubSpoTaxaMultiproduto / 100),
+				                4) - Round(x.encValorTabNeg * (x.encDescontoExibicao / 100), 4), 4) * (x.camDescontoGlobal / 100),
+				                4) - Round((Round(x.encValorTabNeg + Round((x.encValorTabNeg * (x.encTaxaPosicao / 100)), 4) +
+				                Round((Round((x.encValorTabNeg * (1 + (x.encTaxaPosicao / 100))), 4)) * (x.ordPubSpoTaxaMultiproduto / 100),
+				                4) - Round(x.encValorTabNeg * (x.encDescontoExibicao / 100), 4), 4) - Round(Round(x.encValorTabNeg +
+				                Round((x.encValorTabNeg * (x.encTaxaPosicao / 100)), 4) + Round((Round((x.encValorTabNeg * (1 +
+				                x.encTaxaPosicao / 100)), 4)) * (x.ordPubSpoTaxaMultiproduto / 100), 4) - Round(x.encValorTabNeg *
+				                (x.encDescontoExibicao / 100), 4), 4) * (x.camDescontoGlobal / 100), 4)) * (x.ordPubDescontoGlobal / 100),
+				                4), 2)
+				            Else 0
+				        End,
+				        x.encValorBonus,
+				        x.encValorPub,
+				        x.pacId,
+				        x.camGrupoId,
+				        x.encTaxaPosicao AS [Taxa Posição %],
+				        x.codAlvo,
+				        x.MinutosExib,
+				        x.ordPubNegociacao,
+				        x.proId
+				    From
+				        ( Select
+				            encomendas.encid,
+				            encomendas.ordPubCodigo,
+				            campanhas.camAnunciante,
+				            campanhas.camDistribuidor,
+				            campanhas.camVendedor,
+				            campanhas.camEntidadeFacturar,
+				            campanhas.camCentralCompras,
+				            campanhas.camAgencia,
+				            campanhas.camDescricao,
+				            encomendas.priId,
+				            ordemPub.ordPubAno,
+				            ordemPub.ordPubMes,
+				            ordemPub.canCodigo,
+				            ordemPub.tipPubId,
+				            IsNull(bonus.flgValorizacao, 1) As bonus,
+				            encomendas.parValMinId,
+				            GlobalParam.Valor,
+				            Case ordemPub.ordPubFlagFixo
+				                When 2
+				                Then IsNull(negPeriodos.negPerTipo, '')
+				                When 1
+				                Then 'V'
+				                Else 'D'
+				            End As negPerTipo,
+				            encomendas.encValorTab,
+				            Round(Case Case ordemPub.ordPubFlagFixo
+				                    When 2
+				                    Then IsNull(negPeriodos.negPerTipo, '')
+				                    When 1
+				                    Then 'V'
+				                    Else 'D'
+				                End
+				                When 'F'
+				                Then encomendas.encValorTab * encomendasAudiencias.encIndice * encomendasAudiencias.encDescontoSup *
+				                    encomendasAudiencias.encCusto_Indice_Rating
+				                When 'G'
+				                Then encomendasAudiencias.encRating * encomendasAudiencias.encIndice * encomendasAudiencias.encDescontoSup
+				                    * encomendasAudiencias.encCusto_Indice_Rating * encomendas.encIndiceEq
+				                When 'T'
+				                Then encomendasAudiencias.encDescontoSup * encomendasAudiencias.encCusto_Indice_Rating *
+				                    encomendas.encIndiceEq
+				                Else encomendas.encValorTab
+				            End, 2) As encValorTabNeg,
+				            encomendas.encValorBonus,
+				            encomendas.encValorPub,
+				            IsNull( campanhas.camDescontoGlobal, 0) As camDescontoGlobal,
+				            IsNull( ordemPub.ordPubDescontoGlobal, 0) As ordPubDescontoGlobal,
+				            IsNull( encomendas.encTaxaPosicao, 0) As encTaxaPosicao,
+				            IsNull( encomendas.encDescontoExibicao, 0) As encDescontoExibicao,
+				            IsNull( ordemPubSpots.ordPubSpoTaxaMultiproduto, IsNull(spots.spoTaxaMultiproduto,
+				            0)) As ordPubSpoTaxaMultiproduto,
+				            IsNull( encomendas.encIndiceEq, 0) As encIndiceEq,
+				            IsNull( encomendasAudiencias.encRating, 0) As encRating,
+				            IsNull( encomendasAudiencias.encDescontoSup, 0) As encDescontoSup,
+				            IsNull( encomendasAudiencias.encIndice, 0) As encIndice,
+				            IsNull( encomendasAudiencias.encCusto_Indice_Rating, 0) As encCusto_Indice_Rating,
+				            pacotes.pacId,
+				            campanhas.camGrupoId,
+				            ordemPub.codAlvo,
+				            encomendas.greComId,
+				            encomendas.greComHoraInicio As MinutosExib,
+				            ordemPub.ordPubNegociacao,
+				            ordemPub.proId
+				        From encomendas
+				            Join ordemPub
+				                On ordemPub.ordPubCodigo = encomendas.ordPubCodigo
+				            Join ordemPubSpots
+				                On ordemPubSpots.ordPubCodigo = encomendas.ordPubCodigo
+				                And ordemPubSpots.ordPubSpoNumero = encomendas.ordPubSpoNumero
+				            Join campanhas
+				                On campanhas.camId = ordemPub.camId
+				            Join GlobalParam
+				                On GlobalParam.Chave = 'FormulaCalculoPublicidade'
+				            Left Join spots
+				                On spots.spoId = ordemPubSpots.spoId
+				            Left Join bonus
+				                On bonus.bonId = encomendas.bonId
+				            Left Join negPeriodos
+				                On negPeriodos.negPerId = ordemPub.ordPubNegociacao
+				            Left Join encomendasAudiencias
+				                On encomendasAudiencias.encId = encomendas.encid
+				            Left Join pacotes With(NoLock)
+				                On ordemPub.pacId = pacotes.pacId
+				
+				    Union All
+				
+				        Select
+				            encomendas.encId,
+				            encomendas.ordPubCodigo,
+				            campanhas.camAnunciante,
+				            campanhas.camDistribuidor As AgenciaMeiosId,
+				            campanhas.camVendedor,
+				            campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				            campanhas.camCentralCompras As CentralComprasId,
+				            campanhas.camAgencia As AgenciaId,
+				            campanhas.camDescricao As DescricaoCampanhas,
+				            encomendas.priId As PrioridadeId,
+				            ordemPub.ordPubAno,
+				            ordemPub.ordPubMes,
+				            ordemPub.canCodigo,
+				            ordemPub.tipPubId,
+				            IsNull(bonus.flgValorizacao, 1) As bonus,
+				            encomendas.parValMinId,
+				            GlobalParam.Valor,
+				            Case ordemPub.ordPubFlagFixo
+				                When 2
+				                Then IsNull(negPeriodos.negPerTipo, '')
+				                When 1
+				                Then 'V'
+				                Else 'D'
+				            End As negPerTipo,
+				            encomendas.encValorTab,
+				            Round(Case Case ordemPub.ordPubFlagFixo
+				                    When 2
+				                    Then IsNull(negPeriodos.negPerTipo, '')
+				                    When 1
+				                    Then 'V'
+				                    Else 'D'
+				                End
+				                When 'F'
+				                Then encomendas.encValorTab * encomendasAudiencias.encIndice * encomendasAudiencias.encDescontoSup *
+				                    encomendasAudiencias.encCusto_Indice_Rating
+				                When 'G'
+				                Then encomendasAudiencias.encRating * encomendasAudiencias.encIndice * encomendasAudiencias.encDescontoSup
+				                    * encomendasAudiencias.encCusto_Indice_Rating * encomendas.encIndiceEq
+				                When 'T'
+				                Then encomendasAudiencias.encDescontoSup * encomendasAudiencias.encCusto_Indice_Rating *
+				                    encomendas.encIndiceEq
+				                Else encomendas.encValorTab
+				            End, 2) As encValorTabNeg,
+				            encomendas.encValorBonus,
+				            encomendas.encValorPub,
+				            IsNull(campanhas.camDescontoGlobal, 0) As camDescontoGlobal,
+				            IsNull(ordemPub.ordPubDescontoGlobal, 0) As ordPubDescontoGlobal,
+				            IsNull(encomendas.encTaxaPosicao, 0) As encTaxaPosicao,
+				            IsNull(encomendas.encDescontoExibicao, 0) As encDescontoExibicao,
+				            IsNull(ordemPubSpots.ordPubSpoTaxaMultiproduto, IsNull(spots.spoTaxaMultiproduto,
+				            0)) As ordPubSpoTaxaMultiproduto,
+				            IsNull(encomendas.encIndiceEq, 0) As encIndiceEq,
+				            IsNull(encomendasAudiencias.encRating, 0) As encRating,
+				            IsNull(encomendasAudiencias.encDescontoSup, 0) As encDescontoSup,
+				            IsNull(encomendasAudiencias.encIndice, 0) As encIndice,
+				            IsNull(encomendasAudiencias.encCusto_Indice_Rating, 0) As encCusto_Indice_Rating,
+				            pacotes.pacId,
+				            campanhas.camGrupoId,
+				            ordemPub.codAlvo,
+				            encomendas.greComId,
+				            encomendas.greComHoraInicio As MinutosExib,
+				            ordemPub.ordPubNegociacao,
+				            ordemPub.proId
+				        From
+				            encomendasExibidas encomendas
+				            Join ordemPub
+				                On ordemPub.ordPubCodigo = encomendas.ordPubCodigo
+				            Join ordemPubSpots
+				                On ordemPubSpots.ordPubCodigo = encomendas.ordPubCodigo
+				                And ordemPubSpots.ordPubSpoNumero = encomendas.ordPubSpoNumero
+				            Join campanhas
+				                On campanhas.camId = ordemPub.camId
+				            Join GlobalParam
+				                On GlobalParam.Chave = 'FormulaCalculoPublicidade'
+				            Left Join spots
+				                On spots.spoId = ordemPubSpots.spoId
+				            Left Join bonus
+				                On bonus.bonId = encomendas.bonId
+				            Left Join negPeriodos
+				                On negPeriodos.negPerId = ordemPub.ordPubNegociacao
+				            Left Join encomendasAudiencias
+				                On encomendasAudiencias.encId = encomendas.encId
+				            Left Join pacotes With(NoLock)
+				                On ordemPub.pacId = pacotes.pacId) x
+				        Where
+				            x.ordPubAno >= Year(GetDate()) - " & AnoUpdateGMedia,
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

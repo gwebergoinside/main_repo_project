@@ -1,0 +1,91 @@
+table SectorAtividade
+	lineageTag: be3ebb4e-cc89-4b9d-9a24-44ac31b4a856
+
+	column tipProId
+		dataType: string
+		isHidden
+		lineageTag: 2846bd6e-8810-4eba-bb18-82cd27db6568
+		summarizeBy: none
+		sourceColumn: tipProId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Setor Atividade'
+		dataType: string
+		lineageTag: c17dd88e-a8b3-488d-9516-8e60e9b65b03
+		summarizeBy: none
+		sourceColumn: Setor Atividade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sub-Setor
+		dataType: string
+		lineageTag: c77d2d51-95cc-4ea7-ba8e-1a17bac0bd4f
+		summarizeBy: none
+		sourceColumn: Sub-Setor
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubSub-Setor
+		dataType: string
+		lineageTag: 1f6926af-8f67-4eb4-a619-87596e8505a4
+		summarizeBy: none
+		sourceColumn: SubSub-Setor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SectorAtividade-95bed59c-9690-4462-bb0f-dc4c1222a6b7 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = "SELECT
+				            ISNULL(tp3.tipProId,ISNULL(tp2.tipProId, tp1.tipProId)) AS tipProId,
+				            LTRIM(RTRIM(tp1.tipProdescricao)) AS tipProNivel1,
+				            LTRIM(RTRIM(tp2.tipProdescricao)) AS tipProNivel2,
+				            LTRIM(RTRIM(tp3.tipProdescricao)) AS tipProNivel3
+				        FROM tipoProduto tp1
+				            LEFT JOIN tipoProduto tp2
+				                ON tp2.tipProPaiId=tp1.tipProId
+				            LEFT JOIN tipoProduto tp3
+				                ON tp3.tipProPaiId=tp2.tipProId
+				        WHERE tp1.tipProPaiId IS NULL
+				
+				    UNION ALL
+				
+				        SELECT
+				            tp1.tipProId AS tipProId,
+				            LTRIM(RTRIM(tp1.tipProdescricao)) AS tipProNivel1,
+				            NULL AS tipProNivel2,
+				            NULL AS tipProNivel3
+				        FROM tipoProduto tp1
+				        WHERE 1 = 1
+				            AND tp1.tipProPaiId IS NULL
+				        --  AND tp1.tipProdescricao LIKE '%COMERCIO%'
+				            AND tp1.tipProId IN (SELECT tipPropaiid FROM tipoProduto)
+				
+				    UNION ALL
+				
+				        SELECT
+				            tp2.tipProId AS tipProId,
+				            LTRIM(RTRIM(tp1.tipProdescricao)) AS tipProNivel1,
+				            LTRIM(RTRIM(tp2.tipProdescricao)) AS tipProNivel2,
+				            NULL AS tipProNivel3
+				        FROM tipoProduto tp1
+				            LEFT outer JOIN tipoProduto tp2 ON tp2.tipProPaiId=tp1.tipProId
+				        WHERE
+				            tp1.tipProPaiId IS NULL
+				            and tp2.tipProId IN (SELECT tipPropaiid FROM tipoProduto)
+				
+				        ORDER BY 1",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"tipProNivel1", "Setor Atividade"}, {"tipProNivel2", "Sub-Setor"}, {"tipProNivel3", "SubSub-Setor"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

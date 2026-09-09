@@ -1,0 +1,82 @@
+table GrupoCanais
+	isHidden
+	lineageTag: 0ace9b27-7877-490c-961d-f6cc12385c35
+
+	column id
+		dataType: int64
+		isHidden
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 242c069d-8d4c-436f-9f88-6ec17f0ab6c3
+		summarizeBy: sum
+		sourceColumn: id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		isHidden
+		isNullable: false
+		sourceProviderType: varchar(255)
+		lineageTag: 6e9ace30-7f09-4b04-8816-5ce201413644
+		summarizeBy: none
+		sourceColumn: Canal
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeneralistaCabo
+		dataType: string
+		isHidden
+		sourceProviderType: varchar(255)
+		lineageTag: 275ce05e-e320-4b5f-a723-8352060b01de
+		summarizeBy: none
+		sourceColumn: GeneralistaCabo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrupoCabo
+		dataType: string
+		isHidden
+		sourceProviderType: varchar(255)
+		lineageTag: d37f019b-8fa7-4060-baeb-0186c064f48f
+		summarizeBy: none
+		sourceColumn: GrupoCabo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agrupador
+		dataType: string
+		isHidden
+		lineageTag: c769d8b0-13c1-4bc4-bbbc-cd5618a36c8d
+		summarizeBy: none
+		sourceColumn: Agrupador
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GrupoCanais-ba93e9fa-d8a5-4fa0-a519-22f7dc8c13f4 = m
+		mode: import
+		queryGroup: Manual
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("fZXdbqMwEIVfxcrtVquEkEIuU9L8dBNSJShbqeqFF7yNVYIrQ9pNX6gPsi+2zNgEF8Pe2PI534wtxmMeH3uu27vqTdZBOQaTm009gfZ0VQIjWDyENlBqCFyrBVmLN87yNq6yEPe09nOxjG5baeUg7JfSzXI+31mgUhEawzKlH8yGUAVo1AeVykKIjISseBfyxcKbPgYOwFhHewPTK5gQcTA2oykZDMyk4WSllcpEfFgqU55n7EyCA80yllonadgY5tb63SnjQnZFaReDRkqOxRuTl3zkXsji9Exb9+1CMR3Ueib+1AGzzYOW0PfUgqz4b9YCKR1JXyvqarScqA5qIhg/1mYg+bF1K2UAe92vJHFkybkVVg7SULB5Kn4J6+soFSEo+UKk6fldiMQCawdhKHhICy7gFsyZeJb09cDj5kHaEIyHyoc8fmGpSJjIrO1MDwOg6puE5znj1KIvBqJQ0XuaJTanVISgrNvonqzZUUgzZSnqETlfcwNjnrOMSZryvKC5yY414xhzB+v1NTPs2tmDnXbL4DI2MoGInKMWpGx1arxVdShSQ02tT+mByU7M1VgoCh7z/+QbaXBLEx6bl7zBQTF2r+U9//LcaFTrCHq14HSRjkL9SiHR/ls7iw7CUBTHJT94ER+YcdHUBTUcoH0oS7Sy/x2gIQBVifZky2IhjS4B6TbYbKdfbIxwUFpexkYdQURuqBZkxuO/n1SYuZcm52puy8okxbmTgwoFYdjyDjVAKFFAc0pY+Wh88OxAyWJqfQGbwGBPNyu5k99buxgNRP2qA8tPnth/VcNCvOqmIYmmkUVXbTKuGkk3cjf89A8=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [id = _t, Canal = _t, GeneralistaCabo = _t, GrupoCabo = _t, Agrupador = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"id", Int64.Type}, {"Canal", type text}, {"GeneralistaCabo", type text}, {"GrupoCabo", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,42 @@
+table Yumi_TipoProg
+	lineageTag: a69dfee5-d0a1-4f2e-8866-b62450c0dced
+
+	column Yumi_TipoProg
+		dataType: string
+		lineageTag: 1c6b4659-ea11-4471-9edb-8c15544dbb03
+		summarizeBy: none
+		sourceColumn: Yumi_TipoProg
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_TipoProg_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7e0e85f5-a995-48c9-948c-d28fb89cc99f
+		summarizeBy: none
+		sourceColumn: Yumi_TipoProg_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_TipoProg-6cf879b5-599e-47c7-bb0a-c12d4a7b5a9f = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_typology"]}[Data],
+				    #"Replaced Value" = Table.ReplaceValue(Source, "n.a","SEM TYPOLOGY",Replacer.ReplaceText,{"TYPOLOGY_NAME"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Replaced Value",{{"TYPOLOGY_KEY", "Yumi_TipoProg_key"}, {"TYPOLOGY_NAME", "Yumi_TipoProg"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,37 @@
+table Yumi_Marca
+	lineageTag: 61f6c9ff-5353-4882-ac13-a8fe889707d6
+
+	column Yumi_Marca
+		dataType: string
+		lineageTag: ade3abad-6aa9-459b-b697-8ca0517dda51
+		summarizeBy: none
+		sourceColumn: Yumi_Marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_Marca_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2dc60fe2-817c-4f60-87dc-26a9d9b0c894
+		summarizeBy: none
+		sourceColumn: Yumi_Marca_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_Marca-12d10712-4d80-4705-bd13-307f98936f12 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_brand"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(Source, {{"BRAND_NAME", "Yumi_Marca"}, {"BRAND_KEY", "Yumi_Marca_key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

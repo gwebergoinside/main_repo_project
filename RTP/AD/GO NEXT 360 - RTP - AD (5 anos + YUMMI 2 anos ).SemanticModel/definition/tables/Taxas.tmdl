@@ -1,0 +1,50 @@
+table Taxas
+	lineageTag: 0a1edeb2-bfd0-49fe-abce-a3579f8da12b
+
+	column Taxas
+		lineageTag: b65a31f2-5b6f-40b4-b365-9db5074dd8d7
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Taxas Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Taxas Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Taxas Fields'
+		isHidden
+		lineageTag: 193babcf-4af1-4a29-8331-7e119de2f94b
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Taxas Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Taxas Order'
+		isHidden
+		formatString: 0
+		lineageTag: 06e605fb-981c-4494-b098-90a9750e921e
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Taxas = calculated
+		mode: import
+		source =
+				{
+				    ("Excluir Custo Minimo", NAMEOF('~Medidas'[Valor Custo Minimo]), 0),
+				    ("Excluir Outros Custos", NAMEOF('~Medidas'[Valor Outros Custos]), 1),
+				    ("Excluir Tx Multiproduto", NAMEOF('~Medidas'[Valor Taxa Multiproduto]), 2),
+				    ("Excluir Tx Posição", NAMEOF('~Medidas'[Valor Taxa Posição]), 3)
+				}
+
+	annotation PBI_Id = 304b50d8863049049e45bb394ebc7f73
+

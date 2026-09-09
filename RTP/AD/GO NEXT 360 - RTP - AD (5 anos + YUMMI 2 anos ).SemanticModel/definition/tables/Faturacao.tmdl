@@ -1,0 +1,532 @@
+table Faturacao
+	lineageTag: fa78c712-6172-4c1c-8633-2902466405c1
+
+	column canCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 44e49768-1ba6-4a75-a241-41dd21645489
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2f1a87bd-bd2b-4f3b-9c7c-0a834d13e782
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column codcliente_doc
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c7354840-71f4-4565-8ac8-0d53f46b9d42
+		summarizeBy: sum
+		sourceColumn: codcliente_doc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column anuncianteId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bf68783f-8215-4bc8-b079-7132a49fedd8
+		summarizeBy: none
+		sourceColumn: anuncianteId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column distribuidorId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6ca72ee9-d3b2-4ff3-a0ba-7489d126d418
+		summarizeBy: count
+		sourceColumn: distribuidorId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column centralComprasId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 76aa80fc-42b2-4806-a6b4-dcdf21ac7ca1
+		summarizeBy: none
+		sourceColumn: centralComprasId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column gruId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2ea2d462-c3f3-41b1-a066-2df4bbfe983b
+		summarizeBy: count
+		sourceColumn: gruId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column executivoId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 55f13996-6e99-4905-abe6-f64a3c8048e7
+		summarizeBy: count
+		sourceColumn: executivoId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 08bb99ef-944f-44ae-9454-491106d1857f
+		summarizeBy: none
+		sourceColumn: proId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendedorId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f19eef61-49bc-4b9b-8fe1-9ce9ee1af987
+		summarizeBy: none
+		sourceColumn: vendedorId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubFlagValorBrutoVendas
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 89511434-d0bc-4921-bec9-85a5852994ba
+		summarizeBy: none
+		sourceColumn: ordPubFlagValorBrutoVendas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column totalFaturado
+		dataType: double
+		isHidden
+		lineageTag: 5019b818-49d1-4c99-8c07-076e2a14c1b0
+		summarizeBy: sum
+		sourceColumn: totalFaturado
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valorFact
+		dataType: double
+		isHidden
+		lineageTag: 95160837-074f-49a7-ab27-a39b901b3096
+		summarizeBy: sum
+		sourceColumn: valorFact
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ordPubAno
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6e666129-44cb-48f6-a0f3-0390cc7ab33a
+		summarizeBy: sum
+		sourceColumn: ordPubAno
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubMes
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 20c5be7a-5cce-41c5-abf6-6ac088efc5b6
+		summarizeBy: sum
+		sourceColumn: ordPubMes
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipo
+		dataType: string
+		isHidden
+		lineageTag: a8ddb6c2-ee9f-4875-b96f-d7da4e12ac34
+		summarizeBy: none
+		sourceColumn: negPerTipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ccf2b35e-ea47-4dc1-b6c5-c15b74deb869
+		summarizeBy: none
+		sourceColumn: pacId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Correcao
+		dataType: string
+		lineageTag: af7b3aef-5328-411a-8eb3-98411ac28e11
+		summarizeBy: none
+		sourceColumn: Correcao
+
+		annotation SummarizationSetBy = Automatic
+
+	column EntidadeFacturarId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: efe46111-5b7a-46a3-a894-b9feca90b64b
+		summarizeBy: none
+		sourceColumn: EntidadeFacturarId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaMeiosId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d3809131-14ea-4338-90f2-79ce245fe5e5
+		summarizeBy: none
+		sourceColumn: AgenciaMeiosId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 86ae8b78-82f2-4ecd-9ad3-f051f33c9be4
+		summarizeBy: none
+		sourceColumn: AgenciaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescricaoCampanhas
+		dataType: string
+		lineageTag: 0b8583cf-49f7-4987-ad51-37a08ef4e113
+		summarizeBy: none
+		sourceColumn: DescricaoCampanhas
+
+		annotation SummarizationSetBy = Automatic
+
+	column priId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9121a0fa-db1b-4a2b-a5c3-e123aaf9aff2
+		summarizeBy: none
+		sourceColumn: priId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubNegociacao
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: be4ad0a4-65c5-4bf4-87c4-a0a268fbb9b9
+		summarizeBy: none
+		sourceColumn: ordPubNegociacao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column codAlvo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0c7d701d-9bf0-4eef-9d84-e675e2b4e2e1
+		summarizeBy: none
+		sourceColumn: codAlvo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubClaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b29db470-07f7-445a-be06-1e218eae5c72
+		summarizeBy: none
+		sourceColumn: ordPubClaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column camGrupoId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 83ecbe94-cffa-43fe-8530-0aa424022a2b
+		summarizeBy: none
+		sourceColumn: camGrupoId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nº ordem pub'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7eaa5d64-d555-4b37-8cc0-25e9fc04635a
+		summarizeBy: none
+		sourceColumn: Nº ordem pub
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataDocumento
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b1d25123-847f-4f41-876d-36df0f39aea4
+		summarizeBy: none
+		sourceColumn: DataDocumento
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataCorrecao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e7002646-bf05-41d4-bbc8-88c3d3108cd2
+		summarizeBy: none
+		sourceColumn: DataCorrecao
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Faturado (Correção)'
+		dataType: double
+		lineageTag: 0d2f25e1-3db8-420c-8e67-99fa7b0b6463
+		summarizeBy: sum
+		sourceColumn: Valor Faturado (Correção)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Tabela (Faturado)'
+		dataType: double
+		lineageTag: 12d3fc5d-65a9-479e-9adf-d1e4f3af9feb
+		summarizeBy: sum
+		sourceColumn: Valor Tabela (Faturado)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Comissao Agencia Faturado'
+		dataType: double
+		lineageTag: 4d4f01ce-146e-4f01-8ad7-a4fddcc16f8f
+		summarizeBy: sum
+		sourceColumn: Valor Comissao Agencia Faturado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DataEmissao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 94c0fabd-d81a-4dac-956d-8d04bd80fcc9
+		summarizeBy: none
+		sourceColumn: DataEmissao
+
+		variation Variation
+			isDefault
+			relationship: fd12f30f-4f8d-47e2-b71b-598bd22f688b
+			defaultHierarchy: LocalDateTable_0a5427e6-0c77-4bc7-8f92-e1b7447bfbe9.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataVencimento
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ae81abf2-1d3a-4276-805c-e3095acfabd7
+		summarizeBy: none
+		sourceColumn: DataVencimento
+
+		variation Variation
+			isDefault
+			relationship: 17940c6a-58a0-4a2c-b313-351a08631f7c
+			defaultHierarchy: LocalDateTable_7190bcfa-7d0e-42fb-a76a-ef4af08f41d0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descricao
+		dataType: string
+		lineageTag: 0eac158c-6ebb-44fa-85f2-d79d5452026a
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Faturacao-9c98843f-674d-4e2f-ad2e-df6a114475a1 = m
+		mode: import
+		queryGroup: Encomendas
+		source = ```
+				let
+				    SQL = " Select
+				        doc_factura_pub.ordPubCodigo AS [Nº ordem pub],
+				        Doc_Factura.data_doc_df AS DataDocumento,
+				        ordemPub.ordPubClaId,
+				        ordemPub.ordPubNegociacao,
+				        ordemPub.ordPubAno,
+				        ordemPub.ordPubMes,
+				        CASE WHEN ordemPub.ordPubAno IS NULL 
+				                    OR ordemPub.ordPubAno < 1
+				                    OR ordemPub.ordPubMes IS NULL
+				                    OR NOT ordemPub.ordPubMes BETWEEN 1 AND 12
+				                THEN NULL ELSE
+				            DATEFROMPARTS( ordemPub.ordPubAno, ordemPub.ordPubMes, 1)
+				            END AS DataCorrecao,
+				        doc_factura_pub.canCodigo,
+				        doc_factura_pub.tipPubId,
+				        Doc_Factura.codcliente_doc,
+				        doc_factura_pub.anuncianteId,
+				        doc_factura_pub.distribuidorId,
+				        doc_factura_pub.proId,
+				        doc_factura_pub.vendedorId,
+				        ordemPub.ordPubFlagValorBrutoVendas,
+				        ordemPub.priId,
+				        campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				        campanhas.camDistribuidor As AgenciaMeiosId,
+				        campanhas.camAgencia As AgenciaId,
+				        campanhas.camDescricao As DescricaoCampanhas,
+				        Pacotes.pacId,
+				        IsNull(doc_factura_pub.centralComprasId, campanhas.camCentralCompras) As centralComprasId,
+				        IsNull(doc_factura_pub.gruId, campanhas.camGrupoId) As gruId,
+				        IsNull(doc_factura_pub.vendedorId, campanhas.camVendedor) As executivoId,
+				        Case
+				            When t_documento.movimento = 'D'
+				            Then 1
+				            Else -1
+				        End * doc_factura_pub.ordPubValor As [Valor Faturado (Correção)],
+				            Case
+				            When t_documento.movimento = 'D'
+				            Then 1
+				            Else -1
+				        End * doc_factura_pub.valorPublicidade As [Valor Tabela (Faturado)],
+				        vComissaoAgencia.valorComissaoAgencia AS [Valor Comissao Agencia Faturado],
+				        Doc_Factura.data_emissao AS DataEmissao,
+				        Doc_Factura.data_venc AS DataVencimento,
+				        t_documento.descricao AS Descricao,
+				        Case
+				            When (Year(Doc_Factura.data_doc_df) <> ordemPub.ordPubAno Or
+				                Month(Doc_Factura.data_doc_df) <> ordemPub.ordPubMes) Or (t_documento.descricao = 'Nota Crédito Pub')
+				            Then 'CORREÇÃO'
+				            Else ''
+				        End As Correcao,
+				        vTotalFact.totalFaturado,
+				        ordemPub.valorFact,
+				        Case ordemPub.ordPubFlagFixo
+				            When 2
+				            Then negPeriodos.negPerTipo
+				            When 1
+				            Then 'V'
+				            Else 'D'
+				        End As negPerTipo,
+				        ordemPub.codAlvo,
+				        campanhas.camGrupoId
+				    From
+				        doc_factura_pub Join
+				        Doc_Factura On Doc_Factura.id_factura = doc_factura_pub.id_factura Join
+				        t_documento On t_documento.codigo = Doc_Factura.tipo_doc Join
+				        ordemPub On ordemPub.ordPubCodigo = doc_factura_pub.ordPubCodigo Left Outer Join
+				        negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao Join
+				        campanhas On campanhas.camId = ordemPub.camId Left Join
+				        pacotes With(NoLock) On ordemPub.pacId = Pacotes.pacId Join
+				        (Select
+				            doc_factura_pub.ordPubCodigo,
+				            Sum(Case
+				                When t_documento.movimento = 'D'
+				                Then 1
+				                Else -1
+				            End * doc_factura_pub.ordPubValor) As totalFaturado
+				        From
+				            doc_factura_pub Join
+				            Doc_Factura On Doc_Factura.id_factura = doc_factura_pub.id_factura
+				                    And Doc_Factura.estado_doc <> 'A' Join
+				            t_documento On t_documento.codigo = Doc_Factura.tipo_doc
+				        Group By
+				            doc_factura_pub.ordPubCodigo) vTotalFact On vTotalFact.ordPubCodigo = doc_factura_pub.ordPubCodigo Left Join
+				        (Select
+				            item_factura.id_factura,
+				            Sum(Case
+				                When t_documento.movimento = 'D'
+				                Then -1
+				                Else 1
+				            End * item_factura.valor_total) As valorComissaoAgencia
+				        From
+				            item_Factura Join
+				            Doc_Factura On Doc_Factura.id_factura = item_factura.id_factura
+				                    And Doc_Factura.estado_doc <> 'A' Join
+				            produtos_compra On produtos_compra.cod_produto = item_factura.cod_produto
+				                    And produtos_compra.flgCAgencia = 1 Join
+				            t_documento On t_documento.codigo = Doc_Factura.tipo_doc
+				        Group By
+				            item_factura.id_factura) vComissaoAgencia On vComissaoAgencia.id_factura = Doc_Factura.id_factura
+				    Where
+				        Doc_Factura.estado_doc <> 'A' And
+				        Year(Doc_Factura.data_doc_df) >= Year(GetDate()) - " & AnoUpdateGMedia,
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

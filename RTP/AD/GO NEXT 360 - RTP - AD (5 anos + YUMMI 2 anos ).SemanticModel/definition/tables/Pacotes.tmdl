@@ -1,0 +1,65 @@
+table Pacotes
+	lineageTag: 8ff12605-d5e8-4456-8803-7a2bbf66b6d6
+
+	column pacId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e3f07c48-3ffc-4a2f-994b-b44e4afa8a0f
+		summarizeBy: none
+		sourceColumn: pacId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pacote
+		dataType: string
+		lineageTag: 7402f6a3-e12c-4873-9e5a-f532ecb49ccd
+		summarizeBy: none
+		sourceColumn: Pacote
+
+		annotation SummarizationSetBy = Automatic
+
+	column PacoteBreve
+		dataType: string
+		isHidden
+		lineageTag: 0e219b7d-908f-4aa1-8fd7-210522b39c08
+		summarizeBy: none
+		sourceColumn: PacoteBreve
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Pacote'
+		dataType: string
+		lineageTag: 2e8b6e44-4d46-410d-b6b6-0a0d8a107745
+		summarizeBy: none
+		sourceColumn: Tipo Pacote
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Pacotes-6c3219a3-65c0-4dab-8bc5-2b37a544fbff = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = "SELECT
+				            pacId,
+				            pacDescricao AS Pacote,
+				            pacDescricaoBreve AS PacoteBreve,
+				        --  pacflgLivre AS pacFlgValidaReserva,
+				            CASE
+				                WHEN pacflgLivre = 0 THEN 'Package'
+				                WHEN pacflgLivre = 1 THEN 'Livre'
+				                ELSE NULL END AS [Tipo Pacote]
+				        FROM pacotes",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

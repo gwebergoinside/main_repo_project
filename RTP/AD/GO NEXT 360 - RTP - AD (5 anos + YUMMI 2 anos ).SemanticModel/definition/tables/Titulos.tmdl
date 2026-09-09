@@ -1,0 +1,52 @@
+table Titulos
+	isHidden
+	lineageTag: 18698a75-e1bd-448c-86df-d63482814ea9
+
+	measure 'Selected TituloParameter' =
+			
+			MIN ( Titulos[ID] )
+		formatString: 0
+		isHidden
+		lineageTag: c1f99f92-828a-499e-874b-3c2f5567c9d7
+
+		changedProperty = IsHidden
+
+	column Parameter
+		dataType: string
+		isHidden
+		lineageTag: b32a17ee-1e8b-47fb-80ff-3699669e8081
+		summarizeBy: none
+		sourceColumn: Parameter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c402387e-71fd-4f0c-a7fc-b440e4f6def2
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Titulos-a649cce7-3124-4bb9-b0e4-652ab19e6891 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("hZLBTsJAEIZfZdOzB9qC4hFBwUSUIDEhhMOmncAkZRdnW8LrEA9Gr8Yn6Iu5s1uUIsYb/b9hZv5/ZzYLxmCKlQ7OgjCYn82Cx6UkECmIIVAiUwaRA9fbJCsMbrSxUuykMSSAuRQ9LHeE0urNmj4EZWRm5VZNvlUpcmsCbnVeY9NJz2oXTuuCykmi4W26erUmntB2qLMo31WCPALdQpdO7ku11EaAGAGlmDoSNhziX95hfzziD+/qqvxQhSvzljqq4L4qd7uFzWNRTAhXYHICxq1fuAe5zJYOemNdqWR2KHtvfdtDk3emcjYWemdP0iZZvpYvmmEVC2PvcER6rU0uebuoUf0js52G5VuKWvA4dDA8ATOEylnk7U/kVoqHpFhXI23M9tnRPVq0T6TcZWjcTfxV6WM6RQ+cR61/q8TGiLsp1/rw7mGhExfHp9+6Ogx7iDmQEfXXitr797UX0ClSrG7kZsBwnx9s0PDwn2hjn+MAgSQ9F+6QYx9fVxPB9/g4qidyvF5sE5t/AQ==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Titulo = _t, ID = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Titulo", type text}, {"ID", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Titulo", "Parameter"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

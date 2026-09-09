@@ -1,0 +1,175 @@
+table Audiencias
+	isHidden
+	lineageTag: 22869a1e-2169-498c-8734-622956bb0ce8
+
+	column IdChannel
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f535a858-0e22-42ca-864f-129918c69117
+		summarizeBy: none
+		sourceColumn: IdChannel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da Semana'
+		dataType: int64
+		isHidden
+		lineageTag: edea15d9-fbd5-4a65-b49b-0842126af6d4
+		summarizeBy: sum
+		sourceColumn: Dia da Semana
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Audiencias","TableItemName":"Nome do Dia (groups)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column FimFaixa
+		dataType: string
+		isHidden
+		lineageTag: fac53af0-156b-4570-8cd4-9b20028d9090
+		summarizeBy: none
+		sourceColumn: FimFaixa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: double
+		isHidden
+		lineageTag: b70653c0-2672-4276-af55-ef8a27383d13
+		summarizeBy: none
+		sourceColumn: Valor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Faixa
+		dataType: string
+		isHidden
+		lineageTag: 8a0c6f45-38d7-435b-98c8-d7f4bff4403e
+		summarizeBy: none
+		sourceColumn: Faixa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alvo
+		dataType: string
+		isHidden
+		lineageTag: a6fb94e8-1cee-4c7d-a4a7-5aef91e101d0
+		summarizeBy: none
+		sourceColumn: Alvo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chave = [Canal]&"-"&'Audiencias'[Faixa_Horaria]&":00"&"-"&'Audiencias'[Nome do Dia (groups)]
+		isHidden
+		lineageTag: 7cffa7df-52b1-409e-b9af-b96e82199b31
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tempo = IF('Audiencias'[Canal] = "RTP 1" , 360 , 720 )
+		isHidden
+		formatString: 0
+		lineageTag: 546030e1-f698-44b7-a64d-7276c76c55b7
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do Dia (groups)' =
+			SWITCH(
+				TRUE,
+				ISBLANK('Audiencias'[Dia da Semana]),
+				"(Blank)",
+				'Audiencias'[Dia da Semana] IN {2,
+					3,
+					4,
+					5,
+					6},
+				"Dia de Semana",
+				'Audiencias'[Dia da Semana] IN {1,
+					7},
+				"Fim de Semana",
+				"Other"
+			)
+		isHidden
+		lineageTag: 0f660008-0e1a-46ba-8c19-f0ca38184273
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Audiencias"
+				          }
+				        },
+				        "Property": "Dia da Semana"
+				      }
+				    }
+				  ]
+				}
+
+		changedProperty = IsHidden
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"a","Entity":"Audiencias"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Dia da Semana"}}],"GroupItems":[{"DisplayName":"(Blank)","BlankDefaultPlaceholder":true},{"DisplayName":"Dia de Semana","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Dia da Semana"}}],"Values":[[{"Literal":{"Value":"2D"}}],[{"Literal":{"Value":"3D"}}],[{"Literal":{"Value":"4D"}}],[{"Literal":{"Value":"5D"}}],[{"Literal":{"Value":"6D"}}]]}}},{"DisplayName":"Fim de Semana","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"a"}},"Property":"Dia da Semana"}}],"Values":[[{"Literal":{"Value":"1D"}}],[{"Literal":{"Value":"7D"}}]]}}},{"DisplayName":"Other"}]}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Faixa_Horaria = LEFT(FORMAT(Audiencias[Faixa], "00"),2)
+		isHidden
+		lineageTag: 1971779b-024d-4049-a1c0-94f6feed5021
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal = RELATED( Canais[Canal] )
+		isHidden
+		lineageTag: 8cdc2b9d-59f7-4f42-988f-312b9a82513d
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Audiencias-f51c0679-fce3-4b81-a110-9172a84ea6b3 = m
+		mode: import
+		queryGroup: Audiências
+		source =
+				let
+				    SQL = "SELECT#(lf)#(tab)apf.CanCodigo as IdChannel#(lf)#(tab),apf.DiaSemId as [Dia da Semana]#(lf)#(tab),CONVERT(VARCHAR(8), DATEADD(MINUTE, apf.horaInicio, 0), 108) AS Faixa#(lf)    ,CONVERT(VARCHAR(8), DATEADD(MINUTE, apf.horaFim, 0), 108) AS FimFaixa#(lf)#(tab),apf.Rating as Valor#(lf)#(tab),a.abr_alvo as Alvo#(lf)FROM #(lf)#(tab)aud_prev_faixa apf#(lf)#(tab)LEFT JOIN  Aud_Alvos a on apf.Cod_Alvo = a.cod_alvo#(lf)WHERE#(lf)#(tab)apf.dataFim is NULL",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

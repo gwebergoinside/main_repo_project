@@ -1,0 +1,32 @@
+table 'Nº Ordem pub'
+	lineageTag: b7e6bfd5-01ba-4e84-a5ad-dd4b0b761ce0
+
+	column 'Nº ordem pub'
+		formatString: 0
+		lineageTag: 1a61a923-3b9d-4b64-9ef4-63d35fb450e7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Encomendas[Nº ordem pub]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nº ordem pub texto' = FORMAT('Nº Ordem pub'[Nº ordem pub], "General Number")
+		lineageTag: 75bf2509-1083-4b9f-af77-210739474d67
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Nº Ordem pub' = calculated
+		mode: import
+		source =
+				VALUES( Encomendas[Nº ordem pub] )
+				// VAR _1 =
+				// SELECTCOLUMNS(
+				//     Encomendas
+				//     ,"Nº Ordem pub", Encomendas[Nº ordem pub]
+				// )
+				// RETURN
+				// SUMMARIZE( _1, [Nº Ordem pub] )
+
+	annotation PBI_Id = b2bdae733a6d4ded8465ca22a6cd5f9b
+

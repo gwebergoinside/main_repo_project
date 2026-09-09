@@ -1,0 +1,68 @@
+table 'Agencia Meios'
+	lineageTag: 6270275f-2ef5-45d3-86f5-0083d3a0b8b3
+
+	column entId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c2253b57-42c0-46a6-9f0d-b5609320792f
+		summarizeBy: none
+		sourceColumn: entId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agência Meios C/ Encomendas' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    YEAR( MAX( Encomendas[Data Exibição] ) )
+			    ,FILTER(
+			        ALL( Encomendas )
+			        ,Encomendas[AgenciaMeiosId] = 'Agencia Meios'[entId]
+			    )
+			)
+			// LOOKUPVALUE( 
+			//     Encomendas[UltimaEncomenda]
+			//     ,Encomendas[AgenciaMeiosId]
+			//     ,'Agencia Meios'[entId]
+			// )
+			VAR _2 =
+			IF( _1 = BLANK(), 0, _1 )
+			RETURN
+			IF( _2 = 0, "OUTROS", 'Agencia Meios'[Agencia Meios] )
+			```
+		isHidden
+		lineageTag: e7ab2842-9697-445f-b3c4-9d8ce77095b8
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agencia Meios'
+		dataType: string
+		lineageTag: 27267fb4-a64b-4c6f-b70b-39385d06c098
+		summarizeBy: none
+		sourceColumn: Agencia Meios
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Agencia Meios-a4b2e389-690e-4978-8814-f72ecc87f729' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = "SELECT
+				            entId,
+				            entNome AS [Agencia Meios]
+				        FROM Entidades",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,453 @@
+table Rappel
+	lineageTag: 2aed5dac-81e0-406b-aeb3-33d6dabea74e
+
+	column Tipo
+		dataType: string
+		isHidden
+		lineageTag: 46cf4789-419d-4313-bbf1-d551cbf542a2
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 001ebe94-4739-4e2f-9cf1-69bc56fc181b
+		summarizeBy: none
+		sourceColumn: ordPubCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 98138b6c-fa22-4633-a726-106636c569af
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column anuncianteId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 572e16dc-0aac-4e64-ab92-3c44207033f9
+		summarizeBy: none
+		sourceColumn: anuncianteId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dataExib
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 7b372ee9-56cb-4dec-aea2-477e4c45953f
+		summarizeBy: none
+		sourceColumn: dataExib
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5fab5507-2284-45a6-b206-d70804fa99ff
+		summarizeBy: none
+		sourceColumn: proId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubNegociacao
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 829f606e-ac2f-4503-9966-158d88e5ad6b
+		summarizeBy: none
+		sourceColumn: ordPubNegociacao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendedor
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 34afd675-86e9-41da-8d81-90d0c7ed9442
+		summarizeBy: none
+		sourceColumn: vendedor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column valorRappel
+		dataType: double
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 8be4e423-4c59-4f9c-8e50-7792a7db31fa
+		summarizeBy: sum
+		sourceColumn: valorRappel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubClaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 17e06353-d27a-4f70-b102-518a1d0c248e
+		summarizeBy: none
+		sourceColumn: ordPubClaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f2e50d2f-4568-4229-871e-58dc935228e5
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipo
+		dataType: string
+		isHidden
+		lineageTag: 89e3bcec-b34e-4f84-ae72-4d5ce0293b6d
+		summarizeBy: none
+		sourceColumn: negPerTipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal = RELATED(Canais[Canal])
+		isHidden
+		lineageTag: 498f8f55-c203-40c1-b48b-058a67e1a352
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column rapTipTaxId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8baa143a-128a-44df-a8d2-5213716aed44
+		summarizeBy: count
+		sourceColumn: rapTipTaxId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFact
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: c0e64017-9eeb-4875-ba9b-40f70b29acc9
+		summarizeBy: none
+		sourceColumn: DataFact
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaMeiosId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 29a37ecc-033b-4f32-b6ba-c677baf257fa
+		summarizeBy: none
+		sourceColumn: AgenciaMeiosId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EntidadeFacturarId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3a0c8b23-5056-459d-a694-e02de46c2500
+		summarizeBy: none
+		sourceColumn: EntidadeFacturarId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CentralComprasId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4bb9c1af-ad9f-4b3b-8783-bc4267fd00bb
+		summarizeBy: none
+		sourceColumn: CentralComprasId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7b620f6c-7dc3-4ff9-85b0-b262f638f49f
+		summarizeBy: none
+		sourceColumn: AgenciaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescricaoCampanhas
+		dataType: string
+		isHidden
+		lineageTag: d42ad2a9-288c-4b46-8466-71c680d0ff65
+		summarizeBy: none
+		sourceColumn: DescricaoCampanhas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrioridadeId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 42687025-ac11-423d-a721-3ad2f00af84e
+		summarizeBy: none
+		sourceColumn: PrioridadeId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 13cca56e-75cc-4669-801b-c8564776231d
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column camGrupoId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 76bfa980-3ea1-431e-b185-331b35525c2f
+		summarizeBy: none
+		sourceColumn: camGrupoId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Rappel-3b3ef0e5-5de1-4260-83c8-db8eb66d88a9 = m
+		mode: import
+		queryGroup: Encomendas
+		source = ```
+				let
+				    SQL = "
+				    SELECT
+				        'FATURADO' As Tipo,
+				        RappelApuramentos.ordPubCodigo,
+				        RappelApuramentos.canCodigo,
+				        RappelApuramentos.anuncianteId As anuncianteId,
+				        CASE WHEN ordemPub.ordPubAno IS NULL 
+				                    OR ordemPub.ordPubAno < 1
+				                    OR ordemPub.ordPubMes IS NULL
+				                    OR NOT ordemPub.ordPubMes BETWEEN 1 AND 12
+				                THEN NULL ELSE
+				            DATEFROMPARTS( ordemPub.ordPubAno, ordemPub.ordPubMes, 1)
+				            END AS dataExib,
+				        RappelDocs.data_doc_df As DataFact,
+				        ordemPub.proId,
+				        ordemPub.ordPubNegociacao,
+				        RappelApuramentos.distribuidorId As AgenciaMeiosId,
+				        campanhas.camVendedor As vendedor,
+				        campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				        campanhas.camCentralCompras As CentralComprasId,
+				        campanhas.camAgencia As AgenciaId,
+				        campanhas.camDescricao As DescricaoCampanhas,
+				        ordemPub.priId As PrioridadeId,
+				        RappelTipoTaxas.rapTipTaxId,
+				        RappelApuramentos.valorApurado As valorRappel,
+				        ordemPub.ordPubClaId,
+				        ordemPub.tipPubId,
+				        Case ordemPub.ordPubFlagFixo
+				            When 2
+				            Then negPeriodos.negPerTipo
+				            When 1
+				            Then 'V'
+				            Else 'D'
+				        End As negPerTipo,
+				        pedidosEstados.descricao As Status,
+				        campanhas.camGrupoId
+				    From RappelDocs With(NoLock)
+				        Join RappelApuramentos With(NoLock)
+				                On RappelApuramentos.rapDocId = RappelDocs.rapDocId
+				        Join RappelTaxas With(NoLock)
+				                On RappelTaxas.rapId = RappelDocs.rapId
+				                And RappelTaxas.rapTaxId = RappelDocs.rapTaxId
+				        Join RappelTipoTaxas With(NoLock)
+				                On RappelTipoTaxas.rapTipTaxId = RappelTaxas.rapTipTaxId
+				        Join pedidos With(NoLock)
+				                On pedidos.pedidoId = RappelApuramentos.pedidoId
+				        Join ordemPub With(NoLock)
+				                On ordemPub.ordPubCodigo = RappelApuramentos.ordPubCodigo
+				        Join campanhas With(NoLock)
+				                On campanhas.camId = ordemPub.camId
+				        Left Join negPeriodos With(NoLock)
+				                On negPeriodos.negPerId = ordemPub.ordPubNegociacao
+				        Left Join pedidosEstados
+				                On pedidosEstados.estado = pedidos.estado
+				    Where Year(pedidos.dataFact) >= Year(GetDate()) - " & AnoUpdateGMedia & "
+				
+				    Union All
+				    
+				    Select
+				        'FATURADO PROVISÓRIO' As Tipo,
+				        pedidos.ordPubCodigo,
+				        pedidos.canCodigo,
+				        pedidos.anuncianteId As anuncianteId,
+				        CASE WHEN pedidos.ordPubAno IS NULL 
+				                    OR pedidos.ordPubAno < 1
+				                    OR pedidos.ordPubMes IS NULL
+				                    OR NOT pedidos.ordPubMes BETWEEN 1 AND 12
+				                THEN NULL ELSE
+				            DATEFROMPARTS( pedidos.ordPubAno, pedidos.ordPubMes, 1)
+				            END AS dataExib,
+				        Rappel.rapDataFim As DataFact,
+				        pedidos.proId,
+				        ordemPub.ordPubNegociacao,
+				        pedidos.distribuidorId As AgenciaMeiosId,
+				        campanhas.camVendedor As vendedor,
+				        campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				        campanhas.camCentralCompras As CentralComprasId,
+				        campanhas.camAgencia As AgenciaId,
+				        campanhas.camDescricao As DescricaoCampanhas,
+				        pedidos.priId As PrioridadeId,
+				        Null As rapTipTaxId,
+				        SUM(Round((IsNull(pedidoReceitas.PUB,0.00)-(IsNull(pedidoReceitas.PUB,0.00)*(ISNULL(pedidoReceitas.CDAG,0)/100))) * (Rappel.rapTaxaNegociada) * ( -1), 2)) as valorRappel,
+				        pedidos.ordPubClaId,
+				        pedidos.tipPubId,
+				        Case ordemPub.ordPubFlagFixo
+				            When 2
+				            Then negPeriodos.negPerTipo
+				            When 1
+				            Then 'V'
+				            Else 'D'
+				        End As negPerTipo,
+				        pedidosEstados.descricao As Status,
+				        campanhas.camGrupoId
+				    From
+				        pedidos With(NoLock) Join
+				        pedidoReceitas With(NoLock) On pedidoReceitas.pedidoId = pedidos.pedidoId Join
+				        campanhas With(NoLock) On campanhas.camId = pedidos.camId Join
+				        ordemPub With(NoLock) On ordemPub.ordPubCodigo = pedidos.ordPubCodigo Join
+				        Rappel With(NoLock) On (Rappel.entIdCliente = pedidos.entFactId
+				                    Or (campanhas.camCentralCompras = Rappel.entIdCliente
+				                        And IsNull(Rappel.flgCentral, 0) = 1))
+				                And pedidos.dataFact Between Rappel.rapDataInicio And Rappel.rapDataFim Join
+				        entidades e With(NoLock) On e.entId = Rappel.entIdCliente Left Outer Join
+				        negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao Left Join
+				        pedidosEstados On pedidosEstados.estado = pedidos.estado
+				    WHERE 1 IN (
+				        SELECT 1 From RappelDocs
+				        WHERE
+				            RappelDocs.rapId = Rappel.rapId And
+				            RappelDocs.Mes Is Null) And
+				        pedidos.estado Not In ('C', 'P1', 'P2', 'P3', 'SC', 'SS', 'X') And
+				        IsNull(pedidos.flgRappel, 0) = 1 And
+				        Year(pedidos.dataFact) >= Year(GetDate()) - " & AnoUpdateGMedia & " And
+				        Month(pedidos.dataFact) <> 12 And
+				        pedidos.ordPubAno = Year(pedidos.dataFact)
+				    Group By
+				        pedidos.ordPubCodigo,
+				        pedidos.canCodigo,
+				        pedidos.anuncianteId,
+				        Rappel.rapDataFim,
+				        pedidos.proId,
+				        pedidos.distribuidorId,
+				        campanhas.camVendedor,
+				        campanhas.camEntidadeFacturar,
+				        campanhas.camCentralCompras,
+				        campanhas.camAgencia,
+				        campanhas.camDescricao,
+				        pedidos.priId,
+				        pedidos.ordPubClaId,
+				        pedidos.tipPubId,
+				        pedidosEstados.descricao,
+				        pedidos.ordPubAno,
+				        pedidos.ordPubMes,
+				        ordemPub.ordPubNegociacao,
+				        ordemPub.ordPubFlagFixo,
+				        negPeriodos.negPerTipo,
+				        campanhas.camGrupoId
+				
+				Union All
+				    
+				    Select
+				        h.Tipo,
+				        h.ordPubCodigo,
+				        h.canCodigo,
+				        h.anuncianteId,
+				        h.dataExib,
+				        h.DataFact,
+				        h.proId,
+				        h.ordPubNegociacao,
+				        h.AgenciaMeiosId,
+				        h.vendedor,
+				        h.EntidadeFacturarId,
+				        h.CentralComprasId,
+				        h.AgenciaId,
+				        h.DescricaoCampanhas,
+				        h.PrioridadeId,
+				        h.rapTipTaxId,
+				        h.valorRappel,
+				        h.ordPubClaId,
+				        h.tipPubId,
+				        h.negPerTipo,
+				        h.Status,
+				        h.camGrupoId
+				    From
+				        RTP_HistoricoRappelProvisionalPowerBI h
+				    Where
+				            h.Ano >= Year(GetDate()) - " & AnoUpdateGMedia & " 
+				        And h.Mes <> 12 ",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"valorRappel", type number}})
+				in
+				    #"Changed Type"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

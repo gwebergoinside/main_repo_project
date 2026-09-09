@@ -1,0 +1,35 @@
+table 'Tipo de Encomenda'
+	lineageTag: bb4090de-e854-46f4-80b7-06167544e2cd
+
+	column 'Tipo de Encomenda'
+		dataType: string
+		lineageTag: c0c2a48e-f550-442c-a0c6-b9d40b0d0436
+		summarizeBy: none
+		sourceColumn: Tipo de Encomenda
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		isHidden
+		lineageTag: 95ae4f04-f88b-4aab-8a55-99301cd8b12b
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Tipo de Encomenda' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCihNUkjNVXBOLCpJzSxKVNJRclWK1YlWcnQFMv3BTNeK5NTDyw8vzgeKRIBFQJpcKzKTMlNAYq5AHbEA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Tipo de Encomenda" = _t, Tipo = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Tipo de Encomenda", type text}, {"Tipo", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

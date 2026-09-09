@@ -1,0 +1,35 @@
+table Yumi_TO
+	lineageTag: daffeddf-a523-4f74-b592-50d0e73ba6a9
+
+	column TO
+		lineageTag: 59553afd-0ae2-447e-957c-8482df7b97e5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [TO]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_TO-10f93d9d-741c-4741-a9f2-fbd598d940b3 = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				SELECTCOLUMNS(
+				    Yumi_Valores
+				    ,"TO", Yumi_Valores[NO]
+				)
+				VAR _2 =
+				SELECTCOLUMNS(
+				    'Yumi_Exibição'
+				    ,"TO", 'Yumi_Exibição'[NO]
+				)
+				
+				VAR _UN =
+				UNION(_1, _2)
+				VAR Result =
+				SUMMARIZE( _UN,[TO])
+				RETURN
+				Result
+
+	annotation PBI_Id = 31e933272bc04d3195a4a48ee24fb7ac
+

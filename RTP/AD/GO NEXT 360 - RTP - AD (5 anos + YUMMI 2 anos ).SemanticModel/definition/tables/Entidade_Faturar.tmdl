@@ -1,0 +1,66 @@
+table Entidade_Faturar
+	lineageTag: e8775ed2-a796-4017-ae40-f64d0ebf3b73
+
+	column IdEntidadeFaturar
+		isHidden
+		formatString: 0
+		lineageTag: 62156300-7aa0-479e-9cd9-ab61c8b43838
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IdEntidadeFaturar]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Entidade Faturar'
+		lineageTag: 56c1e1be-1bcf-4420-8447-f9cdf943f699
+		summarizeBy: none
+		sourceColumn: [EntidadeFaturar]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Entidade Faturar C/ Encomendas' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    YEAR( MAX( Encomendas[Data Exibição] ) )
+			    ,FILTER(
+			        ALL( Encomendas )
+			        ,Encomendas[EntidadeFacturarId] = Entidade_Faturar[IdEntidadeFaturar]
+			    )
+			)
+			// LOOKUPVALUE( 
+			//     Encomendas[UltimaEncomenda]
+			//     ,Encomendas[AgenciaMeiosId]
+			//     ,'Agencia Meios'[entId]
+			// )
+			VAR _2 =
+			IF( _1 = BLANK(), 0, _1 )
+			RETURN
+			IF( _2 = 0, "OUTROS", Entidade_Faturar[Entidade Faturar] )
+			```
+		isHidden
+		lineageTag: 8f49f0da-0566-42fd-bba2-72421862d9ae
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Entidade_Faturar-8e74c380-5325-4897-b973-686c399b3ebe = calculated
+		mode: import
+		source = ```
+				
+				VAR _1 = 
+				    SELECTCOLUMNS(
+				        'Agencia Meios'
+				        ,"IdEntidadeFaturar", 'Agencia Meios'[entId]
+				        ,"EntidadeFaturar", 'Agencia Meios'[Agencia Meios]
+				        // ,"CentralComprasId", Encomendas[CentralComprasId]
+				        // ,"AgenciaMeiosId", Encomendas[AgenciaMeiosId]
+				        // ,"AgenciaId", Encomendas[AgenciaId]
+				        // ,"DescricaoCampanhas", Encomendas[DescricaoCampanhas]
+				    )
+				RETURN
+				_1
+				```
+
+	annotation PBI_Id = 58ec95bb51e34d9b8b50b96001e3e05e
+

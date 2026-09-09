@@ -1,0 +1,245 @@
+table Propostas
+	lineageTag: c111d297-2afc-470e-a859-364aa15a523e
+
+	measure 'Estado ProvalorPub' =
+			
+			SUMX (
+			    DISTINCT ( Propostas[propostaId] ),
+			    FIRSTNONBLANK ( Propostas[ValorPubProposta], 0 )
+			)
+		formatString: 0.00
+		isHidden
+		lineageTag: 4d4461c1-ec87-4a26-af84-3ed1ba6db094
+
+		changedProperty = IsHidden
+
+	column proNumero
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bdcb3519-a2ae-4c7e-904c-7b6a47d63e9e
+		summarizeBy: sum
+		sourceColumn: proNumero
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column proDataInicio
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: d58ca649-b323-40a8-8547-67bdac57fb79
+		summarizeBy: none
+		sourceColumn: proDataInicio
+
+		variation Variação
+			isDefault
+			relationship: dd50a9cf-27a4-4cea-99fb-42bcb42defb8
+			defaultHierarchy: LocalDateTable_d7dbf4d4-47f4-4530-9576-115d27ca723d.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendedorId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bacdc2dc-dcb5-45af-9981-e5ab50b6a38d
+		summarizeBy: none
+		sourceColumn: vendedorId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column proDataCria
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 8ac7222a-2307-45d5-a802-a2c5d18ab500
+		summarizeBy: none
+		sourceColumn: proDataCria
+
+		variation Variação
+			isDefault
+			relationship: 728934cb-af5e-458e-9ae5-0d313200c680
+			defaultHierarchy: LocalDateTable_ef8293a3-2ca0-491a-a1b2-b4178b43a7c6.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column accNegDataInicio
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 749428ec-0302-46e8-85b6-f9fe1973451f
+		summarizeBy: none
+		sourceColumn: accNegDataInicio
+
+		variation Variation
+			isDefault
+			relationship: 8157fece-6d4e-4770-b728-fa2bdd4f68b9
+			defaultHierarchy: LocalDateTable_59dbc8da-6956-43ed-ba11-ad4b8a28ac86.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column accNegValorPlano
+		dataType: double
+		isHidden
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 1c7d4a97-e033-48d8-b691-418b611aeee1
+		summarizeBy: sum
+		sourceColumn: accNegValorPlano
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 746a018d-c9c7-4737-b5f6-6b0d90835fbd
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column propostaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fc55446f-4224-4cf7-bc2d-f8c0835526de
+		summarizeBy: count
+		sourceColumn: propostaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column accNegId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 504f9a27-0734-4bd8-a83e-141d42091abb
+		summarizeBy: count
+		sourceColumn: accNegId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column proANId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8ffa87d2-5fb6-4e9b-861b-2681be98e4a8
+		summarizeBy: none
+		sourceColumn: proANId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f21348e7-c1f0-43c5-bab5-93676f5b6247
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ValorPubProposta
+		dataType: double
+		lineageTag: f292e8c3-227c-4bbe-a3b7-6e4911af6c4c
+		summarizeBy: sum
+		sourceColumn: ValorPubProposta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column StatusProduto
+		dataType: string
+		lineageTag: 1a5aa330-4435-444c-8cf0-a45eda2ca665
+		summarizeBy: none
+		sourceColumn: StatusProduto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: f8932956-a581-4d43-9d4c-9f361f7b5de9
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'proDataCria Hierarchy'
+		isHidden
+		lineageTag: 512c4b5f-9233-4a04-8b76-17111027c669
+
+		level proDataCria
+			lineageTag: 93f00f61-229b-4823-bd48-ed9332065566
+			column: proDataCria
+
+		level proDataInicio
+			lineageTag: c521584f-0735-4d18-ab3b-cc8762bcec6b
+			column: proDataInicio
+
+		changedProperty = IsHidden
+
+	partition Propostas-9bd57433-3bd1-4bc6-9644-a8f47405380b = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = "SELECT
+				        p.proValorPub As ValorPubProposta,
+				        p.proDataInicio,
+				        p.produtoDesc AS StatusProduto,
+				        p.proNumero,
+				        p.vendedorId,
+				        ae.estadoDesc AS Status,
+				        an.accNegDataInicio,
+				        an.accNegValorPlano As accNegValorPlano,
+				        an.canCodigo,
+				        p.proDataCria,
+				        p.propostaId,
+				        an.accNegId,
+				        p.proANId,
+				        an.tipPubId
+				    FROM Propostas p
+				        LEFT JOIN accaoEstados ae
+				            ON ae.estadoId = p.proEstado
+				        LEFT JOIN accaoNegociacao an
+				            ON p.propostaId = an.propostaId
+				        FULL JOIN entidades e
+				            ON e.entId = p.proANId
+				        LEFT JOIN Vendedores v
+				            ON v.UtiId = p.vendedorId
+				    WHERE
+				        YEAR(an.accNegDataInicio) >= YEAR( GETDATE() ) - " & AnoUpdateGMedia,
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_QueryRelationships = {"columnCount":13,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Propostas/Origem.{proValorPub,0}","Section1/Propostas/Origem.{proDataInicio,1}","Section1/Propostas/Origem.{produtoDesc,2}","Section1/Propostas/Origem.{proNumero,3}","Section1/Propostas/Origem.{vendedorId,4}","Section1/Propostas/Origem.{estadoDesc,5}","Section1/Propostas/Origem.{accNegDataInicio,6}","Section1/Propostas/Origem.{accNegValorPlano,7}","Section1/Propostas/Origem.{canCodigo,8}","Section1/Propostas/Origem.{proDataCria,9}","Section1/Propostas/Origem.{propostaId,10}","Section1/Propostas/Origem.{accNegId,11}","Section1/Propostas/Origem.{proANId,12}"],"ColumnCount":13,"KeyColumnNames":[],"ColumnIdentities":["Section1/Propostas/Origem.{proValorPub,0}","Section1/Propostas/Origem.{proDataInicio,1}","Section1/Propostas/Origem.{produtoDesc,2}","Section1/Propostas/Origem.{proNumero,3}","Section1/Propostas/Origem.{vendedorId,4}","Section1/Propostas/Origem.{estadoDesc,5}","Section1/Propostas/Origem.{accNegDataInicio,6}","Section1/Propostas/Origem.{accNegValorPlano,7}","Section1/Propostas/Origem.{canCodigo,8}","Section1/Propostas/Origem.{proDataCria,9}","Section1/Propostas/Origem.{propostaId,10}","Section1/Propostas/Origem.{accNegId,11}","Section1/Propostas/Origem.{proANId,12}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

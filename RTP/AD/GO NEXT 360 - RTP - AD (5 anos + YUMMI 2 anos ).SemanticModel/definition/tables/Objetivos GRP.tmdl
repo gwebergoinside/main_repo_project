@@ -1,0 +1,224 @@
+table 'Objetivos GRP'
+	lineageTag: 49d451d8-5888-4a6d-aa1a-008b2eb90947
+
+	measure 'GRP Eq Alcance' =
+			
+			// Soma do Previsto e Real
+			VAR _calculo =
+			     [GRP Eq Total] - SUM ('Objetivos GRP'[GRP Eq Objetivo])
+			RETURN
+			    IF ( ISBLANK ( SUM ( 'Objetivos GRP'[GRP Eq Objetivo] ) ), BLANK (), _calculo )
+		formatString: 0.00
+		lineageTag: 6293b554-de7b-4cd0-9aa7-18d37631ddf9
+
+	column 'GRP Eq Objetivo'
+		lineageTag: 0157aae3-17f8-406c-bf61-4e96b3985407
+		summarizeBy: sum
+		sourceColumn: [GRP Objetivo]
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Nº ordem pub'
+		isHidden
+		formatString: 0
+		lineageTag: 0e772070-75e8-47cc-9233-877d067c6f57
+		summarizeBy: none
+		sourceColumn: Nº Ordem pub[Nº ordem pub]
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaId
+		isHidden
+		formatString: 0
+		lineageTag: 39398ef4-0a8a-4d37-ae8a-11f7f38c752e
+		summarizeBy: none
+		sourceColumn: Encomendas[AgenciaId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaMeiosId
+		isHidden
+		formatString: 0
+		lineageTag: 23d898d0-572a-45e7-9a63-87464880c7bb
+		summarizeBy: none
+		sourceColumn: Encomendas[AgenciaMeiosId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column anuncianteId
+		isHidden
+		formatString: 0
+		lineageTag: 1bd5e89c-4ce8-49a6-8bc3-a468a7decb5c
+		summarizeBy: none
+		sourceColumn: Encomendas[anuncianteId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column camGrupoId
+		isHidden
+		formatString: 0
+		lineageTag: e5298438-40b1-43b0-a3d1-84a16e069042
+		summarizeBy: none
+		sourceColumn: Encomendas[camGrupoId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CentralComprasId
+		isHidden
+		formatString: 0
+		lineageTag: 96a62369-eeee-48d4-b52b-c0db77e17adf
+		summarizeBy: count
+		sourceColumn: Encomendas[CentralComprasId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column EntidadeFacturarId
+		isHidden
+		formatString: 0
+		lineageTag: cc942109-f00f-4532-a0be-a130370c247b
+		summarizeBy: none
+		sourceColumn: Encomendas[EntidadeFacturarId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubClaId
+		isHidden
+		formatString: 0
+		lineageTag: c9d3c341-1d46-4e05-835a-5c5580b111e0
+		summarizeBy: none
+		sourceColumn: Encomendas[ordPubClaId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacId
+		isHidden
+		formatString: 0
+		lineageTag: c44941c2-bea4-44fb-8b31-7b4547e0c896
+		summarizeBy: none
+		sourceColumn: Encomendas[pacId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		isHidden
+		formatString: 0
+		lineageTag: 237ac18f-2621-4f21-a993-cfcce46efe71
+		summarizeBy: none
+		sourceColumn: Encomendas[tipPubId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		isHidden
+		formatString: 0
+		lineageTag: f93f987e-b686-4dbd-b914-eb9ddd4d0ab8
+		summarizeBy: none
+		sourceColumn: Encomendas[proId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		isHidden
+		lineageTag: b05b80d8-4077-4e60-8906-6fba2e703fa2
+		summarizeBy: none
+		sourceColumn: Encomendas[Canal]
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		isHidden
+		formatString: 0
+		lineageTag: 855fef7b-2f07-4c2e-a841-7b8833984581
+		summarizeBy: none
+		sourceColumn: Encomendas[canCodigo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_alvo
+		isHidden
+		formatString: 0
+		lineageTag: 58fdcb20-4ab8-477a-a3c6-b080038c797c
+		summarizeBy: none
+		sourceColumn: Encomendas[cod_alvo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescricaoCampanhas
+		isHidden
+		lineageTag: f2f3ccea-1315-4879-a0fd-988f562aa788
+		summarizeBy: none
+		sourceColumn: Encomendas[DescricaoCampanhas]
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipo
+		isHidden
+		lineageTag: d47c3354-382a-41d5-baed-5c13afd5e410
+		summarizeBy: none
+		sourceColumn: Encomendas[negPerTipo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendedor
+		isHidden
+		formatString: 0
+		lineageTag: 5b95c1b8-196e-41dc-b3d7-4c4fc059bd95
+		summarizeBy: none
+		sourceColumn: Encomendas[vendedor]
+
+		annotation SummarizationSetBy = Automatic
+
+	column diaExib
+		isHidden
+		formatString: General Date
+		lineageTag: be38ba30-b27c-473c-bf9e-bd661da4e3f0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [diaExib]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart (id)'
+		isHidden
+		formatString: 0
+		lineageTag: 423a5655-8d5b-4515-88e3-eb696203ed64
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayPart (id)]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Objetivos GRP' = calculated
+		mode: import
+		source = ```
+				
+				    GROUPBY(
+				        FILTER( Encomendas
+				            , ABS( Encomendas[GRP Objetivo] + Encomendas[grpPrevisto] + Encomendas[grpReal] ) > 0 )
+				        , 'Nº Ordem pub'[Nº ordem pub]
+				        , Encomendas[AgenciaId]
+				        , Encomendas[AgenciaMeiosId]
+				        , Encomendas[anuncianteId]
+				        , Encomendas[camGrupoId]
+				        , Encomendas[CentralComprasId]
+				        , Encomendas[EntidadeFacturarId]
+				        , Encomendas[ordPubClaId]
+				        , Encomendas[pacId]
+				        , Encomendas[tipPubId]
+				        , Encomendas[proId]
+				        , Encomendas[Canal]
+				        , Encomendas[canCodigo]
+				        , Encomendas[cod_alvo]
+				        , Encomendas[DescricaoCampanhas]
+				        , Encomendas[negPerTipo]
+				        , Encomendas[vendedor]
+				        , "DayPart (id)", SUMX( CURRENTGROUP(), BLANK())
+				        , "diaExib", MINX( CURRENTGROUP(), Encomendas[diaExib] )
+				        , "GRP Objetivo", MAXX( CURRENTGROUP(), Encomendas[GRP Objetivo] )
+				    )
+				```
+
+	annotation PBI_Id = cc7950b31ced4b81a92befc77c192227
+

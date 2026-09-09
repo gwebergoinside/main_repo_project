@@ -1,0 +1,66 @@
+table Central
+	lineageTag: 30cb5f0c-e4ed-42c6-b6ef-4cd7ed5d2456
+
+	column IdCentralCompras
+		isHidden
+		formatString: 0
+		lineageTag: 8ebf7875-54a4-4fad-808c-14b09a0993a2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IdCentralCompras]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Central de Compras'
+		lineageTag: ea1c09c8-8725-47a4-b7e5-b11946fa696f
+		summarizeBy: none
+		sourceColumn: [Central]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Central C/ Encomendas' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    YEAR( MAX( Encomendas[Data Exibição] ) )
+			    ,FILTER(
+			        ALL( Encomendas )
+			        ,Encomendas[CentralComprasId] = Central[IdCentralCompras]
+			    )
+			)
+			// LOOKUPVALUE( 
+			//     Encomendas[UltimaEncomenda]
+			//     ,Encomendas[AgenciaMeiosId]
+			//     ,'Agencia Meios'[entId]
+			// )
+			VAR _2 =
+			IF( _1 = BLANK(), 0, _1 )
+			RETURN
+			IF( _2 = 0, "OUTROS", Central[Central de Compras] )
+			```
+		isHidden
+		lineageTag: b391fa2b-74f7-4a9d-b5d5-393526071fa9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Central-42fce749-057e-4288-b2f5-b7267e647eaa = calculated
+		mode: import
+		source = ```
+				
+				VAR _1 = 
+				    SELECTCOLUMNS(
+				        'Agencia Meios'
+				        ,"IdCentralCompras", 'Agencia Meios'[entId]
+				        ,"Central", 'Agencia Meios'[Agencia Meios]
+				        // ,"CentralComprasId", Encomendas[CentralComprasId]
+				        // ,"AgenciaMeiosId", Encomendas[AgenciaMeiosId]
+				        // ,"AgenciaId", Encomendas[AgenciaId]
+				        // ,"DescricaoCampanhas", Encomendas[DescricaoCampanhas]
+				    )
+				RETURN
+				_1
+				```
+
+	annotation PBI_Id = a644e796ffea42df9f74c83494bf758c
+

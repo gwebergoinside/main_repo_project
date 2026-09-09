@@ -1,0 +1,41 @@
+table Bonus
+	lineageTag: 69940185-b820-4549-8437-f3e91a92c516
+
+	column bonId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 53771da5-e8b0-4c57-aba3-770b57f41dc7
+		summarizeBy: none
+		sourceColumn: bonId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bonus
+		dataType: string
+		lineageTag: 8dfe215f-5955-44fd-ad5a-36e9c3c9f73f
+		summarizeBy: none
+		sourceColumn: Bonus
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Bonus-304d02b7-eb22-4915-b4be-0869f4c0cb47 = m
+		mode: import
+		queryGroup: Encomendas
+		source = ```
+				let
+				    SQL = "SELECT
+				            bonId,  
+				            bonDescricao AS Bonus
+				        FROM Bonus",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

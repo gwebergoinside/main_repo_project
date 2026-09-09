@@ -1,0 +1,80 @@
+table 'Grupo Anunciante'
+	lineageTag: 95752135-d307-41dc-981f-cab8c5d54ecd
+
+	column 'Nº Ordem pub'
+		isHidden
+		formatString: 0
+		lineageTag: f5ebab34-7241-479e-a4dc-4529b32aed97
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nº Ordem pub]
+
+		annotation SummarizationSetBy = Automatic
+
+	column AnuncianteId
+		isHidden
+		formatString: 0
+		lineageTag: 3afb207f-2788-485a-ba1c-9ff8b72b62f3
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [AnuncianteId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CentralId
+		isHidden
+		formatString: 0
+		lineageTag: 0c2ce454-e0ef-4208-96ff-1cabb8c61d63
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [CentralId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grupo Anunciante' =
+			
+			VAR _1 =
+			LOOKUPVALUE( Anunciante[Anunciante], Anunciante[entId], 'Grupo Anunciante'[AnuncianteId] )
+			RETURN
+			SWITCH(
+			    TRUE()
+			    ,'Grupo Anunciante'[AnuncianteId] = 3428 && 'Grupo Anunciante'[CentralId] = 16774, "GRUPO NOS"
+			    ,'Grupo Anunciante'[AnuncianteId] =	3748	,	"GRUPO ALIANÇA"
+			    ,'Grupo Anunciante'[AnuncianteId] =	16273	,	"GRUPO ALIANÇA"
+			    ,'Grupo Anunciante'[AnuncianteId] =	3968	,	"GRUPO ALIANÇA"
+			    ,'Grupo Anunciante'[AnuncianteId] =	4709	,	"GRUPO ALIANÇA"
+			    ,'Grupo Anunciante'[AnuncianteId] =	18239	,	"GRUPO ALIANÇA"
+			    ,'Grupo Anunciante'[AnuncianteId] =	17468	,	"GRUPO ALIANÇA"
+			    ,'Grupo Anunciante'[AnuncianteId] =	3540	,	"GRUPO ALIANÇA"
+			    ,'Grupo Anunciante'[AnuncianteId] =	18742	,	"GRUPO ALIANÇA"
+			    ,'Grupo Anunciante'[AnuncianteId] =	12494	,	"GRUPO NOS"
+			    ,'Grupo Anunciante'[AnuncianteId] =	17344	,	"GRUPO NOS"
+			    ,'Grupo Anunciante'[AnuncianteId] =	16912	,	"CAETSU - AUTO"
+			    ,'Grupo Anunciante'[AnuncianteId] =	5648	,	"CAETSU - AUTO"
+			    ,'Grupo Anunciante'[AnuncianteId] =	18136	,	"CAETSU - AUTO"
+			    ,'Grupo Anunciante'[AnuncianteId] =	13550	,	"GRUPO INTERMARCHÉ"
+			    ,'Grupo Anunciante'[AnuncianteId] =	18421	,	"GRUPO INTERMARCHÉ"
+			    ,'Grupo Anunciante'[AnuncianteId] =	18442	,	"GRUPO INTERMARCHÉ"
+			    ,_1
+			)
+		lineageTag: 444b2bca-d054-4283-b994-3e58cc0b099c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Grupo Anunciante' = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				SELECTCOLUMNS(
+				    Encomendas
+				    ,"Nº Ordem pub", Encomendas[Nº ordem pub]
+				    ,"CentralId", Encomendas[CentralComprasId]
+				    ,"AnuncianteId", Encomendas[anuncianteId]
+				)
+				RETURN
+				SUMMARIZE( _1, [Nº Ordem pub],[AnuncianteId],[CentralId] )
+
+	annotation PBI_Id = 238a769368b14f2b9a10b5154ecad59b
+

@@ -1,0 +1,162 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Share
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup BD
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Manual
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup Encomendas
+
+	annotation PBI_QueryGroupOrder = 5
+
+queryGroup Audiências
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup Negociações
+
+	annotation PBI_QueryGroupOrder = 5
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Encomendas","Canais","Executivos","Anunciante","~Medidas","GrupoCanais","Classificação de Canais","Objetivos","Propostas","Ocupacao","Variacao Receita","Alvo","Mapeamento","SectorAtividade","fx_dbricks","Base","Yumi_Exibição","Yumi_Anunciante","Yumi_Canal","Yumi_Agencia Meios","Yumi_Setor","Yumi_Alvo","Yumi_Programa","Yumi_Valores","Yumi_Marca","Audiencias","ServerP","ServerP_GoInside","ServerP2","BD","TipoCliente","Table","Titulos","TipoPublicidade","AlvoPadrao","AnoUpdateGMedia","AnoUpdateYummi","Produtos","OrdemPubClassificacao","Bonus","Agencia Meios","Faturacao","Outros Custos","d_Neg_Característica","Negociacao","d_Neg_TaxaMultiProduto","d_Neg_Cond_Neg","d_Neg_Posicoes","d_Neg_Audiencia","d_Neg_EcrDescricao","Categoria","Multiprodutos","DuracaoBase","DuracaoBaseOther","d_Neg_Descontos","FlagFaturacao","Rappel","images","lista de imagem","logo header","TipoRappelComissao","DayPart","DayPart Antigo","Valor","Pacotes","Tipo_Taxas","Yumi_LocalizaçãoSpot","Yumi_Spot","Yumi_SubMarca","Yumi_SubTipoProg","Yumi_TipoSpot","Yumi_TipoProg","Codigo Break","Duracao","Grupo","Tipo de Encomenda","AlvoPadraoInvest","DescontoTVI","DescontoRTP","DescontoCMTV","DescontoSIC","DescontoCartoonNetwork"]
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["WebModelingEdit","DaxQueryView_Desktop","DevMode"]
+
+ref table Encomendas
+ref table DateTableTemplate_4cc20a94-09e2-4929-a9d5-8240048e93fc
+ref table Canais
+ref table Executivos
+ref table Anunciante
+ref table ~Medidas
+ref table Objetivos
+ref table Calendario
+ref table Propostas
+ref table LocalDateTable_d7dbf4d4-47f4-4530-9576-115d27ca723d
+ref table LocalDateTable_ef8293a3-2ca0-491a-a1b2-b4178b43a7c6
+ref table LocalDateTable_59dbc8da-6956-43ed-ba11-ad4b8a28ac86
+ref table 'Simulador % Ocupação'
+ref table 'GRP Simulador'
+ref table 'Variacao Receita'
+ref table Ocupacao
+ref table Alvo
+ref table GrupoCanais
+ref table Yumi_Anunciante
+ref table Yumi_Canal
+ref table Yumi_Exibição
+ref table 'Yumi_Agencia Meios'
+ref table Yumi_Setor
+ref table Yumi_Alvo
+ref table 'Ligacao Inv-Map'
+ref table Mapeamento
+ref table LigacaoINVMAP
+ref table 'Alvos Var'
+ref table LocalDateTable_3c67d549-5f20-49aa-a857-cc198ae6b70e
+ref table Yumi_Programa
+ref table Yumi_Marca
+ref table TipoCliente
+ref table Table
+ref table Titulos
+ref table TipoPublicidade
+ref table 'Calendario comparativo'
+ref table Produtos
+ref table OrdemPubClassificacao
+ref table Bonus
+ref table 'Agencia Meios'
+ref table SectorAtividade
+ref table Faturacao
+ref table 'Outros Custos'
+ref table d_Neg_Característica
+ref table LocalDateTable_1f0842dc-60c0-4465-8dfc-2960fbdffd18
+ref table LocalDateTable_e9564673-7ccd-464f-85e9-50938f65ee86
+ref table Negociacao
+ref table LocalDateTable_5d3ec3d0-2d11-48c4-9e3a-0db9fe0a9ea1
+ref table d_Neg_TaxaMultiProduto
+ref table d_Neg_Cond_Neg
+ref table d_Neg_Posicoes
+ref table LocalDateTable_077f7a2a-a344-4e3b-bf6e-4131d46bffb2
+ref table LocalDateTable_37529e72-ed85-47da-9d39-214bf7ae2632
+ref table d_Neg_Audiencia
+ref table LocalDateTable_4f834c8c-1cb9-4352-b792-76ce28b6a8ae
+ref table LocalDateTable_1068e344-4b63-4a28-b724-074bbbb65cae
+ref table d_Neg_EcrDescricao
+ref table Categoria
+ref table Multiprodutos
+ref table DayPart
+ref table d_Neg_Descontos
+ref table LocalDateTable_5f362b0c-0471-4922-9d15-01d535154cde
+ref table LocalDateTable_609519f8-358f-473e-a07a-cfb8ce7f1385
+ref table Valor
+ref table FlagFaturacao
+ref table TipoNeg
+ref table Rappel
+ref table images
+ref table TipoRappelComissao
+ref table Pacotes
+ref table Tipo_Taxas
+ref table Yumi_Valores
+ref table Yumi_LocalizaçãoSpot
+ref table Yumi_Spot
+ref table Yumi_SubMarca
+ref table Yumi_SubTipoProg
+ref table Yumi_TipoSpot
+ref table Yumi_TipoProg
+ref table AlvoPadrao
+ref table 'logo header'
+ref table DuracaoBase
+ref table Audiencias
+ref table LocalDateTable_1c9563a2-766e-4aab-a96d-75d41d618153
+ref table Entidade_Faturar
+ref table Central
+ref table Agencia
+ref table Descricao_Campanhas
+ref table FaixaHoraria
+ref table Yumi_NO
+ref table Yumi_TO
+ref table 'Yumi_Código Break'
+ref table 'Codigo Break'
+ref table AnoUpdateGMedia
+ref table DuracaoBaseOther
+ref table Duracao
+ref table 'Simulador Dur Ocupação'
+ref table Grupo
+ref table 'Negociacao Detalhe'
+ref table 'Objetivos GRP'
+ref table LocalDateTable_5be3c799-da44-46ea-84e4-2ba909413480
+ref table TaxaPosição
+ref table 'DayPart Antigo'
+ref table 'Nº Ordem pub'
+ref table 'Tipo de Encomenda'
+ref table Taxas
+ref table 'Grupo Anunciante'
+ref table 'DayPart Ocupacao'
+ref table LocalDateTable_0a5427e6-0c77-4bc7-8f92-e1b7447bfbe9
+ref table LocalDateTable_7190bcfa-7d0e-42fb-a76a-ef4af08f41d0
+ref table LocalDateTable_025ac445-b9fa-4c38-a815-198ba7cee063
+ref table LocalDateTable_675cf709-fee4-42fe-b771-5bb6372f384f
+ref table AlvoPadraoInvest
+ref table DescontoTVI
+ref table DescontoRTP
+ref table DescontoCMTV
+ref table DescontoSIC
+ref table DescontoCartoonNetwork
+ref table LocalDateTable_65ea416e-d8fe-4601-a5fe-4c2b38e6ab7c
+ref table AnoUpdateYummi
+
+ref cultureInfo en-US
+

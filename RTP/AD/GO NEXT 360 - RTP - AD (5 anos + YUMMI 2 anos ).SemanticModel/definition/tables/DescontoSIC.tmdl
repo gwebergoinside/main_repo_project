@@ -1,0 +1,24 @@
+table DescontoSIC
+	isHidden
+	lineageTag: e3e1e681-c9fc-49a5-952e-85110cfebf62
+
+	column DescontoSIC
+		dataType: string
+		isHidden
+		lineageTag: 73dc6755-cde6-435f-831d-36ed4acb8e5e
+		summarizeBy: none
+		sourceColumn: DescontoSIC
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DescontoSIC = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+

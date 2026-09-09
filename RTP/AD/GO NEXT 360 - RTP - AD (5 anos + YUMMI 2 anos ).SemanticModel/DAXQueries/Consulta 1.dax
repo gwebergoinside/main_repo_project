@@ -1,0 +1,21 @@
+DEFINE 
+    VAR _TAB =
+        CALCULATETABLE(
+            Encomendas,
+            'Codigo Break'[Codigo Break] = "FICE25",
+            Encomendas[Nº ordem pub] = 24005928
+        )
+
+EVALUATE
+    SUMMARIZECOLUMNS(
+        Encomendas[Nº ordem pub],
+        Encomendas[diaExib],
+        _TAB,
+        "Valor Total Publicitario", CALCULATE ( SUM ( Encomendas[Valor Publicidade Bruto] ), OrdemPubClassificacao[ordPubClaDescricao] <> "Pré-Facturação" ),
+        "GRP Previsto", SUM(Encomendas[grpPrevisto]),
+        "GRP Real", SUM(Encomendas[grpReal]),
+        "GRP Total", SUM(Encomendas[GRP Total]),
+        "GRP Total 20", SUM(Encomendas[GRP Total 20]),
+        "GRP Total 30", SUM(Encomendas[GRP Total 30])
+    )
+ORDER BY Encomendas[diaExib] ASC

@@ -1,0 +1,52 @@
+table 'DayPart Antigo'
+	lineageTag: 21edc61c-5c1f-406e-98a6-e395ae5b5ad8
+
+	column 'DayPart (negociação) Antigo'
+		dataType: string
+		lineageTag: a628aefb-ab3a-4643-9c2b-6c53d65220b1
+		summarizeBy: none
+		sourceColumn: DayPart (negociação) Antigo
+		sortByColumn: 'DayPart (id) Antigo'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart (id) Antigo'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b160d8d6-fa34-4df3-8d4d-a4b2397ae3d3
+		summarizeBy: none
+		sourceColumn: DayPart (id) Antigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart (negociação) Faixas Antigo'
+		dataType: string
+		lineageTag: 329738ac-2432-4845-9d06-96e4f41a0e0b
+		summarizeBy: none
+		sourceColumn: DayPart (negociação) Faixas Antigo
+		sortByColumn: 'DayPart (id) Antigo'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DayPart Antigo' = m
+		mode: import
+		queryGroup: Manual
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("TZBBDoIwEEWv0rDWpC2g0h0bE42CC3aGRWMbIAFJKp7IhQfhYva3lLiYJu1//TN/7vfoKp/t/CEs2kQouhMxJVtC9yLNonqzAtyKKHoQFABjAcj7YZy/o9VimPBFTwT3+nk0T9kTJUkljdKWSWydimPJYgeE5xTfE9+frf3zh369RnIz3QBoDyjMkAWo0r32fax8WOw5dZr7SSocSJghCPUGnIch/yCkZCCt6mbhcWhzkZMmRde0ExjE5cnitAtOV6nMu5FKujRAwkpXpHxPBvtiSOwvdf0D", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [DayPart = _t, ID = _t, #"DayPart Faixas" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"DayPart", type text}, {"ID", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"DayPart", "DayPart (negociação) Antigo"}, {"DayPart Faixas", "DayPart (negociação) Faixas Antigo"}, {"ID", "DayPart (id) Antigo"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

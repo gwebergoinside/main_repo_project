@@ -1,0 +1,37 @@
+table Yumi_LocalizaçãoSpot
+	lineageTag: a61ae6aa-f94e-47f2-bfc5-3f26f6df81f6
+
+	column Yumi_LocalizaçãoSpot
+		dataType: string
+		lineageTag: c543dcd1-8b14-4a46-90f5-08950b0d6a5e
+		summarizeBy: none
+		sourceColumn: Yumi_LocalizaçãoSpot
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_LocalizaçãoSpot_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8d80b5a9-742a-494b-a410-931afc0dddf6
+		summarizeBy: none
+		sourceColumn: Yumi_LocalizaçãoSpot_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_LocalizaçãoSpot-50529a29-0df9-4b4c-862a-47231530c3ef = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_location"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(Source, {{"LOCATION_NAME", "Yumi_LocalizaçãoSpot"}, {"LOCATION_KEY", "Yumi_LocalizaçãoSpot_key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,25 @@
+/// Período de atualização
+table DescontoCartoonNetwork
+	isHidden
+	lineageTag: 48c864c3-e8da-4ad1-ad7f-ce2f5108cbc0
+
+	column DescontoCartoonNetwork
+		dataType: string
+		isHidden
+		lineageTag: d80ff80f-4ca7-424d-8448-8ca85d474b87
+		summarizeBy: none
+		sourceColumn: DescontoCartoonNetwork
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DescontoCartoonNetwork = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+

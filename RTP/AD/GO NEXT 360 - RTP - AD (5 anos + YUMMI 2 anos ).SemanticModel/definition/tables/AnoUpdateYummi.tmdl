@@ -1,0 +1,20 @@
+table AnoUpdateYummi
+	lineageTag: c8312205-c2d1-4445-8d82-45e815e6c014
+
+	column AnoUpdateYummi
+		dataType: string
+		lineageTag: 34fc0317-3007-47bc-9be0-bceb19f77d2e
+		summarizeBy: none
+		sourceColumn: AnoUpdateYummi
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AnoUpdateYummi = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+

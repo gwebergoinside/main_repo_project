@@ -1,0 +1,26 @@
+table AlvoPadrao
+	isHidden
+	lineageTag: 771980e5-755d-405d-8952-b3ddd8111fda
+
+	column AlvoPadrao
+		dataType: string
+		isHidden
+		lineageTag: 1f7e0c20-a51e-4745-9dea-2a3e65ed1f0e
+		summarizeBy: none
+		sourceColumn: AlvoPadrao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AlvoPadrao-adc01e31-1f24-4d34-904a-7766fc209b06 = m
+		mode: import
+		queryGroup: BD
+		source = "2" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+

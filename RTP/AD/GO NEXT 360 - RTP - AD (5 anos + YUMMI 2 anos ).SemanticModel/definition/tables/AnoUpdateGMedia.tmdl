@@ -1,0 +1,23 @@
+table AnoUpdateGMedia
+	isHidden
+	lineageTag: 0467ac77-998b-4203-8cbd-e7e0d9f78d5b
+
+	column AnoUpdateGMedia
+		dataType: string
+		lineageTag: 3f30b542-d990-4ac4-a4ae-044d601c9268
+		summarizeBy: none
+		sourceColumn: AnoUpdateGMedia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AnoUpdateGMedia-2f2305c3-5979-45c4-ab5b-43a87156e94b = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,377 @@
+table Yumi_Valores
+	lineageTag: b542fa8f-b466-4e4e-a601-e14cf55fc7c0
+
+	column DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 50510631-b4df-467f-a0e5-8ba87af5d0dd
+		summarizeBy: none
+		sourceColumn: DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SPOT_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b0b7d237-eb2d-43a9-b6b7-31da3ec1a1d6
+		summarizeBy: none
+		sourceColumn: SPOT_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ADVERTISER_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 138d0b67-f837-440d-b415-4353ee720030
+		summarizeBy: none
+		sourceColumn: ADVERTISER_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BRAND_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 36334236-79c7-430e-ad1d-f836b85e218d
+		summarizeBy: none
+		sourceColumn: BRAND_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUB_BRAND_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d33e4e1e-10d4-4481-9be5-2d59befb6b72
+		summarizeBy: none
+		sourceColumn: SUB_BRAND_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SECTOR_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 502ef480-9b21-4352-a954-6a065bd6ea00
+		summarizeBy: none
+		sourceColumn: SECTOR_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MEDIA_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 00b3bb21-bd77-464f-a256-b3585d1e7abb
+		summarizeBy: none
+		sourceColumn: MEDIA_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CHANNEL_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 808ecc9b-c194-428f-9fc4-41120b54aa5e
+		summarizeBy: none
+		sourceColumn: CHANNEL_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROGRAM_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b9cd3688-7e06-4301-81a0-da522e1d2dac
+		summarizeBy: none
+		sourceColumn: PROGRAM_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TARGET_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a70079b2-927a-4aec-bc48-f221a6e612c5
+		summarizeBy: none
+		sourceColumn: TARGET_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TYPOLOGY_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2062901d-4731-4940-aa41-3a09155a4365
+		summarizeBy: none
+		sourceColumn: TYPOLOGY_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUB_TYPOLOGY_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5bbd9d5b-0eba-483e-aeea-7ef8a2d2255e
+		summarizeBy: none
+		sourceColumn: SUB_TYPOLOGY_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TYPE_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 334aac86-a4ce-40e4-9df2-1bbe875050df
+		summarizeBy: none
+		sourceColumn: TYPE_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LOCATION_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4e96bebe-7f36-4b61-b90b-87a7c1d2f635
+		summarizeBy: none
+		sourceColumn: LOCATION_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Yumi_GRP Eq.20'
+		dataType: double
+		lineageTag: edb64bda-7f22-4066-bc02-1f39076afc38
+		summarizeBy: sum
+		sourceColumn: Yumi_GRP Eq.20
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DayPart =
+			
+			// IF(
+			//     YEAR( Yumi_Valores[DATE] ) <= 2022
+			//     ,SWITCH(
+			//         TRUE()
+			//         ,Yumi_Valores[Time Column] >= 390  && Yumi_Valores[Time Column] < 480,  "06:30 - 07:59"
+			//         ,Yumi_Valores[Time Column] >= 480  && Yumi_Valores[Time Column] < 720,  "08:00 - 11:59"
+			//         ,Yumi_Valores[Time Column] >= 720  && Yumi_Valores[Time Column] < 870,  "12:00 - 14:29"
+			//         ,Yumi_Valores[Time Column] >= 870  && Yumi_Valores[Time Column] < 1080, "14:30 - 17:59"
+			//         ,Yumi_Valores[Time Column] >= 1080 && Yumi_Valores[Time Column] < 1200, "18:00 - 19:59"
+			//         ,Yumi_Valores[Time Column] >= 1200 && Yumi_Valores[Time Column] < 1350, "20:00 - 22:29"
+			//         ,Yumi_Valores[Time Column] >= 1350 && Yumi_Valores[Time Column] < 1440, "22:30 - 23:59"
+			//         ,Yumi_Valores[Time Column] >= 1440 && Yumi_Valores[Time Column] < 1590, "24:00 - 26:29"
+			//         ,Yumi_Valores[Time Column] >= 1590 || Yumi_Valores[Time Column] < 390 , "26:30 - 06:29"
+			//         ,"Outro"
+			//     )
+			//     ,
+			    SWITCH(
+			        TRUE()
+			        , CONTAINSSTRING('Yumi_Valores'[BREAK_CODE], "*INFO13*"), "INFO13"
+			        , CONTAINSSTRING('Yumi_Valores'[BREAK_CODE], "*INFO20*"), "INFO20"
+			        ,Yumi_Valores[Time Column] >= 390  && Yumi_Valores[Time Column] < 480,  "06:30 - 07:59"
+			        ,Yumi_Valores[Time Column] >= 480  && Yumi_Valores[Time Column] < 720,  "08:00 - 11:59"
+			        ,Yumi_Valores[Time Column] >= 720  && Yumi_Valores[Time Column] < 870,  "12:00 - 14:29"
+			        ,Yumi_Valores[Time Column] >= 870  && Yumi_Valores[Time Column] < 1140, "14:30 - 18:59"
+			        ,Yumi_Valores[Time Column] >= 1140 && Yumi_Valores[Time Column] < 1200, "19:00 - 19:59"
+			        ,Yumi_Valores[Time Column] >= 1200 && Yumi_Valores[Time Column] < 1260, "20:00 - 20:59"
+			        ,Yumi_Valores[Time Column] >= 1260 && Yumi_Valores[Time Column] < 1380, "21:00 - 22:59"
+			        ,Yumi_Valores[Time Column] >= 1380 && Yumi_Valores[Time Column] < 1590, "23:00 - 26:29"
+			        ,Yumi_Valores[Time Column] >= 1590 || Yumi_Valores[Time Column] < 390 , "26:30 - 06:29"
+			        ,"Outro"
+			    )
+			// )
+		isHidden
+		lineageTag: 8dfc2305-4b15-4d3e-ad7b-6347b2591a0e
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Time Column' =
+			
+			VAR _1 = LEFT(Yumi_Valores[START_HOUR], 2)
+			VAR _2 = MID(Yumi_Valores[START_HOUR], 4, 2)
+			VAR _3 = RIGHT(Yumi_Valores[START_HOUR], 2)
+			RETURN
+			VALUE(_1) * 60 +
+			VALUE(_2) +
+			VALUE(_3) / 60
+		isHidden
+		lineageTag: 50309d29-bced-43bb-bac1-092a02d62fc1
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column START_HOUR
+		dataType: string
+		isHidden
+		lineageTag: d1b1658f-4af7-411f-9173-e531180ba901
+		summarizeBy: none
+		sourceColumn: START_HOUR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixa_Horaria = LEFT(FORMAT(Yumi_Valores[START_HOUR], "00"),2)
+		isHidden
+		lineageTag: 07053cd2-8e29-4c06-9692-bdaa37713c04
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column END_HOUR
+		dataType: string
+		isHidden
+		lineageTag: 746c7df0-5d2d-4de3-8e8c-8adaac1528a0
+		summarizeBy: none
+		sourceColumn: END_HOUR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BREAK_CODE
+		dataType: string
+		isHidden
+		lineageTag: fc04caff-aff0-46f5-923e-0b6d8cd96b01
+		summarizeBy: none
+		sourceColumn: BREAK_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NO
+		dataType: string
+		isHidden
+		lineageTag: 9d2e44a0-0210-45cc-b7c7-316536977537
+		summarizeBy: none
+		sourceColumn: NO
+
+		changedProperty = IsHidden
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column TO
+		dataType: string
+		isHidden
+		lineageTag: 3efd5aaa-b003-472b-b57b-ffc23b13b560
+		summarizeBy: none
+		sourceColumn: TO
+
+		changedProperty = IsHidden
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart Antigo' = ```
+			
+			    SWITCH(
+			        TRUE()
+			        ,Yumi_Valores[Time Column] >= 390  && Yumi_Valores[Time Column] < 480,  "06:30 - 07:59"
+			        ,Yumi_Valores[Time Column] >= 480  && Yumi_Valores[Time Column] < 720,  "08:00 - 11:59"
+			        ,Yumi_Valores[Time Column] >= 720  && Yumi_Valores[Time Column] < 870,  "12:00 - 14:29"
+			        ,Yumi_Valores[Time Column] >= 870  && Yumi_Valores[Time Column] < 1080, "14:30 - 17:59"
+			        ,Yumi_Valores[Time Column] >= 1080 && Yumi_Valores[Time Column] < 1200, "18:00 - 19:59"
+			        ,Yumi_Valores[Time Column] >= 1200 && Yumi_Valores[Time Column] < 1350, "20:00 - 22:29"
+			        ,Yumi_Valores[Time Column] >= 1350 && Yumi_Valores[Time Column] < 1440, "22:30 - 23:59"
+			        ,Yumi_Valores[Time Column] >= 1440 && Yumi_Valores[Time Column] < 1590, "24:00 - 26:29"
+			        ,Yumi_Valores[Time Column] >= 1590 || Yumi_Valores[Time Column] < 390 , "26:30 - 06:29"
+			        ,"Outro"
+			    )
+			```
+		isHidden
+		lineageTag: 31c2dea1-f399-4255-bfbd-7de4b97f211c
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_Valores-b1685d79-6376-4ac9-85c1-ab01e1971a61 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    SQL = " SELECT
+				              DATE
+				            , START_HOUR
+				            , END_HOUR
+				            , BREAK_CODE
+				            , SPOT_KEY
+				            , ADVERTISER_KEY
+				            , BRAND_KEY
+				            , SUB_BRAND_KEY
+				            , SECTOR_KEY
+				            , MEDIA_KEY
+				            , CHANNEL_KEY
+				            , PROGRAM_KEY
+				            , TARGET_KEY
+				            , TYPOLOGY_KEY
+				            , SUB_TYPOLOGY_KEY
+				            , TYPE_KEY
+				            , LOCATION_KEY
+				            , SHARE
+				            , NO
+				            , TO
+				        FROM pub.fact_audience
+				        WHERE YEAR(DATE) >= YEAR(CURRENT_DATE()) - " & AnoUpdateYummi,
+				    Source = fx_dbricks(SQL),
+				    #"Renamed Columns" = Table.RenameColumns(Source, {{"SHARE", "Yumi_GRP Eq.20"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

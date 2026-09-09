@@ -1,0 +1,175 @@
+table Mapeamento
+	isHidden
+	lineageTag: 002fd346-8f21-46c9-acbc-bf1c2d8c1128
+
+	column IdCanal_GMediaAD
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3c2d2720-fde2-4367-86a3-8e0df083835d
+		summarizeBy: sum
+		sourceColumn: IdCanal_GMediaAD
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora
+		dataType: string
+		isHidden
+		lineageTag: 245d09bb-7981-49ed-b4b4-b438664ea649
+		summarizeBy: none
+		sourceColumn: Hora
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAnunciante
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e12650c4-6b65-41dc-bbf6-3fe3ba2337b9
+		summarizeBy: sum
+		sourceColumn: IdAnunciante
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeAnunciante
+		dataType: string
+		isHidden
+		lineageTag: 0d0a13e3-92d4-4fa2-86c7-4f6faad672be
+		summarizeBy: none
+		sourceColumn: NomeAnunciante
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChaveMkt = Mapeamento[CanalMkt]&Mapeamento[DataMkt]&Mapeamento[Hora]
+		isHidden
+		lineageTag: 6de87dad-c70b-4579-9f44-b8c817524547
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CanalMkt
+		dataType: string
+		isHidden
+		lineageTag: 0c0d3651-e0df-4b1a-ad14-cfd2ef99345f
+		summarizeBy: none
+		sourceColumn: CanalMkt
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataMkt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3b8d0d56-77ea-467c-9cf2-6912e0ca5f60
+		summarizeBy: none
+		sourceColumn: DataMkt
+
+		variation Variation
+			isDefault
+			relationship: acb4e1fa-cf17-493e-8ebe-edfb8b32d02d
+			defaultHierarchy: LocalDateTable_675cf709-fee4-42fe-b771-5bb6372f384f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora_exib
+		dataType: int64
+		formatString: 0
+		lineageTag: 50a6f639-f8f5-4193-9c02-66bc1ee158f8
+		summarizeBy: sum
+		sourceColumn: hora_exib
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Mapeamento-d105c614-9155-4daa-9550-27b31cd34a5b = m
+		mode: import
+		queryGroup: Encomendas
+		source = ```
+				let
+				    SQL = "
+				    SET dateformat dmy;
+				    
+				        SELECT
+				            t.IdCanal_GMediaAD,
+				        --  CASE WHEN t.IdCanal_MKT = 'Panda BIGGS' THEN 'BIGGS'
+				        --      ELSE IdCanal_MKT END AS CanalMkt,
+				            t.Data AS DataMkt,
+				            aud_exib.hora_exib,
+				            (left(right('000000' + CAST(MIN(aud_exib.hora_exib) AS VARCHAR),6),2) + ':' + left(right('000000' + CAST(MIN(aud_exib.hora_exib) AS VARCHAR),4),2) + ':' + left(right('000000' + CAST(MIN(aud_exib.hora_exib) AS VARCHAR),2),2)) as Hora,
+				            t.IdAnunciante,
+				            t.NomeAnunciante
+				        FROM (
+				            SELECT
+				                encomendasExibidas.canCodigo as IdCanal_GMediaAD,
+				                canais.canLeitura as IdCanal_MKT,
+				                MAX(aud_exib.dia) as Data,
+				                --aud_exib.hora_exib as Hora,
+				                spots.entIdAnunciante as IdAnunciante,
+				                entidades.entNome as NomeAnunciante
+				            FROM encomendasExibidas WITH (NOLOCK)
+				                INNER JOIN canais WITH (NOLOCK)
+				                    ON canais.canCodigo = encomendasExibidas.cancodigo
+				                INNER JOIN spots WITH (NOLOCK)
+				                    ON encomendasExibidas.spoId = spots.spoId
+				                INNER JOIN entidades WITH (NOLOCK)
+				                    ON entidades.entId = spots.entIdAnunciante
+				                INNER JOIN aud_alinhamento_publicidade WITH (NOLOCK)
+				                    ON encomendasExibidas.encId = aud_alinhamento_publicidade.encId
+				                    AND ISNULL(aud_alinhamento_publicidade.spoAutId, 0) = 0
+				                INNER JOIN aud_rel_alinhamento_publicidade WITH (NOLOCK)
+				                    ON aud_alinhamento_publicidade.id_pub = aud_rel_alinhamento_publicidade.id_pub
+				                INNER JOIN aud_exib WITH (NOLOCK)
+				                    ON aud_rel_alinhamento_publicidade.id_pubreport = aud_exib.id_exib
+				            WHERE 1 = 1
+				        --      encomendasExibidas.canCodigo = 1
+				        --      YEAR(encomendasExibidas.encDataExibicao) >= Year(GetDate()) - " & AnoUpdateGMedia & "
+				        --      AND encomendasExibidas.encDataExibicao <= GetDate() - 300
+				            GROUP BY
+				                encomendasExibidas.canCodigo,
+				                --aud_exib.hora_exib,
+				                canais.canLeitura,
+				                spots.entIdAnunciante,
+				                entidades.entNome
+				            ) t
+				        INNER JOIN aud_exib
+				            ON aud_exib.cod_canal = t.IdCanal_MKT
+				            AND aud_exib.dia = t.Data
+				        INNER JOIN aud_rel_alinhamento_publicidade WITH (NOLOCK)
+				            ON aud_rel_alinhamento_publicidade.id_pubreport = aud_exib.id_exib
+				        INNER JOIN aud_alinhamento_publicidade WITH (NOLOCK)
+				            ON aud_alinhamento_publicidade.id_pub = aud_rel_alinhamento_publicidade.id_pub
+				            AND ISNULL(aud_alinhamento_publicidade.spoAutId, 0) = 0
+				        INNER JOIN spots WITH (NOLOCK)
+				            ON spots.spoId = aud_alinhamento_publicidade.spoId
+				            AND spots.entIdAnunciante = t.IdAnunciante
+				        GROUP BY
+				            t.IdCanal_GMediaAD,
+				        --  CASE WHEN t.IdCanal_MKT = 'Panda BIGGS' THEN 'BIGGS'
+				        --      ELSE IdCanal_MKT END
+				            t.Data,
+				            aud_exib.hora_exib,
+				            t.IdAnunciante,
+				            t.NomeAnunciante",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL]),
+				    #"Merged Queries" = Table.NestedJoin(Source, {"IdCanal_GMediaAD"}, Canais, {"canCodigo"}, "Canais", JoinKind.LeftOuter),
+				    #"Expanded Canais" = Table.ExpandTableColumn(#"Merged Queries", "Canais", {"Canal"}, {"CanalMkt"})
+				in
+				    #"Expanded Canais"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

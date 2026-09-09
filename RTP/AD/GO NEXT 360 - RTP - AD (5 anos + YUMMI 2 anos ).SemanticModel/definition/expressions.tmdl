@@ -1,0 +1,85 @@
+expression 'Classificação de Canais' =
+		let
+		    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("nZJNboMwEIWvglhnURNCkqULNHUFGBlUqUJZuMiqLAUjATlDz9Flz8HFavOXWs0Cd2HreTQf7w12UdjA3tiw/8QkzKQi7IPXgvJW6vxVFfJU7o5cYFjnTTGcZN1SlRMTrKEX3nZUR4CGbCfEWY+4UsUwCBGBa4PtJhf4RJCvKCQ61gha3kO3GuqNdWQE7Sc/VfXpe633ulrvQaosxUmGCUpO8oCvXVO3v8WI7RcbhR0ni5hVdcPpCiMwXQ+yYNV/N7ykRjOBh9kRP6IoVK2s6r86Xt4L62lhwXaxbrmhrZIoyUOShPkfU3Hhgmmmzo1058DXdhzWIPD8Yp4D6wVHKE6RjzOzT3j6DVl5MOQf99u4O33c5ems7D9M/WkE38x+z/Ff5PkH", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [CanCodigo = _t, Nome = _t, Tipo = _t, Meio = _t, Agrupador = _t, #"Ord Tipo" = _t, #"Ord Meio" = _t, #"Ord Agrupador" = _t]),
+		    #"Changed Type" = Table.TransformColumnTypes(Source,{{"CanCodigo", Int64.Type}, {"Nome", type text}, {"Tipo", type text}, {"Meio", type text}, {"Agrupador", type text}, {"Ord Tipo", Int64.Type}, {"Ord Meio", Int64.Type}, {"Ord Agrupador", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 49b043af-ae1f-4e95-bd15-cd49e2ecfdd9
+	queryGroup: Manual
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression BD = "gmediapub" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 7ef836ac-eeeb-4db0-a191-22008c154987
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+expression 'lista de imagem' =
+		let
+		    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Logo", "Cliente "}),
+		    Nome = #"Removed Columns"[Nome]
+		in
+		    Nome
+	lineageTag: 9b0e5ddd-0ff8-4496-8c94-ba6c1660d643
+	queryGroup: BD
+
+expression ServerP = "172.25.16.178" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 43c7cdc9-1197-4d7d-8be5-cb8ccf45edd4
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression ServerP_GoInside = "// ""sql.goinside.co,1434"" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type=""Text"", IsParameterQueryRequired=true]"
+	lineageTag: 0c527cd3-b1fa-4cfc-8497-3df399e166fd
+	queryGroup: BD
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression fx_dbricks =
+		let
+		    Host = "adb-1365646810174341.1.azuredatabricks.net",
+		    Path = "sql/protocolv1/o/1365646810174341/0203-093942-px9mnkaj",
+		    Base = Databricks.Query(Host, Path)
+		in
+		    Base
+	lineageTag: 22cdd17b-77d0-4cc5-80ad-c345dffb5065
+	queryGroup: Share
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Function
+
+expression Base =
+		let
+		    Source = Databricks.Catalogs("adb-1365646810174341.1.azuredatabricks.net", "sql/protocolv1/o/1365646810174341/0203-093942-px9mnkaj", [Catalog=null, Database=null, EnableAutomaticProxyDiscovery=null]),
+		    hive_metastore_Database = Source{[Name="hive_metastore",Kind="Database"]}[Data],
+		    pub_Schema = hive_metastore_Database{[Name="pub",Kind="Schema"]}[Data]
+		in
+		    pub_Schema
+	lineageTag: d294e651-ef5b-434a-b939-5635acb441a9
+	queryGroup: Share
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression ServerP2 = "172.25.16.178" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text", List = {}]
+	lineageTag: 744f87c0-a1f0-4e53-82bd-fb47c2aa6283
+	queryGroup: BD
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,1435 @@
+table Encomendas
+	lineageTag: 487f0557-de7d-46f9-9c81-8186b7bd6a9d
+
+	column canCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2692fb88-c56b-48ce-a859-2fc979933ced
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column diaExib
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: eb959874-aa7c-47cf-8f97-bb95c0264a38
+		summarizeBy: none
+		sourceColumn: diaExib
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Valor Publicidade Bruto'
+		dataType: double
+		isHidden
+		lineageTag: 6fb5d4b7-40f9-4a3d-926a-4786af064354
+		summarizeBy: sum
+		sourceColumn: Valor Publicidade Bruto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Tabela'
+		dataType: double
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: 084f20e9-cacf-46d3-917c-903c30c01a17
+		summarizeBy: sum
+		sourceColumn: Valor Tabela
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Bonus Bruto'
+		dataType: double
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: c8608544-f904-4f39-947c-2e04e77dd0cb
+		summarizeBy: sum
+		sourceColumn: Valor Bonus Bruto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column grpReal
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 57ed4101-8edb-4f9e-881e-d94a081a65bc
+		summarizeBy: sum
+		sourceColumn: grpReal
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Spot (duração)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 27f5aea8-fb1b-40a9-bbad-1f797aa5dfbf
+		summarizeBy: sum
+		sourceColumn: Spot (duração)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column DayPart = ```
+			
+			    SWITCH(
+			        TRUE()
+			        , CONTAINSSTRING( RELATED( 'Codigo Break'[Codigo Break] ), "*INFO13*"), "INFO13"
+			        , CONTAINSSTRING( RELATED( 'Codigo Break'[Codigo Break] ), "*INFO20*"), "INFO20"
+			        ,Encomendas[MinutosExib] >= 390  && Encomendas[MinutosExib] < 480,  "06:30 - 07:59"
+			        ,Encomendas[MinutosExib] >= 480  && Encomendas[MinutosExib] < 720,  "08:00 - 11:59"
+			        ,Encomendas[MinutosExib] >= 720  && Encomendas[MinutosExib] < 870,  "12:00 - 14:29"
+			        ,Encomendas[MinutosExib] >= 870  && Encomendas[MinutosExib] < 1140, "14:30 - 18:59"
+			        ,Encomendas[MinutosExib] >= 1140 && Encomendas[MinutosExib] < 1200, "19:00 - 19:59"
+			        ,Encomendas[MinutosExib] >= 1200 && Encomendas[MinutosExib] < 1260, "20:00 - 20:59"
+			        ,Encomendas[MinutosExib] >= 1260 && Encomendas[MinutosExib] < 1380, "21:00 - 22:59"
+			        ,Encomendas[MinutosExib] >= 1380 && Encomendas[MinutosExib] < 1590, "23:00 - 26:29"
+			        ,Encomendas[MinutosExib] >= 1590 || Encomendas[MinutosExib] < 390 , "26:30 - 06:29"
+			        ,"Outro"
+			    )
+			```
+		dataType: string
+		isHidden
+		lineageTag: 5d2c52cd-b4d8-4fb3-9bfd-5d59ad4eeff0
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubNegociacao
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 75d848fb-84fd-4fd9-8273-b88396820c98
+		summarizeBy: none
+		sourceColumn: ordPubNegociacao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column anuncianteId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4065cbc8-93ba-4155-a96c-6cfd55fcd25a
+		summarizeBy: none
+		sourceColumn: anuncianteId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column proId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5c139f42-5446-4e4f-957b-78e436d98f72
+		summarizeBy: none
+		sourceColumn: proId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column horaExib
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fd42c61c-016f-4afb-b98a-0b1910082ec1
+		summarizeBy: none
+		sourceColumn: horaExib
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nº ordem pub'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b610815c-6277-492c-9343-a0e8c2089f07
+		summarizeBy: none
+		sourceColumn: Nº ordem pub
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column tipo
+		dataType: string
+		isHidden
+		lineageTag: a62af891-4b34-48e0-8100-f207a86cfd8e
+		summarizeBy: none
+		sourceColumn: tipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column grpPrevisto
+		dataType: double
+		lineageTag: 9d6ff18e-52c3-4b86-9940-8b55d3a9e80e
+		summarizeBy: sum
+		sourceColumn: grpPrevisto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column indice_equi
+		dataType: double
+		isHidden
+		lineageTag: 4ad518ec-55ba-440c-9125-912a6e0a3d48
+		summarizeBy: sum
+		sourceColumn: indice_equi
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GRP Previsto Eq 20'
+		dataType: double
+		lineageTag: e436476d-e473-4921-b0ad-2e331bf9aa1f
+		summarizeBy: sum
+		sourceColumn: GRP Previsto Eq 20
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vendedor
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 160ba20b-7923-4bb0-969e-c2a6c248d5f5
+		summarizeBy: none
+		sourceColumn: vendedor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipo
+		dataType: string
+		isHidden
+		lineageTag: c87c2dda-22f0-4f45-a98f-ac2ea36d5cfb
+		summarizeBy: none
+		sourceColumn: negPerTipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoNeg =
+			
+			SWITCH(
+			    TRUE()
+			    ,[negPerTipo] = "F" , "Desconto"
+			    ,[negPerTipo] = "G" , "GRP"
+			    ,[negPerTipo] = "T" , "Tabela"
+			    ,[negPerTipo] = "D" , "Desconto"
+			    ,[negPerTipo] = "V" , "Valor"
+			    ,[negPerTipo] = BLANK(), "Outros"
+			)
+		isHidden
+		lineageTag: e6a0284a-787e-40f8-a730-4e6de9b9ca3b
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal = RELATED(Canais[Canal])
+		isHidden
+		lineageTag: 5c22d3b4-d45b-4c38-9765-748f9b044f23
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChavePrev = 'Encomendas'[Canal]&"-"&'Encomendas'[Faixa_Horaria]&":00"&"-"&'Encomendas'[Periodo]
+		isHidden
+		lineageTag: 6dc2baae-bca4-4f1c-a76f-cd70a987ce3e
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo = RELATED(Calendario[Periodo da Semana])
+		isHidden
+		lineageTag: 04219368-fbdb-49ba-b71b-de41ed517769
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GRP Total 20' = ```
+			
+			    IF(
+			        ISBLANK(Encomendas[grpReal]) && Encomendas[tipo] = "E",
+			        Encomendas[GRP Previsto Eq 20],
+			        Encomendas[GRP Eq 20]
+			    )
+			```
+		lineageTag: 5436b843-7545-43c4-8faa-7b5d564209a5
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Comissao Agencia'
+		dataType: double
+		formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
+		lineageTag: a30aa498-cf40-4a7e-8be4-567af1a52816
+		summarizeBy: sum
+		sourceColumn: Valor Comissao Agencia
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubClaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ae5a980e-6b45-44a7-ba41-1d3663f8dc2a
+		summarizeBy: none
+		sourceColumn: ordPubClaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column bonId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ce0e6cae-b1c8-4408-a6af-708361a77f77
+		summarizeBy: none
+		sourceColumn: bonId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4b511adf-c613-4cd0-af93-02e8b0731ebe
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_alvo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 65632c1c-d6df-44c0-9e61-62eec0199535
+		summarizeBy: none
+		sourceColumn: cod_alvo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinutosExib
+		dataType: int64
+		isHidden
+		lineageTag: 081e8040-1043-4e88-9a9b-65ab8bdbd117
+		summarizeBy: sum
+		sourceColumn: MinutosExib
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Hora Formatada' = ```
+			
+			VAR Duration = Encomendas[MinutosExib] *60
+			VAR Hours =
+			    INT ( Duration / 3600)
+			VAR Minutes =
+			    INT ( MOD( Duration - ( Hours * 3600 ),3600 ) / 60)
+			VAR Seconds =
+			    ROUNDUP(MOD ( MOD( Duration - ( Hours * 3600 ),3600 ), 60 ),0) 
+			VAR H =
+			    IF ( LEN ( Hours ) = 1, 
+			        CONCATENATE ( "0", Hours ),
+			        CONCATENATE ( "", Hours )
+			      )
+			VAR M =
+			    IF (
+			        LEN ( Minutes ) = 1,
+			        CONCATENATE ( "0", Minutes ),
+			        CONCATENATE ( "", Minutes )
+			    )
+			VAR S =
+			    IF (
+			        LEN ( Seconds ) = 1,
+			        CONCATENATE ( "0", Seconds ),
+			        CONCATENATE ( "", Seconds )
+			    )
+			RETURN
+			IF( Duration = BLANK(), BLANK() ,
+			    CONCATENATE (
+			        H,
+			        CONCATENATE ( ":", CONCATENATE ( M, CONCATENATE ( ":", S ) ) )
+			    )
+			)
+			```
+		dataType: string
+		isHidden
+		lineageTag: 28b582fa-8805-44ca-b368-c6df8a37dc34
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Anunciante = LOOKUPVALUE(Anunciante[Anunciante], Anunciante[entId] ,Encomendas[anuncianteId] )
+		isHidden
+		lineageTag: 2fc045a7-ea9a-4377-b95a-fc2e27c459dc
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubFlagValorBrutoVendas
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c3fb39f9-af04-44ac-93b0-c0b1424cce4e
+		summarizeBy: none
+		sourceColumn: ordPubFlagValorBrutoVendas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubFlagValorLiquidoVendas
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8c813074-dc45-4eb8-8ec6-fe82f09fcf61
+		summarizeBy: sum
+		sourceColumn: ordPubFlagValorLiquidoVendas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ecd71d1f-638e-4229-acc3-1ab77e894e92
+		summarizeBy: none
+		sourceColumn: pacId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixa_Horaria = LEFT(FORMAT(Encomendas[horaExib], "00"),2)
+		isHidden
+		lineageTag: 711065ec-63e0-45e8-bead-497fd283c802
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipoOcupacao
+		dataType: string
+		isHidden
+		lineageTag: dbbb6975-f516-4213-8fb2-cefd04cbc3dd
+		summarizeBy: none
+		sourceColumn: tipoOcupacao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de Ocupacao' =
+			
+			SWITCH(
+			    TRUE()
+			    , Encomendas[tipoOcupacao] = "N", "Normal"
+			    , Encomendas[tipoOcupacao] = "E", "Especial"
+			    , Encomendas[tipoOcupacao] = "P", "Promoção"
+			)
+		lineageTag: 4a5a2d33-1fab-480f-a26b-e9cbea6bff98
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EntidadeFacturarId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 848cfa10-333a-40cf-ba22-70182dfcafb6
+		summarizeBy: none
+		sourceColumn: EntidadeFacturarId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CentralComprasId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 22683899-ee22-4b62-8341-6a98b50087b4
+		summarizeBy: none
+		sourceColumn: CentralComprasId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaMeiosId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: edd59cf4-f330-471e-9a8f-b821ce8e9111
+		summarizeBy: none
+		sourceColumn: AgenciaMeiosId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b245d856-65e9-420e-90f9-32a3f7d01dbb
+		summarizeBy: none
+		sourceColumn: AgenciaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescricaoCampanhas
+		dataType: string
+		isHidden
+		lineageTag: 0840faa3-24ed-460d-8e2b-f98044e2d6e6
+		summarizeBy: none
+		sourceColumn: DescricaoCampanhas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrioridadeId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3633700b-4b07-4250-949c-abb837321aa4
+		summarizeBy: none
+		sourceColumn: PrioridadeId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Alvo Yummi' = LOOKUPVALUE(Alvo[Alvo Yummi], Alvo[cod_alvo], Encomendas[cod_alvo])
+		isHidden
+		lineageTag: 2085d6b9-5451-4e20-bdef-f196443ce136
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alvo = LOOKUPVALUE(Alvo[Alvo (negociação)], Alvo[cod_alvo], Encomendas[cod_alvo])
+		isHidden
+		lineageTag: ce7ba33a-f117-49ad-b8a7-181aae18a660
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column greComId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6747544b-8b02-4e4e-a234-207bffdf89ff
+		summarizeBy: none
+		sourceColumn: greComId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column indice_equiOther
+		dataType: double
+		isHidden
+		lineageTag: 5a0a97a6-bd26-48cd-be3f-5a370c84ea49
+		summarizeBy: sum
+		sourceColumn: indice_equiOther
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GRP Previsto Eq 30'
+		dataType: double
+		lineageTag: 6fdaac14-24af-4a7b-9c60-8c726857c8c5
+		summarizeBy: sum
+		sourceColumn: GRP Previsto Eq 30
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GRP Total 30' = ```
+			
+			    IF(
+			        ISBLANK(Encomendas[grpReal]) && Encomendas[tipo] = "E",
+			        Encomendas[GRP Previsto Eq 30],
+			        Encomendas[GRP Eq 30]
+			    )
+			```
+		lineageTag: 094c42ae-f0cc-4528-97d5-517137ef2778
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Marcações =
+			
+			SWITCH(
+			      TRUE()
+			    , Encomendas[tipo] <> "O" , 1
+			    , 0
+			)
+			//    Encomendas[tipo] = "E", "Pub"
+			//    Encomendas[tipo] = "O", "AE",
+		isHidden
+		formatString: 0
+		lineageTag: bd3a2881-e92e-4e93-865b-0a6880a11395
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column camGrupoId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: aefa0400-aea7-4fae-b897-19f4f3e87ebb
+		summarizeBy: none
+		sourceColumn: camGrupoId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Marcações Emitidas' =
+			
+			SWITCH(
+			    TRUE()
+			    , Encomendas[Marcações] = 0 , 0
+			    , Encomendas[bonId] = 735 || Encomendas[bonId] = 748 , 0
+			    , 1
+			)
+		isHidden
+		formatString: 0
+		lineageTag: 70d11a65-e7c6-4411-9340-a212f7925d84
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GRP Objetivo'
+		dataType: double
+		isHidden
+		lineageTag: df613914-afa6-4877-b3a3-f00a5454ebc8
+		summarizeBy: sum
+		sourceColumn: GRP Objetivo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Data Exibição' = ```
+			
+			VAR _1 =
+			TIME(
+			    INT(DIVIDE(Encomendas[MinutosExib], 60)),  // Obtém as horas a partir dos minutos
+			    MOD(Encomendas[MinutosExib], 60),     // Obtém os minutos restantes após a conversão para horas
+			    0                  // Defina os segundos como zero
+			)
+			VAR _2 = Encomendas[diaExib]
+			VAR _3 = _2 + _1 
+			RETURN
+			_3
+			```
+		formatString: General Date
+		lineageTag: c8a269d7-9d6a-418a-a33d-4be542c0e137
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: c3199258-491e-4133-b3e9-fef8d3dc6528
+			defaultHierarchy: LocalDateTable_5be3c799-da44-46ea-84e4-2ba909413480.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column encid
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: daf19698-1f2a-4421-ab6f-4ae266a67086
+		summarizeBy: sum
+		sourceColumn: encid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Taxa Posição %' =
+			
+			LOOKUPVALUE( Multiprodutos[Taxa Posição %], Multiprodutos[encid], Encomendas[encid] )
+		formatString: 0
+		lineageTag: 67e661d5-ccb6-4c4d-90b9-3019388fcab6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Valor Taxa Posição' =
+			
+			LOOKUPVALUE( Multiprodutos[valorTaxaPosicao], Multiprodutos[encid], Encomendas[encid] )
+		isHidden
+		lineageTag: 6d6234e6-088e-4d3a-8f1d-5535b073146e
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Valor Taxa Multiproduto' =
+			
+			LOOKUPVALUE( Multiprodutos[valorTaxaMultiproduto], Multiprodutos[encid], Encomendas[encid] )
+		isHidden
+		lineageTag: 89be71b9-174a-4604-ae89-356c65aca9b8
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UltimaEncomenda =
+			
+			CALCULATE(
+			    YEAR( MAX( Encomendas[Data Exibição] ) )
+			    ,ALLEXCEPT( Encomendas, Encomendas[anuncianteId] )
+			)
+		isHidden
+		formatString: 0
+		lineageTag: fdad8227-33bf-4b7c-97eb-3d938a58113d
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart Antigo' =
+			
+			SWITCH(
+			        TRUE()
+			        ,Encomendas[MinutosExib] >= 390  && Encomendas[MinutosExib] < 480,  "06:30 - 07:59"
+			        ,Encomendas[MinutosExib] >= 480  && Encomendas[MinutosExib] < 720,  "08:00 - 11:59"
+			        ,Encomendas[MinutosExib] >= 720  && Encomendas[MinutosExib] < 870,  "12:00 - 14:29"
+			        ,Encomendas[MinutosExib] >= 870  && Encomendas[MinutosExib] < 1080, "14:30 - 17:59"
+			        ,Encomendas[MinutosExib] >= 1080 && Encomendas[MinutosExib] < 1200, "18:00 - 19:59"
+			        ,Encomendas[MinutosExib] >= 1200 && Encomendas[MinutosExib] < 1350, "20:00 - 22:29"
+			        ,Encomendas[MinutosExib] >= 1350 && Encomendas[MinutosExib] < 1440, "22:30 - 23:59"
+			        ,Encomendas[MinutosExib] >= 1440 && Encomendas[MinutosExib] < 1590, "24:00 - 26:29"
+			        ,Encomendas[MinutosExib] >= 1590 || Encomendas[MinutosExib] < 390 , "26:30 - 06:29"
+			        ,"Outro"
+			    )
+		isHidden
+		lineageTag: c04d6ecf-4f20-44c1-b0de-fe35a2c68c7d
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GRP Eq 20'
+		dataType: double
+		lineageTag: b45db906-c657-4608-af6c-095a772bbaa8
+		summarizeBy: sum
+		sourceColumn: GRP Eq 20
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GRP Eq 30'
+		dataType: double
+		lineageTag: fd5d12cd-2d0e-41dd-af3d-e87eeff29894
+		summarizeBy: sum
+		sourceColumn: GRP Eq 30
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Publicidade (Paga/Não Paga)' =
+			
+			VAR _1 =
+			SWITCH(
+			    TRUE()
+			    ,Encomendas[Marcações] = 0 , 0
+			    ,Encomendas[bonId] = 735 || Encomendas[bonId] = 748 , 0
+			    ,1
+			)
+			VAR _TipoPub =
+			SWITCH(
+			    TRUE()
+			    ,_1 = 1 && ( Encomendas[bonId] = BLANK() || ISBLANK(Encomendas[bonId]) ), "Publicidade Paga"
+			    ,_1 = 1 && Encomendas[bonId] <> BLANK(), "Publicidade Não Paga"
+			    ,"Outros (AE ou Não Emitido)"
+			)
+			RETURN
+			_TipoPub
+		lineageTag: 8cfcff07-acda-4b85-829b-667bfbe7bc16
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GRP Projetado' = ```
+			
+			        SWITCH( TRUE(),
+			            ISBLANK(Encomendas[grpReal]) && Encomendas[tipo] = "EE", BLANK(),
+			            ISBLANK(Encomendas[grpReal]), Encomendas[grpPrevisto]
+			            , BLANK())
+			```
+		lineageTag: 967abb99-48a0-4a2b-bb67-e24a3b5cb932
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'verificar eq Real 20' = IF( ROUNDDOWN( Encomendas[grpReal] * Encomendas[indice_equiOther], 2) = ROUNDDOWN( Encomendas[GRP Eq 30] , 2 ) && Encomendas[indice_equiOther] >  0, 1, 0)
+		formatString: 0
+		lineageTag: f8133c21-761e-4408-ac7e-228438334e6c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GRP Eq Projetado 20' = ```
+			
+			        SWITCH( TRUE(),
+			            ISBLANK(Encomendas[grpReal]) && Encomendas[tipo] = "EE", 0,
+			            ISBLANK(Encomendas[grpReal]), Encomendas[GRP Previsto Eq 20]
+			            , Encomendas[GRP Total 20])
+			```
+		lineageTag: ab950fa8-fa26-4172-b92b-86bd557eb89d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GRP Eq Projetado 30' = ```
+			
+			        SWITCH( TRUE(),
+			            ISBLANK(Encomendas[grpReal]) && Encomendas[tipo] = "EE", 0,
+			            ISBLANK(Encomendas[grpReal]), Encomendas[GRP Previsto Eq 30]
+			            , Encomendas[GRP Total 30])
+			```
+		lineageTag: 629e716d-b055-4072-99ec-6fd5f30775bb
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GRP Total' = ```
+			
+			    IF(
+			        ISBLANK(Encomendas[grpReal]) && Encomendas[tipo] = "E",
+			        Encomendas[grpPrevisto],
+			        Encomendas[grpReal]
+			    )
+			```
+		lineageTag: 8236270c-fe84-4736-85ae-901d7124867f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Encomendas-748911e9-513d-4cc5-893d-2ee7cc33bd27 = m
+		mode: import
+		queryGroup: Encomendas
+		source = ```
+				let
+				    SQL = "
+				        Select
+				            encomendas.ordPubCodigo,
+				            encomendas.canCodigo,
+				            campanhas.camAnunciante As anuncianteId,
+				            campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				            campanhas.camCentralCompras As CentralComprasId,
+				            campanhas.camDistribuidor As AgenciaMeiosId,
+				            campanhas.camAgencia As AgenciaId,
+				            campanhas.camDescricao As DescricaoCampanhas,
+				            ordemPub.proId,
+				            Case
+				                When IsNull(ordemPub.ordPubNegociacao, 0) = 0
+				                Then Null
+				                Else ordemPub.ordPubNegociacao
+				            End As ordPubNegociacao,
+				            encomendas.greComHoraInicio As horaExib,
+				            encomendas.encDataExibicao As diaExib,
+				            'E' As tipo,
+				            campanhas.camVendedor As vendedor,
+				            IsNull(encomendas.encValorPub, 0) As valorPub,
+				            IsNull(encomendas.encValorTab, 0) As valorTab,
+				            IsNull(encomendas.encValorBonus, 0) As valorBonus,
+				            IsNull(ordemPub.ordPubTotalGRPs, 0) As GRPObjetivo,
+				            Pacotes.pacId,
+				            IsNull(encomendas.encValorPub, 0) * (IsNull(campanhas.camDescontoAgencia, 0) / 100) As valorComissaoAgencia,
+				            IsNull(EncomendasAudiencias.encRating, IsNull((
+				                SELECT MAX(apf.Rating)
+				                FROM aud_prev_faixa apf
+				                WHERE 1 = 1
+				                    And apf.CanCodigo = encomendas.canCodigo
+				                    And DatePart(dw, encomendas.encDataExibicao) + 1 = apf.DiaSemId
+				                    And apf.Cod_Alvo = aud_alvos.cod_alvo
+				                    And encomendas.encDataExibicao >= apf.dataInicio
+				                    And (encomendas.encDataExibicao <= apf.dataFim
+				                        Or apf.dataFim Is Null)
+				                    And encomendas.greComHoraInicio >= apf.horaInicio
+				                    And encomendas.greComHoraInicio <= apf.horaFim
+				            ), 0)) As grpPrevisto,
+				            0 As [GRP_Equivalente],
+				            0 As [GRP_EquivalenteOther],
+				            0 As grpReal,
+				            indiceeq.ratValor As indice_equi,
+				            indiceeqOther.ratValor As indice_equiOther,
+				            encomendas.encMaterialDuracaoEmissao As durEmissao,
+				            ordemPub.ordPubClaId,
+				            encomendas.bonId,
+				            ordemPub.tipPubId,
+				            encomendas.priId As PrioridadeId,
+				            tipoPublicidade.tipEcrIdOcupacao As tipoOcupacao,
+				            aud_alvos.cod_alvo,
+				            Case ordemPub.ordPubFlagFixo
+				                When 2
+				                Then negPeriodos.negPerTipo
+				                When 1
+				                Then 'V'
+				                Else 'D'
+				            End As negPerTipo,
+				            ordemPub.ordPubFlagValorBrutoVendas,
+				            ordemPub.ordPubFlagValorLiquidoVendas,
+				            encomendas.greComId,
+				            campanhas.camGrupoId,
+				            encomendas.encid
+				        From
+				            encomendas With(NoLock)
+				            Inner Join ordemPub With(NoLock) On encomendas.ordPubCodigo = ordemPub.ordPubCodigo
+				            Left Join tipoPublicidade With(NoLock) On tipoPublicidade.tipPubId = ordemPub.tipPubId
+				            Left Join pacotes With(NoLock) On ordemPub.pacId = Pacotes.pacId
+				            Left Join encomendasAudiencias EncomendasAudiencias With(NoLock) On EncomendasAudiencias.encId = encomendas.encid
+				            Left Join campanhas With(NoLock) On campanhas.camId = ordemPub.camId
+				            Left Join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao
+				            Left Join ratingsTabela indiceeq With(NoLock)
+				                    On (IsNull(indiceeq.canCodigo, 0) = 0
+				                        Or indiceeq.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq.ratDuracaoIntermed =
+				                            CASE WHEN encomendas.encMaterialDuracaoFacturacao = 0 THEN encomendas.encMaterialDuracaoEmissao
+				                                ELSE encomendas.encMaterialDuracaoFacturacao END
+				                    And indiceeq.ratDuracaoBase = " & DuracaoBase & "
+				                    And encomendas.encDataExibicao Between indiceeq.ratDataInicio And indiceeq.ratDataFim
+				            Left Join ratingsTabela indiceeq2030 With(NoLock)
+				                    On (IsNull(indiceeq2030.canCodigo, 0) = 0
+				                        Or indiceeq2030.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq2030.ratDuracaoBase = " & DuracaoBase & "
+				                    And indiceeq2030.ratDuracaoIntermed = " & DuracaoBaseOther & "
+				                    And encomendas.encDataExibicao Between indiceeq2030.ratDataInicio And indiceeq2030.ratDataFim
+				            Left Join ratingsTabela indiceeqOther With(NoLock)
+				                    On (IsNull(indiceeqOther.canCodigo, 0) = 0
+				                        Or indiceeqOther.canCodigo = ordemPub.canCodigo)
+				                    And indiceeqOther.ratDuracaoIntermed =
+				                            CASE WHEN encomendas.encMaterialDuracaoFacturacao = 0 THEN encomendas.encMaterialDuracaoEmissao
+				                                ELSE encomendas.encMaterialDuracaoFacturacao END
+				                    And indiceeqOther.ratDuracaoBase = " & DuracaoBaseOther & "
+				                    And encomendas.encDataExibicao Between indiceeqOther.ratDataInicio And indiceeqOther.ratDataFim
+				            Left Join ratingsTabela indiceeq2030Other With(NoLock)
+				                    On (IsNull(indiceeq2030Other.canCodigo, 0) = 0
+				                        Or indiceeq2030Other.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq2030Other.ratDuracaoBase = " & DuracaoBaseOther & "
+				                    And indiceeq2030Other.ratDuracaoIntermed = " & DuracaoBaseOther & "
+				                    And encomendas.encDataExibicao Between indiceeq2030Other.ratDataInicio And indiceeq2030Other.ratDataFim
+				            Left Join aud_alvos With(NoLock)
+				                    On aud_alvos.cod_alvo = IsNull(ordemPub.codAlvo, " & AlvoPadrao & ")
+				            Left Join aud_prev_faixa With(NoLock)
+				                    On aud_prev_faixa.Cod_Alvo = aud_alvos.cod_alvo
+				                    And aud_prev_faixa.CanCodigo = encomendas.canCodigo
+				                    And encomendas.encDataExibicao >= aud_prev_faixa.dataInicio
+				                    And (encomendas.encDataExibicao <= aud_prev_faixa.dataFim
+				                        Or aud_prev_faixa.dataFim Is Null)
+				                    And encomendas.greComHoraInicio >= aud_prev_faixa.horaInicio
+				                    And encomendas.greComHoraInicio <= aud_prev_faixa.horaFim
+				                    And DatePart(dw, encomendas.encDataExibicao) + 1 = aud_prev_faixa.DiaSemId
+				        Where
+				            Year(encomendas.encDataExibicao) >= Year(GetDate()) - " & AnoUpdateGMedia & "
+				
+				    Union
+				        
+				        Select
+				            encomendasExibidas.ordPubCodigo,
+				            encomendasExibidas.canCodigo,
+				            campanhas.camAnunciante As anuncianteId,
+				            campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				            campanhas.camCentralCompras As CentralComprasId,
+				            campanhas.camDistribuidor As AgenciaMeiosId,
+				            campanhas.camAgencia As AgenciaId,
+				            campanhas.camDescricao As DescricaoCampanhas,
+				            ordemPub.proId,
+				            Case
+				                When IsNull(ordemPub.ordPubNegociacao, 0) = 0
+				                Then Null
+				                Else ordemPub.ordPubNegociacao
+				            End As ordPubNegociacao,
+				            encomendasExibidas.greComHoraInicio As horaExib,
+				            encomendasExibidas.encDataExibicao As diaExib,
+				            'EE' As tipo,
+				            campanhas.camVendedor As vendedor,
+				            IsNull(encomendasExibidas.encValorPub, 0) As valorPub,
+				            IsNull(encomendasExibidas.encValorTab, 0) As valorTab,
+				            IsNull(encomendasExibidas.encValorBonus, 0) As valorBonus,
+				            IsNull(ordemPub.ordPubTotalGRPs, 0) As GRPObjetivo,
+				            Pacotes.pacId,
+				            IsNull(encomendasExibidas.encValorPub, 0) * (IsNull(campanhas.camDescontoAgencia, 0) / 100) As valorComissaoAgencia,
+				            IsNull((
+				                SELECT MAX(apf.Rating)
+				                FROM aud_prev_faixa apf
+				                WHERE 1 = 1
+				                    And apf.CanCodigo = encomendasExibidas.canCodigo
+				                    And DatePart(dw, encomendasExibidas.encDataExibicao) + 1 = apf.DiaSemId
+				                    And apf.Cod_Alvo = aud_alvos.cod_alvo
+				                    And encomendasExibidas.encDataExibicao >= apf.dataInicio
+				                    And (encomendasExibidas.encDataExibicao <= apf.dataFim
+				                        Or apf.dataFim Is Null)
+				                    And encomendasExibidas.greComHoraInicio >= apf.horaInicio
+				                    And encomendasExibidas.greComHoraInicio <= apf.horaFim
+				            ), 0) As grpPrevisto,
+				            IsNull(EncomendasAudiencias.encRating, IsNull(
+				                    (SELECT aei.audiencia
+				                    FROM aud_exib AS ae WITH(NOLOCK)
+				                    INNER JOIN aud_exib_id AS aei WITH(NOLOCK)
+				                        ON aei.id_exib = ae.id_exib
+				                    WHERE ae.id_exib = aud_rel_alinhamento_publicidade.id_pubreport
+				                        AND aei.cod_alvo = aud_alvos.cod_alvo), 0)
+				                ) * IsNull(indiceeq.ratValor,0) As [GRP_Equivalente],
+				            IsNull(EncomendasAudiencias.encRating, IsNull(
+				                    (SELECT aei.audiencia
+				                    FROM aud_exib AS ae WITH(NOLOCK)
+				                    INNER JOIN aud_exib_id AS aei WITH(NOLOCK)
+				                        ON aei.id_exib = ae.id_exib
+				                    WHERE ae.id_exib = aud_rel_alinhamento_publicidade.id_pubreport
+				                        AND aei.cod_alvo = aud_alvos.cod_alvo), 0)
+				                ) * IsNull(indiceeqOther.ratValor,0) As [GRP_EquivalenteOther],
+				            IsNull(EncomendasAudiencias.encRating, IsNull(
+				                    (SELECT aei.audiencia
+				                    FROM aud_exib AS ae WITH(NOLOCK)
+				                    INNER JOIN aud_exib_id AS aei WITH(NOLOCK)
+				                        ON aei.id_exib = ae.id_exib
+				                    WHERE ae.id_exib = aud_rel_alinhamento_publicidade.id_pubreport
+				                    AND aei.cod_alvo = aud_alvos.cod_alvo), 0)
+				                ) As grpReal,
+				            indiceeq.ratValor As indice_equi,
+				            indiceeqOther.ratValor As indice_equiOther,
+				            encomendasExibidas.encMaterialDuracaoEmissao As durEmissao,
+				            ordemPub.ordPubClaId,
+				            encomendasExibidas.bonId,
+				            ordemPub.tipPubId,
+				            encomendasExibidas.priId As PrioridadeId,
+				            tipoPublicidade.tipEcrIdOcupacao As tipoOcupacao,
+				            aud_alvos.cod_alvo,
+				            Case ordemPub.ordPubFlagFixo
+				                When 2
+				                Then negPeriodos.negPerTipo
+				                When 1
+				                Then 'V'
+				                Else 'D'
+				            End As negPerTipo,
+				            ordemPub.ordPubFlagValorBrutoVendas,
+				            ordemPub.ordPubFlagValorLiquidoVendas,
+				            encomendasExibidas.greComId,
+				            campanhas.camGrupoId,
+				            encomendasExibidas.encId
+				        From
+				            encomendasExibidas With(NoLock)
+				            Inner Join ordemPub With(NoLock)
+				                    On encomendasExibidas.ordPubCodigo = ordemPub.ordPubCodigo
+				            Left Join tipoPublicidade With(NoLock)
+				                    On tipoPublicidade.tipPubId = ordemPub.tipPubId
+				            Left Join pacotes With(NoLock)
+				                    On ordemPub.pacId = Pacotes.pacId
+				            Left Join encomendasAudiencias EncomendasAudiencias With(NoLock)
+				                    On EncomendasAudiencias.encId = encomendasExibidas.encId
+				                    And EncomendasAudiencias.audPaiId = 1
+				            Left Join campanhas With(NoLock) On campanhas.camId = ordemPub.camId
+				            Left Join negPeriodos With(NoLock) On negPeriodos.negPerId = ordemPub.ordPubNegociacao
+				            Left Join ratingsTabela indiceeq With(NoLock)
+				                    On (IsNull(indiceeq.canCodigo, 0) = 0
+				                        Or indiceeq.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq.ratDuracaoIntermed =
+				                            CASE WHEN encomendasExibidas.encMaterialDuracaoFacturacao = 0 THEN encomendasExibidas.encMaterialDuracaoEmissao
+				                                ELSE encomendasExibidas.encMaterialDuracaoFacturacao END
+				                    And indiceeq.ratDuracaoBase = " & DuracaoBase & "
+				                    And encomendasExibidas.encDataExibicao Between indiceeq.ratDataInicio And indiceeq.ratDataFim
+				            Left Join ratingsTabela indiceeq2030 With(NoLock) On (IsNull(indiceeq2030.canCodigo, 0) = 0
+				                        Or indiceeq2030.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq2030.ratDuracaoBase = " & DuracaoBase & "
+				                    And indiceeq2030.ratDuracaoIntermed = " & DuracaoBaseOther & "
+				                    And encomendasExibidas.encDataExibicao Between indiceeq2030.ratDataInicio And indiceeq2030.ratDataFim
+				            Left Join ratingsTabela indiceeqOther With(NoLock)
+				                    On (IsNull(indiceeqOther.canCodigo, 0) = 0
+				                        Or indiceeqOther.canCodigo = ordemPub.canCodigo)
+				                    And indiceeqOther.ratDuracaoIntermed =
+				                            CASE WHEN encomendasExibidas.encMaterialDuracaoFacturacao = 0 THEN encomendasExibidas.encMaterialDuracaoEmissao
+				                                ELSE encomendasExibidas.encMaterialDuracaoFacturacao END
+				                    And indiceeqOther.ratDuracaoBase = " & DuracaoBaseOther & "
+				                    And encomendasExibidas.encDataExibicao Between indiceeqOther.ratDataInicio And indiceeqOther.ratDataFim
+				            Left Join ratingsTabela indiceeq2030Other With(NoLock) On (IsNull(indiceeq2030Other.canCodigo, 0) = 0
+				                        Or indiceeq2030Other.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq2030Other.ratDuracaoBase = " & DuracaoBaseOther & "
+				                    And indiceeq2030Other.ratDuracaoIntermed = " & DuracaoBaseOther & "
+				                    And encomendasExibidas.encDataExibicao Between indiceeq2030Other.ratDataInicio And
+				                    indiceeq2030Other.ratDataFim
+				            Left Join aud_alvos With(NoLock)
+				                    On aud_alvos.cod_alvo = IsNull(ordemPub.codAlvo, " & AlvoPadrao & ")
+				            Left Join aud_prev_faixa With(NoLock) On aud_prev_faixa.CanCodigo = encomendasExibidas.canCodigo
+				                    And DatePart(dw, encomendasExibidas.encDataExibicao) + 1 = aud_prev_faixa.DiaSemId
+				                    And aud_prev_faixa.Cod_Alvo = aud_alvos.cod_alvo
+				                    And encomendasExibidas.encDataExibicao >= aud_prev_faixa.dataInicio
+				                    And (encomendasExibidas.encDataExibicao <= aud_prev_faixa.dataFim
+				                        Or aud_prev_faixa.dataFim Is Null)
+				                    And encomendasExibidas.greComHoraInicio >= aud_prev_faixa.horaInicio
+				                    And encomendasExibidas.greComHoraInicio <= aud_prev_faixa.horaFim
+				            Left Join aud_alinhamento_publicidade With(NoLock)
+				                    On aud_alinhamento_publicidade.encId = encomendasExibidas.encId
+				                    And aud_alinhamento_publicidade.spoAutId = 0
+				            Left Join aud_rel_alinhamento_publicidade With(NoLock)
+				                    On aud_rel_alinhamento_publicidade.id_pub =
+				                    aud_alinhamento_publicidade.id_pub 
+				        --  Left Join aud_exib With(NoLock) On aud_exib.id_exib = aud_rel_alinhamento_publicidade.id_pubreport
+				        --  Left Join aud_exib_id With(NoLock) On aud_exib_id.id_exib = aud_exib.id_exib
+				        --          And aud_exib_id.cod_alvo = aud_alvos.cod_alvo
+				        Where
+				            Year(encomendasExibidas.encDataExibicao) >= Year(GetDate()) - " & AnoUpdateGMedia & "
+				
+				    Union
+				        
+				        Select
+				            ordemPub.ordPubCodigo,
+				            ordemPub.canCodigo,
+				            campanhas.camAnunciante As anuncianteId,
+				            campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				            campanhas.camCentralCompras As CentralComprasId,
+				            campanhas.camDistribuidor As AgenciaMeiosId,
+				            campanhas.camAgencia As AgenciaId,
+				            campanhas.camDescricao As DescricaoCampanhas,
+				            ordemPub.proId,
+				            Case
+				                When IsNull(ordemPub.ordPubNegociacao, 0) = 0
+				                Then Null
+				                Else ordemPub.ordPubNegociacao
+				            End As ordPubNegociacao,
+				            0 As horaExib,
+				            Cast(Convert(VARCHAR,ordemPub.ordPubAno) + '-' + Convert(VARCHAR,ordemPub.ordPubMes) + '-' + Convert(VARCHAR,1) As
+				            DATETIME) As diaExib,
+				            'O' As tipo,
+				            campanhas.camVendedor As vendedor,
+				            IsNull(ordemPub.ordPubValor, 0) As valorPub,
+				            IsNull(ordemPub.ordPubValorTab, 0) As valorTab,
+				            IsNull(ordemPub.valorBonus, 0) As valorBonus,
+				            IsNull(ordemPub.ordPubTotalGRPs, 0) As GRPObjetivo,
+				            Pacotes.pacId,
+				            IsNull(ordemPub.ordPubValor, 0) * (IsNull(campanhas.camDescontoAgencia, 0) / 100) As valorComissaoAgencia,
+				            0 As grpPrevisto,
+				            0 As [GRP_Equivalente],
+				            0 As [GRP_EquivalenteOther],
+				            0 As grpReal,
+				            0 As indice_equi,
+				            0 As indice_equiOther,
+				            0 As durEmissao,
+				            ordemPub.ordPubClaId,
+				            ordemPub.ordPubBonus As bonId,
+				            ordemPub.tipPubId,
+				            ordemPub.priId As PrioridadeId,
+				            tipoPublicidade.tipEcrIdOcupacao As tipoOcupacao,
+				            aud_alvos.cod_alvo,
+				            Case ordemPub.ordPubFlagFixo
+				                When 2
+				                Then negPeriodos.negPerTipo
+				                When 1
+				                Then 'V'
+				                Else 'D'
+				            End As negPerTipo,
+				            ordemPub.ordPubFlagValorBrutoVendas,
+				            ordemPub.ordPubFlagValorLiquidoVendas,
+				            Null As greComId,
+				            campanhas.camGrupoId,
+				            0 As encId
+				        From
+				            ordemPub With(NoLock)
+				            Left Join campanhas With(NoLock)
+				                On campanhas.camId = ordemPub.camId
+				            Left Join tipoPublicidade With(NoLock)
+				                On tipoPublicidade.tipPubId = ordemPub.tipPubId
+				            Left Join pacotes With(NoLock)
+				                On ordemPub.pacId = Pacotes.pacId
+				            Left Join aud_alvos With(NoLock)
+				                On aud_alvos.cod_alvo = IsNull(ordemPub.codAlvo, " & AlvoPadrao & ")
+				            Left Join negPeriodos With(NoLock)
+				                On negPeriodos.negPerId = ordemPub.ordPubNegociacao
+				        Where
+				            ordemPub.ordPubAno >= Year(GetDate()) - " & AnoUpdateGMedia & " And
+				            ordemPub.ordPubCodigo Not In (
+				                Select e.ordPubCodigo
+				                From encomendas e With(NoLock)
+				                Where e.ordPubCodigo = ordemPub.ordPubCodigo
+				                Group By e.ordPubCodigo
+				            Union
+				                Select e.ordPubCodigo
+				                From encomendasExibidas e With(NoLock)
+				                Where e.ordPubCodigo = ordemPub.ordPubCodigo
+				                Group By e.ordPubCodigo
+				            Union
+				                Select e.ordPubCodigo
+				                From encomendasExcepcoes e With(NoLock)
+				                Where IsNull(e.encValorPub, 0) <> 0
+				                    And e.ordPubCodigo = ordemPub.ordPubCodigo
+				                Group By e.ordPubCodigo)
+				
+				    Union
+				
+				        Select
+				            encomendas.ordPubCodigo,
+				            encomendas.canCodigo,
+				            campanhas.camAnunciante As anuncianteId,
+				            campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				            campanhas.camCentralCompras As CentralComprasId,
+				            campanhas.camDistribuidor As AgenciaMeiosId,
+				            campanhas.camAgencia As AgenciaId,
+				            campanhas.camDescricao As DescricaoCampanhas,
+				            ordemPub.proId,
+				            Case
+				                When IsNull(ordemPub.ordPubNegociacao, 0) = 0
+				                Then Null
+				                Else ordemPub.ordPubNegociacao
+				            End As ordPubNegociacao,
+				            encomendas.greComHoraInicio As horaExib,
+				            encomendas.encDataExibicao As diaExib,
+				            'X' As tipo,
+				            campanhas.camVendedor As vendedor,
+				            IsNull(encomendas.encValorPub, 0) As valorPub,
+				            IsNull(encomendas.encValorTab, 0) As valorTab,
+				            0 As valorBonus,
+				            IsNull(ordemPub.ordPubTotalGRPs, 0) As GRPObjetivo,
+				            Pacotes.pacId,
+				            IsNull(encomendas.encValorPub, 0) * (IsNull(campanhas.camDescontoAgencia, 0) / 100) As valorComissaoAgencia,
+				            IsNull(EncomendasAudiencias.encRating, IsNull((
+				                SELECT MAX(apf.Rating)
+				                FROM aud_prev_faixa apf
+				                WHERE 1 = 1
+				                    And apf.CanCodigo = encomendas.canCodigo
+				                    And DatePart(dw, encomendas.encDataExibicao) + 1 = apf.DiaSemId
+				                    And apf.Cod_Alvo = aud_alvos.cod_alvo
+				                    And encomendas.encDataExibicao >= apf.dataInicio
+				                    And (encomendas.encDataExibicao <= apf.dataFim
+				                        Or apf.dataFim Is Null)
+				                    And encomendas.greComHoraInicio >= apf.horaInicio
+				                    And encomendas.greComHoraInicio <= apf.horaFim
+				            ), 0)) As grpPrevisto,
+				            0 As [GRP_Equivalente],
+				            0 As [GRP_EquivalenteOther],
+				            0 As grpReal,
+				            indiceeq.ratValor As indice_equi,
+				            indiceeqOther.ratValor As indice_equiOther,
+				            encomendas.encMaterialDuracaoEmissao As durEmissao,
+				            ordemPub.ordPubClaId,
+				            encomendas.bonId,
+				            ordemPub.tipPubId,
+				            encomendas.priId As PrioridadeId,
+				            tipoPublicidade.tipEcrIdOcupacao As tipoOcupacao,
+				            aud_alvos.cod_alvo,
+				            Case ordemPub.ordPubFlagFixo
+				                When 2
+				                Then negPeriodos.negPerTipo
+				                When 1
+				                Then 'V'
+				                Else 'D'
+				            End As negPerTipo,
+				            ordemPub.ordPubFlagValorBrutoVendas,
+				            ordemPub.ordPubFlagValorLiquidoVendas,
+				            encomendas.greComId,
+				            campanhas.camGrupoId,
+				            encomendas.encId
+				        From encomendasExcepcoes encomendas With(NoLock)
+				            Inner Join ordemPub With(NoLock)
+				                    On encomendas.ordPubCodigo = ordemPub.ordPubCodigo
+				            Left Join tipoPublicidade With(NoLock)
+				                    On tipoPublicidade.tipPubId = ordemPub.tipPubId
+				            Left Join pacotes With(NoLock)
+				                    On ordemPub.pacId = Pacotes.pacId
+				            Left Join grelhaComercial With(NoLock)
+				                    On grelhaComercial.greComId = encomendas.greComId
+				            Left Join encomendasAudiencias EncomendasAudiencias With(NoLock)
+				                    On EncomendasAudiencias.encId = encomendas.encId
+				            Left Join campanhas With(NoLock)
+				                    On campanhas.camId = ordemPub.camId
+				            Left Join negPeriodos With(NoLock)
+				                    On negPeriodos.negPerId = ordemPub.ordPubNegociacao
+				            Left Join ratingsTabela indiceeq With(NoLock)
+				                    On (IsNull(indiceeq.canCodigo, 0) = 0
+				                        Or indiceeq.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq.ratDuracaoIntermed =
+				                            CASE WHEN encomendas.encMaterialDuracaoFacturacao = 0 THEN encomendas.encMaterialDuracaoEmissao
+				                                ELSE encomendas.encMaterialDuracaoFacturacao END
+				                    And indiceeq.ratDuracaoBase = " & DuracaoBase & "
+				                    And encomendas.encDataExibicao Between indiceeq.ratDataInicio And indiceeq.ratDataFim
+				            Left Join ratingsTabela indiceeq2030 With(NoLock)
+				                    On (IsNull(indiceeq2030.canCodigo, 0) = 0
+				                        Or indiceeq2030.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq2030.ratDuracaoBase = " & DuracaoBase & "
+				                    And indiceeq2030.ratDuracaoIntermed = " & DuracaoBaseOther & "
+				                    And encomendas.encDataExibicao Between indiceeq2030.ratDataInicio And indiceeq2030.ratDataFim
+				            Left Join ratingsTabela indiceeqOther With(NoLock)
+				                    On (IsNull(indiceeqOther.canCodigo, 0) = 0
+				                        Or indiceeqOther.canCodigo = ordemPub.canCodigo)
+				                    And indiceeqOther.ratDuracaoIntermed =
+				                            CASE WHEN encomendas.encMaterialDuracaoFacturacao = 0 THEN encomendas.encMaterialDuracaoEmissao
+				                                ELSE encomendas.encMaterialDuracaoFacturacao END
+				                    And indiceeqOther.ratDuracaoBase = " & DuracaoBaseOther & "
+				                    And encomendas.encDataExibicao Between indiceeqOther.ratDataInicio And indiceeqOther.ratDataFim
+				            Left Join ratingsTabela indiceeq2030Other With(NoLock)
+				                    On (IsNull(indiceeq2030Other.canCodigo, 0) = 0
+				                        Or indiceeq2030Other.canCodigo = ordemPub.canCodigo)
+				                    And indiceeq2030Other.ratDuracaoBase = " & DuracaoBaseOther & "
+				                    And indiceeq2030Other.ratDuracaoIntermed = " & DuracaoBaseOther & "
+				                    And encomendas.encDataExibicao Between indiceeq2030Other.ratDataInicio And indiceeq2030Other.ratDataFim
+				            Left Join aud_alvos With(NoLock)
+				                    On aud_alvos.cod_alvo = IsNull(ordemPub.codAlvo, " & AlvoPadrao & ")
+				            Left Join aud_prev_faixa With(NoLock)
+				                    On aud_prev_faixa.Cod_Alvo = aud_alvos.cod_alvo
+				                    And aud_prev_faixa.CanCodigo = encomendas.canCodigo
+				                    And encomendas.encDataExibicao >= aud_prev_faixa.dataInicio
+				                    And (encomendas.encDataExibicao <= aud_prev_faixa.dataFim
+				                        Or aud_prev_faixa.dataFim Is Null)
+				                    And encomendas.greComHoraInicio >= aud_prev_faixa.horaInicio
+				                    And encomendas.greComHoraInicio <= aud_prev_faixa.horaFim
+				                    And DatePart(dw, encomendas.encDataExibicao) + 1 = aud_prev_faixa.DiaSemId
+				        Where
+				            Year(encomendas.encDataExibicao) >= Year(GetDate()) - " & AnoUpdateGMedia,
+				    Source = Sql.Database(ServerP, BD, [Query = SQL, CommandTimeout = #duration(6, 6, 0, 0)]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"diaExib", type date}}),
+				    #"Personalizado Adicionado" = Table.AddColumn(#"Changed Type", "GRP Equivalente", each if [grpReal] = 0 then [grpPrevisto] * [indice_equi] else [grpReal] * [indice_equi]),
+				    Custom1 = Table.AddColumn(#"Personalizado Adicionado", "GRP EquivalenteOther", each if [grpReal] = 0 then [grpPrevisto] * [indice_equiOther] else [grpReal] * [indice_equiOther]),
+				    #"Personalizado Adicionado2" = Table.AddColumn(Custom1, "GRP Previsto Equivalente", each [grpPrevisto] * [indice_equi]),
+				    Custom2 = Table.AddColumn(#"Personalizado Adicionado2", "GRP Previsto EquivalenteOther", each [grpPrevisto] * [indice_equiOther]),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(Custom2,{{"GRP Equivalente", type number}, {"GRP Previsto Equivalente", type number}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Tipo Alterado2",0,null,Replacer.ReplaceValue,{"grpPrevisto", "grpReal"}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Replaced Value", "horaExib", "horaExib - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"horaExib - Copy", "MinutosExib"}}),
+				    #"Divided Column" = Table.TransformColumns(#"Renamed Columns", {{"horaExib", each _ / 60, type number}}),
+				    #"Arredondado por Defeito" = Table.TransformColumns(#"Divided Column",{{"horaExib", Number.RoundDown, Int64.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Arredondado por Defeito",{{"durEmissao", "Duracao Emissao"}, {"GRP EquivalenteOther", "GRP Eq 30"}, {"GRP Previsto EquivalenteOther", "GRP Previsto Eq 30"}, {"GRP Equivalente", "GRP Eq 20"}, {"GRP Previsto Equivalente", "GRP Previsto Eq 20"}, {"valorPub", "Valor Publicidade Bruto"}, {"valorTab", "Valor Tabela"}, {"valorBonus", "Valor Bonus Bruto"}, {"ordPubCodigo", "Nº ordem pub"}, {"valorComissaoAgencia", "Valor Comissao Agencia"}, {"GRPObjetivo", "GRP Objetivo"}, {"GRP_Equivalente", "GRP Eq - 20"}, {"GRP_EquivalenteOther", "GRP Eq - 30"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"GRP Eq 20", "GRP Eq 30"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns",{{"GRP Eq - 30", "GRP Eq 30"}, {"GRP Eq - 20", "GRP Eq 20"}, {"Duracao Emissao", "Spot (duração)"}})
+				in
+				    #"Renamed Columns2"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_QueryRelationships = {"columnCount":33,"keyColumnNames":[],"queryRelationships":[{"keyColumnCount":1,"keyColumn":9,"otherKeyColumnIdentity":"Section1/Centrais/Changed Type.{Distribuidor,1}","KeyColumnCount":1}],"columnIdentities":["Section1/GMediaBI_Encomendas/Source.{encid,0}","Section1/GMediaBI_Encomendas/Source.{ordPubCodigo,1}","Section1/GMediaBI_Encomendas/Source.{canCodigo,2}","Section1/GMediaBI_Encomendas/Source.{anuncianteId,3}","Section1/GMediaBI_Encomendas/Source.{proId,4}","Section1/GMediaBI_Encomendas/Source.{ordPubNegociacao,5}","Section1/GMediaBI_Encomendas/Source.{horaExib,6}","Section1/GMediaBI_Encomendas/Source.{diaExib,7}","Section1/GMediaBI_Encomendas/Source.{tipo,8}","Section1/GMediaBI_Encomendas/Source.{distribuidorid,9}","Section1/GMediaBI_Encomendas/Source.{vendedor,10}","Section1/GMediaBI_Encomendas/Source.{valorPub,11}","Section1/GMediaBI_Encomendas/Source.{valorTab,12}","Section1/GMediaBI_Encomendas/Source.{valorBonus,13}","Section1/GMediaBI_Encomendas/Source.{valorRappel,14}","Section1/GMediaBI_Encomendas/Source.{grpPrevisto,15}","Section1/GMediaBI_Encomendas/Source.{grpReal,16}","Section1/GMediaBI_Encomendas/Source.{indice_equi,18}","Section1/GMediaBI_Encomendas/Source.{durEmissao,19}","Section1/GMediaBI_Encomendas/Source.{ordPubClaDescricao,20}","Section1/GMediaBI_Encomendas/Source.{bonDescricao,21}","Section1/GMediaBI_Encomendas/Source.{Distribuidor,22}","Section1/GMediaBI_Encomendas/Source.{tipPubDescricao,23}","Section1/GMediaBI_Encomendas/Replaced Value.{abr_alvo,24}","Section1/GMediaBI_Encomendas/Source.{proDescricao,25}","Section1/GMediaBI_Encomendas/Source.{tipProDescricao,26}","Section1/GMediaBI_Encomendas/Source.{negPerDescricao,29}","Section1/GMediaBI_Encomendas/Source.{negPerTipo,30}","Section1/Centrais/Origem.{Central,0}","Section1/GMediaBI_Encomendas/Arredondado.{GRP Equivalente,32}","Section1/GMediaBI_Encomendas/Arredondado.{GRP Previsto Equivalente,33}","Section1/GMediaBI_Encomendas/Changed Type.{custo grp,33}","Section1/TipoProduto/Source.{tipProDescricao,1}"],"ColumnCount":33,"KeyColumnNames":[],"ColumnIdentities":["Section1/GMediaBI_Encomendas/Source.{encid,0}","Section1/GMediaBI_Encomendas/Source.{ordPubCodigo,1}","Section1/GMediaBI_Encomendas/Source.{canCodigo,2}","Section1/GMediaBI_Encomendas/Source.{anuncianteId,3}","Section1/GMediaBI_Encomendas/Source.{proId,4}","Section1/GMediaBI_Encomendas/Source.{ordPubNegociacao,5}","Section1/GMediaBI_Encomendas/Source.{horaExib,6}","Section1/GMediaBI_Encomendas/Source.{diaExib,7}","Section1/GMediaBI_Encomendas/Source.{tipo,8}","Section1/GMediaBI_Encomendas/Source.{distribuidorid,9}","Section1/GMediaBI_Encomendas/Source.{vendedor,10}","Section1/GMediaBI_Encomendas/Source.{valorPub,11}","Section1/GMediaBI_Encomendas/Source.{valorTab,12}","Section1/GMediaBI_Encomendas/Source.{valorBonus,13}","Section1/GMediaBI_Encomendas/Source.{valorRappel,14}","Section1/GMediaBI_Encomendas/Source.{grpPrevisto,15}","Section1/GMediaBI_Encomendas/Source.{grpReal,16}","Section1/GMediaBI_Encomendas/Source.{indice_equi,18}","Section1/GMediaBI_Encomendas/Source.{durEmissao,19}","Section1/GMediaBI_Encomendas/Source.{ordPubClaDescricao,20}","Section1/GMediaBI_Encomendas/Source.{bonDescricao,21}","Section1/GMediaBI_Encomendas/Source.{Distribuidor,22}","Section1/GMediaBI_Encomendas/Source.{tipPubDescricao,23}","Section1/GMediaBI_Encomendas/Replaced Value.{abr_alvo,24}","Section1/GMediaBI_Encomendas/Source.{proDescricao,25}","Section1/GMediaBI_Encomendas/Source.{tipProDescricao,26}","Section1/GMediaBI_Encomendas/Source.{negPerDescricao,29}","Section1/GMediaBI_Encomendas/Source.{negPerTipo,30}","Section1/Centrais/Origem.{Central,0}","Section1/GMediaBI_Encomendas/Arredondado.{GRP Equivalente,32}","Section1/GMediaBI_Encomendas/Arredondado.{GRP Previsto Equivalente,33}","Section1/GMediaBI_Encomendas/Changed Type.{custo grp,33}","Section1/TipoProduto/Source.{tipProDescricao,1}"],"RelationshipInfo":[{"keyColumnCount":1,"keyColumn":9,"otherKeyColumnIdentity":"Section1/Centrais/Changed Type.{Distribuidor,1}","KeyColumnCount":1}]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

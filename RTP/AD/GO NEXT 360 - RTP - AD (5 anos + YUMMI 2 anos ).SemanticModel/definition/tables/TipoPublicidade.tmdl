@@ -1,0 +1,159 @@
+table TipoPublicidade
+	lineageTag: eebba879-7c8e-4680-a927-4dacd1bdd358
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9af403c1-df0e-4f4c-af18-3734f96ab544
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de Receita' = ```
+			
+			SWITCH(
+			    TRUE()
+			    , 'TipoPublicidade'[Tipo Publicidade] = "APOIO À PRODUÇÃO DIGITAL",	"Produção"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "APOIO A PRODUÇÃO RADIO",	"Produção" 
+			    , 'TipoPublicidade'[Tipo Publicidade] = "APOIO À PRODUÇAO TV",	"Produção"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "BLOCO DE TELEVENDA (TELEVENDA FORA EMISSÃO)",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "CARTOES PUB",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "ECRÃ FRACCIONADO/SPLIT-SCREEN",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "ECRÃ FRACCIONADO/SPLIT-SCREEN ESPECIAL",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "ESPECIAL",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "INTERNET",	"Media Digital"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "Morphing",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "Morphing Especial",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "Morphing Promocao",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "NORMAL",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "PATROCINIOS",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "PROMO",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "PROMO SPONSORIZADAS",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "RTP SPONSOR/COL.PRODUTO",	"Media TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "TELEPROMOÇÃO",	"Media TV"	
+			    , 'TipoPublicidade'[Tipo Publicidade] = "TELEVENDAS",	"Media TV"
+			)
+			```
+		lineageTag: 288cc816-034e-4f88-ae29-8431d55bb03b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meio = ```
+			
+			SWITCH(
+			    TRUE()
+			    , 'TipoPublicidade'[Tipo Publicidade] = "APOIO À PRODUÇÃO DIGITAL",	"DIGITAL"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "APOIO A PRODUÇÃO RADIO",	"RADIO" 
+			    , 'TipoPublicidade'[Tipo Publicidade] = "APOIO À PRODUÇAO TV",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "BLOCO DE TELEVENDA (TELEVENDA FORA EMISSÃO)",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "CARTOES PUB",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "ECRÃ FRACCIONADO/SPLIT-SCREEN",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "ECRÃ FRACCIONADO/SPLIT-SCREEN ESPECIAL",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "ESPECIAL",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "INTERNET",	"DIGITAL"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "Morphing",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "Morphing Especial",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "Morphing Promocao",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "NORMAL",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "PATROCINIOS",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "PROMO",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "PROMO SPONSORIZADAS",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "RTP SPONSOR/COL.PRODUTO",	"TV"
+			    , 'TipoPublicidade'[Tipo Publicidade] = "TELEPROMOÇÃO",	"TV"	
+			    , 'TipoPublicidade'[Tipo Publicidade] = "TELEVENDAS",	"TV"
+			)
+			```
+		lineageTag: e19f2261-8ccd-48ab-bfbd-a664f75be9fe
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Publicidade C/ Encomendas' =
+			
+			VAR _1 =
+			CALCULATE(
+			    YEAR( MAX( Encomendas[Data Exibição] ) )
+			    ,FILTER(
+			        ALL( Encomendas )
+			        ,Encomendas[tipPubId] = TipoPublicidade[tipPubId]
+			    )
+			)
+			VAR _2 =
+			IF( _1 = BLANK(), 0, _1 )
+			RETURN
+			IF( _2 = 0, "OUTROS", TipoPublicidade[Tipo Publicidade] )
+		isHidden
+		lineageTag: fab1d7b2-466d-4abb-9ec4-64e41cb52a1a
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Publicidade'
+		dataType: string
+		lineageTag: 2fc6030c-f00d-477f-b073-1e64bfd4e771
+		summarizeBy: none
+		sourceColumn: Tipo Publicidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Publicidade (agrupamento)'
+		dataType: string
+		lineageTag: 31030907-aee0-450d-9141-c207f694ee66
+		summarizeBy: none
+		sourceColumn: Tipo Publicidade (agrupamento)
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoPublicidade-912ea09b-6d9b-4579-946b-39723dcee53c = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = "SELECT
+				            tipPubId,
+				            tipPubDescricao AS [Tipo Publicidade],
+				            CASE
+				                WHEN tipPubDescricao LIKE '%ESPECIAL%' THEN 'INSTITUCIONAL'
+				                WHEN tipPubDescricao LIKE '%NORMAL%' THEN 'NORMAL'
+				                WHEN tipPubDescricao LIKE '%PATROCINIOS%' THEN 'PATROCINIOS'
+				                WHEN tipPubDescricao LIKE '%CARTOES PUB%' THEN 'CARTÕES DE PATROCÍNIO'
+				                WHEN tipPubDescricao LIKE '%RTP SPONSOR/COL.PRODUTO%' THEN 'SOFTSPONSORING'
+				                WHEN tipPubDescricao LIKE '%BLOCO DE TELEVENDA (TELEVENDA FORA EMISSÃO)%' THEN 'TELEVENDAS'
+				                WHEN tipPubDescricao LIKE '%PROMO SPONSORIZADAS%' THEN 'SOFTSPONSORING'
+				                WHEN tipPubDescricao LIKE '%ECRÃ FRACCIONADO/SPLIT-SCREEN%' THEN 'NORMAL'
+				                WHEN tipPubDescricao LIKE '%TELEPROMOÇÃO%' THEN 'SOFTSPONSORING'
+				                WHEN tipPubDescricao LIKE '%TELEVENDAS%' THEN 'NORMAL'
+				                WHEN tipPubDescricao LIKE '%Morphing%' THEN 'SOFTSPONSORING'
+				                ELSE tipPubDescricao END AS [Tipo Publicidade (agrupamento)]
+				            FROM TipoPublicidade",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				    // Custom1 = Table.AddColumn(Source, "TipoPublicidade", each
+				    //     if [tipPubDescricao] = "ESPECIAL       " then "INSTITUCIONAL" else
+				    //     if [tipPubDescricao] = "NORMAL         " then "NORMAL" else
+				    //     if [tipPubDescricao] = "PATROCINIOS    " then "PATROCINIOS" else
+				    //     if [tipPubDescricao] = "CARTOES PUB    " then "CARTÕES DE PATROCÍNIO" else
+				    //     if [tipPubDescricao] = "RTP SPONSOR/COL.PRODUTO" then "SOFTSPONSORING" else
+				    //     if [tipPubDescricao] = "BLOCO DE TELEVENDA (TELEVENDA FORA EMISSÃO)" then "TELEVENDAS" else
+				    //     if [tipPubDescricao] = "PROMO SPONSORIZADAS" then "SOFTSPONSORING" else
+				    //     if [tipPubDescricao] = "ECRÃ FRACCIONADO/SPLIT-SCREEN" then "NORMAL" else
+				    //     if [tipPubDescricao] = "TELEPROMOÇÃO" then "SOFTSPONSORING" else
+				    //     if [tipPubDescricao] = "TELEVENDAS" then "NORMAL" else
+				    //     if [tipPubDescricao] = "Morphing Promocao" then "SOFTSPONSORING" else
+				    //     if [tipPubDescricao] = "Morphing" then "SOFTSPONSORING" else
+				    //     if [tipPubDescricao] = "Morphing Especial" then "SOFTSPONSORING" else
+				    //     [tipPubDescricao], type text),
+				    // #"Renamed Columns" = Table.RenameColumns(Custom1,{{"tipPubDescricao", "Tipo Publicidade"}, {"TipoPublicidade", "Tipo Publicidade (agrupamento)"}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

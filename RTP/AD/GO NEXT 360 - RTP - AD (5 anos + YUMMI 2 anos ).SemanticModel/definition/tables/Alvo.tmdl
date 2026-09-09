@@ -1,0 +1,93 @@
+table Alvo
+	lineageTag: 83cf3fc8-4f8d-4ca3-a001-f9644a072f39
+
+	column cod_alvo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e2a5355d-9722-4c98-aa95-a81b35834305
+		summarizeBy: none
+		sourceColumn: cod_alvo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Alvo C/ Encomendas' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    YEAR( MAX( Encomendas[Data Exibição] ) )
+			    ,FILTER(
+			        ALL( Encomendas )
+			        ,Encomendas[cod_alvo] = Alvo[cod_alvo]
+			    )
+			)
+			// LOOKUPVALUE( 
+			//     Encomendas[UltimaEncomenda]
+			//     ,Encomendas[AgenciaMeiosId]
+			//     ,'Agencia Meios'[entId]
+			// )
+			VAR _2 =
+			IF( _1 = BLANK(), 0, _1 )
+			RETURN
+			IF( _2 = 0, "OUTROS", Alvo[Alvo (negociação)] )
+			```
+		isHidden
+		lineageTag: 2d678642-474b-4f17-a1c3-f38ecfa3ac5c
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Alvo (negociação)'
+		dataType: string
+		lineageTag: 0b389e90-af61-4c66-873d-27345de6edb2
+		summarizeBy: none
+		sourceColumn: Alvo (negociação)
+
+		annotation SummarizationSetBy = Automatic
+
+	column AlvoPreenchido
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a049e5c-4a70-4639-8ac8-26a685598cff
+		summarizeBy: sum
+		sourceColumn: AlvoPreenchido
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Alvo Yummi'
+		dataType: string
+		lineageTag: 6b910bcb-bb09-4635-9911-5a5adb5c9bd9
+		summarizeBy: none
+		sourceColumn: Alvo Yummi
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Alvo-8617abae-d9db-44c5-900d-87a5d2a612f9 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = "SELECT cod_alvo
+				            , abr_alvo AS [Alvo (negociação)]
+				        --  , abr_alvo_old as [Alvo Yummi]
+				            , CASE abr_alvo_old
+				                WHEN NULL THEN 0
+				                WHEN '' THEN 0
+				                ELSE 1 END AS AlvoPreenchido
+				            , CASE abr_alvo_old
+				                WHEN NULL THEN abr_alvo
+				                WHEN '' THEN abr_alvo
+				                ELSE abr_alvo_old END AS [Alvo Yummi]
+				        FROM Aud_Alvos",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

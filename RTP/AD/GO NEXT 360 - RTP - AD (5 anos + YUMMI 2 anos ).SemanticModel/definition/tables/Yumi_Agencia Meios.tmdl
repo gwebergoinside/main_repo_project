@@ -1,0 +1,70 @@
+table 'Yumi_Agencia Meios'
+	lineageTag: e1cc252b-0e08-473a-8395-ff97e1f27fb8
+
+	column 'Yumi_Central Compras' =
+			
+			
+			SWITCH(
+			    TRUE()
+			        , ISERROR ( FIND ( "DIRECTOS", [Yumi_Agencia Meios] ) ) <> TRUE (), "CLIENTES DIRETOS",
+			        ISERROR ( FIND ( "CARAT", [Yumi_Agencia Meios] ) ) <> TRUE (), "POWER MEDIA",
+			        ISERROR ( FIND ( "ARENA", [Yumi_Agencia Meios] ) ) <> TRUE (), "HAVAS",
+			        ISERROR ( FIND ( "OMD", [Yumi_Agencia Meios] ) ) <> TRUE (), "OMG",
+			        ISERROR ( FIND ( "INITIATIVE", [Yumi_Agencia Meios] ) ) <> TRUE (), "MEGA",
+			        ISERROR ( FIND ( "WAVEMAKER", [Yumi_Agencia Meios] ) ) <> TRUE (), "GRUPO M",
+			        ISERROR ( FIND ( "STARCOM", [Yumi_Agencia Meios] ) ) <> TRUE (), "MEGA",
+			        ISERROR ( FIND ( "MINDSHARE", [Yumi_Agencia Meios] ) ) <> TRUE (), "GRUPO M",
+			        ISERROR ( FIND ( "PHD", [Yumi_Agencia Meios] ) ) <> TRUE (), "OMG",
+			        ISERROR ( FIND ( "MEDIACOM", [Yumi_Agencia Meios] ) ) <> TRUE (), "GRUPO M",
+			        ISERROR ( FIND ( "GROUPM", [Yumi_Agencia Meios] ) ) <> TRUE (), "GRUPO M",
+			        ISERROR ( FIND ( "HAVAS", [Yumi_Agencia Meios] ) ) <> TRUE (), "HAVAS",
+			        ISERROR ( FIND ( "MCCANN", [Yumi_Agencia Meios] ) ) <> TRUE (), "MEGA",
+			        ISERROR ( FIND ( "ZENITH", [Yumi_Agencia Meios] ) ) <> TRUE (), "MEGA",
+			        ISERROR ( FIND ( "STUDIOM", [Yumi_Agencia Meios] ) ) <> TRUE (), "GRUPO M",
+			        ISERROR ( FIND ( "EXPRESSAO", [Yumi_Agencia Meios] ) ) <> TRUE (), "POWER MEDIA",
+			        ISERROR ( FIND ( "MEDIAGATE", [Yumi_Agencia Meios] ) ) <> TRUE (), "POWER MEDIA",
+			        ISERROR ( FIND ( "INDEFINIDO", [Yumi_Agencia Meios] ) ) <> TRUE (), "INDEFINIDO"
+			    , "OUTROS"
+			)
+		isHidden
+		lineageTag: 68908b44-7e6a-49fa-943a-dacc70383eb3
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Yumi_Agencia Meios'
+		dataType: string
+		lineageTag: 1a709a53-ad8a-43db-8b40-313aa6ba88b5
+		summarizeBy: none
+		sourceColumn: Yumi_Agencia Meios
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Yumi_Agencia Meios_Key'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b40f7cbf-1c4a-4a70-8c5a-48f7a8d90d1a
+		summarizeBy: none
+		sourceColumn: Yumi_Agencia Meios_Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Yumi_Agencia Meios-840bf8b2-0bb7-4fe6-a127-605c0cf788dd' = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_media_agency"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(Source, {{"MEDIA_NAME", "Yumi_Agencia Meios"}, {"MEDIA_KEY", "Yumi_Agencia Meios_Key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

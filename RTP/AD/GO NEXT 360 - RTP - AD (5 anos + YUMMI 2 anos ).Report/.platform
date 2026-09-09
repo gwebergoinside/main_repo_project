@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "GO NEXT 360 - RTP - AD (5 anos + YUMMI 2 anos )"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "29ddf976-35da-47c5-b6f0-473eb13f5d78"
+  }
+}

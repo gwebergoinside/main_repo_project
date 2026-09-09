@@ -1,0 +1,38 @@
+table Yumi_TipoSpot
+	lineageTag: 87e33e7d-12d0-4e3a-8b80-7d5a990b3038
+
+	column Yumi_TipoSpot
+		dataType: string
+		lineageTag: b450231e-e83f-4d6f-9a6f-1e08955aae67
+		summarizeBy: none
+		sourceColumn: Yumi_TipoSpot
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_TipoSpot_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4488f0b1-1fd4-4055-9dbd-fcc50b068192
+		summarizeBy: none
+		sourceColumn: Yumi_TipoSpot_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_TipoSpot-7080cba2-380a-49fe-9894-8facf582b724 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_type"]}[Data],
+				    #"Replaced Value" = Table.ReplaceValue(Source, "#(0002)","SEM TYPE",Replacer.ReplaceText,{"TYPE_NAME"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Replaced Value",{{"TYPE_NAME", "Yumi_TipoSpot"}, {"TYPE_KEY", "Yumi_TipoSpot_key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

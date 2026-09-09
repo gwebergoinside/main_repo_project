@@ -1,0 +1,96 @@
+table d_Neg_EcrDescricao
+	isHidden
+	lineageTag: 32969dc7-1181-4f6a-a393-6c207ccbfcb1
+
+	column tipEcrId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e72f3908-faba-43c6-9b44-2f3b1669ccea
+		summarizeBy: none
+		sourceColumn: tipEcrId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrDescricao
+		dataType: string
+		isHidden
+		lineageTag: 6d3bbc7b-cb77-42c1-9051-a69d3e495624
+		summarizeBy: none
+		sourceColumn: tipEcrDescricao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrCodigo
+		dataType: string
+		isHidden
+		lineageTag: dfbb061c-e976-4b68-a836-79f123247668
+		summarizeBy: none
+		sourceColumn: tipEcrCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrSigla
+		dataType: string
+		isHidden
+		lineageTag: 29b7d2fe-6820-4990-866c-0cbc4264c4e1
+		summarizeBy: none
+		sourceColumn: tipEcrSigla
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipEcrMancha
+		dataType: double
+		isHidden
+		lineageTag: 434b9642-ae4b-4307-a56e-aef08695fe51
+		summarizeBy: none
+		sourceColumn: tipEcrMancha
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tipEcrColor
+		dataType: string
+		isHidden
+		lineageTag: cacb5c59-7443-4e4d-b4cd-fdc34adc0295
+		summarizeBy: none
+		sourceColumn: tipEcrColor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition d_Neg_EcrDescricao-d3992721-fbc7-4c8c-977b-02a8bcc56b5c = m
+		mode: import
+		queryGroup: Negociações
+		source =
+				let
+				    SQL = "SELECT
+				              tipEcrId
+				            , tipEcrDescricao
+				            , tipEcrCodigo
+				            , tipEcrSigla
+				            , tipEcrMancha
+				            , tipEcrColor
+				        FROM tiposEcra",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

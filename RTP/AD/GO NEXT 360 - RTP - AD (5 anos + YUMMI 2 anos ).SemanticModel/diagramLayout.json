@@ -1,0 +1,1423 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 12316.666666666666,
+        "y": 425.55555555555554
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 2329.5,
+            "y": 1750.2
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 62
+        },
+        {
+          "location": {
+            "x": 1941.2,
+            "y": 2055.6
+          },
+          "nodeIndex": "Canais",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 53
+        },
+        {
+          "location": {
+            "x": 5242.5,
+            "y": 1446.6
+          },
+          "nodeIndex": "GRP Simulador",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 74
+        },
+        {
+          "location": {
+            "x": 2658.6,
+            "y": 693.5
+          },
+          "nodeIndex": "GrupoCanais",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 54
+        },
+        {
+          "location": {
+            "x": 5630.8,
+            "y": 1482.6
+          },
+          "nodeIndex": "Ligacao Inv-Map",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 55
+        },
+        {
+          "location": {
+            "x": 6019,
+            "y": 1446.6
+          },
+          "nodeIndex": "Mapeamento",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 56
+        },
+        {
+          "location": {
+            "x": 2832,
+            "y": 1649.6
+          },
+          "nodeIndex": "Ocupacao",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 57
+        },
+        {
+          "location": {
+            "x": 1717.2,
+            "y": 2505.9
+          },
+          "nodeIndex": "Propostas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 58
+        },
+        {
+          "location": {
+            "x": 3220.2,
+            "y": 1922.8
+          },
+          "nodeIndex": "Variacao Receita",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 68
+        },
+        {
+          "location": {
+            "x": 3384.4,
+            "y": 731.9
+          },
+          "nodeIndex": "LigacaoINVMAP",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 73
+        },
+        {
+          "location": {
+            "x": 2443.7,
+            "y": 2077
+          },
+          "nodeIndex": "Objetivos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 60
+        },
+        {
+          "location": {
+            "x": 6795.5,
+            "y": 1470.6
+          },
+          "nodeIndex": "Alvos Var",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 75
+        },
+        {
+          "location": {
+            "x": 7183.8,
+            "y": 1494.6
+          },
+          "nodeIndex": "TipoCliente",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 49
+        },
+        {
+          "location": {
+            "x": 7572,
+            "y": 1506.6
+          },
+          "nodeIndex": "Table",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 50
+        },
+        {
+          "location": {
+            "x": 7960.3,
+            "y": 1494.6
+          },
+          "nodeIndex": "Titulos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 51
+        },
+        {
+          "location": {
+            "x": 2882.9,
+            "y": 2206.3
+          },
+          "nodeIndex": "Calendario comparativo",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 61
+        },
+        {
+          "location": {
+            "x": 2735.3,
+            "y": 0
+          },
+          "nodeIndex": "Bonus",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 46
+        },
+        {
+          "location": {
+            "x": 8348.5,
+            "y": 1506.6
+          },
+          "nodeIndex": "Centrais",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 47
+        },
+        {
+          "location": {
+            "x": 5403.5555555555566,
+            "y": 2059.4444444444443
+          },
+          "nodeIndex": "Negociacao",
+          "nodeLineageTag": "cfea3ff2-908a-44fb-9f91-7eaa000d87e7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 63
+        },
+        {
+          "location": {
+            "x": 1367.2,
+            "y": 1081
+          },
+          "nodeIndex": "OrdemPubClassificacao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 64
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1762.7
+          },
+          "nodeIndex": "Produtos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 48
+        },
+        {
+          "location": {
+            "x": 1755.4,
+            "y": 1016.3
+          },
+          "nodeIndex": "Outros Custos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 79
+        },
+        {
+          "location": {
+            "x": 1516.1,
+            "y": 2960.1
+          },
+          "nodeIndex": "d_Neg_Característica",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 65
+        },
+        {
+          "location": {
+            "x": 2176.1,
+            "y": 2522.3
+          },
+          "nodeIndex": "d_Neg_TaxaMultiProduto",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 42
+        },
+        {
+          "location": {
+            "x": 2819.6,
+            "y": 2674.1
+          },
+          "nodeIndex": "d_Neg_Cond_Neg",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 43
+        },
+        {
+          "location": {
+            "x": 1127.9,
+            "y": 3113.8
+          },
+          "nodeIndex": "d_Neg_Posicoes",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 44
+        },
+        {
+          "location": {
+            "x": 2264.2,
+            "y": 2985.5
+          },
+          "nodeIndex": "d_Neg_Audiencia",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 45
+        },
+        {
+          "location": {
+            "x": 1436.2,
+            "y": 3414.4
+          },
+          "nodeIndex": "d_Neg_EcrDescricao",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 67
+        },
+        {
+          "location": {
+            "x": 2242.4,
+            "y": 1262.8
+          },
+          "nodeIndex": "Multiprodutos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 66
+        },
+        {
+          "location": {
+            "x": 388.2,
+            "y": 1892.4
+          },
+          "nodeIndex": "d_Neg_Descontos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 70
+        },
+        {
+          "location": {
+            "x": 8736.8,
+            "y": 1494.6
+          },
+          "nodeIndex": "Valor",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 40
+        },
+        {
+          "location": {
+            "x": 776.5,
+            "y": 2111.3
+          },
+          "nodeIndex": "Central",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 41
+        },
+        {
+          "location": {
+            "x": 1488.8,
+            "y": 1336.6
+          },
+          "nodeIndex": "FlagFaturacao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 69
+        },
+        {
+          "location": {
+            "x": 978.9,
+            "y": 1015.7
+          },
+          "nodeIndex": "TipoNeg",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 78
+        },
+        {
+          "location": {
+            "x": 9125,
+            "y": 1420.6
+          },
+          "nodeIndex": "~Medidas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 39
+        },
+        {
+          "location": {
+            "x": 1553,
+            "y": 1487.4
+          },
+          "nodeIndex": "Rappel",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 72
+        },
+        {
+          "location": {
+            "x": 9513.3,
+            "y": 1494.6
+          },
+          "nodeIndex": "images",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 9901.5,
+            "y": 1506.6
+          },
+          "nodeIndex": "TipoRappelComissao",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 1124,
+            "y": 480.4
+          },
+          "nodeIndex": "Pacotes",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 38
+        },
+        {
+          "location": {
+            "x": 10289.8,
+            "y": 1494.6
+          },
+          "nodeIndex": "Tipo_Taxas",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 76
+        },
+        {
+          "location": {
+            "x": 10678,
+            "y": 1518.6
+          },
+          "nodeIndex": "AlvoPadrao",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 11066.3,
+            "y": 1518.6
+          },
+          "nodeIndex": "DescontoCartoonNetwork",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 11454.5,
+            "y": 1518.6
+          },
+          "nodeIndex": "DescontoCMTV",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 11842.8,
+            "y": 1518.6
+          },
+          "nodeIndex": "DescontoRTP",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 12231,
+            "y": 1518.6
+          },
+          "nodeIndex": "DescontoSIC",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 12619.3,
+            "y": 1518.6
+          },
+          "nodeIndex": "DescontoTVI",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 13007.5,
+            "y": 1518.6
+          },
+          "nodeIndex": "logo header",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 13395.8,
+            "y": 1518.6
+          },
+          "nodeIndex": "DuracaoBase",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 6819.6219667943806,
+            "y": 4754.3282247765
+          },
+          "nodeIndex": "Audiencias",
+          "nodeLineageTag": "22869a1e-2169-498c-8734-622956bb0ce8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 77
+        },
+        {
+          "location": {
+            "x": 13784,
+            "y": 1518.6
+          },
+          "nodeIndex": "AlvoPadraoInvest",
+          "nodeLineageTag": "fa4d6133-9a25-4bfd-9495-dbd07c96d55b",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 2143.7,
+            "y": 808.6
+          },
+          "nodeIndex": "Encomendas",
+          "nodeLineageTag": "487f0557-de7d-46f9-9c81-8186b7bd6a9d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1212,
+            "y": 2297.3
+          },
+          "nodeIndex": "Executivos",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 2996.1,
+            "y": 1100.6
+          },
+          "nodeIndex": "DayPart",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 1164.7,
+            "y": 1825.1
+          },
+          "nodeIndex": "Categoria",
+          "nodeLineageTag": "752e4a87-a3dc-4073-aaad-cd9f9593af0a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 81
+        },
+        {
+          "location": {
+            "x": 1941.2,
+            "y": 1560.5
+          },
+          "nodeIndex": "TipoPublicidade",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 1249.5,
+            "y": 2751.6
+          },
+          "nodeIndex": "SectorAtividade",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 1600.2,
+            "y": 1941.7
+          },
+          "nodeIndex": "Faturacao",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 2457,
+            "y": 526.3
+          },
+          "nodeIndex": "Entidade_Faturar",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 80
+        },
+        {
+          "location": {
+            "x": 1968.2,
+            "y": 535.1
+          },
+          "nodeIndex": "Agencia",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1367.2,
+            "y": 810.6
+          },
+          "nodeIndex": "Descricao_Campanhas",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3494.2,
+            "y": 1408.1
+          },
+          "nodeIndex": "FaixaHoraria",
+          "nodeLineageTag": "5c6bd435-c40f-4c73-9ae3-086a63c95d3c",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3472.8,
+            "y": 2006.7
+          },
+          "nodeIndex": "Yumi_Spot",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4477.8,
+            "y": 1910.7
+          },
+          "nodeIndex": "Yumi_NO",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4659,
+            "y": 1533.4
+          },
+          "nodeIndex": "Yumi_TO",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4270.7,
+            "y": 1129.9
+          },
+          "nodeIndex": "Yumi_Valores",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3882.5,
+            "y": 1545.9
+          },
+          "nodeIndex": "Yumi_Exibição",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3106,
+            "y": 1248
+          },
+          "nodeIndex": "Yumi_Canal",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3384.4,
+            "y": 1130.2
+          },
+          "nodeIndex": "Yumi_Anunciante",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3593.7,
+            "y": 2289
+          },
+          "nodeIndex": "Yumi_Marca",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4815.2,
+            "y": 1179.1
+          },
+          "nodeIndex": "Yumi_Código Break",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3982,
+            "y": 2454
+          },
+          "nodeIndex": "Yumi_LocalizaçãoSpot",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3558.1,
+            "y": 957.7
+          },
+          "nodeIndex": "Yumi_Agencia Meios",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4270.7,
+            "y": 1628.4
+          },
+          "nodeIndex": "Yumi_Programa",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3946.4,
+            "y": 1230
+          },
+          "nodeIndex": "Yumi_Setor",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3746,
+            "y": 2000.1
+          },
+          "nodeIndex": "Yumi_SubMarca",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3856.3,
+            "y": 1401.7
+          },
+          "nodeIndex": "Yumi_SubTipoProg",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3852,
+            "y": 960.3
+          },
+          "nodeIndex": "Yumi_Alvo",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4854.3,
+            "y": 2264.9
+          },
+          "nodeIndex": "Yumi_TipoSpot",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3442.2,
+            "y": 449.7
+          },
+          "nodeIndex": "Yumi_TipoProg",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1755.4,
+            "y": 817.3
+          },
+          "nodeIndex": "Agencia Meios",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2347,
+            "y": 196.1
+          },
+          "nodeIndex": "Alvo",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2418.3,
+            "y": 1047.8
+          },
+          "nodeIndex": "Anunciante",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1926.7,
+            "y": 228.8
+          },
+          "nodeIndex": "Codigo Break",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6407.3,
+            "y": 1458.6
+          },
+          "nodeIndex": "Simulador % Ocupação",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 15169.762395965838,
+            "y": 36
+          },
+          "nodeIndex": "Duracao",
+          "nodeLineageTag": "c2c4c9ec-bc70-404f-8e0d-21af4ba4c3aa",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 16671.287187897513,
+            "y": 60
+          },
+          "nodeIndex": "DuracaoBaseOther",
+          "nodeLineageTag": "667aefaa-a900-468b-bec0-8b5238f183c9",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 14419,
+            "y": 0
+          },
+          "nodeIndex": "Simulador Dur Ocupação",
+          "nodeLineageTag": "8f36c095-7168-491a-afbf-f36e98185536",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 15545.143593948756,
+            "y": 36
+          },
+          "nodeIndex": "Grupo",
+          "nodeLineageTag": "90d10fe1-3016-4aef-a06f-530628db8253",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 15218.302569709454,
+            "y": 425.77777777777783
+          },
+          "nodeIndex": "Negociacao Detalhe",
+          "nodeLineageTag": "e16149a5-4a32-43f2-9c1e-33df20012b61",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 16295.905989914594,
+            "y": 48
+          },
+          "nodeIndex": "Objetivos GRP",
+          "nodeLineageTag": "49d451d8-5888-4a6d-aa1a-008b2eb90947",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 14794.381197982919,
+            "y": 12
+          },
+          "nodeIndex": "TaxaPosição",
+          "nodeLineageTag": "02a7c7d4-2d5a-4161-b226-d8318ed2e6c7",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 14135,
+            "y": 0
+          },
+          "nodeIndex": "AnoUpdateGMedia",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 90,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 109.80539528970792,
+            "y": 746.08697343031315
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 1055.0404837359019,
+            "y": -10
+          },
+          "nodeIndex": "DayPart",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1317.620855818418,
+            "y": 1000.4466978146098
+          },
+          "nodeIndex": "Yumi_Spot",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1562.3497422150574,
+            "y": 359.31088853648532
+          },
+          "nodeIndex": "Yumi_NO",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10,
+            "y": 489.94329623130193
+          },
+          "nodeIndex": "Yumi_TO",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 807.08148845603159,
+            "y": 553.54402394037493
+          },
+          "nodeIndex": "Yumi_Valores",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 910.70179050838681,
+            "y": 196.46286944311805
+          },
+          "nodeIndex": "Yumi_Exibição",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 399.63186594599847,
+            "y": 523.25675404915387
+          },
+          "nodeIndex": "Yumi_Canal",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 517.21748604876916,
+            "y": 907.2401058434632
+          },
+          "nodeIndex": "Yumi_Anunciante",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 721.58021668241076,
+            "y": 13.550170425607803
+          },
+          "nodeIndex": "Yumi_Marca",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1275.1619487876114,
+            "y": 196.34646534053195
+          },
+          "nodeIndex": "Yumi_Código Break",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 317.49633685753884,
+            "y": 316.8139342759905
+          },
+          "nodeIndex": "Yumi_Agencia Meios",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1790.565421095077,
+            "y": 613.41595518712438
+          },
+          "nodeIndex": "Yumi_Programa",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 737.95040244827715,
+            "y": 1113.1615440511796
+          },
+          "nodeIndex": "Yumi_Setor",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 344.97972084220783,
+            "y": 137.1309287428362
+          },
+          "nodeIndex": "Yumi_SubMarca",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1851.7117544591354,
+            "y": 342.22572635566803
+          },
+          "nodeIndex": "Yumi_SubTipoProg",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 419.285238942641,
+            "y": 1112.5893912554632
+          },
+          "nodeIndex": "Yumi_Alvo",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1027.7426922079158,
+            "y": 1036.3662230207165
+          },
+          "nodeIndex": "Yumi_TipoSpot",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 622.13785727650327,
+            "y": 318.80843053532328
+          },
+          "nodeIndex": "Yumi_TipoProg",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Investimento",
+      "zoomValue": 58.368490954356581,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 295,
+            "y": 235
+          },
+          "nodeIndex": "Encomendas",
+          "nodeLineageTag": "487f0557-de7d-46f9-9c81-8186b7bd6a9d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 817,
+            "y": 178
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "55b9f423-4ac7-447b-91d2-cb060f18fd57",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 1",
+  "defaultDiagram": "All tables"
+}

@@ -1,0 +1,565 @@
+table Yumi_Exibição
+	lineageTag: f4f3dcac-f04e-4699-9697-803d703823c8
+
+	measure Investimento =
+			
+			SUM ( [Investimento_apoio] )
+		formatString: #,0
+		isHidden
+		lineageTag: 33e6472f-6a85-476a-b2e9-a8c0da56d131
+
+		changedProperty = IsHidden
+
+	measure 'Investimento LY %' =
+			
+			VAR _LY =
+			    CALCULATE ( [Investimento], SAMEPERIODLASTYEAR ( Calendario[Data] ) )
+			RETURN
+			    DIVIDE ( [Investimento] - _LY, _LY )
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		lineageTag: 70903eb5-3d88-476c-a847-1ce91aa33b31
+
+		changedProperty = IsHidden
+
+	measure Ultimo_Carregamento =
+			
+			"Último Carregamento: "
+			    & CALCULATE (
+			        FORMAT ( MAX ( 'Yumi_Exibição'[DATE] ), "dd/mm/yyyy", "pt-PT" ),
+			        ALL ( 'Yumi_Exibição' )
+			    )
+		isHidden
+		lineageTag: 4c92acd8-8d58-4294-92f3-45105640f379
+
+		changedProperty = IsHidden
+
+	column DayPart =
+			
+			// IF(
+			//     YEAR( 'Yumi_Exibição'[DATE] ) <= 2022
+			//     ,SWITCH(
+			//         TRUE()
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 390  && 'Yumi_Exibição'[Horario_Minutos] < 480,  "06:30 - 07:59"
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 480  && 'Yumi_Exibição'[Horario_Minutos] < 720,  "08:00 - 11:59"
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 720  && 'Yumi_Exibição'[Horario_Minutos] < 870,  "12:00 - 14:29"
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 870  && 'Yumi_Exibição'[Horario_Minutos] < 1080, "14:30 - 17:59"
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 1080 && 'Yumi_Exibição'[Horario_Minutos] < 1200, "18:00 - 19:59"
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 1200 && 'Yumi_Exibição'[Horario_Minutos] < 1350, "20:00 - 22:29"
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 1350 && 'Yumi_Exibição'[Horario_Minutos] < 1440, "22:30 - 23:59"
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 1440 && 'Yumi_Exibição'[Horario_Minutos] < 1590, "24:00 - 26:29"
+			//         ,'Yumi_Exibição'[Horario_Minutos] >= 1590 || 'Yumi_Exibição'[Horario_Minutos] < 390 , "26:30 - 06:29"
+			//         ,"Outro"
+			//     )
+			//     ,
+			    SWITCH(
+			        TRUE()
+			        , CONTAINSSTRING('Yumi_Exibição'[BREAK_CODE], "*INFO13*"), "INFO13"
+			        , CONTAINSSTRING('Yumi_Exibição'[BREAK_CODE], "*INFO20*"), "INFO20"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 390  && 'Yumi_Exibição'[Horario_Minutos] < 480,  "06:30 - 07:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 480  && 'Yumi_Exibição'[Horario_Minutos] < 720,  "08:00 - 11:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 720  && 'Yumi_Exibição'[Horario_Minutos] < 870,  "12:00 - 14:29"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 870  && 'Yumi_Exibição'[Horario_Minutos] < 1140, "14:30 - 18:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1140 && 'Yumi_Exibição'[Horario_Minutos] < 1200, "19:00 - 19:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1200 && 'Yumi_Exibição'[Horario_Minutos] < 1260, "20:00 - 20:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1260 && 'Yumi_Exibição'[Horario_Minutos] < 1380, "21:00 - 22:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1380 && 'Yumi_Exibição'[Horario_Minutos] < 1590, "23:00 - 26:29"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1590 || 'Yumi_Exibição'[Horario_Minutos] < 390 , "26:30 - 06:29"
+			        ,"Outro"
+			    )
+			// )
+		isHidden
+		lineageTag: 45f3d48b-8825-43cf-b57d-32d4b2b87d55
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora = LEFT('Yumi_Exibição'[TIME_SPOT],2)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 48dbf898-dbaf-47b7-93cf-2c7c9d17432b
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grupo Canais' =
+			
+			SWITCH(
+			    TRUE()
+			    ,'Yumi_Exibição'[CHANNEL_KEY] = 15, "TVI"
+			    ,RELATED(GrupoCanais[Agrupador])
+			)
+		isHidden
+		lineageTag: 3ecbbf0d-99c9-453e-9929-b65822eae827
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chave = RELATED('Yumi_Canal'[Yumi_Canal])&'Yumi_Exibição'[DATE]&'Yumi_Exibição'[Yumi_Hora de Inicio]
+		isHidden
+		lineageTag: 6830a4bd-5b4d-43f2-8a14-6121cba3aa80
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdAnuncianteAD = ```
+			
+			VAR _1 = 
+			CALCULATE (
+			    FIRSTNONBLANK ( 'Ligacao Inv-Map'[IdAnunciante], 1 ),
+			    FILTER ( ALL ( 'Ligacao Inv-Map' ), 'Ligacao Inv-Map'[Anunciante] = 'Yumi_Exibição'[Anunciante] )
+			)
+			RETURN
+			IF.EAGER( _1 = BLANK(), 'Yumi_Exibição'[ADVERTISER_KEY] + 99999999999999999, _1 )
+			```
+		isHidden
+		formatString: 0
+		lineageTag: 7c321683-6453-49d0-8e09-69e86ad02027
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Anunciante = LOOKUPVALUE( Yumi_Anunciante[Yumi_Anunciante],Yumi_Anunciante[Yumi_Anunciante_Key], 'Yumi_Exibição'[ADVERTISER_KEY] )
+		isHidden
+		lineageTag: 80e12ae2-4b11-44d8-83f5-37067f6bb017
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Horario_Minutos = ```
+			
+			VAR Hours = 'Yumi_Exibição'[Hora]*60 
+			VAR Minutes = FORMAT( MID( 'Yumi_Exibição'[Yumi_Hora de Inicio],4,2), "General Number") 
+			VAR Seconds = FORMAT( RIGHT('Yumi_Exibição'[Yumi_Hora de Inicio],2), "General Number")/60 
+			
+			RETURN
+			Hours+ Minutes + Seconds
+			```
+		isHidden
+		formatString: 0
+		lineageTag: 68ddc980-fc62-419d-93e2-e6f255f6f8b1
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo_Ordem =
+			
+			SWITCH(
+			    TRUE()
+			    ,'Yumi_Exibição'[DayPart] = "Manhã 1",  1
+			    ,'Yumi_Exibição'[DayPart] = "Manhã 2",2
+			    ,'Yumi_Exibição'[DayPart] = "Almoço",3
+			    ,'Yumi_Exibição'[DayPart] = "Tarde",4
+			    ,'Yumi_Exibição'[DayPart] = "Acesso Prime",5
+			    ,'Yumi_Exibição'[DayPart] = "Prime Time 1",6
+			    ,'Yumi_Exibição'[DayPart] = "Prime Time 2",7
+			    ,'Yumi_Exibição'[DayPart] = "Late Night",8
+			    ,'Yumi_Exibição'[DayPart] = "Madrugada",9
+			    ,'Yumi_Exibição'[DayPart] = "Outro",10
+			)
+		isHidden
+		formatString: 0
+		lineageTag: 4b230e20-a624-4868-a916-478611f6b762
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Flag_Exclusivo = CALCULATE(DISTINCTCOUNT('Yumi_Exibição'[Grupo Canais]),ALLEXCEPT('Yumi_Exibição','Yumi_Exibição'[ADVERTISER_KEY],'Yumi_Exibição'[Year],'Yumi_Exibição'[Month]),'Yumi_Exibição'[Grupo Canais]<>blank(),'Yumi_Exibição'[Yumi_InvestimentoTabela]>0)
+		isHidden
+		formatString: 0
+		lineageTag: c8c0412b-0691-459c-ae1e-bfb1aaf7a46a
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountCanais = CALCULATE( DISTINCTCOUNT( 'Yumi_Exibição'[CHANNEL_KEY] ), ALLEXCEPT( 'Yumi_Exibição', 'Yumi_Exibição'[Year], 'Yumi_Exibição'[Month]  , 'Yumi_Exibição'[ADVERTISER_KEY] ) )
+		isHidden
+		formatString: 0
+		lineageTag: 787ca70f-ec93-495c-8841-3c616b36bd4f
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Investimento_apoio = ```
+			
+			VAR selected = 'Yumi_Exibição'[Grupo Canais]
+			VAR soma = 'Yumi_Exibição'[Yumi_InvestimentoTabela]
+			VAR Result = 
+			SWITCH (
+			    --selected,
+			    TRUE(),
+			    [Grupo Canais] = "TVI", soma - (soma * descontotvi ),
+				[Grupo Canais] = "RTP", soma - (soma * descontortp ),
+				[Grupo Canais] = "CMTV", soma - (soma * descontocmtv ),
+				[Grupo Canais] = "SIC", soma - (soma * descontosic ),
+			    [Grupo Canais] = "Cartoon Network", soma - (soma * descontocartoonnetwork ),
+			    soma
+			)
+			RETURN
+			Result
+			```
+		isHidden
+		lineageTag: 8af39b2a-c5fe-43d7-80f7-8804a8f3ea65
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 67e9acff-218e-4c63-a333-f5eeb5b77e6d
+		summarizeBy: none
+		sourceColumn: DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Yumi_Hora de Inicio'
+		dataType: string
+		lineageTag: 2bb5739f-9249-4cf8-87aa-d8916f0bb522
+		summarizeBy: none
+		sourceColumn: Yumi_Hora de Inicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BREAK_CODE
+		dataType: string
+		isHidden
+		lineageTag: ee16b0d0-7924-4a2d-bead-0d4985e0af7d
+		summarizeBy: none
+		sourceColumn: BREAK_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPOT_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b3e5853c-ae30-4075-b1af-83ed73d0904c
+		summarizeBy: none
+		sourceColumn: SPOT_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ADVERTISER_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 80fcec55-5126-4cbb-990b-613b0560fa0d
+		summarizeBy: none
+		sourceColumn: ADVERTISER_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BRAND_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: deef2568-322c-45ec-a268-8d985ae57535
+		summarizeBy: none
+		sourceColumn: BRAND_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUB_BRAND_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bc94d102-bb6c-422a-a30f-f97638a85e31
+		summarizeBy: none
+		sourceColumn: SUB_BRAND_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SECTOR_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 370f34b1-8e30-4ed8-ad14-729d003e87f5
+		summarizeBy: none
+		sourceColumn: SECTOR_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MEDIA_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5e421771-1530-4dbf-8074-862f3c697344
+		summarizeBy: none
+		sourceColumn: MEDIA_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CHANNEL_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4b06681e-76b8-4224-9ead-307e16c9b492
+		summarizeBy: none
+		sourceColumn: CHANNEL_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROGRAM_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: eecb76cf-a31a-4166-aa4f-86784e3c9f7c
+		summarizeBy: none
+		sourceColumn: PROGRAM_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TYPOLOGY_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fd71a034-4502-4921-b3ac-f15666713d56
+		summarizeBy: none
+		sourceColumn: TYPOLOGY_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUB_TYPOLOGY_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8283a775-5531-430d-b27f-da68e62d13c0
+		summarizeBy: none
+		sourceColumn: SUB_TYPOLOGY_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TYPE_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 45842bc8-98a6-4452-8e2a-10b376f936f4
+		summarizeBy: none
+		sourceColumn: TYPE_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LOCATION_KEY
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 41a20180-228c-4966-a27e-2e741ed26440
+		summarizeBy: none
+		sourceColumn: LOCATION_KEY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column NO
+		dataType: string
+		isHidden
+		lineageTag: 3f76d1b4-cce2-42a7-96b2-9a33b92903fa
+		summarizeBy: none
+		sourceColumn: NO
+
+		changedProperty = IsHidden
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column TO
+		dataType: string
+		isHidden
+		lineageTag: 22abb865-ac39-4d64-ba89-b28812bc3635
+		summarizeBy: none
+		sourceColumn: TO
+
+		changedProperty = IsHidden
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_DuraçãoSpot
+		dataType: int64
+		formatString: #,0
+		lineageTag: 4aadaef8-7277-4e9b-9bec-7cf9ffb3820a
+		summarizeBy: sum
+		sourceColumn: Yumi_DuraçãoSpot
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_InvestimentoTabela
+		dataType: double
+		lineageTag: 28fc212f-b7fe-4379-a2b3-d14bad61c42d
+		summarizeBy: sum
+		sourceColumn: Yumi_InvestimentoTabela
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TIME_SPOT
+		dataType: string
+		isHidden
+		lineageTag: d318135d-6f11-4595-8e8a-db03c04e581e
+		summarizeBy: none
+		sourceColumn: TIME_SPOT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faixa_Horaria = LEFT(FORMAT('Yumi_Exibição'[Yumi_Hora de Inicio], "00"),2)
+		isHidden
+		lineageTag: 448c9092-3ea9-4b4c-a0dd-3d1e2a5ad801
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart Antigo' = ```
+			
+			    SWITCH(
+			        TRUE()
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 390  && 'Yumi_Exibição'[Horario_Minutos] < 480,  "06:30 - 07:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 480  && 'Yumi_Exibição'[Horario_Minutos] < 720,  "08:00 - 11:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 720  && 'Yumi_Exibição'[Horario_Minutos] < 870,  "12:00 - 14:29"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 870  && 'Yumi_Exibição'[Horario_Minutos] < 1080, "14:30 - 17:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1080 && 'Yumi_Exibição'[Horario_Minutos] < 1200, "18:00 - 19:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1200 && 'Yumi_Exibição'[Horario_Minutos] < 1350, "20:00 - 22:29"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1350 && 'Yumi_Exibição'[Horario_Minutos] < 1440, "22:30 - 23:59"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1440 && 'Yumi_Exibição'[Horario_Minutos] < 1590, "24:00 - 26:29"
+			        ,'Yumi_Exibição'[Horario_Minutos] >= 1590 || 'Yumi_Exibição'[Horario_Minutos] < 390 , "26:30 - 06:29"
+			        ,"Outro"
+			    )
+			```
+		isHidden
+		lineageTag: dbbef8f6-98d5-40ad-8312-838c47988f88
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR
+		dataType: int64
+		formatString: 0
+		lineageTag: 2634805e-017f-4da4-9659-018063449434
+		summarizeBy: sum
+		sourceColumn: YEAR
+
+		annotation SummarizationSetBy = Automatic
+
+	column MONTH
+		dataType: int64
+		formatString: 0
+		lineageTag: 8480f471-7806-4940-9261-6f8f12cbcfb6
+		summarizeBy: sum
+		sourceColumn: MONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_Exibição-beedf99d-465d-4c58-9d14-486feffc7527 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    SQL = " SELECT
+				              DATE
+				            , YEAR(DATE) AS YEAR
+				            , MONTH(DATE) AS MONTH
+				            , START_HOUR -- AS `Yumi_Hora de Inicio`
+				        --  , END_HOUR -- AS `Yumi_Hora de Fim`
+				            , BREAK_CODE
+				            , SPOT_KEY
+				            , ADVERTISER_KEY
+				            , BRAND_KEY
+				            , SUB_BRAND_KEY
+				            , SECTOR_KEY
+				            , MEDIA_KEY
+				            , CHANNEL_KEY
+				            , PROGRAM_KEY
+				            , TYPOLOGY_KEY
+				            , SUB_TYPOLOGY_KEY
+				            , TYPE_KEY
+				            , LOCATION_KEY
+				            , NO
+				            , TO
+				            , DURATION -- AS `Yumi_DuraçãoSpot`
+				            , INVESTMENT -- AS `Yumi_InvestimentoTabela`
+				        --  , DATE_KEY
+				            , TIME_SPOT
+				        --  , INVESTMENT_EQUI -- AS `Yumi_InvestimentoTabelaEq`
+				        FROM pub.fact_exhibition
+				        WHERE YEAR(DATE) >= YEAR(CURRENT_DATE()) - " & AnoUpdateYummi,
+				    Source = fx_dbricks(SQL),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"START_HOUR", "Yumi_Hora de Inicio"}, /* {"END_HOUR", "Yumi_Hora de Fim"}, {"INVESTMENT_EQUI", "Yumi_InvestimentoTabelaEq"}, */ {"INVESTMENT", "Yumi_InvestimentoTabela"}, {"DURATION", "Yumi_DuraçãoSpot"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,33 @@
+table 'DayPart Ocupacao'
+	lineageTag: a0ec39e4-06d6-4e25-bee9-22111be27be0
+
+	column Horas
+		isHidden
+		formatString: 0
+		lineageTag: 8e915955-f7db-42f6-9856-2e7fa556a7b0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Ocupacao[Horas]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart Ocupação'
+		lineageTag: 057a969a-fb2e-4841-bc9a-2f5583e63eaf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Ocupacao[DayPart Ocupação]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DayPart Ocupacao' = calculated
+		mode: import
+		source =
+				
+				    SUMMARIZE(
+						Ocupacao
+						, Ocupacao[Horas]
+						, Ocupacao[DayPart Ocupação]
+					)
+
+	annotation PBI_Id = bd694f99be5046d98f2c06acf4db2bd7
+

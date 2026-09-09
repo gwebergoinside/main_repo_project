@@ -1,0 +1,26 @@
+table DuracaoBaseOther
+	isHidden
+	lineageTag: 667aefaa-a900-468b-bec0-8b5238f183c9
+
+	column DuracaoBaseOther
+		dataType: string
+		isHidden
+		lineageTag: 9b7a3574-d3b5-4ea1-bc6d-23c0c04d1e9d
+		summarizeBy: none
+		sourceColumn: DuracaoBaseOther
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DuracaoBaseOther = m
+		mode: import
+		queryGroup: BD
+		source = "30" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+

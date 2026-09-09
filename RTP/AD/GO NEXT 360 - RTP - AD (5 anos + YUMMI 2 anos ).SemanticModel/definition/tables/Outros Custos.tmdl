@@ -1,0 +1,342 @@
+table 'Outros Custos'
+	isHidden
+	lineageTag: 33c76a14-308d-43a4-96f6-a60ecfa026d1
+
+	column valor
+		dataType: double
+		isHidden
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		lineageTag: 5eb5d950-d636-479e-9a7c-0959b0718a43
+		summarizeBy: sum
+		sourceColumn: valor
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0db01481-000e-4c63-b151-906bab566d5a
+		summarizeBy: none
+		sourceColumn: ordPubCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: cdd0bf2e-8d06-4574-89bc-891508e37286
+		summarizeBy: none
+		sourceColumn: dia
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column canCodigo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9d73c867-c086-4ca6-b6bb-ccd1a135a2a1
+		summarizeBy: none
+		sourceColumn: canCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipPubId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b26adf52-42e5-4ee1-9333-2d44fe6d0151
+		summarizeBy: none
+		sourceColumn: tipPubId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column camAnunciante
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5125fb87-d923-453b-9d92-ba8c35a33bde
+		summarizeBy: none
+		sourceColumn: camAnunciante
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column camVendedor
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 22023bca-4804-420d-8406-ffda156fff49
+		summarizeBy: none
+		sourceColumn: camVendedor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column negPerTipo
+		dataType: string
+		isHidden
+		lineageTag: 7dfcc250-a7d1-4fa7-be14-5b72008684c3
+		summarizeBy: none
+		sourceColumn: negPerTipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CentralComprasId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 81ca52c6-5866-4203-b69c-5acb64a040b1
+		summarizeBy: none
+		sourceColumn: CentralComprasId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaMeiosId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d8be4e14-fe25-45f3-bd6f-2b32dd735c6b
+		summarizeBy: none
+		sourceColumn: AgenciaMeiosId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ebf57db4-015f-4e8d-bf2a-0b7595f46fcf
+		summarizeBy: none
+		sourceColumn: pacId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EntidadeFacturarId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d5b351f8-9b8f-488e-9fd2-2a27c35ef603
+		summarizeBy: none
+		sourceColumn: EntidadeFacturarId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d60a02f3-ca6b-47b1-9ed0-967744f11bec
+		summarizeBy: none
+		sourceColumn: AgenciaId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DescricaoCampanhas
+		dataType: string
+		isHidden
+		lineageTag: d4fe62c0-16ed-4c14-9236-987417b4849d
+		summarizeBy: none
+		sourceColumn: DescricaoCampanhas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrioridadeId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d3351ae1-a0f9-4bfd-8775-e66e5769bc92
+		summarizeBy: none
+		sourceColumn: PrioridadeId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column camGrupoId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a5d4d297-d82d-4ed8-b53b-7537e68e84f0
+		summarizeBy: none
+		sourceColumn: camGrupoId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column codAlvo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 71294ef7-92b7-43ec-a4bb-4475b11703e1
+		summarizeBy: none
+		sourceColumn: codAlvo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hora =
+			
+			0
+		isHidden
+		formatString: 0
+		lineageTag: 75a8c242-9d02-491e-974d-e79ae84dca8c
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayPart =
+			
+			"23:00 - 26:29"
+		isHidden
+		lineageTag: a9966647-fca9-463e-8722-54f706afe224
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordPubNegociacao
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e60155bc-b4ed-4a93-aa49-d86ed16b11d6
+		summarizeBy: none
+		sourceColumn: ordPubNegociacao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'DayPart Antigo' =
+			
+			"24:00 - 26:29"
+		isHidden
+		lineageTag: 4d0a9f92-fbcb-48f7-ba7a-5cdd96e18870
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoEncomenda = ```
+			
+			    // LOOKUPVALUE( Encomendas[tipo], Encomendas[Nº ordem pub], 'Outros Custos'[ordPubCodigo] )
+			    CALCULATE( 
+			        MAX( Encomendas[tipo] )
+			        ,FILTER( 
+			            ALL( Encomendas ), Encomendas[Nº ordem pub] = 'Outros Custos'[ordPubCodigo]
+			        )
+			        , Encomendas[tipo] <> "X"
+			    )
+			```
+		isHidden
+		lineageTag: 33071244-dc25-4946-aaa3-9e19318e7eab
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TaxaPosição =
+			
+			LOOKUPVALUE( Multiprodutos[Taxa Posição %], Multiprodutos[ordPubCodigo], 'Outros Custos'[ordPubCodigo] )
+		isHidden
+		lineageTag: a61dd045-6f21-4c2d-a16f-c6b7e5c6b39e
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column proId
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f950a38-e31f-48ca-b2ba-7d4ee96bf24d
+		summarizeBy: none
+		sourceColumn: proId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Outros Custos-cf797c06-6a23-4f30-a3c5-e6bc09848300' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = " Select
+				            op.ordPubCodigo,
+				            op.ordPubDetFactValor As valor,
+				            DATEFROMPARTS(ordemPub.ordPubAno, ordemPub.ordPubMes, 1) As dia,
+				            ordemPub.canCodigo,
+				            ordemPub.tipPubId,
+				            campanhas.camAnunciante,
+				            campanhas.camVendedor,
+				            campanhas.camEntidadeFacturar As EntidadeFacturarId,
+				            campanhas.camCentralCompras As CentralComprasId,
+				            campanhas.camDistribuidor As AgenciaMeiosId,
+				            campanhas.camAgencia As AgenciaId,
+				            campanhas.camDescricao As DescricaoCampanhas,
+				            negPeriodos.negPerTipo,
+				            ordemPub.priId As PrioridadeId,
+				            ordemPub.pacId,
+				            campanhas.camGrupoId,
+				            IsNull(ordemPub.codAlvo, " & AlvoPadrao & ") As codAlvo,
+				            ordemPub.ordPubNegociacao,
+				            ordemPub.proId
+				        From
+				            ordemPubDetalheFact op
+				        Left Join ordemPub
+				            On op.ordPubCodigo = ordemPub.ordPubCodigo
+				        Left Join campanhas
+				            On ordemPub.camId = campanhas.camId
+				        Left Join negPeriodos
+				            On ordemPub.ordPubNegociacao = negPeriodos.negPerId
+				        Where
+				            ordemPub.ordPubAno >= Year(GetDate()) - " & AnoUpdateGMedia,
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

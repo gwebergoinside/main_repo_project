@@ -1,0 +1,32 @@
+table TaxaPosição
+	isHidden
+	lineageTag: 02a7c7d4-2d5a-4161-b226-d8318ed2e6c7
+
+	column 'Taxa Posição %'
+		isHidden
+		lineageTag: eed95d63-afce-4b84-b29c-d4cd8fc630f1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Taxa Posição %]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition TaxaPosição = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				SELECTCOLUMNS(
+				    Multiprodutos
+				    ,"Taxa Posição %", Multiprodutos[Taxa Posição %]
+				)
+				
+				VAR Result =
+				FILTER( SUMMARIZE( _1,[Taxa Posição %] ), [Taxa Posição %] <> BLANK() )
+				RETURN
+				Result
+
+	annotation PBI_Id = f526f7c0c4e44eb0ac17164f06e72444
+

@@ -1,0 +1,156 @@
+table Executivos
+	lineageTag: 36e5eba4-e9d1-43c8-b44a-6098b1b6f2ae
+
+	column UtiId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f50b55cf-9fa1-4b03-9897-cf244753828c
+		summarizeBy: none
+		sourceColumn: UtiId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UtiLogin
+		dataType: string
+		isHidden
+		lineageTag: 20f0911f-3630-4f3a-8567-48a96382fa9c
+		summarizeBy: none
+		sourceColumn: UtiLogin
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Executivo
+		dataType: string
+		lineageTag: 4773528a-d1aa-4cac-8c9f-f8fcf38f758b
+		summarizeBy: none
+		sourceColumn: Executivo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UtiEmail
+		dataType: string
+		isHidden
+		lineageTag: abc6a857-d758-4523-93fd-38fd2335d35c
+		summarizeBy: none
+		sourceColumn: UtiEmail
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UtiSenha
+		dataType: string
+		isHidden
+		lineageTag: cbb864e6-4e67-436e-9bf4-8e2e029e9f6b
+		summarizeBy: none
+		sourceColumn: UtiSenha
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UtiContacto
+		dataType: string
+		isHidden
+		lineageTag: ab996f52-97f1-43d9-a99f-484e5ca97a0b
+		summarizeBy: none
+		sourceColumn: UtiContacto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendedorStatus
+		dataType: string
+		lineageTag: 57ae6c03-47ae-4535-ad34-3bbdea402852
+		summarizeBy: none
+		sourceColumn: VendedorStatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column flgResponsavel
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2b1a8aa9-caa8-472b-ba1b-f3d0e65ea24f
+		summarizeBy: sum
+		sourceColumn: flgResponsavel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column flgForcar
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2c5fda33-4e6e-480c-93f2-e8fb770c26df
+		summarizeBy: sum
+		sourceColumn: flgForcar
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UtiCodigoExt
+		dataType: string
+		isHidden
+		lineageTag: 33c6a67d-dc43-4abd-b9b9-5dcca61767b9
+		summarizeBy: none
+		sourceColumn: UtiCodigoExt
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UtiNumFunc
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1df92db2-8f8a-46f9-a9fe-2e6fc7c7180d
+		summarizeBy: sum
+		sourceColumn: UtiNumFunc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UtiAssinatura
+		dataType: string
+		isHidden
+		lineageTag: 43663cf8-8722-43e1-8d76-6f0eb6def2d8
+		summarizeBy: none
+		sourceColumn: UtiAssinatura
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Executivos-88023c6c-105e-48b3-a440-e20d8e769017 = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = "SELECT#(lf)u.UtiId,#(lf)u.UtiLogin,#(lf)u.UtiNome,#(lf)u.UtiEmail,#(lf)u.UtiSenha,#(lf)u.UtiContacto,#(lf)u.UtiStatus,#(lf)u.flgResponsavel,#(lf)u.flgForcar,#(lf)u.UtiCodigoExt,#(lf)u.UtiNumFunc,#(lf)u.UtiAssinatura#(lf)FROM#(lf)dbo.Utilizadores AS u INNER JOIN#(lf)dbo.relGrupoUtilizador AS r ON u.UtiId = r.utiId#(lf)GROUP BY#(lf)u.UtiId,#(lf)u.UtiLogin,#(lf)u.UtiNome,#(lf)u.UtiEmail,#(lf)u.UtiSenha,#(lf)u.UtiContacto,#(lf)u.UtiStatus,#(lf)u.flgResponsavel,#(lf)u.flgForcar,#(lf)u.UtiCodigoExt,#(lf)u.UtiNumFunc,#(lf)u.UtiAssinatura#(lf)#(lf)",
+				    Source = Sql.Database(ServerP, BD, [Query = SQL]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"UtiNome", "Executivo"}, {"UtiStatus", "VendedorStatus"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_QueryRelationships = {"columnCount":12,"keyColumnNames":[],"queryRelationships":[],"columnIdentities":["Section1/Vendedores/Source.{UtiId,0}","Section1/Vendedores/Source.{UtiLogin,1}","Section1/Vendedores/Source.{UtiNome,2}","Section1/Vendedores/Source.{UtiEmail,3}","Section1/Vendedores/Source.{UtiSenha,4}","Section1/Vendedores/Source.{UtiContacto,5}","Section1/Vendedores/Source.{UtiStatus,6}","Section1/Vendedores/Source.{flgResponsavel,7}","Section1/Vendedores/Source.{flgForcar,8}","Section1/Vendedores/Source.{UtiCodigoExt,9}","Section1/Vendedores/Source.{UtiNumFunc,10}","Section1/Vendedores/Source.{UtiAssinatura,11}"],"ColumnCount":12,"KeyColumnNames":[],"ColumnIdentities":["Section1/Vendedores/Source.{UtiId,0}","Section1/Vendedores/Source.{UtiLogin,1}","Section1/Vendedores/Source.{UtiNome,2}","Section1/Vendedores/Source.{UtiEmail,3}","Section1/Vendedores/Source.{UtiSenha,4}","Section1/Vendedores/Source.{UtiContacto,5}","Section1/Vendedores/Source.{UtiStatus,6}","Section1/Vendedores/Source.{flgResponsavel,7}","Section1/Vendedores/Source.{flgForcar,8}","Section1/Vendedores/Source.{UtiCodigoExt,9}","Section1/Vendedores/Source.{UtiNumFunc,10}","Section1/Vendedores/Source.{UtiAssinatura,11}"],"RelationshipInfo":[]}
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

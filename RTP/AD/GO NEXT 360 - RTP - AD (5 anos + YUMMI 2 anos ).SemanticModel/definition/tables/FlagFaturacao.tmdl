@@ -1,0 +1,40 @@
+table FlagFaturacao
+	isHidden
+	lineageTag: 982cb99e-b0c2-40e1-96f2-7eab3267ccdf
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a840aa9b-7e74-4e9c-afe8-51b6bd76fac6
+		summarizeBy: none
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Flag Faturação'
+		dataType: string
+		isHidden
+		lineageTag: 3703987e-c727-4b33-857e-c1decd7d1b44
+		summarizeBy: none
+		sourceColumn: Flag Faturação
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FlagFaturacao-691aa431-1bf5-4ab1-9ef9-9610d07c77f0 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMlDSUXJJLU4sySzLV4rViVYyBAo4QnixAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ID = _t, #"Flag Faturação" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"ID", Int64.Type}, {"Flag Faturação", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

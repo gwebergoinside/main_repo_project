@@ -1,0 +1,34 @@
+table 'Yumi_Código Break'
+	lineageTag: 57d8e12a-833c-4226-aca3-c2c7be6114be
+
+	column 'Yumi_Código Break'
+		lineageTag: cff74aaa-5208-465c-ac7f-7b0964a0d7c8
+		summarizeBy: none
+		sourceColumn: [BREAK_CODE]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Yumi_Código Break-1528cbbd-2f8c-4353-983f-78bbede213b3' = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				SELECTCOLUMNS(
+				    Yumi_Valores
+				    ,"BREAK_CODE", Yumi_Valores[BREAK_CODE]
+				)
+				VAR _2 =
+				SELECTCOLUMNS(
+				    'Yumi_Exibição'
+				    ,"BREAK_CODE", 'Yumi_Exibição'[BREAK_CODE]
+				)
+				
+				VAR _UN =
+				UNION(_1, _2)
+				VAR Result =
+				SUMMARIZE( _UN,[BREAK_CODE])
+				RETURN
+				Result
+
+	annotation PBI_Id = 9d8ffb340f9247d4a3b0c045756e0819
+

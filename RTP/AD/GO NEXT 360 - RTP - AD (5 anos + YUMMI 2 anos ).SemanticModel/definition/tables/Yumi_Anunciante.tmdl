@@ -1,0 +1,51 @@
+table Yumi_Anunciante
+	lineageTag: 95eb7567-323b-4997-841a-ef1413cca2b7
+
+	column IdAdv =
+			
+			VAR _1 = LOOKUPVALUE( 'Yumi_Exibição'[IdAnuncianteAD],'Yumi_Exibição'[Anunciante], Yumi_Anunciante[Yumi_Anunciante] )
+			RETURN
+			IF.EAGER( _1 = BLANK(), Yumi_Anunciante[Yumi_Anunciante_Key] + 99999999999999999, _1 )
+		isHidden
+		formatString: 0
+		lineageTag: 6f5a2d3b-2007-483e-9524-5fcacd44f093
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_Anunciante
+		dataType: string
+		lineageTag: 1f807eef-9f6b-41af-b40c-fc32d0967e6c
+		summarizeBy: none
+		sourceColumn: Yumi_Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_Anunciante_Key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8a65a18d-1b6e-4c2b-b6d6-5b4cc0b90da3
+		summarizeBy: none
+		sourceColumn: Yumi_Anunciante_Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_Anunciante-2fe17f55-0770-4e57-ae4d-4877f5511ff6 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_advertiser"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(Source, {{"ADVERTISER_NAME", "Yumi_Anunciante"}, {"ADVERTISER_KEY", "Yumi_Anunciante_Key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

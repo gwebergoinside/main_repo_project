@@ -1,0 +1,78 @@
+table 'Codigo Break'
+	lineageTag: f7bffef3-f1e2-45d1-a4de-43099783732e
+
+	column greComId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 378b52fa-5c63-457f-ad02-aaa6cab535a7
+		summarizeBy: none
+		sourceColumn: greComId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Codigo Break C/ Encomendas' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    YEAR( MAX( Encomendas[Data Exibição] ) )
+			    ,FILTER(
+			        ALL( Encomendas )
+			        ,Encomendas[greComId] = 'Codigo Break'[greComId]
+			    )
+			)
+			// LOOKUPVALUE( 
+			//     Encomendas[UltimaEncomenda]
+			//     ,Encomendas[AgenciaMeiosId]
+			//     ,'Agencia Meios'[entId]
+			// )
+			VAR _2 =
+			IF( _1 = BLANK(), 0, _1 )
+			RETURN
+			IF( _2 = 0, "OUTROS", 'Codigo Break'[Codigo Break] )
+			```
+		isHidden
+		lineageTag: 297ca741-4488-4298-b490-0c8a1cac0b1b
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Codigo Break'
+		dataType: string
+		lineageTag: a447ba3c-5751-49c0-aba6-edd46ef1ff0e
+		summarizeBy: none
+		sourceColumn: Codigo Break
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Descrição Cod_Break'
+		dataType: string
+		lineageTag: b8fdae0e-d570-49c6-b381-91903f5cc60c
+		summarizeBy: none
+		sourceColumn: Descrição Cod_Break
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Codigo Break-34964ec2-bc2f-4568-b53d-f84ba3f45caf' = m
+		mode: import
+		queryGroup: Encomendas
+		source =
+				let
+				    SQL = "SELECT
+				              greComId
+				            , ecrCodigo AS [Codigo Break]
+				            , ecrDescricao AS [Descrição Cod_Break]
+				        FROM Grelhacomercial
+				        WHERE YEAR(grecomdata) >= YEAR(GETDATE()) - " & AnoUpdateGMedia,
+				    Source = Sql.Database(ServerP, BD, [Query = SQL])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

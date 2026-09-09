@@ -1,0 +1,24 @@
+table DescontoTVI
+	isHidden
+	lineageTag: 21f660fb-80ed-4689-9175-af910d2dc9de
+
+	column DescontoTVI
+		dataType: string
+		isHidden
+		lineageTag: 739861af-c009-4f70-b2ca-4b4d695797de
+		summarizeBy: none
+		sourceColumn: DescontoTVI
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DescontoTVI = m
+		mode: import
+		queryGroup: BD
+		source = "0" meta [IsParameterQuery=true, List={"20", "30"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Text
+

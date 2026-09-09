@@ -1,0 +1,24 @@
+table 'Simulador Dur Ocupação'
+	lineageTag: 8f36c095-7168-491a-afbf-f36e98185536
+
+	measure 'Parâmetro Dur Ocupação' =
+			
+			MIN ( 'Simulador Dur Ocupação'[Parâmetro] )
+		formatString: 0
+		isHidden
+		lineageTag: bdf572f2-fb2c-49bf-a575-4c40718f836d
+
+	column Parâmetro
+		formatString: 0
+		lineageTag: 4b7fc09d-cba0-4bf2-90ef-167bb556c8c5
+		summarizeBy: sum
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Simulador Dur Ocupação' = calculated
+		mode: import
+		source = GENERATESERIES(0, SUM(Ocupacao[OcupacaoNormal]), 1)
+
+	annotation PBI_Id = c382e28b8b184ccabbf4c517ee5bc50b
+

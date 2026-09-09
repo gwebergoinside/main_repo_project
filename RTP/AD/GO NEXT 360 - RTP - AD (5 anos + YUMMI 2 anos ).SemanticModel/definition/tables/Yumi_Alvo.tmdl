@@ -1,0 +1,37 @@
+table Yumi_Alvo
+	lineageTag: b86000a1-7c71-453f-a878-c2fa1443abab
+
+	column Yumi_Alvo
+		dataType: string
+		lineageTag: 84098fab-0994-4a6c-8282-8ba900d0738e
+		summarizeBy: none
+		sourceColumn: Yumi_Alvo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_Alvo_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a1ee29ef-79ac-44b5-aaad-5e2549f0e3c6
+		summarizeBy: none
+		sourceColumn: Yumi_Alvo_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_Alvo-02d731c0-a200-40dd-b9fb-03183044f087 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_target"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(Source, {{"TARGET_KEY", "Yumi_Alvo_key"}, {"TARGET_NAME", "Yumi_Alvo"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

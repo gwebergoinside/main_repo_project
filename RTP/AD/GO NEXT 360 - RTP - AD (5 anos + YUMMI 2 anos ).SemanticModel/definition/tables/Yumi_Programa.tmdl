@@ -1,0 +1,37 @@
+table Yumi_Programa
+	lineageTag: 738d67e5-8eb4-4050-8ba9-e13183fd856c
+
+	column Yumi_Programa
+		dataType: string
+		lineageTag: 10cbb9dd-254f-4d29-a6a6-00ddd2b8cbcc
+		summarizeBy: none
+		sourceColumn: Yumi_Programa
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yumi_Programa_Key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5f7453a0-8e8c-4ab5-be8c-f296e2b02439
+		summarizeBy: none
+		sourceColumn: Yumi_Programa_Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Yumi_Programa-52168fa3-8f14-4939-9ffd-d9963fe9a977 = m
+		mode: import
+		queryGroup: Share
+		source =
+				let
+				    Source = Base{[Name="dim_program"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(Source, {{"PROGRAM_NAME", "Yumi_Programa"}, {"PROGRAM_KEY", "Yumi_Programa_Key"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+
