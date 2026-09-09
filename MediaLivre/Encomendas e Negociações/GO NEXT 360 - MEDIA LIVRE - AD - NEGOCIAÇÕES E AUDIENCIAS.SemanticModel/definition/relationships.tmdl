@@ -37,6 +37,7 @@ relationship 4abae8b9-6d01-7d21-4684-c2014dfc5855
 
 relationship fad9dfc7-848c-2ab1-3d82-2a642126a635
 	isActive: false
+	crossFilteringBehavior: bothDirections
 	fromColumn: pbi_dim_accounts_client.cd_account_agency
 	toColumn: pbi_dim_accounts_agency.cd_account
 
@@ -128,18 +129,6 @@ relationship 2386189c-3642-3e0b-1a83-bbe3ba14a030
 	fromColumn: 'Relação Ambição'.cd_ambicao
 	toColumn: Ambição.Código
 
-relationship 88917366-6d12-902f-5c0a-37ebfef31ef6
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: pbi_dim_accounts_agency.cd_account
-	toColumn: 'Relação Ambição'.cd_account_agency
-
-relationship 79560f08-964b-2fde-fd7d-689a4279de6b
-	isActive: false
-	crossFilteringBehavior: bothDirections
-	fromColumn: pbi_dim_accounts_client.cd_account_agency
-	toColumn: 'Relação Ambição'.cd_account_agency
-
 relationship AutoDetected_dfecd7d3-1dc2-42c2-b44e-c5cc17343b05
 	fromColumn: pbi_vw_indicators.cd_ad_insertion
 	toColumn: pbi_vw_ad_insertion.cd_ad_insertion
@@ -163,4 +152,10 @@ relationship 429f22f8-fdce-bd8b-acb9-850682274ef3
 relationship 3e874d9d-b4bf-02d8-4668-7717dc9c10ec
 	fromColumn: pbi_vw_ad_break_units.dt_air
 	toColumn: dim_tempo.data
+
+relationship 69b0acbb-3b13-1ba1-cea9-4983482fd909
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Relação Ambição'.cd_account_agency
+	toColumn: pbi_dim_accounts_agency.cd_account
 

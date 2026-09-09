@@ -56,7 +56,7 @@ table pbi_vw_projected_revenue
 				            vl_negotiation_projected_revenue
 				        FROM medialivre.pbi_out.pbi_vw_projected_revenue
 				        WHERE 1 = 1
-				            AND ( ABS(vl_negotiation_gross) > 0 OR ABS(vl_negotiation_projected_revenue) > 0 )
+				            AND ( ABS(vl_negotiation_gross_contracted) > 0 OR ABS(vl_negotiation_gross_insertions) > 0 OR ABS(vl_negotiation_projected_revenue) > 0 )
 				            AND YEAR(dt_negotiation_projected) >= YEAR(GETDATE()) -" & AnoUpdate,
 				    Source = fx_dbricks(SQL)
 				in

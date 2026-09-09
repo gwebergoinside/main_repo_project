@@ -195,6 +195,14 @@ table 'Ficheiros Negociações'
 
 		annotation SummarizationSetBy = Automatic
 
+	column cd_account_agency
+		dataType: string
+		lineageTag: 9dcc0399-0ae8-45b5-add5-382bc11845c1
+		summarizeBy: none
+		sourceColumn: cd_account_agency
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'Ficheiros Negociações' = m
 		mode: import
 		source =
@@ -207,8 +215,9 @@ table 'Ficheiros Negociações'
 				    Combinar = Table.Combine(#"Listar Tabelas"),
 				    #"Tipo Alterado" = Table.TransformColumnTypes(Combinar,{{"Ano", type date}, {"Nº de Casos", Int64.Type}, {"CPR Seg.", type number}}),
 				    #"Linhas Filtradas" = Table.SelectRows(#"Tipo Alterado", each [Ano] <> null),
-				    #"Fuzzy Nested Join" = Table.FuzzyNestedJoin(#"Linhas Filtradas", {"Anunciante"}, pbi_dim_accounts_client, {"nm_account"}, "pbi_dim_accounts_client", JoinKind.LeftOuter),
-				    Expand = Table.ExpandTableColumn(#"Fuzzy Nested Join", "pbi_dim_accounts_client", {"cd_account"}),
+				    #"Fuzzy Join Channels" = Table.FuzzyNestedJoin(#"Linhas Filtradas", {"Anunciante"}, pbi_dim_accounts_client, {"nm_account"}, "pbi_dim_accounts_client", JoinKind.LeftOuter),
+				    #"Fuzzy Join Agencies" = Table.FuzzyNestedJoin(#"Fuzzy Join Channels", {"Agência"}, pbi_dim_accounts_client, {"nm_account"}, "pbi_dim_accounts_agency", JoinKind.LeftOuter),
+				    Expand = Table.ExpandTableColumn(Table.ExpandTableColumn(#"Fuzzy Join Agencies", "pbi_dim_accounts_client", {"cd_account"}, {"cd_account"}), "pbi_dim_accounts_agency", {"cd_account"}, {"cd_account_agency"}),
 				    #"Colunas Removidas" = Table.RemoveColumns(Expand,{"Column1"}),
 				    #"Substituir Canal" = let
 				      Replace = Table.ReplaceValue(#"Colunas Removidas", each [Canal],
@@ -219,9 +228,20 @@ table 'Ficheiros Negociações'
 				    #"Ano Extraído" = Table.TransformColumns(#"Substituir Canal",{{"Ano", Date.Year, Int64.Type}}),
 				    #"Substituir GML" = let
 				      Substituir = Table.ReplaceValue(#"Ano Extraído", each [cd_account], each if Text.Contains([Anunciante], "GML INTERACTIVE", Comparer.OrdinalIgnoreCase) then "840" else [cd_account], Replacer.ReplaceValue,{"cd_account"})
-				      in Table.TransformColumnTypes(Substituir,{{"cd_account", type text}})
+				      in Table.TransformColumnTypes(Substituir,{{"cd_account", type text}}),
+				    #"Ajustes Adicionais" = Table.ReplaceValue(#"Substituir GML", each [cd_account],
+				      each if [cd_account] is null and Text.Contains([Anunciante],"AGEAS", Comparer.OrdinalIgnoreCase) then "394"
+				      else if [cd_account] is null and Text.Contains([Anunciante],"AROMAS INTERNACIONAIS", Comparer.OrdinalIgnoreCase) then "1484"
+				      else if [cd_account] is null and Text.Contains([Anunciante],"CVRA", Comparer.OrdinalIgnoreCase) then "1885"
+				      else if [cd_account] is null and Text.Contains([Anunciante],"ABOCA", Comparer.OrdinalIgnoreCase) then "1581"
+				      else if [cd_account] is null and Text.Contains([Anunciante],"LUXOTTICA", Comparer.OrdinalIgnoreCase) then "1760"
+				      else if [cd_account] is null and Text.Contains([Anunciante],"MORENO II", Comparer.OrdinalIgnoreCase) then "386"
+				      else if [cd_account] is null and Text.Contains([Anunciante],"PONTO VERDE", Comparer.OrdinalIgnoreCase) then "625-143"
+				      else [cd_account]
+				      , Replacer.ReplaceValue,{"cd_account"}),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Ajustes Adicionais",{{"cd_account", type text}})
 				in
-				    #"Substituir GML"
+				    #"Tipo Alterado1"
 
 	annotation PBI_NavigationStepName = Navegação
 

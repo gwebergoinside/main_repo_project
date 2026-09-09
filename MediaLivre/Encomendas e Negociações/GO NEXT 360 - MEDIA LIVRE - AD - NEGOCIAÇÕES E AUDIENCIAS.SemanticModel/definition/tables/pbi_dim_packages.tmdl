@@ -50,26 +50,23 @@ table pbi_dim_packages
 
 		annotation SummarizationSetBy = Automatic
 
-	column dt_modified_on
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: fe406a67-7cf0-4ddb-8f76-f2a0117558b0
-		summarizeBy: none
-		sourceColumn: dt_modified_on
-
-		annotation SummarizationSetBy = Automatic
-
 	partition pbi_dim_packages = m
 		mode: import
 		source =
 				let
-				    pbi_dim_packages = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_vw_packages")
+				    SQL = "SELECT * EXCEPT( dt_modified_on )
+						FROM medialivre.pbi_out.pbi_vw_packages
+				        WHERE dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+				    Source = fx_dbricks(SQL)
 				in
-				    pbi_dim_packages
+				    Source
 
 	changedProperty = IsHidden
 
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Exception
+
+	annotation PBI_IsMQueryFoldable = True
 

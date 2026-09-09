@@ -44,20 +44,21 @@ table pbi_dim_products_sectors
 
 		annotation SummarizationSetBy = Automatic
 
-	column dt_modified_on
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: 758d96c3-d80c-42ec-9df8-dc8629065de8
-		summarizeBy: none
-		sourceColumn: dt_modified_on
-
-		annotation SummarizationSetBy = Automatic
-
 	partition pbi_dim_products_sectors = m
 		mode: import
-		source = fx_dbricks("select * from medialivre.pbi_out.pbi_dim_products_sectors")
+		source =
+				let
+				    SQL = "SELECT * EXCEPT( dt_modified_on )
+						FROM medialivre.pbi_out.pbi_dim_products_sectors
+				        WHERE dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+				    Source = fx_dbricks(SQL)
+				in
+				    Source
 
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_IsMQueryFoldable = True
 

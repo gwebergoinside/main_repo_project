@@ -19,26 +19,23 @@ table pbi_dim_programs
 
 		changedProperty = IsHidden
 
-	column dt_modified_on
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: b9637a8a-85f7-418c-a709-62d5b4f5e049
-		summarizeBy: none
-		sourceColumn: dt_modified_on
-
-		annotation SummarizationSetBy = Automatic
-
 	partition pbi_dim_programs-partition = m
 		mode: import
 		source =
 				let
-				    pbi_dim_programs = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_dim_programs")
+				    SQL = "SELECT * EXCEPT( dt_modified_on )
+						FROM medialivre.pbi_out.pbi_dim_programs
+				        WHERE dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+				    Source = fx_dbricks(SQL)
 				in
-				    pbi_dim_programs
+				    Source
 
 	changedProperty = IsHidden
 
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_IsMQueryFoldable = True
 

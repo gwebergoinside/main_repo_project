@@ -358,22 +358,13 @@ table pbi_vw_ad_insertion
 
 		annotation SummarizationSetBy = Automatic
 
-	column dt_modified_on
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: 3ce9e944-7fa3-4b1a-82de-9fd26053b200
-		summarizeBy: none
-		sourceColumn: dt_modified_on
-
-		annotation SummarizationSetBy = Automatic
-
 	partition pbi_vw_ad_insertion-partition = m
 		mode: import
 		source = ```
 				let
-				    SQL = "SELECT * FROM medialivre.pbi_out.pbi_vw_ad_insertion
+				    SQL = "SELECT * EXCEPT( dt_modified_on ) FROM medialivre.pbi_out.pbi_vw_ad_insertion
 				        WHERE YEAR(dt_air) >= YEAR(GETDATE()) - 2 
-				            AND dt_air BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
 				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
 				    Source = fx_dbricks(SQL)
 				in
@@ -384,7 +375,7 @@ table pbi_vw_ad_insertion
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_IsMQueryFoldable = True
 

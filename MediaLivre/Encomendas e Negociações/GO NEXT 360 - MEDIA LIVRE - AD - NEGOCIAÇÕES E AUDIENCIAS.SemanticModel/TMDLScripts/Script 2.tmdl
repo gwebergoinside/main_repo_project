@@ -58,7 +58,7 @@ createOrReplace
 		measure CPR_EQ_XT =
 				
 				DIVIDE (
-				    CALCULATE ( [total_billing], REMOVEFILTERS ( pbi_vw_targets_var ) ),
+				    CALCULATE ( [total_billing], REMOVEFILTERS ( pbi_vw_targets_var[ds_variant] ) ),
 				    [GRP_EQ_XT]
 				)
 			formatString: #,0.00\ "€";-#,0.00\ "€";#,0.00\ "€"
@@ -170,7 +170,7 @@ createOrReplace
 			displayFolder: '09 Negotiations'
 			lineageTag: 08b1d600-c601-4cfa-a53a-589fecded9dc
 
-		measure filter_register_ambicao_ficheiro = [vl_ambicao] + [vl_negociado_ficheiro]
+		measure filter_register_ambicao_ficheiro = [vl_contracted_shouldBe_ambicao] + [vl_contracted_shouldBe_ficheiro]
 			displayFolder: '11 Ficheiro'
 			lineageTag: 89fa79b0-9b52-4854-bd15-ee623e1cce20
 
@@ -215,7 +215,7 @@ createOrReplace
 				                ), 
 				                IF( _fl_duration = 30, [GRP_EQ30], [GRP_EQ])
 				            ),
-				            REMOVEFILTERS ( pbi_vw_targets_simulado ),
+				            REMOVEFILTERS ( pbi_vw_targets ),
 				            TREATAS (
 				                VALUES ( pbi_vw_targets_var[ds_variant] ),
 				                pbi_vw_targets[ds_variant]
@@ -284,16 +284,59 @@ createOrReplace
 
 		measure GRP_EQ_XT =
 				
-				VAR _Selecionados =
-				    VALUES ( pbi_vw_targets_simulado[ds_variant] )
+				// VAR _Selecionados =
+				//     VALUES ( pbi_vw_targets_simulado[ds_variant] )
+				// VAR _fl_duration =
+				//     SELECTEDVALUE ( pmt_duration_equivancy[nm_duration_equivancy] )
+				// VAR _TemSelecao =
+				//     COUNTROWS ( _Selecionados ) > 0
+				// VAR _VariantLinha =
+				//     SELECTEDVALUE ( pbi_vw_targets_var[ds_variant] )
+				// VAR _LinhaSelecionada =
+				//     CONTAINS ( _Selecionados, pbi_vw_targets_simulado[ds_variant], _VariantLinha )
+				// RETURN
+				//     IF ( NOT ISFILTERED ( pbi_vw_targets_simulado[ds_variant] ),
+				//         BLANK (),
+				//         IF (
+				//             ISINSCOPE ( pbi_vw_targets_var[ds_variant] ),
+				//             IF ( NOT _LinhaSelecionada,
+				//                 BLANK (),
+				//                 CALCULATE (
+				//                     IF( _fl_duration = 30,
+				//                         SUM( pbi_vw_indicators[GRP_EQ30_XT] ),
+				//                         SUM( pbi_vw_indicators[GRP_EQ_XT] )
+				//                     ),
+				//                     TREATAS ( { _VariantLinha }, pbi_vw_targets_simulado[ds_variant] )
+				//                 )
+				//             ),
+				//             CALCULATE (
+				//                 IF( _fl_duration = 30,
+				//                     SUM( pbi_vw_indicators[GRP_EQ30_XT] ),
+				//                     SUM( pbi_vw_indicators[GRP_EQ_XT] )
+				//                 ),
+				//                 TREATAS ( _Selecionados, pbi_vw_targets_simulado[ds_variant] )
+				//             )
+				//         )
+				//     )
+				
 				VAR _fl_duration =
 				    SELECTEDVALUE ( pmt_duration_equivancy[nm_duration_equivancy] )
+				
+				// Códigos selecionados no slicer (mesma tabela → filtro já propaga naturalmente)
+				VAR _CodigosSelecionados =
+				    VALUES ( pbi_vw_targets_simulado[cd_variant] )
 				VAR _TemSelecao =
-				    COUNTROWS ( _Selecionados ) > 0
+				    COUNTROWS ( _CodigosSelecionados ) > 0
+				
+				// Linha atual da matriz, traduzida para cd_variant
 				VAR _VariantLinha =
 				    SELECTEDVALUE ( pbi_vw_targets_var[ds_variant] )
+				VAR _CdVariantLinha =
+				    SELECTEDVALUE ( pbi_vw_targets_var[cd_variant] )
+				
 				VAR _LinhaSelecionada =
-				    CONTAINS ( _Selecionados, pbi_vw_targets_simulado[ds_variant], _VariantLinha )
+				    CONTAINS ( VALUES ( pbi_vw_targets_simulado[ds_variant] ), pbi_vw_targets_simulado[ds_variant], _VariantLinha )
+				
 				RETURN
 				    IF (
 				        NOT ISFILTERED ( pbi_vw_targets_simulado[ds_variant] ),
@@ -304,21 +347,19 @@ createOrReplace
 				                NOT _LinhaSelecionada,
 				                BLANK (),
 				                CALCULATE (
-				                    // SUM ( pbi_vw_indicators[GRP_EQ_XT] ),
-				                    IF( _fl_duration = 30,
-				                        SUM( pbi_vw_indicators[GRP_EQ30_XT] ),
-				                        SUM( pbi_vw_indicators[GRP_EQ_XT] )
+				                    IF ( _fl_duration = 30,
+				                        SUM ( pbi_vw_indicators[GRP_EQ30_XT] ),
+				                        SUM ( pbi_vw_indicators[GRP_EQ_XT] )
 				                    ),
-				                    TREATAS ( { _VariantLinha }, pbi_vw_targets_simulado[ds_variant] )
+				                    TREATAS ( { _CdVariantLinha }, pbi_vw_indicators[cd_target] )
 				                )
 				            ),
 				            CALCULATE (
-				                // SUM ( pbi_vw_indicators[GRP_EQ_XT] ),
-				                IF( _fl_duration = 30,
-				                    SUM( pbi_vw_indicators[GRP_EQ30_XT] ),
-				                    SUM( pbi_vw_indicators[GRP_EQ_XT] )
+				                IF ( _fl_duration = 30,
+				                    SUM ( pbi_vw_indicators[GRP_EQ30_XT] ),
+				                    SUM ( pbi_vw_indicators[GRP_EQ_XT] )
 				                ),
-				                TREATAS ( _Selecionados, pbi_vw_targets_simulado[ds_variant] )
+				                TREATAS ( _CodigosSelecionados, pbi_vw_indicators[cd_target] )
 				            )
 				        )
 				    )
@@ -2141,7 +2182,9 @@ createOrReplace
 			displayFolder: '07 Texts'
 			lineageTag: 2764cd73-9f36-4ba4-95c8-2753b2c66fbb
 
-		measure vl_ambicao = CALCULATE( SUM( 'Ambição'[Ambição TTV] ), USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], 'Relação Ambição'[cd_account_agency] ) )
+		measure vl_ambicao =
+				
+				CALCULATE( SUM( 'Ambição'[Ambição TTV] ), USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] ) )
 			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 			displayFolder: '11 Ficheiro'
 			lineageTag: 0fac4d5f-8ec9-4ae8-ae55-6bd316e0d028
@@ -2281,13 +2324,12 @@ createOrReplace
 			displayFolder: '04 Investment'
 			lineageTag: 80e990b9-b07d-45c5-a7a6-20fdff9cdcaa
 
-		measure vl_fechado_ficheiro = ```
-				
-				    CALCULATE(
-				        SUM( 'Ficheiros Negociações'[Valor Fechado] ),
-				        USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] )
-				    )
-				```
+		measure vl_fechado_ficheiro =
+				SUM( 'Ficheiros Negociações'[Valor Fechado] )
+				    // CALCULATE(
+				    //     SUM( 'Ficheiros Negociações'[Valor Fechado] ),
+				    //     USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] )
+				    // )
 			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 			displayFolder: '11 Ficheiro'
 			lineageTag: a9bf9f4d-103e-44e5-a787-b3321d93db3d
@@ -2367,7 +2409,8 @@ createOrReplace
 
 		measure vl_projected_revenue_negotiated_pessimist_ficheiro = ```
 				
-				    SUMX( 'Ficheiros Negociações', MIN( [vl_projected_revenue_negotiated_simple], [vl_projected_revenue_left_ficheiro] ) )
+				    SUMX( 'Ficheiros Negociações', [vl_projected_revenue_negotiated_simple])
+				    // SUMX( 'Ficheiros Negociações', MIN( [vl_projected_revenue_negotiated_simple], [vl_projected_revenue_left_ficheiro] ) )
 				```
 			formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 			displayFolder: '11 Ficheiro'

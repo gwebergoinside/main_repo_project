@@ -143,31 +143,22 @@ table pbi_dim_campaigns
 
 		annotation SummarizationSetBy = Automatic
 
-	column dt_modified_on
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: 4b1f596e-9f34-4e92-a47c-59931c0f96e1
-		summarizeBy: none
-		sourceColumn: dt_modified_on
-
-		annotation SummarizationSetBy = Automatic
-
 	partition pbi_dim_campaigns-partition = m
 		mode: import
 		source =
 				let
-				    SQL = "SELECT * FROM medialivre.pbi_out.pbi_dim_campaigns
-				        WHERE dt_init between '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				    SQL = "SELECT * EXCEPT( dt_modified_on ) FROM medialivre.pbi_out.pbi_dim_campaigns
+				        WHERE dt_modified_on between '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
 				            and '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
 				    pbi_dim_campaigns = fx_dbricks(SQL),
 				    #"JSON Channel" = Table.TransformColumns(pbi_dim_campaigns, {"cd_list_channel", each Json.Document(_){0}, type text}),
-				    #"Ajuste Pontual" = Table.ReplaceValue(#"JSON Channel", each [cd_ad_type], each if Text.Contains([cd_ad_type], "boost", Comparer.OrdinalIgnoreCase) and [cd_account_client] = "36" and Text.StartsWith([cd_campaign], "25") then "NORMAL" else [cd_ad_type], Replacer.ReplaceText, {"cd_ad_type"})
+				    #"Ajuste Pontual" = Table.ReplaceValue(#"JSON Channel", each [cd_ad_type], each if Text.Contains([cd_ad_type], "boost", Comparer.OrdinalIgnoreCase) and [cd_account_client] = "36" and Text.StartsWith([cd_campaign], "25") and Date.Year([dt_init]) = 2025 then "NORMAL" else [cd_ad_type], Replacer.ReplaceText, {"cd_ad_type"})
 				in
 				    #"Ajuste Pontual"
 
 	changedProperty = IsHidden
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_NavigationStepName = Navegação
 

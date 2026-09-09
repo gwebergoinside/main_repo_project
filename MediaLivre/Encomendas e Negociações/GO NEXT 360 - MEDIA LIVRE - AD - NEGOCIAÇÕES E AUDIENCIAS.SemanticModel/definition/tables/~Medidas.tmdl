@@ -2316,13 +2316,12 @@ table ~Medidas
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure vl_fechado_ficheiro = ```
-			
-			    CALCULATE(
-			        SUM( 'Ficheiros Negociações'[Valor Fechado] ),
-			        USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] )
-			    )
-			```
+	measure vl_fechado_ficheiro =
+			SUM( 'Ficheiros Negociações'[Valor Fechado] )
+			    // CALCULATE(
+			    //     SUM( 'Ficheiros Negociações'[Valor Fechado] ),
+			    //     USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] )
+			    // )
 		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 		displayFolder: '11 Ficheiro'
 		lineageTag: a9bf9f4d-103e-44e5-a787-b3321d93db3d
@@ -2364,13 +2363,16 @@ table ~Medidas
 
 	measure vl_projected_revenue_negotiated_pessimist_ficheiro = ```
 			
-			    SUMX( 'Ficheiros Negociações', MIN( [vl_projected_revenue_negotiated_simple], [vl_projected_revenue_left_ficheiro] ) )
+			    SUMX( 'Ficheiros Negociações', [vl_projected_revenue_negotiated_simple])
+			    // SUMX( 'Ficheiros Negociações', MIN( [vl_projected_revenue_negotiated_simple], [vl_projected_revenue_left_ficheiro] ) )
 			```
 		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 		displayFolder: '11 Ficheiro'
 		lineageTag: 48654bce-56fc-4683-af72-c44c5049b1de
 
-	measure vl_ambicao = CALCULATE( SUM( 'Ambição'[Ambição TTV] ), USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], 'Relação Ambição'[cd_account_agency] ) )
+	measure vl_ambicao =
+			
+			CALCULATE( SUM( 'Ambição'[Ambição TTV] ), USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] ) )
 		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 		displayFolder: '11 Ficheiro'
 		lineageTag: 0fac4d5f-8ec9-4ae8-ae55-6bd316e0d028
@@ -2384,7 +2386,7 @@ table ~Medidas
 		displayFolder: '11 Ficheiro'
 		lineageTag: 5301982c-207e-4c26-9132-66842ed8f02f
 
-	measure filter_register_ambicao_ficheiro = [vl_ambicao] + [vl_negociado_ficheiro]
+	measure filter_register_ambicao_ficheiro = [vl_contracted_shouldBe_ambicao] + [vl_contracted_shouldBe_ficheiro]
 		displayFolder: '11 Ficheiro'
 		lineageTag: 89fa79b0-9b52-4854-bd15-ee623e1cce20
 

@@ -119,22 +119,14 @@ table pbi_vw_invoices
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column dt_modified_on
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: e0cd12a6-23fa-492b-a83e-963ba2de3f34
-		summarizeBy: none
-		sourceColumn: dt_modified_on
-
-		annotation SummarizationSetBy = Automatic
-
 	partition pbi_vw_invoices = m
 		mode: import
 		source = ```
 				let
-				    SQL = "SELECT * FROM medialivre.pbi_out.pbi_vw_invoices
+				    SQL = "SELECT * EXCEPT( dt_modified_on )
+							FROM medialivre.pbi_out.pbi_vw_invoices
 				            WHERE YEAR(dt_init) >= YEAR(GETDATE()) - " & AnoUpdate &" 
-				                AND dt_init BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				                AND dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
 				                AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
 				    Source = fx_dbricks(SQL)
 				in

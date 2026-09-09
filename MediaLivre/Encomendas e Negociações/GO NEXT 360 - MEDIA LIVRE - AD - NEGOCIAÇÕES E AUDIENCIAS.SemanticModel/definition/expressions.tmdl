@@ -1,7 +1,7 @@
 expression BD = "GMediaAD" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 7ef836ac-eeeb-4db0-a191-22008c154987
 
-	annotation PBI_ResultType = Text
+	annotation PBI_ResultType = Exception
 
 	annotation PBI_NavigationStepName = Navegação
 
@@ -53,19 +53,6 @@ expression pbi_dim_buy_units = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Table
-
-expression 'fx_dbricks (old)' =
-		let
-		    Host = "adb-2785966857078032.12.azuredatabricks.net",
-		    Path = "/sql/1.0/warehouses/46354e2811119b6c",
-		    Base = Databricks.Query(Host, Path)
-		in
-		    Base
-	lineageTag: 8df1888d-03d2-4b7a-bade-1d1483179e70
-
-	annotation PBI_NavigationStepName = Navegação
-
-	annotation PBI_ResultType = Function
 
 expression Host = "adb-7405615480453934.14.azuredatabricks.net" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: b68df4a1-62a8-435b-88f0-ee49eb9953db

@@ -171,28 +171,18 @@ table pbi_vw_ad_units
 
 		annotation SummarizationSetBy = Automatic
 
-	column dt_modified_on
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: c71ede33-b92b-4c57-a3b1-8821b4b2a851
-		summarizeBy: none
-		sourceColumn: dt_modified_on
-
-		annotation SummarizationSetBy = Automatic
-
 	partition pbi_vw_ad_units = m
 		mode: import
-		source = ```
+		source =
 				let
-				    SQL = "SELECT * 
+				    SQL = "SELECT * EXCEPT( dt_modified_on )
 				            FROM medialivre.pbi_out.pbi_vw_ad_units
 				            WHERE YEAR(dt_air) >= YEAR(GETDATE()) - " & AnoUpdate & "
-				            AND dt_air BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
 				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
 				    Source = fx_dbricks(SQL)
 				in
 				    Source
-				```
 
 	annotation PBI_NavigationStepName = Navegação
 

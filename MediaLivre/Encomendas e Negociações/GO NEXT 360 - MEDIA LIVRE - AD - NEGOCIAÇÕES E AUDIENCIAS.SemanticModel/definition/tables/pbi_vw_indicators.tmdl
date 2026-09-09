@@ -108,7 +108,7 @@ table pbi_vw_indicators
 				        JOIN medialivre.pbi_out.pbi_vw_ad_insertion AS B
 				            ON A.cd_ad_insertion = B.cd_ad_insertion
 				            AND YEAR(B.dt_air) >= YEAR(GETDATE()) - 2
-				            AND B.dt_air BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND B.dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
 				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
 				    Source = fx_dbricks(SQL)
 				in

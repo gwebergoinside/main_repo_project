@@ -137,20 +137,21 @@ table pbi_vw_media_investment
 
 		annotation SummarizationSetBy = Automatic
 
-	column dt_modified_on
-		dataType: dateTime
-		formatString: General Date
-		lineageTag: 0eb81b18-eb75-4eee-be37-6d3a1294236e
-		summarizeBy: none
-		sourceColumn: dt_modified_on
-
-		annotation SummarizationSetBy = Automatic
-
 	partition pbi_vw_media_investment = m
 		mode: import
-		source = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_vw_media_investment")
+		source =
+				let
+				    SQL = "SELECT * EXCEPT( dt_modified_on )
+				            FROM medialivre.pbi_out.pbi_vw_media_investment
+				            WHERE dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+				            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+				    Source = fx_dbricks(SQL)
+				in
+				    Source
 
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_IsMQueryFoldable = True
 

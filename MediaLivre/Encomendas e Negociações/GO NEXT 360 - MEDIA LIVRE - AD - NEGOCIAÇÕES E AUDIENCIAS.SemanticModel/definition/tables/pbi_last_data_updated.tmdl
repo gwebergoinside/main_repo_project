@@ -16,5 +16,5 @@ table pbi_last_data_updated
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
 
