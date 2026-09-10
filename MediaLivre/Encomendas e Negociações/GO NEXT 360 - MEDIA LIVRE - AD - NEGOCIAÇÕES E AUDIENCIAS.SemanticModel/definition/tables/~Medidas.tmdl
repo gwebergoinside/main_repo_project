@@ -2345,9 +2345,10 @@ table ~Medidas
 
 	measure pc_contracted_efective_realised_ficheiro =
 			
-			VAR _OFF = DIVIDE( [total_billing], [vl_fechado_ficheiro] )
-			VAR _ON = DIVIDE( [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro], [vl_fechado_ficheiro] )
-			RETURN SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			VAR _OFF = [total_billing]
+			VAR _ON = [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro]
+			VAR _CHECK = SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			RETURN DIVIDE( _CHECK - [vl_fechado_ficheiro], [vl_fechado_ficheiro] )
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: '11 Ficheiro'
 		lineageTag: 735bb993-74dd-48d2-80f2-d9059bb36c12
@@ -2379,9 +2380,10 @@ table ~Medidas
 
 	measure pc_contracted_efective_realised_ambicao =
 			
-			VAR _OFF = DIVIDE( [total_billing], [vl_ambicao] )
-			VAR _ON = DIVIDE( [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro], [vl_ambicao] )
-			RETURN SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			VAR _OFF = [total_billing]
+			VAR _ON = [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro]
+			VAR _CHECK = SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			RETURN DIVIDE( _CHECK - [vl_ambicao], [vl_ambicao] )
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: '11 Ficheiro'
 		lineageTag: 5301982c-207e-4c26-9132-66842ed8f02f
