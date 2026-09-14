@@ -18222,19 +18222,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "vl_projected_revenue_negotiated_pessimist_ficheiro"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Projeção de Receita": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "medidas.vl_ambicao": {
 			      "Definition": {
@@ -18361,6 +18349,69 @@ cultureInfo en-US
 			      "Terms": [
 			        {
 			          "VBN LY": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.total_billing_ly_all": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "~Medidas",
+			          "ConceptualProperty": "total_billing_ly_all"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "VBN LY ALL": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.total_billing_forecast_ly": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "~Medidas",
+			          "ConceptualProperty": "total_billing_forecast_LY"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Forecast": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.total_billing_booked": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "~Medidas",
+			          "ConceptualProperty": "total_billing_booked"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Insert. Booked": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

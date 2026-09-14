@@ -332,7 +332,7 @@ table ~Medidas
 			
 			    CALCULATE(
 			        SUM ( pbi_vw_negotiations[vl_negotiation_gross_contracted] )
-			        , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] )
+			        , TREATAS( VALUES( dim_tempo[data] ), pbi_vw_negotiations[dt_first_air] )
 			    )
 			```
 		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
@@ -692,7 +692,7 @@ table ~Medidas
 			        CALCULATE (
 			            SUM ( pbi_dim_campaigns[vl_budget] ),
 			            VALUES ( pbi_vw_targets[ds_variant] ),
-			            CROSSFILTER( pbi_dim_campaigns[cd_campaign], pbi_vw_ad_insertion[cd_campaign], Both ),
+			            TREATAS( VALUES( pbi_vw_ad_insertion[cd_campaign] ), pbi_dim_campaigns[cd_campaign] ),
 			            TREATAS (
 			                VALUES ( pbi_vw_targets_var[ds_variant] ),
 			                pbi_vw_targets[ds_variant_adults]
@@ -701,7 +701,7 @@ table ~Medidas
 			        CALCULATE (
 			            SUM ( pbi_dim_campaigns[vl_budget] ),
 			            VALUES ( pbi_vw_targets[ds_variant] ),
-			            CROSSFILTER( pbi_dim_campaigns[cd_campaign], pbi_vw_ad_insertion[cd_campaign], Both ),
+			            TREATAS( VALUES( pbi_vw_ad_insertion[cd_campaign] ), pbi_dim_campaigns[cd_campaign] ),
 			            TREATAS (
 			                VALUES ( pbi_vw_targets_var[ds_variant] ),
 			                pbi_vw_targets_simulado[ds_variant]
@@ -2077,7 +2077,7 @@ table ~Medidas
 			            SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_net] ),
 			            // SUM ( pbi_vw_invoices[vl_invoice_net] ),
 			            VALUES ( pbi_vw_targets[ds_variant] ),
-			            CROSSFILTER( pbi_dim_campaigns[cd_campaign], pbi_vw_ad_insertion[cd_campaign], Both ),
+			            TREATAS( VALUES( pbi_vw_ad_insertion[cd_campaign] ), pbi_dim_campaigns[cd_campaign] ),
 			            TREATAS (
 			                VALUES ( pbi_vw_targets_var[ds_variant] ),
 			                pbi_vw_targets[ds_variant_adults]
@@ -2087,7 +2087,7 @@ table ~Medidas
 			            SUMX( FILTER( pbi_vw_invoices, pbi_vw_invoices[nr_quantity] = 1 ), pbi_vw_invoices[vl_invoice_net] ),
 			            // SUM ( pbi_vw_invoices[vl_invoice_net] ),
 			            VALUES ( pbi_vw_targets[ds_variant] ),
-			            CROSSFILTER( pbi_dim_campaigns[cd_campaign], pbi_vw_ad_insertion[cd_campaign], Both ),
+			            TREATAS( VALUES( pbi_vw_ad_insertion[cd_campaign] ), pbi_dim_campaigns[cd_campaign] ),
 			            TREATAS (
 			                VALUES ( pbi_vw_targets_var[ds_variant] ),
 			                pbi_vw_targets_simulado[ds_variant]
@@ -2203,7 +2203,7 @@ table ~Medidas
 			
 			CALCULATE(
 			    MIN( pbi_vw_negotiations[dt_first_air] )
-			    , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] )
+			    , TREATAS( VALUES( dim_tempo[data] ), pbi_vw_negotiations[dt_first_air] )
 			)
 		formatString: Short Date
 		displayFolder: '09 Negotiations'
@@ -2213,7 +2213,7 @@ table ~Medidas
 			
 			CALCULATE(
 			    MAX( pbi_vw_negotiations[dt_last_air] )
-			    , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] )
+			    , TREATAS( VALUES( dim_tempo[data] ), pbi_vw_negotiations[dt_first_air] )
 			)
 		formatString: Short Date
 		displayFolder: '09 Negotiations'
@@ -2222,10 +2222,10 @@ table ~Medidas
 	measure pc_contracted_shouldBe_realised = ```
 			
 			VAR _total = SUMX( pbi_vw_negotiations, CALCULATE( DATEDIFF( MIN( pbi_vw_negotiations[dt_first_air] ), MAX( pbi_vw_negotiations[dt_last_air] ), DAY ) 
-			    , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] ))
+			    , TREATAS( VALUES( dim_tempo[data] ), pbi_vw_negotiations[dt_first_air] ))
 			)
 			VAR _actual = SUMX( pbi_vw_negotiations, CALCULATE( DATEDIFF( MIN( pbi_vw_negotiations[dt_first_air] ), MIN( MAX( pbi_vw_negotiations[dt_last_air] ), MAX ( pbi_last_data_updated[last_update] ) ) , DAY )
-			    , USERELATIONSHIP( pbi_vw_negotiations[dt_first_air], dim_tempo[data] ))
+			    , TREATAS( VALUES( dim_tempo[data] ), pbi_vw_negotiations[dt_first_air] ))
 			)
 			VAR _divide = DIVIDE( _actual, _total )
 			RETURN _divide
@@ -2308,7 +2308,7 @@ table ~Medidas
 			
 			    CALCULATE(
 			        SUM( 'Ficheiros Negociações'[Valor Negociado] ),
-			        USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] )
+			        TREATAS( VALUES( pbi_dim_accounts_agency[cd_account] ), pbi_dim_accounts_client[cd_account_agency] )
 			    )
 			```
 		displayFolder: '11 Ficheiro'
@@ -2346,7 +2346,7 @@ table ~Medidas
 	measure pc_contracted_efective_realised_ficheiro =
 			
 			VAR _OFF = [total_billing]
-			VAR _ON = [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro]
+			VAR _ON = [total_billing_forecast_LY]
 			VAR _CHECK = SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
 			RETURN DIVIDE( _CHECK - [vl_fechado_ficheiro], [vl_fechado_ficheiro] )
 		formatString: 0.00%;-0.00%;0.00%
@@ -2373,7 +2373,7 @@ table ~Medidas
 
 	measure vl_ambicao =
 			
-			CALCULATE( SUM( 'Ambição'[Ambição TTV] ), USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] ) )
+			CALCULATE( SUM( 'Ambição'[Ambição TTV] ), TREATAS( VALUES( pbi_dim_accounts_client[cd_account_agency] ), pbi_dim_accounts_agency[cd_account] ) )
 		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
 		displayFolder: '11 Ficheiro'
 		lineageTag: 0fac4d5f-8ec9-4ae8-ae55-6bd316e0d028
@@ -2381,14 +2381,14 @@ table ~Medidas
 	measure pc_contracted_efective_realised_ambicao =
 			
 			VAR _OFF = [total_billing]
-			VAR _ON = [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro]
+			VAR _ON = [total_billing_forecast_LY]
 			VAR _CHECK = SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
 			RETURN DIVIDE( _CHECK - [vl_ambicao], [vl_ambicao] )
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: '11 Ficheiro'
 		lineageTag: 5301982c-207e-4c26-9132-66842ed8f02f
 
-	measure filter_register_ambicao_ficheiro = [vl_contracted_shouldBe_ambicao] + [vl_contracted_shouldBe_ficheiro]
+	measure filter_register_ambicao_ficheiro = [vl_contracted_shouldBe_ambicao] + [vl_contracted_shouldBe_ficheiro] + [total_billing_LY] + [total_billing] + [total_billing_ly_all]
 		displayFolder: '11 Ficheiro'
 		lineageTag: 89fa79b0-9b52-4854-bd15-ee623e1cce20
 
@@ -2412,7 +2412,7 @@ table ~Medidas
 			
 			    CALCULATE(
 			        SUM( pbi_vw_projected_revenue[vl_negotiation_projected_revenue] ),
-			        CROSSFILTER( pbi_vw_projected_revenue[dt_negotiation_projected], dim_tempo[data], NONE ),
+			        REMOVEFILTERS( dim_tempo ),
 			        TREATAS( VALUES( dim_tempo[nr_month_weekday] ), pbi_vw_projected_revenue[nr_month_weekday] )
 			    )
 			```
@@ -2499,18 +2499,19 @@ table ~Medidas
 	measure tx_add_projected =
 			
 			VAR _behavior = "scroll" // Controls the marquee animation behavior.
-			VAR _direction = "left" // Sets the direction of the scrolling text.
+			VAR _direction = "right" // Sets the direction of the scrolling text.
 			VAR _text_align = "right" // Sets the aligning text.
-			VAR _scrollamount = "5" // Sets the scrolling speed.
+			VAR _scrollamount = "0" // Sets the scrolling speed.
 			VAR _text =
 			    SWITCH (
 			        USERCULTURE (),
-			        "en-GB", "Add the Projections to the Expectation Percentages?",
-			        "en-US", "Add the Projections to the Expectation Percentages?",
-			        "es-ES", "¿Añadir las Proyecciones a los Porcentajes de Expectativa?",
-			        "pt-PT", "Adicionar as Projeções nas Percentagens de Expectativa?",
-			        "pt-BR", "Adicionar as Projeções nos Percentuais de Expectativa?",
-			        "Add the Projections to the Expectation Percentages?"
+			        "pt-BR", "Considerar Forecast?",
+			        "pt-PT", "Considerar Forecast?",
+			        "en-US", "Consider Forecast?",
+			        "en-GB", "Consider Forecast?",
+			        "es-ES", "¿Considerar Forecast?",
+			        "fr-FR", "Considérer Forecast?",
+			        "Consider Forecast?"
 			    )
 			RETURN
 			    "<marquee behavior='" & _behavior & "' direction='" & _direction & "' scrollamount='" & _scrollamount & "'>" & _text & "</marquee>"
@@ -2520,9 +2521,10 @@ table ~Medidas
 
 	measure pc_contracted_efective_realised_billing_ly =
 			
-			VAR _OFF = DIVIDE( [total_billing] - [total_billing_LY], [total_billing_LY] )
-			VAR _ON = DIVIDE( [total_billing] + [vl_projected_revenue_negotiated_pessimist_ficheiro] - [total_billing_LY], [total_billing_LY] )
-			RETURN SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			VAR _OFF = [total_billing]
+			VAR _ON = [total_billing_forecast_LY]
+			VAR _CHECK = SWITCH( SELECTEDVALUE( pmt_add_projections[fl_validate] ), 1, _ON, _OFF )
+			RETURN DIVIDE( _CHECK - [total_billing_LY], [total_billing_LY] )
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: '11 Ficheiro'
 		lineageTag: 542d8f98-ae06-426e-ae56-3f9acaab9d10
@@ -2540,6 +2542,107 @@ table ~Medidas
 	measure ts_time_break = MIN( pbi_vw_ad_insertion[ts_time_break] )
 		displayFolder: '02 Duration'
 		lineageTag: bd216659-08cc-4b90-afcc-a11cb820f782
+
+	measure total_billing_ly_all =
+			
+			VAR _year_ly = YEAR( SELECTEDVALUE( pbi_last_data_updated[last_update] ) ) - 1
+			RETURN
+			    CALCULATE (
+			        [total_billing],
+			        REMOVEFILTERS ( dim_tempo ),
+			        FILTER( ALL( dim_tempo ), dim_tempo[nr_year] = _year_ly )
+			    )
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		displayFolder: '05 Time Intelligence'
+		lineageTag: f0fbec21-59cb-4d2b-99a3-6c337d5e83f2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure total_billing_forecast_LY =
+			
+			VAR _fl_VBN_consider =
+			    SELECTEDVALUE ( pmt_values_KPI[ds_metrics] )
+			        // {"vl_biiling", "Encomendas", 0},
+			        // {"vl_invoice_billing", "Facturação", 1}
+			
+			VAR _last_update =
+			    SWITCH ( _fl_VBN_consider, "vl_invoice_billing", CALCULATE ( MAX ( pbi_vw_invoices[dt_init] ), REMOVEFILTERS () ),  MAX ( pbi_last_data_updated[last_update] ))
+			VAR _real =
+			    CALCULATE ( [total_billing], KEEPFILTERS ( dim_tempo[data] <= _last_update ) )
+			VAR _LY =
+			    CALCULATE ( [total_billing_LY], KEEPFILTERS ( dim_tempo[data] >  _last_update ) )
+			RETURN
+			    _real + _LY
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		displayFolder: '05 Time Intelligence'
+		lineageTag: a5a99073-864c-4fde-944c-6c08458471b8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure total_billing_booked =
+			
+			VAR _last_update = MAX ( pbi_last_data_updated[last_update] )
+			RETURN
+			    CALCULATE ( [total_billing_2],
+			        KEEPFILTERS ( dim_tempo[data] >= _last_update ),
+			        KEEPFILTERS( pbi_vw_ad_insertion[st_status] IN {"Booked", "No Fitting", "Ready to Process"}
+			    ))
+		formatString: #,0\ "€";-#,0\ "€";#,0\ "€"
+		displayFolder: '03 Financial'
+		lineageTag: 5aaac527-136c-4b91-b09d-313de502f005
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure total_billing_2 = ```
+			
+			// VAR _valor = SUM( pbi_vw_ad_insertion[vl_billing] )
+			VAR _fl_adults =
+			    SELECTEDVALUE ( pmt_adults_GRP[fl_adults_eq] )
+			VAR _postion_tax =
+			    SELECTEDVALUE ( pmt_exclude_position_tax[fl_validate] )
+			VAR _multiproduct_tax =
+			    SELECTEDVALUE ( pmt_exclude_multiproduct_tax[fl_validate] )
+			// VAR _fl_VBN_consider =
+			//     SELECTEDVALUE( pmt_values_KPI[ds_metrics] ) 
+			        // {"vl_biiling", "Encomendas", 0},
+			        // {"vl_invoice_billing", "Facturação", 1}
+			VAR _CALC =
+			    IF (
+			        _fl_adults,
+			        CALCULATE (
+			            SWITCH( TRUE()
+			                , AND( _postion_tax <> 0, _multiproduct_tax <> 0 ), SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_position] - pbi_vw_ad_insertion[vl_billing_multiproduct] )
+			                , _postion_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_position] )
+			                , _multiproduct_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_multiproduct] )
+			                , SUM( pbi_vw_ad_insertion[vl_billing] )
+			            ),
+			            VALUES ( pbi_vw_targets[ds_variant] ),
+			            TREATAS (
+			                VALUES ( pbi_vw_targets_var[ds_variant] ),
+			                pbi_vw_targets[ds_variant_adults]
+			            )
+			        ),
+			        CALCULATE ( 
+			            SWITCH( TRUE()
+			                , AND( _postion_tax <> 0, _multiproduct_tax <> 0 ), SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_position] - pbi_vw_ad_insertion[vl_billing_multiproduct] )
+			                , _postion_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_position] )
+			                , _multiproduct_tax <> 0, SUMX( pbi_vw_ad_insertion, pbi_vw_ad_insertion[vl_billing] - pbi_vw_ad_insertion[vl_billing_multiproduct] )
+			                , SUM( pbi_vw_ad_insertion[vl_billing] )
+			            ),
+			            VALUES ( pbi_vw_targets[ds_variant] ),
+			            TREATAS (
+			                VALUES ( pbi_vw_targets_var[ds_variant] ),
+			                pbi_vw_targets_simulado[ds_variant]
+			            )
+			        )
+			    )
+			RETURN
+			    IF ( ABS ( _CALC ) > 0, _CALC, BLANK () )
+			```
+		displayFolder: '03 Financial'
+		lineageTag: d4eb549a-5c50-4728-9730-42b73fad44ac
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column ~Medidas
 		dataType: string

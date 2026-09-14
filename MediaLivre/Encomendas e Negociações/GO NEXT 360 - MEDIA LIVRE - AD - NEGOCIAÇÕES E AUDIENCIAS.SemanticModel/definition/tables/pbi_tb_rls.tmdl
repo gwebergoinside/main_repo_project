@@ -1,0 +1,36 @@
+table pbi_tb_rls
+	lineageTag: 9bb73e50-f39f-42f5-b1f7-f975593fa4a1
+
+	column cd_group
+		dataType: int64
+		formatString: 0
+		lineageTag: 09472add-9775-46b6-8f59-8380ccc26adf
+		summarizeBy: none
+		sourceColumn: cd_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_email
+		dataType: string
+		lineageTag: 44ac4bbf-a68a-49b6-a104-133bd064587a
+		summarizeBy: none
+		sourceColumn: ds_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_user
+		dataType: string
+		lineageTag: da0b0027-e8c2-4eca-9887-933612df106c
+		summarizeBy: none
+		sourceColumn: ds_user
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_tb_rls = m
+		mode: import
+		source = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_tb_rls")
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

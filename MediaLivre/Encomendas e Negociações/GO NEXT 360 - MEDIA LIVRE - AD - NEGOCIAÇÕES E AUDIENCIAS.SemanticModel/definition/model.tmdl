@@ -10,7 +10,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["Host","Path","RangeStart","RangeEnd","~Medidas","fx_dbricks","Server","BD","AnoUpdate","dim_tempo","dim_daypart","pbi_vw_yummi","pbi_vw_invoices","pbi_vw_indicators","pbi_vw_ad_insertion","pbi_dim_campaigns","pbi_vw_negotiations","pbi_vw_projected_revenue","pbi_dim_accounts_client","pbi_dim_accounts_agency","pbi_dim_packages","pbi_dim_materials","pbi_dim_channels","pbi_dim_programs","pbi_dim_buy_units","pbi_dim_products_sectors","pbi_last_data_updated","pbi_vw_targets","pbi_vw_max_date_indicators","pbi_vw_audit_transactions_native_json","pbi_vw_media_investment","pbi_vw_max_media_investment","pbi_vw_ad_units","pbi_vw_ad_break_units","pbi_vw_media_investment_GRP","Ficheiros Negociações","Ambição","Relação Ambição"]
+annotation PBI_QueryOrder = ["Host","Path","RangeStart","RangeEnd","~Medidas","fx_dbricks","Server","BD","AnoUpdate","dim_tempo","dim_daypart","pbi_vw_yummi","pbi_vw_invoices","pbi_vw_indicators","pbi_vw_ad_insertion","pbi_dim_campaigns","pbi_vw_negotiations","pbi_vw_projected_revenue","pbi_dim_accounts_client","pbi_dim_accounts_agency","pbi_dim_packages","pbi_dim_materials","pbi_dim_channels","pbi_dim_programs","pbi_dim_buy_units","pbi_dim_products_sectors","pbi_last_data_updated","pbi_vw_targets","pbi_vw_max_date_indicators","pbi_vw_audit_transactions_native_json","pbi_vw_media_investment","pbi_vw_max_media_investment","pbi_vw_ad_units","pbi_vw_ad_break_units","pbi_vw_media_investment_GRP","Ficheiros Negociações","Ambição","Relação Ambição","pbi_tb_rls"]
 
 annotation PBI_ProTooling = ["DaxQueryView_Desktop","CalcGroup","TMDLView_Desktop","DevMode"]
 
@@ -62,6 +62,7 @@ ref table pmt_add_projections
 ref table pbi_vw_indicators
 ref table pbi_vw_media_investment_GRP
 ref table pbi_vw_ad_break_units
+ref table pbi_tb_rls
 
 ref cultureInfo en-US
 ref cultureInfo es-ES
