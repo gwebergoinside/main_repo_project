@@ -1,0 +1,72 @@
+table Users
+	lineageTag: cf732f2d-53c9-486d-9c72-e66418dbb242
+
+	column go_st_codigoexterno
+		dataType: string
+		lineageTag: 2e371fb1-a446-4d12-be69-b4d3a2bbc26b
+		summarizeBy: none
+		sourceColumn: go_st_codigoexterno
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Local
+		dataType: string
+		lineageTag: 0d83069d-49d5-47f8-a18a-373f1dcac949
+		summarizeBy: none
+		sourceColumn: Local
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gerente
+		dataType: string
+		lineageTag: b8e648ae-c965-4eec-b70c-01e886823f40
+		summarizeBy: none
+		sourceColumn: Gerente
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Executivo Corporativo'
+		dataType: string
+		lineageTag: 9ebcc3ec-7355-471e-892e-32ab9a310725
+		summarizeBy: none
+		sourceColumn: Executivo Corporativo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Users-09963f46-b4a3-4899-a849-c30ed7c8e4be = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				    Source = #"GetCDST_EntityTable"("SystemUser"),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"go_bl_executivocorporativo", "go_st_codigoexterno", "parentsystemuserid", "go_lk_siteid", "systemuserid"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Other Columns", {"go_lk_siteid"}, Site, {"go_siteid"}, "Site", JoinKind.LeftOuter),
+				    #"Expanded Site" = Table.ExpandTableColumn(#"Merged Queries", "Site", {"go_name"}, {"Local"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Expanded Site", {"parentsystemuserid"}, UsersMain, {"systemuserid"}, "UsersMain", JoinKind.LeftOuter),
+				    #"Expanded UsersMain" = Table.ExpandTableColumn(#"Merged Queries1", "UsersMain", {"fullname"}, {"Gerente"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Expanded UsersMain", each ([go_st_codigoexterno] <> null)),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Filtered Rows",{"go_bl_executivocorporativo", "go_st_codigoexterno", "Local", "Gerente"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns1",{{"go_bl_executivocorporativo", "Executivo Corporativo"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Executivo Corporativo", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type",null,"Não Definido",Replacer.ReplaceValue,{"Executivo Corporativo"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","true","Sim",Replacer.ReplaceText,{"Executivo Corporativo"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","false","Não",Replacer.ReplaceText,{"Executivo Corporativo"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Replaced Value2",{{"go_st_codigoexterno", Text.Upper, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Uppercased Text", {"go_st_codigoexterno"})
+				in
+				    #"Removed Duplicates"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

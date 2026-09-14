@@ -1,0 +1,20 @@
+table SnapShotAnterior
+	lineageTag: 6fa4440b-3907-4741-816b-e43a90973a71
+
+	column SnapShotAnterior
+		dataType: string
+		lineageTag: b19246c9-a9ad-4b1b-be55-a19bf284c46f
+		summarizeBy: none
+		sourceColumn: SnapShotAnterior
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SnapShotAnterior-9452d2a1-aece-447a-afe6-dc4050c2c3ea = m
+		mode: import
+		queryGroup: Config
+		source = "20220617" meta [IsParameterQuery=true, ExpressionIdentifier=SnapShotForecast, Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,146 @@
+table Metas
+	isHidden
+	lineageTag: a4ab673b-d8ac-46d1-b991-0ddddaae713a
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 708fb70c-998d-4e4d-8903-a86e490194f6
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCode
+		dataType: string
+		lineageTag: c0526b45-83c4-41ec-aab3-ab5e600207ec
+		summarizeBy: none
+		sourceColumn: ExternalCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column GoalAmount
+		dataType: double
+		lineageTag: 7b1ccda6-9948-40e6-8663-8846c41c2f92
+		summarizeBy: sum
+		sourceColumn: GoalAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ExternalCodeExecutivo
+		dataType: string
+		lineageTag: 51bca47f-8225-45c0-92c9-d3fc04e389ab
+		summarizeBy: none
+		sourceColumn: ExternalCodeExecutivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCodeCompany
+		dataType: string
+		lineageTag: adc8a707-c3a5-4810-b5ac-476245d98f8b
+		summarizeBy: none
+		sourceColumn: ExternalCodeCompany
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCodeAgency
+		dataType: string
+		lineageTag: 4fa5a07c-cd4c-4016-bf96-bf549ec2ba6c
+		summarizeBy: none
+		sourceColumn: ExternalCodeAgency
+
+		annotation SummarizationSetBy = Automatic
+
+	column MediaType
+		dataType: string
+		lineageTag: 94960745-ec15-4bdb-bedd-bf01f92bd736
+		summarizeBy: none
+		sourceColumn: MediaType
+
+		annotation SummarizationSetBy = Automatic
+
+	column SaleType
+		dataType: string
+		lineageTag: 76d511db-cef2-41d4-937b-e928ef65991e
+		summarizeBy: none
+		sourceColumn: SaleType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Governo'
+		dataType: string
+		lineageTag: dbdf87d3-e2c1-41d2-87f1-88c49d160808
+		summarizeBy: none
+		sourceColumn: Tipo Governo
+
+		annotation SummarizationSetBy = Automatic
+
+	column codIntegrador
+		dataType: string
+		lineageTag: 05e0a1c2-79f5-4fba-99e9-f74f8594fd34
+		summarizeBy: none
+		sourceColumn: codIntegrador
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metas-dd4bdfca-773c-41f9-be8c-7403fbc05f85 = m
+		mode: import
+		queryGroup: Carteira
+		source =
+				// let
+				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)    FP.Date,#(lf)    Entity.ExternalCode,#(lf)    F.GoalAmount As GoalAmount,#(lf)    [User].ExternalCode As ExternalCodeExecutivo,#(lf)    Company.ExternalCode As ExternalCodeCompany,#(lf)    Entity1.ExternalCode As ExternalCodeAgency,#(lf)    ForecastMediaType.ExternalCode As MediaType,#(lf)    ForecastSaleType.ExternalCode As SaleType#(lf)From#(lf)    Goal F Inner Join#(lf)    ForecastPeriod FP On F.PeriodID = FP.ID Inner Join#(lf)    Entity On F.EntityClientID = Entity.ID Inner Join#(lf)    [User] On F.UserID = [User].ID Inner Join#(lf)    Company On F.CompanyID = Company.ID Inner Join#(lf)    Entity Entity1 On F.EntityAgencyID = Entity1.ID Inner Join#(lf)    ForecastMediaType On F.MediaTypeID = ForecastMediaType.ID Inner Join#(lf)    ForecastSaleType On F.SaleTypeID = ForecastSaleType.ID#(lf)Where#(lf)    F.ContextId = 1 -- Conta"]),
+				//     #"Uppercased Text" = Table.TransformColumns(Source,{{"MediaType", Text.Upper, type text}, {"SaleType", Text.Upper, type text}}),
+				//     #"Merged Queries" = Table.NestedJoin(#"Uppercased Text", {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
+				//     #"Expanded Account" = Table.ExpandTableColumn(#"Merged Queries", "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"}),
+				//     #"Replaced Value" = Table.ReplaceValue(#"Expanded Account",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"}),
+				//     #"Filtered Rows" = Table.SelectRows(#"Replaced Value", each ([GoalAmount] <> 0) and ([Date] = null)) // Depois retirar o filtro da DATE
+				//  // Depois retirar o filtro da DATE
+				//  // Depois retirar o filtro da DATE
+				//  //Depois retirar o filtro da DATE
+				
+				// in
+				//     #"Filtered Rows"
+				
+				let
+				    SQL = "Select
+				            FP.Date,
+				            Entity.ExternalCode,
+				            F.GoalAmount As GoalAmount,
+				            [User].ExternalCode As ExternalCodeExecutivo,
+				            Company.ExternalCode As ExternalCodeCompany,
+				            Entity1.ExternalCode As ExternalCodeAgency,
+				            UPPER(ForecastMediaType.ExternalCode) As MediaType,
+				            UPPER(ForecastSaleType.ExternalCode) As SaleType,
+				            UPPER(Entity.ExternalCode + Entity1.ExternalCode) AS codIntegrador
+				        FROM Goal F
+				        JOIN ForecastPeriod FP
+				            ON F.PeriodID = FP.ID
+				        JOIN Entity
+				            ON F.EntityClientID = Entity.ID
+				        JOIN [User]
+				            ON F.UserID = [User].ID
+				        JOIN Company
+				            ON F.CompanyID = Company.ID
+				        JOIN Entity Entity1
+				            ON F.EntityAgencyID = Entity1.ID
+				        JOIN ForecastMediaType
+				            ON F.MediaTypeID = ForecastMediaType.ID
+				        JOIN ForecastSaleType
+				            ON F.SaleTypeID = ForecastSaleType.ID
+				        WHERE 1 = 1
+				            AND F.ContextId = 1 -- Conta
+				            AND ABS(F.GoalAmount) > 0",
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
+				    #"Merged Account" = let
+				        Juntar = Table.NestedJoin(Source, {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
+				        Expandir = Table.ExpandTableColumn(Juntar, "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"})
+				        in Table.ReplaceValue(Expandir, null, "Setor Privado", Replacer.ReplaceValue, {"Tipo Governo"})
+				in
+				    #"Merged Account"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,64 @@
+{
+  "config": "{\"version\":\"5.66\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"type\":2,\"version\":{\"visual\":\"1.8.97\",\"report\":\"2.0.97\",\"page\":\"1.3.97\"}}},\"activeSectionIndex\":0,\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}]}}",
+  "filters": "[]",
+  "layoutOptimization": 0,
+  "publicCustomVisuals": [],
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY24SU10",
+            "path": "BaseThemes/CY24SU10.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    }
+  ],
+  "sections": [
+    {
+      "config": "{\"visibility\":1}",
+      "displayName": "Exemplo",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "383ec6720c3e1788a253",
+      "ordinal": 1,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"8cb7dc0e39507042c58a\",\"layouts\":[{\"id\":0,\"position\":{\"x\":1069.2347611553023,\"y\":12.740652516057681,\"z\":1000,\"width\":199.9302394827513,\"height\":78.40401548343188}}],\"singleVisual\":{\"visualType\":\"slicer\",\"projections\":{\"Values\":[{\"queryRef\":\"Calendario.Ano\",\"active\":true},{\"queryRef\":\"Calendario.Mes\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendario\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Ano\"},\"Name\":\"Calendario.Ano\",\"NativeReferenceName\":\"Soma de Ano\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Mes\"},\"Name\":\"Calendario.Mes\",\"NativeReferenceName\":\"Mes\"}]},\"expansionStates\":[{\"roles\":[\"Values\"],\"levels\":[{\"queryRefs\":[\"Calendario.Ano\"],\"isCollapsed\":true,\"identityKeys\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendario\"}},\"Property\":\"Ano\"}}],\"isPinned\":true},{\"queryRefs\":[\"Calendario.Mes\"],\"isCollapsed\":true,\"isPinned\":true}],\"root\":{\"identityValues\":null}}],\"drillFilterOtherVisuals\":true,\"objects\":{\"data\":[{\"properties\":{\"mode\":{\"expr\":{\"Literal\":{\"Value\":\"'Dropdown'\"}}}}}],\"general\":[{\"properties\":{\"filter\":{\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Calendario\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Ano\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2026L\"}}]]}}}]}}}}]},\"cachedFilterDisplayItems\":[{\"id\":{\"scopeId\":{\"Comparison\":{\"ComparisonKind\":0,\"Left\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Calendario\"}},\"Property\":\"Ano\"}},\"Right\":{\"Literal\":{\"Value\":\"2026L\"}}}}},\"displayName\":\"2026\"}]}}",
+          "filters": "[]",
+          "height": 78.40,
+          "width": 199.93,
+          "x": 1069.23,
+          "y": 12.74,
+          "z": 1000.00
+        },
+        {
+          "config": "{\"name\":\"fbed8909ed35e59e3a36\",\"layouts\":[{\"id\":0,\"position\":{\"x\":17.879440158898795,\"y\":103.30343202919303,\"z\":0,\"width\":1648.8817035428888,\"height\":600.9478497852094}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"Users.Gerente\"},{\"queryRef\":\"Executivos.Executivo\"},{\"queryRef\":\"GrupoCliente.Cliente_Cod\"},{\"queryRef\":\"GrupoCliente.Grupo_Cliente\"},{\"queryRef\":\"GrupoAgencia.Agencia\"},{\"queryRef\":\"@Medidas.Val Liquido Carteira Final Atual DePara\"},{\"queryRef\":\"@Medidas.Val Liquido Carteira Final LY Atual DePara\"},{\"queryRef\":\"@Medidas.Forecast Carteira\"},{\"queryRef\":\"@Medidas.Forecast Var\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"e\",\"Entity\":\"Executivos\",\"Type\":0},{\"Name\":\"g\",\"Entity\":\"GrupoCliente\",\"Type\":0},{\"Name\":\"@\",\"Entity\":\"@Medidas\",\"Type\":0},{\"Name\":\"g1\",\"Entity\":\"GrupoAgencia\",\"Type\":0},{\"Name\":\"u\",\"Entity\":\"Users\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Executivo\"},\"Name\":\"Executivos.Executivo\",\"NativeReferenceName\":\"Executivo\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"Cliente_Cod\"},\"Name\":\"GrupoCliente.Cliente_Cod\",\"NativeReferenceName\":\"Cliente_Cod\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"@\"}},\"Property\":\"Val Liquido Carteira Final Atual DePara\"},\"Name\":\"@Medidas.Val Liquido Carteira Final Atual DePara\",\"NativeReferenceName\":\"Valor Atual\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"@\"}},\"Property\":\"Val Liquido Carteira Final LY Atual DePara\"},\"Name\":\"@Medidas.Val Liquido Carteira Final LY Atual DePara\",\"NativeReferenceName\":\"Valor LY\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"@\"}},\"Property\":\"Forecast Carteira\"},\"Name\":\"@Medidas.Forecast Carteira\",\"NativeReferenceName\":\"Forecast Carteira\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g1\"}},\"Property\":\"Agencia\"},\"Name\":\"GrupoAgencia.Agencia\",\"NativeReferenceName\":\"Agencia\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"u\"}},\"Property\":\"Gerente\"},\"Name\":\"Users.Gerente\",\"NativeReferenceName\":\"Gerente\"},{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"@\"}},\"Property\":\"Forecast Var\"},\"Name\":\"@Medidas.Forecast Var\",\"NativeReferenceName\":\"Forecast Var\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"Grupo_Cliente\"},\"Name\":\"GrupoCliente.Grupo_Cliente\",\"NativeReferenceName\":\"Grupo_Cliente\"}],\"OrderBy\":[{\"Direction\":1,\"Expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"e\"}},\"Property\":\"Executivo\"}}}]},\"columnProperties\":{\"@Medidas.Val Liquido Carteira Final Atual DePara\":{\"displayName\":\"Valor Atual\"},\"@Medidas.Val Liquido Carteira Final LY Atual DePara\":{\"displayName\":\"Valor LY\"}},\"drillFilterOtherVisuals\":true,\"objects\":{\"columnWidth\":[{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"165.76379695826358D\"}}}},\"selector\":{\"metadata\":\"Executivos.Executivo\"}},{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"251.3433137975934D\"}}}},\"selector\":{\"metadata\":\"GrupoCliente.Cliente_Cod\"}},{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"148.7805476117975D\"}}}},\"selector\":{\"metadata\":\"@Medidas.Forecast Carteira\"}},{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"284.85784835877774D\"}}}},\"selector\":{\"metadata\":\"GrupoAgencia.Agencia\"}},{\"properties\":{\"value\":{\"expr\":{\"Literal\":{\"Value\":\"131.9186988562883D\"}}}},\"selector\":{\"metadata\":\"Users.Gerente\"}}],\"values\":[{\"properties\":{\"wordWrap\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}],\"columnHeaders\":[{\"properties\":{}}]}}}",
+          "filters": "[]",
+          "height": 600.95,
+          "width": 1648.88,
+          "x": 17.88,
+          "y": 103.30,
+          "z": 0.00
+        }
+      ],
+      "width": 1680.00
+    },
+    {
+      "config": "{}",
+      "displayName": "Página 1",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "8a74ab316be0a1a6681a",
+      "visualContainers": [],
+      "width": 1280.00
+    }
+  ]
+}

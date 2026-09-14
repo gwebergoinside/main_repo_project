@@ -1,0 +1,64 @@
+table UsersGestores
+	isHidden
+	lineageTag: fd4f2154-3286-4f08-96f3-87673eeeb1a9
+
+	column go_st_codigoexterno_gestores
+		dataType: string
+		isHidden
+		lineageTag: 73267988-3226-4b9c-b3a3-7418c8551ecf
+		summarizeBy: none
+		sourceColumn: go_st_codigoexterno_gestores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nameGestores
+		dataType: string
+		isHidden
+		lineageTag: e8cf1a62-3a92-4343-8608-ab86123e6fda
+		summarizeBy: none
+		sourceColumn: nameGestores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column domainGestores
+		dataType: string
+		isHidden
+		lineageTag: 0e80b05e-f192-4504-b7b2-df8db4f244b8
+		summarizeBy: none
+		sourceColumn: domainGestores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column parentsystemuserid
+		dataType: string
+		isHidden
+		lineageTag: da6b1d0b-80ff-49fc-a516-b3fcfb89e56d
+		summarizeBy: none
+		sourceColumn: parentsystemuserid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition UsersGestores = m
+		mode: import
+		queryGroup: RLS
+		source =
+				let
+				    FonteNacionais = Table.SelectColumns(UsersNacionais,{"parentsystemuserid", "go_st_codigoexterno_gestores", "nameGestores", "domainGestores"}),
+				    Distintos = Table.Distinct(FonteNacionais)
+				in
+				    Distintos
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

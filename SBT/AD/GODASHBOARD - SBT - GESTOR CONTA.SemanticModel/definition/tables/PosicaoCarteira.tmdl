@@ -1,0 +1,326 @@
+table PosicaoCarteira
+	isHidden
+	lineageTag: 0826d2be-e49c-4cdd-a5f3-0992427f950c
+
+	column Cliente
+		dataType: string
+		isHidden
+		lineageTag: 6f077ac4-fb7e-420d-b0d0-1d89613cf93f
+		summarizeBy: none
+		sourceColumn: Cliente
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienteCodigo
+		dataType: string
+		isHidden
+		lineageTag: e76c7a8c-ce0c-44bd-a795-ab4281e9baa7
+		summarizeBy: none
+		sourceColumn: ClienteCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agencia
+		dataType: string
+		isHidden
+		lineageTag: 7c34370c-eacd-4d6d-a238-da44aa0bd22a
+		summarizeBy: none
+		sourceColumn: Agencia
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaCodigo
+		dataType: string
+		isHidden
+		lineageTag: a4d1335c-3541-43e3-b1f0-8374fe9e591e
+		summarizeBy: none
+		sourceColumn: AgenciaCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Executivo
+		dataType: string
+		isHidden
+		lineageTag: 91f08da8-727e-4592-8b56-70f854568eb8
+		summarizeBy: none
+		sourceColumn: Executivo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExecutivoCodigo
+		dataType: string
+		isHidden
+		lineageTag: 1c3d767a-188e-45b9-880e-fb30ae30022e
+		summarizeBy: none
+		sourceColumn: ExecutivoCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		isHidden
+		formatString: dd/mm/yyyy
+		lineageTag: 6555fbb3-b3f3-4dd6-87b5-150ca2a1f4b3
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column DataFim
+		dataType: dateTime
+		isHidden
+		formatString: dd/mm/yyyy
+		lineageTag: cfb8f0d9-74aa-49fe-a3dd-11750ab00c47
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Mes Inicio'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4c72a725-5bff-4e22-89f9-91b32f34b65a
+		summarizeBy: none
+		sourceColumn: Mes Inicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes Nome Inicio'
+		dataType: string
+		isHidden
+		lineageTag: d86cc3bc-7e19-4709-941c-ec006cd0ce32
+		summarizeBy: none
+		sourceColumn: Mes Nome Inicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ano Inicio'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6b947c0a-e9b7-4920-94db-196ed3e1db3a
+		summarizeBy: none
+		sourceColumn: Ano Inicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes Fim'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b5110538-ef83-4532-aa74-758601cd7095
+		summarizeBy: none
+		sourceColumn: Mes Fim
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmpVendaCodigo
+		dataType: string
+		isHidden
+		lineageTag: 855f2cd0-0ac6-4bc7-a2bf-6e98dc26d110
+		summarizeBy: none
+		sourceColumn: EmpVendaCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmpresaVenda
+		dataType: string
+		isHidden
+		lineageTag: 812c900c-b797-4d93-8a2c-d9aee7a1c762
+		summarizeBy: none
+		sourceColumn: EmpresaVenda
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmpVenda
+		dataType: string
+		isHidden
+		lineageTag: ab80f248-f0a0-4702-8069-8a0f6081cb12
+		summarizeBy: none
+		sourceColumn: EmpVenda
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EndFim
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 300b6682-646c-46c1-a09a-33479ccbe281
+		summarizeBy: none
+		sourceColumn: EndFim
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column StartInicio
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: db3e73dd-eeaf-4b07-a9ef-ee511a4a2d17
+		summarizeBy: none
+		sourceColumn: StartInicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ClientesDiretos = IF.EAGER( PosicaoCarteira[Cliente] = PosicaoCarteira[Agencia], "CLIENTES DIRETOS", "COM AGÊNCIAS" )
+		isHidden
+		lineageTag: 56a27702-1f69-471b-bbfb-e382d3219d57
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado = IF( PosicaoCarteira[DataFim] >= TODAY(), "Ativa", "Inativa" )
+		isHidden
+		lineageTag: 5e31df94-9c26-4202-b78e-17bab14c14dc
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c3eab4fc-e00b-420d-a09e-9c7222274a36
+		summarizeBy: none
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Fim' =
+			
+			IF( year(PosicaoCarteira[DataFim]) = 2099, BLANK(), PosicaoCarteira[DataFim] )
+		formatString: dd/mm/yyyy
+		lineageTag: 98ffd3b3-9235-45e7-a159-4e885477e52f
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Status
+		dataType: string
+		lineageTag: 3e7078f1-7297-444a-8b6a-928a50824624
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column codIntegrador
+		dataType: string
+		lineageTag: 1a37715f-5620-4403-9d37-53a158356705
+		summarizeBy: none
+		sourceColumn: codIntegrador
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PosicaoCarteira-fddb36b0-92bc-41ca-89e1-ea614118b435 = m
+		mode: import
+		queryGroup: Carteira
+		source =
+				// let
+				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)    [User].Name Executivo,#(lf)    [User].ExternalCode ExecutivoCodigo,#(lf)    ENTITYCLIENT.Name Cliente,#(lf)    ENTITYCLIENT.ExternalCode ClienteCodigo,#(lf)    ENTITYAGENCY.Name Agencia,#(lf)    ENTITYAGENCY.ExternalCode AgenciaCodigo,#(lf)    Format(CustomerPortfolio.EndDate, 'dd-MM-yyyy') As DataFim,#(lf)    Format(CustomerPortfolio.BeginDate, 'dd-MM-yyyy') As DataInicio,#(lf)    Company.ExternalCode As EmpVendaCodigo,#(lf)    Company.Name As EmpVenda,#(lf)    CONCAT(Company.ExternalCode, ' - ', Company.Name) As EmpresaVenda,#(lf)    CustomerPortfolio.ID#(lf)From#(lf)    CustomerPortfolio Left Join#(lf)    [User] On [User].ID = CustomerPortfolio.UserID Left Join#(lf)    Entity ENTITYAGENCY On ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID Left Join#(lf)    Entity ENTITYCLIENT On ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID Inner Join#(lf)    Company On CustomerPortfolio.CompanyID = Company.ID"]),
+				//     Custom3 = Table.ReplaceValue(Source,null,"31-12-2099",Replacer.ReplaceValue,{"DataFim"}),
+				//     #"Changed Type" = Table.TransformColumnTypes(Custom3,{{"DataInicio", type date}, {"DataFim", type date}}),
+				//     #"Inserted Month" = Table.AddColumn(#"Changed Type", "Mes Inicio", each Date.Month([DataInicio]), Int64.Type),
+				//     #"Inserted Month Name" = Table.AddColumn(#"Inserted Month", "Mes Nome Inicio", each Date.MonthName([DataInicio]), type text),
+				//     #"Inserted Year" = Table.AddColumn(#"Inserted Month Name", "Ano Inicio", each Date.Year([DataInicio]), Int64.Type),
+				//     #"Inserted Month1" = Table.AddColumn(#"Inserted Year", "Mes Fim", each Date.Month([DataFim]), Int64.Type),
+				//     #"Inserted End of Month" = Table.AddColumn(#"Inserted Month1", "EndFim", each Date.EndOfMonth([DataFim]), type date),
+				//     #"Inserted Start of Month" = Table.AddColumn(#"Inserted End of Month", "StartInicio", each Date.StartOfMonth([DataInicio]), type date)
+				// in
+				//     #"Inserted Start of Month"
+				
+				let
+				    SQL = "Select
+				        [User].Name Executivo,
+				        [User].ExternalCode ExecutivoCodigo,
+				        ENTITYCLIENT.Name Cliente,
+				        ENTITYCLIENT.ExternalCode ClienteCodigo,
+				        ENTITYAGENCY.Name Agencia,
+				        ENTITYAGENCY.ExternalCode AgenciaCodigo,
+				        CustomerPortfolio.BeginDate AS DataInicio,
+				        CASE WHEN CustomerPortfolio.EndDate IS NULL THEN DATEFROMPARTS(YEAR(GETDATE()) + 5, 12, 31) ELSE CustomerPortfolio.EndDate END AS DataFim,
+				        Company.ExternalCode As EmpVendaCodigo,
+				        Company.Name As EmpVenda,
+				        CONCAT(Company.ExternalCode, ' - ', Company.Name) As EmpresaVenda,
+				        CustomerPortfolio.ID,
+				        UPPER(ENTITYCLIENT.ExternalCode + ENTITYAGENCY.ExternalCode) AS codIntegrador,
+				        CASE WHEN
+				            CustomerPortfolio.Status = 1 THEN 'Sim'
+				            ELSE 'Não' END AS Status
+				    From CustomerPortfolio
+				    Left Join [User]
+				        On [User].ID = CustomerPortfolio.UserID
+				    Left Join Entity ENTITYAGENCY
+				        On ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID
+				    Left Join Entity ENTITYCLIENT
+				        On ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID
+				    Left Join Company
+				        On CustomerPortfolio.CompanyID = Company.ID",
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
+				    #"Inserted Coluns" = Table.AddColumn( Table.AddColumn( Table.AddColumn( Table.AddColumn( Table.AddColumn( Table.AddColumn( Source,
+				        "Mes Inicio", each Date.Month([DataInicio]), Int64.Type),
+				        "Mes Nome Inicio", each Date.MonthName([DataInicio]), type text),
+				        "Ano Inicio", each Date.Year([DataInicio]), Int64.Type),
+				        "Mes Fim", each Date.Month([DataFim]), Int64.Type),
+				        "StartInicio", each Date.StartOfMonth(DateTime.Date([DataInicio])), type date),
+				        "EndFim", each Date.EndOfMonth(DateTime.Date([DataFim])), type date)
+				in
+				    #"Inserted Coluns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

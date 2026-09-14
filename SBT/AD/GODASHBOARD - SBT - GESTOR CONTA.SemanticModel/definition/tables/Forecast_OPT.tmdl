@@ -1,0 +1,311 @@
+table Forecast_OPT
+	isHidden
+	lineageTag: de8b6475-42d9-49dc-97e3-0aa56cf5af18
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 37781a31-ec4c-4fbe-ab08-79cd520a6ce8
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCode
+		dataType: string
+		isHidden
+		lineageTag: 7fbb0e5b-48ed-4604-85af-e2b90ae4a092
+		summarizeBy: none
+		sourceColumn: ExternalCode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ForecastAmount
+		dataType: double
+		isHidden
+		lineageTag: 53631250-2b11-4b47-bd45-d18d9d55bf3f
+		summarizeBy: sum
+		sourceColumn: ForecastAmount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Forecast
+		dataType: double
+		lineageTag: 5bbb9d8a-7afb-429c-8014-6726ae838514
+		summarizeBy: sum
+		sourceColumn: Forecast
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ExternalCodeAgency
+		dataType: string
+		isHidden
+		lineageTag: 2e2804a6-3aff-48cf-b022-56fa844e87e0
+		summarizeBy: none
+		sourceColumn: ExternalCodeAgency
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MediaType
+		dataType: string
+		isHidden
+		lineageTag: 23b83cb2-9f71-4907-85be-434052c235a1
+		summarizeBy: none
+		sourceColumn: MediaType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SaleType
+		dataType: string
+		isHidden
+		lineageTag: e6f11085-9c11-425e-ac91-807c0c90f585
+		summarizeBy: none
+		sourceColumn: SaleType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OpportunityID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 13c6ebc3-74e6-4b4c-a841-58532c67d1a7
+		summarizeBy: count
+		sourceColumn: OpportunityID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7183b59c-838d-457d-8ec5-9d7a924740a5
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column RealizedAmount
+		dataType: double
+		isHidden
+		lineageTag: 416ecdd4-8a72-468f-bb0c-0c9184dc261a
+		summarizeBy: sum
+		sourceColumn: RealizedAmount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Numero_Negociacao
+		dataType: int64
+		isHidden
+		lineageTag: 71bd1de9-74fd-402d-8238-d4fea3f9c15c
+		summarizeBy: none
+		sourceColumn: Numero_Negociacao
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IsActive
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 71277334-3e26-4360-be84-bad1b8527365
+		summarizeBy: none
+		sourceColumn: IsActive
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LockedExpectedAmount
+		dataType: double
+		isHidden
+		lineageTag: afafa90c-41e2-4975-a3be-77cdb8196687
+		summarizeBy: sum
+		sourceColumn: LockedExpectedAmount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MêsCorrente =
+			
+			IF (
+			    AND ( [Date]>=DATE ( YEAR ( NOW () ), MONTH ( NOW () ), 1 ) ,[Date]<DATE ( YEAR ( NOW () ), MONTH ( NOW () )+1, 1) ),
+			    "Mês Corrente",
+			    IF (
+			        AND ( [Date]>=DATE ( YEAR ( NOW () ), MONTH ( NOW () )-12, 1 ),[Date]<[Today] ),
+			        "Meses Transactos",
+			        IF ( [Today] = 0, "" )
+			    )
+			)
+		isHidden
+		lineageTag: d46989d1-e10b-41a6-a460-f012c21501b3
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Today = IF([Date] = TODAY(), 1, 0)
+		isHidden
+		formatString: 0
+		lineageTag: 343853bc-d2e0-46e6-8d0d-ed7501af55fa
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chave = [ExternalCode]&"-"& [ExternalCodeAgency]&"-"& [MediaType]&"-"& [SaleType]&"-"& [Numero_Negociacao]&"-"& Year([Date])&"-"& MONTH([Date])
+		isHidden
+		lineageTag: bdf60d3c-0980-4c0b-bc1c-1bbc1fe5802f
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor_BAV =
+			
+			// LOOKUPVALUE(
+			//     R0002[Vlr_Gerencial_BAV]
+			//     ,R0002[ChaveForecast]
+			//     ,Forecast_OPT[Chave]
+			// )
+			
+			CALCULATE(
+			    SUM( R0002[Vlr_Gerencial_BAV] )
+			    ,FILTER(
+			        ALL(R0002)
+			        , Forecast_OPT[Chave] = R0002[ChaveForecast]
+			    )
+			)
+		isHidden
+		lineageTag: 5ad4b709-68c9-4375-a58f-70f576497481
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Valor_Rep_var =
+			
+			// LOOKUPVALUE(
+			//     R0002[Vlr_Repasse_Varejo]
+			//     ,R0002[ChaveForecast]
+			//     ,Forecast_OPT[Chave]
+			// )
+			
+			CALCULATE(
+			    SUM( R0002[Vlr_Repasse_Varejo] )
+			    ,FILTER(
+			        ALL(R0002)
+			        , Forecast_OPT[Chave] = R0002[ChaveForecast]
+			    )
+			)
+		isHidden
+		lineageTag: 9aafe2e7-e535-4dad-bbe0-0b419b75b351
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column codIntegrador
+		dataType: string
+		lineageTag: b4bfee3c-6ef2-4464-b048-016c0d06909b
+		summarizeBy: none
+		sourceColumn: codIntegrador
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Forecast_OPT-ddc06653-9c03-41de-bc0d-a4ea71c2298f = m
+		mode: import
+		queryGroup: Carteira
+		source = ```
+				let
+				    SQL = "Select
+				            fp.Date,
+				            e.ExternalCode,
+				            f.Amount As ForecastAmount,
+				            f.ExpectedAmount As Forecast,
+				            f.RealizedAmount, 
+				            e1.ExternalCode As ExternalCodeAgency,
+				            UPPER(fmt.ExternalCode) As MediaType,
+				            UPPER(fst.ExternalCode) As SaleType,
+				            CAST(DO.ExternalCode AS INT) AS Numero_Negociacao,
+				            Negotiation.OpportunityID,
+				            Negotiation.ID,
+				            f.IsActive,
+				            f.LockedExpectedAmount,
+				            UPPER(e.ExternalCode + e1.ExternalCode) AS codIntegrador
+				        From NegotiationForecast f
+				        Join ForecastPeriod fp
+				            On f.PeriodID = fp.ID
+				        Join Entity e
+				            On f.EntityClientID = e.ID
+				        Join Entity e1
+				            On f.EntityAgencyID = e1.ID
+				        Join ForecastMediaType fmt
+				            On f.MediaTypeID = fmt.ID
+				        Join ForecastSaleType fst
+				            On f.SaleTypeID = fst.ID
+				        Join Negotiation
+				            On f.NegotiationID = Negotiation.ID
+				        Join DynamicsOpportunity DO
+				            On DO.ID = Negotiation.OpportunityID
+				        Where
+				            f.IsActive = 1",
+				    Source = Sql.Database(Org, BD, [Query = SQL])
+				    // #"Uppercased Text" = Table.TransformColumns(Source,{{"MediaType", Text.Upper, type text}, {"SaleType", Text.Upper, type text}}),
+				    // #"Changed Type" = Table.TransformColumnTypes(#"Uppercased Text",{{"Numero_Negociacao", Int64.Type}}),
+				    // #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"ForecastExpAmount", "Forecast"}}),
+				    // #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Date", type date}}),
+				    // #"Linhas Filtradas" = Table.SelectRows(#"Changed Type1", each ([IsActive] = true))
+				in
+				    Source
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

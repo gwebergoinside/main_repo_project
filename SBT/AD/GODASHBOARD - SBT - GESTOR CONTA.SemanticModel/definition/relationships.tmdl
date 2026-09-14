@@ -1,0 +1,374 @@
+relationship 4f6280b8-cc15-48bc-b87a-9f70edff1c1b
+	fromColumn: R0002.MediaTypeExternalCode
+	toColumn: TipoMidia.ExternalCode
+
+relationship 4508066e-ee08-4dcc-8e7b-46011687ca2d
+	fromColumn: Forecast.MediaType
+	toColumn: TipoMidia.ExternalCode
+
+relationship 9b24c90b-95c8-4154-808e-7d2a8f271942
+	fromColumn: Forecast.SaleType
+	toColumn: TipoVenda.ExternalCode
+
+relationship c8b57bda-204a-4a5c-a3e2-390388ad26c5
+	fromColumn: R0002.SaleTypeExternalCode
+	toColumn: TipoVenda.ExternalCode
+
+relationship 3f259536-6d8b-4667-9030-e7fed0a41e08
+	fromColumn: Metas.MediaType
+	toColumn: TipoMidia.ExternalCode
+
+relationship b671d736-4316-4bf5-bc23-3612c037ddc4
+	fromColumn: Metas.SaleType
+	toColumn: TipoVenda.ExternalCode
+
+relationship 868bd6ce-fc8d-492f-94bd-a5437d1da758
+	crossFilteringBehavior: bothDirections
+	fromColumn: Activity.regardingobjectid
+	toColumn: Neg.OpportunityId
+
+relationship 6b12d9eb-6d4e-4d31-a274-9a9dc2de7663
+	crossFilteringBehavior: bothDirections
+	fromColumn: Briefings.go_lk_oportunidadedeorigemid
+	toColumn: Neg.OpportunityId
+
+relationship a5ce9701-0d4b-4659-b744-14a5e587ca6e
+	crossFilteringBehavior: bothDirections
+	fromColumn: Solicitacao.go_lk_oportunidadeid
+	toColumn: Neg.OpportunityId
+
+relationship f23d3b57-38c8-493f-85ee-3fca5400a55a
+	crossFilteringBehavior: bothDirections
+	fromColumn: NucleoOport.opportunityid
+	toColumn: Neg.OpportunityId
+
+relationship 737eaf0e-4b70-4761-9cf1-fc24743b9f58
+	fromColumn: LY.TipoVenda
+	toColumn: TipoVenda.ExternalCode
+
+relationship ceeb717c-7c10-4b59-861a-791b65e91829
+	fromColumn: LY.TipoMidia
+	toColumn: TipoMidia.ExternalCode
+
+relationship 7f656643-2e1f-451f-aee1-43a519f11806
+	fromColumn: LY.CustomerPortfolioID
+	toColumn: PosicaoCarteira.ID
+
+relationship 2a01fb87-2440-4a94-b029-7f466814414a
+	fromColumn: Neg.'Tipo Governo'
+	toColumn: 'Tipo Governo'.'Tipo Governo'
+
+relationship df39624f-c0da-42c4-a1c4-717e23d6d0b6
+	fromColumn: LY.'Tipo Governo'
+	toColumn: 'Tipo Governo'.'Tipo Governo'
+
+relationship 4182eeef-339f-49a0-a18b-11a92738ece7
+	fromColumn: R0002.'Tipo Governo'
+	toColumn: 'Tipo Governo'.'Tipo Governo'
+
+relationship 3f063b2f-4c54-45f1-8d6e-ec9b2ddad256
+	fromColumn: R0002.Cod_Cliente
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 4b31bd50-f26d-4045-a85a-e0603aafbe37
+	fromColumn: Metas.ExternalCodeAgency
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship 8b2911e7-966e-4ce6-b054-1a3410c741eb
+	fromColumn: R0002.Cod_Agencia
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+	annotation PBI_IsFromSource = FS
+
+relationship ba1fd1e7-a9d9-45b1-9eb1-1eb98db99de7
+	fromColumn: Metas.ExternalCodeCompany
+	toColumn: Emp_Venda.ExternalCode
+
+relationship 649c2e17-7a4b-415b-ab15-d06460d8d96b
+	fromColumn: Forecast.ExternalCodeCompany
+	toColumn: Emp_Venda.ExternalCode
+
+relationship 8efc5d17-b577-4b6b-a626-f37135472388
+	fromColumn: R0002.Cod_Empresa
+	toColumn: Emp_Venda.ExternalCode
+
+relationship b6cec12a-4d31-47a6-8526-e14a49159969
+	fromColumn: Metas.ExternalCode
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship e83a0583-b138-4122-a4e0-2561d68d5bba
+	fromColumn: Forecast.ExternalCodeAgency
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship 6023d2fb-e0ed-4b0b-9ac0-6c8dc705b598
+	fromColumn: Forecast.ExternalCode
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 003fb16a-7f22-42f2-b95b-99e2d45212a2
+	fromColumn: Metas.ExternalCodeExecutivo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship 9f8283a1-3a23-409d-b122-1c7604e8c6f9
+	fromColumn: Forecast.ExternalCodeExecutivo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship 7b8f30b7-f6c8-4e3d-8a2a-61b8da3564ab
+	fromColumn: Neg.go_st_codigoexterno
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship 55a611a9-5b15-46cc-886c-fac3f62c4077
+	fromColumn: R0002.Cod_Executivo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship a8e1ea3a-09e6-4b20-bdf3-c91064f37aa7
+	fromColumn: Veiculacao_Segmento.Cod_Contato
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship e282c3a6-e89c-4ef9-bc18-95f4f3e36745
+	fromColumn: Veiculacao_Segmento.Cod_Agencia
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship 70dcaf77-7c5a-449a-8cea-1c1469029081
+	fromColumn: Veiculacao_Segmento.Cod_Cliente
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 60aa345a-2763-42c2-aacd-e9e5b03d577b
+	fromColumn: Veiculacao_Segmento.Cod_Empresa_Venda
+	toColumn: Emp_Venda.ExternalCode
+
+relationship 0d3b96b3-355a-4cd6-b018-f2ba2b3452cc
+	fromColumn: Veiculacao_Segmento.Cod_Empresa_Faturamento
+	toColumn: Emp_Faturamento.ExternalCode
+
+relationship 9b1263d3-b713-4897-b288-f0efaf38aada
+	fromColumn: R0002.'CodEmp Faturamento'
+	toColumn: Emp_Faturamento.ExternalCode
+
+relationship 6b0a79ab-38ae-446b-971d-48cf8114b5b3
+	fromColumn: Forecast.'Tipo Governo'
+	toColumn: 'Tipo Governo'.'Tipo Governo'
+
+relationship 8b234ff6-43f0-491a-b8f0-d39b1b2f76d1
+	fromColumn: Metas.'Tipo Governo'
+	toColumn: 'Tipo Governo'.'Tipo Governo'
+
+relationship c64c7de0-9041-4283-907a-499b32d82424
+	fromColumn: ForecastSnapshot.ExternalCode
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 7812e11f-1283-4cae-a3e1-fe1b6d589b45
+	fromColumn: ForecastSnapshot.ExternalCodeAgency
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship 178cdbe7-d387-4b42-8746-761b39ce163a
+	fromColumn: ForecastSnapshot.ExternalCodeCompany
+	toColumn: Emp_Venda.ExternalCode
+
+relationship 481663e2-707f-4829-b926-53a09d5739b2
+	fromColumn: ForecastSnapshot.ExternalCodeExecutivo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship 49f5f111-cd69-479a-9bde-27357ddcba16
+	fromColumn: ForecastSnapshot.'Tipo Governo'
+	toColumn: 'Tipo Governo'.'Tipo Governo'
+
+relationship 2518e957-bd6e-4103-aa05-794394daea1a
+	fromColumn: ForecastSnapshot.MediaType
+	toColumn: TipoMidia.ExternalCode
+
+relationship b62bf559-c0ca-4110-8bef-9e7bebf44f22
+	fromColumn: ForecastSnapshot.SaleType
+	toColumn: TipoVenda.ExternalCode
+
+relationship d14debe3-2f98-43c6-a73a-61002f0af45f
+	fromColumn: R0002.Cod_Tipo_Comercial
+	toColumn: TipoComercial.Cod_Tipo_Comercial
+
+relationship 655a246f-72a4-4187-b1c1-32901c71d128
+	toCardinality: many
+	fromColumn: ForecastSnapshot.ExternalCodeExecutivo
+	toColumn: RLS.Filho
+
+relationship 691bc707-70e5-4d30-bc31-06e036993f1f
+	toCardinality: many
+	fromColumn: Metas.ExternalCodeExecutivo
+	toColumn: RLS.Filho
+
+relationship 81a72931-d7f4-48fa-94ad-ad69cc5f59c7
+	toCardinality: many
+	fromColumn: R0002.Cod_Executivo
+	toColumn: RLS.Filho
+
+relationship 54169b13-8b19-4245-b6e3-e5e1e91d158b
+	toCardinality: many
+	fromColumn: Forecast.ExternalCodeExecutivo
+	toColumn: RLS.Filho
+
+relationship e6a8d5f2-6603-4a54-97ee-7436a4895624
+	fromColumn: LY.Cod_Emp
+	toColumn: Emp_Venda.ExternalCode
+
+relationship c0ad608a-a775-46d3-9cb5-9156d8749a09
+	fromColumn: LY.Cod_Cliente
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 9df18443-b5f2-4e87-9ae6-f591d2267d49
+	fromColumn: LY.Cod_Agencia
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship 6d76b036-89c0-4e16-b56c-5a4dec777a3a
+	fromColumn: LY.Cod_Executivo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship a442768b-bb40-447c-9e26-4427b6a7b0e4
+	toCardinality: many
+	fromColumn: LY.Cod_Executivo
+	toColumn: RLS.Filho
+
+relationship 2fbb0ac3-c531-4973-8aa0-71753f51e150
+	fromColumn: Forecast.ExternalCodeExecutivo
+	toColumn: Users.go_st_codigoexterno
+
+relationship 77271cae-5124-497d-af8b-3a3ece1b66b3
+	fromColumn: Metas.ExternalCodeExecutivo
+	toColumn: Users.go_st_codigoexterno
+
+relationship 4961ea0a-3c0b-414a-ada2-97d8b233ac70
+	fromColumn: R0002.Cod_Executivo
+	toColumn: Users.go_st_codigoexterno
+
+relationship a03b5b2e-f2a0-4627-89d6-f02128d32d98
+	fromColumn: LY.Cod_Executivo
+	toColumn: Users.go_st_codigoexterno
+
+relationship 42275f9f-f7ec-4be0-8f01-62f6aec0c43d
+	fromColumn: Veiculacao_Segmento.Cod_Contato
+	toColumn: Users.go_st_codigoexterno
+
+relationship 6cca388e-0b26-4710-885b-507d871db83d
+	fromColumn: Neg.go_st_codigoexterno
+	toColumn: Users.go_st_codigoexterno
+
+relationship c4a71103-a2ea-4a70-996a-eb9723d8553e
+	fromColumn: ForecastSnapshot.ExternalCodeExecutivo
+	toColumn: Users.go_st_codigoexterno
+
+relationship d6cc8713-78be-48ed-bba8-14790085ebd4
+	toCardinality: many
+	fromColumn: Neg.go_st_codigoexterno
+	toColumn: RLS.Filho
+
+relationship 48b3dd00-95dd-4c27-8fbd-6e445fbf789d
+	fromColumn: R0002.Data
+	toColumn: Calendario.Date
+
+relationship 4a95bd58-d364-49b7-8325-6088cba20362
+	fromColumn: Forecast.Date
+	toColumn: Calendario.Date
+
+relationship eaf4fc5f-ddc2-4fd5-942c-4e2cc89c8f9a
+	fromColumn: Metas.Date
+	toColumn: Calendario.Date
+
+relationship cfd1daf5-41f8-453a-801d-a6532424481e
+	fromColumn: LY.Data
+	toColumn: Calendario.Date
+
+relationship 59f4283a-b671-43b5-a361-e3efacb90d3a
+	fromColumn: Forecast_OPT.Date
+	toColumn: Calendario.Date
+
+relationship 745b15a1-12e6-448a-a801-5058cb91294c
+	fromColumn: Neg.'Data de Integração_Final'
+	toColumn: Calendario.Date
+
+relationship 019b126b-90ce-4c61-b542-7a63f3d8d07a
+	fromColumn: Veiculacao_Segmento.Data_Exibicao
+	toColumn: Calendario.Date
+
+relationship 1c33d612-29b1-4e9c-8298-de6d1a72aca6
+	fromColumn: ForecastSnapshot.Date
+	toColumn: Calendario.Date
+
+relationship ded0f84f-b537-a7dd-118d-de6dea2a1f1c
+	fromColumn: PosicaoCarteiraNacional.ExecutivoCodigo
+	toColumn: UsersNacionais.go_st_codigoexterno
+
+relationship 266250dd-cd38-4ad5-f80d-0744129d532b
+	isActive: false
+	toCardinality: many
+	fromColumn: PosicaoCarteira.ClienteCodigo
+	toColumn: PosicaoCarteiraNacional.ClienteCodigo
+
+relationship cde4bf88-62bd-b15e-a724-6aa0c8f8d14f
+	fromColumn: UsersNacionais.parentsystemuserid
+	toColumn: UsersGestores.parentsystemuserid
+
+relationship b57b7ed8-3ef9-e8cf-45b8-522e902a4a6a
+	toCardinality: many
+	fromColumn: ForecastSnapshot.codIntegrador
+	toColumn: PosicaoCarteiraNacional.codIntegrador
+
+relationship 052b31fc-dca1-d774-12cf-48b40aa86309
+	toCardinality: many
+	fromColumn: R0002.codIntegrador
+	toColumn: PosicaoCarteiraNacional.codIntegrador
+
+relationship 6ab03aa0-323d-66fa-2ecb-cdb617ed4e35
+	toCardinality: many
+	fromColumn: Metas.codIntegrador
+	toColumn: PosicaoCarteiraNacional.codIntegrador
+
+relationship 1eb4a7dc-d04e-4754-be3c-be3abd3dee63
+	toCardinality: many
+	fromColumn: LY.codIntegrador
+	toColumn: PosicaoCarteiraNacional.codIntegrador
+
+relationship a7cc339d-8349-b3ba-b655-aa4722eae9f7
+	toCardinality: many
+	fromColumn: Forecast.codIntegrador
+	toColumn: PosicaoCarteiraNacional.codIntegrador
+
+relationship ba364276-8748-900f-d6ae-6d2add9064a9
+	toCardinality: many
+	fromColumn: Forecast_OPT.codIntegrador
+	toColumn: PosicaoCarteiraNacional.codIntegrador
+
+relationship 593e0b81-bb4c-78ae-bfef-1972e1d82aad
+	toCardinality: many
+	fromColumn: Veiculacao_Segmento.codIntegrador
+	toColumn: PosicaoCarteiraNacional.codIntegrador
+
+relationship f44e76f2-1f2c-9e6b-67f8-da4775ae158c
+	fromColumn: R0002.is_SBTNEWS
+	toColumn: is_SBTNEWS.is_SBTNEWS
+
+relationship 3d2b7c22-5e3f-556e-85ff-8c9022e8b941
+	fromColumn: LY.is_SBTNEWS
+	toColumn: is_SBTNEWS.is_SBTNEWS
+
+relationship 805279e6-c0db-7a43-7188-39773788a4f6
+	fromColumn: NucleoOport.is_SBTNEWS
+	toColumn: is_SBTNEWS.is_SBTNEWS
+
+relationship be9ed3e7-1b49-ccba-8a21-58e4ac964c6a
+	toCardinality: many
+	fromColumn: Veiculacao_Segmento.Cod_Executivo
+	toColumn: RLS.Filho
+
+relationship e06b5153-76c1-762c-c33c-3b4912c1077f
+	fromColumn: Veiculacao_Segmento.is_SBTNEWS
+	toColumn: is_SBTNEWS.is_SBTNEWS
+
+relationship b24286bd-f596-2f4f-69ae-1ce3ffcc23ee
+	fromColumn: LY.Cod_Nucleo
+	toColumn: Núcleos.Núcleos
+
+relationship 4637aa78-64ec-8808-7d4a-b42109d4d9b8
+	fromColumn: NucleoOport.go_st_codigo
+	toColumn: Núcleos.Núcleos
+
+relationship 9ba2ae5b-882a-47ec-f4c9-a2695cdb6ecb
+	fromColumn: R0002.Cod_Nucleo
+	toColumn: Núcleos.Núcleos
+

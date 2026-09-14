@@ -1,0 +1,76 @@
+table Briefings
+	isHidden
+	lineageTag: 0b26509f-afe3-4144-ab0d-4ac91f62e754
+
+	column go_breafingid
+		dataType: string
+		isHidden
+		lineageTag: ee69fa61-737a-44d5-a3d6-de99a5ec91d3
+		summarizeBy: none
+		sourceColumn: go_breafingid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_lk_oportunidadedeorigemid
+		dataType: string
+		isHidden
+		lineageTag: c5f83d7b-9337-4c7b-b591-26f5701a3e75
+		summarizeBy: none
+		sourceColumn: go_lk_oportunidadedeorigemid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_name
+		dataType: string
+		isHidden
+		lineageTag: 62457edc-30c9-4373-a33b-85903a2bfb78
+		summarizeBy: none
+		sourceColumn: go_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecode
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 828abc4f-1fc7-448b-9d14-79cf947520e0
+		summarizeBy: sum
+		sourceColumn: statecode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecode_display
+		dataType: string
+		isHidden
+		lineageTag: 5dd26392-5639-44de-8f4d-19df8947f96d
+		summarizeBy: none
+		sourceColumn: statecode_display
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Briefings-f21ae185-8d91-46d0-a644-93a2367fa787 = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				    Source = #"GetCDST_EntityTable"("go_briefing"),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"go_briefingid", "go_lk_oportunidadedeorigemid", "go_name", "statecode", "statecode_display"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([statecode] <> 2)),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"go_briefingid", "go_breafingid"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

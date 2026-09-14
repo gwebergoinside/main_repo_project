@@ -1,0 +1,338 @@
+expression Site =
+		let
+		    Source = GetCDST_EntityTable("go_site"),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"go_siteid", "go_name"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: 7c75c918-cadf-432c-b819-e636e1725def
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression @CRMOrgUrl = "https://sbtcomercialprd.crm2.dynamics.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6a2bded9-4e6d-44cb-9f9a-102fd54095c4
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression #CDSTEntitySource =
+		let
+		    Url = #"@CRMOrgUrl",
+		    //TrimmedUrl = Text.TrimEnd(Text.Trim(Url), "/"), // We cannot trim the URL because then data sourcewill not be recognized
+		    Source = Cds.Entities(Url, [ReorderColumns=null, UseFormattedValue=true])
+		in
+		    Source
+	lineageTag: c7351fee-d1e6-46d5-9151-3ee7672cb808
+	queryGroup: Config
+
+	annotation PBI_ResultType = Table
+
+/// Loads the table of profile instances for a specific custom Profile
+expression GetCDST_EntityTable =
+		let
+		    Source = (#"schema name" as text) =>
+		        let
+		            Source = #"#CDSTEntitySource",
+		            Entities = Source{[Group="entities"]}[Data],
+		            DataTable = Entities{[SchemaName=#"schema name"]}[Data]
+		        in
+		            DataTable
+		in
+		    Source
+	lineageTag: 8fec0624-f472-42c4-a18f-9c50e604137a
+	queryGroup: Config
+
+	annotation PBI_ResultType = Function
+
+/// Enter the Server of the GMedia
+expression Org = "sbt-gonext-prd-stg-rds-ms-saeast-01.c6upqumvij3c.sa-east-1.rds.amazonaws.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: baaff107-69bc-486c-910c-d54e8f691d16
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression Posi =
+		let
+		    Accounts = #"GetCDST_EntityTable"("Position"),
+		    #"Removed Other Columns" = Table.SelectColumns(Accounts,{"parentpositionid", "positionid"}),
+		    Custom1 = Table.NestedJoin(#"Removed Other Columns", {"positionid"}, UsersMain, {"positionid"}, "Users", JoinKind.LeftOuter),
+		    #"Expanded Users" = Table.ExpandTableColumn(Custom1, "Users", {"azureactivedirectoryobjectid"}, {"azureactivedirectoryobjectid"}),
+		    #"Merged Queries" = Table.NestedJoin(#"Expanded Users", {"parentpositionid"}, UsersMain, {"positionid"}, "UsersMain", JoinKind.LeftOuter),
+		    #"Expanded UsersMain" = Table.ExpandTableColumn(#"Merged Queries", "UsersMain", {"azureactivedirectoryobjectid"}, {"parentazure"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Expanded UsersMain",{"parentpositionid", "positionid"}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Removed Columns", "azureactivedirectoryobjectid", "COPYazureactivedirectoryobjectid")
+		in
+		    #"Duplicated Column"
+	lineageTag: 3f43cdbb-8023-4593-93ab-9f7a4161e4b8
+	queryGroup: RLS
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression UsersMain =
+		let
+		    Source = #"GetCDST_EntityTable"("SystemUser"),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"azureactivedirectoryobjectid", "fullname", "go_st_codigoexterno", "positionid", "systemuserid"}),
+		    #"Uppercased Text" = Table.TransformColumns(#"Removed Other Columns",{{"go_st_codigoexterno", Text.Upper, type text}}),
+		    #"Filtered Rows" = Table.SelectRows(#"Uppercased Text", each ([positionid] <> null))
+		in
+		    #"Filtered Rows"
+	lineageTag: 67ff1bca-98bc-47aa-a2ff-b669016d6419
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression BD = "GONEXTAD20" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6bc91e25-5b27-4069-9bf7-db000d1c644a
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression Account =
+		let
+		    Source = #"GetCDST_EntityTable"("Account"),
+		    #"Removed Other Columns2" = Table.SelectColumns(Source,{"go_pl_classificacaogoverno_display", "accountnumber"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns2", each ([go_pl_classificacaogoverno_display] <> null))
+		in
+		    #"Filtered Rows"
+	lineageTag: 229378f3-cd91-4be0-baee-7c0a3c6f4f16
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression VendaImportada =
+		let
+		    Source = Sql.Database(Org, BD, [Query="Select#(lf)    R2.Cod_Empresa,#(lf)    --R2.Cod_Agencia,#(lf)    --R2.Cod_Cliente,#(lf)    R2.Competencia,#(lf)    R2.Cod_Contato,#(lf)    --R2.Cod_Empresa_Faturamento,#(lf)    R2.Numero_Negociacao#(lf)From#(lf)    "&BDExternal&".SCTV.R0002 R2#(lf)Where#(lf)    R2.Competencia >= 201601 And#(lf)    R2.Cod_Nucleo Not In ('n10', 'novon', 'vale') And#(lf)    R2.Indica_Mes_Anterior = 0 And#(lf)    R2.Cod_Empresa_Faturamento <> '054' And#(lf)    Exists(Select#(lf)         0#(lf)     From#(lf)         Company E#(lf)     Where#(lf)         E.ExternalCode = R2.Cod_Empresa_Faturamento And#(lf)         E.Affiliation = 'FILIADO') And#(lf)    Exists(Select#(lf)         0#(lf)     From#(lf)         Company E#(lf)     Where#(lf)         E.ExternalCode = R2.Cod_Empresa And#(lf)         E.Affiliation <> 'FILIADO')#(lf)Group By#(lf)    R2.Cod_Empresa,#(lf)    R2.Competencia,#(lf)    R2.Cod_Contato,#(lf)    R2.Numero_Negociacao"]),
+		    #"Added Custom" = Table.AddColumn(Source, "Cod_Contato_Importada", each "VEIMPR")
+		in
+		    #"Added Custom"
+	lineageTag: f251825f-ea21-4f98-a3d8-d7206e2f753c
+	queryGroup: CORE
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Link = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=" meta [IsParameterQuery=true, List={"https://sbtcomercialqa.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=", "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id="}, DefaultValue="https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 76ea3167-eb07-4a77-ba49-0cb09fcfddf1
+	queryGroup: Config
+
+	annotation PBI_ResultType = Exception
+
+expression ExecutivoVenda =
+		let
+		    Source = #"GetCDST_EntityTable"("SystemUser"),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"fullname", "go_st_codigoexterno", "systemuserid"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([go_st_codigoexterno] <> null)),
+		    #"Uppercased Text" = Table.TransformColumns(#"Filtered Rows",{{"go_st_codigoexterno", Text.Upper, type text}}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Uppercased Text",{{"go_st_codigoexterno", Text.Trim, type text}})
+		in
+		    #"Trimmed Text"
+	lineageTag: e8e5bb14-f838-4589-9dda-b74b2f258d69
+	queryGroup: Dynamics
+
+	annotation PBI_ResultType = Exception
+
+expression EmpresaFaturamento =
+		let
+		    Accounts = #"GetCDST_EntityTable"("Account"),
+		    #"Removed Other Columns" = Table.SelectColumns(Accounts,{"accountid", "name"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: 739d857c-d616-4c43-afef-4de37516b42d
+	queryGroup: Dynamics
+
+	annotation PBI_ResultType = Exception
+
+expression EmpresaVenda =
+		let
+		    Accounts = #"GetCDST_EntityTable"("Account"),
+		    #"Removed Other Columns" = Table.SelectColumns(Accounts,{"accountid", "name"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: 9eacff87-2195-4428-8994-1bcf6de7e9b4
+	queryGroup: Dynamics
+
+	annotation PBI_ResultType = Exception
+
+expression 'Tipo Midia' =
+		let
+		    Accounts = #"GetCDST_EntityTable"("go_tipomidia"),
+		    #"Removed Other Columns" = Table.SelectColumns(Accounts,{"go_st_codigo", "go_name", "go_tipomidiaid"}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"go_st_codigo", "go_codigo"}})
+		in
+		    #"Renamed Columns"
+	lineageTag: de4d87d1-53d9-4386-aa11-027ffb17da77
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+
+expression Conta =
+		let
+		    Accounts = #"GetCDST_EntityTable"("Account"),
+		    #"Removed Other Columns" = Table.SelectColumns(Accounts,{"accountid", "createdon", "go_pl_classificacaogoverno_display", "go_pl_funcao", "name", "statuscode", "statuscode_display"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"createdon", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: 3dbf6fc7-88eb-48e1-9c39-b76d34d52a88
+	queryGroup: Dynamics
+
+	annotation PBI_ResultType = Exception
+
+expression Nucleos =
+		let
+		    Source = #"GetCDST_EntityTable"("go_nucleo"),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"go_lk_empresavendaid", "go_name", "go_nucleoid", "go_st_codigo"})
+		in
+		    #"Removed Other Columns"
+	lineageTag: 5e3186fd-a33c-41ce-96a8-c371ddc5167b
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+
+expression OPTSCreated =
+		let
+		    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
+		    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"createdon", "go_st_codnegociacao"}),
+		    #"Grouped Rows" = Table.Group(#"Removed Other Columns", {"go_st_codnegociacao"}, {{"createdon", each List.Min([createdon]), type nullable datetimezone}})
+		in
+		    #"Grouped Rows"
+	lineageTag: 1d540321-e8dc-4918-80aa-21e6ec6f95b2
+	queryGroup: Dynamics
+
+	annotation PBI_ResultType = Exception
+
+expression OPTSModified =
+		let
+		    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
+		    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"modifiedon", "go_st_codnegociacao"}),
+		    #"Grouped Rows" = Table.Group(#"Removed Other Columns", {"go_st_codnegociacao"}, {{"modifiedon", each List.Min([modifiedon]), type nullable datetimezone}})
+		in
+		    #"Grouped Rows"
+	lineageTag: 1fc8938f-5657-46a4-87e3-92f244e84c0c
+	queryGroup: Dynamics
+
+	annotation PBI_ResultType = Exception
+
+expression YearUpdateVeiculacao = "1" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d9357d3a-d578-4c8a-a682-bbf1d88fd405
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression OPTSIntegrated =
+		let
+		    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
+		    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"go_opportunityid", "go_dt_dataintegracao", "go_st_codnegociacao"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"go_dt_dataintegracao", type date}}),
+		    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([go_dt_dataintegracao] <> null)),
+		    #"Grouped Rows" = Table.Group(#"Filtered Rows", {"go_st_codnegociacao"}, {{"Data de Integração", each List.Min([go_dt_dataintegracao]), type nullable datetimezone}})
+		in
+		    #"Grouped Rows"
+	lineageTag: 1daf280a-efcc-4a46-94ce-52f15e6f9629
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression BDExternal = "GONEXTADExternal" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: e81f78c8-1d64-490f-bbd9-81cd2f5c2d88
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression 'lista de imagem' =
+		let
+		    Source = Excel.Workbook(Web.Contents("http://godashboard.logos.goinside.co/images/logo.xlsx"), null, true),
+		    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+		    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Nome", type text}, {"Logo", type text}, {"Cliente ", type text}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Logo", "Cliente "}),
+		    Nome = #"Removed Columns"[Nome]
+		in
+		    Nome
+	lineageTag: 0a0826c2-a99e-4c37-bd2f-766f5a8acfe9
+	queryGroup: Config
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = List
+
+expression RangeStart = #datetime(2022, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: abcc93f3-295a-4a6c-8286-a166961ca5fd
+	queryGroup: Config
+
+	annotation PBI_ResultType = DateTime
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression RangeEnd = #datetime(2029, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: adb2fc7b-64e5-4cc3-a5f4-5aa65a137b93
+	queryGroup: Config
+
+	annotation PBI_ResultType = DateTime
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression YearUpdateData = "7" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6fad1c01-f6af-4b1c-9a00-51285547401d
+	queryGroup: Config
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+
+expression array_SBTNEWS = "SBTNEWS,SBTNDIG,SBTNMAI" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b1daa326-7379-41b3-9d82-744f2ee262b7
+	queryGroup: Config
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+
+expression OPTSIntegrated_2 =
+		let
+		    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
+		    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"go_opportunityid", "go_dt_dataintegracao"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"go_dt_dataintegracao", type date}})
+		in
+		    #"Changed Type"
+	lineageTag: 9c8c3757-12aa-4195-b67e-455b0720214d
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Search Users' =
+		let
+		    Search = "Lazarim",
+		    Source = #"GetCDST_EntityTable"("SystemUser"),
+		    Filtrar = Table.SelectRows(Source, each Text.Contains([fullname], Search, Comparer.OrdinalIgnoreCase)),
+		    #"Selecionar Colunas" = Table.SelectColumns(Filtrar, {"go_st_codigoexterno", "systemuserid", "parentsystemuserid", "fullname", "domainname"})
+		in
+		    #"Selecionar Colunas"
+	lineageTag: 681378a6-daf1-46be-867c-e3df28716598
+	queryGroup: RLS
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

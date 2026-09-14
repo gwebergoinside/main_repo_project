@@ -1,0 +1,1528 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 2442.706954216329,
+            "y": 1044.6212363782206
+          },
+          "nodeIndex": "@Medidas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 222.81350749272929,
+            "y": 1219.87010928569
+          },
+          "nodeIndex": "Activity",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 286.63763699504852,
+            "y": 1798.2954477461358
+          },
+          "nodeIndex": "Briefings",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 960.34359474090525,
+            "y": 310.91116207711
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 1320.2581250314352,
+            "y": 571.49586072225588
+          },
+          "nodeIndex": "Forecast",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 36
+        },
+        {
+          "location": {
+            "x": 1271.112838923189,
+            "y": 308.84277351435571
+          },
+          "nodeIndex": "GrupoAgencia",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 1745.050225477961,
+            "y": 1993.354076525336
+          },
+          "nodeIndex": "GrupoCliente",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 1330.3135644948566,
+            "y": 932.1430460768911
+          },
+          "nodeIndex": "LY",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 1622.82008693724,
+            "y": 799.14145975203974
+          },
+          "nodeIndex": "Metas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 32
+        },
+        {
+          "location": {
+            "x": 575.48519961922841,
+            "y": 1456.3205039294921
+          },
+          "nodeIndex": "Neg",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 33
+        },
+        {
+          "location": {
+            "x": 575.48482532671323,
+            "y": 1952.0412071793985
+          },
+          "nodeIndex": "NucleoOport",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 1805.1419280297951,
+            "y": -22.267353217293021
+          },
+          "nodeIndex": "PosicaoCarteira",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 37
+        },
+        {
+          "location": {
+            "x": 1452.3497072695548,
+            "y": 1651.9486288088694
+          },
+          "nodeIndex": "R0002",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 31
+        },
+        {
+          "location": {
+            "x": 958.72039387628251,
+            "y": 779.22338381571626
+          },
+          "nodeIndex": "RLS",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 2726.706954216329,
+            "y": 1082.6212363782206
+          },
+          "nodeIndex": "RLSFILTER",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 1541.6985222869835
+          },
+          "nodeIndex": "Solicitacao",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 25
+        },
+        {
+          "location": {
+            "x": 1915.6144866811837,
+            "y": 988.78451704184477
+          },
+          "nodeIndex": "TipoMidia",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 26
+        },
+        {
+          "location": {
+            "x": 1563.0815768787493,
+            "y": 336.65544630056206
+          },
+          "nodeIndex": "TipoVenda",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 27
+        },
+        {
+          "location": {
+            "x": 3010.706954216329,
+            "y": 1118.6212363782206
+          },
+          "nodeIndex": "Titulos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 28
+        },
+        {
+          "location": {
+            "x": 868.406310045206,
+            "y": 1481.4777082029927
+          },
+          "nodeIndex": "Users",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 29
+        },
+        {
+          "location": {
+            "x": 3294.706954216329,
+            "y": 1118.6212363782206
+          },
+          "nodeIndex": "Valor",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 30
+        },
+        {
+          "location": {
+            "x": 667.65138804156186,
+            "y": 608.60422902327173
+          },
+          "nodeIndex": "Tipo Governo",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 1749.9622807439648,
+            "y": 1566.8047573669178
+          },
+          "nodeIndex": "Emp_Venda",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 868.41219118566255,
+            "y": 1712.7582392596407
+          },
+          "nodeIndex": "Executivos",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1227.4766532053195,
+            "y": -50
+          },
+          "nodeIndex": "Forecast_OPT",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 34
+        },
+        {
+          "location": {
+            "x": 3578.706954216329,
+            "y": 1118.6212363782206
+          },
+          "nodeIndex": "TipoCliente",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 1161.1868527394754,
+            "y": 1651.9407918727543
+          },
+          "nodeIndex": "Veiculacao_Segmento",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1305.5671187551857,
+            "y": 2133.4720567315521
+          },
+          "nodeIndex": "Emp_Faturamento",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 1312.9314575190529,
+            "y": 1291.2335336208796
+          },
+          "nodeIndex": "ForecastSnapshot",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 3862.706954216329,
+            "y": 1142.6212363782206
+          },
+          "nodeIndex": "SnapShot",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 4146.706954216329,
+            "y": 1142.6212363782206
+          },
+          "nodeIndex": "SnapShotAnterior",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 4430.706954216329,
+            "y": 1142.6212363782206
+          },
+          "nodeIndex": "SnapShotForecast",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 877.94060498828753,
+            "y": 2187.2424727564417
+          },
+          "nodeIndex": "TipoComercial",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 4714.706954216329,
+            "y": 1046.6212363782206
+          },
+          "nodeIndex": "DashboardUserPermission",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 4998.706954216329,
+            "y": 1106.6212363782206
+          },
+          "nodeIndex": "images",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 5282.706954216329,
+            "y": 1142.6212363782206
+          },
+          "nodeIndex": "logo header",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 5566.706954216329,
+            "y": 1044.6212363782206
+          },
+          "nodeIndex": "Calendario_OPT",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 2208.706954216329,
+            "y": 735.87866890675286
+          },
+          "nodeIndex": "UsersNacionais",
+          "nodeLineageTag": "ba3c557c-95e4-4218-a95e-e38133a7e828",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1915.6186169376911,
+            "y": 668.90399530635773
+          },
+          "nodeIndex": "PosicaoCarteiraNacional",
+          "nodeLineageTag": "60fcd516-d3ed-4fd4-a8e8-42724056ed39",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 514.40189816869884,
+            "y": 1228.0811151855878
+          },
+          "nodeIndex": "UsersGestores",
+          "nodeLineageTag": "fd4f2154-3286-4f08-96f3-87673eeeb1a9",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 868.39289354696939,
+            "y": 2005.3762995074949
+          },
+          "nodeIndex": "is_SBTNEWS",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Núcleos",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 28.433596428423453,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 114.81481764051649
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 403.70980825217293,
+            "y": 351.24512919159724
+          },
+          "nodeIndex": "Veiculacao_Segmento",
+          "nodeLineageTag": "00628a91-37c0-448c-98e0-13c5246e0cc3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 424.91677080742079,
+            "y": -10
+          },
+          "nodeIndex": "Executivos",
+          "nodeLineageTag": "7966c825-c0fd-45cb-a3fc-9de29514c951",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 883.26416540424111,
+            "y": 456.49412041652516
+          },
+          "nodeIndex": "GrupoAgencia",
+          "nodeLineageTag": "742cb6ec-692f-40ca-8f81-2ba4175763a6",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 690.36102738461261,
+            "y": 174.99008316135564
+          },
+          "nodeIndex": "GrupoCliente",
+          "nodeLineageTag": "6c028b10-824d-410a-9da4-eb021482177a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 368.85280149981793,
+            "y": 783.4377526947037
+          },
+          "nodeIndex": "Emp_Venda",
+          "nodeLineageTag": "4fe87e0c-666a-4989-b26f-e76258094ba1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 10,
+            "y": 346.97088536656383
+          },
+          "nodeIndex": "Emp_Faturamento",
+          "nodeLineageTag": "e02b371c-1d64-4147-9268-668814b5c40b",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 655.65059188617909,
+            "y": 715.8514435481095
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "d90cf1d6-cb29-4e92-8b7e-eaf345df1f02",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 133.13019625705249,
+            "y": 90.36390476981137
+          },
+          "nodeIndex": "RLS",
+          "nodeLineageTag": "c57a6699-61a7-4c89-a28f-9e157b39ca4e",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 108.87743400350541,
+            "y": 553.17942068112075
+          },
+          "nodeIndex": "Users",
+          "nodeLineageTag": "cf732f2d-53c9-486d-9c72-e66418dbb242",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 7
+        }
+      ],
+      "name": "Veiculação",
+      "zoomValue": 90,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 0,
+        "y": 184.80000305175781
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 451.87656729042095,
+            "y": 448.41728945582031
+          },
+          "nodeIndex": "RLS",
+          "nodeLineageTag": "c57a6699-61a7-4c89-a28f-9e157b39ca4e",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 336.76393341153442,
+            "y": 777.56401128519906
+          },
+          "nodeIndex": "Veiculacao_Segmento",
+          "nodeLineageTag": "00628a91-37c0-448c-98e0-13c5246e0cc3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 799.812706880711,
+            "y": 401.43682455021269
+          },
+          "nodeIndex": "ForecastSnapshot",
+          "nodeLineageTag": "ab0d0aa4-180a-4297-8060-40b506708973",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 380.41846430819965,
+            "y": -50
+          },
+          "nodeIndex": "Metas",
+          "nodeLineageTag": "a4ab673b-d8ac-46d1-b991-0ddddaae713a",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 90.518911300274,
+            "y": 153.60499224562818
+          },
+          "nodeIndex": "R0002",
+          "nodeLineageTag": "684be20c-5e5f-4b39-8688-b46b36f4adb7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 677.65536357790029,
+            "y": 44.186433339649511
+          },
+          "nodeIndex": "Forecast",
+          "nodeLineageTag": "b63479f0-d407-4465-8c01-4b7f7e988f95",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 49.999999999999986,
+            "y": 510.8745615773164
+          },
+          "nodeIndex": "LY",
+          "nodeLineageTag": "2119a278-8db8-40b2-9536-84a7a74234e8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 626.286855629076,
+            "y": 758.67561247144158
+          },
+          "nodeIndex": "Neg",
+          "nodeLineageTag": "6ad7042a-08f2-4b9d-af1b-b99ba94827e2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1270,
+            "y": 586
+          },
+          "nodeIndex": "DashboardUserPermission",
+          "nodeLineageTag": "14fe1515-51ce-4e87-9cf1-8e8d2705c5a7",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1268.3333320617676,
+            "y": 320.33333587646484
+          },
+          "nodeIndex": "RLSFILTER",
+          "nodeLineageTag": "147ba4d8-fce8-4b61-bf47-535546858ae5",
+          "size": {
+            "height": 224,
+            "width": 230
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 922.33333206176758,
+            "y": 1110
+          },
+          "nodeIndex": "Users",
+          "nodeLineageTag": "cf732f2d-53c9-486d-9c72-e66418dbb242",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "RLS",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 3,
+      "scrollPosition": {
+        "x": 0,
+        "y": 260.31063805126735
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 998.468536816035,
+            "y": 885.10679022735542
+          },
+          "nodeIndex": "UsersNacionais",
+          "nodeLineageTag": "ba3c557c-95e4-4218-a95e-e38133a7e828",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1294.2848498850581,
+            "y": 264.20024690504573
+          },
+          "nodeIndex": "PosicaoCarteira",
+          "nodeLineageTag": "0826d2be-e49c-4cdd-a5f3-0992427f950c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 681.48247616106551,
+            "y": 631.4780109549132
+          },
+          "nodeIndex": "PosicaoCarteiraNacional",
+          "nodeLineageTag": "60fcd516-d3ed-4fd4-a8e8-42724056ed39",
+          "size": {
+            "height": 173.55436165897186,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1367.6279772189594,
+            "y": 1104.044767753385
+          },
+          "nodeIndex": "UsersGestores",
+          "nodeLineageTag": "fd4f2154-3286-4f08-96f3-87673eeeb1a9",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1804.0166796247588,
+            "y": 266.58360524706677
+          },
+          "nodeIndex": "LY",
+          "nodeLineageTag": "2119a278-8db8-40b2-9536-84a7a74234e8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 410.8622981462172,
+            "y": 14.317085092819703
+          },
+          "nodeIndex": "Forecast_OPT",
+          "nodeLineageTag": "de8b6475-42d9-49dc-97e3-0aa56cf5af18",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 981.85084155876393,
+            "y": 116.96381509242562
+          },
+          "nodeIndex": "Forecast",
+          "nodeLineageTag": "b63479f0-d407-4465-8c01-4b7f7e988f95",
+          "size": {
+            "height": 257.04874472154086,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 273.69199773384713
+          },
+          "nodeIndex": "Veiculacao_Segmento",
+          "nodeLineageTag": "00628a91-37c0-448c-98e0-13c5246e0cc3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 40.1307326769945,
+            "y": 696.72006565604
+          },
+          "nodeIndex": "ForecastSnapshot",
+          "nodeLineageTag": "ab0d0aa4-180a-4297-8060-40b506708973",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 137.73265574879477,
+            "y": 1244.0645554484097
+          },
+          "nodeIndex": "Metas",
+          "nodeLineageTag": "a4ab673b-d8ac-46d1-b991-0ddddaae713a",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 457.059836129132,
+            "y": 956.713301716791
+          },
+          "nodeIndex": "R0002",
+          "nodeLineageTag": "684be20c-5e5f-4b39-8688-b46b36f4adb7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1644.5792324974186,
+            "y": 655.44470324625559
+          },
+          "nodeIndex": "Neg",
+          "nodeLineageTag": "6ad7042a-08f2-4b9d-af1b-b99ba94827e2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 11
+        }
+      ],
+      "name": "Carteira Nacional",
+      "zoomValue": 76.831281847425174,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 4,
+      "scrollPosition": {
+        "x": 0,
+        "y": 516.11478935458388
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 432.49376299376314,
+            "y": 473.11668431266435
+          },
+          "nodeIndex": "Executivos",
+          "nodeLineageTag": "7966c825-c0fd-45cb-a3fc-9de29514c951",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 181.60654484263029,
+            "y": 117.61600371160807
+          },
+          "nodeIndex": "Metas",
+          "nodeLineageTag": "a4ab673b-d8ac-46d1-b991-0ddddaae713a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 896.5018374027178,
+            "y": 582.60826866907814
+          },
+          "nodeIndex": "Forecast",
+          "nodeLineageTag": "b63479f0-d407-4465-8c01-4b7f7e988f95",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 606.64121179601261,
+            "y": 869.696826038603
+          },
+          "nodeIndex": "Neg",
+          "nodeLineageTag": "6ad7042a-08f2-4b9d-af1b-b99ba94827e2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 470.93096936000671,
+            "y": -50
+          },
+          "nodeIndex": "R0002",
+          "nodeLineageTag": "684be20c-5e5f-4b39-8688-b46b36f4adb7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 474.87221044743575
+          },
+          "nodeIndex": "Veiculacao_Segmento",
+          "nodeLineageTag": "00628a91-37c0-448c-98e0-13c5246e0cc3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 757.4209538872019,
+            "y": 223.99509635886091
+          },
+          "nodeIndex": "ForecastSnapshot",
+          "nodeLineageTag": "ab0d0aa4-180a-4297-8060-40b506708973",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 282.8756019154838,
+            "y": 832.10211661963581
+          },
+          "nodeIndex": "LY",
+          "nodeLineageTag": "2119a278-8db8-40b2-9536-84a7a74234e8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1252.3333320617676,
+            "y": 1367
+          },
+          "nodeIndex": "GrupoCliente",
+          "nodeLineageTag": "6c028b10-824d-410a-9da4-eb021482177a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 56.447393005377734,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 5,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 669.41366662164558,
+            "y": 1418.5192143135666
+          },
+          "nodeIndex": "is_SBTNEWS",
+          "nodeLineageTag": "b788d34a-f087-44da-aaad-05c7b6234fb1",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 568.45585963009808,
+            "y": 781.348410506539
+          },
+          "nodeIndex": "LY",
+          "nodeLineageTag": "2119a278-8db8-40b2-9536-84a7a74234e8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1395.3398185457456,
+            "y": 736.3842073363212
+          },
+          "nodeIndex": "R0002",
+          "nodeLineageTag": "684be20c-5e5f-4b39-8688-b46b36f4adb7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 118.47970354179557,
+            "y": 876.39262166796141
+          },
+          "nodeIndex": "NucleoOport",
+          "nodeLineageTag": "e2dd34f8-c0b3-41df-bbf4-e3374c624b85",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1028.5162312136436,
+            "y": 505.8626265105338
+          },
+          "nodeIndex": "Veiculacao_Segmento",
+          "nodeLineageTag": "00628a91-37c0-448c-98e0-13c5246e0cc3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1042.5585983499564,
+            "y": 8.7991452016120952
+          },
+          "nodeIndex": "Forecast_OPT",
+          "nodeLineageTag": "de8b6475-42d9-49dc-97e3-0aa56cf5af18",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 288.83394118661408,
+            "y": 202.84531710598537
+          },
+          "nodeIndex": "Neg",
+          "nodeLineageTag": "6ad7042a-08f2-4b9d-af1b-b99ba94827e2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1590.6586926528832,
+            "y": 304.30230460569533
+          },
+          "nodeIndex": "PosicaoCarteiraNacional",
+          "nodeLineageTag": "60fcd516-d3ed-4fd4-a8e8-42724056ed39",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 619.19738460737835,
+            "y": 462.27918970856138
+          },
+          "nodeIndex": "Núcleos",
+          "nodeLineageTag": "6f798672-e567-442d-8d2c-7d58d458d6d0",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "SBTNEWS",
+      "zoomValue": 75.89496856684508,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 6,
+      "scrollPosition": {
+        "x": 0,
+        "y": 529.86060122142635
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 2308.9535552407237,
+            "y": 552.17503861115279
+          },
+          "nodeIndex": "LY",
+          "nodeLineageTag": "2119a278-8db8-40b2-9536-84a7a74234e8",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 306.95004962057453,
+            "y": 1179.5818969638608
+          },
+          "nodeIndex": "TipoVenda",
+          "nodeLineageTag": "5df4b9c6-45c0-4991-9d60-31a539265ea7",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1154.6206817189295,
+            "y": 408.08602671174003
+          },
+          "nodeIndex": "TipoMidia",
+          "nodeLineageTag": "a1ed728a-2b4b-45d3-a46c-97747d893d35",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 594.05171253157948
+          },
+          "nodeIndex": "PosicaoCarteira",
+          "nodeLineageTag": "0826d2be-e49c-4cdd-a5f3-0992427f950c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 590.784131791545,
+            "y": 1465.3118820073141
+          },
+          "nodeIndex": "Tipo Governo",
+          "nodeLineageTag": "c6ea6ef2-04f8-4968-81a5-d9f38a2fba67",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 878.0777591411827,
+            "y": 1382.9563841754707
+          },
+          "nodeIndex": "Emp_Venda",
+          "nodeLineageTag": "4fe87e0c-666a-4989-b26f-e76258094ba1",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 279.87740514586915,
+            "y": 315.14445022745372
+          },
+          "nodeIndex": "GrupoCliente",
+          "nodeLineageTag": "6c028b10-824d-410a-9da4-eb021482177a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1145.6604509851875,
+            "y": 153.6942765474214
+          },
+          "nodeIndex": "GrupoAgencia",
+          "nodeLineageTag": "742cb6ec-692f-40ca-8f81-2ba4175763a6",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 337.73121261645917,
+            "y": 707.09140012045464
+          },
+          "nodeIndex": "Executivos",
+          "nodeLineageTag": "7966c825-c0fd-45cb-a3fc-9de29514c951",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 569.11068503569209,
+            "y": 173.24600693907496
+          },
+          "nodeIndex": "RLS",
+          "nodeLineageTag": "c57a6699-61a7-4c89-a28f-9e157b39ca4e",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 856.42714067524491,
+            "y": -50
+          },
+          "nodeIndex": "Users",
+          "nodeLineageTag": "cf732f2d-53c9-486d-9c72-e66418dbb242",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1303.688752031881,
+            "y": 1012.2731838016308
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "d90cf1d6-cb29-4e92-8b7e-eaf345df1f02",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 140.02693084722375,
+            "y": 949.95404190074373
+          },
+          "nodeIndex": "PosicaoCarteiraNacional",
+          "nodeLineageTag": "60fcd516-d3ed-4fd4-a8e8-42724056ed39",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 913.81957184680562,
+            "y": 1160.2284304736918
+          },
+          "nodeIndex": "is_SBTNEWS",
+          "nodeLineageTag": "b788d34a-f087-44da-aaad-05c7b6234fb1",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1868.9785960855943,
+            "y": 958.92746608425489
+          },
+          "nodeIndex": "Forecast",
+          "nodeLineageTag": "b63479f0-d407-4465-8c01-4b7f7e988f95",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2300.34620964032,
+            "y": 121.47385735163851
+          },
+          "nodeIndex": "NucleoOport",
+          "nodeLineageTag": "e2dd34f8-c0b3-41df-bbf4-e3374c624b85",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 2",
+      "zoomValue": 63.287087723234038,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 7,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 221.1847511806298,
+            "y": 292
+          },
+          "nodeIndex": "UsersNacionais",
+          "nodeLineageTag": "ba3c557c-95e4-4218-a95e-e38133a7e828",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 618.36163941535983,
+            "y": 11.324992632434942
+          },
+          "nodeIndex": "PosicaoCarteiraNacional",
+          "nodeLineageTag": "60fcd516-d3ed-4fd4-a8e8-42724056ed39",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 49.999999999999986,
+            "y": -20.934890822657948
+          },
+          "nodeIndex": "UsersGestores",
+          "nodeLineageTag": "fd4f2154-3286-4f08-96f3-87673eeeb1a9",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 3",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 3",
+  "defaultDiagram": "All tables"
+}

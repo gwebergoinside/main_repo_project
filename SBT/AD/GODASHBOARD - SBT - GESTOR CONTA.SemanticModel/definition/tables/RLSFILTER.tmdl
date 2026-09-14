@@ -1,0 +1,69 @@
+table RLSFILTER
+	isHidden
+	lineageTag: 147ba4d8-fce8-4b61-bf47-535546858ae5
+
+	column PortalsAzureID
+		dataType: string
+		lineageTag: f021436c-71a3-4c53-bdc9-a174795526b0
+		summarizeBy: none
+		sourceColumn: PortalsAzureID
+
+		annotation SummarizationSetBy = Automatic
+
+	column fullname
+		dataType: string
+		lineageTag: a060337b-b837-4c3d-baf0-8ca2c1e67da3
+		summarizeBy: none
+		sourceColumn: fullname
+
+		annotation SummarizationSetBy = Automatic
+
+	column domainname
+		dataType: string
+		lineageTag: 7e17705b-05e5-43e6-9cc0-cb6f007dc17a
+		summarizeBy: none
+		sourceColumn: domainname
+
+		annotation SummarizationSetBy = Automatic
+
+	column internalemailaddress
+		dataType: string
+		lineageTag: 01db1604-2497-470e-af7a-efd70293b9cb
+		summarizeBy: none
+		sourceColumn: internalemailaddress
+
+		annotation SummarizationSetBy = Automatic
+
+	column positionid
+		dataType: string
+		lineageTag: e5bfa886-1154-4092-9c39-811c1ef80cbf
+		summarizeBy: none
+		sourceColumn: positionid
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_st_codigoexterno
+		dataType: string
+		lineageTag: ee1633f4-281e-48cd-9b4c-2613a1d69462
+		summarizeBy: none
+		sourceColumn: go_st_codigoexterno
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RLSFILTER-2688d5d8-d176-417c-ac89-074faffa1b61 = m
+		mode: import
+		queryGroup: RLS
+		source =
+				let
+				    Source = #"GetCDST_EntityTable"("SystemUser"),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"azureactivedirectoryobjectid", "domainname", "fullname", "go_st_codigoexterno", "internalemailaddress", "positionid"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"azureactivedirectoryobjectid", "PortalsAzureID"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"PortalsAzureID", "fullname", "domainname", "internalemailaddress"}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Reordered Columns",{{"go_st_codigoexterno", Text.Upper, type text}})
+				in
+				    #"Uppercased Text"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

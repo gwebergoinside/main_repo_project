@@ -1,0 +1,53 @@
+table TipoComercial
+	lineageTag: da513069-b950-4068-8c54-1227bda06be6
+
+	column Cod_Tipo_Comercial
+		dataType: string
+		lineageTag: 353aabba-96be-4ad9-8c29-9547c4989332
+		summarizeBy: none
+		sourceColumn: Cod_Tipo_Comercial
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descricao
+		dataType: string
+		lineageTag: 4ff42638-a4c3-43b5-95be-f1a9705ca2f4
+		summarizeBy: none
+		sourceColumn: Descricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Comercial'
+		dataType: string
+		lineageTag: 299ba9dc-a4e8-400c-83da-8492a523a02e
+		summarizeBy: none
+		sourceColumn: Tipo Comercial
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoComercial-38a4717e-ce91-466e-bc5d-ca6c544fb7e8 = m
+		mode: import
+		queryGroup: CORE
+		source =
+				// let
+				//     Source = Sql.Database(Org, BDExternal, [Query="SELECT#(lf)TC.Cod_Tipo_Comercial#(lf),TC.Descricao#(lf)FROM#(lf)SCTV.Tipo_Comercial TC"]),
+				//     #"Trimmed Text" = Table.TransformColumns(Source,{{"Descricao", Text.Trim, type text}}),
+				//     #"Inserted Merged Column" = Table.AddColumn(#"Trimmed Text", "Merged", each Text.Combine({[Cod_Tipo_Comercial], " (", [Descricao], ")"}), type text),
+				//     #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"Merged", "Tipo Comercial"}})
+				// in
+				//     #"Renamed Columns"
+				
+				let
+				    SQL = "SELECT
+				              LTRIM( RTRIM( TC.Cod_Tipo_Comercial )) AS Cod_Tipo_Comercial
+				            , LTRIM( RTRIM( TC.Descricao )) AS Descricao
+				            , LTRIM( RTRIM( TC.Cod_Tipo_Comercial )) + ' (' + LTRIM( RTRIM( TC.Descricao )) + ')' AS [Tipo Comercial]
+				        FROM SCTV.Tipo_Comercial TC",
+				    Source = Sql.Database(Org, BDExternal, [Query = SQL])
+				in
+				    Source
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

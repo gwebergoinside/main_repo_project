@@ -1,0 +1,75 @@
+table Activity
+	isHidden
+	lineageTag: 434f9424-c48e-4c78-9c42-ebfd0791fb3f
+
+	column activityid
+		dataType: string
+		isHidden
+		lineageTag: 0a51f92b-bbd4-43a3-a947-e79a38805c23
+		summarizeBy: none
+		sourceColumn: activityid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column activitytypecode
+		dataType: string
+		isHidden
+		lineageTag: 9e3ef8d1-5f0a-467f-8684-3337857f51ab
+		summarizeBy: none
+		sourceColumn: activitytypecode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column regardingobjectid
+		dataType: string
+		isHidden
+		lineageTag: dd6dd94a-d443-4031-9bda-13fd57c94c21
+		summarizeBy: none
+		sourceColumn: regardingobjectid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecode
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a87f971e-5507-4ea5-97bc-9ae505d6eaf6
+		summarizeBy: sum
+		sourceColumn: statecode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecode_display
+		dataType: string
+		isHidden
+		lineageTag: ee9d3a58-4f3a-44ba-bffe-6dbb4d6aac6d
+		summarizeBy: none
+		sourceColumn: statecode_display
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Activity-ed3a8182-79f1-4324-9a2c-ff345320239e = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				    Source = #"GetCDST_EntityTable"("ActivityPointer"),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"activityid", "activitytypecode", "regardingobjectid", "statecode", "statecode_display"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([statecode] <> 2))
+				in
+				    #"Filtered Rows"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

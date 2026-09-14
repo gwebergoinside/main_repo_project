@@ -1,0 +1,213 @@
+table ForecastSnapshot
+	isHidden
+	lineageTag: ab0d0aa4-180a-4297-8060-40b506708973
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 4c19d33c-3215-481a-9a70-1f7879bd913c
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCode
+		dataType: string
+		isHidden
+		lineageTag: 7046425e-76c7-4311-b837-ad332a4f4b33
+		summarizeBy: none
+		sourceColumn: ExternalCode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ForecastAmount
+		dataType: double
+		isHidden
+		lineageTag: 28746571-eebc-4caf-bbf4-fc8872098b0b
+		summarizeBy: sum
+		sourceColumn: ForecastAmount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ForecastExpAmount
+		dataType: double
+		isHidden
+		lineageTag: 32ba7ffd-5e47-4c26-b290-bb9bf0df2283
+		summarizeBy: sum
+		sourceColumn: ForecastExpAmount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ExternalCodeExecutivo
+		dataType: string
+		isHidden
+		lineageTag: fd5703dc-ebb2-4cc0-b8a2-15af71374f18
+		summarizeBy: none
+		sourceColumn: ExternalCodeExecutivo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCodeCompany
+		dataType: string
+		isHidden
+		lineageTag: 193a88ad-26c0-4879-bd9b-50b8717bc489
+		summarizeBy: none
+		sourceColumn: ExternalCodeCompany
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCodeAgency
+		dataType: string
+		isHidden
+		lineageTag: 4b005e4c-ca7c-4466-907f-8ccd5c1be1fd
+		summarizeBy: none
+		sourceColumn: ExternalCodeAgency
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MediaType
+		dataType: string
+		isHidden
+		lineageTag: 0fd887f9-dd92-4868-ac42-d1b6975d9886
+		summarizeBy: none
+		sourceColumn: MediaType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SaleType
+		dataType: string
+		isHidden
+		lineageTag: 92b1129d-4d5e-475a-9350-3333b91a38de
+		summarizeBy: none
+		sourceColumn: SaleType
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Forecast
+		dataType: double
+		isHidden
+		lineageTag: 399e7fd7-97d7-4553-acb0-03b13a737be2
+		summarizeBy: sum
+		sourceColumn: Forecast
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Tipo Governo'
+		dataType: string
+		isHidden
+		lineageTag: 6a63677c-cddf-4b22-90cc-e1e849076d7a
+		summarizeBy: none
+		sourceColumn: Tipo Governo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Snapshotcode
+		dataType: string
+		lineageTag: db0ed1d1-526a-40a4-a0a4-7edd706394e7
+		summarizeBy: none
+		sourceColumn: Snapshotcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column codIntegrador
+		dataType: string
+		lineageTag: bb33d83b-515f-4c6d-975a-0d28e0b73c01
+		summarizeBy: none
+		sourceColumn: codIntegrador
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ForecastSnapshot-06bed2e2-c1c8-4b82-bc5e-3c9852f90b72 = m
+		mode: import
+		queryGroup: Carteira
+		source = ```
+				// let
+				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)    FP.Date,#(lf)    E.ExternalCode,#(lf)    F.Amount As ForecastAmount,#(lf)    F.ExpectedAmount As ForecastExpAmount,#(lf)    U.ExternalCode As ExternalCodeExecutivo,#(lf)    C.ExternalCode As ExternalCodeCompany,#(lf)    E1.ExternalCode As ExternalCodeAgency,#(lf) Snapshotcode, #(lf)    FMT.ExternalCode As MediaType,#(lf)    FST.ExternalCode As SaleType#(lf)From#(lf)    ForecastSnapshot F Inner Join#(lf)    ForecastPeriod FP On F.PeriodID = FP.ID Inner Join#(lf)    Entity E On F.EntityClientID = E.ID Inner Join#(lf)    [User] U On F.UserID = U.ID Inner Join#(lf)    Company C On F.CompanyID = C.ID Inner Join#(lf)    Entity E1 On F.EntityAgencyID = E1.ID Inner Join#(lf)    ForecastMediaType FMT On F.MediaTypeID = FMT.ID Inner Join#(lf)    ForecastSaleType FST On F.SaleTypeID = FST.ID"]),
+				//     #"Filtered Rows1" = Table.SelectRows(Source, each ([Snapshotcode] = SnapShot or [Snapshotcode] = SnapShotAnterior)),
+				//     #"Uppercased Text" = Table.TransformColumns(#"Filtered Rows1",{{"MediaType", Text.Upper, type text}, {"SaleType", Text.Upper, type text}}),
+				//     #"Added Custom" = Table.AddColumn(#"Uppercased Text", "Forecast", each [ForecastAmount]+[ForecastExpAmount]),
+				//     #"Multiplied Column" = Table.TransformColumns(#"Added Custom", {{"Forecast", each _ * 1000, type number}}),
+				//     #"Filtered Rows" = Table.SelectRows(#"Multiplied Column", each ([Forecast] <> 0)),
+				//     #"Merged Queries" = Table.NestedJoin(#"Filtered Rows", {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
+				//     #"Expanded Account" = Table.ExpandTableColumn(#"Merged Queries", "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"}),
+				//     #"Replaced Value" = Table.ReplaceValue(#"Expanded Account",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"})
+				// in
+				//     #"Replaced Value"
+				
+				let
+				    SQL = "Select
+				            FP.Date,
+				            E.ExternalCode,
+				            F.Amount As ForecastAmount,
+				            F.ExpectedAmount As ForecastExpAmount,
+				            (F.Amount + F.ExpectedAmount) * 1000 As Forecast,
+				            U.ExternalCode As ExternalCodeExecutivo,
+				            C.ExternalCode As ExternalCodeCompany,
+				            E1.ExternalCode As ExternalCodeAgency,
+				            Snapshotcode, 
+				            UPPER(FMT.ExternalCode) As MediaType,
+				            UPPER(FST.ExternalCode) As SaleType,
+				            UPPER(E.ExternalCode + E1.ExternalCode) AS codIntegrador
+				        FROM ForecastSnapshot F
+				        JOIN ForecastPeriod FP
+				            ON F.PeriodID = FP.ID
+				        JOIN Entity E
+				            ON F.EntityClientID = E.ID
+				        JOIN [User] U
+				            ON F.UserID = U.ID
+				        JOIN Company C
+				            ON F.CompanyID = C.ID
+				        JOIN Entity E1
+				            ON F.EntityAgencyID = E1.ID
+				        JOIN ForecastMediaType FMT
+				            ON F.MediaTypeID = FMT.ID
+				        JOIN ForecastSaleType FST
+				            ON F.SaleTypeID = FST.ID
+				        WHERE 1 = 1
+				            AND ABS(F.Amount + F.ExpectedAmount) > 0",
+				    #"Valores SnapShot" = {"20220805", "20220617"},
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
+				    #"Filtrar SnapShot" = Table.SelectRows(Source, each List.Contains(#"Valores SnapShot", [Snapshotcode])),
+				    #"Merged Account" = let
+				        Juntar = Table.NestedJoin(#"Filtrar SnapShot", {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
+				        Expandir = Table.ExpandTableColumn(Juntar, "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"})
+				        in Table.ReplaceValue(Expandir, null, "Setor Privado", Replacer.ReplaceValue,{"Tipo Governo"})
+				in
+				    #"Merged Account"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

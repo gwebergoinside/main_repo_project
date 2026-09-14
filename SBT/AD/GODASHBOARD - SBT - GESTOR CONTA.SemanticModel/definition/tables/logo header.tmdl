@@ -1,0 +1,18 @@
+table 'logo header'
+	lineageTag: 78b34f87-60a2-47c2-ac3e-84a68dabb54e
+
+	column 'logo header'
+		dataType: string
+		lineageTag: 3607df7c-6319-436d-9ea9-6b4aa4e11817
+		summarizeBy: none
+		sourceColumn: logo header
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'logo header-6bfb73b3-cd1e-4edd-ae83-8aaab068b315' = m
+		mode: import
+		queryGroup: Config
+		source = "SBT" meta [IsParameterQuery=true, ExpressionIdentifier=#"lista de imagem", Type="Text", IsParameterQueryRequired=true]
+
+	annotation PBI_ResultType = Text
+

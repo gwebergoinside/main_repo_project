@@ -1,0 +1,112 @@
+table UsersNacionais
+	isHidden
+	lineageTag: ba3c557c-95e4-4218-a95e-e38133a7e828
+
+	column go_st_codigoexterno
+		dataType: string
+		isHidden
+		lineageTag: 4aee3cd3-c18e-45c5-be8e-64bfbdeb7a39
+		summarizeBy: none
+		sourceColumn: go_st_codigoexterno
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column systemuserid
+		dataType: string
+		isHidden
+		lineageTag: cbd4976f-5847-44f6-9e28-f214fa778258
+		summarizeBy: none
+		sourceColumn: systemuserid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column parentsystemuserid
+		dataType: string
+		isHidden
+		lineageTag: 217bba28-6e47-42b3-8cd4-bfdb2d8db494
+		summarizeBy: none
+		sourceColumn: parentsystemuserid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fullname
+		dataType: string
+		isHidden
+		lineageTag: 0e250d54-730a-480f-9a11-8823a5a8c273
+		summarizeBy: none
+		sourceColumn: fullname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column domainname
+		dataType: string
+		isHidden
+		lineageTag: 79aa0557-26b2-40d9-822d-9daae63b06b6
+		summarizeBy: none
+		sourceColumn: domainname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nameGestores
+		dataType: string
+		isHidden
+		lineageTag: b1b87f70-afa6-4b39-a73f-5cb516ba8b7e
+		summarizeBy: none
+		sourceColumn: nameGestores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column domainGestores
+		dataType: string
+		isHidden
+		lineageTag: 7e8f9d3d-be7b-448d-8f1b-a46d21d27554
+		summarizeBy: none
+		sourceColumn: domainGestores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_st_codigoexterno_gestores
+		dataType: string
+		isHidden
+		lineageTag: 5d6c3628-5276-4d99-b9e9-515c739524e3
+		summarizeBy: none
+		sourceColumn: go_st_codigoexterno_gestores
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition UsersNacionais = m
+		mode: import
+		queryGroup: RLS
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("lVVdb9s6DP0rQp7nQf6U/Ta3TW5TOG2QZBhwiz1QEr04cKxMtgOsv/5SztLtJtvqAQZMS7R4RJ5DPj9PJu8mUoo00SV6WgvfQ/R9L/VF6nEeBFEaxmWggdzo+aeChi3AKsPW0HSwB1u5rS/t69eHVnbvldm/l3by+d3zJF9t7j+Si8qSkKel73GptIeSgkhQ6hwkiXwejseS227bW/bYH7Fp2bz50uALLUM1WJcYVvnyPqftWCd+KUv1BoZAZLQvIi/QtImlw4AIZzeBnEtyW8FhC1jXwJb2W6u+OUsjyy30O8OWVdMZ8rKHg7MuIRXTO5cVn2dRHPuJx9WfECVhkmlelh6UUXhCBKH7a3BDPxChJreir1o21T1YbVj+gkfUDkKBp6VLDHfF/HHqTodRIEaW5g6IJMge4GuPdUWWBnZr2s7t6Z1y1iWQ9TK/c/Up04iD9tUbQFKIQ5UI+Vs3rXxyu7F9Y9g9NrYiKK40C2MBW7Y+wIBUts64BLMonpYuK0QBqThGvyXLKcpIsjjRYG1YYQ6EIK+P2NLqvgZnXUJ4+FjMA9oWMlAyc4f9EcJIdjz0NVUG2AxtA40mGEu0WFkqDzSNcXh2arCu8Dytp0uXeH8UnpH1eTAtsiX0lJWlaTrCQ0xZV/XR1WZ3OLTOvITyqZgvHFWEkkqGIn4jxkgoM5CVYZ+qI9atadiqkpQX4yhTVHsHp6zpfaWf/HEzHR9k0Abdk607Q5Ww1Egb3TtV7J3xKxLcuBaBcTTi9JHqPJNg1VeuYe4ktN11wYvp0/2Ta9qkABkL7olU42ts+UruUAXJ+AQUaJqhNf2syaeask4kpP16a75/XOIZrzN6TpRaGYm2oznlAp3OJ0ad7MvjZ/Ni7vidZZCSYKSHILLvQlIBfxWSHyV6vN5mVV0d6IKqgyOxa0bTkRK/VmChcW25bE/mJZrNfT5QPPMhARn5Xgxp/FrR7EeYUMrxidls3XwGdoMvaOl9nk/dVp5WfpHzkRd17a23FSX9Flvi9cq0wB76pjLW9Ti1G8xrjq2mG3dNDIUIk9ATEV2OYlAQyUtPcCBeQZaVifiLEUgcMwSB7tQMw9j0aovsDtnG1KdxmHLOo0gIcY3oNl84PUIQoZLgEfXxZ0QKdaohzTKZjVdcgaRuaiYE4ZbERtYC2699NQzEM5bkCkuR/zuMxET4ES/BS4JYeCV30kLl/5AWZeIvFNirYTjfwhFqNTSjAl6ImHsnv/pk/g/K5/8A", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [go_st_codigoexterno = _t, systemuserid = _t, parentsystemuserid = _t, fullname = _t, domainname = _t]),
+				    Mesclar = let
+				        FiltrarGestores = Table.SelectRows(Fonte, each [parentsystemuserid] is null or [parentsystemuserid] = ""),
+				        FiltrarExecutivos = Table.SelectRows(Fonte, each not ([parentsystemuserid] is null or [parentsystemuserid] = "")),
+				        MesclarTabelas = Table.NestedJoin(FiltrarExecutivos, {"parentsystemuserid"}, FiltrarGestores, {"systemuserid"}, "nameGestores", JoinKind.LeftOuter)
+				        in Table.ExpandTableColumn(MesclarTabelas, "nameGestores", {"go_st_codigoexterno", "fullname", "domainname"}, {"go_st_codigoexterno_gestores", "nameGestores", "domainGestores"})
+				in
+				    Mesclar
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,75 @@
+table Solicitacao
+	isHidden
+	lineageTag: ac4153ff-9052-4a0c-b64e-a1217a92dbd5
+
+	column go_lk_oportunidadeid
+		dataType: string
+		isHidden
+		lineageTag: 65c82891-298a-4c1d-8110-bdf10ecc2b64
+		summarizeBy: none
+		sourceColumn: go_lk_oportunidadeid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_name
+		dataType: string
+		isHidden
+		lineageTag: 6fe7b687-4d08-4529-bc9b-23c7f1df2db8
+		summarizeBy: none
+		sourceColumn: go_name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecode
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b5aa520e-33c8-4b74-bcbc-7d58ad883df3
+		summarizeBy: sum
+		sourceColumn: statecode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecode_display
+		dataType: string
+		isHidden
+		lineageTag: cb446bb5-2790-43f5-b9ff-87f4b42f0851
+		summarizeBy: none
+		sourceColumn: statecode_display
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_solicitaodeaprovacaoid
+		dataType: string
+		isHidden
+		lineageTag: 62faf1ed-f0b6-4e65-a5df-122fd86d6b5b
+		summarizeBy: none
+		sourceColumn: go_solicitaodeaprovacaoid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Solicitacao-7fccf034-095c-4e9d-af34-b0744e1a6748 = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				    Source = #"GetCDST_EntityTable"("go_solicitaodeaprovacao"),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"go_lk_oportunidadeid", "go_name", "go_solicitaodeaprovacaoid", "statecode", "statecode_display"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([statecode] <> 2))
+				in
+				    #"Filtered Rows"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

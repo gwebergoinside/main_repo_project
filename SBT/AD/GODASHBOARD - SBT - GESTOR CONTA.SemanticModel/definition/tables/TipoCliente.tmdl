@@ -1,0 +1,51 @@
+table TipoCliente
+	isHidden
+	lineageTag: 21d70e67-40ba-4c12-869f-b90d88af3e52
+
+	measure 'Selected Type' =
+			
+			SELECTEDVALUE ( TipoCliente[ID] )
+		formatString: 0
+		isHidden
+		lineageTag: ca86e287-efbb-4337-a11e-5b5ff84f66a3
+
+		changedProperty = IsHidden
+
+	column Tipo
+		dataType: string
+		isHidden
+		lineageTag: b22264d3-9e99-426d-88d4-c093373c83b3
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cb7332e3-e23e-429f-9602-d74c35ed1af5
+		summarizeBy: count
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoCliente-7c47a74c-11f8-4102-a65d-158b82ca5a94 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCkpNzi8qSs0rSVXSUTJUitWJVvLLL8svBvKMwLyA1KKUzBSwgDFYILA0NSURyDMB85yLUouTM3OBBuQDxUyVYmMB", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Tipo = _t, ID = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Tipo", type text}, {"ID", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

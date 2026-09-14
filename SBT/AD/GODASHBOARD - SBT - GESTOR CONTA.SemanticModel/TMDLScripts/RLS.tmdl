@@ -1,0 +1,97 @@
+createOrReplace
+
+	role Nacional
+		modelPermission: read
+
+		tablePermission RLS =
+				VAR __upn = USERPRINCIPALNAME()
+				VAR __isFull =
+				    CONTAINS( ALL( DashboardUserPermission ), DashboardUserPermission[Email], __upn )
+				VAR __isGestor =
+				    CONTAINS( ALL( UsersGestores ), UsersGestores[domainGestores], __upn )
+				VAR __isNacional =
+				        CONTAINS( ALL( UsersNacionais ), UsersNacionais[domainname], __upn )
+				RETURN
+				    IF.EAGER( __isFull, TRUE(),
+				        IF.EAGER( __isGestor, TRUE(),
+				            IF.EAGER( __isNacional, TRUE(),
+				                RLS[domainname] = __upn
+				            )
+				        )
+				    )
+
+		tablePermission RLSFILTER =
+				VAR __upn = USERPRINCIPALNAME()
+				VAR __isFull =
+				    CONTAINS( ALL( DashboardUserPermission ), DashboardUserPermission[Email], __upn )
+				VAR __isGestor =
+				    CONTAINS( ALL( UsersGestores ), UsersGestores[domainGestores], __upn )
+				VAR __isNacional =
+				        CONTAINS( ALL( UsersNacionais ), UsersNacionais[domainname], __upn )
+				RETURN
+				    IF.EAGER( __isFull, TRUE(),
+				        IF.EAGER( __isGestor, TRUE(),
+				            IF.EAGER( __isNacional, TRUE(),
+				                RLSFILTER[domainname] = __upn
+				            )
+				        )
+				    )
+
+		tablePermission UsersGestores =
+				VAR __upn = USERPRINCIPALNAME()
+				VAR __isFull =
+				    CONTAINS( ALL( DashboardUserPermission ), DashboardUserPermission[Email], __upn )
+				VAR __isGestor =
+				    CONTAINS( ALL( UsersGestores ), UsersGestores[domainGestores], __upn )
+				RETURN
+				    IF.EAGER( __isFull, TRUE(),
+				        IF.EAGER( __isGestor, UsersGestores[domainGestores] = __upn,
+				            TRUE()
+				        )
+				    )
+
+		tablePermission UsersNacionais =
+				VAR __upn = USERPRINCIPALNAME()
+				VAR __isFull =
+				    CONTAINS( ALL( DashboardUserPermission ), DashboardUserPermission[Email], __upn )
+				VAR __isGestor =
+				    CONTAINS( ALL( UsersGestores ), UsersGestores[domainGestores], __upn )
+				VAR __isNacional =
+				    CONTAINS( ALL( UsersNacionais ), UsersNacionais[domainname], __upn )
+				RETURN
+				    IF.EAGER( __isFull, TRUE(),
+				        IF.EAGER( __isGestor, TRUE(),
+				            IF.EAGER( __isNacional, UsersNacionais[domainname] = __upn,
+				                TRUE()
+				            )
+				        )
+				    )
+
+		tablePermission Users = [Gerente] <> Blank()
+
+		annotation PBI_Id = cd298b5f30d54687a0f477c6e8df1ee7
+
+	role RLS
+		modelPermission: read
+
+		tablePermission RLSFILTER =
+				VAR __upn = USERPRINCIPALNAME()
+				VAR __isFull =
+				    CONTAINS( ALL( DashboardUserPermission ), DashboardUserPermission[Email], __upn )
+				
+				RETURN
+				    IF.EAGER( __isFull, TRUE(),
+				            RLSFILTER[domainname] = __upn
+				        )
+
+		tablePermission RLS =
+				VAR __upn = USERPRINCIPALNAME()
+				VAR __isFull =
+				    CONTAINS( ALL( DashboardUserPermission ), DashboardUserPermission[Email], __upn )
+				
+				RETURN
+				    IF.EAGER( __isFull, TRUE(),
+				            RLS[domainname] = __upn
+				        )
+
+		annotation PBI_Id = 0620da114ebc4b308134711daa668234

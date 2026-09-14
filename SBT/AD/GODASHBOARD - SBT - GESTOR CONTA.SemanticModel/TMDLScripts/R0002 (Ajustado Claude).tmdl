@@ -1,0 +1,450 @@
+createOrReplace
+
+	expression array_desconsiderar_Negociacoes = "434522,433991,433968,433687,433688,433685,433675,433456,436008,436379,437426,435038,435037,435638" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+		lineageTag: dfca0b68-a3df-48c8-b3dd-f509f81134f7
+		queryGroup: Config
+
+		annotation PBI_NavigationStepName = Navegação
+
+		annotation PBI_ResultType = Text
+
+	table R0002
+		lineageTag: 684be20c-5e5f-4b39-8688-b46b36f4adb7
+
+		column Cod_Empresa
+			dataType: string
+			lineageTag: b16bb43c-2366-4944-8d81-47f4852369c2
+			summarizeBy: none
+			sourceColumn: Cod_Empresa
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Cod_Agencia
+			dataType: string
+			lineageTag: 4aff18b6-855e-4259-acbb-bd4bbd8f6c77
+			summarizeBy: none
+			sourceColumn: Cod_Agencia
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Cod_Cliente
+			dataType: string
+			lineageTag: 84bb0a29-a9d4-4282-b945-524a9f2d0dda
+			summarizeBy: none
+			sourceColumn: Cod_Cliente
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Cod_Nucleo
+			dataType: string
+			lineageTag: 2d4a9326-5444-4919-aef2-45bf5ddc3de4
+			summarizeBy: none
+			sourceColumn: Cod_Nucleo
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Competencia
+			dataType: int64
+			formatString: 0
+			lineageTag: a658f83c-ea3d-4394-8336-2b043664d72e
+			summarizeBy: sum
+			sourceColumn: Competencia
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Data
+			dataType: dateTime
+			formatString: General Date
+			lineageTag: a1a21b4a-9eeb-4d36-8a42-9d7cfc8c9d1a
+			summarizeBy: none
+			sourceColumn: Data
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Sequencia_Mr
+			dataType: string
+			lineageTag: 919f2561-3510-4aac-8237-e8986bcc0873
+			summarizeBy: none
+			sourceColumn: Sequencia_Mr
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Numero_Negociacao
+			dataType: double
+			lineageTag: 80ffc8dd-1e44-4797-b9f4-2bfac8d70c51
+			summarizeBy: sum
+			sourceColumn: Numero_Negociacao
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		column Vlr_Gerencial_BAV
+			dataType: double
+			lineageTag: 4767905c-9b4b-4a06-a54e-87acaf3dd9b0
+			summarizeBy: sum
+			sourceColumn: Vlr_Gerencial_BAV
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		column 'CodEmp Faturamento'
+			dataType: string
+			lineageTag: 7bd52aa5-fb5b-4ad9-897b-fc32ce15586b
+			summarizeBy: none
+			sourceColumn: CodEmp Faturamento
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Vlr_Repasse_Varejo
+			dataType: double
+			lineageTag: 459a587a-20bf-4d78-9b7b-8314ff0e4b14
+			summarizeBy: sum
+			sourceColumn: Vlr_Repasse_Varejo
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		column Vlr_Exibido
+			dataType: double
+			lineageTag: 7a67e91f-cd48-43e1-b265-131670fb8046
+			summarizeBy: sum
+			sourceColumn: Vlr_Exibido
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+			annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		column 'Tipo Governo'
+			dataType: string
+			lineageTag: 3c99963e-3a38-4b8b-b499-9721bcc0c3e8
+			summarizeBy: none
+			sourceColumn: Tipo Governo
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Tipo
+			dataType: string
+			lineageTag: 1e663762-c4e7-47d7-817f-9230f8f158fe
+			summarizeBy: none
+			sourceColumn: Tipo
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column SaleTypeExternalCode
+			dataType: string
+			lineageTag: ca55badb-48c2-473c-8aa3-e37b860a0a17
+			summarizeBy: none
+			sourceColumn: SaleTypeExternalCode
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column MediaTypeExternalCode
+			dataType: string
+			lineageTag: d9be6e1a-2076-4624-a129-66237271b4b3
+			summarizeBy: none
+			sourceColumn: MediaTypeExternalCode
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column 'CLIENTES DIRETOS'
+			dataType: string
+			lineageTag: cce8a0bc-e042-4385-89e0-ffdd9fa7b365
+			summarizeBy: none
+			sourceColumn: CLIENTES DIRETOS
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column ChannelDisplay
+			dataType: string
+			lineageTag: 06a2fd4a-0e57-4b87-b9f7-57b4f6373853
+			summarizeBy: none
+			sourceColumn: ChannelDisplay
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column 'Venda Importada'
+			dataType: string
+			lineageTag: 08610258-833a-4694-a266-e9b59e0bba3e
+			summarizeBy: none
+			sourceColumn: Venda Importada
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Affiliation
+			dataType: string
+			lineageTag: d54b06b9-77ef-4da5-8112-179b57c804ba
+			summarizeBy: none
+			sourceColumn: Affiliation
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column Cod_Executivo
+			dataType: string
+			lineageTag: 8b5d8a27-8fff-4ebf-a810-85a0fd4a3d1f
+			summarizeBy: none
+			sourceColumn: Cod_Executivo
+
+			annotation SummarizationSetBy = Automatic
+
+		column Cod_Tipo_Comercial
+			dataType: string
+			lineageTag: 59ce64c5-f335-4380-b93e-c8f2882b86e4
+			summarizeBy: none
+			sourceColumn: Cod_Tipo_Comercial
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column ChaveForecast
+			dataType: string
+			lineageTag: 996beb1b-2e2c-4a0c-8d27-4413f4b4383b
+			summarizeBy: none
+			sourceColumn: ChaveForecast
+
+			changedProperty = IsHidden
+
+			annotation SummarizationSetBy = Automatic
+
+		column codIntegrador
+			dataType: string
+			lineageTag: 36a12962-2ae3-4efc-8334-d2bb71af3113
+			summarizeBy: none
+			sourceColumn: codIntegrador
+
+			annotation SummarizationSetBy = Automatic
+
+		column is_SBTNEWS
+			dataType: string
+			lineageTag: 44bc01ad-59cf-4fa0-8849-b037fe93120a
+			summarizeBy: none
+			sourceColumn: is_SBTNEWS
+
+			annotation SummarizationSetBy = Automatic
+
+		column chaveT
+			dataType: string
+			lineageTag: f1356fc5-68fb-4d58-bda5-7158269e4d9c
+			summarizeBy: none
+			sourceColumn: chaveT
+
+			annotation SummarizationSetBy = Automatic
+
+		partition R0002-5b2f1cdd-8bce-4385-9d08-626abdf75db3 = m
+			mode: import
+			queryGroup: CORE
+			source = ```
+					let
+					    // Sanitização de aspas simples para evitar quebra de SQL via parâmetros
+					    arrSBTNEWS_safe   = Text.Replace(array_SBTNEWS, "'", "''"),
+					    arrNegoc_safe     = Text.Replace(array_desconsiderar_Negociacoes, "'", "''"),
+
+					    // Constrói cláusulas IN inline (mais rápido e portável que STRING_SPLIT)
+					    arrSBTNEWS_IN = "(" & Text.Combine(
+					                        List.Transform(
+					                            Text.Split(arrSBTNEWS_safe, ","),
+					                            each "'" & Text.Upper(Text.Trim(_)) & "'"
+					                        ), ","
+					                    ) & ")",
+
+					    arrNegoc_IN   = "(" & Text.Combine(
+					                        List.Transform(
+					                            Text.Split(arrNegoc_safe, ","),
+					                            each Text.Trim(_)
+					                        ), ","
+					                    ) & ")",
+
+					    // Limites de partição (incremental refresh)
+					    dtRangeStart = DateTime.ToText(RangeStart, "yyyy-MM-dd"),
+					    dtRangeEnd   = DateTime.ToText(RangeEnd,   "yyyy-MM-dd"),
+
+					    SQL =
+					        "
+					        ;WITH VI AS
+					        (
+					            SELECT DISTINCT
+					                r2.Cod_Empresa,
+					                r2.Competencia,
+					                r2.Numero_Negociacao,
+					                Cod_Contato_Importada = 'VEIMPR'
+					            FROM " & BDExternal & ".SCTV.R0002 AS r2 WITH (NOLOCK)
+					            INNER JOIN " & BD & ".dbo.Company AS eFat WITH (NOLOCK)
+					                ON eFat.ExternalCode = r2.Cod_Empresa_Faturamento
+					                AND eFat.Affiliation = 'FILIADO'
+					            INNER JOIN " & BD & ".dbo.Company AS eEmp WITH (NOLOCK)
+					                ON eEmp.ExternalCode = r2.Cod_Empresa
+					                AND eEmp.Affiliation <> 'FILIADO'
+					            WHERE r2.Cod_Nucleo NOT IN ('n10', 'novon', 'vale')
+					              AND r2.Indica_Mes_Anterior = 0
+					              AND r2.Cod_Empresa_Faturamento <> '054'
+					        ),
+					        RowLevel AS
+					        (
+					            SELECT
+					                r.Cod_Empresa,
+					                r.Cod_Tipo_Comercial,
+					                UPPER(r.Sequencia_Mr) AS Sequencia_Mr,
+					                UPPER(LTRIM(RTRIM(r.Cod_Empresa_Faturamento))) AS [CodEmp Faturamento],
+					                UPPER(LTRIM(RTRIM(r.Cod_Agencia))) AS Cod_Agencia,
+					                UPPER(LTRIM(RTRIM(r.Cod_Cliente))) AS Cod_Cliente,
+					                UPPER(LTRIM(RTRIM(r.Cod_Contato))) AS Cod_Contato,
+					                UPPER(LTRIM(RTRIM(r.Cod_Nucleo))) AS Cod_Nucleo,
+					                r.Competencia,
+					                DATEFROMPARTS(CONVERT(INT, LEFT(r.Competencia, 4)), CONVERT(INT, RIGHT(r.Competencia, 2)), 1) AS Data,
+					                r.Numero_Negociacao,
+					                LTRIM(RTRIM(r.SaleTypeExternalCode)) AS SaleTypeExternalCode,
+					                CASE WHEN UPPER(LTRIM(RTRIM(r.Cod_Nucleo))) = 'INTERAT' THEN 'SITE'
+					                     ELSE LTRIM(RTRIM(r.MediaTypeExternalCode))
+					                END AS MediaTypeExternalCode,
+					                r.Vlr_Gerencial_BAV,
+					                r.Vlr_Repasse_Varejo,
+					                r.Vlr_Bruto AS Vlr_Exibido,
+					                ch.ExternalCode + ' - ' + ch.Name AS ChannelDisplay,
+					                cp.Affiliation,
+					                r.MotivoAjusteManual
+					            FROM " & BDExternal & ".SCTV.R0002_Detalhe AS r WITH (NOLOCK)
+					            LEFT JOIN " & BD & ".dbo.Company AS cp    WITH (NOLOCK) ON cp.ExternalCode    = r.Cod_Empresa
+					            LEFT JOIN " & BD & ".dbo.Company AS cpfat WITH (NOLOCK) ON cpfat.ExternalCode = r.Cod_Empresa_Faturamento
+					            LEFT JOIN " & BD & ".dbo.Channel AS ch    WITH (NOLOCK) ON ch.ExternalCode    = r.Cod_Veiculo
+					            WHERE NOT (ISNULL(cp.Affiliation, '') = 'AFILIADO' AND ISNULL(cpfat.Affiliation, '') = 'AFILIADO')
+					              AND r.Competencia >= ((YEAR(GETDATE()) - " & YearUpdateData & ") * 100 + 1)
+					        ),
+					        Enriched AS
+					        (
+					            SELECT
+					                E.*,
+					                Cod_Executivo = COALESCE(E.MotivoAjusteManual, VI.Cod_Contato_Importada, E.Cod_Contato),
+					                TipoGoverno   = ISNULL(A.go_pl_classificacaogoverno_display, 'Setor Privado'),
+					                chaveT =
+					                    E.Cod_Cliente +
+					                    E.Cod_Agencia +
+					                    E.Cod_Empresa +
+					                    E.Cod_Contato +
+					                    UPPER(E.SaleTypeExternalCode) +
+					                    UPPER(E.MediaTypeExternalCode) +
+					                    CAST(YEAR(E.Data)  AS VARCHAR(4)) +
+					                    CAST(MONTH(E.Data) AS VARCHAR(2))
+					            FROM RowLevel AS E
+					            LEFT JOIN VI
+					                ON VI.Cod_Empresa       = E.Cod_Empresa
+					               AND VI.Competencia       = E.Competencia
+					               AND VI.Numero_Negociacao = E.Numero_Negociacao
+					            LEFT JOIN " & BD & ".dbo.Account AS A WITH (NOLOCK)
+					                ON A.accountnumber = E.Cod_Cliente
+					            WHERE E.Data >= '" & dtRangeStart & "'
+					              AND E.Data <  '" & dtRangeEnd   & "'
+					        ),
+					        ChaveTExcecoes AS
+					        (
+					            -- chaveTs marcadas como exceção SBTNEWS (ticket Intercom 96052764)
+					            SELECT DISTINCT chaveT
+					            FROM Enriched
+					            WHERE Numero_Negociacao IN " & arrNegoc_IN & "
+					              AND Data IN ('2026-01-01','2026-02-01','2026-03-01')
+					        )
+					        SELECT
+					            E.Cod_Empresa,
+					            E.Cod_Tipo_Comercial,
+					            E.Sequencia_Mr,
+					            E.[CodEmp Faturamento],
+					            E.Cod_Agencia,
+					            E.Cod_Cliente,
+					            E.Cod_Nucleo,
+					            E.Competencia,
+					            E.Data,
+					            E.Numero_Negociacao,
+					            E.SaleTypeExternalCode,
+					            E.MediaTypeExternalCode,
+					            E.ChannelDisplay,
+					            E.Affiliation,
+					            E.Cod_Executivo,
+					            E.chaveT,
+					            [Tipo Governo] = E.TipoGoverno,
+					            Tipo = CASE WHEN E.TipoGoverno = 'Setor Privado' THEN 'Setor Privado' ELSE 'Governo' END,
+					            [CLIENTES DIRETOS] = CASE WHEN E.Cod_Cliente = E.Cod_Agencia
+					                                      THEN 'CLIENTES DIRETOS'
+					                                      ELSE 'COM AGÊNCIA'
+					                                 END,
+					            [Venda Importada]  = CASE
+					                                    WHEN LEFT(E.[CodEmp Faturamento], 3) = '054' AND E.Affiliation = 'AFILIADO'
+					                                         THEN 'VENDA IMPORTADA NACIONAL'
+					                                    WHEN E.Cod_Executivo = 'VEIMPR'
+					                                         THEN 'VENDA IMPORTADA REGIONAL'
+					                                 END,
+					            is_SBTNEWS = CASE
+					                            WHEN UPPER(E.Cod_Nucleo) IN " & arrSBTNEWS_IN & " THEN 'Sim'
+					                            WHEN EXISTS (SELECT 1 FROM ChaveTExcecoes c WHERE c.chaveT = E.chaveT) THEN 'Sim'
+					                            ELSE 'Não'
+					                         END,
+					            codIntegrador = UPPER(E.Cod_Cliente + E.Cod_Agencia),
+					            ChaveForecast =
+					                E.Cod_Cliente + '-' +
+					                E.Cod_Agencia + '-' +
+					                E.MediaTypeExternalCode + '-' +
+					                E.SaleTypeExternalCode + '-' +
+					                CONVERT(VARCHAR(50), CAST(E.Numero_Negociacao AS BIGINT)) + '-' +
+					                CAST(YEAR(E.Data)  AS VARCHAR(4)) + '-' +
+					                CAST(MONTH(E.Data) AS VARCHAR(2)),
+					            Vlr_Gerencial_BAV  = SUM(E.Vlr_Gerencial_BAV),
+					            Vlr_Repasse_Varejo = SUM(E.Vlr_Repasse_Varejo),
+					            Vlr_Exibido        = SUM(E.Vlr_Exibido)
+					        FROM Enriched AS E
+					        GROUP BY
+					            E.Cod_Empresa, E.Cod_Tipo_Comercial, E.Sequencia_Mr, E.[CodEmp Faturamento],
+					            E.Cod_Agencia, E.Cod_Cliente, E.Cod_Nucleo, E.Competencia, E.Data, E.Numero_Negociacao,
+					            E.SaleTypeExternalCode, E.MediaTypeExternalCode, E.ChannelDisplay, E.Affiliation,
+					            E.Cod_Executivo, E.TipoGoverno, E.chaveT
+					        ",
+					    Source = Sql.Database(Org, BD, [Query = SQL])
+					in
+					    Source
+					```
+
+		changedProperty = IsHidden
+
+		annotation PBI_ResultType = Exception
+
+		annotation PBI_NavigationStepName = Navegação

@@ -1,0 +1,122 @@
+table DashboardUserPermission
+	isHidden
+	lineageTag: 14fe1515-51ce-4e87-9cf1-8e8d2705c5a7
+
+	column Id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3bd33f55-d6b5-42d3-aeac-7ad6204ae1ac
+		summarizeBy: count
+		sourceColumn: Id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		isHidden
+		lineageTag: a588b33b-9beb-4467-9e93-77a6cf522601
+		summarizeBy: none
+		sourceColumn: Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		isHidden
+		lineageTag: 140a7b8d-44ec-462a-a96a-433aa67ae57b
+		summarizeBy: none
+		sourceColumn: Notes
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		isHidden
+		lineageTag: dc99c3e8-6231-4612-a19a-da87e6549958
+		summarizeBy: none
+		sourceColumn: Email
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		isHidden
+		lineageTag: 7d894599-eae5-4f8f-83de-b374e485fd76
+		summarizeBy: none
+		sourceColumn: Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column StampDate
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: ceede98f-c591-4b17-8148-123556e31b79
+		summarizeBy: none
+		sourceColumn: StampDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		isHidden
+		lineageTag: a9b5f30a-baa4-414e-9480-de40106e7916
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 4af73172-40cd-43d0-b52a-d4dc4ce415ad
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedBy
+		dataType: string
+		isHidden
+		lineageTag: 44f57f9d-d1d6-41fb-a978-bad62b3e30a9
+		summarizeBy: none
+		sourceColumn: ModifiedBy
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DashboardUserPermission-347e311b-8f20-4b23-b61e-58f08c7e2cc8 = m
+		mode: import
+		queryGroup: Config
+		source =
+				let
+				    SQL = "SELECT#(lf)    *#(lf)FROM#(lf)    DashboardUserPermission DP WHERE Status = 'Ativadas'",
+				    Source = Sql.Database(Org, BDExternal, [Query = SQL])
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

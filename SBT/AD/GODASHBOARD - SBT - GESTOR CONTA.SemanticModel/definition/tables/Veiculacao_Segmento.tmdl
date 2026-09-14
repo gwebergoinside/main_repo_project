@@ -1,0 +1,333 @@
+table Veiculacao_Segmento
+	lineageTag: 00628a91-37c0-448c-98e0-13c5246e0cc3
+
+	column Nome_Setor
+		dataType: string
+		lineageTag: fec81904-0c0e-4074-87d8-3abbec190060
+		summarizeBy: none
+		sourceColumn: Nome_Setor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Sub_Setor
+		dataType: string
+		lineageTag: ef5f1184-d20c-44a6-91b6-daffc47e7cc7
+		summarizeBy: none
+		sourceColumn: Nome_Sub_Setor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Empresa_Venda
+		dataType: string
+		lineageTag: e0888c95-6edb-413c-b002-5093b3cdd38c
+		summarizeBy: none
+		sourceColumn: Cod_Empresa_Venda
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data_Exibicao
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b61b7945-c9de-40cc-9210-a61dadbb6c3c
+		summarizeBy: none
+		sourceColumn: Data_Exibicao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Agencia
+		dataType: string
+		lineageTag: eed8d00a-0d64-4b7f-b7bf-10ed909322ff
+		summarizeBy: none
+		sourceColumn: Cod_Agencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Cliente
+		dataType: string
+		lineageTag: 32e9ad45-115e-464d-b2b5-a8f754831864
+		summarizeBy: none
+		sourceColumn: Cod_Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Empresa_Faturamento
+		dataType: string
+		lineageTag: 9a0471ee-360b-4b7f-b8a0-a11badb0d046
+		summarizeBy: none
+		sourceColumn: Cod_Empresa_Faturamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome_Produto
+		dataType: string
+		lineageTag: bd0c8953-6cc8-43e2-b840-55c2d1721571
+		summarizeBy: none
+		sourceColumn: Nome_Produto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Contato
+		dataType: string
+		lineageTag: 92320dee-2047-43d4-bd59-c989c10f70d2
+		summarizeBy: none
+		sourceColumn: Cod_Contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: double
+		lineageTag: ef754da0-4ee0-411a-a36d-3b1dc87b78b6
+		summarizeBy: sum
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Cod_Veiculo
+		dataType: string
+		lineageTag: b8ff6264-9cac-498d-8803-3bb395b6afcb
+		summarizeBy: none
+		sourceColumn: Cod_Veiculo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Indica_Midia_On_Line
+		dataType: int64
+		formatString: 0
+		lineageTag: 81c0e186-3ccf-49da-a0e7-5a149a6522f3
+		summarizeBy: sum
+		sourceColumn: Indica_Midia_On_Line
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Tipo_Comercial
+		dataType: string
+		lineageTag: b83297db-8205-47c1-bf6c-d40b84a7f70e
+		summarizeBy: none
+		sourceColumn: Cod_Tipo_Comercial
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Indica Online' =
+			
+			SWITCH(
+			    TRUE()
+			    ,Veiculacao_Segmento[Indica_Midia_On_Line] = 1, "Sim"
+			    ,Veiculacao_Segmento[Indica_Midia_On_Line] = 0, "Não"
+			)
+		lineageTag: 220830a9-1151-4292-8751-3ebd10f94201
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column codIntegrador
+		dataType: string
+		lineageTag: ef0ad9f7-aa9e-4755-81a2-4c41d6c5c22d
+		summarizeBy: none
+		sourceColumn: codIntegrador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Executivo = ```
+			
+			    MAXX(
+			        FILTER( LY
+			            , LY[Cod_Cliente] = Veiculacao_Segmento[Cod_Cliente] &&
+			              LY[Cod_Agencia] = Veiculacao_Segmento[Cod_Agencia] &&
+			              LY[Cod_Emp] = COALESCE( Veiculacao_Segmento[Cod_Empresa_Venda], Veiculacao_Segmento[Cod_Empresa_Faturamento] ) &&
+			              LY[Year] = YEAR(Veiculacao_Segmento[Data_Exibicao]) &&
+			              LY[Month] = MONTH(Veiculacao_Segmento[Data_Exibicao])
+			        ), LY[Cod_Executivo]
+			    )
+			```
+		lineageTag: 1ec76c50-95cc-4272-bdba-c522a7cf6aa1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_SBTNEWS = ```
+			
+			    VAR _check =
+			        MAXX(
+			            FILTER(
+			                LY,
+			                LY[Cod_Cliente] = Veiculacao_Segmento[Cod_Cliente]
+			                    && LY[Cod_Agencia] = Veiculacao_Segmento[Cod_Agencia]
+			                    && LY[Cod_Emp]
+			                        = COALESCE(
+			                            Veiculacao_Segmento[Cod_Empresa_Venda],
+			                            Veiculacao_Segmento[Cod_Empresa_Faturamento]
+			                        )
+			                    && LY[Year] = YEAR(Veiculacao_Segmento[Data_Exibicao])
+			                    && LY[Month] = MONTH(Veiculacao_Segmento[Data_Exibicao])
+			            ),
+			            LY[Cod_Nucleo]
+			        )
+			    RETURN
+			    IF( NOT ISBLANK(_check) && CONTAINSSTRING( UPPER(_check), "SBTNEWS" ),
+			        "Sim",
+			        "Não"
+			    ) // Condicional solicitada ticket 72675899 - Ajuste de exibição dos dados do SBT News nos dashboards - 72675899
+			  
+			```
+		lineageTag: cdb9a2d7-16aa-45eb-94ac-299e4543f693
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Veiculacao_Segmento-e2ab505c-1cee-4114-b92e-895800fde494 = m
+		mode: import
+		queryGroup: CORE
+		source = ```
+				// let
+				//     Source = Sql.Database(Org, BD, [Query="
+				// SELECT
+				// 	r.Data_Exibicao
+				// 	,r.Cod_Agencia
+				// 	,r.Cod_Cliente
+				// 	,r.Cod_Empresa_Faturamento
+				// 	,'' as Cod_Veiculo
+				// 	,'' as Cod_Contato
+				// 	,r.Cod_Empresa_Venda
+				// 	,r.Cod_Tipo_Comercial
+				// 	--,Cod_Red_Produto3  as 'Cod_Red_Produto'
+				// 	--,sum (r.Vlr_Esp)
+				// 	--,sum (r.Vlr_Per)
+				// 	--,sum (r.Vlr_Esp_Mer)
+				// 	--,sum (r.Vlr_Per_Mer)
+				// 	--,sum (r.Vlr_Per_Especial)
+				// 	--,Sum (r.Vlr_Patrocinio)
+				// 	--,sum (r.Vlr_Ant) as Valor
+				// 	,r.descricao1 as Nome_Setor
+				// 	,r.descricao2 as Nome_Sub_Setor
+				// 	,r.descricao3 as Nome_Produto
+				// 	,r.Indica_Midia_On_Line
+				// 	--,BIPS.Nome_Sub_Setor
+				//     --,BIPS.Nome_Setor
+				//     --,BIPS.Nome_Produto
+				// 	,(r.Vlr_Esp+
+				// 	r.Vlr_Per+
+				// 	r.Vlr_Esp_Mer+
+				// 	r.Vlr_Per_Mer+
+				// 	r.Vlr_Per_Especial+
+				// 	r.Vlr_Patrocinio+
+				// 	r.Vlr_Ant) as Valor
+				// FROM 
+				// 	"&BDExternal&".sctv.r0059 As r
+				// 	--LEFT JOIN GONEXTADExternal.dbo.VW_BI_Produto_Setor As BIPS On BIPS.Id_Produto = r.Cod_Red_Produto3
+				// 	Left Join Company cp With(NoLock) On cp.ExternalCode = r.Cod_Empresa_Venda 
+				// 	Left Join Company cpfat With(NoLock) On cpfat.ExternalCode = r.Cod_Empresa_Faturamento
+				// WHERE
+				// 	Not (cp.Affiliation = 'AFILIADO' And cpfat.Affiliation = 'AFILIADO') 
+				// 	AND	Year(r.Data_Exibicao) >= Year(GetDate()) - '"&YearUpdateVeiculacao&"'
+				// --GROUP BY
+				// --	r.Data_Exibicao
+				// --	,r.Cod_Agencia
+				// --	,r.Cod_Cliente
+				// --	,r.Cod_Empresa_Faturamento
+				// --	,r.Cod_Empresa_Venda
+				// --	,r.Cod_Tipo_Comercial
+				// --	--,Cod_Red_Produto3
+				// --	,r.Indica_Midia_On_Line
+				// --	--,BIPS.Nome_Sub_Setor
+				// --    --,BIPS.Nome_Setor
+				// --    --,BIPS.Nome_Produto
+				// "]),
+				//     #"Filtered Rows" = Table.SelectRows(Source, each [Data_Exibicao] >= RangeStart and [Data_Exibicao] < RangeEnd)
+				// in
+				//     #"Filtered Rows"
+				
+				let
+				    SQL = "WITH
+						Base AS (
+							SELECT
+								r.Data_Exibicao,
+								r.Cod_Agencia,
+								r.Cod_Cliente,
+								r.Cod_Empresa_Faturamento,
+								'' AS Cod_Veiculo,
+								'' AS Cod_Contato,
+								r.Cod_Empresa_Venda,
+								r.Cod_Tipo_Comercial,
+								r.descricao1 AS Nome_Setor,
+								r.descricao2 AS Nome_Sub_Setor,
+								r.descricao3 AS Nome_Produto,
+								r.Indica_Midia_On_Line,
+								r.Vlr_Esp,
+								r.Vlr_Per,
+								r.Vlr_Esp_Mer,
+								r.Vlr_Per_Mer,
+								r.Vlr_Per_Especial,
+								r.Vlr_Patrocinio,
+								r.Vlr_Ant
+							FROM
+								" & BDExternal & ".SCTV.R0059 AS r
+								LEFT JOIN " & BD & ".dbo.Company cp WITH (NOLOCK)
+									ON cp.ExternalCode = r.Cod_Empresa_Venda
+								LEFT JOIN " & BD & ".dbo.Company cpfat WITH (NOLOCK)
+									ON cpfat.ExternalCode = r.Cod_Empresa_Faturamento
+							WHERE
+								NOT (cp.Affiliation = 'AFILIADO' AND cpfat.Affiliation = 'AFILIADO')
+								AND YEAR(r.Data_Exibicao) >= YEAR(GETDATE()) - " & YearUpdateVeiculacao & "
+						),
+				
+						Final AS (
+							SELECT
+								Base.Data_Exibicao,
+								Base.Cod_Agencia,
+								Base.Cod_Cliente,
+								Base.Cod_Empresa_Faturamento,
+								Base.Cod_Veiculo,
+								Base.Cod_Contato,
+								Base.Cod_Empresa_Venda,
+								Base.Cod_Tipo_Comercial,
+								Base.Nome_Setor,
+								Base.Nome_Sub_Setor,
+								Base.Nome_Produto,
+								Base.Indica_Midia_On_Line,
+				            	UPPER(Base.Cod_Cliente + Base.Cod_Agencia) AS codIntegrador,
+								(
+									Base.Vlr_Esp
+									+ Base.Vlr_Per
+									+ Base.Vlr_Esp_Mer
+									+ Base.Vlr_Per_Mer
+									+ Base.Vlr_Per_Especial
+									+ Base.Vlr_Patrocinio
+									+ Base.Vlr_Ant
+								) AS Valor
+							FROM
+								Base
+						)
+				
+					SELECT
+						Final.Data_Exibicao,
+						Final.Cod_Agencia,
+						Final.Cod_Cliente,
+						Final.Cod_Empresa_Faturamento,
+						Final.Cod_Veiculo,
+						Final.Cod_Contato,
+						Final.Cod_Empresa_Venda,
+						Final.Cod_Tipo_Comercial,
+						Final.Nome_Setor,
+						Final.Nome_Sub_Setor,
+						Final.Nome_Produto,
+						Final.Indica_Midia_On_Line,
+						Final.codIntegrador,
+						Final.Valor
+					FROM Final
+					WHERE 1 = 1
+						AND Final.Data_Exibicao >= '" &  DateTime.ToText( RangeStart, "yyyy-MM-dd") & "'
+						AND Final.Data_Exibicao < '" & DateTime.ToText( RangeEnd , "yyyy-MM-dd") & "'",
+				    Source = Sql.Database(Org, BD, [Query = SQL])
+				    // #"Filtered Rows" = Table.SelectRows(Source, each [Data_Exibicao] >= RangeStart and [Data_Exibicao] < RangeEnd)
+				in
+				    Source
+				```
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_IsMQueryFoldable = True
+

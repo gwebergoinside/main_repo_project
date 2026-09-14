@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "GODASHBOARD - SBT - GESTOR CONTA"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "54055053-b04a-4f5f-a923-475cbe4eb75c"
+  }
+}

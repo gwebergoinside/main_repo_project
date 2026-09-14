@@ -1,0 +1,113 @@
+table Calendario_OPT
+	lineageTag: 0b36fd4c-7809-4a93-8f6c-214648861eb0
+
+	column Date
+		formatString: General Date
+		lineageTag: d786d1f5-7945-4000-b741-a1b9645f9bd2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		formatString: 0
+		lineageTag: 6876b70c-1fbd-4981-8d44-e0acb01a331f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Ano]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		formatString: 0
+		lineageTag: e701e532-aded-4414-ae49-0284f8de7977
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Dia]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes
+		lineageTag: 7d468628-5d34-40bf-840e-b7cb3537be67
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Mes]
+		sortByColumn: 'Mes No'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes No'
+		formatString: 0
+		lineageTag: 1029e9ea-5fe1-446a-ac3d-bcefcd1e1fa5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Mes No]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		lineageTag: a0ab6eba-df40-48b4-a6aa-a71c838a26a3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Trimestre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de Ano'
+		lineageTag: 5325ef06-6369-4c75-9b39-34e08b1c806a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Tipo de Ano]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dias Úteis'
+		formatString: 0
+		lineageTag: 2dd20f40-0638-4945-aa22-c2924798d5e5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Dias Úteis]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia_
+		formatString: 0
+		lineageTag: ce6a8fb9-dcad-4f05-a186-c4187ddc55d2
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Dia_]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MêsCorrente
+		lineageTag: 9936f3c7-e7e2-4e24-b7a0-9eaa387cf430
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[MêsCorrente]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Today
+		formatString: 0
+		lineageTag: 19ffde7d-09f0-4235-a6d2-64eebb41d71a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: Calendario[Today]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano_Classificação
+		lineageTag: b4e50491-1a0f-46e9-a66a-2026b3caabec
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendario[Ano_Classificação]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendario_OPT-a63d4fbb-84b3-4568-9648-368e09870646 = calculated
+		mode: import
+		source = Calendario
+
+	annotation PBI_Id = 9496521c1f5547b69317ab7c82be5da2
+

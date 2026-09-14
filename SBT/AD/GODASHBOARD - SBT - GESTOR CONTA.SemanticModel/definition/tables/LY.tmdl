@@ -1,0 +1,307 @@
+table LY
+	lineageTag: 2119a278-8db8-40b2-9536-84a7a74234e8
+
+	column Cod_Cliente
+		dataType: string
+		lineageTag: 9d997424-51c8-46bd-ac0b-64d37c70c497
+		summarizeBy: none
+		sourceColumn: Cod_Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Agencia
+		dataType: string
+		lineageTag: 801924c1-238a-4882-a3dc-049d124f48e5
+		summarizeBy: none
+		sourceColumn: Cod_Agencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Emp
+		dataType: string
+		lineageTag: d048bbc3-7d5d-4b06-b554-11e7627327f3
+		summarizeBy: none
+		sourceColumn: Cod_Emp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Executivo
+		dataType: string
+		lineageTag: 374bfc8a-7db2-4f79-b3e9-595da292779d
+		summarizeBy: none
+		sourceColumn: Cod_Executivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoVenda
+		dataType: string
+		lineageTag: e4cb4c4d-7ab7-4079-b95f-2c55bd4835e8
+		summarizeBy: none
+		sourceColumn: TipoVenda
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoMidia
+		dataType: string
+		lineageTag: d7b2f65c-1c0a-4381-8eb2-92d7519f67a9
+		summarizeBy: none
+		sourceColumn: TipoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a8e9609-18e2-4a6a-8ae3-cc96714d0f7a
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fea63d0-5ea6-4d3d-bb44-e8871edd84ba
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		lineageTag: c6af3e1e-a709-45dc-b079-01523b67cbda
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NextID
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b62e9e4-b967-420f-943d-ac999ba6841f
+		summarizeBy: count
+		sourceColumn: NextID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerPortfolioID
+		dataType: int64
+		formatString: 0
+		lineageTag: 98cf3db3-cf67-4bef-870b-b29f6abf7f18
+		summarizeBy: none
+		sourceColumn: CustomerPortfolioID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: ac05324f-e885-4cec-ac25-3e41e7bd7d8f
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column chaveT
+		dataType: string
+		lineageTag: 42343220-0131-4916-ae6b-1895927814be
+		summarizeBy: none
+		sourceColumn: chaveT
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Governo'
+		dataType: string
+		lineageTag: 4fd8a80e-c2f3-401a-8263-88af98ad104f
+		summarizeBy: none
+		sourceColumn: Tipo Governo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientesDiretos = IF.EAGER( LY[Cod_Cliente] = LY[Cod_Agencia], "CLIENTES DIRETOS", "COM AGÊNCIAS" )
+		lineageTag: f3fff8c1-6cfa-41a8-8f12-5d60000860a7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Nucleo
+		dataType: string
+		lineageTag: 103e041b-a3c4-4edd-9ccd-98e3f2647a33
+		summarizeBy: none
+		sourceColumn: Cod_Nucleo
+
+		annotation SummarizationSetBy = Automatic
+
+	column codIntegrador
+		dataType: string
+		lineageTag: 988a4437-6e64-4f70-a384-e5dc1f9f03da
+		summarizeBy: none
+		sourceColumn: codIntegrador
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_SBTNEWS
+		dataType: string
+		lineageTag: 4559ca1e-1a41-4fef-a408-e09539e14433
+		summarizeBy: none
+		sourceColumn: is_SBTNEWS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LY-bb3bc924-53bb-415b-abe8-ad07e99c704d = m
+		mode: import
+		queryGroup: Carteira
+		source = ```
+				// let
+				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)c.ExternalCode As Cod_Cliente,#(lf)a.ExternalCode As Cod_Agencia,#(lf)emp.ExternalCode As Cod_Emp,#(lf)e.ExternalCode As Cod_Executivo,#(lf)sa.ExternalCode As TipoVenda,#(lf)me.ExternalCode As TipoMidia,#(lf)dp.Year,#(lf)dp.Month,#(lf)dp.Amount,#(lf)cp.NextID,#(lf)dp.CustomerPortfolioID,#(lf)dp.Cod_Nucleo#(lf)From#(lf)CustomerPortfolioLastYearAmount dp#(lf)Inner Join Entity c On c.ID = dp.EntityClientID#(lf)Inner Join Entity a On a.ID = dp.EntityAgencyID#(lf)Inner Join Company emp On emp.ID = dp.CompanyID#(lf)Inner Join [User] e On e.ID = dp.UserID#(lf)Left Join ForecastMediaType me On me.ID = dp.ForecastMediaTypeId#(lf)Left Join ForecastSaleType sa On sa.ID = dp.ForecastSaleTypeId#(lf)Inner Join CustomerPortfolio cp On cp.ID = dp.CustomerPortfolioID#(lf)Where NextID is null#(lf)And dp.Year >= year(getdate())-5#(lf)And Not exists (#(lf)Select 1#(lf)from CustomerPortfolio X#(lf)Where#(lf)X.EntityClientid = cp.EntityClientid AND#(lf)X.EntityAgencyid = cp.EntityAgencyid AND#(lf)X.Userid = cp.Userid AND#(lf)X.CompanyId = cp.CompanyId and X.Id > cp.Id#(lf))"]),
+				//     #"Uppercased Text" = Table.TransformColumns(Source,{{"TipoVenda", Text.Upper, type text}, {"TipoMidia", Text.Upper, type text}}),
+				//     #"Inserted Merged Column" = Table.AddColumn(#"Uppercased Text", "Data", each Text.Combine({"1-", Text.From([Month], "pt-PT"), "-", Text.From([Year], "pt-PT")}), type text),
+				//     #"Changed Type" = Table.TransformColumnTypes(#"Inserted Merged Column",{{"Data", type date}}),
+				//     #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"Year", type text}, {"Month", type text}}),
+				//     Custom1 = Table.AddColumn(#"Changed Type1", "chaveT", each [Cod_Cliente]&"-"&[Cod_Agencia]&"-"&[Cod_Emp]&"-"&[Cod_Executivo]&"-"&[TipoVenda]&"-"&[TipoMidia]&"-"&[Year]&"-"&[Month]),
+				//     #"Merged Queries" = Table.NestedJoin(Custom1, {"Cod_Cliente"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
+				//     #"Expanded Account" = Table.ExpandTableColumn(#"Merged Queries", "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"}),
+				//     #"Replaced Value" = Table.ReplaceValue(#"Expanded Account",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"})
+				// in
+				//     #"Replaced Value"
+				
+				let
+				    SQL = "WITH
+				            Base AS (
+				                SELECT
+				                    c.ExternalCode AS Cod_Cliente,
+				                    a.ExternalCode AS Cod_Agencia,
+				                    emp.ExternalCode AS Cod_Emp,
+				                    e.ExternalCode AS Cod_Executivo,
+				                    sa.ExternalCode AS TipoVenda,
+				                    CASE WHEN UPPER(dp.Cod_Nucleo) = 'INTERAT' THEN 'SITE' ELSE me.ExternalCode END AS TipoMidia, -- Condicional solicitada ticket 73910310 - Ajuste Nucelo Interatividade
+				                    dp.[Year],
+				                    dp.[Month],
+				                    dp.Amount,
+				                    cp.NextID,
+				                    dp.CustomerPortfolioID,
+				                    dp.Cod_Nucleo,
+				                    cp.EntityClientID,
+				                    cp.EntityAgencyID,
+				                    cp.UserID,
+				                    cp.CompanyID,
+				                    cp.ID AS CustomerPortfolioId_Atual
+				                FROM CustomerPortfolioLastYearAmount dp
+				                JOIN Entity c
+				                    ON c.ID = dp.EntityClientID
+				                JOIN Entity a
+				                    ON a.ID = dp.EntityAgencyID
+				                JOIN Company emp
+				                    ON emp.ID = dp.CompanyID
+				                JOIN [User] e
+				                    ON e.ID = dp.UserID
+				                LEFT JOIN ForecastMediaType me
+				                    ON me.ID = dp.ForecastMediaTypeId
+				                LEFT JOIN ForecastSaleType sa
+				                    ON sa.ID = dp.ForecastSaleTypeId
+				                JOIN CustomerPortfolio cp
+				                    ON cp.ID = dp.CustomerPortfolioID
+				                WHERE 1 = 1
+				                    AND cp.NextID IS NULL
+				                    AND dp.[Year] >= YEAR(GETDATE()) - " & YearUpdateData & "
+				            ),
+				
+				            LastYear AS (
+				                SELECT Base.*
+				                FROM Base
+				                WHERE NOT EXISTS
+				                    ( SELECT 1
+				                        FROM CustomerPortfolio X
+				                        WHERE 1 = 1
+				                            AND X.EntityClientID = Base.EntityClientID
+				                            AND X.EntityAgencyID = Base.EntityAgencyID
+				                            AND X.UserID = Base.UserID
+				                            AND X.CompanyID = Base.CompanyID
+				                            AND X.ID > Base.CustomerPortfolioId_Atual
+				                    )
+				            )
+				        SELECT
+				            T.Cod_Cliente,
+				            T.Cod_Agencia,
+				            T.Cod_Emp,
+				            T.Cod_Executivo,
+				            UPPER(T.TipoVenda) AS TipoVenda,
+				            UPPER(T.TipoMidia) AS TipoMidia,
+				            T.[Year],
+				            T.[Month],
+				            DATEFROMPARTS( T.[Year], T.[Month], 1 ) AS Data,
+				            T.Amount,
+				            T.NextID,
+				            T.CustomerPortfolioID,
+				            T.Cod_Nucleo,
+				            UPPER(T.Cod_Cliente + T.Cod_Agencia) AS codIntegrador,
+				            chaveT =
+				                T.Cod_Cliente +
+				                T.Cod_Agencia +
+				                T.Cod_Emp +
+				                T.Cod_Executivo +
+				                UPPER(T.TipoVenda) + 
+				                UPPER(T.TipoMidia) + 
+				                CAST(T.[Year] AS VARCHAR(4)) +
+				                CAST(T.[Month] AS VARCHAR(2))
+				        FROM
+				            LastYear AS T
+				        WHERE 1 = 1
+				            AND DATEFROMPARTS( T.[Year], T.[Month], 1 ) >= '" & DateTime.ToText( RangeStart, "yyyy-MM-dd") & "'
+				            AND DATEFROMPARTS( T.[Year], T.[Month], 1 ) < '" & DateTime.ToText( RangeEnd , "yyyy-MM-dd") & "'",
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
+				    // Etapa Exceções no Objeto R0002
+				    Exceções = {"HAVANIMPHAV227SEMCNACIONSITE20263",
+				            "HAVANIMPHAV227SEMCNACIONNORMAL20261",
+				            "HAVANIMPHAV227SEMCNACIONNORMAL20262",
+				            "HAVANIMPHAV227SEMCNACIONNORMAL20263",
+				            "HAVANIMPHAV227SEMCNACIONMAISSBT20263",
+				            "9LA0IT9LA0IT605SEMCNACIONNORMAL20262",
+				            "0IORC3CALY2P605SEMCNACIONNORMAL20262",
+				            "FRIBOICPBCR605SEMCNACIONSITE20263",
+				            "APEXSNBB605SEMCNACIONNORMAL20262",
+				            "APEXSNBB605SEMCNACIONNORMAL20263",
+				            "ATACAFATACAF605SEMCNACIONMERCHA20263",
+				            "HIRNN0HIRNN0605SEMCNACIONMERCHA20262",
+				            "HIRNN0HIRNN0605SEMCNACIONMERCHA20263",
+				            "AMISP70IT0AP605SEMCNACIONNORMAL20263",
+				            "9LA0IT9LA0IT605SEMCNACIONNORMAL20261",
+				            "9LA0IT9LA0IT605SEMCNACIONNORMAL20263",
+				            "TIMSA1DAANAD605SEMCNACIONNORMAL20261",
+				            "TIMSA1DAANAD605SEMCNACIONNORMAL20262",
+				            "TIMSA1DAANAD605SEMCNACIONNORMAL20263",
+				            "U0PN0CTPLAN605SEMCNACIONNORMAL20261",
+				            "U0PN0CTPLAN605SEMCNACIONNORMAL20262",
+				            "FRIBOICPBCR605SEMCNACIONMAISSBT20262",
+				            "FRIBOICPBCR605SEMCNACIONMAISSBT20263",
+				            "FRIBOICPBCR605SEMCNACIONSITE20262",
+				            "TIMSA1DAANAD605SEMCNACIONSITE20261",
+				            "TIMSA1DAANAD605SEMCNACIONSITE20262",
+				            "TIMSA1DAANAD605SEMCNACIONSITE20263",
+				            "ATACAFATACAF605SEMCNACIONNORMAL20263",
+				            "HIRNN0HIRNN0605SEMCNACIONNORMAL20262",
+				            "HIRNN0HIRNN0605SEMCNACIONNORMAL20263"},
+				    SBTNEWS = Table.AddColumn(Source, "is_SBTNEWS", each try
+				                if List.Contains(Text.Split(array_SBTNEWS, ","), [Cod_Nucleo], Comparer.OrdinalIgnoreCase) then "Sim" // Condicional solicitada ticket 72675899 - Ajuste de exibição dos dados do SBT News nos dashboards - 72675899
+				        // else    if List.Contains({"MAISSBT", "SITE"}, [Cod_Nucleo], Comparer.OrdinalIgnoreCase) and DateTime.Date( [Data] ) >= #date(2026, 4, 1) then "Sim"
+				        else    if List.Contains(Exceções, [chaveT], Comparer.OrdinalIgnoreCase) then "Sim" // Condicional solicitada ticket Intercom 96052764 [Melhoria SBT] - Criação de Dashboard "Venda Líquida Carteira Atual" – SBT News (Fase 2 | Chamado 85579164)        
+				        else    "Não" otherwise "Não", type text),
+				    #"Ajuste Nucleo SBTNEWS" = Table.ReplaceValue(SBTNEWS, each [Cod_Nucleo],
+				            each if Text.Trim(Text.Clean([Cod_Nucleo])) = "MAISSBT" and [is_SBTNEWS] = "Sim" then "SBTNMAI"
+				            else if Text.Trim(Text.Clean([Cod_Nucleo])) = "SITE" and [is_SBTNEWS] = "Sim" then "SBTNDIG"
+				            else Text.Trim(Text.Clean([Cod_Nucleo])),
+				        Replacer.ReplaceText,{"Cod_Nucleo"}),  
+				    #"Merged Account" = let
+				        Juntar = Table.NestedJoin(#"Ajuste Nucleo SBTNEWS", {"Cod_Cliente"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
+				        Expandir = Table.ExpandTableColumn( Juntar, "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"})
+				        in Table.ReplaceValue( Expandir, null, "Setor Privado", Replacer.ReplaceValue, {"Tipo Governo"})
+				in
+				    #"Merged Account"
+				```
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,25 @@
+table SnapShotForecast
+	lineageTag: a686f001-c999-4e20-a539-7ff393679a3f
+
+	column SnapShotForecast
+		dataType: string
+		lineageTag: ceeb74d4-ce23-4385-a693-e6f0f1ca4926
+		summarizeBy: none
+		sourceColumn: SnapShotForecast
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SnapShotForecast-d9820575-2b4a-47c4-8832-ae3482d65827 = m
+		mode: import
+		queryGroup: Config
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select Snapshotcode From ForecastSnapshot group by Snapshotcode"]),
+				    Snapshotcode = Source[Snapshotcode]
+				in
+				    Snapshotcode
+
+	annotation PBI_ResultType = List
+
+	annotation PBI_NavigationStepName = Navegação
+

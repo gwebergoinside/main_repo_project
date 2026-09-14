@@ -1,0 +1,25 @@
+role RLS
+	modelPermission: read
+
+	tablePermission RLSFILTER =
+			VAR __upn = USERPRINCIPALNAME()
+			VAR __isFull =
+			    CONTAINS( ALL( DashboardUserPermission ), DashboardUserPermission[Email], __upn )
+			
+			RETURN
+			    IF.EAGER( __isFull, TRUE(),
+			            RLSFILTER[domainname] = __upn
+			        )
+
+	tablePermission RLS =
+			VAR __upn = USERPRINCIPALNAME()
+			VAR __isFull =
+			    CONTAINS( ALL( DashboardUserPermission ), DashboardUserPermission[Email], __upn )
+			
+			RETURN
+			    IF.EAGER( __isFull, TRUE(),
+			            RLS[domainname] = __upn
+			        )
+
+	annotation PBI_Id = 0620da114ebc4b308134711daa668234
+

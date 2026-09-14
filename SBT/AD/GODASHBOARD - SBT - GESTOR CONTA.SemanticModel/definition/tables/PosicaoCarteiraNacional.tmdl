@@ -1,0 +1,74 @@
+table PosicaoCarteiraNacional
+	lineageTag: 60fcd516-d3ed-4fd4-a8e8-42724056ed39
+
+	column ExecutivoCodigo
+		dataType: string
+		lineageTag: a5317d21-d00d-4560-ac1e-00017a00283e
+		summarizeBy: none
+		sourceColumn: ExecutivoCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienteCodigo
+		dataType: string
+		lineageTag: 46de198b-1aea-40ec-83e4-f3cde5d2406c
+		summarizeBy: none
+		sourceColumn: ClienteCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaCodigo
+		dataType: string
+		lineageTag: 9a6a182c-bdfc-464e-af9b-be81259450d2
+		summarizeBy: none
+		sourceColumn: AgenciaCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column codIntegrador
+		dataType: string
+		lineageTag: d6f84205-ab39-4bc9-936b-27ed42a15e40
+		summarizeBy: none
+		sourceColumn: codIntegrador
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PosicaoCarteiraNacional = m
+		mode: import
+		queryGroup: Config
+		source = ```
+				let
+				    SQL = "SELECT
+				    --    CustomerPortfolio.EntityClientID,
+				    --    CustomerPortfolio.UserID,
+				        [User].ExternalCode AS ExecutivoCodigo,
+				        ENTITYAGENCY.ExternalCode AgenciaCodigo,
+				        ENTITYCLIENT.ExternalCode AS ClienteCodigo,
+				        UPPER(ENTITYCLIENT.ExternalCode + ENTITYAGENCY.ExternalCode) AS codIntegrador
+				    FROM CustomerPortfolio
+				    LEFT JOIN [User]
+				        ON [User].ID = CustomerPortfolio.UserID
+				    LEFT JOIN Entity ENTITYCLIENT
+				        ON ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID
+				    LEFT JOIN Entity ENTITYAGENCY
+				        On ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID
+					WHERE
+						CustomerPortfolio.[Status] = 1
+				    GROUP BY 
+				    --    CustomerPortfolio.EntityClientID,
+				    --    CustomerPortfolio.UserID,
+				        [User].ExternalCode,
+				        ENTITYAGENCY.ExternalCode,
+				        ENTITYCLIENT.ExternalCode,
+				        UPPER(ENTITYCLIENT.ExternalCode + ENTITYAGENCY.ExternalCode) ",
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
+				    #"Códigos Nacionais" = List.Select( List.Distinct( List.Union({UsersNacionais[go_st_codigoexterno], UsersNacionais[go_st_codigoexterno_gestores]})), each _ <> "" and _ <> null ),
+				    Restringir = Table.SelectRows( Source, each List.Contains(#"Códigos Nacionais", [ExecutivoCodigo] ))
+				in
+				    Restringir
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

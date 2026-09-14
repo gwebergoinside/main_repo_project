@@ -1,0 +1,33 @@
+table 'Tipo Governo'
+	lineageTag: c6ea6ef2-04f8-4968-81a5-d9f38a2fba67
+
+	column Tipo
+		dataType: string
+		lineageTag: 84634fb9-4d78-4dc4-bb1d-cf4d01615012
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Governo'
+		dataType: string
+		lineageTag: 8523e786-a3f9-41b3-80ee-08a2e803e359
+		summarizeBy: none
+		sourceColumn: Tipo Governo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Tipo Governo-fad42eb6-6bda-4dfa-be41-d21754d15dbb' = m
+		mode: import
+		queryGroup: Carteira
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45Wcs8vSy3Ky1fSUXItLklMKU3MUYrVQRb2Lc3LTM4swBB3S01JLYKKBqeW5BcpBBRlliWmgORQ+bGxAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Tipo = _t, #"Tipo Governo" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Tipo", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

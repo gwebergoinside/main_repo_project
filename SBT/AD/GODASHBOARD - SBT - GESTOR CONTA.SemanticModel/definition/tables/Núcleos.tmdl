@@ -1,0 +1,23 @@
+table Núcleos
+	lineageTag: 6f798672-e567-442d-8d2c-7d58d458d6d0
+
+	column Núcleos
+		lineageTag: 13490867-0561-442e-ae42-6b937b5efe8e
+		summarizeBy: none
+		sourceColumn: LY[Cod_Nucleo]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Núcleos = calculated
+		mode: import
+		source = ```
+				
+				    DISTINCT( FILTER( UNION(
+				        VALUES( LY[Cod_Nucleo] ),
+				        VALUES( R0002[Cod_Nucleo] ),
+				        VALUES( NucleoOport[go_st_codigo] )
+				    ), NOT(ISBLANK(LY[Cod_Nucleo]))))
+				```
+
+	annotation PBI_Id = 9fe2d0c948114ab385bb05f58b4ead50
+

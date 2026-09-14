@@ -1,0 +1,560 @@
+table Neg
+	lineageTag: 6ad7042a-08f2-4b9d-af1b-b99ba94827e2
+
+	column createdon
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5e344087-e44d-4708-bb27-9f0014ec401c
+		summarizeBy: none
+		sourceColumn: createdon
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column estimatedclosedate
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 24dd7324-5c8d-4689-900f-b07680e80f2d
+		summarizeBy: none
+		sourceColumn: estimatedclosedate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column go_dt_competenciainicial
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: 35ce1170-dc35-4e49-aa49-f397dd8ca94c
+		summarizeBy: none
+		sourceColumn: go_dt_competenciainicial
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column go_fp_maiordescontodado
+		dataType: double
+		formatString: 0.00000%;-0.00000%;0.00000%
+		lineageTag: e53b7f9c-844e-4870-a6b1-a974db3620a6
+		summarizeBy: sum
+		sourceColumn: go_fp_maiordescontodado
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParentAccountId
+		dataType: string
+		lineageTag: 119eba5a-be39-470b-b4d3-d50d5ea159d4
+		summarizeBy: none
+		sourceColumn: ParentAccountId
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_lk_empresafaturamentoid
+		dataType: string
+		lineageTag: 3021829a-ad9c-4fb7-a9fe-44d136c313c8
+		summarizeBy: none
+		sourceColumn: go_lk_empresafaturamentoid
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_lk_empresavendaid
+		dataType: string
+		lineageTag: 628f2aee-48d8-4635-b1de-dc635832007b
+		summarizeBy: none
+		sourceColumn: go_lk_empresavendaid
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_lk_executivovendasid
+		dataType: string
+		lineageTag: 75f1eac5-f043-42a8-9cb4-6f7ee839e5ca
+		summarizeBy: none
+		sourceColumn: go_lk_executivovendasid
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_lk_tipomidiaid
+		dataType: string
+		lineageTag: 9d50015b-82d9-47e8-850b-81ea6717377c
+		summarizeBy: none
+		sourceColumn: go_lk_tipomidiaid
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_mn_valornegociado
+		dataType: double
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 0f570b60-91e1-4e32-8b9b-0f3a54f19dd9
+		summarizeBy: sum
+		sourceColumn: go_mn_valornegociado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column go_pl_tabelamidiaprincipal
+		dataType: int64
+		formatString: 0
+		lineageTag: a1ba87b3-0207-4d71-9641-87f629d7d3d3
+		summarizeBy: sum
+		sourceColumn: go_pl_tabelamidiaprincipal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tabela
+		dataType: string
+		lineageTag: 44cdb2c4-4b32-4011-b55f-c5f265afbba5
+		summarizeBy: none
+		sourceColumn: Tabela
+
+		annotation SummarizationSetBy = Automatic
+
+	column modifiedon
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 022634ac-d5a5-4285-a71f-70bd1d152743
+		summarizeBy: none
+		sourceColumn: modifiedon
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 4f20f105-2b7c-4dc7-88a7-c49505401633
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column OpportunityId
+		dataType: string
+		lineageTag: 9d4b6de8-5374-4026-824b-6a6877ce9f65
+		summarizeBy: none
+		sourceColumn: OpportunityId
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecode
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e503192-c297-4562-8948-41f53eaf18e3
+		summarizeBy: sum
+		sourceColumn: statecode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: afaf088d-bbdb-4ad9-b362-bc0045a7d1e1
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column URL
+		dataType: string
+		lineageTag: a5ab6d90-14b9-451a-b28f-c60b407f5dc4
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: URL
+
+		annotation SummarizationSetBy = Automatic
+
+	column NomeExecutivo
+		dataType: string
+		lineageTag: dad2aa97-290c-4f60-a895-5f981073d873
+		summarizeBy: none
+		sourceColumn: NomeExecutivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmpresaFaturamento
+		dataType: string
+		lineageTag: 9cbf65ee-83d9-4edf-a3ee-a25fe53cdee8
+		summarizeBy: none
+		sourceColumn: EmpresaFaturamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmpresaVenda
+		dataType: string
+		lineageTag: b1269e4f-b05f-4c3c-82c1-9c51f0e59b4a
+		summarizeBy: none
+		sourceColumn: EmpresaVenda
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoMedia
+		dataType: string
+		lineageTag: b0bdce27-07e1-4c56-9b01-e9da0efb1d03
+		summarizeBy: none
+		sourceColumn: TipoMedia
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContaCreatedon
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 450340f1-5f58-481e-a12d-0e8556a04be4
+		summarizeBy: none
+		sourceColumn: ContaCreatedon
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ContaFuncao
+		dataType: int64
+		formatString: 0
+		lineageTag: 3cadd9ba-96f2-4b9e-afe6-e4f9eccc202a
+		summarizeBy: sum
+		sourceColumn: ContaFuncao
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContaNome
+		dataType: string
+		lineageTag: 27eadb99-9d22-47c8-9e8e-bb022a0cce8c
+		summarizeBy: none
+		sourceColumn: ContaNome
+
+		annotation SummarizationSetBy = Automatic
+
+	column statuscode
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ffde213-f846-4308-8f51-0f5b71cea316
+		summarizeBy: sum
+		sourceColumn: statuscode
+
+		annotation SummarizationSetBy = Automatic
+
+	column statuscode_display
+		dataType: string
+		lineageTag: 9378a457-0fc8-40f8-abf2-3ee4df5a9d4b
+		summarizeBy: none
+		sourceColumn: statuscode_display
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado =
+			
+			SWITCH( TRUE()
+			    , Neg[statuscode] in {100000010,1,2,100000001,100000002,100000003}  , "Em Aberto"
+			    , Neg[statuscode] in {5,100000011,100000012,100000013,100000014}  , "Perdida"
+			    , Neg[statuscode] in {100000006,100000007,100000008,100000004}  , "Em Aprovação"
+			    , Neg[statuscode] in {3}  , "Ganho"
+			    , BLANK()
+			)
+		lineageTag: a3093d49-f5e0-49d4-931c-e8290385bb60
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_dc_descontoprogramas
+		dataType: double
+		formatString: 0.00000%;-0.00000%;0.00000%
+		lineageTag: 861bb5dc-41af-4756-9a9a-4b0d334bef02
+		summarizeBy: sum
+		sourceColumn: go_dc_descontoprogramas
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_st_codnegociacao
+		dataType: string
+		lineageTag: a8b4a9ed-ba35-46d5-b964-97a97eaf83bc
+		summarizeBy: none
+		sourceColumn: go_st_codnegociacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column Numero_Negociacao
+		dataType: int64
+		lineageTag: 306ced08-0585-4213-95c5-168c77b2f255
+		summarizeBy: none
+		sourceColumn: Numero_Negociacao
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ownerid
+		dataType: string
+		lineageTag: 194e4721-fded-4923-832f-b0c14d5f133e
+		summarizeBy: none
+		sourceColumn: ownerid
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Cliente'
+		dataType: string
+		lineageTag: 5df01d4b-05f6-49c1-81e0-53a32ddc7ecd
+		summarizeBy: none
+		sourceColumn: Status Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Proprietario
+		dataType: string
+		lineageTag: b4305e41-a286-44b3-b011-0d936467d961
+		summarizeBy: none
+		sourceColumn: Proprietario
+
+		annotation SummarizationSetBy = Automatic
+
+	column First_Createdon
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: cbea1531-a225-44c1-8de1-bc5db6d19e47
+		summarizeBy: none
+		sourceColumn: First_Createdon
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_int_versao
+		dataType: int64
+		formatString: 0
+		lineageTag: deba7f43-165a-4b75-9288-9cbf7395c1a6
+		summarizeBy: sum
+		sourceColumn: go_int_versao
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_mn_valormidiaapoio
+		dataType: double
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 78e65658-9825-41ba-babf-8ece20368012
+		summarizeBy: sum
+		sourceColumn: go_mn_valormidiaapoio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column go_pl_tiporegistro_display
+		dataType: string
+		lineageTag: 5326d91d-6374-44a2-975e-fc219f00658d
+		summarizeBy: none
+		sourceColumn: go_pl_tiporegistro_display
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_st_codigoexterno
+		dataType: string
+		lineageTag: fbf33f24-d985-474e-98de-a19e3e49db90
+		summarizeBy: none
+		sourceColumn: go_st_codigoexterno
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Governo'
+		dataType: string
+		lineageTag: 4ce9dcd5-868b-4d1f-b106-7290afe2e88e
+		summarizeBy: none
+		sourceColumn: Tipo Governo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ControloDataFim =
+			
+			IF( Neg[estimatedclosedate] < TODAY(), 1, BLANK() )
+		formatString: 0
+		lineageTag: fc36ad5b-34ec-425d-87ce-9397b5db4713
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valida Insercao' = IF( Neg[statuscode] = 100000010 && Neg[go_int_versao] > 1, 1, 0 )
+		formatString: 0
+		lineageTag: 70c1974c-94a4-4236-b348-8dad6cce4009
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nucleos =
+			
+			CONCATENATEX(SUMMARIZE(RELATEDTABLE(NucleoOport),NucleoOport[go_st_codigo]), [go_st_codigo],", ")
+		lineageTag: dc36f6da-2f82-49a5-bcc9-e2b1cfc01350
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Integração'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 87aab8d9-1707-43ce-87af-738d1d1e036f
+		summarizeBy: none
+		sourceColumn: Data Integração
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Aprovação'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 78f6b792-7425-4fda-8ff2-7234ee7a8673
+		summarizeBy: none
+		sourceColumn: Data Aprovação
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Data de Aprovação'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f5523ed6-aa8f-4dec-a245-36e961ca0b5a
+		summarizeBy: none
+		sourceColumn: Data de Aprovação
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Data De Integração'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c65c5218-f365-470f-8b75-25959520bb4d
+		summarizeBy: none
+		sourceColumn: Data De Integração
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column go_dc_comissaoagencia
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 20223ae3-7b52-4080-abce-7d4bc1b1b200
+		summarizeBy: sum
+		sourceColumn: go_dc_comissaoagencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data de Integração_Final'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d73879a1-9a70-499e-9d75-fb2411c9aad5
+		summarizeBy: none
+		sourceColumn: Data de Integração_Final
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Mes Integração' =
+			
+			SWITCH(
+			    MONTH(Neg[Data de Integração_Final])
+			    ,1,"Jan",2,"Fev",3,"Mar",4,"Abr"
+			    ,5,"Mai",6,"Jun",7,"Jul",8,"Ago"
+			    ,9,"Set",10,"Out",11,"Nov",12,"Dez"
+			)
+		lineageTag: 1bf37e35-7c35-4506-a8b2-50bfee9bc3d4
+		summarizeBy: none
+		sortByColumn: 'Mes Nº Integração'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ano Integração' = YEAR( Neg[Data de Integração_Final] )
+		formatString: 0
+		lineageTag: 7be7311b-603a-4a41-8bb0-e52b40d763b2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes Nº Integração' = MONTH( Neg[Data de Integração_Final] )
+		formatString: 0
+		lineageTag: a3eb07c7-3ba5-4d3b-8057-01b03ffd16bc
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column ValorLiquido =
+			
+			// LOOKUPVALUE(
+			//     R0002[Vlr_Gerencial_BAV]
+			//     ,R0002[ChaveForecast]
+			//     ,Forecast_OPT[Chave]
+			// )
+			VAR _1 =
+			CALCULATE(
+			    SUM( R0002[Vlr_Gerencial_BAV] )
+			    ,FILTER(
+			        ALL(R0002)
+			        , Neg[Numero_Negociacao] = R0002[Numero_Negociacao]
+			    )
+			)
+			VAR _2 =
+			CALCULATE(
+			    SUM( R0002[Vlr_Repasse_Varejo] )
+			    ,FILTER(
+			        ALL(R0002)
+			        , Neg[Numero_Negociacao] = R0002[Numero_Negociacao]
+			    )
+			)
+			RETURN
+			IF( Neg[Numero_Negociacao] = BLANK(), BLANK(),
+			_1+_2 )
+		lineageTag: bcdd4720-7e58-410e-8196-8b9f00f805f6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Neg-7463bb7d-869e-467b-abf3-d03553b679d1 = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
+				    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"createdon", "go_dc_descontoprogramas", "go_dc_maiordescontodado", "go_dt_competenciainicial", "go_dt_dataintegracao", "go_dt_estimatedclosedate", "go_int_versao", "go_lk_clienteid", "go_lk_empresafaturamentoid", "go_lk_empresavendaid", "go_lk_executivovendasid", "go_lk_tipomidiaid", "go_mn_valormidiaapoio", "go_mn_valornegociado", "go_name", "go_opportunityid", "go_pl_tabelamidiaprincipal", "go_pl_tabelamidiaprincipal_display", "go_pl_tiporegistro_display", "go_st_codnegociacao", "go_st_codnegociacaosctv", "modifiedon", "ownerid", "statecode", "statecode_display", "statuscode", "statuscode_display", "go_dc_comissaoagencia"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"go_opportunityid", "OpportunityId"}, {"go_lk_clienteid", "ParentAccountId"}, {"go_name", "Name"}, {"statecode_display", "Status"}, {"go_pl_tabelamidiaprincipal_display", "Tabela"}, {"go_dt_estimatedclosedate", "estimatedclosedate"}, {"go_dc_maiordescontodado", "go_fp_maiordescontodado"}}),
+				    #"Divided Column" = Table.TransformColumns(#"Renamed Columns", {{"go_fp_maiordescontodado", each _ / 100, type number}}),
+				    #"Divided Column1" = Table.TransformColumns(#"Divided Column", {{"go_dc_descontoprogramas", each _ / 100, type number}}),
+				    #"Divided Column2" = Table.TransformColumns(#"Divided Column1", {{"go_dc_comissaoagencia", each _ / 100, type number}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Divided Column2", each ([statuscode_display] <> "Versionada" and [statuscode_display] <> "Versionamento Cancelado" and [statuscode_display] <> "Versionamento Reprovado")),
+				    #"Replaced Value" = Table.ReplaceValue(#"Filtered Rows",".","",Replacer.ReplaceText,{"go_st_codnegociacaosctv"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value",{{"createdon", type date}, {"go_fp_maiordescontodado", Percentage.Type}, {"go_dc_comissaoagencia", Percentage.Type}, {"go_dc_descontoprogramas", Percentage.Type}, {"go_st_codnegociacaosctv", Int64.Type}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "URL", each Link & [OpportunityId]),
+				    #"Merged Queries" = Table.NestedJoin(#"Added Custom", {"go_lk_executivovendasid"}, ExecutivoVenda, {"systemuserid"}, "ExecutivoVenda", JoinKind.LeftOuter),
+				    #"Expanded ExecutivoVenda" = Table.ExpandTableColumn(#"Merged Queries", "ExecutivoVenda", {"fullname", "go_st_codigoexterno"}, {"NomeExecutivo", "go_st_codigoexterno"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Expanded ExecutivoVenda", {"go_lk_empresafaturamentoid"}, EmpresaFaturamento, {"accountid"}, "EmpresaFaturamento", JoinKind.LeftOuter),
+				    #"Expanded EmpresaFaturamento" = Table.ExpandTableColumn(#"Merged Queries1", "EmpresaFaturamento", {"name"}, {"EmpresaFaturamento"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Expanded EmpresaFaturamento", {"go_lk_empresavendaid"}, EmpresaVenda, {"accountid"}, "EmpresaVenda", JoinKind.LeftOuter),
+				    #"Expanded EmpresaVenda" = Table.ExpandTableColumn(#"Merged Queries2", "EmpresaVenda", {"name"}, {"EmpresaVenda"}),
+				    #"Merged Queries3" = Table.NestedJoin(#"Expanded EmpresaVenda", {"go_lk_tipomidiaid"}, #"Tipo Midia", {"go_tipomidiaid"}, "TipoMidia", JoinKind.LeftOuter),
+				    #"Expanded TipoMidia" = Table.ExpandTableColumn(#"Merged Queries3", "TipoMidia", {"go_name"}, {"TipoMedia"}),
+				    #"Merged Queries4" = Table.NestedJoin(#"Expanded TipoMidia", {"ParentAccountId"}, Conta, {"accountid"}, "Conta", JoinKind.LeftOuter),
+				    #"Expanded Conta" = Table.ExpandTableColumn(#"Merged Queries4", "Conta", {"createdon", "go_pl_funcao", "name", "statuscode_display", "go_pl_classificacaogoverno_display"}, {"ContaCreatedon", "ContaFuncao", "ContaNome", "Status Cliente", "Tipo Governo"}),
+				    #"Merged Queries5" = Table.NestedJoin(#"Expanded Conta", {"ownerid"}, ExecutivoVenda, {"systemuserid"}, "ExecutivoVenda", JoinKind.LeftOuter),
+				    #"Expanded ExecutivoVenda1" = Table.ExpandTableColumn(#"Merged Queries5", "ExecutivoVenda", {"fullname"}, {"Proprietario"}),
+				    #"Merged Queries6" = Table.NestedJoin(#"Expanded ExecutivoVenda1", {"go_st_codnegociacao"}, OPTSCreated, {"go_st_codnegociacao"}, "OPTSCreated", JoinKind.LeftOuter),
+				    #"Expanded OPTSCreated" = Table.ExpandTableColumn(#"Merged Queries6", "OPTSCreated", {"createdon"}, {"First_Createdon"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Expanded OPTSCreated",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Replaced Value1",{{"go_st_codnegociacaosctv", "Numero_Negociacao"}, {"go_dt_dataintegracao", "Data Integração"}}),
+				    #"Merged Queries7" = Table.NestedJoin(#"Renamed Columns1", {"go_st_codnegociacao"}, OPTSModified, {"go_st_codnegociacao"}, "OPTSModified", JoinKind.LeftOuter),
+				    #"Expanded OPTSModified" = Table.ExpandTableColumn(#"Merged Queries7", "OPTSModified", {"modifiedon"}, {"Data Aprovação"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Expanded OPTSModified",{{"Data Aprovação", type date}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type1", "Data de Aprovação", each if [Data Aprovação] > [createdon] then [createdon] else [Data Aprovação]),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Conditional Column", "Data Integração", "Data De Integração"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data De Integração", type date}, {"Data de Aprovação", type date}}),
+				    #"Merged Queries8" = Table.NestedJoin(#"Changed Type2", {"go_st_codnegociacao"}, OPTSIntegrated, {"go_st_codnegociacao"}, "OPTSIntegrated", JoinKind.LeftOuter),
+				    #"Expanded OPTSIntegrated" = Table.ExpandTableColumn(#"Merged Queries8", "OPTSIntegrated", {"Data de Integração"}, {"OPTSIntegrated.Data de Integração"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Expanded OPTSIntegrated",{{"OPTSIntegrated.Data de Integração", "Data de Integração_Final"}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Data de Integração_Final", type date}})
+				in
+				    #"Changed Type3"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

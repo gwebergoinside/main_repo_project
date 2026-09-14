@@ -1,0 +1,30 @@
+table is_SBTNEWS
+	lineageTag: b788d34a-f087-44da-aaad-05c7b6234fb1
+
+	column is_SBTNEWS
+		lineageTag: 2b8c6c5e-6d48-4f02-839a-d42a5ed59e1c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: LY[is_SBTNEWS]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descrição = IF( is_SBTNEWS[is_SBTNEWS] = "Sim", "Somente SBT NEWS", "Desconsiderar SBT NEWS" )
+		lineageTag: 5c44a8c1-5979-41e4-a169-5fbb958a50f4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition is_SBTNEWS = calculated
+		mode: import
+		source = ```
+				
+				    DISTINCT( UNION(
+				        VALUES( LY[is_SBTNEWS] ),
+				        VALUES( R0002[is_SBTNEWS] ),
+				        VALUES( NucleoOport[is_SBTNEWS] )
+				    ))
+				```
+
+	annotation PBI_Id = c29b003a72f84205aa1caa024362d656
+

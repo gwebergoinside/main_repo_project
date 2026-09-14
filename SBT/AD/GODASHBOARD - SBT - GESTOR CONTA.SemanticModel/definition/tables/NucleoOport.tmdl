@@ -1,0 +1,97 @@
+table NucleoOport
+	isHidden
+	lineageTag: e2dd34f8-c0b3-41df-bbf4-e3374c624b85
+
+	column opportunityid
+		dataType: string
+		isHidden
+		lineageTag: 5dcd0611-ad4b-4a4b-a5c0-74f281e63e2f
+		summarizeBy: none
+		sourceColumn: opportunityid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_nucleoid
+		dataType: string
+		isHidden
+		lineageTag: 397e116c-c78c-4175-a5f9-5dbb480cf351
+		summarizeBy: none
+		sourceColumn: go_nucleoid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nucleo
+		dataType: string
+		isHidden
+		lineageTag: bc34cf95-79f1-4898-b680-cb9451351085
+		summarizeBy: none
+		sourceColumn: Nucleo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_st_codigo
+		dataType: string
+		isHidden
+		lineageTag: 5d8a94e3-4064-4b7e-b426-7bbae4fed32f
+		summarizeBy: none
+		sourceColumn: go_st_codigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_SBTNEWS
+		dataType: string
+		lineageTag: 40fd89c9-70e2-4692-b876-8cda3f0f6215
+		summarizeBy: none
+		sourceColumn: is_SBTNEWS
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_dt_data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2988ae5c-e04f-4932-bdf1-447e1216cb60
+		summarizeBy: none
+		sourceColumn: go_dt_data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition NucleoOport-03bc9598-bdc0-44ba-81dc-57db52cf6c71 = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				    Accounts = #"GetCDST_EntityTable"("go_opportunity_nucleo"),
+				    #"Select Columns" = Table.SelectColumns(Accounts,{"go_opportunityid", "go_nucleoid"}),
+				    #"Merged Nucleos" = Table.NestedJoin(#"Select Columns", {"go_nucleoid"}, Nucleos, {"go_nucleoid"}, "Nucleos", JoinKind.LeftOuter),
+				    #"Expanded Nucleos" = Table.ExpandTableColumn(#"Merged Nucleos", "Nucleos", {"go_name","go_st_codigo"}, {"Nucleo","go_st_codigo"}),
+				    #"Merged Opportunities" = Table.NestedJoin(#"Expanded Nucleos", {"go_opportunityid"}, OPTSIntegrated_2, {"go_opportunityid"}, "OPTSIntegrated", JoinKind.LeftOuter),
+				    #"Expanded Opportunities" = Table.ExpandTableColumn(#"Merged Opportunities", "OPTSIntegrated", {"go_dt_dataintegracao"}, {"go_dt_data"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded Opportunities",{{"go_opportunityid", "opportunityid"}}),
+				    SBTNEWS = Table.AddColumn(#"Renamed Columns", "is_SBTNEWS", each try // Condicional solicitada ticket 72675899 - Ajuste de exibição dos dados do SBT News nos dashboards - 72675899
+				                if List.Contains(Text.Split(array_SBTNEWS, ","), [go_st_codigo], Comparer.OrdinalIgnoreCase) then "Sim"
+				        // else    if List.Contains({"MAISSBT", "SITE"}, [go_st_codigo], Comparer.OrdinalIgnoreCase) and DateTime.Date([go_dt_data]) >= #date(2026, 4, 1) then "Sim"
+				        else    "Não" otherwise "Não", type text),
+				    #"Ajuste Nucleo SBTNEWS" = Table.ReplaceValue(SBTNEWS, each [go_st_codigo],
+				            each if Text.Trim(Text.Clean([go_st_codigo])) = "MAISSBT" and [is_SBTNEWS] = "Sim" then "SBTNMAI"
+				            else if Text.Trim(Text.Clean([go_st_codigo])) = "SITE" and [is_SBTNEWS] = "Sim" then "SBTNDIG"
+				            else Text.Trim(Text.Clean([go_st_codigo])),
+				        Replacer.ReplaceText,{"go_st_codigo"})
+				in
+				    #"Ajuste Nucleo SBTNEWS"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+
