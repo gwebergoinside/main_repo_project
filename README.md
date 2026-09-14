@@ -17,6 +17,8 @@ relatorios_pbi/
 │   └── AD/              # AD e AD - Resumo (.pbip, Report, SemanticModel)
 ├── RTP/                 # Relatórios do cliente / projeto RTP
 │   └── AD/              # AD - 5 anos + YUMMI 2 anos (.pbip, Report, SemanticModel)
+├── SBT/                 # Relatórios do cliente / projeto SBT
+│   └── AD/              # GODASHBOARD - Gestor Conta (.pbip, Report, SemanticModel)
 ├── Soico/               # Relatórios do cliente / projeto SOICO
 │   ├── AD/              # AD e AD - Operação Comercial (.pbip, Report, SemanticModel)
 │   ├── TX/              # TX (.pbip, Report, SemanticModel)
@@ -106,6 +108,7 @@ git push origin master
 | 28/08/2026 | Adiciona projeto SOICO (AD, TX, PLAN, INCIDENTES) — modelos repontados da instância RDS `gmedia-soico` (desativada) para `gmedia-saas-sql`, com bases renomeadas (prefixo `SOICO_`) |
 | 31/08/2026 | Adiciona projetos DAZN (TX) e MEGA (AD e AD - Resumo); atualizações nos modelos SOICO — `Ocupacao` (AD) passa a formatar a faixa horária em SQL puro, `Contratos` (TX) migrada para query SQL parametrizada e nova coluna `LogoBase64` em `images` (TX e INCIDENTES) |
 | 09/09/2026 | Adiciona projeto RTP (AD - 5 anos + YUMMI 2 anos); MediaLivre passa a usar `dt_modified_on` como marca de água do refresh incremental (queries filtram por essa coluna e excluem-na do resultado) |
+| 14/09/2026 | Adiciona projeto SBT (AD - GODASHBOARD Gestor Conta), com RLS já definido em `definition/roles/`; MediaLivre prepara RLS dinâmico pela tabela `pbi_tb_rls` e reescreve em `TREATAS` as medidas que usavam `USERELATIONSHIP`/`CROSSFILTER` (proibidos sob RLS) — ver `MediaLivre/Encomendas e Negociações/RLS.md` |
 
 ---
 
