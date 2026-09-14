@@ -10,3 +10,6 @@ MediaLivre/dashboard-web/api/.env
 
 # Worktrees e estado local do Claude Code
 .claude/
+
+# Documentos com emails de trabalho reais (mapeamentos de RLS, listas de utilizadores)
+MediaLivre/Encomendas e Negociações/RLS.md
