@@ -3,7 +3,9 @@
   "tabOrder": [
     "RLS",
     "R0002",
-    "R0002 (Ajustado Claude)"
+    "R0002 (Ajustado Claude)",
+    "Script 1",
+    "Script 2"
   ],
-  "defaultTab": "RLS"
+  "defaultTab": "Script 1"
 }

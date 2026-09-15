@@ -128,7 +128,7 @@ expression Link = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f70
 	lineageTag: 76ea3167-eb07-4a77-ba49-0cb09fcfddf1
 	queryGroup: Config
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Text
 
 expression ExecutivoVenda =
 		let
@@ -297,7 +297,7 @@ expression YearUpdateData = "7" meta [IsParameterQuery=true, List={}, DefaultVal
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Text
 
 expression array_SBTNEWS = "SBTNEWS,SBTNDIG,SBTNMAI" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: b1daa326-7379-41b3-9d82-744f2ee262b7
@@ -305,7 +305,7 @@ expression array_SBTNEWS = "SBTNEWS,SBTNDIG,SBTNMAI" meta [IsParameterQuery=true
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Text
 
 expression OPTSIntegrated_2 =
 		let
