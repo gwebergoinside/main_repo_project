@@ -1,6 +1,22 @@
 table pbi_vw_media_investment
 	lineageTag: 605487e1-5393-4657-b7c9-ae8986616303
 
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 3
+		incrementalGranularity: month
+		incrementalPeriods: 1
+		sourceExpression =
+			let
+			    SQL = "SELECT * EXCEPT( dt_modified_on )
+			            FROM medialivre.pbi_out.pbi_vw_media_investment
+			            WHERE dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+			            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+			    Source = fx_dbricks(SQL)
+			in
+			    Source
+
 	column cd_media_investment
 		dataType: string
 		lineageTag: 8775e9a7-76d6-4b79-bd0b-ad2c4d35fd71

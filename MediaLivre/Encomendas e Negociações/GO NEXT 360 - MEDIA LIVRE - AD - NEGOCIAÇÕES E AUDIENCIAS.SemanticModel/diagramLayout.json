@@ -577,6 +577,16 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "pbi_tb_rls_all",
+          "nodeLineageTag": "77c61ed2-cede-4296-b2b1-8e06e89e874a",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "Todas as tabelas",
@@ -951,7 +961,7 @@
       "ordinal": 6,
       "scrollPosition": {
         "x": 0,
-        "y": 85.333335876464844
+        "y": 11.333333015441895
       },
       "nodes": [
         {

@@ -1,6 +1,23 @@
 table pbi_vw_ad_units
 	lineageTag: ac0fde43-2c95-498f-9022-11db3cf218ab
 
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 3
+		incrementalGranularity: month
+		incrementalPeriods: 1
+		sourceExpression =
+			let
+			    SQL = "SELECT * EXCEPT( dt_modified_on )
+			            FROM medialivre.pbi_out.pbi_vw_ad_units
+			            WHERE YEAR(dt_air) >= YEAR(GETDATE()) - " & AnoUpdate & "
+			            AND dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+			            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+			    Source = fx_dbricks(SQL)
+			in
+			    Source
+
 	column cd_ad_unit
 		dataType: string
 		isHidden

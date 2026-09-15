@@ -1,6 +1,25 @@
 table pbi_vw_invoices
 	lineageTag: 4ea9d796-10df-4258-85a9-835739a19724
 
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 3
+		incrementalGranularity: month
+		incrementalPeriods: 1
+		sourceExpression = ```
+			let
+			    SQL = "SELECT * EXCEPT( dt_modified_on )
+						FROM medialivre.pbi_out.pbi_vw_invoices
+			            WHERE YEAR(dt_init) >= YEAR(GETDATE()) - " & AnoUpdate &" 
+			                AND dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+			                AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+			    Source = fx_dbricks(SQL),
+			    #"Ajuste CONTINENTE" = Table.ReplaceValue(Source, each [ds_product], each if Text.Contains([ds_product], "boost", Comparer.OrdinalIgnoreCase) and [cd_account_client] = "36" then "Publicidade Normal" else [ds_product], Replacer.ReplaceText, {"ds_product"})
+			in
+			    #"Ajuste CONTINENTE"
+			```
+
 	column cd_invoice
 		dataType: string
 		isHidden
@@ -119,6 +138,14 @@ table pbi_vw_invoices
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	column cd_account_client
+		dataType: string
+		lineageTag: 20998e4c-8471-467c-acc9-39ee4deff56d
+		summarizeBy: none
+		sourceColumn: cd_account_client
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_vw_invoices = m
 		mode: import
 		source = ```
@@ -128,14 +155,13 @@ table pbi_vw_invoices
 				            WHERE YEAR(dt_init) >= YEAR(GETDATE()) - " & AnoUpdate &" 
 				                AND dt_modified_on BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
 				                AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
-				    Source = fx_dbricks(SQL)
+				    Source = fx_dbricks(SQL),
+				    #"Ajuste CONTINENTE" = Table.ReplaceValue(Source, each [ds_product], each if Text.Contains([ds_product], "boost", Comparer.OrdinalIgnoreCase) and [cd_account_client] = "36" then "Publicidade Normal" else [ds_product], Replacer.ReplaceText, {"ds_product"})
 				in
-				    Source
+				    #"Ajuste CONTINENTE"
 				```
 
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Table
-
-	annotation PBI_IsMQueryFoldable = True
 

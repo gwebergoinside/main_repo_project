@@ -26,6 +26,22 @@ table pbi_tb_rls
 
 		annotation SummarizationSetBy = Automatic
 
+	column ds_email_2
+		dataType: string
+		lineageTag: 2d523ae4-e5eb-4703-83af-dfb6a8abf971
+		summarizeBy: none
+		sourceColumn: ds_email_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column fl_global
+		dataType: string
+		lineageTag: 0834fa5b-f328-426e-b088-1b6177e0199a
+		summarizeBy: none
+		sourceColumn: fl_global
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_tb_rls = m
 		mode: import
 		source = fx_dbricks("SELECT * FROM medialivre.pbi_out.pbi_tb_rls")

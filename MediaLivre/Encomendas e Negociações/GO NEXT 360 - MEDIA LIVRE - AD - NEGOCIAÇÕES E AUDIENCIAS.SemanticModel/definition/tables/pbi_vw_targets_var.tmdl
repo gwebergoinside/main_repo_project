@@ -1,4 +1,5 @@
 table pbi_vw_targets_var
+	isHidden
 	lineageTag: 81dd1f22-4544-4428-932a-5947ce121216
 
 	column cd_variant
@@ -11,6 +12,7 @@ table pbi_vw_targets_var
 		annotation SummarizationSetBy = Automatic
 
 	column ds_variant
+		isHidden
 		lineageTag: 16b380a9-243a-4d14-8afb-95ab2da0e07b
 		summarizeBy: none
 		isNameInferred
@@ -19,6 +21,7 @@ table pbi_vw_targets_var
 		annotation SummarizationSetBy = Automatic
 
 	column ds_variant_adults
+		isHidden
 		lineageTag: e7990361-5aa4-4f7b-8e97-b0ecd93a5cde
 		summarizeBy: none
 		isNameInferred
@@ -27,6 +30,7 @@ table pbi_vw_targets_var
 		annotation SummarizationSetBy = Automatic
 
 	column fl_is_adult
+		isHidden
 		lineageTag: 6ea8a561-fed8-40b9-b46a-707a88ae272e
 		summarizeBy: none
 		isNameInferred

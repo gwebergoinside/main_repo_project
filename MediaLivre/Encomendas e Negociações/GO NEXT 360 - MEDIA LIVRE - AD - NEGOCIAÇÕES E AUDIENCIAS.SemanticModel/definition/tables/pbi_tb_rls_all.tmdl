@@ -1,0 +1,41 @@
+table pbi_tb_rls_all
+	lineageTag: 77c61ed2-cede-4296-b2b1-8e06e89e874a
+
+	column ds_email
+		dataType: string
+		lineageTag: d26f28cd-d557-4929-8db6-67596071923c
+		summarizeBy: none
+		sourceColumn: ds_email
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_email_2
+		dataType: string
+		lineageTag: 6bd145c4-ad1e-4c3f-b495-0d607201de7a
+		summarizeBy: none
+		sourceColumn: ds_email_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column ds_user
+		dataType: string
+		lineageTag: 3c67ff99-07ea-40ec-8797-c80e108bb5b6
+		summarizeBy: none
+		sourceColumn: ds_user
+
+		annotation SummarizationSetBy = Automatic
+
+	partition pbi_tb_rls_all = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.SelectRows(pbi_tb_rls, each [fl_global] = "Y"),
+				    #"Colunas Removidas" = Table.RemoveColumns(Fonte,{"cd_group", "fl_global"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Colunas Removidas")
+				in
+				    #"Duplicatas Removidas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

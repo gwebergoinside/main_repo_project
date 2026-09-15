@@ -1,6 +1,29 @@
 table pbi_vw_media_investment_GRP
 	lineageTag: e16adb2b-0605-4576-9fbb-9bca532abf1a
 
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 3
+		incrementalGranularity: month
+		incrementalPeriods: 1
+		sourceExpression = ```
+			let
+			    SQL = "SELECT
+			              cd_media_investment
+			        --  , dt_broadcast
+			            , cd_target
+			            , GRP
+			        --    GRP_EQ 
+			            FROM medialivre.pbi_out.pbi_vw_media_investment_GRP
+			        WHERE YEAR(dt_broadcast) >= YEAR(GETDATE()) - " & AnoUpdate & "
+			            AND dt_broadcast BETWEEN '"& Text.From( DateTime.ToText(RangeStart,"yyyy-MM-dd") ) &"'
+			            AND '"& Text.From( DateTime.ToText(RangeEnd,"yyyy-MM-dd") ) &"'",
+			    Source = fx_dbricks(SQL)
+			in
+			    Source
+			```
+
 	column cd_media_investment
 		dataType: string
 		lineageTag: bb43441e-6224-48b6-a2c8-414d93b6d6da

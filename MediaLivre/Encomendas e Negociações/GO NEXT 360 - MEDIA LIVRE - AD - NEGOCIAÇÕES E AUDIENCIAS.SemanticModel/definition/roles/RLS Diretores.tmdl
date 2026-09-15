@@ -1,0 +1,17 @@
+role 'RLS Diretores'
+	modelPermission: read
+
+	tablePermission Ambição =
+			CONTAINS (
+			    FILTER (
+			        ALL ( pbi_tb_rls ),
+			        pbi_tb_rls[ds_email] = USERPRINCIPALNAME ()
+			            || pbi_tb_rls[ds_email_2] = USERPRINCIPALNAME ()
+			    ),
+			    pbi_tb_rls[cd_group], 'Ambição'[Código]
+			)
+
+	tablePermission pbi_tb_rls = pbi_tb_rls[ds_email] = USERPRINCIPALNAME ()
+
+	annotation PBI_Id = d0a43b8c39704cadade7c4c70ee5a3f0
+
