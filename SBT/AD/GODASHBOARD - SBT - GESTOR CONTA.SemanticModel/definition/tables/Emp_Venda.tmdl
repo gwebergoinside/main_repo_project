@@ -29,12 +29,6 @@ table Emp_Venda
 		mode: import
 		queryGroup: CORE
 		source =
-				// let
-				//     Source = Sql.Database(Org, BD, [Query="Select ExternalCode, name from company"]),
-				//     #"Inserted Merged Column" = Table.AddColumn(Source, "Empresa Venda", each Text.Combine({[ExternalCode], " - ", [name]}), type text)
-				// in
-				//     #"Inserted Merged Column"
-				
 				let
 				    SQL = "SELECT
 				              ExternalCode

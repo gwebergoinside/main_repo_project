@@ -21,9 +21,13 @@ expression @CRMOrgUrl = "https://sbtcomercialprd.crm2.dynamics.com" meta [IsPara
 
 expression #CDSTEntitySource =
 		let
-		    Url = #"@CRMOrgUrl",
-		    //TrimmedUrl = Text.TrimEnd(Text.Trim(Url), "/"), // We cannot trim the URL because then data sourcewill not be recognized
-		    Source = Cds.Entities(Url, [ReorderColumns=null, UseFormattedValue=true])
+		    // ATENÇÃO: o servidor tem de ser um literal (ou um parâmetro simples, como o Org/BD
+		    // usados no Sql.Database). Qualquer transformação — Text.*, if, concatenação — torna a
+		    // origem DINÂMICA: o serviço deixa de a reconhecer, chama-lhe "Data source for Query1"
+		    // e recusa agendar o refresh. Era este o aviso do autor original nesta linha.
+		    Source = CommonDataService.Database("sbtcomercialprd.crm2.dynamics.com", [CreateNavigationProperties=false])
+		    // Origem anterior (conector Dataverse legacy, deprecado) — manter para rollback de emergência:
+		    // Source = Cds.Entities(#"@CRMOrgUrl", [ReorderColumns=null, UseFormattedValue=true])
 		in
 		    Source
 	lineageTag: c7351fee-d1e6-46d5-9151-3ee7672cb808
@@ -37,10 +41,20 @@ expression GetCDST_EntityTable =
 		    Source = (#"schema name" as text) =>
 		        let
 		            Source = #"#CDSTEntitySource",
-		            Entities = Source{[Group="entities"]}[Data],
-		            DataTable = Entities{[SchemaName=#"schema name"]}[Data]
+		            // O TDS endereça a tabela pelo NOME LÓGICO (singular, minúsculas),
+		            // não pelo SchemaName em PascalCase nem pelo EntitySetName no plural.
+		            DataTable = Source{[Schema="dbo", Item=Text.Lower(#"schema name")]}[Data],
+		            // Compatibilidade com UseFormattedValue=true do conector antigo:
+		            // o TDS devolve o rótulo em <coluna>name; o modelo consome <coluna>_display.
+		            // Só renomeia quando a coluna base existe, para não tocar em name/fullname/go_name/domainname.
+		            Colunas = Table.ColumnNames(DataTable),
+		            Rotulos = List.Select(Colunas, each Text.EndsWith(_, "name")
+		                and Text.Length(_) > 4
+		                and List.Contains(Colunas, Text.Start(_, Text.Length(_) - 4))),
+		            DataTableCompat = Table.RenameColumns(DataTable,
+		                List.Transform(Rotulos, each {_, Text.Start(_, Text.Length(_) - 4) & "_display"}))
 		        in
-		            DataTable
+		            DataTableCompat
 		in
 		    Source
 	lineageTag: 8fec0624-f472-42c4-a18f-9c50e604137a
@@ -111,19 +125,6 @@ expression Account =
 
 	annotation PBI_ResultType = Table
 
-expression VendaImportada =
-		let
-		    Source = Sql.Database(Org, BD, [Query="Select#(lf)    R2.Cod_Empresa,#(lf)    --R2.Cod_Agencia,#(lf)    --R2.Cod_Cliente,#(lf)    R2.Competencia,#(lf)    R2.Cod_Contato,#(lf)    --R2.Cod_Empresa_Faturamento,#(lf)    R2.Numero_Negociacao#(lf)From#(lf)    "&BDExternal&".SCTV.R0002 R2#(lf)Where#(lf)    R2.Competencia >= 201601 And#(lf)    R2.Cod_Nucleo Not In ('n10', 'novon', 'vale') And#(lf)    R2.Indica_Mes_Anterior = 0 And#(lf)    R2.Cod_Empresa_Faturamento <> '054' And#(lf)    Exists(Select#(lf)         0#(lf)     From#(lf)         Company E#(lf)     Where#(lf)         E.ExternalCode = R2.Cod_Empresa_Faturamento And#(lf)         E.Affiliation = 'FILIADO') And#(lf)    Exists(Select#(lf)         0#(lf)     From#(lf)         Company E#(lf)     Where#(lf)         E.ExternalCode = R2.Cod_Empresa And#(lf)         E.Affiliation <> 'FILIADO')#(lf)Group By#(lf)    R2.Cod_Empresa,#(lf)    R2.Competencia,#(lf)    R2.Cod_Contato,#(lf)    R2.Numero_Negociacao"]),
-		    #"Added Custom" = Table.AddColumn(Source, "Cod_Contato_Importada", each "VEIMPR")
-		in
-		    #"Added Custom"
-	lineageTag: f251825f-ea21-4f98-a3d8-d7206e2f753c
-	queryGroup: CORE
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
 expression Link = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=" meta [IsParameterQuery=true, List={"https://sbtcomercialqa.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=", "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id="}, DefaultValue="https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=", Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 76ea3167-eb07-4a77-ba49-0cb09fcfddf1
 	queryGroup: Config
@@ -144,27 +145,17 @@ expression ExecutivoVenda =
 
 	annotation PBI_ResultType = Exception
 
-expression EmpresaFaturamento =
+expression AccountNome =
+		// Unifica EmpresaFaturamento e EmpresaVenda, que eram duas queries idênticas sobre a mesma entidade.
 		let
 		    Accounts = #"GetCDST_EntityTable"("Account"),
-		    #"Removed Other Columns" = Table.SelectColumns(Accounts,{"accountid", "name"})
+		    #"Colunas Selecionadas" = Table.SelectColumns(Accounts,{"accountid", "name"})
 		in
-		    #"Removed Other Columns"
+		    #"Colunas Selecionadas"
 	lineageTag: 739d857c-d616-4c43-afef-4de37516b42d
 	queryGroup: Dynamics
 
-	annotation PBI_ResultType = Exception
-
-expression EmpresaVenda =
-		let
-		    Accounts = #"GetCDST_EntityTable"("Account"),
-		    #"Removed Other Columns" = Table.SelectColumns(Accounts,{"accountid", "name"})
-		in
-		    #"Removed Other Columns"
-	lineageTag: 9eacff87-2195-4428-8994-1bcf6de7e9b4
-	queryGroup: Dynamics
-
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 expression 'Tipo Midia' =
 		let
@@ -205,49 +196,28 @@ expression Nucleos =
 
 	annotation PBI_ResultType = Exception
 
-expression OPTSCreated =
-		let
-		    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
-		    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"createdon", "go_st_codnegociacao"}),
-		    #"Grouped Rows" = Table.Group(#"Removed Other Columns", {"go_st_codnegociacao"}, {{"createdon", each List.Min([createdon]), type nullable datetimezone}})
-		in
-		    #"Grouped Rows"
-	lineageTag: 1d540321-e8dc-4918-80aa-21e6ec6f95b2
-	queryGroup: Dynamics
-
-	annotation PBI_ResultType = Exception
-
-expression OPTSModified =
-		let
-		    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
-		    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"modifiedon", "go_st_codnegociacao"}),
-		    #"Grouped Rows" = Table.Group(#"Removed Other Columns", {"go_st_codnegociacao"}, {{"modifiedon", each List.Min([modifiedon]), type nullable datetimezone}})
-		in
-		    #"Grouped Rows"
-	lineageTag: 1fc8938f-5657-46a4-87e3-92f244e84c0c
-	queryGroup: Dynamics
-
-	annotation PBI_ResultType = Exception
-
 expression YearUpdateVeiculacao = "1" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
 	lineageTag: d9357d3a-d578-4c8a-a682-bbf1d88fd405
 	queryGroup: Config
 
 	annotation PBI_ResultType = Text
 
-expression OPTSIntegrated =
+expression OPTSDatas =
+		// Unifica OPTSCreated, OPTSModified e OPTSIntegrated: uma única leitura de go_opportunity
+		// e um único agrupamento por negociação, em vez de três.
 		let
 		    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
-		    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"go_opportunityid", "go_dt_dataintegracao", "go_st_codnegociacao"}),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"go_dt_dataintegracao", type date}}),
-		    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([go_dt_dataintegracao] <> null)),
-		    #"Grouped Rows" = Table.Group(#"Filtered Rows", {"go_st_codnegociacao"}, {{"Data de Integração", each List.Min([go_dt_dataintegracao]), type nullable datetimezone}})
+		    #"Colunas Selecionadas" = Table.SelectColumns(Opportunities,{"go_st_codnegociacao", "createdon", "modifiedon", "go_dt_dataintegracao"}),
+		    #"Tipo Data Integração" = Table.TransformColumnTypes(#"Colunas Selecionadas",{{"go_dt_dataintegracao", type date}}),
+		    #"Agrupado por Negociação" = Table.Group(#"Tipo Data Integração", {"go_st_codnegociacao"}, {
+		        {"First_Createdon", each List.Min([createdon]), type nullable datetimezone},
+		        {"Data Aprovação", each List.Min([modifiedon]), type nullable datetimezone},
+		        {"Data de Integração_Final", each List.Min(List.RemoveNulls([go_dt_dataintegracao])), type nullable date}
+		    })
 		in
-		    #"Grouped Rows"
+		    #"Agrupado por Negociação"
 	lineageTag: 1daf280a-efcc-4a46-94ce-52f15e6f9629
 	queryGroup: Dynamics
-
-	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
 
@@ -335,4 +305,62 @@ expression 'Search Users' =
 	annotation PBI_NavigationStepName = Navegação
 
 	annotation PBI_ResultType = Table
+
+expression Excecoes_SBTNEWS =
+		// Chaves chaveT tratadas como SBT News. Antes estava duplicada, palavra por palavra, em R0002 e LY.
+		// Condicional solicitada ticket Intercom 96052764 [Melhoria SBT] - Criação de Dashboard "Venda Líquida Carteira Atual" – SBT News (Fase 2 | Chamado 85579164)
+		{
+		    "HAVANIMPHAV227SEMCNACIONSITE20263",
+		    "HAVANIMPHAV227SEMCNACIONNORMAL20261",
+		    "HAVANIMPHAV227SEMCNACIONNORMAL20262",
+		    "HAVANIMPHAV227SEMCNACIONNORMAL20263",
+		    "HAVANIMPHAV227SEMCNACIONMAISSBT20263",
+		    "9LA0IT9LA0IT605SEMCNACIONNORMAL20262",
+		    "0IORC3CALY2P605SEMCNACIONNORMAL20262",
+		    "FRIBOICPBCR605SEMCNACIONSITE20263",
+		    "APEXSNBB605SEMCNACIONNORMAL20262",
+		    "APEXSNBB605SEMCNACIONNORMAL20263",
+		    "ATACAFATACAF605SEMCNACIONMERCHA20263",
+		    "HIRNN0HIRNN0605SEMCNACIONMERCHA20262",
+		    "HIRNN0HIRNN0605SEMCNACIONMERCHA20263",
+		    "AMISP70IT0AP605SEMCNACIONNORMAL20263",
+		    "9LA0IT9LA0IT605SEMCNACIONNORMAL20261",
+		    "9LA0IT9LA0IT605SEMCNACIONNORMAL20263",
+		    "TIMSA1DAANAD605SEMCNACIONNORMAL20261",
+		    "TIMSA1DAANAD605SEMCNACIONNORMAL20262",
+		    "TIMSA1DAANAD605SEMCNACIONNORMAL20263",
+		    "U0PN0CTPLAN605SEMCNACIONNORMAL20261",
+		    "U0PN0CTPLAN605SEMCNACIONNORMAL20262",
+		    "FRIBOICPBCR605SEMCNACIONMAISSBT20262",
+		    "FRIBOICPBCR605SEMCNACIONMAISSBT20263",
+		    "FRIBOICPBCR605SEMCNACIONSITE20262",
+		    "TIMSA1DAANAD605SEMCNACIONSITE20261",
+		    "TIMSA1DAANAD605SEMCNACIONSITE20262",
+		    "TIMSA1DAANAD605SEMCNACIONSITE20263",
+		    "ATACAFATACAF605SEMCNACIONNORMAL20263",
+		    "HIRNN0HIRNN0605SEMCNACIONNORMAL20262",
+		    "HIRNN0HIRNN0605SEMCNACIONNORMAL20263"
+		}
+	lineageTag: 3a7c1f52-6d84-4b19-9e0c-8f21d4b7a501
+	queryGroup: Config
+
+	annotation PBI_ResultType = List
+
+/// Acrescenta a coluna "Tipo Governo" a partir da Account; sem correspondência = Setor Privado.
+expression Fn_TipoGoverno =
+		// Substitui o bloco que estava repetido em R0002, LY, Forecast, ForecastSnapshot e Metas.
+		let
+		    Fn = (tabela as table, colunaCliente as text) as table =>
+		        let
+		            Juntar = Table.NestedJoin(tabela, {colunaCliente}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
+		            Expandir = Table.ExpandTableColumn(Juntar, "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"}),
+		            Preencher = Table.ReplaceValue(Expandir, null, "Setor Privado", Replacer.ReplaceValue, {"Tipo Governo"})
+		        in
+		            Preencher
+		in
+		    Fn
+	lineageTag: 5b9e2c30-7f41-42a8-b6d3-0c58e9a1f772
+	queryGroup: Config
+
+	annotation PBI_ResultType = Function
 

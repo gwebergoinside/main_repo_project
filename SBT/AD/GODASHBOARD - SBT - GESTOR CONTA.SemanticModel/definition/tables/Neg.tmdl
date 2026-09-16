@@ -21,8 +21,6 @@ table Neg
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation UnderlyingDateTimeDataType = Date
-
 		annotation PBI_FormatHint = {"isDateTimeCustom":true}
 
 	column go_dt_competenciainicial
@@ -33,8 +31,6 @@ table Neg
 		sourceColumn: go_dt_competenciainicial
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
 
 		annotation PBI_FormatHint = {"isDateTimeCustom":true}
 
@@ -88,7 +84,7 @@ table Neg
 		annotation SummarizationSetBy = Automatic
 
 	column go_mn_valornegociado
-		dataType: double
+		dataType: decimal
 		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
 		lineageTag: 0f570b60-91e1-4e32-8b9b-0f3a54f19dd9
 		summarizeBy: sum
@@ -327,7 +323,7 @@ table Neg
 		annotation SummarizationSetBy = Automatic
 
 	column go_mn_valormidiaapoio
-		dataType: double
+		dataType: decimal
 		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
 		lineageTag: 78e65658-9825-41ba-babf-8ece20368012
 		summarizeBy: sum
@@ -518,18 +514,19 @@ table Neg
 				    Opportunities = #"GetCDST_EntityTable"("go_opportunity"),
 				    #"Removed Other Columns" = Table.SelectColumns(Opportunities,{"createdon", "go_dc_descontoprogramas", "go_dc_maiordescontodado", "go_dt_competenciainicial", "go_dt_dataintegracao", "go_dt_estimatedclosedate", "go_int_versao", "go_lk_clienteid", "go_lk_empresafaturamentoid", "go_lk_empresavendaid", "go_lk_executivovendasid", "go_lk_tipomidiaid", "go_mn_valormidiaapoio", "go_mn_valornegociado", "go_name", "go_opportunityid", "go_pl_tabelamidiaprincipal", "go_pl_tabelamidiaprincipal_display", "go_pl_tiporegistro_display", "go_st_codnegociacao", "go_st_codnegociacaosctv", "modifiedon", "ownerid", "statecode", "statecode_display", "statuscode", "statuscode_display", "go_dc_comissaoagencia"}),
 				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"go_opportunityid", "OpportunityId"}, {"go_lk_clienteid", "ParentAccountId"}, {"go_name", "Name"}, {"statecode_display", "Status"}, {"go_pl_tabelamidiaprincipal_display", "Tabela"}, {"go_dt_estimatedclosedate", "estimatedclosedate"}, {"go_dc_maiordescontodado", "go_fp_maiordescontodado"}}),
-				    #"Divided Column" = Table.TransformColumns(#"Renamed Columns", {{"go_fp_maiordescontodado", each _ / 100, type number}}),
-				    #"Divided Column1" = Table.TransformColumns(#"Divided Column", {{"go_dc_descontoprogramas", each _ / 100, type number}}),
-				    #"Divided Column2" = Table.TransformColumns(#"Divided Column1", {{"go_dc_comissaoagencia", each _ / 100, type number}}),
+				    #"Divided Column2" = Table.TransformColumns(#"Renamed Columns", {
+				        {"go_fp_maiordescontodado", each _ / 100, type number},
+				        {"go_dc_descontoprogramas", each _ / 100, type number},
+				        {"go_dc_comissaoagencia", each _ / 100, type number}}),
 				    #"Filtered Rows" = Table.SelectRows(#"Divided Column2", each ([statuscode_display] <> "Versionada" and [statuscode_display] <> "Versionamento Cancelado" and [statuscode_display] <> "Versionamento Reprovado")),
 				    #"Replaced Value" = Table.ReplaceValue(#"Filtered Rows",".","",Replacer.ReplaceText,{"go_st_codnegociacaosctv"}),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value",{{"createdon", type date}, {"go_fp_maiordescontodado", Percentage.Type}, {"go_dc_comissaoagencia", Percentage.Type}, {"go_dc_descontoprogramas", Percentage.Type}, {"go_st_codnegociacaosctv", Int64.Type}}),
 				    #"Added Custom" = Table.AddColumn(#"Changed Type", "URL", each Link & [OpportunityId]),
 				    #"Merged Queries" = Table.NestedJoin(#"Added Custom", {"go_lk_executivovendasid"}, ExecutivoVenda, {"systemuserid"}, "ExecutivoVenda", JoinKind.LeftOuter),
 				    #"Expanded ExecutivoVenda" = Table.ExpandTableColumn(#"Merged Queries", "ExecutivoVenda", {"fullname", "go_st_codigoexterno"}, {"NomeExecutivo", "go_st_codigoexterno"}),
-				    #"Merged Queries1" = Table.NestedJoin(#"Expanded ExecutivoVenda", {"go_lk_empresafaturamentoid"}, EmpresaFaturamento, {"accountid"}, "EmpresaFaturamento", JoinKind.LeftOuter),
+				    #"Merged Queries1" = Table.NestedJoin(#"Expanded ExecutivoVenda", {"go_lk_empresafaturamentoid"}, AccountNome, {"accountid"}, "EmpresaFaturamento", JoinKind.LeftOuter),
 				    #"Expanded EmpresaFaturamento" = Table.ExpandTableColumn(#"Merged Queries1", "EmpresaFaturamento", {"name"}, {"EmpresaFaturamento"}),
-				    #"Merged Queries2" = Table.NestedJoin(#"Expanded EmpresaFaturamento", {"go_lk_empresavendaid"}, EmpresaVenda, {"accountid"}, "EmpresaVenda", JoinKind.LeftOuter),
+				    #"Merged Queries2" = Table.NestedJoin(#"Expanded EmpresaFaturamento", {"go_lk_empresavendaid"}, AccountNome, {"accountid"}, "EmpresaVenda", JoinKind.LeftOuter),
 				    #"Expanded EmpresaVenda" = Table.ExpandTableColumn(#"Merged Queries2", "EmpresaVenda", {"name"}, {"EmpresaVenda"}),
 				    #"Merged Queries3" = Table.NestedJoin(#"Expanded EmpresaVenda", {"go_lk_tipomidiaid"}, #"Tipo Midia", {"go_tipomidiaid"}, "TipoMidia", JoinKind.LeftOuter),
 				    #"Expanded TipoMidia" = Table.ExpandTableColumn(#"Merged Queries3", "TipoMidia", {"go_name"}, {"TipoMedia"}),
@@ -537,24 +534,19 @@ table Neg
 				    #"Expanded Conta" = Table.ExpandTableColumn(#"Merged Queries4", "Conta", {"createdon", "go_pl_funcao", "name", "statuscode_display", "go_pl_classificacaogoverno_display"}, {"ContaCreatedon", "ContaFuncao", "ContaNome", "Status Cliente", "Tipo Governo"}),
 				    #"Merged Queries5" = Table.NestedJoin(#"Expanded Conta", {"ownerid"}, ExecutivoVenda, {"systemuserid"}, "ExecutivoVenda", JoinKind.LeftOuter),
 				    #"Expanded ExecutivoVenda1" = Table.ExpandTableColumn(#"Merged Queries5", "ExecutivoVenda", {"fullname"}, {"Proprietario"}),
-				    #"Merged Queries6" = Table.NestedJoin(#"Expanded ExecutivoVenda1", {"go_st_codnegociacao"}, OPTSCreated, {"go_st_codnegociacao"}, "OPTSCreated", JoinKind.LeftOuter),
-				    #"Expanded OPTSCreated" = Table.ExpandTableColumn(#"Merged Queries6", "OPTSCreated", {"createdon"}, {"First_Createdon"}),
-				    #"Replaced Value1" = Table.ReplaceValue(#"Expanded OPTSCreated",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"}),
+				    // Uma única leitura de go_opportunity (OPTSDatas) substitui OPTSCreated + OPTSModified + OPTSIntegrated
+				    #"Merged Datas" = Table.NestedJoin(#"Expanded ExecutivoVenda1", {"go_st_codnegociacao"}, OPTSDatas, {"go_st_codnegociacao"}, "OPTSDatas", JoinKind.LeftOuter),
+				    #"Expanded Datas" = Table.ExpandTableColumn(#"Merged Datas", "OPTSDatas", {"First_Createdon", "Data Aprovação", "Data de Integração_Final"}, {"First_Createdon", "Data Aprovação", "Data de Integração_Final"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Expanded Datas",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"}),
 				    #"Renamed Columns1" = Table.RenameColumns(#"Replaced Value1",{{"go_st_codnegociacaosctv", "Numero_Negociacao"}, {"go_dt_dataintegracao", "Data Integração"}}),
-				    #"Merged Queries7" = Table.NestedJoin(#"Renamed Columns1", {"go_st_codnegociacao"}, OPTSModified, {"go_st_codnegociacao"}, "OPTSModified", JoinKind.LeftOuter),
-				    #"Expanded OPTSModified" = Table.ExpandTableColumn(#"Merged Queries7", "OPTSModified", {"modifiedon"}, {"Data Aprovação"}),
-				    #"Changed Type1" = Table.TransformColumnTypes(#"Expanded OPTSModified",{{"Data Aprovação", type date}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Data Aprovação", type date}}),
 				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type1", "Data de Aprovação", each if [Data Aprovação] > [createdon] then [createdon] else [Data Aprovação]),
 				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Conditional Column", "Data Integração", "Data De Integração"),
-				    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data De Integração", type date}, {"Data de Aprovação", type date}}),
-				    #"Merged Queries8" = Table.NestedJoin(#"Changed Type2", {"go_st_codnegociacao"}, OPTSIntegrated, {"go_st_codnegociacao"}, "OPTSIntegrated", JoinKind.LeftOuter),
-				    #"Expanded OPTSIntegrated" = Table.ExpandTableColumn(#"Merged Queries8", "OPTSIntegrated", {"Data de Integração"}, {"OPTSIntegrated.Data de Integração"}),
-				    #"Renamed Columns2" = Table.RenameColumns(#"Expanded OPTSIntegrated",{{"OPTSIntegrated.Data de Integração", "Data de Integração_Final"}}),
-				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Data de Integração_Final", type date}})
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data De Integração", type date}, {"Data de Aprovação", type date}})
 				in
-				    #"Changed Type3"
+				    #"Changed Type2"
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
 
 	annotation PBI_NavigationStepName = Navegação
 

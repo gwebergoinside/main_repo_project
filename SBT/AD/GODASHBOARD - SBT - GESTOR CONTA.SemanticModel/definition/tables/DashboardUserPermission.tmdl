@@ -109,7 +109,11 @@ table DashboardUserPermission
 		queryGroup: Config
 		source =
 				let
-				    SQL = "SELECT#(lf)    *#(lf)FROM#(lf)    DashboardUserPermission DP WHERE Status = 'Ativadas'",
+				    SQL = "SELECT
+				            *
+				        FROM DashboardUserPermission
+				        WHERE 1 = 1
+				            AND Status = 'Ativadas'",
 				    Source = Sql.Database(Org, BDExternal, [Query = SQL])
 				in
 				    Source

@@ -109,6 +109,8 @@ git push origin master
 | 31/08/2026 | Adiciona projetos DAZN (TX) e MEGA (AD e AD - Resumo); atualizações nos modelos SOICO — `Ocupacao` (AD) passa a formatar a faixa horária em SQL puro, `Contratos` (TX) migrada para query SQL parametrizada e nova coluna `LogoBase64` em `images` (TX e INCIDENTES) |
 | 09/09/2026 | Adiciona projeto RTP (AD - 5 anos + YUMMI 2 anos); MediaLivre passa a usar `dt_modified_on` como marca de água do refresh incremental (queries filtram por essa coluna e excluem-na do resultado) |
 | 14/09/2026 | Adiciona projeto SBT (AD - GODASHBOARD Gestor Conta), com RLS já definido em `definition/roles/`; MediaLivre prepara RLS dinâmico pela tabela `pbi_tb_rls` e reescreve em `TREATAS` as medidas que usavam `USERELATIONSHIP`/`CROSSFILTER` (proibidos sob RLS) — ver `MediaLivre/Encomendas e Negociações/RLS.md` |
+| 15/09/2026 | SBT (AD) migrado do conector Dataverse legacy (`Cds.Entities`) para o endpoint TDS (`CommonDataService.Database`) — troca centralizada nas expressões `#CDSTEntitySource` e `GetCDST_EntityTable`, com shim que mantém os nomes `<coluna>_display` e deixa as 22 queries a jusante intactas — ver `SBT/AD/MIGRACAO-TDS.md` |
+| 15/09/2026 | SBT (AD) — refatoração do modelo: queries duplicadas unificadas (`EmpresaFaturamento`+`EmpresaVenda` → `AccountNome`; `OPTSCreated`+`OPTSModified`+`OPTSIntegrated` → `OPTSDatas`), lista de exceções SBT News e bloco `Tipo Governo` passam a partilhados (`Excecoes_SBTNEWS`, `Fn_TipoGoverno`), filtros e colunas calculadas empurrados para SQL e −498 linhas de código morto — ver `SBT/AD/REFATORACAO-MODELO.md` |
 
 ---
 

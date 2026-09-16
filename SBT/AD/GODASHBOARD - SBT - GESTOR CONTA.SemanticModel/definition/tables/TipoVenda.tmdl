@@ -39,13 +39,6 @@ table TipoVenda
 		mode: import
 		queryGroup: Carteira
 		source =
-				// let
-				//     Source = Sql.Database(Org, BD, [Query="Select#(lf) *#(lf)FROM#(lf)ForecastSaleType"]),
-				//     #"Uppercased Text" = Table.TransformColumns(Source,{{"ExternalCode", Text.Upper, type text}}),
-				//     #"Renamed Columns" = Table.RenameColumns(#"Uppercased Text",{{"Name", "TipoVenda"}})
-				// in
-				//     #"Renamed Columns"
-				
 				let
 				    SQL = "Select
 				            ID

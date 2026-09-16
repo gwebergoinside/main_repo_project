@@ -11,10 +11,13 @@ table SnapShotForecast
 
 	partition SnapShotForecast-d9820575-2b4a-47c4-8832-ae3482d65827 = m
 		mode: import
-		queryGroup: Config
+		queryGroup: Carteira
 		source =
 				let
-				    Source = Sql.Database(Org, BD, [Query="Select Snapshotcode From ForecastSnapshot group by Snapshotcode"]),
+				    SQL = "SELECT DISTINCT
+				            Snapshotcode
+				        FROM ForecastSnapshot",
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
 				    Snapshotcode = Source[Snapshotcode]
 				in
 				    Snapshotcode

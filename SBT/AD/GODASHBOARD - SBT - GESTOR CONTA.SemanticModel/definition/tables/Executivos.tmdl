@@ -21,27 +21,18 @@ table Executivos
 		mode: import
 		queryGroup: CORE
 		source =
-				// let
-				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)    [User].Name Executivo,#(lf)    [User].ExternalCode ExecutivoCodigo#(lf)From#(lf)    [User]"]),
-				//     #"Filtered Rows" = Table.SelectRows(Source, each ([ExecutivoCodigo] <> null))
-				// in
-				//     #"Filtered Rows"
-				
 				let
 				    SQL = "SELECT
 				            [User].Name AS Executivo,
 				            [User].ExternalCode AS ExecutivoCodigo
 				        FROM [User]
 				        WHERE 1 = 1
-				            AND [User].ExternalCode IS NOT NULL",
-				    Source = Sql.Database(Org, BD, [Query = SQL]),
-				    Verificar = let
-				        Agrupar = Table.Group(Source, {"ExecutivoCodigo"}, {"Contagem", each Table.RowCount(_), Int64.Type})
-				        in Table.SelectRows(Agrupar, each [Contagem] > 1)[ExecutivoCodigo],
-				    #"Registros Duplicados" = Table.SelectRows(Source, each List.Contains(Verificar, [ExecutivoCodigo])),
-				    #"Filtrar Sem Duplicidade" = Table.SelectRows(Source, each not ([ExecutivoCodigo] = "BVENA" and [Executivo] = "Bruna Kethelyn Candida Venancio"))
+				            AND [User].ExternalCode IS NOT NULL
+				            -- ExecutivoCodigo tem de ser único (lado 1 de cinco relações): duplicado conhecido excluído aqui
+				            AND NOT ([User].ExternalCode = 'BVENA' AND [User].Name = 'Bruna Kethelyn Candida Venancio')",
+				    Source = Sql.Database(Org, BD, [Query = SQL])
 				in
-				    #"Filtrar Sem Duplicidade"
+				    Source
 
 	annotation PBI_ResultType = Table
 

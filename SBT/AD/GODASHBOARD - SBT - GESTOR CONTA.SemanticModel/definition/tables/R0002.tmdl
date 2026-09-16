@@ -278,24 +278,6 @@ table R0002
 		mode: import
 		queryGroup: CORE
 		source = ```
-				// let
-				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)    R.Cod_Empresa,#(lf)    R.Cod_Tipo_Comercial,#(lf)    R.Numero_Mr,#(lf)    R.Sequencia_Mr,#(lf)    R.Cod_Empresa_Faturamento As [CodEmp Faturamento],#(lf)    R.Cod_Agencia,#(lf)    R.Cod_Cliente,#(lf)    R.Cod_Contato,#(lf)    R.Cod_Nucleo,#(lf)    R.Competencia,#(lf)    Cast(Convert(VARCHAR,Left(R.Competencia, 4)) + '-' + Convert(VARCHAR,Right(R.Competencia, 2)) + '-' +#(lf)    Convert(VARCHAR,1) As DATETIME) As Data,#(lf)    R.Numero_Negociacao,#(lf)    Sum(R.Vlr_Gerencial_BAV) As Vlr_Gerencial_BAV,#(lf)    R.SaleTypeExternalCode,#(lf)    R.MediaTypeExternalCode,#(lf)    Sum(R.Vlr_Repasse_Varejo) As Vlr_Repasse_Varejo,#(lf)    --Sum(c.Vlr_Exibido) As Vlr_Exibido,#(lf)#(tab)Sum(R.Vlr_Bruto) as Vlr_Exibido,#(lf)    ch.ExternalCode + ' - ' + ch.Name As ChannelDisplay,#(lf)    cp.Affiliation,#(lf)    R.MotivoAjusteManual#(lf)From#(lf)    "&BDExternal&".SCTV.R0002_Detalhe R With(NoLock) #(lf)#(tab)--Left Join "&BDExternal&".SCTV.Contrato c With(NoLock) On c.Cod_Empresa = R.Cod_Empresa#(lf)    --        And c.Numero_Mr = R.Numero_Mr#(lf)    --        And c.Sequencia_Mr = R.Sequencia_Mr #(lf)#(tab)Left Join Company cp With(NoLock) On cp.ExternalCode = R.Cod_Empresa #(lf)#(tab)Left Join Company cpfat With(NoLock) On cpfat.ExternalCode = R.Cod_Empresa_Faturamento #(lf)#(tab)Left Join Channel ch With(NoLock) On ch.ExternalCode = R.Cod_Veiculo#(lf)Where#(lf)    left(R.Competencia,4) >= year(getdate())-5 And#(lf)    Not (cp.Affiliation = 'AFILIADO' And cpfat.Affiliation = 'AFILIADO')#(lf)Group By#(lf)    R.Cod_Empresa,#(lf)    R.Cod_Tipo_Comercial,#(lf)    R.Numero_Mr,#(lf)    R.Sequencia_Mr,#(lf)    R.Cod_Empresa_Faturamento,#(lf)    R.Cod_Agencia,#(lf)    R.Cod_Cliente,#(lf)    R.Cod_Contato,#(lf)    R.Cod_Nucleo,#(lf)    R.Competencia,#(lf)    Cast(Convert(VARCHAR,Left(R.Competencia, 4)) + '-' + Convert(VARCHAR,Right(R.Competencia, 2)) + '-' +#(lf)    Convert(VARCHAR,1) As DATETIME),#(lf)    R.Numero_Negociacao,#(lf)    R.SaleTypeExternalCode,#(lf)    R.MediaTypeExternalCode,#(lf)    ch.ExternalCode + ' - ' + ch.Name,#(lf)    cp.Affiliation,#(lf)    R.MotivoAjusteManual"]),
-				//     #"Changed Type" = Table.TransformColumnTypes(Source,{{"Numero_Mr", type text}, {"Sequencia_Mr", type text}}),
-				//     #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"Cod_Agencia", Text.Trim, type text}, {"Cod_Cliente", Text.Trim, type text}, {"Cod_Contato", Text.Trim, type text}, {"MediaTypeExternalCode", Text.Trim, type text}, {"SaleTypeExternalCode", Text.Trim, type text}}),
-				//     #"Uppercased Text" = Table.TransformColumns(#"Trimmed Text",{{"Cod_Agencia", Text.Upper, type text}, {"Cod_Cliente", Text.Upper, type text}, {"Cod_Contato", Text.Upper, type text}, {"Cod_Nucleo", Text.Upper, type text}}),
-				//     #"Merged Queries3" = Table.NestedJoin(#"Uppercased Text", {"Cod_Empresa", "Competencia", "Numero_Negociacao"}, VendaImportada, {"Cod_Empresa", "Competencia", "Numero_Negociacao"}, "VendaImportada", JoinKind.LeftOuter),
-				//     #"Expanded VendaImportada" = Table.ExpandTableColumn(#"Merged Queries3", "VendaImportada", {"Cod_Contato_Importada"}, {"Cod_Contato.1"}),
-				//     #"Added Custom" = Table.AddColumn(#"Expanded VendaImportada", "Cod_ContatoFinal", each if [MotivoAjusteManual] = null then [Cod_Contato.1] else [Cod_Contato]),
-				//     Custom6 = Table.AddColumn(#"Added Custom" , "Cod_Contato.2", each if [Cod_ContatoFinal] <> null then [Cod_ContatoFinal] else [Cod_Contato]),
-				//     #"Removed Columns" = Table.RemoveColumns(Custom6,{"Cod_Contato", "Cod_Contato.1", "Cod_ContatoFinal", "Numero_Mr"}),
-				//     #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{"Cod_Contato.2", "Cod_Contato"}),
-				//     #"Merged Queries2" = Table.NestedJoin(#"Renamed Columns", {"Cod_Cliente"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
-				//     #"Expanded Account" = Table.ExpandTableColumn(#"Merged Queries2", "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"}),
-				//     #"Replaced Value" = Table.ReplaceValue(#"Expanded Account",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"}),
-				//     #"Renamed Columns1" = Table.RenameColumns(#"Replaced Value",{"Cod_Contato", "Cod_Executivo"})
-				// in
-				//     #"Renamed Columns1"
-				
 				let
 				    SQL = "
 				        WITH VI AS
@@ -438,36 +420,7 @@ table R0002
 					//     in Table.AddColumn( Expandir, "Cod_Contato_Final", each if [MotivoAjusteManual] is null or [MotivoAjusteManual] = "" then if [Cod_Contato_Importada] is null or [Cod_Contato_Importada] = "" then [Cod_Contato_Importada] else [Cod_Contato] else [Cod_Contato], type text ),
 					// Cleanup = Table.RemoveColumns(MergeVendaImportada, {"Cod_Contato_Importada"}),
 					// ReplaceCodContato = Table.RenameColumns( Table.RemoveColumns(Cleanup, {"Cod_Contato"}), {{"Cod_Contato_Final", "Cod_Contato"}}),
-					Exceções = {"HAVANIMPHAV227SEMCNACIONSITE20263",
-				            "HAVANIMPHAV227SEMCNACIONNORMAL20261",
-				            "HAVANIMPHAV227SEMCNACIONNORMAL20262",
-				            "HAVANIMPHAV227SEMCNACIONNORMAL20263",
-				            "HAVANIMPHAV227SEMCNACIONMAISSBT20263",
-				            "9LA0IT9LA0IT605SEMCNACIONNORMAL20262",
-				            "0IORC3CALY2P605SEMCNACIONNORMAL20262",
-				            "FRIBOICPBCR605SEMCNACIONSITE20263",
-				            "APEXSNBB605SEMCNACIONNORMAL20262",
-				            "APEXSNBB605SEMCNACIONNORMAL20263",
-				            "ATACAFATACAF605SEMCNACIONMERCHA20263",
-				            "HIRNN0HIRNN0605SEMCNACIONMERCHA20262",
-				            "HIRNN0HIRNN0605SEMCNACIONMERCHA20263",
-				            "AMISP70IT0AP605SEMCNACIONNORMAL20263",
-				            "9LA0IT9LA0IT605SEMCNACIONNORMAL20261",
-				            "9LA0IT9LA0IT605SEMCNACIONNORMAL20263",
-				            "TIMSA1DAANAD605SEMCNACIONNORMAL20261",
-				            "TIMSA1DAANAD605SEMCNACIONNORMAL20262",
-				            "TIMSA1DAANAD605SEMCNACIONNORMAL20263",
-				            "U0PN0CTPLAN605SEMCNACIONNORMAL20261",
-				            "U0PN0CTPLAN605SEMCNACIONNORMAL20262",
-				            "FRIBOICPBCR605SEMCNACIONMAISSBT20262",
-				            "FRIBOICPBCR605SEMCNACIONMAISSBT20263",
-				            "FRIBOICPBCR605SEMCNACIONSITE20262",
-				            "TIMSA1DAANAD605SEMCNACIONSITE20261",
-				            "TIMSA1DAANAD605SEMCNACIONSITE20262",
-				            "TIMSA1DAANAD605SEMCNACIONSITE20263",
-				            "ATACAFATACAF605SEMCNACIONNORMAL20263",
-				            "HIRNN0HIRNN0605SEMCNACIONNORMAL20262",
-				            "HIRNN0HIRNN0605SEMCNACIONNORMAL20263"},
+					// Lista de exceções partilhada: ver a query Excecoes_SBTNEWS no grupo Config
 				    // Exceções = let // Condicional solicitada ticket Intercom 96052764 [Melhoria SBT] - Criação de Dashboard "Venda Líquida Carteira Atual" – SBT News (Fase 2 | Chamado 85579164)     
 					// 	#"Códigos Núcleo" = {434522,433991,433968,433687,433688,433685,433675,433456,436008,436379,437426,435038,435037,435638
 				    //         ,437707}, // 4659 [Melhoria SBT] - Inclusão de negociação - Intercom: 98881620
@@ -477,17 +430,14 @@ table R0002
 					SBTNEWS = Table.AddColumn(Source, "is_SBTNEWS", each try
 								if List.Contains(Text.Split(array_SBTNEWS, ","), [Cod_Nucleo], Comparer.OrdinalIgnoreCase) then "Sim" // Condicional solicitada ticket 72675899 - Ajuste de exibição dos dados do SBT News nos dashboards - 72675899
 				        // else    if List.Contains({"MAISSBT", "SITE"}, [Cod_Nucleo], Comparer.OrdinalIgnoreCase) and DateTime.Date( [Data] ) >= #date(2026, 4, 1) then "Sim"
-						else    if List.Contains(Exceções, [chaveT], Comparer.OrdinalIgnoreCase) then "Sim" // Condicional solicitada ticket Intercom 96052764 [Melhoria SBT] - Criação de Dashboard "Venda Líquida Carteira Atual" – SBT News (Fase 2 | Chamado 85579164)        
+						else    if List.Contains(Excecoes_SBTNEWS, [chaveT], Comparer.OrdinalIgnoreCase) then "Sim" // Condicional solicitada ticket Intercom 96052764 [Melhoria SBT] - Criação de Dashboard "Venda Líquida Carteira Atual" – SBT News (Fase 2 | Chamado 85579164)        
 						else    "Não" otherwise "Não", type text),
 				    #"Ajuste Nucleo SBTNEWS" = Table.ReplaceValue(SBTNEWS, each [Cod_Nucleo],
 				            each if Text.Trim(Text.Clean([Cod_Nucleo])) = "MAISSBT" and [is_SBTNEWS] = "Sim" then "SBTNMAI"
 				            else if Text.Trim(Text.Clean([Cod_Nucleo])) = "SITE" and [is_SBTNEWS] = "Sim" then "SBTNDIG"
 				            else Text.Trim(Text.Clean([Cod_Nucleo])),
 				        Replacer.ReplaceText,{"Cod_Nucleo"}), 
-					MergeAccount = let
-						Juntar = Table.NestedJoin(#"Ajuste Nucleo SBTNEWS", {"Cod_Cliente"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter ),
-						Expandir = Table.ExpandTableColumn( Juntar, "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"})
-						in Table.ReplaceValue( Expandir, null, "Setor Privado", Replacer.ReplaceValue, {"Tipo Governo"})
+					MergeAccount = Fn_TipoGoverno(#"Ajuste Nucleo SBTNEWS", "Cod_Cliente")
 				in
 					MergeAccount
 				```

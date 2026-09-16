@@ -14,10 +14,11 @@ table Activity
 		annotation SummarizationSetBy = Automatic
 
 	column activitytypecode
-		dataType: string
+		dataType: int64
 		isHidden
+		formatString: 0
 		lineageTag: 9e3ef8d1-5f0a-467f-8684-3337857f51ab
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: activitytypecode
 
 		changedProperty = IsHidden

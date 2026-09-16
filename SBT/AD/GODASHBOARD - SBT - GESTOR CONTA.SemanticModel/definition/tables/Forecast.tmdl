@@ -109,19 +109,6 @@ table Forecast
 		mode: import
 		queryGroup: Carteira
 		source =
-				// let
-				//     SQL = "Select#(lf)    ForecastPeriod.Date,#(lf)    Entity.ExternalCode,#(lf)    Forecast.Amount As ForecastAmount,#(lf)    Forecast.ExpectedAmount As ForecastExpAmount,#(lf)    [User].ExternalCode As ExternalCodeExecutivo,#(lf)    Company.ExternalCode As ExternalCodeCompany,#(lf)    Entity1.ExternalCode As ExternalCodeAgency,#(lf)    ForecastMediaType.ExternalCode As MediaType,#(lf)    ForecastSaleType.ExternalCode As SaleType#(lf)From#(lf)    Forecast Inner Join#(lf)    ForecastPeriod On Forecast.PeriodID = ForecastPeriod.ID Inner Join#(lf)    Entity On Forecast.EntityClientID = Entity.ID Inner Join#(lf)    [User] On Forecast.UserID = [User].ID Inner Join#(lf)    Company On Forecast.CompanyID = Company.ID Inner Join#(lf)    Entity Entity1 On Forecast.EntityAgencyID = Entity1.ID Inner Join#(lf)    ForecastMediaType On Forecast.MediaTypeID = ForecastMediaType.ID Inner Join#(lf)    ForecastSaleType On Forecast.SaleTypeID = ForecastSaleType.ID",
-				//     Source = Sql.Database(Org, BD, [Query = SQL]),
-				//     #"Uppercased Text" = Table.TransformColumns(Source,{{"MediaType", Text.Upper, type text}, {"SaleType", Text.Upper, type text}}),
-				//     #"Added Custom" = Table.AddColumn(#"Uppercased Text", "Forecast", each [ForecastAmount]+[ForecastExpAmount]),
-				//     #"Multiplied Column" = Table.TransformColumns(#"Added Custom", {{"Forecast", each _ * 1000, type number}}),
-				//     #"Filtered Rows" = Table.SelectRows(#"Multiplied Column", each ([Forecast] <> 0)),
-				//     #"Merged Queries" = Table.NestedJoin(#"Filtered Rows", {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
-				//     #"Expanded Account" = Table.ExpandTableColumn(#"Merged Queries", "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"}),
-				//     #"Replaced Value" = Table.ReplaceValue(#"Expanded Account",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"})
-				// in
-				//     #"Replaced Value"
-				
 				let
 				    SQL = "SELECT
 				            ForecastPeriod.Date,
@@ -153,14 +140,11 @@ table Forecast
 				        WHERE
 				            ABS(Forecast.Amount + Forecast.ExpectedAmount) > 0",
 				    Source = Sql.Database(Org, BD, [Query = SQL]),
-				    #"Merged Account" =  let
-				        Juntar = Table.NestedJoin(Source, {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
-				        Expandir = Table.ExpandTableColumn(Juntar, "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"})
-				        in Table.ReplaceValue(Expandir, null, "Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"})
+				    #"Merged Account" = Fn_TipoGoverno(Source, "ExternalCode")
 				in
 				    #"Merged Account"
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
 
 	annotation PBI_NavigationStepName = Navigation
 

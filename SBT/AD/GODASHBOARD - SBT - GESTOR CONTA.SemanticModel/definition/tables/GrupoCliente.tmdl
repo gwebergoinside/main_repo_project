@@ -53,13 +53,6 @@ table GrupoCliente
 		mode: import
 		queryGroup: CORE
 		source = ```
-				// let
-				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)    TRIM(union1.Cliente) As Cliente,#(lf)    TRIM(union1.GrupoCliente) As GrupoCliente,#(lf)    TRIM(union1.ClienteCodigo) As ClienteCodigo,#(lf)    TRIM(union1.GrupoClienteCodigo) As GrupoClienteCodigo,#(lf)    TRIM(union1.GrupoCliente) + ' (' + TRIM(union1.GrupoClienteCodigo) + ')' AS Grupo_Cliente#(lf)From#(lf)    ((Select#(lf)         cl.Name As Cliente,#(lf)         g.Name As GrupoCliente,#(lf)         cl.ExternalCode As ClienteCodigo,#(lf)         g.ExternalCode As GrupoClienteCodigo#(lf)     From#(lf)         Entity cl Inner Join#(lf)         Entity g On cl.ExternalCode = g.ExternalCode#(lf)                 And cl.ParentID Is Null Inner Join#(lf)         EntityEntityType On g.ID = EntityEntityType.EntityID#(lf)     Where#(lf)         EntityEntityType.EntityTypeID = 1)#(lf)     Union#(lf)     (Select#(lf)         cl.Name As Cliente,#(lf)         g.Name As GrupoCliente,#(lf)         cl.ExternalCode As ClienteCodigo,#(lf)         g.ExternalCode As GrupoClienteCodigo#(lf)     From#(lf)         Entity cl Inner Join#(lf)         Entity g On cl.ParentID = g.ID Inner Join#(lf)         EntityEntityType On g.ID = EntityEntityType.EntityID#(lf)     Where#(lf)         EntityEntityType.EntityTypeID = 1)) As union1"]),
-				//     #"Uppercased Text" = Table.TransformColumns(Source,{{"ClienteCodigo", Text.Upper, type text}}),
-				//     #"Removed Duplicates" = Table.Distinct(#"Uppercased Text", {"ClienteCodigo"})
-				// in
-				//     #"Removed Duplicates"
-				
 				let
 				    SQL = "WITH
 				        GrupoPorExternalCode AS (
@@ -112,13 +105,26 @@ table GrupoCliente
 				            )
 				        
 				        SELECT
-				            TRIM(Union1.Cliente) AS Cliente,
-				            TRIM(Union1.GrupoCliente) AS GrupoCliente,
-				            UPPER(TRIM(Union1.ClienteCodigo)) AS ClienteCodigo,
-				            TRIM(Union1.GrupoClienteCodigo) AS GrupoClienteCodigo,
-				            TRIM(Union1.GrupoCliente) + ' (' + TRIM(Union1.GrupoClienteCodigo) + ')' AS Grupo_Cliente
-				        FROM
-				            Union1",
+				            D.Cliente,
+				            D.GrupoCliente,
+				            D.ClienteCodigo,
+				            D.GrupoClienteCodigo,
+				            D.Grupo_Cliente
+				            FROM (
+				                SELECT
+				                    TRIM(Union1.Cliente) AS Cliente,
+				                    TRIM(Union1.GrupoCliente) AS GrupoCliente,
+				                    UPPER(TRIM(Union1.ClienteCodigo)) AS ClienteCodigo,
+				                    TRIM(Union1.GrupoClienteCodigo) AS GrupoClienteCodigo,
+				                    TRIM(Union1.GrupoCliente) + ' (' + TRIM(Union1.GrupoClienteCodigo) + ')' AS Grupo_Cliente,
+				                    -- ClienteCodigo é o lado 1 de várias relações: uma linha por código, com desempate determinístico
+				                    ROW_NUMBER() OVER (
+				                        PARTITION BY UPPER(TRIM(Union1.ClienteCodigo))
+				                        ORDER BY Union1.GrupoClienteCodigo, Union1.Cliente
+				                    ) AS rn
+				                FROM Union1
+				            ) AS D
+				            WHERE D.rn = 1",
 				    Source = Sql.Database(Org, BD, [Query = SQL])
 				in
 				    Source

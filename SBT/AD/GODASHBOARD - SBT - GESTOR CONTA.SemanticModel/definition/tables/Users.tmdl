@@ -55,11 +55,10 @@ table Users
 				    #"Filtered Rows" = Table.SelectRows(#"Expanded UsersMain", each ([go_st_codigoexterno] <> null)),
 				    #"Removed Other Columns1" = Table.SelectColumns(#"Filtered Rows",{"go_bl_executivocorporativo", "go_st_codigoexterno", "Local", "Gerente"}),
 				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns1",{{"go_bl_executivocorporativo", "Executivo Corporativo"}}),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Executivo Corporativo", type text}}),
-				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type",null,"Não Definido",Replacer.ReplaceValue,{"Executivo Corporativo"}),
-				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","true","Sim",Replacer.ReplaceText,{"Executivo Corporativo"}),
-				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","false","Não",Replacer.ReplaceText,{"Executivo Corporativo"}),
-				    #"Uppercased Text" = Table.TransformColumns(#"Replaced Value2",{{"go_st_codigoexterno", Text.Upper, type text}}),
+				    // Uma passagem em vez de cinco: conversão para texto, três substituições e o Text.Upper
+				    #"Uppercased Text" = Table.TransformColumns(#"Renamed Columns", {
+				        {"Executivo Corporativo", each if _ = null then "Não Definido" else if _ = true then "Sim" else "Não", type text},
+				        {"go_st_codigoexterno", Text.Upper, type text}}),
 				    #"Removed Duplicates" = Table.Distinct(#"Uppercased Text", {"go_st_codigoexterno"})
 				in
 				    #"Removed Duplicates"

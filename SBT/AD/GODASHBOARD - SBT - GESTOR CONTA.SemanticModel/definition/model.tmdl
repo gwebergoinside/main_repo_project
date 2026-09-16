@@ -26,7 +26,7 @@ queryGroup Dynamics
 
 	annotation PBI_QueryGroupOrder = 4
 
-annotation PBI_QueryOrder = ["Forecast","ForecastSnapshot","PosicaoCarteira","Forecast_OPT","R0002","Org","BD","BDExternal","@CRMOrgUrl","Link","YearUpdateVeiculacao","GrupoCliente","GrupoAgencia","@Medidas","Users","Site","#CDSTEntitySource","GetCDST_EntityTable","UsersMain","Posi","Search Users","UsersGestores","UsersNacionais","RLS","Veiculacao_Segmento","Valor","VendaImportada","RLSFILTER","Account","Neg","OPTSCreated","OPTSModified","OPTSIntegrated","ExecutivoVenda","EmpresaFaturamento","EmpresaVenda","Conta","Tipo Midia","TipoCliente","Briefings","Activity","Solicitacao","NucleoOport","Nucleos","OPTSIntegrated_2","TipoMidia","TipoVenda","Metas","LY","Titulos","Tipo Governo","Emp_Venda","Executivos","SnapShot","SnapShotAnterior","DashboardUserPermission","SnapShotForecast","TipoComercial","images","lista de imagem","logo header","RangeStart","RangeEnd","PosicaoCarteiraNacional","YearUpdateData","array_SBTNEWS"]
+annotation PBI_QueryOrder = ["Forecast","ForecastSnapshot","SnapShotForecast","PosicaoCarteira","Forecast_OPT","R0002","Org","BD","BDExternal","@CRMOrgUrl","Link","YearUpdateVeiculacao","GrupoCliente","GrupoAgencia","@Medidas","Users","Site","#CDSTEntitySource","GetCDST_EntityTable","UsersMain","Posi","Search Users","UsersGestores","UsersNacionais","RLS","Veiculacao_Segmento","Valor","RLSFILTER","Account","Neg","OPTSDatas","ExecutivoVenda","AccountNome","Conta","Tipo Midia","TipoCliente","Briefings","Activity","Solicitacao","NucleoOport","Nucleos","OPTSIntegrated_2","TipoMidia","TipoVenda","Metas","LY","Titulos","Tipo Governo","Emp_Venda","Executivos","DashboardUserPermission","TipoComercial","images","lista de imagem","logo header","RangeStart","RangeEnd","PosicaoCarteiraNacional","YearUpdateData","array_SBTNEWS","Excecoes_SBTNEWS","Fn_TipoGoverno"]
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
@@ -61,8 +61,6 @@ ref table Forecast_OPT
 ref table Veiculacao_Segmento
 ref table Emp_Faturamento
 ref table ForecastSnapshot
-ref table SnapShotAnterior
-ref table SnapShot
 ref table SnapShotForecast
 ref table TipoComercial
 ref table DashboardUserPermission

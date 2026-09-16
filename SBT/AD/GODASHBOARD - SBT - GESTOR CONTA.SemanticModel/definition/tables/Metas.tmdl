@@ -133,10 +133,7 @@ table Metas
 				            AND F.ContextId = 1 -- Conta
 				            AND ABS(F.GoalAmount) > 0",
 				    Source = Sql.Database(Org, BD, [Query = SQL]),
-				    #"Merged Account" = let
-				        Juntar = Table.NestedJoin(Source, {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
-				        Expandir = Table.ExpandTableColumn(Juntar, "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"})
-				        in Table.ReplaceValue(Expandir, null, "Setor Privado", Replacer.ReplaceValue, {"Tipo Governo"})
+				    #"Merged Account" = Fn_TipoGoverno(Source, "ExternalCode")
 				in
 				    #"Merged Account"
 

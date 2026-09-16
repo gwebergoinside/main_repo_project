@@ -150,19 +150,6 @@ table ForecastSnapshot
 		mode: import
 		queryGroup: Carteira
 		source = ```
-				// let
-				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)    FP.Date,#(lf)    E.ExternalCode,#(lf)    F.Amount As ForecastAmount,#(lf)    F.ExpectedAmount As ForecastExpAmount,#(lf)    U.ExternalCode As ExternalCodeExecutivo,#(lf)    C.ExternalCode As ExternalCodeCompany,#(lf)    E1.ExternalCode As ExternalCodeAgency,#(lf) Snapshotcode, #(lf)    FMT.ExternalCode As MediaType,#(lf)    FST.ExternalCode As SaleType#(lf)From#(lf)    ForecastSnapshot F Inner Join#(lf)    ForecastPeriod FP On F.PeriodID = FP.ID Inner Join#(lf)    Entity E On F.EntityClientID = E.ID Inner Join#(lf)    [User] U On F.UserID = U.ID Inner Join#(lf)    Company C On F.CompanyID = C.ID Inner Join#(lf)    Entity E1 On F.EntityAgencyID = E1.ID Inner Join#(lf)    ForecastMediaType FMT On F.MediaTypeID = FMT.ID Inner Join#(lf)    ForecastSaleType FST On F.SaleTypeID = FST.ID"]),
-				//     #"Filtered Rows1" = Table.SelectRows(Source, each ([Snapshotcode] = SnapShot or [Snapshotcode] = SnapShotAnterior)),
-				//     #"Uppercased Text" = Table.TransformColumns(#"Filtered Rows1",{{"MediaType", Text.Upper, type text}, {"SaleType", Text.Upper, type text}}),
-				//     #"Added Custom" = Table.AddColumn(#"Uppercased Text", "Forecast", each [ForecastAmount]+[ForecastExpAmount]),
-				//     #"Multiplied Column" = Table.TransformColumns(#"Added Custom", {{"Forecast", each _ * 1000, type number}}),
-				//     #"Filtered Rows" = Table.SelectRows(#"Multiplied Column", each ([Forecast] <> 0)),
-				//     #"Merged Queries" = Table.NestedJoin(#"Filtered Rows", {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
-				//     #"Expanded Account" = Table.ExpandTableColumn(#"Merged Queries", "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"}),
-				//     #"Replaced Value" = Table.ReplaceValue(#"Expanded Account",null,"Setor Privado",Replacer.ReplaceValue,{"Tipo Governo"})
-				// in
-				//     #"Replaced Value"
-				
 				let
 				    SQL = "Select
 				            FP.Date,
@@ -193,21 +180,17 @@ table ForecastSnapshot
 				        JOIN ForecastSaleType FST
 				            ON F.SaleTypeID = FST.ID
 				        WHERE 1 = 1
-				            AND ABS(F.Amount + F.ExpectedAmount) > 0",
-				    #"Valores SnapShot" = {"20220805", "20220617"},
+				            AND ABS(F.Amount + F.ExpectedAmount) > 0
+				            AND F.Snapshotcode IN ('20220617', '20220805')",
 				    Source = Sql.Database(Org, BD, [Query = SQL]),
-				    #"Filtrar SnapShot" = Table.SelectRows(Source, each List.Contains(#"Valores SnapShot", [Snapshotcode])),
-				    #"Merged Account" = let
-				        Juntar = Table.NestedJoin(#"Filtrar SnapShot", {"ExternalCode"}, Account, {"accountnumber"}, "Account", JoinKind.LeftOuter),
-				        Expandir = Table.ExpandTableColumn(Juntar, "Account", {"go_pl_classificacaogoverno_display"}, {"Tipo Governo"})
-				        in Table.ReplaceValue(Expandir, null, "Setor Privado", Replacer.ReplaceValue,{"Tipo Governo"})
+				    #"Merged Account" = Fn_TipoGoverno(Source, "ExternalCode")
 				in
 				    #"Merged Account"
 				```
 
 	changedProperty = IsHidden
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_NavigationStepName = Navegação
 

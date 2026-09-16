@@ -36,11 +36,9 @@ table PosicaoCarteiraNacional
 	partition PosicaoCarteiraNacional = m
 		mode: import
 		queryGroup: Config
-		source = ```
+		source =
 				let
-				    SQL = "SELECT
-				    --    CustomerPortfolio.EntityClientID,
-				    --    CustomerPortfolio.UserID,
+				    SQL = "SELECT DISTINCT
 				        [User].ExternalCode AS ExecutivoCodigo,
 				        ENTITYAGENCY.ExternalCode AgenciaCodigo,
 				        ENTITYCLIENT.ExternalCode AS ClienteCodigo,
@@ -52,21 +50,13 @@ table PosicaoCarteiraNacional
 				        ON ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID
 				    LEFT JOIN Entity ENTITYAGENCY
 				        On ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID
-					WHERE
-						CustomerPortfolio.[Status] = 1
-				    GROUP BY 
-				    --    CustomerPortfolio.EntityClientID,
-				    --    CustomerPortfolio.UserID,
-				        [User].ExternalCode,
-				        ENTITYAGENCY.ExternalCode,
-				        ENTITYCLIENT.ExternalCode,
-				        UPPER(ENTITYCLIENT.ExternalCode + ENTITYAGENCY.ExternalCode) ",
+				    WHERE 1 = 1
+				        AND CustomerPortfolio.[Status] = 1",
 				    Source = Sql.Database(Org, BD, [Query = SQL]),
 				    #"Códigos Nacionais" = List.Select( List.Distinct( List.Union({UsersNacionais[go_st_codigoexterno], UsersNacionais[go_st_codigoexterno_gestores]})), each _ <> "" and _ <> null ),
 				    Restringir = Table.SelectRows( Source, each List.Contains(#"Códigos Nacionais", [ExecutivoCodigo] ))
 				in
 				    Restringir
-				```
 
 	annotation PBI_NavigationStepName = Navegação
 

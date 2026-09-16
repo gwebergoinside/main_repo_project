@@ -29,14 +29,6 @@ table TipoComercial
 		mode: import
 		queryGroup: CORE
 		source =
-				// let
-				//     Source = Sql.Database(Org, BDExternal, [Query="SELECT#(lf)TC.Cod_Tipo_Comercial#(lf),TC.Descricao#(lf)FROM#(lf)SCTV.Tipo_Comercial TC"]),
-				//     #"Trimmed Text" = Table.TransformColumns(Source,{{"Descricao", Text.Trim, type text}}),
-				//     #"Inserted Merged Column" = Table.AddColumn(#"Trimmed Text", "Merged", each Text.Combine({[Cod_Tipo_Comercial], " (", [Descricao], ")"}), type text),
-				//     #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"Merged", "Tipo Comercial"}})
-				// in
-				//     #"Renamed Columns"
-				
 				let
 				    SQL = "SELECT
 				              LTRIM( RTRIM( TC.Cod_Tipo_Comercial )) AS Cod_Tipo_Comercial

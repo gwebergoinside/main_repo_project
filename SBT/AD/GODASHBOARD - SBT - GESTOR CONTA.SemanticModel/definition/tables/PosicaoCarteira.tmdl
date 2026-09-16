@@ -188,8 +188,6 @@ table PosicaoCarteira
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation UnderlyingDateTimeDataType = Date
-
 	column StartInicio
 		dataType: dateTime
 		isHidden
@@ -201,8 +199,6 @@ table PosicaoCarteira
 		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation UnderlyingDateTimeDataType = Date
 
 	column ClientesDiretos = IF.EAGER( PosicaoCarteira[Cliente] = PosicaoCarteira[Agencia], "CLIENTES DIRETOS", "COM AGÊNCIAS" )
 		isHidden
@@ -267,54 +263,57 @@ table PosicaoCarteira
 		mode: import
 		queryGroup: Carteira
 		source =
-				// let
-				//     Source = Sql.Database(Org, BD, [Query="Select#(lf)    [User].Name Executivo,#(lf)    [User].ExternalCode ExecutivoCodigo,#(lf)    ENTITYCLIENT.Name Cliente,#(lf)    ENTITYCLIENT.ExternalCode ClienteCodigo,#(lf)    ENTITYAGENCY.Name Agencia,#(lf)    ENTITYAGENCY.ExternalCode AgenciaCodigo,#(lf)    Format(CustomerPortfolio.EndDate, 'dd-MM-yyyy') As DataFim,#(lf)    Format(CustomerPortfolio.BeginDate, 'dd-MM-yyyy') As DataInicio,#(lf)    Company.ExternalCode As EmpVendaCodigo,#(lf)    Company.Name As EmpVenda,#(lf)    CONCAT(Company.ExternalCode, ' - ', Company.Name) As EmpresaVenda,#(lf)    CustomerPortfolio.ID#(lf)From#(lf)    CustomerPortfolio Left Join#(lf)    [User] On [User].ID = CustomerPortfolio.UserID Left Join#(lf)    Entity ENTITYAGENCY On ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID Left Join#(lf)    Entity ENTITYCLIENT On ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID Inner Join#(lf)    Company On CustomerPortfolio.CompanyID = Company.ID"]),
-				//     Custom3 = Table.ReplaceValue(Source,null,"31-12-2099",Replacer.ReplaceValue,{"DataFim"}),
-				//     #"Changed Type" = Table.TransformColumnTypes(Custom3,{{"DataInicio", type date}, {"DataFim", type date}}),
-				//     #"Inserted Month" = Table.AddColumn(#"Changed Type", "Mes Inicio", each Date.Month([DataInicio]), Int64.Type),
-				//     #"Inserted Month Name" = Table.AddColumn(#"Inserted Month", "Mes Nome Inicio", each Date.MonthName([DataInicio]), type text),
-				//     #"Inserted Year" = Table.AddColumn(#"Inserted Month Name", "Ano Inicio", each Date.Year([DataInicio]), Int64.Type),
-				//     #"Inserted Month1" = Table.AddColumn(#"Inserted Year", "Mes Fim", each Date.Month([DataFim]), Int64.Type),
-				//     #"Inserted End of Month" = Table.AddColumn(#"Inserted Month1", "EndFim", each Date.EndOfMonth([DataFim]), type date),
-				//     #"Inserted Start of Month" = Table.AddColumn(#"Inserted End of Month", "StartInicio", each Date.StartOfMonth([DataInicio]), type date)
-				// in
-				//     #"Inserted Start of Month"
-				
 				let
-				    SQL = "Select
-				        [User].Name Executivo,
-				        [User].ExternalCode ExecutivoCodigo,
-				        ENTITYCLIENT.Name Cliente,
-				        ENTITYCLIENT.ExternalCode ClienteCodigo,
-				        ENTITYAGENCY.Name Agencia,
-				        ENTITYAGENCY.ExternalCode AgenciaCodigo,
-				        CustomerPortfolio.BeginDate AS DataInicio,
-				        CASE WHEN CustomerPortfolio.EndDate IS NULL THEN DATEFROMPARTS(YEAR(GETDATE()) + 5, 12, 31) ELSE CustomerPortfolio.EndDate END AS DataFim,
-				        Company.ExternalCode As EmpVendaCodigo,
-				        Company.Name As EmpVenda,
-				        CONCAT(Company.ExternalCode, ' - ', Company.Name) As EmpresaVenda,
-				        CustomerPortfolio.ID,
-				        UPPER(ENTITYCLIENT.ExternalCode + ENTITYAGENCY.ExternalCode) AS codIntegrador,
-				        CASE WHEN
-				            CustomerPortfolio.Status = 1 THEN 'Sim'
-				            ELSE 'Não' END AS Status
-				    From CustomerPortfolio
-				    Left Join [User]
-				        On [User].ID = CustomerPortfolio.UserID
-				    Left Join Entity ENTITYAGENCY
-				        On ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID
-				    Left Join Entity ENTITYCLIENT
-				        On ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID
-				    Left Join Company
-				        On CustomerPortfolio.CompanyID = Company.ID",
+				    SQL = "WITH Base AS (
+				            SELECT
+				                [User].Name AS Executivo,
+				                [User].ExternalCode AS ExecutivoCodigo,
+				                ENTITYCLIENT.Name AS Cliente,
+				                ENTITYCLIENT.ExternalCode AS ClienteCodigo,
+				                ENTITYAGENCY.Name AS Agencia,
+				                ENTITYAGENCY.ExternalCode AS AgenciaCodigo,
+				                CustomerPortfolio.BeginDate AS DataInicio,
+				                COALESCE(CustomerPortfolio.EndDate, DATEFROMPARTS(YEAR(GETDATE()) + 5, 12, 31)) AS DataFim,
+				                Company.ExternalCode AS EmpVendaCodigo,
+				                Company.Name AS EmpVenda,
+				                CONCAT(Company.ExternalCode, ' - ', Company.Name) AS EmpresaVenda,
+				                CustomerPortfolio.ID,
+				                UPPER(ENTITYCLIENT.ExternalCode + ENTITYAGENCY.ExternalCode) AS codIntegrador,
+				                CASE WHEN CustomerPortfolio.Status = 1 THEN 'Sim' ELSE 'Não' END AS Status
+				            FROM CustomerPortfolio
+				            LEFT JOIN [User]
+				                ON [User].ID = CustomerPortfolio.UserID
+				            LEFT JOIN Entity ENTITYAGENCY
+				                ON ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID
+				            LEFT JOIN Entity ENTITYCLIENT
+				                ON ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID
+				            LEFT JOIN Company
+				                ON CustomerPortfolio.CompanyID = Company.ID
+				        )
+				        SELECT
+				            Base.Executivo,
+				            Base.ExecutivoCodigo,
+				            Base.Cliente,
+				            Base.ClienteCodigo,
+				            Base.Agencia,
+				            Base.AgenciaCodigo,
+				            Base.DataInicio,
+				            Base.DataFim,
+				            Base.EmpVendaCodigo,
+				            Base.EmpVenda,
+				            Base.EmpresaVenda,
+				            Base.ID,
+				            Base.codIntegrador,
+				            Base.Status,
+				            MONTH(Base.DataInicio) AS [Mes Inicio],
+				            YEAR(Base.DataInicio)  AS [Ano Inicio],
+				            MONTH(Base.DataFim)    AS [Mes Fim],
+				            DATEFROMPARTS(YEAR(Base.DataInicio), MONTH(Base.DataInicio), 1) AS StartInicio,
+				            EOMONTH(Base.DataFim) AS EndFim
+				        FROM Base",
 				    Source = Sql.Database(Org, BD, [Query = SQL]),
-				    #"Inserted Coluns" = Table.AddColumn( Table.AddColumn( Table.AddColumn( Table.AddColumn( Table.AddColumn( Table.AddColumn( Source,
-				        "Mes Inicio", each Date.Month([DataInicio]), Int64.Type),
-				        "Mes Nome Inicio", each Date.MonthName([DataInicio]), type text),
-				        "Ano Inicio", each Date.Year([DataInicio]), Int64.Type),
-				        "Mes Fim", each Date.Month([DataFim]), Int64.Type),
-				        "StartInicio", each Date.StartOfMonth(DateTime.Date([DataInicio])), type date),
-				        "EndFim", each Date.EndOfMonth(DateTime.Date([DataFim])), type date)
+				    // Só o nome do mês fica no Power Query: depende da cultura do modelo, não da do servidor
+				    #"Inserted Coluns" = Table.AddColumn(Source, "Mes Nome Inicio", each Date.MonthName([DataInicio]), type text)
 				in
 				    #"Inserted Coluns"
 
