@@ -2152,14 +2152,31 @@ table @Medidas
 		displayFolder: Ganho e Perdido Anunciante
 		lineageTag: a5dbddb4-c338-4f2d-8ff3-ffb80a428a97
 
+	measure 'Snapshot Atual' =
+			
+			// Substitui o parâmetro SnapShot, apagado do modelo.
+			// O código sai dos próprios dados: única fonte é o IN (...) do SQL do ForecastSnapshot.
+			CALCULATE ( MAX ( ForecastSnapshot[Snapshotcode] ), ALL ( ForecastSnapshot ) )
+		displayFolder: Forecast SnapShot
+		lineageTag: 7c41d0ae-35b2-4f9d-9a16-2e6b08c3d114
+
+	measure 'Snapshot Anterior' =
+			
+			// Substitui o parâmetro SnapShotAnterior, apagado do modelo.
+			CALCULATE ( MIN ( ForecastSnapshot[Snapshotcode] ), ALL ( ForecastSnapshot ) )
+		displayFolder: Forecast SnapShot
+		lineageTag: 1f58b6c2-90d3-4e77-8b45-63a0c1e2f985
+
 	measure 'Forecast SnapShot' =
 			
+			VAR _Snapshot = [Snapshot Atual]
+			RETURN
 			IF (
 			    HASONEFILTER ( R0002[ChannelDisplay] ),
 			    BLANK (),
 			    CALCULATE (
 			        SUM ( ForecastSnapshot[Forecast] ),
-			        ForecastSnapshot[Snapshotcode] = Snapshot
+			        ForecastSnapshot[Snapshotcode] = _Snapshot
 			    )
 			)
 		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
@@ -2172,9 +2189,11 @@ table @Medidas
 
 	measure 'Forecast SnapShot Carteira' =
 			
+			VAR _Snapshot = [Snapshot Atual]
+			RETURN
 			CALCULATE (
 			    SUM ( ForecastSnapshot[Forecast] ),
-			    ForecastSnapshot[Snapshotcode] = Snapshot
+			    ForecastSnapshot[Snapshotcode] = _Snapshot
 			)
 		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
 		displayFolder: Forecast SnapShot
@@ -2477,12 +2496,14 @@ table @Medidas
 
 	measure 'Forecast SnapShotAnterior' =
 			
+			VAR _Snapshot = [Snapshot Anterior]
+			RETURN
 			IF (
 			    HASONEFILTER ( R0002[ChannelDisplay] ),
 			    BLANK (),
 			    CALCULATE (
 			        SUM ( ForecastSnapshot[Forecast] ),
-			        ForecastSnapshot[Snapshotcode] = SnapshotAnterior
+			        ForecastSnapshot[Snapshotcode] = _Snapshot
 			    )
 			)
 		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
@@ -2495,9 +2516,11 @@ table @Medidas
 
 	measure 'Forecast SnapShotAnterior Carteira' =
 			
+			VAR _Snapshot = [Snapshot Anterior]
+			RETURN
 			CALCULATE (
 			    SUM ( ForecastSnapshot[Forecast] ),
-			    ForecastSnapshot[Snapshotcode] = SnapshotAnterior
+			    ForecastSnapshot[Snapshotcode] = _Snapshot
 			)
 		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
 		displayFolder: Forecast SnapShot
@@ -2765,7 +2788,7 @@ table @Medidas
 
 	measure 'Tituto Workshop' =
 			
-			"Workshop " & MAX ( SnapShot[SnapShot] )
+			"Workshop " & [Snapshot Atual]
 		displayFolder: Forecast SnapShot
 		lineageTag: cd81a571-a563-42e9-9c97-da44e9a5df27
 
