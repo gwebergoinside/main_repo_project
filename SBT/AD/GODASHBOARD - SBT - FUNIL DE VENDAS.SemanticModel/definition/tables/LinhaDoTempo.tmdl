@@ -22,13 +22,32 @@ table LinhaDoTempo
 		queryGroup: Dynamics
 		source =
 				let
-				       Accounts = Sql.Database(OrgDynamics, BD_Dynamics, [Query="select #(lf)#(tab)l.go_leadid#(lf)#(tab)--,a.subject#(lf)#(tab),MAX(CASE WHEN ISNULL(a.subject, ISNULL(a.description, a.activitytypecodename)) IS NOT NULL THEN 'Atividade' ELSE 'nac' END) AS has#(lf)from #(lf)#(tab)activitypointer a  #(lf)left join go_lead l ON a.regardingobjectid = l.go_leadid#(lf)left join go_opportunity o ON l.go_leadid = o.go_lk_originatingleadid#(lf)where #(lf)#(tab)yeaR(l.createdon) >= year(getdate())-3#(lf)GROUP BY#(lf)        l.go_leadid"]),
-				    #"Appended Query" = Table.Combine({Accounts, Anotacoes}),
-				    #"Grouped Rows" = Table.Group(#"Appended Query", {"go_leadid"}, {{"Linha do Tempo", each Text.Combine([has], "/"), type text}})
+				    SQL = "SELECT
+				            L.go_leadid,
+				            MAX(CASE
+				                    WHEN COALESCE(A.subject, A.description, A.activitytypecodename) IS NOT NULL THEN 'Atividade'
+				                    ELSE 'nac'
+				                END) AS has
+				        FROM activitypointer A
+				        INNER JOIN go_lead L
+				            ON L.go_leadid = A.regardingobjectid
+				        WHERE YEAR(L.createdon) >= YEAR(GETDATE()) - 3
+				        GROUP BY L.go_leadid
+				        UNION ALL
+				        SELECT
+				            L.go_leadid,
+				            'Anotação' AS has
+				        FROM go_lead L
+				        INNER JOIN annotation AN
+				            ON AN.objectid = L.go_leadid
+				        WHERE YEAR(L.createdon) >= YEAR(GETDATE()) - 3
+				            AND AN.createdon IS NOT NULL
+				        GROUP BY L.go_leadid",
+				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query = SQL]),
+				    #"Linha do Tempo por Lead" = Table.Group(Source, {"go_leadid"}, {{"Linha do Tempo", each Text.Combine([has], "/"), type text}})
 				in
-				    #"Grouped Rows"
+				    #"Linha do Tempo por Lead"
 
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

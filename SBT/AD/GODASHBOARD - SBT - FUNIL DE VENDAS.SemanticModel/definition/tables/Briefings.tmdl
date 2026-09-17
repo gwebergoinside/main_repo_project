@@ -1,44 +1,11 @@
 table Briefings
 	lineageTag: 681db3eb-fa07-4866-91d0-666fbd7f5eae
 
-	column go_briefingid
-		dataType: string
-		lineageTag: 152abff1-188a-4c0d-923e-f2fe9d81f059
-		summarizeBy: none
-		sourceColumn: go_briefingid
-
-		annotation SummarizationSetBy = Automatic
-
 	column go_lk_oportunidadedeorigemid
 		dataType: string
 		lineageTag: 29509734-c802-47f5-8ba2-91ccec91a77f
 		summarizeBy: none
 		sourceColumn: go_lk_oportunidadedeorigemid
-
-		annotation SummarizationSetBy = Automatic
-
-	column go_name
-		dataType: string
-		lineageTag: 1d0ef10f-463e-4f9e-94db-f5cd54a1ac71
-		summarizeBy: none
-		sourceColumn: go_name
-
-		annotation SummarizationSetBy = Automatic
-
-	column statecode
-		dataType: int64
-		formatString: 0
-		lineageTag: f4b1be5a-c581-41b8-89e9-9a1c6586a3e0
-		summarizeBy: sum
-		sourceColumn: statecode
-
-		annotation SummarizationSetBy = Automatic
-
-	column statecodename
-		dataType: string
-		lineageTag: 6792a334-e869-4069-a6ca-3bf275e4a084
-		summarizeBy: none
-		sourceColumn: statecodename
 
 		annotation SummarizationSetBy = Automatic
 
@@ -50,18 +17,29 @@ table Briefings
 
 		annotation SummarizationSetBy = Automatic
 
+	column go_name
+		dataType: string
+		lineageTag: 1d0ef10f-463e-4f9e-94db-f5cd54a1ac71
+		summarizeBy: none
+		sourceColumn: go_name
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Briefings-61dc4513-11d0-4fcf-b972-ddb8506afaff = m
 		mode: import
 		queryGroup: Dynamics
 		source =
 				let
-				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   go_briefingid,#(lf)   go_lk_oportunidadedeorigemid,#(lf)   go_lk_leadorigem,#(lf)   go_name,#(lf)   statecode,#(lf)   statecodename#(lf)FROM#(lf)   go_briefing"]),
-				    #"Removed Other Columns" = Table.SelectColumns(Source,{"go_briefingid", "go_lk_oportunidadedeorigemid", "go_lk_leadorigem", "go_name", "statecode", "statecodename"}),
-				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([statecode] <> 2))
+				    SQL = "SELECT
+				            go_lk_oportunidadedeorigemid,
+				            go_lk_leadorigem,
+				            go_name
+				        FROM go_briefing
+				        WHERE statecode <> 2 OR statecode IS NULL",
+				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query = SQL])
 				in
-				    #"Filtered Rows"
+				    Source
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_NavigationStepName = Navegação
-

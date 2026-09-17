@@ -22,24 +22,6 @@ table RLS
 
 		annotation SummarizationSetBy = Automatic
 
-	column Filho = LOOKUPVALUE( RLSFILTER[go_st_codigoexterno], RLSFILTER[PortalsAzureID], RLS[FirstName] )
-		isHidden
-		lineageTag: ce9a67a6-59c8-44da-9cc6-c26fcd82880f
-		summarizeBy: none
-
-		changedProperty = IsHidden
-
-		annotation SummarizationSetBy = Automatic
-
-	column Pai = LOOKUPVALUE( RLSFILTER[go_st_codigoexterno], RLSFILTER[PortalsAzureID], RLS[Parent] )
-		isHidden
-		lineageTag: 3f97549e-6aeb-4599-b8ca-d578c394e5e9
-		summarizeBy: none
-
-		changedProperty = IsHidden
-
-		annotation SummarizationSetBy = Automatic
-
 	column Parent
 		dataType: string
 		isHidden

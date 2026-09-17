@@ -1,7 +1,7 @@
 cultureInfo en-US
 
 	linguisticMetadata =
-			{
+									{
 			  "Version": "3.1.0",
 			  "Language": "en-US",
 			  "Entities": {
@@ -26,35 +26,6 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
-			    },
-			    "grupo_cliente.grupo_cliente": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "GrupoCliente",
-			          "ConceptualProperty": "GrupoCliente"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "grupo cliente": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "grupo cliente name": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "GrupoCliente": {
-			            "Type": "Noun",
-			            "State": "Generated",
-			            "Weight": 0.99
-			          }
-			        }
-			      ],
-			      "NameType": "Name"
 			    },
 			    "grupo_cliente.cliente": {
 			      "Definition": {
@@ -367,22 +338,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "calendario.dia": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Calendario",
-			          "ConceptualProperty": "Dia"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "dia": {
-			            "State": "Generated"
-			          }
-			        }
-			      ]
-			    },
 			    "calendario.me": {
 			      "Definition": {
 			        "Binding": {
@@ -425,22 +380,6 @@ cultureInfo en-US
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Weight": 0.727
-			          }
-			        }
-			      ]
-			    },
-			    "calendario.trimestre": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Calendario",
-			          "ConceptualProperty": "Trimestre"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "trimestre": {
-			            "State": "Generated"
 			          }
 			        }
 			      ]
@@ -518,60 +457,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "medidas.qtd_oportunidades": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "#Medidas",
-			          "ConceptualProperty": "QTD Oportunidades"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "medidas.qtd_appointments": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "#Medidas",
-			          "ConceptualProperty": "QTD Appointments"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "medidas.qtd_clientes": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "#Medidas",
-			          "ConceptualProperty": "QTD Clientes"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "medidas.qtd_pendentes_card": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "#Medidas",
-			          "ConceptualProperty": "QTD Pendentes Card"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "medidas.qtd_clientes_card": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "#Medidas",
-			          "ConceptualProperty": "QTD Clientes Card"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "medidas.qtd_briefing_card": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "#Medidas",
-			          "ConceptualProperty": "QTD Briefing Card"
-			        }
-			      },
-			      "State": "Generated"
-			    },
 			    "medidas.qtd_oportunidades1": {
 			      "Definition": {
 			        "Binding": {
@@ -586,15 +471,6 @@ cultureInfo en-US
 			        "Binding": {
 			          "ConceptualEntity": "@Medidas",
 			          "ConceptualProperty": "Valor Negociado"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "grupocliente.grupo_cliente": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "GrupoCliente",
-			          "ConceptualProperty": "Grupo_Cliente"
 			        }
 			      },
 			      "State": "Generated"
@@ -620,113 +496,11 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "neg.nomeexecutivo": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Neg",
-			          "ConceptualProperty": "NomeExecutivo"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "neg.first_createdon": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Neg",
-			          "ConceptualProperty": "First_Createdon"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Data Criação": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
-			    },
 			    "lead.statuscodename": {
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "Lead",
 			          "ConceptualProperty": "statuscodename"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "contato2.createdon": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Contato(2)",
-			          "ConceptualProperty": "createdon"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "contato2.modifiedby": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Contato(2)",
-			          "ConceptualProperty": "modifiedby"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "contato2.go_bt_contatocobranca": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Contato(2)",
-			          "ConceptualProperty": "go_bt_contatocobranca"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "contato2.go_bt_gestorpiap": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Contato(2)",
-			          "ConceptualProperty": "go_bt_gestorpiap"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "contato2.go_pl_tiporegistro_display": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Contato(2)",
-			          "ConceptualProperty": "go_pl_tiporegistro_display"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "contato2.go_pl_cargo_display": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Contato(2)",
-			          "ConceptualProperty": "go_pl_cargo_display"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "contato2.go_pl_departamento_display": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Contato(2)",
-			          "ConceptualProperty": "go_pl_departamento_display"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "contato2.nome": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Contato(2)",
-			          "ConceptualProperty": "Nome"
 			        }
 			      },
 			      "State": "Generated"
@@ -855,48 +629,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "neg.go_int_versao": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Neg",
-			          "ConceptualProperty": "go_int_versao"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Versão": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
-			    },
-			    "neg.go_name": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Neg",
-			          "ConceptualProperty": "go_name"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "OPT": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
-			    },
 			    "lead.go_name": {
 			      "Definition": {
 			        "Binding": {
@@ -1010,36 +742,6 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
-			    },
-			    "neg.clientes": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Neg",
-			          "ConceptualProperty": "Clientes"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Cliente": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
-			    },
-			    "carteira.datainicio": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Carteira",
-			          "ConceptualProperty": "DataInicio"
-			        }
-			      },
-			      "State": "Generated"
 			    },
 			    "lead.estadoopt": {
 			      "Definition": {
@@ -1441,50 +1143,6 @@ cultureInfo en-US
 			    }
 			  },
 			  "Relationships": {
-			    "grupo_cliente_is_named_grupo_cliente": {
-			      "Binding": {
-			        "ConceptualEntity": "GrupoCliente"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "grupo_cliente": {
-			          "Target": {
-			            "Entity": "grupo_cliente"
-			          }
-			        },
-			        "grupo_cliente.grupo_cliente": {
-			          "Target": {
-			            "Entity": "grupo_cliente.grupo_cliente"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Name": {
-			            "Subject": {
-			              "Role": "grupo_cliente"
-			            },
-			            "Name": {
-			              "Role": "grupo_cliente.grupo_cliente"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "grupo_cliente"
-			            },
-			            "Object": {
-			              "Role": "grupo_cliente.grupo_cliente"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99
-			        }
-			      ]
-			    },
 			    "grupo_cliente_is_named_ID": {
 			      "Binding": {
 			        "ConceptualEntity": "GrupoCliente"
@@ -1797,38 +1455,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "calendario_has_dia": {
-			      "Binding": {
-			        "ConceptualEntity": "Calendario"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "calendario": {
-			          "Target": {
-			            "Entity": "calendario"
-			          }
-			        },
-			        "calendario.dia": {
-			          "Target": {
-			            "Entity": "calendario.dia"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "calendario"
-			            },
-			            "Object": {
-			              "Role": "calendario.dia"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99
-			        }
-			      ]
-			    },
 			    "calendario_has_me": {
 			      "Binding": {
 			        "ConceptualEntity": "Calendario"
@@ -1886,38 +1512,6 @@ cultureInfo en-US
 			            },
 			            "Object": {
 			              "Role": "calendario.mes_no"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99
-			        }
-			      ]
-			    },
-			    "calendario_has_trimestre": {
-			      "Binding": {
-			        "ConceptualEntity": "Calendario"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "calendario": {
-			          "Target": {
-			            "Entity": "calendario"
-			          }
-			        },
-			        "calendario.trimestre": {
-			          "Target": {
-			            "Entity": "calendario.trimestre"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "calendario"
-			            },
-			            "Object": {
-			              "Role": "calendario.trimestre"
 			            }
 			          },
 			          "State": "Generated",

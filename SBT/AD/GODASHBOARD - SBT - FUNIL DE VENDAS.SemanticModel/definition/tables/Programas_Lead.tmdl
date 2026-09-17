@@ -9,22 +9,6 @@ table Programas_Lead
 
 		annotation SummarizationSetBy = Automatic
 
-	column go_go_lead_go_programid
-		dataType: string
-		lineageTag: aa2b3ca0-b73f-4cb6-a7a3-697936ed719a
-		summarizeBy: none
-		sourceColumn: go_go_lead_go_programid
-
-		annotation SummarizationSetBy = Automatic
-
-	column go_programid
-		dataType: string
-		lineageTag: 7761d17a-38e7-461a-8c0b-504df2228a33
-		summarizeBy: none
-		sourceColumn: go_programid
-
-		annotation SummarizationSetBy = Automatic
-
 	column programname
 		dataType: string
 		lineageTag: 4f046857-2ea1-4f10-9fab-922cf48c1ba0
@@ -38,9 +22,14 @@ table Programas_Lead
 		queryGroup: CORE
 		source =
 				let
-				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query="select #(lf) b.go_go_lead_go_programid#(lf),b.go_leadid#(lf),b.go_programid#(lf),a.go_st_name as programname#(lf)from dbo.go_go_lead_go_program b#(lf)left join dbo.go_program a on a.go_programid = b.go_programid"])
+				    SQL = "SELECT DISTINCT
+				            LP.go_leadid,
+				            P.go_st_name AS programname
+				        FROM go_go_lead_go_program LP
+				        LEFT JOIN go_program P
+				            ON P.go_programid = LP.go_programid",
+				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query = SQL])
 				in
 				    Source
 
 	annotation PBI_ResultType = Table
-

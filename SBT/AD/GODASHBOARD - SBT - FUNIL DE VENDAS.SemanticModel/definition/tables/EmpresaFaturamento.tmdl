@@ -22,11 +22,19 @@ table EmpresaFaturamento
 		queryGroup: Dynamics
 		source =
 				let
-				    Accounts = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)    ev.name EmpFat#(lf)    ,ev.accountid EmpFatId#(lf)FROM#(lf)    account ev"])
+				    SQL = "SELECT
+				            EV.name      AS EmpFat,
+				            EV.accountid AS EmpFatId
+				        FROM account EV
+				        WHERE EXISTS (
+				            SELECT 1
+				            FROM go_opportunity OPT
+				            WHERE OPT.go_lk_empresafaturamentoid = EV.accountid
+				        )",
+				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query = SQL])
 				in
-				    Accounts
+				    Source
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_NavigationStepName = Navegação
-

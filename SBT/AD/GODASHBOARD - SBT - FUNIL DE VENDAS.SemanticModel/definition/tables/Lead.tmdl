@@ -9,32 +9,6 @@ table Lead
 
 		annotation SummarizationSetBy = Automatic
 
-	column statecode
-		dataType: int64
-		formatString: 0
-		lineageTag: a8fcdea3-d9d4-43a4-b9a8-0f148750a4ea
-		summarizeBy: sum
-		sourceColumn: statecode
-
-		annotation SummarizationSetBy = Automatic
-
-	column statecodename
-		dataType: string
-		lineageTag: 163129c1-6136-4bc4-9f4d-b4edf8af7010
-		summarizeBy: none
-		sourceColumn: statecodename
-
-		annotation SummarizationSetBy = Automatic
-
-	column statuscode
-		dataType: int64
-		formatString: 0
-		lineageTag: c79f8b8b-edee-40c7-9261-3c8fbb3ffbb1
-		summarizeBy: sum
-		sourceColumn: statuscode
-
-		annotation SummarizationSetBy = Automatic
-
 	column statuscodename
 		dataType: string
 		lineageTag: ce2d2535-2ecc-4cf0-a82a-ded8182e0794
@@ -56,14 +30,6 @@ table Lead
 		lineageTag: 90fd7981-45f9-457c-8780-b3db7dbf4ea9
 		summarizeBy: none
 		sourceColumn: ownerid
-
-		annotation SummarizationSetBy = Automatic
-
-	column cod_executivo
-		dataType: string
-		lineageTag: d7be3f49-96fd-4e45-b815-6e4dc4485c52
-		summarizeBy: none
-		sourceColumn: cod_executivo
 
 		annotation SummarizationSetBy = Automatic
 
@@ -99,14 +65,6 @@ table Lead
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Conta Primária'
-		dataType: string
-		lineageTag: 7e071fd8-733c-4398-85ef-7d2e17f11f77
-		summarizeBy: none
-		sourceColumn: Conta Primária
-
-		annotation SummarizationSetBy = Automatic
-
 	column URL
 		dataType: string
 		lineageTag: 6d5469f7-bf6d-4ed7-ae62-bef6bb17ae78
@@ -117,7 +75,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column Opt =
-			
+
 			LOOKUPVALUE(
 			    Neg[go_st_codnegociacao]
 			    ,Neg[go_lk_originatingleadid]
@@ -129,40 +87,15 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column Status = ```
-			
-			--IF( 'Lead'[CodSCTV] <> BLANK(), "Integrado", 'Lead'[statuscodename] )
+
 			SWITCH(
 			    TRUE()
 			    ,'Lead'[Opt CodSCTV]  <> BLANK(), "Qualificado"
 			    ,'Lead'[statuscodename] = "Em aprovação","Em aprovação"
 			    ,'Lead'[statuscodename] = "Aprovado", "Aprovado"
 			    ,'Lead'[statuscodename] = "Rejeitado", "Rejeitado"
-			    ,'Lead'[statuscodename] = "Crédito não aprovado", "Desqualificado" 
-			    ,'Lead'[statuscodename] = "Optou por outra emissora", "Desqualificado" 
-			    ,'Lead'[statuscodename] = "Prazo diferenciado não aprovado pelo financeiro SBT", "Desqualificado" 
-			    ,'Lead'[statuscodename] = "Alegou que a grade do SBT não é atrativa", "Desqualificado" 
-			    ,'Lead'[statuscodename] = "De/Para", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Não É Possível Contatar", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Não é Possível contatar, sem retorno do cliente", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Postergou investimentos", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Lead aberto indevidamente - Erro operacional", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Alega que o SBT não atende o perfil necessário", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Corte de verba no Cliente", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Desistiu de anunciar em TV", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Não É Possível Contatar", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Não Está Mais Interessado", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Cancelado", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Cancelamento da Campanha", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Concorrência", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Conflito de Segmento", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Disponibilidade de Espaço", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Sem Disponibilidade de Espaço", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Perda da Negociação", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Outros", "Desqualificado"
-			    ,'Lead'[statuscodename] = "Perdido", "Desqualificado"
 			    ,'Lead'[statuscodename] = "Em inserção", "Em inserção"
 			    ,'Lead'[statuscodename] = "Novo", "Novo"
-			    ,'Lead'[statuscodename] = "Desqualificado", "Desqualificado"
 			    ,'Lead'[statuscodename] = "Qualificado", "Qualificado"
 			    ,'Lead'[statuscodename] = "Relacionamento", "Relacionamento"
 			    ,'Lead'[statuscodename] = "Integrado", "Integrado"
@@ -177,7 +110,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Opt Estado' =
-			
+
 			LOOKUPVALUE(
 			    Neg[Estado]
 			    ,Neg[go_lk_originatingleadid]
@@ -189,7 +122,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Opt CodSCTV' =
-			
+
 			LOOKUPVALUE(
 			    Neg[go_st_codnegociacaosctv]
 			    ,Neg[go_lk_originatingleadid]
@@ -210,7 +143,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Opt URL' =
-			
+
 			LOOKUPVALUE(
 			    Neg[URL]
 			    ,Neg[go_lk_originatingleadid]
@@ -221,20 +154,8 @@ table Lead
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Opt DeuOrigemConta' =
-			
-			LOOKUPVALUE(
-			    Neg[DeuOrigemConta]
-			    ,Neg[go_lk_originatingleadid]
-			    ,'Lead'[go_leadid]
-			)
-		lineageTag: aae46357-29bf-4c21-9805-bfd4c7d0626f
-		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
 	column idStatus =
-			
+
 			SWITCH(
 			    TRUE()
 			        ,'Lead'[Status] = "Integrado", 4
@@ -266,7 +187,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Opt Valor Negociado' =
-			
+
 			LOOKUPVALUE(
 			    Neg[go_mn_valornegociado]
 			    ,Neg[go_lk_originatingleadid]
@@ -281,18 +202,10 @@ table Lead
 		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
 
 	column 'Briefing Lead' =
-			
+
 			CONCATENATEX(FILTER(ALL(Briefings), Briefings[go_lk_leadorigem] = 'Lead'[go_leadid]), Briefings[go_name],", ")
 		lineageTag: b85081e1-a34c-4178-8e01-846035f0ff29
 		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
-	column go_st_subject
-		dataType: string
-		lineageTag: a3174fa5-c7e3-4478-b1f1-a5dcaa2bb6d5
-		summarizeBy: none
-		sourceColumn: go_st_subject
 
 		annotation SummarizationSetBy = Automatic
 
@@ -303,7 +216,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column Cliente =
-			
+
 			VAR _1 =
 			LOOKUPVALUE(
 			    GrupoCliente[Cliente_Cod]
@@ -318,7 +231,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column Programa =
-			
+
 			CONCATENATEX(FILTER(ALL(Programas_Lead), Programas_Lead[go_leadid] = 'Lead'[go_leadid]), Programas_Lead[programname],", ")
 		lineageTag: f42f9772-89c8-44c3-91c7-2b3f45803789
 		summarizeBy: none
@@ -360,7 +273,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Tipo Midia' =
-			
+
 			LOOKUPVALUE(
 			    Neg[TipoMidiaCod]
 			    ,Neg[go_lk_originatingleadid]
@@ -372,7 +285,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Opt Id' =
-			
+
 			LOOKUPVALUE(
 			    Neg[OpportunityId]
 			    ,Neg[go_lk_originatingleadid]
@@ -391,7 +304,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Opt Data Integracao' =
-			
+
 			VAR _1 =
 			LOOKUPVALUE(
 			    Neg[Data de Integração_Final]
@@ -407,7 +320,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Opt EmpFat' =
-			
+
 			LOOKUPVALUE(
 			    Neg[go_lk_empresafaturamentoid]
 			    ,Neg[go_lk_originatingleadid]
@@ -430,15 +343,12 @@ table Lead
 		annotation UnderlyingDateTimeDataType = Date
 
 	column 'Opt Data Integracao_Opt' =
-			
-			VAR _1 =
+
 			LOOKUPVALUE(
 			    Neg[Data de Integração_Final]
 			    ,Neg[go_lk_originatingleadid]
 			    ,'Lead'[go_leadid]
 			)
-			RETURN
-			_1
 		formatString: Short Date
 		lineageTag: 4f150327-8f62-4936-9f10-a93eb318370f
 		summarizeBy: none
@@ -446,7 +356,7 @@ table Lead
 		annotation SummarizationSetBy = Automatic
 
 	column 'Linha do Tempo' =
-			
+
 			VAR _1 =
 			LOOKUPVALUE( LinhaDoTempo[Linha do Tempo], LinhaDoTempo[go_leadid], 'Lead'[go_leadid] )
 			RETURN
@@ -470,28 +380,30 @@ table Lead
 		queryGroup: Dynamics
 		source =
 				let
-				       Accounts = Sql.Database(OrgDynamics, BD_Dynamics, [Query="select #(lf)   GL.[go_leadid]#(lf)   ,GL.[statecode]#(lf)   ,GL.[statecodename]#(lf)   ,GL.[statuscode]#(lf)   ,GL.[statuscodename]#(lf)   ,GL.[go_st_subject]#(lf)   ,GL.[go_name]#(lf)   ,GL.createdon#(lf)   ,GL.modifiedon as [Data Modificação]#(lf)   ,GL.ownerid#(lf)   ,su.go_st_codigoexterno as cod_executivo#(lf)   ,su.fullname as Executivo#(lf)   ,GL.go_lk_empresaprincipalidname as [Empresa Principal]#(lf)   ,GL.go_pl_funcaoname as [Função]#(lf)   ,GL.go_pl_tiponegociacaoname as [Tipo Negociação]#(lf)   ,GL.go_pl_offertypename as [Tipo Oferta]#(lf)   ,GL.go_lk_parentaccountidname as [Conta Primária]#(lf)   --,GL.[go_st_program] as Programa#(lf)   ,a.accountnumber as ClienteCodigo#(lf)  -- ,bri.go_briefingid as [Briefing]#(lf)   ,GL.go_st_companyname#(lf)FROM #(lf)   [dbo].[go_lead] GL#(lf)   left join systemuser su on GL.ownerid = su.systemuserid#(lf)   left join Account a on GL.go_lk_parentaccountid = a.accountid#(lf)   --left join go_briefing bri on GL.[go_leadid] = bri.go_lk_leadorigem#(lf)"]),
-				    #"Changed Type2" = Table.TransformColumnTypes(Accounts,{{"createdon", type datetimezone}}),
-				    #"Adjusted Time Zone35" = Table.AddColumn(#"Changed Type2", "createdon_adjusted", each DateTimeZone.SwitchZone([createdon], -3)),
-				    #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Adjusted Time Zone35", {{"createdon_adjusted", each Text.BeforeDelimiter(Text.From(_, "pt-PT"), " "), type text}}),
-				    #"Changed Type3" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter",{{"createdon_adjusted", type datetime}}),
-				    #"Removed Previous Column35" = Table.RemoveColumns(#"Changed Type3", {"createdon"}),
-				    #"Renamed Adjusted Column35" = Table.RenameColumns(#"Removed Previous Column35", {{"createdon_adjusted", "createdon"}}),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Adjusted Column35",{{"createdon", type date}}),
-				    Custom1 = Table.AddColumn(#"Changed Type", "URL", each LinkLead & [go_leadid]),
-				    #"Renamed Columns" = Table.RenameColumns(Custom1,{{"cod_executivo", "cod_executivo1"}}),
-				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns",null,"SEM CODIGO",Replacer.ReplaceValue,{"cod_executivo1"}),
-				    #"Renamed Columns1" = Table.RenameColumns(#"Replaced Value",{{"ClienteCodigo", "ClienteCodigo1"}}),
-				    #"Replaced Value1" = Table.ReplaceValue(#"Renamed Columns1",null,"SEM CODIGO",Replacer.ReplaceValue,{"ClienteCodigo1"}),
-				    #"Inserted Merged Column" = Table.AddColumn(#"Replaced Value1", "cod_executivo", each if [cod_executivo1] = "SEM CODIGO" then Text.Combine({[cod_executivo1], "_", [go_st_companyname]})
-				else [cod_executivo1]),
-				    #"Added Custom" = Table.AddColumn(#"Inserted Merged Column", "ClienteCodigo", each if [ClienteCodigo1] = "SEM CODIGO" then Text.Combine({[ClienteCodigo1], "_", [go_st_companyname]})
-				else [ClienteCodigo1]),
-				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"cod_executivo1", "ClienteCodigo1"})
+				    SQL = "SELECT
+				            GL.go_leadid,
+				            GL.statuscodename,
+				            GL.go_name,
+				            GL.go_st_companyname,
+				            GL.ownerid,
+				            CAST(DATEADD(hour, -3, GL.createdon) AS date) AS createdon,
+				            GL.modifiedon                       AS [Data Modificação],
+				            SU.fullname                         AS Executivo,
+				            GL.go_lk_empresaprincipalidname     AS [Empresa Principal],
+				            GL.go_pl_funcaoname                 AS [Função],
+				            GL.go_pl_tiponegociacaoname         AS [Tipo Negociação],
+				            GL.go_pl_offertypename              AS [Tipo Oferta],
+				            ISNULL(A.accountnumber, 'SEM CODIGO_' + ISNULL(GL.go_st_companyname, '')) AS ClienteCodigo
+				        FROM go_lead GL
+				        LEFT JOIN systemuser SU
+				            ON SU.systemuserid = GL.ownerid
+				        LEFT JOIN account A
+				            ON A.accountid = GL.go_lk_parentaccountid",
+				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query = SQL]),
+				    #"URL do Lead" = Table.AddColumn(Source, "URL", each LinkLead & [go_leadid], type text)
 				in
-				    #"Removed Columns"
+				    #"URL do Lead"
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_NavigationStepName = Navigation
-

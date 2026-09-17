@@ -2,24 +2,40 @@ table Programas_Opt_Lead
 	lineageTag: cfa57bc6-a1a2-49cd-8012-4a0d27f91b4b
 
 	column DynamicsOpportunityID
+		dataType: string
 		lineageTag: b9895fad-ec31-4d09-811c-13ff4dddcc6a
 		summarizeBy: none
-		isNameInferred
-		sourceColumn: Programas_OPT[DynamicsOpportunityID]
+		sourceColumn: DynamicsOpportunityID
 
 		annotation SummarizationSetBy = Automatic
 
 	column Title
+		dataType: string
 		lineageTag: a2bec327-7955-46d7-817a-e1900c64cb1e
 		summarizeBy: none
-		isNameInferred
-		sourceColumn: Programas_OPT[Title]
+		sourceColumn: Title
 
 		annotation SummarizationSetBy = Automatic
 
-	partition Programas_Opt_Lead-8a40feac-75bb-4cc7-b9be-3a9de0912d9f = calculated
+	partition Programas_Opt_Lead-8a40feac-75bb-4cc7-b9be-3a9de0912d9f = m
 		mode: import
-		source = Programas_OPT
+		queryGroup: CORE
+		source =
+				let
+				    SQL = "SELECT DISTINCT
+				            UPPER(DOP.DynamicsOpportunityID) AS DynamicsOpportunityID,
+				            P.Title
+				        FROM NegotiationDiscount ND
+				        INNER JOIN Program P
+				            ON P.ID = ND.ProgramID
+				        INNER JOIN Negotiation N
+				            ON N.ID = ND.NegotiationID
+				        INNER JOIN DynamicsOpportunity DOP
+				            ON DOP.ID = N.OpportunityID
+				        WHERE DOP.DynamicsOpportunityID IS NOT NULL
+				            AND DOP.DynamicsOpportunityID <> '99999999-9999-9999-9999-999999999999'",
+				    Source = Sql.Database(Org, BD, [Query = SQL])
+				in
+				    Source
 
-	annotation PBI_Id = b1686f274cd740bd93829a598a53ab06
-
+	annotation PBI_ResultType = Table

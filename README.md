@@ -18,7 +18,7 @@ relatorios_pbi/
 ├── RTP/                 # Relatórios do cliente / projeto RTP
 │   └── AD/              # AD - 5 anos + YUMMI 2 anos (.pbip, Report, SemanticModel)
 ├── SBT/                 # Relatórios do cliente / projeto SBT
-│   └── AD/              # GODASHBOARD - Gestor Conta (.pbip, Report, SemanticModel)
+│   └── AD/              # GODASHBOARD - Gestor Conta e Funil de Vendas (.pbip, Report, SemanticModel)
 ├── Soico/               # Relatórios do cliente / projeto SOICO
 │   ├── AD/              # AD e AD - Operação Comercial (.pbip, Report, SemanticModel)
 │   ├── TX/              # TX (.pbip, Report, SemanticModel)
@@ -111,6 +111,7 @@ git push origin master
 | 14/09/2026 | Adiciona projeto SBT (AD - GODASHBOARD Gestor Conta), com RLS já definido em `definition/roles/`; MediaLivre prepara RLS dinâmico pela tabela `pbi_tb_rls` e reescreve em `TREATAS` as medidas que usavam `USERELATIONSHIP`/`CROSSFILTER` (proibidos sob RLS) — ver `MediaLivre/Encomendas e Negociações/RLS.md` |
 | 15/09/2026 | SBT (AD) migrado do conector Dataverse legacy (`Cds.Entities`) para o endpoint TDS (`CommonDataService.Database`) — troca centralizada nas expressões `#CDSTEntitySource` e `GetCDST_EntityTable`, com shim que mantém os nomes `<coluna>_display` e deixa as 22 queries a jusante intactas — ver `SBT/AD/MIGRACAO-TDS.md` |
 | 15/09/2026 | SBT (AD) — refatoração do modelo: queries duplicadas unificadas (`EmpresaFaturamento`+`EmpresaVenda` → `AccountNome`; `OPTSCreated`+`OPTSModified`+`OPTSIntegrated` → `OPTSDatas`), lista de exceções SBT News e bloco `Tipo Governo` passam a partilhados (`Excecoes_SBTNEWS`, `Fn_TipoGoverno`), filtros e colunas calculadas empurrados para SQL e −498 linhas de código morto — ver `SBT/AD/REFATORACAO-MODELO.md` |
+| 17/09/2026 | SBT (AD) — adiciona o modelo `GODASHBOARD - SBT - FUNIL DE VENDAS` e otimiza-o: as 10 queries `Sql.Database` passam a ter o SQL em texto multi-linha na primeira variável, transformações de M empurradas para SQL, `OPTSCreated`/`OPTSModified`/`OPTSIntegrated`/`Anotacoes`/`Programas_OPT` eliminadas (4 → 1 leituras de `go_opportunity` por refresh) e −64 colunas sem uso nos visuais — ver `SBT/AD/OTIMIZACAO-FUNIL-VENDAS.md` |
 
 ---
 

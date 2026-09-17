@@ -40,65 +40,6 @@ expression Link = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f70
 
 	annotation PBI_ResultType = Text
 
-expression OPTSCreated =
-		let
-		    Opportunities = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   createdon,#(lf)   go_st_codnegociacao#(lf)FROM#(lf)   go_opportunity"]),
-		    #"Grouped Rows" = Table.Group(Opportunities, {"go_st_codnegociacao"}, {{"createdon", each List.Min([createdon]), type nullable datetimezone}}),
-		    #"Changed Type35" = Table.TransformColumnTypes( #"Grouped Rows",{{"createdon", type datetimezone}}),
-		    #"Adjusted Time Zone35" = Table.AddColumn(#"Changed Type35", "createdon_adjusted", each DateTimeZone.SwitchZone([createdon], -3)),
-		    #"Extracted Text Before Delimiter35" = Table.TransformColumns(#"Adjusted Time Zone35", {{"createdon_adjusted", each Text.BeforeDelimiter(Text.From(_, "pt-PT"), " "), type text}}),
-		    #"Changed Type38" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter35",{{"createdon_adjusted", type datetime}}),
-		    #"Removed Previous Column35" = Table.RemoveColumns(#"Changed Type38", {"createdon"}),
-		    #"Renamed Adjusted Column35" = Table.RenameColumns(#"Removed Previous Column35", {{"createdon_adjusted", "createdon"}})
-		in
-		    #"Renamed Adjusted Column35"
-	lineageTag: 1d540321-e8dc-4918-80aa-21e6ec6f95b2
-	queryGroup: Dynamics
-
-	annotation PBI_ResultType = Table
-
-	annotation PBI_NavigationStepName = Navigation
-
-expression OPTSModified =
-		let
-		    Opportunities = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   modifiedon,#(lf)   go_st_codnegociacao#(lf)FROM#(lf)   go_opportunity"]),
-		    #"Grouped Rows" = Table.Group(Opportunities, {"go_st_codnegociacao"}, {{"modifiedon", each List.Min([modifiedon]), type nullable datetimezone}}),
-		    #"Changed Type35" = Table.TransformColumnTypes( #"Grouped Rows",{{"modifiedon", type datetimezone}}),
-		    #"Adjusted Time Zone35" = Table.AddColumn(#"Changed Type35", "createdon_adjusted", each DateTimeZone.SwitchZone([modifiedon], -3)),
-		    #"Extracted Text Before Delimiter35" = Table.TransformColumns(#"Adjusted Time Zone35", {{"createdon_adjusted", each Text.BeforeDelimiter(Text.From(_, "pt-PT"), " "), type text}}),
-		    #"Changed Type38" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter35",{{"createdon_adjusted", type datetime}}),
-		    #"Removed Previous Column35" = Table.RemoveColumns(#"Changed Type38", {"modifiedon"}),
-		    #"Renamed Adjusted Column35" = Table.RenameColumns(#"Removed Previous Column35", {{"createdon_adjusted", "modifiedon"}})
-		in
-		    #"Renamed Adjusted Column35"
-	lineageTag: 1fc8938f-5657-46a4-87e3-92f244e84c0c
-	queryGroup: Dynamics
-
-	annotation PBI_ResultType = Table
-
-	annotation PBI_NavigationStepName = Navigation
-
-expression OPTSIntegrated =
-		let
-		    Opportunities = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   go_dt_dataintegracao,#(lf)   go_st_codnegociacao#(lf)FROM#(lf)   go_opportunity"]),
-		    #"Changed Type35" = Table.TransformColumnTypes( Opportunities,{{"go_dt_dataintegracao", type datetimezone}}),
-		    #"Adjusted Time Zone35" = Table.AddColumn(#"Changed Type35", "createdon_adjusted", each DateTimeZone.SwitchZone([go_dt_dataintegracao], -3)),
-		    #"Extracted Text Before Delimiter35" = Table.TransformColumns(#"Adjusted Time Zone35", {{"createdon_adjusted", each Text.BeforeDelimiter(Text.From(_, "pt-PT"), " "), type text}}),
-		    #"Changed Type38" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter35",{{"createdon_adjusted", type datetime}}),
-		    #"Removed Previous Column35" = Table.RemoveColumns(#"Changed Type38", {"go_dt_dataintegracao"}),
-		    #"Renamed Adjusted Column35" = Table.RenameColumns(#"Removed Previous Column35", {{"createdon_adjusted", "go_dt_dataintegracao"}}),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Adjusted Column35",{{"go_dt_dataintegracao", type date}}),
-		    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([go_dt_dataintegracao] <> null)),
-		    #"Grouped Rows" = Table.Group(#"Filtered Rows", {"go_st_codnegociacao"}, {{"Data de Integração", each List.Min([go_dt_dataintegracao]), type nullable datetimezone}})
-		in
-		    #"Grouped Rows"
-	lineageTag: 1daf280a-efcc-4a46-94ce-52f15e6f9629
-	queryGroup: Dynamics
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-
 expression OrgDynamics = "sbtcomercialprd.crm2.dynamics.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 1a267ad6-9403-4179-9279-f97d031a3655
 	queryGroup: Config
@@ -122,12 +63,6 @@ expression BDExternal = "GONEXTADExternal" meta [IsParameterQuery=true, List={},
 	queryGroup: Config
 
 	annotation PBI_ResultType = Text
-
-expression LinkActivity = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=appointment&id=" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
-	lineageTag: d9f7a006-a21a-4217-bcf2-1801780e6156
-	queryGroup: Config
-
-	annotation PBI_ResultType = Exception
 
 expression #CDSTEntitySource =
 		let
@@ -195,16 +130,3 @@ expression UsersMain =
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Exception
-
-expression Anotacoes =
-		let
-		       Accounts = Sql.Database(OrgDynamics, BD_Dynamics, [Query="#(tab)select #(lf)#(tab)l.go_leadid#(lf)#(tab)--,an.subject#(lf)#(tab),MAX(CASE WHEN an.createdon IS NOT NULL THEN 'Anotação' ELSE 'nan' END) AS has#(lf)from #(lf)#(tab)go_lead l#(lf)left join go_opportunity o ON l.go_leadid = o.go_lk_originatingleadid#(lf)left join annotation an ON l.go_leadid = an.objectid#(lf)where#(lf)#(tab)yeaR(l.createdon) >= year(getdate())-3#(lf)#(tab)and an.createdon is not null#(tab)#(lf)#(tab)#(tab)#(lf)   #(lf)    GROUP BY#(lf)        l.go_leadid"])
-		in
-		    Accounts
-	lineageTag: 5766761d-5d91-45ee-9442-899a12ae6c84
-	queryGroup: Dynamics
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Table
-

@@ -25,13 +25,6 @@ table Calendario
 
 		annotation SummarizationSetBy = Automatic
 
-	column Dia = day(Calendario[Date])
-		formatString: 0
-		lineageTag: 74bfcbbb-8044-442b-8b96-c58bf8674ad6
-		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
 	column Mes =
 			SWITCH(
 			    MONTH(Calendario[Date])
@@ -51,67 +44,8 @@ table Calendario
 
 		annotation SummarizationSetBy = Automatic
 
-	column Trimestre = CONCATENATE("Trimestre ",ROUNDUP(MONTH([date])/3,0))
-		lineageTag: a35d1821-d5b2-457a-b4eb-276454df0c8c
-		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
 	column 'Tipo de Ano' = IF('Calendario'[Ano] = YEAR(NOW()) , "Corrente", IF('Calendario'[Ano] = YEAR(NOW())-1 ,"Anterior","Passado"))
 		lineageTag: e6f3ab31-2b86-413e-8d60-215cc53a17f4
-		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
-	column 'Dias Úteis' =
-			IF (NOT('Calendario'[Dia_]= 1|| ('Calendario'[Dia_]= 7)),1,0)
-			/*Dias Úteis = IF (NOT('Calendario'[Dia]= "Saturday" || ('Calendario'[Dia]= "Sunday")) && COUNTX(RELATEDTABLE('Feriados Nacionais'),1)<1,1,0)*/
-		formatString: 0
-		lineageTag: f3702a64-ad5a-4e9a-a4ab-c3cdd90a12f9
-		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
-	column Dia_ =
-			
-			WEEKDAY(Calendario[Date],1)
-		formatString: 0
-		lineageTag: bfabd9f5-ac03-437b-ba41-390530748e8a
-		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
-	column MêsCorrente =
-			
-			IF (
-			    AND ( [Date]>=DATE ( YEAR ( NOW () ), MONTH ( NOW () ), 1 ) ,[Date]<DATE ( YEAR ( NOW () ), MONTH ( NOW () )+1, 1) ),
-			    "Mês Corrente",
-			    IF (
-			        AND ( [Date]>=DATE ( YEAR ( NOW () ), MONTH ( NOW () )-12, 1 ),[Date]<[Today] ),
-			        "Meses Transactos",
-			        IF ( [Today] = 0, "" )
-			    )
-			)
-		lineageTag: 2ad31731-8ddb-41ae-bb26-e41b7755dea3
-		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
-	column Today = IF(Calendario[Date] = TODAY(), 1, 0)
-		formatString: 0
-		lineageTag: ad0ca97b-110e-4063-a6eb-10795ad698e9
-		summarizeBy: none
-
-		annotation SummarizationSetBy = Automatic
-
-	column Ano_Classificação =
-			
-			var _2 = YEAR(NOW()) //Atual
-			Var _3 = YEAR(NOW()) -1 //Anterior
-			
-			Return
-			IF( Calendario[Ano]> YEAR(NOW()), "Futuro", IF( Calendario[Ano] = _2, "Corrente", IF( Calendario[Ano] = _3, "Anterior", "Passado" ) ) )
-		lineageTag: 31b7ea8d-b471-463e-bf42-441d692bb5c5
 		summarizeBy: none
 
 		annotation SummarizationSetBy = Automatic

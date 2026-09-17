@@ -9,35 +9,11 @@ table Executivos
 
 		annotation SummarizationSetBy = Automatic
 
-	column ExecutivoCodigo
-		dataType: string
-		lineageTag: 56b0af4d-89e0-4fee-812e-28f282b0f4ce
-		summarizeBy: none
-		sourceColumn: ExecutivoCodigo
-
-		annotation SummarizationSetBy = Automatic
-
 	column systemuserid
 		dataType: string
 		lineageTag: 8003ba54-8afb-4688-80dc-0fed0a8fb05c
 		summarizeBy: none
 		sourceColumn: systemuserid
-
-		annotation SummarizationSetBy = Automatic
-
-	column azureactivedirectoryobjectid
-		dataType: string
-		lineageTag: 6e47d5db-085f-4b22-b1aa-1743e57375a9
-		summarizeBy: none
-		sourceColumn: azureactivedirectoryobjectid
-
-		annotation SummarizationSetBy = Automatic
-
-	column parentsystemuserid
-		dataType: string
-		lineageTag: 58518a85-f6f5-4e34-b5d2-9656060767a6
-		summarizeBy: none
-		sourceColumn: parentsystemuserid
 
 		annotation SummarizationSetBy = Automatic
 
@@ -54,13 +30,18 @@ table Executivos
 		queryGroup: CORE
 		source =
 				let
-				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   su.go_st_codigoexterno as ExecutivoCodigo,#(lf)   su.parentsystemuserid,#(lf)   su.systemuserid,#(lf)   su.azureactivedirectoryobjectid,#(lf)   su.fullname as Executivo,#(lf)   s.fullname as Gerente,#(lf)   CASE WHEN EXISTS (SELECT 1 FROM SystemUser WHERE parentsystemuserid = su.systemuserid) THEN 'Sim' ELSE 'Não' END as GerenteFlag#(lf)FROM#(lf)   SystemUser su#(lf)   Left Join SystemUser s on su.parentsystemuserid = s.systemuserid#(lf)"]),
-				    #"Added Custom" = Table.AddColumn(Source, "Gerente_New", each if [Gerente] = null and [GerenteFlag] = "Sim" then [Executivo] else [Gerente]),
-				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"Gerente", "GerenteFlag"}),
-				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Gerente_New", "Gerente"}}),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Gerente", type text}})
+				    SQL = "SELECT
+				            SU.systemuserid,
+				            SU.fullname AS Executivo,
+				            CASE
+				                WHEN GER.fullname IS NOT NULL THEN GER.fullname
+				                WHEN EXISTS (SELECT 1 FROM systemuser F WHERE F.parentsystemuserid = SU.systemuserid) THEN SU.fullname
+				            END AS Gerente
+				        FROM systemuser SU
+				        LEFT JOIN systemuser GER
+				            ON GER.systemuserid = SU.parentsystemuserid",
+				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query = SQL])
 				in
-				    #"Changed Type"
+				    Source
 
 	annotation PBI_ResultType = Table
-

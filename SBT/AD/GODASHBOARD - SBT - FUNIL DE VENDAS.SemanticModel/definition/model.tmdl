@@ -22,7 +22,7 @@ queryGroup Dynamics
 
 	annotation PBI_QueryGroupOrder = 4
 
-annotation PBI_QueryOrder = ["Org","OrgDynamics","CRMOrgUrl","BD","BD_Dynamics","Link","LinkLead","LinkActivity","GrupoCliente","@Medidas","Posi","RLS","RLSFILTER","OPTSCreated","OPTSModified","OPTSIntegrated","Titulos","Lead","Neg","Termometro","Status_Agregado","Estados","Executivos","BDExternal","DashboardUserPermission","#CDSTEntitySource","Briefings","GetCDST_EntityTable","UsersMain","Programas_OPT","Programas_Lead","Propostas","EmpresaFaturamento","Atualização","LinhaDoTempo","Anotacoes"]
+annotation PBI_QueryOrder = ["Org","OrgDynamics","CRMOrgUrl","BD","BD_Dynamics","Link","LinkLead","GrupoCliente","@Medidas","Posi","RLS","RLSFILTER","Titulos","Lead","Neg","Termometro","Status_Agregado","Estados","Executivos","BDExternal","DashboardUserPermission","#CDSTEntitySource","Briefings","GetCDST_EntityTable","UsersMain","Programas_Opt_Lead","Programas_Lead","Propostas","EmpresaFaturamento","Atualização","LinhaDoTempo"]
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
@@ -41,7 +41,6 @@ ref table Executivos
 ref table DashboardUserPermission
 ref table Briefings
 ref table StatusLeads
-ref table Programas_OPT
 ref table Status_Agregado
 ref table Programas_Lead
 ref table Termometro
