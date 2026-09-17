@@ -1,0 +1,25 @@
+table Atualização
+	lineageTag: 71964ac2-0171-4420-825f-45b77613e7ee
+
+	column Data_Hora
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: edb86db9-1c41-4519-879c-4a51f0c0510a
+		summarizeBy: none
+		sourceColumn: Data_Hora
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Atualização-a01933e6-d856-4795-94dc-1ed059e0bf28 = m
+		mode: import
+		source =
+				let
+				    Fonte = DateTimeZone.ToText(DateTimeZone.SwitchZone(DateTimeZone.UtcNow(), -3), [Format="dd/MM/yyyy HH:mm:ss", Culture="pt-BR"]),
+				    #"Convertido para Tabela" = #table(1, {{Fonte}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Convertido para Tabela",{{"Column1", "Data_Hora"}}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colunas Renomeadas",{{"Data_Hora", type datetime}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

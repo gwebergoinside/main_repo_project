@@ -1,0 +1,55 @@
+relationship afa2040b-77c4-4e72-8142-226630906286
+	fromColumn: Lead.ClienteCodigo
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 2610e883-bbf0-4525-a06a-95c4422b84aa
+	fromColumn: Lead.'Tipo Midia'
+	toColumn: TipoMidia.TipoMidia_Cod
+
+relationship 73676b36-7de4-4292-8090-ba45720569d3
+	crossFilteringBehavior: bothDirections
+	fromColumn: Programas_Lead.go_leadid
+	toColumn: Lead.go_leadid
+
+relationship 8da5ec04-0ec2-4000-b0a4-270ad14c5f8d
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Programas_Opt_Lead.DynamicsOpportunityID
+	toColumn: Lead.'Opt Id'
+
+relationship 811c485e-e040-5a21-dded-1412439f1078
+	fromColumn: Lead.'Opt Termometro cod'
+	toColumn: Termometro.ID
+
+relationship e9269ce9-e8b4-4913-8a30-8a64e24b8648
+	isActive: false
+	fromColumn: Lead.'Opt Data Integracao'
+	toColumn: Calendario.Date
+
+relationship 1dc3c269-b780-44d0-8c23-6ed3f32ff43c
+	fromColumn: Lead.'Tipo Oferta'
+	toColumn: TipoOferta.'Tipo Oferta'
+
+relationship dc9caabe-4aa7-4b38-8d0c-22cacf127980
+	fromColumn: Lead.'Opt EmpFat'
+	toColumn: EmpresaFaturamento.EmpFatId
+
+relationship 922edf9f-451c-48ef-8bb4-b812326c46e8
+	fromColumn: Lead.ownerid
+	toColumn: Executivos.systemuserid
+
+relationship a77cba9f-2f75-e774-ea65-fe6be2060f54
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: RLS.RLS
+	toColumn: Lead.ownerid
+
+relationship c7d21505-5461-4d1d-8571-01baf95fe3de
+	fromColumn: Lead.createdon
+	toColumn: Calendario.Date
+
+relationship f87bada4-735f-4c52-93ea-4d425161936c
+	fromColumn: Lead.idStatus
+	toColumn: StatusLeads.id
+

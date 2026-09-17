@@ -1,0 +1,34 @@
+table LinhaDoTempo
+	lineageTag: 30ddf3ba-5cab-44aa-99ea-d80d2844e719
+
+	column go_leadid
+		dataType: string
+		lineageTag: 25f0196f-efc4-47a2-811e-520d04f6840b
+		summarizeBy: none
+		sourceColumn: go_leadid
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Linha do Tempo'
+		dataType: string
+		lineageTag: 53760a5d-1f2c-49a2-b4d2-bfbcde520842
+		summarizeBy: none
+		sourceColumn: Linha do Tempo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LinhaDoTempo = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				       Accounts = Sql.Database(OrgDynamics, BD_Dynamics, [Query="select #(lf)#(tab)l.go_leadid#(lf)#(tab)--,a.subject#(lf)#(tab),MAX(CASE WHEN ISNULL(a.subject, ISNULL(a.description, a.activitytypecodename)) IS NOT NULL THEN 'Atividade' ELSE 'nac' END) AS has#(lf)from #(lf)#(tab)activitypointer a  #(lf)left join go_lead l ON a.regardingobjectid = l.go_leadid#(lf)left join go_opportunity o ON l.go_leadid = o.go_lk_originatingleadid#(lf)where #(lf)#(tab)yeaR(l.createdon) >= year(getdate())-3#(lf)GROUP BY#(lf)        l.go_leadid"]),
+				    #"Appended Query" = Table.Combine({Accounts, Anotacoes}),
+				    #"Grouped Rows" = Table.Group(#"Appended Query", {"go_leadid"}, {{"Linha do Tempo", each Text.Combine([has], "/"), type text}})
+				in
+				    #"Grouped Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

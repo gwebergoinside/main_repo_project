@@ -1,0 +1,32 @@
+table Programas_OPT
+	lineageTag: 025e9035-4495-4a03-959c-0e41dbde1312
+
+	column DynamicsOpportunityID
+		dataType: string
+		lineageTag: f2c4b8e1-dda5-45a8-9963-c80ded65c58e
+		summarizeBy: none
+		sourceColumn: DynamicsOpportunityID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Title
+		dataType: string
+		lineageTag: 5f6d60e0-c295-44c8-87db-23fbe41b697e
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Programas_OPT-204881e0-0fcf-4bcf-a1fc-5b0b1a341a05 = m
+		mode: import
+		queryGroup: CORE
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    DO.DynamicsOpportunityID,#(lf)    P.Title#(lf)From#(lf)    NegotiationDiscount ND Inner Join#(lf)    Program P On P.ID = ND.ProgramID Inner Join#(lf)    Negotiation N On N.ID = ND.NegotiationID Inner Join#(lf)    DynamicsOpportunity DO On DO.ID = N.OpportunityID#(lf)Where#(lf)    ND.ID Is Not Null And#(lf)    ND.ProgramID Is Not Null"]),
+				    #"Uppercased Text" = Table.TransformColumns(Source,{{"DynamicsOpportunityID", Text.Upper, type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Uppercased Text", each ([DynamicsOpportunityID] <> "99999999-9999-9999-9999-999999999999"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+

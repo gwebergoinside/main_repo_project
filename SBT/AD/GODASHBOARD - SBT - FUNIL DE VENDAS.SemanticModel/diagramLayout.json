@@ -1,0 +1,495 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1003.8,
+            "y": 795.8
+          },
+          "nodeIndex": "Calendario",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 613.8,
+            "y": 850.4
+          },
+          "nodeIndex": "GrupoCliente",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 1393.8,
+            "y": 437.7
+          },
+          "nodeIndex": "Neg",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 20
+        },
+        {
+          "location": {
+            "x": 223.8,
+            "y": 1051.2
+          },
+          "nodeIndex": "RLS",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 1783.8,
+            "y": 463.7
+          },
+          "nodeIndex": "RLSFILTER",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 2173.8,
+            "y": 511.7
+          },
+          "nodeIndex": "Titulos",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 417.5,
+            "y": 444.1
+          },
+          "nodeIndex": "Lead",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 2563.8,
+            "y": 523.7
+          },
+          "nodeIndex": "Estados",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 2953.8,
+            "y": 437.7
+          },
+          "nodeIndex": "@Medidas",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 116.8,
+            "y": 172.7
+          },
+          "nodeIndex": "Executivos",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 3343.8,
+            "y": 439.7
+          },
+          "nodeIndex": "DashboardUserPermission",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 3733.8,
+            "y": 475.7
+          },
+          "nodeIndex": "Briefings",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 574.9,
+            "y": 129.3
+          },
+          "nodeIndex": "StatusLeads",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 4123.8,
+            "y": 523.7
+          },
+          "nodeIndex": "Programas_OPT",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 4513.8,
+            "y": 523.7
+          },
+          "nodeIndex": "Status_Agregado",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 18
+        },
+        {
+          "location": {
+            "x": 834.2,
+            "y": 483.8
+          },
+          "nodeIndex": "Programas_Lead",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 156.4,
+            "y": 871.5
+          },
+          "nodeIndex": "Termometro",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 4903.8,
+            "y": 535.7
+          },
+          "nodeIndex": "Propostas",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 506.8,
+            "y": 0
+          },
+          "nodeIndex": "TipoMidia",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 397.7
+          },
+          "nodeIndex": "TipoOferta",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 11.2,
+            "y": 676.3
+          },
+          "nodeIndex": "Programas_Opt_Lead",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 768.5,
+            "y": 277.4
+          },
+          "nodeIndex": "EmpresaFaturamento",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 5293.8,
+            "y": 535.7
+          },
+          "nodeIndex": "Atualização",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5577.8,
+            "y": 487.6
+          },
+          "nodeIndex": "LinhaDoTempo",
+          "nodeLineageTag": "30ddf3ba-5cab-44aa-99ea-d80d2844e719",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 27.563492902180421,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 235.19999694824219,
+        "y": 219.19999694824219
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 522.60211011245769,
+            "y": 720.70839014522164
+          },
+          "nodeIndex": "StatusLeads",
+          "nodeLineageTag": "0349dbfc-b545-4e36-9492-c796fc2c9c06",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 702.31102603202555,
+            "y": 359.72458733443307
+          },
+          "nodeIndex": "Lead",
+          "nodeLineageTag": "b7c9dcfa-eb5b-4588-a186-ce7145b1e828",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1529.646169254971,
+            "y": 74.057776334719733
+          },
+          "nodeIndex": "Briefings",
+          "nodeLineageTag": "681db3eb-fa07-4866-91d0-666fbd7f5eae",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 1207.6134151734582,
+            "y": 292.74069430119334
+          },
+          "nodeIndex": "GrupoCliente",
+          "nodeLineageTag": "6c028b10-824d-410a-9da4-eb021482177a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 921.36592570516245,
+            "y": 115.79851231970883
+          },
+          "nodeIndex": "TipoMidia",
+          "nodeLineageTag": "531ed964-21ee-48d3-b182-55f840fec066",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 340.456346167178,
+            "y": 203.03095157223424
+          },
+          "nodeIndex": "Programas_Lead",
+          "nodeLineageTag": "91449581-b53e-4bbd-8981-9d4a54c7f7a7",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 89.018267773165917
+          },
+          "nodeIndex": "Programas_Opt_Lead",
+          "nodeLineageTag": "cfa57bc6-a1a2-49cd-8012-4a0d27f91b4b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1022.5545657150899,
+            "y": 994.11555266943947
+          },
+          "nodeIndex": "Termometro",
+          "nodeLineageTag": "f781109f-6029-41da-9d6c-34e5fcf2bced",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1055.5974028375995,
+            "y": 633.78093778467
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "d90cf1d6-cb29-4e92-8b7e-eaf345df1f02",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 632.34066107599165,
+            "y": -50
+          },
+          "nodeIndex": "TipoOferta",
+          "nodeLineageTag": "96160bbc-b91c-48aa-8dc6-eb989d6e5b12",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1350.8496114982149,
+            "y": 860.36850487963443
+          },
+          "nodeIndex": "EmpresaFaturamento",
+          "nodeLineageTag": "3cdf6159-ed0f-4656-81f0-a8ca2f0016d9",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1381.712804386807,
+            "y": 577.37964013927922
+          },
+          "nodeIndex": "Executivos",
+          "nodeLineageTag": "bd850d38-b0d8-4a71-8c77-2e126b38e032",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 340.48191516188058,
+            "y": 438.38126098809437
+          },
+          "nodeIndex": "RLS",
+          "nodeLineageTag": "c57a6699-61a7-4c89-a28f-9e157b39ca4e",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 11
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 1",
+  "defaultDiagram": "All tables"
+}

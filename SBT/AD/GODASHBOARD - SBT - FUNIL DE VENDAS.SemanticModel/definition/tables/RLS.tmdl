@@ -1,0 +1,114 @@
+table RLS
+	isHidden
+	lineageTag: c57a6699-61a7-4c89-a28f-9e157b39ca4e
+
+	column FirstName
+		dataType: string
+		isHidden
+		lineageTag: 6a8b4e02-6550-4227-ac3b-54c4b99f9a81
+		summarizeBy: none
+		sourceColumn: FirstName
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column domainname = LOOKUPVALUE( RLSFILTER[domainname], RLSFILTER[PortalsAzureID], RLS[Parent] )
+		isHidden
+		lineageTag: 2db58752-ada4-4a4e-a524-5602aca7fded
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Filho = LOOKUPVALUE( RLSFILTER[go_st_codigoexterno], RLSFILTER[PortalsAzureID], RLS[FirstName] )
+		isHidden
+		lineageTag: ce9a67a6-59c8-44da-9cc6-c26fcd82880f
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pai = LOOKUPVALUE( RLSFILTER[go_st_codigoexterno], RLSFILTER[PortalsAzureID], RLS[Parent] )
+		isHidden
+		lineageTag: 3f97549e-6aeb-4599-b8ca-d578c394e5e9
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent
+		dataType: string
+		isHidden
+		lineageTag: f5c8d507-7cf9-43bc-a5b6-66ddf0a98aa5
+		summarizeBy: none
+		sourceColumn: Parent
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column RLS = LOOKUPVALUE( RLSFILTER[systemuserid], RLSFILTER[PortalsAzureID], RLS[FirstName] )
+		lineageTag: ead30d52-74e8-4b2b-955a-9cbde575f7dd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RLS-7b30806d-c52e-42eb-9048-50e3832ee4bd = m
+		mode: import
+		queryGroup: RLS
+		source =
+				let
+				//*
+				//Debug Parameters
+				ParChTable = Posi,
+				ChildKey = "azureactivedirectoryobjectid",
+				ParentKey = "parentazure",
+				LevelColumnName = "COPYazureactivedirectoryobjectid",
+				//*/
+				
+				    SelectRelevantColumns = Table.SelectColumns(ParChTable, {ChildKey, ParentKey, LevelColumnName}),
+				    ReplaceNulls = Table.ReplaceValue(SelectRelevantColumns,null,"",Replacer.ReplaceValue,{ParentKey}),
+				    //    CleanParChTable = Table.Distinct(ReplaceNulls , {ChildKey, ParentKey}),
+				    MissingParents = List.Buffer(List.Select(List.Difference(List.Distinct(Table.Column(ReplaceNulls , ParentKey)), List.Distinct(Table.Column(ReplaceNulls , ChildKey))), each _ <> "")),
+				    AddMissingParents = Table.Buffer(Table.Combine({ReplaceNulls , #table({ChildKey, LevelColumnName, ParentKey}, List.Transform(MissingParents, each {_, "Unknown TopLevel"& Text.From(List.PositionOf(MissingParents, _)), ""}))})),
+				    #"Merged Queries0" = Table.NestedJoin(AddMissingParents,{ChildKey},AddMissingParents,{ParentKey},"SelectRelevantColumns",JoinKind.LeftOuter),
+				    CheckIfIsLeaf = Table.AddColumn(#"Merged Queries0", "IsLeaf", each if Table.IsEmpty([SelectRelevantColumns]) then "yes" else "no"),
+				    #"Replaced Value1" = Table.ReplaceValue(CheckIfIsLeaf,null,"",Replacer.ReplaceValue,{ParentKey, LevelColumnName}),
+				    AddStartPath = Table.AddColumn(#"Replaced Value1", "Path", each Text.Trim(Record.Field(_, ChildKey)&"|"&Record.Field(_,ParentKey), "|")),
+				    #"Duplicated Column" = Table.DuplicateColumn(AddStartPath, LevelColumnName, "FirstName"),
+				    Feed = Table.DuplicateColumn(#"Duplicated Column", ParentKey, "FirstParentKey"),
+				
+				// Retrieve all parents per row
+				    fnAllParents = List.Generate(()=>
+				    [Result= Feed, Level=1, EndlessLoop = false, StopEndlessLoop = false],
+				    each Table.RowCount([Result]) > 0 and not [StopEndlessLoop],
+				    each [ Result= let
+				            #"Merged Queries" = Table.NestedJoin([Result],{ParentKey},AddMissingParents,{ChildKey},"Added Custom",JoinKind.Inner),
+				            #"Removed Columns1" = Table.RemoveColumns(#"Merged Queries",{ParentKey}),
+				            #"Expanded Added Custom" = Table.ExpandTableColumn(#"Removed Columns1", "Added Custom", {ParentKey, LevelColumnName}, {"ParentKey.1", "Name.1"}),
+				            #"Duplicated Column" = Table.DuplicateColumn(#"Expanded Added Custom", "ParentKey.1", ParentKey),
+				            #"Merged Columns" = Table.CombineColumns(#"Duplicated Column",{"Path", "ParentKey.1"},Combiner.CombineTextByDelimiter("|", QuoteStyle.None),"Path"),
+				            #"Merged Columns2" = Table.CombineColumns( #"Merged Columns" ,{LevelColumnName, "Name.1"},Combiner.CombineTextByDelimiter("|", QuoteStyle.None),LevelColumnName)
+				          in
+				            #"Merged Columns2",
+				          Level = [Level]+1,
+				          EndlessLoop = Table.SelectColumns(Result, {ChildKey}) = Table.SelectColumns([Result], {ChildKey}),
+				          StopEndlessLoop = [EndlessLoop]
+				        ]),
+				    ConvertToTable = Table.FromList(fnAllParents, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    ExpandLevel = Table.ExpandRecordColumn(ConvertToTable, "Column1", {"Result", "Level", "EndlessLoop"}, {"Result", "Level", "EndlessLoop"}),
+				    ExpandLG = Table.ExpandTableColumn(ExpandLevel, "Result", {ParentKey, "FirstName"}, {"ParentKey", "FirstName"}),
+				    #"Added Custom" = Table.AddColumn(ExpandLG, "Parent", each if [ParentKey] = null or [ParentKey] = "" then [FirstName] else [ParentKey]),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Added Custom",{"FirstName", "Parent"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

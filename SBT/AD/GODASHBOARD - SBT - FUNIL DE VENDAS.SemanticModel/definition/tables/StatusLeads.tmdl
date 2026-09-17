@@ -1,0 +1,40 @@
+table StatusLeads
+	lineageTag: 0349dbfc-b545-4e36-9492-c796fc2c9c06
+
+	column id
+		formatString: 0
+		lineageTag: 17b1072c-cd86-4334-b9ae-5e78af286b5f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusLead
+		lineageTag: 5477c8be-ea70-497d-94a8-82c3e54763db
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [StatusLead]
+		sortByColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition StatusLeads-7c403603-04ef-4d17-b95f-ee24d71a129a = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				SELECTCOLUMNS(
+				    'Lead'
+				    ,"StatusLead", 'Lead'[Status]
+				    ,"id", 'Lead'[idStatus]
+				)
+				VAR _2 =
+				SUMMARIZE(
+				_1,[StatusLead],[id]
+				)
+				RETURN
+				_2
+
+	annotation PBI_Id = e8cc326d14d6494a8199319c28092a4a
+

@@ -1,0 +1,27 @@
+table TipoOferta
+	lineageTag: 96160bbc-b91c-48aa-8dc6-eb989d6e5b12
+
+	column 'Tipo Oferta'
+		lineageTag: 19f78f3c-dbde-4f89-bcf7-faf6bce799d8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tipo Oferta]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoOferta-11525209-9497-4813-8e8e-be5c7c6fc967 = calculated
+		mode: import
+		source =
+				
+				VAR _11 =
+				    SELECTCOLUMNS(
+				        'Lead'
+				        ,"Tipo Oferta", 'Lead'[Tipo Oferta]
+				    )
+				VAR _2 =
+				    FILTER( SUMMARIZE( _11, [Tipo Oferta] ), [Tipo Oferta] <> BLANK() )
+				RETURN
+				_2
+
+	annotation PBI_Id = 2a589a4944494195aa985a39c32a739a
+

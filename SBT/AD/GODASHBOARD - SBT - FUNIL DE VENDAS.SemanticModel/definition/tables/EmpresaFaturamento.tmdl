@@ -1,0 +1,32 @@
+table EmpresaFaturamento
+	lineageTag: 3cdf6159-ed0f-4656-81f0-a8ca2f0016d9
+
+	column EmpFat
+		dataType: string
+		lineageTag: ace538d5-e02a-472f-80bf-1472d3b00c1f
+		summarizeBy: none
+		sourceColumn: EmpFat
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmpFatId
+		dataType: string
+		lineageTag: de07422f-e9fd-421d-aa8c-6527a621e860
+		summarizeBy: none
+		sourceColumn: EmpFatId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition EmpresaFaturamento-aa4c57ea-4518-49df-9764-3d9ee4094ca5 = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				    Accounts = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)    ev.name EmpFat#(lf)    ,ev.accountid EmpFatId#(lf)FROM#(lf)    account ev"])
+				in
+				    Accounts
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,66 @@
+table Executivos
+	lineageTag: bd850d38-b0d8-4a71-8c77-2e126b38e032
+
+	column Executivo
+		dataType: string
+		lineageTag: 3ac7bdb1-b811-4514-80ec-cbde2cb55d7c
+		summarizeBy: none
+		sourceColumn: Executivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExecutivoCodigo
+		dataType: string
+		lineageTag: 56b0af4d-89e0-4fee-812e-28f282b0f4ce
+		summarizeBy: none
+		sourceColumn: ExecutivoCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column systemuserid
+		dataType: string
+		lineageTag: 8003ba54-8afb-4688-80dc-0fed0a8fb05c
+		summarizeBy: none
+		sourceColumn: systemuserid
+
+		annotation SummarizationSetBy = Automatic
+
+	column azureactivedirectoryobjectid
+		dataType: string
+		lineageTag: 6e47d5db-085f-4b22-b1aa-1743e57375a9
+		summarizeBy: none
+		sourceColumn: azureactivedirectoryobjectid
+
+		annotation SummarizationSetBy = Automatic
+
+	column parentsystemuserid
+		dataType: string
+		lineageTag: 58518a85-f6f5-4e34-b5d2-9656060767a6
+		summarizeBy: none
+		sourceColumn: parentsystemuserid
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gerente
+		dataType: string
+		lineageTag: 4a6ab4d5-b9a0-44a4-8821-3b4656d4c2a4
+		summarizeBy: none
+		sourceColumn: Gerente
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Executivos-e03d45ff-da48-43d6-b695-83215befd5bf = m
+		mode: import
+		queryGroup: CORE
+		source =
+				let
+				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   su.go_st_codigoexterno as ExecutivoCodigo,#(lf)   su.parentsystemuserid,#(lf)   su.systemuserid,#(lf)   su.azureactivedirectoryobjectid,#(lf)   su.fullname as Executivo,#(lf)   s.fullname as Gerente,#(lf)   CASE WHEN EXISTS (SELECT 1 FROM SystemUser WHERE parentsystemuserid = su.systemuserid) THEN 'Sim' ELSE 'Não' END as GerenteFlag#(lf)FROM#(lf)   SystemUser su#(lf)   Left Join SystemUser s on su.parentsystemuserid = s.systemuserid#(lf)"]),
+				    #"Added Custom" = Table.AddColumn(Source, "Gerente_New", each if [Gerente] = null and [GerenteFlag] = "Sim" then [Executivo] else [Gerente]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"Gerente", "GerenteFlag"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Gerente_New", "Gerente"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Gerente", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

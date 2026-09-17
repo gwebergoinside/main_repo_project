@@ -1,0 +1,134 @@
+table Calendario
+	lineageTag: d90cf1d6-cb29-4e92-8b7e-eaf345df1f02
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: Short Date
+		lineageTag: bbe61ded-219a-4e90-81b8-24914d27eaf7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano = year(Calendario[Date])
+		formatString: 0
+		lineageTag: 8980030e-83a8-452f-9ba3-0e475de1a1f9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia = day(Calendario[Date])
+		formatString: 0
+		lineageTag: 74bfcbbb-8044-442b-8b96-c58bf8674ad6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes =
+			SWITCH(
+			    MONTH(Calendario[Date])
+			    ,1,"Jan",2,"Fev",3,"Mar",4,"Abr"
+			    ,5,"Mai",6,"Jun",7,"Jul",8,"Ago"
+			    ,9,"Set",10,"Out",11,"Nov",12,"Dez")
+		lineageTag: 27a9990f-8228-4e30-91c2-a7ce7c201c00
+		summarizeBy: none
+		sortByColumn: 'Mes No'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mes No' = MONTH(Calendario[Date])
+		formatString: 0
+		lineageTag: 125ee996-9315-4dd9-bb33-66a1202fa170
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre = CONCATENATE("Trimestre ",ROUNDUP(MONTH([date])/3,0))
+		lineageTag: a35d1821-d5b2-457a-b4eb-276454df0c8c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de Ano' = IF('Calendario'[Ano] = YEAR(NOW()) , "Corrente", IF('Calendario'[Ano] = YEAR(NOW())-1 ,"Anterior","Passado"))
+		lineageTag: e6f3ab31-2b86-413e-8d60-215cc53a17f4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dias Úteis' =
+			IF (NOT('Calendario'[Dia_]= 1|| ('Calendario'[Dia_]= 7)),1,0)
+			/*Dias Úteis = IF (NOT('Calendario'[Dia]= "Saturday" || ('Calendario'[Dia]= "Sunday")) && COUNTX(RELATEDTABLE('Feriados Nacionais'),1)<1,1,0)*/
+		formatString: 0
+		lineageTag: f3702a64-ad5a-4e9a-a4ab-c3cdd90a12f9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia_ =
+			
+			WEEKDAY(Calendario[Date],1)
+		formatString: 0
+		lineageTag: bfabd9f5-ac03-437b-ba41-390530748e8a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column MêsCorrente =
+			
+			IF (
+			    AND ( [Date]>=DATE ( YEAR ( NOW () ), MONTH ( NOW () ), 1 ) ,[Date]<DATE ( YEAR ( NOW () ), MONTH ( NOW () )+1, 1) ),
+			    "Mês Corrente",
+			    IF (
+			        AND ( [Date]>=DATE ( YEAR ( NOW () ), MONTH ( NOW () )-12, 1 ),[Date]<[Today] ),
+			        "Meses Transactos",
+			        IF ( [Today] = 0, "" )
+			    )
+			)
+		lineageTag: 2ad31731-8ddb-41ae-bb26-e41b7755dea3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Today = IF(Calendario[Date] = TODAY(), 1, 0)
+		formatString: 0
+		lineageTag: ad0ca97b-110e-4063-a6eb-10795ad698e9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano_Classificação =
+			
+			var _2 = YEAR(NOW()) //Atual
+			Var _3 = YEAR(NOW()) -1 //Anterior
+			
+			Return
+			IF( Calendario[Ano]> YEAR(NOW()), "Futuro", IF( Calendario[Ano] = _2, "Corrente", IF( Calendario[Ano] = _3, "Anterior", "Passado" ) ) )
+		lineageTag: 31b7ea8d-b471-463e-bf42-441d692bb5c5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column AnoMes = VALUE( Calendario[Ano]&FORMAT(Calendario[Mes No], "00") )
+		lineageTag: d0701d7b-d234-4e98-8833-ebc331a17208
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Calendario-790a6d8f-aa7e-4546-b392-05187bbad58b = calculated
+		mode: import
+		source =
+				CALENDAR(DATE(year(now())-5, 1, 1), DATE(year(now()), 12, 31) )
+				/*Calendario = CALENDAR(FORMAT(DATE(year(now())-5, 1, 1), "DD/MM/YYYY"), Format(DATE(year(now())+1, 12, 31) , "DD-MM-YYYY"))*/
+
+	annotation PBI_Id = ba4dc2e401a54584b2a974eebaaeec9b
+

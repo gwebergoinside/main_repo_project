@@ -1,0 +1,46 @@
+table Programas_Lead
+	lineageTag: 91449581-b53e-4bbd-8981-9d4a54c7f7a7
+
+	column go_leadid
+		dataType: string
+		lineageTag: a6f0b796-1c1d-48c2-8de8-ac94976fa4a6
+		summarizeBy: none
+		sourceColumn: go_leadid
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_go_lead_go_programid
+		dataType: string
+		lineageTag: aa2b3ca0-b73f-4cb6-a7a3-697936ed719a
+		summarizeBy: none
+		sourceColumn: go_go_lead_go_programid
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_programid
+		dataType: string
+		lineageTag: 7761d17a-38e7-461a-8c0b-504df2228a33
+		summarizeBy: none
+		sourceColumn: go_programid
+
+		annotation SummarizationSetBy = Automatic
+
+	column programname
+		dataType: string
+		lineageTag: 4f046857-2ea1-4f10-9fab-922cf48c1ba0
+		summarizeBy: none
+		sourceColumn: programname
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Programas_Lead-4317b62e-3e03-41e0-b4db-890898d6c2be = m
+		mode: import
+		queryGroup: CORE
+		source =
+				let
+				    Source = Sql.Database(OrgDynamics, BD_Dynamics, [Query="select #(lf) b.go_go_lead_go_programid#(lf),b.go_leadid#(lf),b.go_programid#(lf),a.go_st_name as programname#(lf)from dbo.go_go_lead_go_program b#(lf)left join dbo.go_program a on a.go_programid = b.go_programid"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,22 @@
+table Propostas
+	lineageTag: 4f0f479c-33a5-4f55-a87c-ad33e82198e2
+
+	column Estado
+		dataType: string
+		lineageTag: 6f554153-709a-49ab-a7f2-0229bf9e061b
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Propostas-4a845186-90b1-45c0-ac56-c980dfce8929 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45Wck/My0gsVorViVZyzs8F08GpEBoi5V9QApOFMYEKwMxYAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Estado = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Estado", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

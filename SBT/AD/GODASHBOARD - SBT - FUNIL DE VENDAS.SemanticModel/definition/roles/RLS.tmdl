@@ -1,0 +1,7 @@
+role RLS
+	modelPermission: read
+
+	tablePermission RLSFILTER = [domainname] = userprincipalname()
+
+	annotation PBI_Id = dd067d2db12b4838a885fb94d3082759
+

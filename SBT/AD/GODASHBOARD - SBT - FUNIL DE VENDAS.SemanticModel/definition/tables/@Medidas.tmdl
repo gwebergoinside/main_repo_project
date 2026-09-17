@@ -1,0 +1,573 @@
+table @Medidas
+	lineageTag: f208a06d-6edf-426b-b2be-c7b5f9a95eb7
+
+	measure Titulo =
+			
+			SWITCH (
+			    [Selected TituloParameter],
+			    1, SELECTEDVALUE(Titulos[Parameter]),
+			    2, SELECTEDVALUE(Titulos[Parameter]),
+			    3, SELECTEDVALUE(Titulos[Parameter]),
+			    4, SELECTEDVALUE(Titulos[Parameter]),
+			    5, SELECTEDVALUE(Titulos[Parameter]),
+			    6, SELECTEDVALUE(Titulos[Parameter]),
+			    7, SELECTEDVALUE(Titulos[Parameter]),
+			    8, SELECTEDVALUE(Titulos[Parameter]),
+			    9, SELECTEDVALUE(Titulos[Parameter]),
+			    10, SELECTEDVALUE(Titulos[Parameter]),
+			    11, SELECTEDVALUE(Titulos[Parameter]),
+			    12, SELECTEDVALUE(Titulos[Parameter]),
+			    13, SELECTEDVALUE(Titulos[Parameter]),
+			    14, SELECTEDVALUE(Titulos[Parameter]),
+			    15, SELECTEDVALUE(Titulos[Parameter]),
+			    16, SELECTEDVALUE(Titulos[Parameter]),
+			    17, SELECTEDVALUE(Titulos[Parameter]),
+			    18, SELECTEDVALUE(Titulos[Parameter]),
+			    19, SELECTEDVALUE(Titulos[Parameter]),
+			    20, SELECTEDVALUE(Titulos[Parameter]),
+			    21, SELECTEDVALUE(Titulos[Parameter])
+			    , "GESTÃO DE VENDAS"
+			)
+		displayFolder: Outros
+		lineageTag: cf319a67-ddfc-4700-854e-5e795cf4b4bf
+
+	measure 'QTD Oportunidades card' =
+			
+			[QTD Opt]+0
+		formatString: #,0
+		displayFolder: Oportunidades
+		lineageTag: d714af10-6b7a-4dbb-b7d8-fc247792ba9f
+
+	measure 'Valor Negociado' = ```
+			
+			CALCULATE( 
+			    SUM( 'Lead'[Opt Valor Negociado] )
+			    ,'Lead'[Opt] <> BLANK()
+			    ,FILTER( ALL( RLS[domainname] ), RLS[domainname] = [RLS] )
+			    ,USERELATIONSHIP( RLS[RLS], 'Lead'[ownerid] )
+			)
+			```
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		displayFolder: Valor
+		lineageTag: a1639afd-7feb-4d64-8a14-28891098e8fd
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure RLS = ```
+			
+			// DEFAULT
+			    IF.EAGER( 
+			        USERPRINCIPALNAME() in VALUES(DashboardUserPermission[Email])
+			        ,"crmadmin@gruposilviosantos.onmicrosoft.com"
+			        ,USERPRINCIPALNAME()
+			    )
+			// GMediaAD
+			    // "crmadmin@gruposilviosantos.onmicrosoft.com"
+			// Kotait    
+			    // "mkotait@sbt.com.br"
+			// GMediaAD
+			    // "cbf29051-a44f-473c-867e-2ca74d377b88"
+			// alessandra nogueira gama
+			    // "1e5eab-a46b-44b4-87f9-d27c0ad43db7"  
+			// Juliana
+			    // "bfd86487-a7fd-45f2-b8da-a0451b4a9e89"
+			// OLD
+			    // IF.EAGER( SELECTEDVALUE( RLSFILTER[PortalsAzureID] ) = BLANK() || SELECTEDVALUE( RLSFILTER[positionid] ) = BLANK(), "nao-tem-permissoes", SELECTEDVALUE( RLSFILTER[PortalsAzureID] ) )
+			```
+		displayFolder: Outros
+		lineageTag: 47f3ecca-e93d-4036-90f8-84d129b272ee
+
+	measure 'QTD Lead' = ```
+			
+			CALCULATE( 
+			   DISTINCTCOUNT('Lead'[go_leadid])
+			    ,FILTER( ALL( RLS[domainname] ), RLS[domainname] = [RLS] )
+			    ,USERELATIONSHIP( RLS[RLS], 'Lead'[ownerid] )
+			)
+			```
+		formatString: 0
+		displayFolder: Leads
+		lineageTag: dba06b1a-0d0f-4c53-a398-19d2fc3f1288
+
+		changedProperty = FormatString
+
+	measure 'QTD Lead Card' = [QTD Lead]+0
+		formatString: #,0
+		displayFolder: Leads
+		lineageTag: c0f7c3bf-b6df-4ca2-9439-b5466e0f46b7
+
+		changedProperty = FormatString
+
+	measure 'QTD Opt_Clientes_Novos' = ```
+			
+			CALCULATE( 
+			    [QTD Clientes Novos], Neg[go_lk_originatingleadid] <> BLANK())
+			```
+		formatString: 0
+		displayFolder: Leads
+		lineageTag: fba096f2-ca98-48e2-bff1-4f29f7157026
+
+	measure 'QTD Lead sem Proposta' =
+			
+			CALCULATE(
+			    [QTD Lead]
+			    ,'Lead'[Briefing Lead] = BLANK()
+			)
+		formatString: #,0
+		displayFolder: Leads
+		lineageTag: 9bcb861a-2216-4b56-8b7f-14ad16bc7e7a
+
+	measure '% Leads com Opt' = ```
+			
+			IF( 
+			    ISFILTERED( Calendario[Mes] ), "-- %",
+			    DIVIDE( [QTD Opt com Lead], [QTD Lead])+0
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Leads
+		lineageTag: e71722c2-b304-4dda-a2f3-3c9f80b0cd31
+
+	measure '% Lead com Opt Ganhas' = ```
+			
+			IF( 
+			    ISFILTERED( Calendario[Mes] ), "-- %",
+			    DIVIDE([QTD Oportunidades Ganho Card], [QTD Lead])+0
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Leads
+		lineageTag: 455978f4-2e1b-4a6e-8bd7-133a907d1046
+
+	measure 'Qtd Leads_Novos_Opt_Ganhas' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    DISTINCTCOUNT( 'Lead'[go_leadid]),
+			    FILTER(
+			        'Lead',
+			        'Lead'[Opt Estado] = "Ganho" && 
+			        'Lead'[ClienteCodigo] <> "SEM CODIGO"  &&
+			        YEAR( 'Lead'[createdon] ) >= SELECTEDVALUE( Calendario[Ano] ) - 2 &&
+			        CALCULATE( COUNTROWS( 'Lead' ), ALLEXCEPT( 'Lead', 'Lead'[ClienteCodigo] ) ) <= 1
+			    )
+			)
+			RETURN
+			_1
+			```
+		formatString: 0
+		displayFolder: Leads
+		lineageTag: 89e51b98-c525-49f4-bb99-06b3a4fdaeeb
+
+	measure '% Leads Novos Opt Ganhas' = DIVIDE( [Qtd Leads_Novos_Opt_Ganhas], [QTD Opt_Clientes_Novos])+0
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Leads
+		lineageTag: d670f1dc-f65b-4ad9-9ebf-ce2b346a7fd5
+
+	measure '% QTD Opt_Ganhas_c_Lead' = ```
+			
+			VAR _1 = 
+			CALCULATE(
+			    [QTD Oportunidades card]
+			    ,'Lead'[Opt] <> BLANK()
+			    ,'Lead'[Opt Estado] = "Ganho"
+			    --,USERELATIONSHIP(Calendario[Date], 'Lead'[Opt Data Integracao])
+			)
+			VAR _2 = 
+			CALCULATE(
+			    [QTD Oportunidades card]
+			    ,'Lead'[Opt] <> BLANK()
+			)
+			RETURN
+			IF( 
+			    ISFILTERED( Calendario[Mes] ), "-- %",
+			    DIVIDE(_1, _2)
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Oportunidades
+		lineageTag: 5d87a735-da81-4d9c-bf30-4f9d486d4baf
+
+	measure '% Valor_Opt_Ganhas' = ```
+			
+			VAR _1 = 
+			CALCULATE(
+			    [Valor Negociado card]
+			    ,'Lead'[Opt] <> BLANK()
+			    ,'Lead'[Opt Estado] = "Ganho"
+			    --,USERELATIONSHIP(Calendario[Date], 'Lead'[Opt Data Integracao])
+			)
+			VAR _2 = 
+			CALCULATE(
+			    [Valor Negociado card]
+			    ,'Lead'[Opt] <> BLANK()
+			)
+			RETURN
+			IF( 
+			    ISFILTERED( Calendario[Mes] ), "-- %",
+			    DIVIDE(_1, _2)
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Oportunidades
+		lineageTag: e097adf9-c912-485a-bfac-e5bdc2a3162f
+
+	measure 'QTD Opt Com Proposta' =
+			
+			CALCULATE(
+			    [QTD Opt]
+			    ,'Lead'[Opt Briefing] <> BLANK()
+			)
+		formatString: 0
+		displayFolder: Oportunidades
+		lineageTag: 320ade43-9168-42b7-b143-692b90742acf
+
+	measure 'QTD Opt Sem Proposta' =
+			
+			CALCULATE(
+			    [QTD Opt]
+			    ,'Lead'[Opt Briefing] = BLANK()
+			)
+		formatString: #,0
+		displayFolder: Oportunidades
+		lineageTag: 2e06c2fb-4d7e-4020-a78e-5c0950582d2b
+
+	measure 'QTD Opt Com Proposta Fechada' = ```
+			
+			CALCULATE(
+			    [QTD Opt]
+			    ,NOT ISBLANK( 'Lead'[Opt Briefing] ) && 'Lead'[Opt Briefing] <> BLANK()
+			    && 'Lead'[Opt Estado] = "Ganho" 
+			)
+			```
+		formatString: 0
+		displayFolder: Oportunidades
+		lineageTag: 5299811f-dbf2-40f9-a248-42d8f70163e3
+
+	measure '% QTD Opt com Proposta_Fechados' = DIVIDE([QTD Opt Com Proposta Fechada], [QTD Opt Com Proposta])+0
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Oportunidades
+		lineageTag: 6d067857-8bfe-43fa-94d3-cd084a35a184
+
+	measure 'QTD Lead com Proposta' =
+			
+			CALCULATE(
+			    [QTD Lead]
+			    ,'Lead'[Briefing Lead] <> BLANK()
+			)
+		formatString: #,0
+		displayFolder: Leads
+		lineageTag: c6462b2c-2c75-40c9-a11d-deb56d190157
+
+	measure '% Leads com Porposta Ganhas' = DIVIDE([QTD Lead com Proposta Ganhas] , [QTD Lead com Proposta])+0
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Leads
+		lineageTag: 9b8266a7-ecdf-434a-9c52-5673e1a3f420
+
+	measure 'QTD Lead com Proposta Ganhas' =
+			
+			CALCULATE(
+			    [QTD Lead]
+			    ,'Lead'[Briefing Lead] <> BLANK()
+			    ,'Lead'[Opt Estado] = "Ganho"
+			)
+		formatString: 0
+		displayFolder: Leads
+		lineageTag: 44b24d09-ae33-435d-b72a-93adcefdf75e
+
+	measure 'QTD Opt com Lead' = ```
+			
+			CALCULATE( 
+			    [QTD Oportunidades card]
+			    ,FILTER( Neg, Neg[go_lk_originatingleadid] <> BLANK() )
+			)
+			```
+		formatString: 0
+		displayFolder: Oportunidades
+		lineageTag: 0f19606d-657e-454e-bb69-92a342f92a36
+
+	measure 'Estagio OPT subtitle' =
+			
+			FORMAT([QTD Opt], "#,##0") & " Opt"
+		displayFolder: Oportunidades
+		lineageTag: 8381d0dd-3989-42e0-8610-fba770e4f5b2
+
+	measure 'Estagio Leads subtitle' = FORMAT([QTD Lead], "#,##0") & " Leads"
+		displayFolder: Leads
+		lineageTag: 5a013900-cb04-47aa-8611-9b9d40bd008b
+
+	measure 'QTD Clientes Novos' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    DISTINCTCOUNT( 'Lead'[go_leadid]),
+			    FILTER(
+			        'Lead',
+			        --'Lead'[EstadoOPT] = "Ganho" && 
+			        'Lead'[ClienteCodigo] <> "SEM CODIGO"  &&
+			        YEAR( 'Lead'[createdon] ) >= SELECTEDVALUE( Calendario[Ano] ) - 2 &&
+			        CALCULATE( COUNTROWS( 'Lead' ), ALLEXCEPT( 'Lead', 'Lead'[ClienteCodigo] ) ) <= 1
+			    )
+			)
+			RETURN
+			_1
+			```
+		formatString: 0
+		displayFolder: Leads
+		lineageTag: d36685c0-fef6-444d-8cb4-8b5d51717fb8
+
+	measure 'Status_Agregado Switch' = ```
+			
+			SWITCH(
+			    TRUE()
+			    -- Em andamento (Lead)
+			    ,SELECTEDVALUE('Status_Agregado'[Status_name]) = "Em andamento (Lead)"
+			        , CALCULATE(
+			            [QTD Lead]
+			            ,StatusLeads[StatusLead] = "Em andamento"
+			        )
+			    -- Qualificado (Lead)
+			    ,SELECTEDVALUE(Status_Agregado[Status_name]) = "Qualificado (Lead)"
+			        ,CALCULATE(
+			            [QTD Lead]
+			            ,StatusLeads[StatusLead] = "Qualificado"
+			        )
+			    -- Desqualificado (Lead)
+			    ,SELECTEDVALUE('Status_Agregado'[Status_name]) = "Desqualificado (Lead)"
+			        ,CALCULATE(
+			            [QTD Lead]
+			            ,StatusLeads[StatusLead] = "Desqualificado"
+			        )
+			    -- Em andamento (Opt)
+			    ,SELECTEDVALUE('Status_Agregado'[Status_name]) = "Em andamento (Opt)"
+			        ,CALCULATE(
+			            [QTD Opt]
+			            ,'Lead'[Opt Estado] = "Em andamento"
+			        )
+			    -- Perdido (Opt)
+			    ,SELECTEDVALUE('Status_Agregado'[Status_name]) = "Perdido (Opt)"
+			        ,CALCULATE(
+			            [QTD Opt]
+			            ,'Lead'[Opt Estado] = "Perdida"
+			        )
+			    -- Ganho (Opt)
+			    ,SELECTEDVALUE('Status_Agregado'[Status_name]) = "Ganha (Opt)" 
+			        ,CALCULATE(
+			            [QTD Opt]
+			            ,'Lead'[Opt Estado] = "Ganho"
+			            ,USERELATIONSHIP( Calendario[Date], 'Lead'[Opt Data Integracao] )
+			        )
+			    ,BLANK()
+			)
+			```
+		formatString: 0
+		lineageTag: 7e304eea-9a63-4481-9cf8-bb4aef63da6a
+
+	measure 'Visual Control Clientes_Novos' =
+			
+			IF ( [QTD Clientes Novos Card] <> BLANK(), 1, -1 )
+		formatString: 0
+		displayFolder: Visual Control
+		lineageTag: 8e5fed14-ca51-475c-b4f9-c039edb281ff
+
+	measure 'QTD Clientes Novos Card' =
+			
+			[QTD Clientes Novos]+0
+		formatString: 0
+		displayFolder: Leads
+		lineageTag: f010a141-f01d-4a5d-b3e1-395f581eb017
+
+	measure 'Visual Control - Funil de Vendas_Opt' =
+			
+			IF ( [QTD Oportunidades card] <> BLANK(), 1, -1 )
+		formatString: 0
+		displayFolder: Visual Control
+		lineageTag: f204bc4f-e1f5-43d8-858b-b7ae6cb80e56
+
+	measure 'Visual Control Status do Funil' =
+			
+			// IF (
+			//     DISTINCTCOUNT ( Status_Agregado[Status_name] ) = 1,
+			//     SWITCH (
+			//         SELECTEDVALUE ( Status_Agregado[Status_name] ),
+			//         "Em andamento (Lead)", IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 ),
+			//         "Perdido (Lead)",  IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 ),
+			//         "Qualificado (Lead)",  IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 ),
+			//         "Desqualificado (Lead)",  IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 ),
+			//         "Em andamento (Opt)",  IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 ),
+			//         "Perdido (Opt)", IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 ),
+			//         "Qualificado (Opt)", IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 ),
+			//         "Desqualificado (Opt)",  IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 )
+			//     ),
+			//     1
+			// )
+			
+			IF ( [Status_Agregado Switch] <> BLANK(), 1, -1 )
+		formatString: 0
+		displayFolder: Visual Control
+		lineageTag: a50c452e-6f9d-4837-a2fe-80eb5a4dfdad
+
+	measure 'Valor Negociado card' =
+			
+			[Valor Negociado]+0
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Valor
+		lineageTag: 4631abb8-c51a-41ee-94f6-c10bd24e2d54
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'QTD Oportunidades Ganho Card' = ```
+			
+			CALCULATE( 
+			    [QTD Opt]
+			    ,'Lead'[Opt Estado] = "Ganho"
+			    ,'Lead'[Opt] <> BLANK()
+			)
+			```
+		formatString: #,0
+		displayFolder: Oportunidades
+		lineageTag: e89be153-6b28-4293-931d-21fba5f2d277
+
+	measure 'Valor Negociado Ganho Card' = ```
+			
+			CALCULATE( 
+			    [Valor Negociado]
+			    ,'Lead'[Opt Estado] = "Ganho"
+			    ,'Lead'[Opt] <> BLANK()
+			)+0
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Valor
+		lineageTag: 22b64511-2029-4ac0-b2ca-7c705e9ff250
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Visual control Propostas Lead' =
+			
+			IF (
+			    DISTINCTCOUNT ( Propostas[Estado] ) = 1,
+			    SWITCH (
+			        SELECTEDVALUE ( Propostas[Estado] ),
+			        "Ganhas",       IF ( [QTD Lead com Proposta Ganhas] <> BLANK(), 1, -1 ),
+			        "Com",       IF ( [QTD Lead com Proposta] <> BLANK(), 1, -1 ),
+			        "Sem",     IF ( [QTD Lead sem Proposta] <> BLANK(), 1, -1 )
+			    ),
+			    1
+			)
+		displayFolder: Visual Control
+		lineageTag: 303ee50f-dc5c-41c4-a3aa-dc311595d89b
+
+	measure Status_Proposta =
+			
+			SWITCH(
+			    TRUE()
+			    ,SELECTEDVALUE('Propostas'[Estado]) = "Ganhas", [QTD Lead com Proposta Ganhas]+0
+			    ,SELECTEDVALUE('Propostas'[Estado]) = "Com", [QTD Lead com Proposta]+0
+			    ,SELECTEDVALUE('Propostas'[Estado]) = "Sem", [QTD Lead sem Proposta]+0
+			)
+		formatString: #,0
+		lineageTag: 0333bd6b-2024-491a-aca7-d3b4f21154b7
+
+	measure Status_Proposta_Opt =
+			
+			SWITCH(
+			    TRUE()
+			    ,SELECTEDVALUE('Propostas'[Estado]) = "GanhasOpt", [QTD Opt Com Proposta Fechada]+0
+			    ,SELECTEDVALUE('Propostas'[Estado]) = "ComOpt", [QTD Opt Com Proposta]+0
+			    ,SELECTEDVALUE('Propostas'[Estado]) = "SemOpt", [QTD Opt Sem Proposta]+0
+			)
+		formatString: #,0
+		lineageTag: ebe2d741-e0f8-4205-b446-aad895404969
+
+	measure 'Visual control Propostas Opt' =
+			
+			IF (
+			    DISTINCTCOUNT ( Propostas[Estado] ) = 1,
+			    SWITCH (
+			        SELECTEDVALUE ( Propostas[Estado] ),
+			        "GanhasOpt",       IF ( [QTD Opt Com Proposta Fechada] <> BLANK(), 1, -1 ),
+			        "ComOpt",       IF ( [QTD Opt Com Proposta] <> BLANK(), 1, -1 ),
+			        "SemOpt",     IF ( [QTD Opt Sem Proposta] <> BLANK(), 1, -1 )
+			    ),
+			    1
+			)
+		formatString: 0
+		displayFolder: Visual Control
+		lineageTag: 8a0804d5-abd8-4a71-8276-74eadd4e2eda
+
+	measure 'Visual Control - Funil de Vendas_Opt all' =
+			
+			IF ( [QTD Oportunidades Ganho Card] <> BLANK(), 1, -1 )
+		formatString: 0
+		displayFolder: Visual Control
+		lineageTag: 273b55b4-66ff-4d3f-b4fb-8ee7837e81b2
+
+	measure 'QTD Opt' = ```
+			
+			CALCULATE( 
+			    DISTINCTCOUNT('Lead'[Opt])
+			    ,'Lead'[Opt] <> BLANK()
+			    ,USERELATIONSHIP( 'Lead'[Opt Data Integracao], Calendario[Date] )
+			    ,FILTER( ALL( RLS[domainname] ), RLS[domainname] = [RLS] )
+			    ,USERELATIONSHIP( RLS[RLS], 'Lead'[ownerid] )
+			)
+			```
+		displayFolder: Oportunidades
+		lineageTag: 06557378-0755-41bb-8664-769010f0edb2
+
+	measure 'Tipo de Cliente' = ```
+			
+			VAR _1 =
+			CALCULATE(
+			    DISTINCTCOUNT( 'Lead'[go_leadid]),
+			    FILTER(
+			        'Lead',
+			        --'Lead'[EstadoOPT] = "Ganho" && 
+			        'Lead'[ClienteCodigo] <> "SEM CODIGO"  &&
+			        YEAR( 'Lead'[createdon] ) >= SELECTEDVALUE( Calendario[Ano] ) - 2 &&
+			        CALCULATE( COUNTROWS( 'Lead' ), ALLEXCEPT( 'Lead', 'Lead'[ClienteCodigo] ) ) <= 1
+			    )
+			)
+			RETURN
+			IF( _1 = BLANK() , "Existente", IF( _1 = 1, "Novo", BLANK() ) )
+			
+			--IF( _1 = BLANK(), "Existente", "Novo" )
+			```
+		lineageTag: b444341b-497d-4229-aefb-15263cbd39c8
+
+	measure 'Visual Control Total Leads' = IF ( [QTD Lead Card] <> BLANK(), 1, -1 )
+		formatString: 0
+		displayFolder: Visual Control
+		lineageTag: 3914fc57-3b03-4bf5-85a7-f59214395794
+
+	measure OptURL =
+			
+			CALCULATE( MIN( 'Lead'[Opt URL] ), ALL( Calendario ) )
+		lineageTag: 46c3c24f-28c3-464f-8d0f-c5eac277202b
+
+	measure LeadURL =
+			
+			CALCULATE( MIN( 'Lead'[URL] ), ALL( Calendario ) )
+		lineageTag: 8796cfad-df8b-4e7d-9bb1-355f4f6e2383
+
+	measure Atualização = "Taxa de Conversão - YTD                DIÁRIO - Atualizado em " & FORMAT(SELECTEDVALUE('Atualização'[Data_Hora]),"","pt-BR")
+		lineageTag: c222b8d0-d06a-4ee3-9c98-85b4b350648f
+
+	measure MesRef = UPPER(FORMAT(MAX('Lead'[createdon]),"mmm/yyyy","pt-BR"))
+		lineageTag: f274c53d-c5f1-4a89-8e06-e5c8e23645ef
+
+	partition @Medidas-9386f809-3ffe-4053-9ad4-6bfdacaa9619 = m
+		mode: import
+		queryGroup: Config
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Medidas = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Medidas", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Medidas"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

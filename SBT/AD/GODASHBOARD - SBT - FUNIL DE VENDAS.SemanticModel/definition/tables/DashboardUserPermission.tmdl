@@ -1,0 +1,90 @@
+table DashboardUserPermission
+	lineageTag: 122ba776-7e9c-42e6-9996-64fd7a5dee90
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e283859-3562-440f-951f-8665d8d55a9c
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 3c1a5d40-f035-4c14-b612-1869a433790b
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		lineageTag: e69f5dbf-7294-4eae-8085-a75b0dfe7fc0
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: eebcacb2-3f9d-4c95-af7b-b42c8dee6ef2
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: bfb4c969-afa0-4c44-bbc0-ccb3e9a0a6ff
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column StampDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fe2d37e4-73d0-4fc2-9579-5bcbbeb1e6cb
+		summarizeBy: none
+		sourceColumn: StampDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 1995847e-40af-4f0e-94f5-abb463208174
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f5212a92-f96d-4f66-90ec-da4164c65eb5
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedBy
+		dataType: string
+		lineageTag: 6d26c689-7488-41f4-a70f-dda86d964e04
+		summarizeBy: none
+		sourceColumn: ModifiedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DashboardUserPermission-74c56110-a404-4157-bb57-5a5a1c71afbf = m
+		mode: import
+		queryGroup: Config
+		source =
+				let
+				    Source = Sql.Database(Org, BDExternal, [Query="SELECT#(lf)    *#(lf)FROM#(lf)    DashboardUserPermission DP"]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Status] = "Ativadas"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,210 @@
+/// Enter the Server of the GMedia
+expression Org = "sbt-gonext-prd-stg-rds-ms-saeast-01.c6upqumvij3c.sa-east-1.rds.amazonaws.com" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text", List = {}]
+	lineageTag: baaff107-69bc-486c-910c-d54e8f691d16
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression Posi =
+		let
+		    Accounts = #"GetCDST_EntityTable"("Position"),
+		    #"Removed Other Columns" = Table.SelectColumns(Accounts,{"parentpositionid", "positionid"}),
+		    Custom1 = Table.NestedJoin(#"Removed Other Columns", {"positionid"}, UsersMain, {"positionid"}, "Users", JoinKind.LeftOuter),
+		    #"Expanded Users" = Table.ExpandTableColumn(Custom1, "Users", {"azureactivedirectoryobjectid"}, {"azureactivedirectoryobjectid"}),
+		    #"Merged Queries" = Table.NestedJoin(#"Expanded Users", {"parentpositionid"}, UsersMain, {"positionid"}, "UsersMain", JoinKind.LeftOuter),
+		    #"Expanded UsersMain" = Table.ExpandTableColumn(#"Merged Queries", "UsersMain", {"azureactivedirectoryobjectid"}, {"azureactivedirectoryobjectid.1"}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Expanded UsersMain",{{"azureactivedirectoryobjectid.1", "parentazure"}}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"parentpositionid", "positionid"}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Removed Columns", "azureactivedirectoryobjectid", "azureactivedirectoryobjectid - Copy"),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Duplicated Column",{{"azureactivedirectoryobjectid - Copy", "COPYazureactivedirectoryobjectid"}})
+		in
+		    #"Renamed Columns1"
+	lineageTag: 3f43cdbb-8023-4593-93ab-9f7a4161e4b8
+	queryGroup: RLS
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression BD = "GONEXTAD20" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6bc91e25-5b27-4069-9bf7-db000d1c644a
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression Link = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 76ea3167-eb07-4a77-ba49-0cb09fcfddf1
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression OPTSCreated =
+		let
+		    Opportunities = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   createdon,#(lf)   go_st_codnegociacao#(lf)FROM#(lf)   go_opportunity"]),
+		    #"Grouped Rows" = Table.Group(Opportunities, {"go_st_codnegociacao"}, {{"createdon", each List.Min([createdon]), type nullable datetimezone}}),
+		    #"Changed Type35" = Table.TransformColumnTypes( #"Grouped Rows",{{"createdon", type datetimezone}}),
+		    #"Adjusted Time Zone35" = Table.AddColumn(#"Changed Type35", "createdon_adjusted", each DateTimeZone.SwitchZone([createdon], -3)),
+		    #"Extracted Text Before Delimiter35" = Table.TransformColumns(#"Adjusted Time Zone35", {{"createdon_adjusted", each Text.BeforeDelimiter(Text.From(_, "pt-PT"), " "), type text}}),
+		    #"Changed Type38" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter35",{{"createdon_adjusted", type datetime}}),
+		    #"Removed Previous Column35" = Table.RemoveColumns(#"Changed Type38", {"createdon"}),
+		    #"Renamed Adjusted Column35" = Table.RenameColumns(#"Removed Previous Column35", {{"createdon_adjusted", "createdon"}})
+		in
+		    #"Renamed Adjusted Column35"
+	lineageTag: 1d540321-e8dc-4918-80aa-21e6ec6f95b2
+	queryGroup: Dynamics
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression OPTSModified =
+		let
+		    Opportunities = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   modifiedon,#(lf)   go_st_codnegociacao#(lf)FROM#(lf)   go_opportunity"]),
+		    #"Grouped Rows" = Table.Group(Opportunities, {"go_st_codnegociacao"}, {{"modifiedon", each List.Min([modifiedon]), type nullable datetimezone}}),
+		    #"Changed Type35" = Table.TransformColumnTypes( #"Grouped Rows",{{"modifiedon", type datetimezone}}),
+		    #"Adjusted Time Zone35" = Table.AddColumn(#"Changed Type35", "createdon_adjusted", each DateTimeZone.SwitchZone([modifiedon], -3)),
+		    #"Extracted Text Before Delimiter35" = Table.TransformColumns(#"Adjusted Time Zone35", {{"createdon_adjusted", each Text.BeforeDelimiter(Text.From(_, "pt-PT"), " "), type text}}),
+		    #"Changed Type38" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter35",{{"createdon_adjusted", type datetime}}),
+		    #"Removed Previous Column35" = Table.RemoveColumns(#"Changed Type38", {"modifiedon"}),
+		    #"Renamed Adjusted Column35" = Table.RenameColumns(#"Removed Previous Column35", {{"createdon_adjusted", "modifiedon"}})
+		in
+		    #"Renamed Adjusted Column35"
+	lineageTag: 1fc8938f-5657-46a4-87e3-92f244e84c0c
+	queryGroup: Dynamics
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression OPTSIntegrated =
+		let
+		    Opportunities = Sql.Database(OrgDynamics, BD_Dynamics, [Query="SELECT#(lf)   go_dt_dataintegracao,#(lf)   go_st_codnegociacao#(lf)FROM#(lf)   go_opportunity"]),
+		    #"Changed Type35" = Table.TransformColumnTypes( Opportunities,{{"go_dt_dataintegracao", type datetimezone}}),
+		    #"Adjusted Time Zone35" = Table.AddColumn(#"Changed Type35", "createdon_adjusted", each DateTimeZone.SwitchZone([go_dt_dataintegracao], -3)),
+		    #"Extracted Text Before Delimiter35" = Table.TransformColumns(#"Adjusted Time Zone35", {{"createdon_adjusted", each Text.BeforeDelimiter(Text.From(_, "pt-PT"), " "), type text}}),
+		    #"Changed Type38" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter35",{{"createdon_adjusted", type datetime}}),
+		    #"Removed Previous Column35" = Table.RemoveColumns(#"Changed Type38", {"go_dt_dataintegracao"}),
+		    #"Renamed Adjusted Column35" = Table.RenameColumns(#"Removed Previous Column35", {{"createdon_adjusted", "go_dt_dataintegracao"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Adjusted Column35",{{"go_dt_dataintegracao", type date}}),
+		    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each ([go_dt_dataintegracao] <> null)),
+		    #"Grouped Rows" = Table.Group(#"Filtered Rows", {"go_st_codnegociacao"}, {{"Data de Integração", each List.Min([go_dt_dataintegracao]), type nullable datetimezone}})
+		in
+		    #"Grouped Rows"
+	lineageTag: 1daf280a-efcc-4a46-94ce-52f15e6f9629
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression OrgDynamics = "sbtcomercialprd.crm2.dynamics.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 1a267ad6-9403-4179-9279-f97d031a3655
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression BD_Dynamics = "sbtcomercialprd" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: ba19c2b9-023c-4027-9d2f-f21402c78a6b
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression LinkLead = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_lead&id=" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 1f500e21-8433-44d5-b884-6e72d3daca2f
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression BDExternal = "GONEXTADExternal" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b3c6daf8-cca4-4efb-a2d4-10bdcc7ea955
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression LinkActivity = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=appointment&id=" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d9f7a006-a21a-4217-bcf2-1801780e6156
+	queryGroup: Config
+
+	annotation PBI_ResultType = Exception
+
+expression #CDSTEntitySource =
+		let
+		    // ATENÇÃO: o servidor tem de ser um literal (ou um parâmetro simples, como o Org/BD
+		    // usados no Sql.Database). Qualquer transformação — Text.*, if, concatenação — torna a
+		    // origem DINÂMICA: o serviço deixa de a reconhecer, chama-lhe "Data source for Query1"
+		    // e recusa agendar o refresh. Era este o aviso do autor original nesta linha.
+		    Source = CommonDataService.Database("sbtcomercialprd.crm2.dynamics.com", [CreateNavigationProperties=false])
+		    // Origem anterior (conector Dataverse legacy, deprecado) — manter para rollback de emergência:
+		    // Source = Cds.Entities(#"@CRMOrgUrl", [ReorderColumns=null, UseFormattedValue=true])
+		in
+		    Source
+	lineageTag: 6463e6b9-a169-41ef-aa23-58093d00c3ed
+	queryGroup: Config
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression GetCDST_EntityTable =
+		let
+		    Source = (#"schema name" as text) =>
+		        let
+		            Source = #"#CDSTEntitySource",
+		            // O TDS endereça a tabela pelo NOME LÓGICO (singular, minúsculas),
+		            // não pelo SchemaName em PascalCase nem pelo EntitySetName no plural.
+		            DataTable = Source{[Schema="dbo", Item=Text.Lower(#"schema name")]}[Data],
+		            // Compatibilidade com UseFormattedValue=true do conector antigo:
+		            // o TDS devolve o rótulo em <coluna>name; o modelo consome <coluna>_display.
+		            // Só renomeia quando a coluna base existe, para não tocar em name/fullname/go_name/domainname.
+		            Colunas = Table.ColumnNames(DataTable),
+		            Rotulos = List.Select(Colunas, each Text.EndsWith(_, "name")
+		                and Text.Length(_) > 4
+		                and List.Contains(Colunas, Text.Start(_, Text.Length(_) - 4))),
+		            DataTableCompat = Table.RenameColumns(DataTable,
+		                List.Transform(Rotulos, each {_, Text.Start(_, Text.Length(_) - 4) & "_display"}))
+		        in
+		            DataTableCompat
+		in
+		    Source
+	lineageTag: b84afc49-17f0-4aa0-91a6-041613d17faa
+	queryGroup: Config
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+
+expression CRMOrgUrl = "https://sbtcomercialprd.crm2.dynamics.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 9579797f-2b72-4ff1-8c23-b3cea6529785
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression UsersMain =
+		let
+		    Source = #"GetCDST_EntityTable"("SystemUser"),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"azureactivedirectoryobjectid", "fullname", "go_st_codigoexterno", "positionid", "systemuserid"}),
+		    #"Uppercased Text" = Table.TransformColumns(#"Removed Other Columns",{{"go_st_codigoexterno", Text.Upper, type text}}),
+		    #"Filtered Rows" = Table.SelectRows(#"Uppercased Text", each ([positionid] <> null))
+		in
+		    #"Filtered Rows"
+	lineageTag: f0074d2d-7fbe-492d-9130-386b3a97df11
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+
+expression Anotacoes =
+		let
+		       Accounts = Sql.Database(OrgDynamics, BD_Dynamics, [Query="#(tab)select #(lf)#(tab)l.go_leadid#(lf)#(tab)--,an.subject#(lf)#(tab),MAX(CASE WHEN an.createdon IS NOT NULL THEN 'Anotação' ELSE 'nan' END) AS has#(lf)from #(lf)#(tab)go_lead l#(lf)left join go_opportunity o ON l.go_leadid = o.go_lk_originatingleadid#(lf)left join annotation an ON l.go_leadid = an.objectid#(lf)where#(lf)#(tab)yeaR(l.createdon) >= year(getdate())-3#(lf)#(tab)and an.createdon is not null#(tab)#(lf)#(tab)#(tab)#(lf)   #(lf)    GROUP BY#(lf)        l.go_leadid"])
+		in
+		    Accounts
+	lineageTag: 5766761d-5d91-45ee-9442-899a12ae6c84
+	queryGroup: Dynamics
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

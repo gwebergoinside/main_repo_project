@@ -1,0 +1,64 @@
+table GrupoCliente
+	lineageTag: 6c028b10-824d-410a-9da4-eb021482177a
+
+	column GrupoCliente
+		dataType: string
+		lineageTag: e79d0412-b74c-4837-a959-d514fac6a985
+		summarizeBy: none
+		sourceColumn: GrupoCliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cliente
+		dataType: string
+		lineageTag: 0d1fe6d2-b55f-485c-8904-1b84772a7637
+		summarizeBy: none
+		sourceColumn: Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienteCodigo
+		dataType: string
+		lineageTag: 0c79ccf3-9311-4eed-b76a-f6afc988647f
+		summarizeBy: none
+		sourceColumn: ClienteCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrupoClienteCodigo
+		dataType: string
+		lineageTag: 1018f647-863e-47b9-8897-3ddcd0298b20
+		summarizeBy: none
+		sourceColumn: GrupoClienteCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo_Cliente
+		dataType: string
+		lineageTag: 612d089e-4423-4eda-8236-978ae673b5ab
+		summarizeBy: none
+		sourceColumn: Grupo_Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cliente_Cod = ```
+			GrupoCliente[Cliente] & " (" &  GrupoCliente[ClienteCodigo] & ")" 
+			```
+		lineageTag: 1a00d938-b0e5-4648-bf87-92e950f9ab6f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GrupoCliente-de94ef5f-6947-47b8-9312-4dba17083391 = m
+		mode: import
+		queryGroup: CORE
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    union1.Cliente,#(lf)    union1.GrupoCliente,#(lf)    union1.ClienteCodigo,#(lf)    union1.GrupoClienteCodigo,#(lf)    union1.GrupoCliente + ' (' + union1.GrupoClienteCodigo + ')' AS Grupo_Cliente#(lf)From#(lf)    ((Select#(lf)         cl.Name As Cliente,#(lf)         g.Name As GrupoCliente,#(lf)         cl.ExternalCode As ClienteCodigo,#(lf)         g.ExternalCode As GrupoClienteCodigo#(lf)     From#(lf)         Entity cl Inner Join#(lf)         Entity g On cl.ExternalCode = g.ExternalCode#(lf)                 And cl.ParentID Is Null Inner Join#(lf)         EntityEntityType On g.ID = EntityEntityType.EntityID#(lf)     Where#(lf)         EntityEntityType.EntityTypeID = 1)#(lf)     Union#(lf)     (Select#(lf)         cl.Name As Cliente,#(lf)         g.Name As GrupoCliente,#(lf)         cl.ExternalCode As ClienteCodigo,#(lf)         g.ExternalCode As GrupoClienteCodigo#(lf)     From#(lf)         Entity cl Inner Join#(lf)         Entity g On cl.ParentID = g.ID Inner Join#(lf)         EntityEntityType On g.ID = EntityEntityType.EntityID#(lf)     Where#(lf)         EntityEntityType.EntityTypeID = 1)) As union1"]),
+				    #"Uppercased Text" = Table.TransformColumns(Source,{{"ClienteCodigo", Text.Upper, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Uppercased Text", {"ClienteCodigo"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_ResultType = Table
+

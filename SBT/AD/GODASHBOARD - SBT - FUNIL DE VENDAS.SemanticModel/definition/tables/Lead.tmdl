@@ -1,0 +1,497 @@
+table Lead
+	lineageTag: b7c9dcfa-eb5b-4588-a186-ce7145b1e828
+
+	column go_leadid
+		dataType: string
+		lineageTag: 4abc3a04-b17e-4828-b447-f6bb6f9523d9
+		summarizeBy: none
+		sourceColumn: go_leadid
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecode
+		dataType: int64
+		formatString: 0
+		lineageTag: a8fcdea3-d9d4-43a4-b9a8-0f148750a4ea
+		summarizeBy: sum
+		sourceColumn: statecode
+
+		annotation SummarizationSetBy = Automatic
+
+	column statecodename
+		dataType: string
+		lineageTag: 163129c1-6136-4bc4-9f4d-b4edf8af7010
+		summarizeBy: none
+		sourceColumn: statecodename
+
+		annotation SummarizationSetBy = Automatic
+
+	column statuscode
+		dataType: int64
+		formatString: 0
+		lineageTag: c79f8b8b-edee-40c7-9261-3c8fbb3ffbb1
+		summarizeBy: sum
+		sourceColumn: statuscode
+
+		annotation SummarizationSetBy = Automatic
+
+	column statuscodename
+		dataType: string
+		lineageTag: ce2d2535-2ecc-4cf0-a82a-ded8182e0794
+		summarizeBy: none
+		sourceColumn: statuscodename
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_name
+		dataType: string
+		lineageTag: a9592bb4-53ff-4403-a3db-419938bb74d1
+		summarizeBy: none
+		sourceColumn: go_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownerid
+		dataType: string
+		lineageTag: 90fd7981-45f9-457c-8780-b3db7dbf4ea9
+		summarizeBy: none
+		sourceColumn: ownerid
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_executivo
+		dataType: string
+		lineageTag: d7be3f49-96fd-4e45-b815-6e4dc4485c52
+		summarizeBy: none
+		sourceColumn: cod_executivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Executivo
+		dataType: string
+		lineageTag: ac38b965-f034-4801-9795-9a8c1a840b97
+		summarizeBy: none
+		sourceColumn: Executivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Empresa Principal'
+		dataType: string
+		lineageTag: 7d25d7f8-bc31-4b4f-a546-be1d3fcf2f65
+		summarizeBy: none
+		sourceColumn: Empresa Principal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Função
+		dataType: string
+		lineageTag: 35eaa781-ca28-4aab-98f3-370d612232da
+		summarizeBy: none
+		sourceColumn: Função
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Negociação'
+		dataType: string
+		lineageTag: 3de3b604-412d-4b13-a90e-469907155277
+		summarizeBy: none
+		sourceColumn: Tipo Negociação
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Conta Primária'
+		dataType: string
+		lineageTag: 7e071fd8-733c-4398-85ef-7d2e17f11f77
+		summarizeBy: none
+		sourceColumn: Conta Primária
+
+		annotation SummarizationSetBy = Automatic
+
+	column URL
+		dataType: string
+		lineageTag: 6d5469f7-bf6d-4ed7-ae62-bef6bb17ae78
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: URL
+
+		annotation SummarizationSetBy = Automatic
+
+	column Opt =
+			
+			LOOKUPVALUE(
+			    Neg[go_st_codnegociacao]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		lineageTag: ec986c09-ddcb-4a9e-9719-3b7dfe32918c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status = ```
+			
+			--IF( 'Lead'[CodSCTV] <> BLANK(), "Integrado", 'Lead'[statuscodename] )
+			SWITCH(
+			    TRUE()
+			    ,'Lead'[Opt CodSCTV]  <> BLANK(), "Qualificado"
+			    ,'Lead'[statuscodename] = "Em aprovação","Em aprovação"
+			    ,'Lead'[statuscodename] = "Aprovado", "Aprovado"
+			    ,'Lead'[statuscodename] = "Rejeitado", "Rejeitado"
+			    ,'Lead'[statuscodename] = "Crédito não aprovado", "Desqualificado" 
+			    ,'Lead'[statuscodename] = "Optou por outra emissora", "Desqualificado" 
+			    ,'Lead'[statuscodename] = "Prazo diferenciado não aprovado pelo financeiro SBT", "Desqualificado" 
+			    ,'Lead'[statuscodename] = "Alegou que a grade do SBT não é atrativa", "Desqualificado" 
+			    ,'Lead'[statuscodename] = "De/Para", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Não É Possível Contatar", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Não é Possível contatar, sem retorno do cliente", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Postergou investimentos", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Lead aberto indevidamente - Erro operacional", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Alega que o SBT não atende o perfil necessário", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Corte de verba no Cliente", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Desistiu de anunciar em TV", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Não É Possível Contatar", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Não Está Mais Interessado", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Cancelado", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Cancelamento da Campanha", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Concorrência", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Conflito de Segmento", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Disponibilidade de Espaço", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Sem Disponibilidade de Espaço", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Perda da Negociação", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Outros", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Perdido", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Em inserção", "Em inserção"
+			    ,'Lead'[statuscodename] = "Novo", "Novo"
+			    ,'Lead'[statuscodename] = "Desqualificado", "Desqualificado"
+			    ,'Lead'[statuscodename] = "Qualificado", "Qualificado"
+			    ,'Lead'[statuscodename] = "Relacionamento", "Relacionamento"
+			    ,'Lead'[statuscodename] = "Integrado", "Integrado"
+			    ,'Lead'[statuscodename] = "Disponível", "Disponível"
+			    ,'Lead'[statuscodename] = "Em andamento", "Em andamento"
+			    ,"Desqualificado"
+			)
+			```
+		lineageTag: bc95516a-f9b9-43cc-9a7c-0732eaffac83
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Estado' =
+			
+			LOOKUPVALUE(
+			    Neg[Estado]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		lineageTag: b0a6ef42-acdb-4093-8eb7-757dcca0185b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt CodSCTV' =
+			
+			LOOKUPVALUE(
+			    Neg[go_st_codnegociacaosctv]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		formatString: 0
+		lineageTag: 95fcccb5-a996-4692-985b-affbbd699e04
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienteCodigo
+		dataType: string
+		lineageTag: 38fe07c9-458e-4b8d-b252-31af34fa50a4
+		summarizeBy: none
+		sourceColumn: ClienteCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt URL' =
+			
+			LOOKUPVALUE(
+			    Neg[URL]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		lineageTag: 50785cae-b48e-4958-8536-50550d4f98a2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt DeuOrigemConta' =
+			
+			LOOKUPVALUE(
+			    Neg[DeuOrigemConta]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		lineageTag: aae46357-29bf-4c21-9805-bfd4c7d0626f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column idStatus =
+			
+			SWITCH(
+			    TRUE()
+			        ,'Lead'[Status] = "Integrado", 4
+			        ,'Lead'[Status] = "Em andamento", 1
+			        ,'Lead'[Status] = "Perdido", 3
+			        ,'Lead'[Status] = "Qualificado", 2
+			        ,'Lead'[Status] = "Relacionamento", 5
+			        ,'Lead'[Status] = "Outros", 6
+			        ,'Lead'[Status] = "Desqualificado", 10
+			        ,'Lead'[Status] = "Em aprovação", 8
+			        ,'Lead'[Status] = "Aprovado", 9
+			        ,'Lead'[Status] = "Rejeitado", 11
+			        ,'Lead'[Status] = "Em inserção", 12
+			        ,'Lead'[Status] = "Disponível", 13
+			        ,7
+			)
+		formatString: 0
+		lineageTag: 0e248a8d-0f19-4ee9-87be-1440aa8c179c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Oferta'
+		dataType: string
+		lineageTag: 4de2ffc4-67ca-4079-bcb3-bd26cdf54ec8
+		summarizeBy: none
+		sourceColumn: Tipo Oferta
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Valor Negociado' =
+			
+			LOOKUPVALUE(
+			    Neg[go_mn_valornegociado]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 3811a524-70f4-413d-ba06-9f4081eaa801
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	column 'Briefing Lead' =
+			
+			CONCATENATEX(FILTER(ALL(Briefings), Briefings[go_lk_leadorigem] = 'Lead'[go_leadid]), Briefings[go_name],", ")
+		lineageTag: b85081e1-a34c-4178-8e01-846035f0ff29
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_st_subject
+		dataType: string
+		lineageTag: a3174fa5-c7e3-4478-b1f1-a5dcaa2bb6d5
+		summarizeBy: none
+		sourceColumn: go_st_subject
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Motivo Lead Desqualificada' = IF.EAGER('Lead'[Status] = "Desqualificado", 'Lead'[statuscodename], BLANK())
+		lineageTag: 04becb26-990f-43ec-969f-76b14a8e1629
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cliente =
+			
+			VAR _1 =
+			LOOKUPVALUE(
+			    GrupoCliente[Cliente_Cod]
+			    ,GrupoCliente[ClienteCodigo]
+			    ,'Lead'[ClienteCodigo]
+			)
+			RETURN
+			IF( _1 = BLANK(), 'Lead'[go_st_companyname], _1 )
+		lineageTag: 0ab65c9d-f77a-4a8b-a1a4-70d920bc4a5f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Programa =
+			
+			CONCATENATEX(FILTER(ALL(Programas_Lead), Programas_Lead[go_leadid] = 'Lead'[go_leadid]), Programas_Lead[programname],", ")
+		lineageTag: f42f9772-89c8-44c3-91c7-2b3f45803789
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Motivo Perdida' = LOOKUPVALUE( Neg[Motivo Opt Perdida], Neg[go_lk_originatingleadid], 'Lead'[go_leadid] )
+		lineageTag: 1093884a-becb-4d52-ab86-05e50f7ad18d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Briefing' = LOOKUPVALUE('Neg'[Briefing Opt], Neg[go_lk_originatingleadid], 'Lead'[go_leadid])
+		lineageTag: 93eb6527-ca46-4f57-a1a7-994cdf785a8d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Termometro' = LOOKUPVALUE( Neg[Thermometer], Neg[go_lk_originatingleadid], 'Lead'[go_leadid] )
+		lineageTag: 415ae9a0-e27b-4127-b0aa-c8a9afde6c54
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column go_st_companyname
+		dataType: string
+		lineageTag: 08d0eaab-aaa4-47c9-beb0-fe99771a9a36
+		summarizeBy: none
+		sourceColumn: go_st_companyname
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Programa' =
+			--LOOKUPVALUE( Programas_Opt_Lead[Title], Programas_Opt_Lead[DynamicsOpportunityID], 'Lead'[Opt Id] )
+			CONCATENATEX(FILTER(ALL(Programas_Opt_Lead), Programas_Opt_Lead[DynamicsOpportunityID] = 'Lead'[Opt Id]), Programas_Opt_Lead[Title],", ")
+		lineageTag: 8706b4f0-9475-430e-a685-88bbfac23b70
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Midia' =
+			
+			LOOKUPVALUE(
+			    Neg[TipoMidiaCod]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		lineageTag: 2ddadb0f-1872-4c2f-91fb-614c0b5d0286
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Id' =
+			
+			LOOKUPVALUE(
+			    Neg[OpportunityId]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		lineageTag: 317659ac-e97b-4d95-81ad-61ba5b79b1b8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Termometro cod' = LOOKUPVALUE( Neg[Thermometer_cod], Neg[go_lk_originatingleadid], 'Lead'[go_leadid] )
+		formatString: 0
+		lineageTag: 7e1a40cf-2365-48b0-a273-38b2cb08f282
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt Data Integracao' =
+			
+			VAR _1 =
+			LOOKUPVALUE(
+			    Neg[Data de Integração_Final]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+			RETURN
+			IF( _1 = BLANK(), 'Lead'[createdon], _1 )
+		formatString: Short Date
+		lineageTag: 3ec8ce81-e5a7-46f1-8d17-b0e3178b1a56
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Opt EmpFat' =
+			
+			LOOKUPVALUE(
+			    Neg[go_lk_empresafaturamentoid]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+		lineageTag: f46bb0a4-0b33-4d3a-94c1-ee1edac3f35a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column createdon
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 812e6bf3-438d-470e-8e7c-a00ec9c2bf34
+		summarizeBy: none
+		sourceColumn: createdon
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Opt Data Integracao_Opt' =
+			
+			VAR _1 =
+			LOOKUPVALUE(
+			    Neg[Data de Integração_Final]
+			    ,Neg[go_lk_originatingleadid]
+			    ,'Lead'[go_leadid]
+			)
+			RETURN
+			_1
+		formatString: Short Date
+		lineageTag: 4f150327-8f62-4936-9f10-a93eb318370f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Linha do Tempo' =
+			
+			VAR _1 =
+			LOOKUPVALUE( LinhaDoTempo[Linha do Tempo], LinhaDoTempo[go_leadid], 'Lead'[go_leadid] )
+			RETURN
+			IF( _1 = BLANK(), "Não", "Sim (" & _1 & ")" )
+		lineageTag: b671994c-6110-4b36-89f8-0d0fb78c2845
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Modificação'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 92131c43-e038-47e8-9f9c-fbaace4bc459
+		summarizeBy: none
+		sourceColumn: Data Modificação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Lead-40084854-2c86-4993-bcfd-f1c3872ccecf = m
+		mode: import
+		queryGroup: Dynamics
+		source =
+				let
+				       Accounts = Sql.Database(OrgDynamics, BD_Dynamics, [Query="select #(lf)   GL.[go_leadid]#(lf)   ,GL.[statecode]#(lf)   ,GL.[statecodename]#(lf)   ,GL.[statuscode]#(lf)   ,GL.[statuscodename]#(lf)   ,GL.[go_st_subject]#(lf)   ,GL.[go_name]#(lf)   ,GL.createdon#(lf)   ,GL.modifiedon as [Data Modificação]#(lf)   ,GL.ownerid#(lf)   ,su.go_st_codigoexterno as cod_executivo#(lf)   ,su.fullname as Executivo#(lf)   ,GL.go_lk_empresaprincipalidname as [Empresa Principal]#(lf)   ,GL.go_pl_funcaoname as [Função]#(lf)   ,GL.go_pl_tiponegociacaoname as [Tipo Negociação]#(lf)   ,GL.go_pl_offertypename as [Tipo Oferta]#(lf)   ,GL.go_lk_parentaccountidname as [Conta Primária]#(lf)   --,GL.[go_st_program] as Programa#(lf)   ,a.accountnumber as ClienteCodigo#(lf)  -- ,bri.go_briefingid as [Briefing]#(lf)   ,GL.go_st_companyname#(lf)FROM #(lf)   [dbo].[go_lead] GL#(lf)   left join systemuser su on GL.ownerid = su.systemuserid#(lf)   left join Account a on GL.go_lk_parentaccountid = a.accountid#(lf)   --left join go_briefing bri on GL.[go_leadid] = bri.go_lk_leadorigem#(lf)"]),
+				    #"Changed Type2" = Table.TransformColumnTypes(Accounts,{{"createdon", type datetimezone}}),
+				    #"Adjusted Time Zone35" = Table.AddColumn(#"Changed Type2", "createdon_adjusted", each DateTimeZone.SwitchZone([createdon], -3)),
+				    #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Adjusted Time Zone35", {{"createdon_adjusted", each Text.BeforeDelimiter(Text.From(_, "pt-PT"), " "), type text}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Extracted Text Before Delimiter",{{"createdon_adjusted", type datetime}}),
+				    #"Removed Previous Column35" = Table.RemoveColumns(#"Changed Type3", {"createdon"}),
+				    #"Renamed Adjusted Column35" = Table.RenameColumns(#"Removed Previous Column35", {{"createdon_adjusted", "createdon"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Adjusted Column35",{{"createdon", type date}}),
+				    Custom1 = Table.AddColumn(#"Changed Type", "URL", each LinkLead & [go_leadid]),
+				    #"Renamed Columns" = Table.RenameColumns(Custom1,{{"cod_executivo", "cod_executivo1"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns",null,"SEM CODIGO",Replacer.ReplaceValue,{"cod_executivo1"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Replaced Value",{{"ClienteCodigo", "ClienteCodigo1"}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Renamed Columns1",null,"SEM CODIGO",Replacer.ReplaceValue,{"ClienteCodigo1"}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Replaced Value1", "cod_executivo", each if [cod_executivo1] = "SEM CODIGO" then Text.Combine({[cod_executivo1], "_", [go_st_companyname]})
+				else [cod_executivo1]),
+				    #"Added Custom" = Table.AddColumn(#"Inserted Merged Column", "ClienteCodigo", each if [ClienteCodigo1] = "SEM CODIGO" then Text.Combine({[ClienteCodigo1], "_", [go_st_companyname]})
+				else [ClienteCodigo1]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"cod_executivo1", "ClienteCodigo1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

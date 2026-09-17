@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "GODASHBOARD - SBT - FUNIL DE VENDAS"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5fc5e66c-5985-41ef-98b7-39d650330f1b"
+  }
+}

@@ -1,0 +1,44 @@
+table TipoMidia
+	lineageTag: 531ed964-21ee-48d3-b182-55f840fec066
+
+	column TipoMidia_Cod
+		lineageTag: c1e49035-e33f-496f-9c5e-dd33c7ee44f6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [TipoMidia_Cod]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoMidia
+		lineageTag: 0c9fbab0-b676-4784-9f11-92741e926395
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [TipoMidia]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoMidia-6d773f84-4b90-4bac-8676-d522efd22875 = calculated
+		mode: import
+		source =
+				
+				VAR _1 =
+				    SELECTCOLUMNS(
+				        Neg
+				        ,"TipoMidia_Cod", Neg[TipoMidiaCod]
+				        ,"TipoMidia", Neg[TipoMidia]
+				    )
+				VAR _11 =
+				    SELECTCOLUMNS(
+				        'Lead'
+				        ,"TipoMidia_Cod", 'Lead'[Tipo Midia]
+				        ,"TipoMidia", LOOKUPVALUE( Neg[TipoMidia], Neg[go_lk_originatingleadid], 'Lead'[go_leadid] )
+				    )
+				VAR _12 =
+				    UNION( _1, _11 )
+				VAR _2 =
+				    FILTER( SUMMARIZE( _12, [TipoMidia_Cod], [TipoMidia] ), [TipoMidia_Cod] <> BLANK() )
+				RETURN
+				_2
+
+	annotation PBI_Id = f7049c89aefd42c0bade1d7fe06b938e
+

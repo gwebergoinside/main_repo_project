@@ -1,0 +1,33 @@
+table Estados
+	lineageTag: 8fb98016-ad3a-4adc-bc05-ce4e8907d8f8
+
+	column Estado
+		dataType: string
+		lineageTag: 386130ac-92b0-45b2-92eb-7d38ab822068
+		summarizeBy: none
+		sourceColumn: Estado
+		sortByColumn: ID
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: string
+		lineageTag: 59c389d9-a31e-419d-b62f-c50e249892db
+		summarizeBy: none
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Estados-ad2cf222-e4b1-4a27-be6b-23587dfa71c6 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WcktNzkhMSSxW8D28qlhJR8lIKVYnWsm/QE/BMS8lMVdPITLEBShsCBYOSC1KyURSbAwRLcovyC8uSQSJmIBFHJNSi0oQykyVYmMB", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Estado = _t, ID = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Estado", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

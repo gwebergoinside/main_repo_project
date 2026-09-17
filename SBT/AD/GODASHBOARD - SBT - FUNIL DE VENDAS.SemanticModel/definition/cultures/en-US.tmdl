@@ -1,0 +1,3211 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "3.1.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "grupo_cliente": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GrupoCliente"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "grupo cliente": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "GrupoCliente": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "grupo_cliente.grupo_cliente": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GrupoCliente",
+			          "ConceptualProperty": "GrupoCliente"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "grupo cliente": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "grupo cliente name": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "GrupoCliente": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ],
+			      "NameType": "Name"
+			    },
+			    "grupo_cliente.cliente": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GrupoCliente",
+			          "ConceptualProperty": "Cliente"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "cliente": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "medida": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "@medida": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "calendario": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "calendario": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "calendario.date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "ConceptualProperty": "Date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "date": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "moment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "period": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.714
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "calendario.date.variation.date_hierarchy": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "VariationSource": "Date",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "date hierarchy": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "calendario.date.variation.date_hierarchy.year": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "VariationSource": "Date",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Year"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "year": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date year": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date yr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "yr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "moment year": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "period year": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.582
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "calendario.date.variation.date_hierarchy.quarter": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "VariationSource": "Date",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Quarter"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "quarter": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date quarter": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date qtr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.833
+			          }
+			        },
+			        {
+			          "qtr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.818
+			          }
+			        },
+			        {
+			          "moment quarter": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "period quarter": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.582
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "calendario.date.variation.date_hierarchy.month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "VariationSource": "Date",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "month": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date month": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date mth": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "mth": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "moment month": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "period month": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.582
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "calendario.date.variation.date_hierarchy.day": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "VariationSource": "Date",
+			          "VariationSet": "Variation",
+			          "Hierarchy": "Date Hierarchy",
+			          "HierarchyLevel": "Day"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "day": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date day": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "moment day": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "period day": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.582
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "calendario.ano": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "ConceptualProperty": "Ano"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ano": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "calendario.dia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "ConceptualProperty": "Dia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "dia": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "calendario.me": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "ConceptualProperty": "Mes"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "me": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "calendario.mes_no": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "ConceptualProperty": "Mes No"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "mes no": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "me no": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.78
+			          }
+			        },
+			        {
+			          "me number": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "calendario.trimestre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendario",
+			          "ConceptualProperty": "Trimestre"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "trimestre": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "rl": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "RLS"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "rl": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "rl.first_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "RLS",
+			          "ConceptualProperty": "FirstName"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "first name": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "FirstName": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "first nickname": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "first title": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "first label": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "first tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "1st name": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Weight": 0.582
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.qtd_oportunidades": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "#Medidas",
+			          "ConceptualProperty": "QTD Oportunidades"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "medidas.qtd_appointments": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "#Medidas",
+			          "ConceptualProperty": "QTD Appointments"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "medidas.qtd_clientes": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "#Medidas",
+			          "ConceptualProperty": "QTD Clientes"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "medidas.qtd_pendentes_card": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "#Medidas",
+			          "ConceptualProperty": "QTD Pendentes Card"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "medidas.qtd_clientes_card": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "#Medidas",
+			          "ConceptualProperty": "QTD Clientes Card"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "medidas.qtd_briefing_card": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "#Medidas",
+			          "ConceptualProperty": "QTD Briefing Card"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "medidas.qtd_oportunidades1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "QTD Oportunidades card"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "medidas.valor_negociado": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "Valor Negociado"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "grupocliente.grupo_cliente": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GrupoCliente",
+			          "ConceptualProperty": "Grupo_Cliente"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "grupocliente.cliente_cod": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "GrupoCliente",
+			          "ConceptualProperty": "Cliente_Cod"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cliente": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.nomeexecutivo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "NomeExecutivo"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "neg.first_createdon": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "First_Createdon"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Data Criação": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "lead.statuscodename": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Lead",
+			          "ConceptualProperty": "statuscodename"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "contato2.createdon": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contato(2)",
+			          "ConceptualProperty": "createdon"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "contato2.modifiedby": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contato(2)",
+			          "ConceptualProperty": "modifiedby"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "contato2.go_bt_contatocobranca": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contato(2)",
+			          "ConceptualProperty": "go_bt_contatocobranca"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "contato2.go_bt_gestorpiap": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contato(2)",
+			          "ConceptualProperty": "go_bt_gestorpiap"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "contato2.go_pl_tiporegistro_display": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contato(2)",
+			          "ConceptualProperty": "go_pl_tiporegistro_display"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "contato2.go_pl_cargo_display": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contato(2)",
+			          "ConceptualProperty": "go_pl_cargo_display"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "contato2.go_pl_departamento_display": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contato(2)",
+			          "ConceptualProperty": "go_pl_departamento_display"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "contato2.nome": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Contato(2)",
+			          "ConceptualProperty": "Nome"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "medidas.qtd_leads_ytd_card": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "QTD Lead Card"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "QTD Leads YTD": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.tipomidia": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "TipoMidia"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tipo Mídia": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Programa Opt": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Tipo Midia": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.go_st_codnegociacao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "go_st_codnegociacao"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "🔗": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "🔗 OPT": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.data_de_integração_final": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "Data de Integração_Final"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Data Integração": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Data de Integração": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.go_int_versao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "go_int_versao"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Versão": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.go_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "go_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "OPT": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "lead.go_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Lead",
+			          "ConceptualProperty": "go_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Lead": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "lead.url": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Lead",
+			          "ConceptualProperty": "URL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "🔗": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "lead.origem": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Lead",
+			          "ConceptualProperty": "Opt"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "🔗 OPT": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "lead.codsctv": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Lead",
+			          "ConceptualProperty": "Opt CodSCTV"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "SCTV": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "lead.go_leadid": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Lead",
+			          "ConceptualProperty": "go_leadid"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "executivos.executivo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Executivos",
+			          "ConceptualProperty": "Executivo"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Executivo": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.clientes": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "Clientes"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cliente": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "carteira.datainicio": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Carteira",
+			          "ConceptualProperty": "DataInicio"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "lead.estadoopt": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Lead",
+			          "ConceptualProperty": "Opt Estado"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "StatusOPT": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.estado": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "Estado"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Status Opt": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.thermometer": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "Thermometer"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Termômetro Opt": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.briefing": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "Briefing Opt"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Briefing | Opt": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "neg.go_st_codnegociacaosctv": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Neg",
+			          "ConceptualProperty": "go_st_codnegociacaosctv"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "SCTV": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.qtd_lead": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "QTD Lead"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "QTD Lead": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Total Leads": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.qtd_opt_clientes_novos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "QTD Opt_Clientes_Novos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Clientes Novos": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.leads_com_opt": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "% Leads com Opt"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Total QTD": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.valor_opt_ganhas": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "% Valor_Opt_Ganhas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% Valor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.lead_com_opt_ganhas": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "% Lead com Opt Ganhas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Leads c/ Opt Ganhas": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.leads_novos_opt_ganhas": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "% Leads Novos Opt Ganhas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Novos Opt Ganhas": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.qtd_optc_lead_sem_proposta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "QTD Opt Sem Proposta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Sem Proposta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.qtd_opt_lead_proposta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "QTD Opt Com Proposta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Com Proposta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.qtd_opt_com_proposta_fechados": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "% QTD Opt com Proposta_Fechados"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Com Proposta Fechada": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.qtd_lead_sem_proposta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "QTD Lead sem Proposta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Sem Proposta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.qtd_lead_com_proposta": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "QTD Lead com Proposta"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Com Proposta": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medidas.leads_com_porposta_ganhas": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "@Medidas",
+			          "ConceptualProperty": "% Leads com Porposta Ganhas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Com Proposta Fechada": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "programas_lead.programname": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Programas_Lead",
+			          "ConceptualProperty": "programname"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Lead | Programa": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  },
+			  "Relationships": {
+			    "grupo_cliente_is_named_grupo_cliente": {
+			      "Binding": {
+			        "ConceptualEntity": "GrupoCliente"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "grupo_cliente": {
+			          "Target": {
+			            "Entity": "grupo_cliente"
+			          }
+			        },
+			        "grupo_cliente.grupo_cliente": {
+			          "Target": {
+			            "Entity": "grupo_cliente.grupo_cliente"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Name": {
+			            "Subject": {
+			              "Role": "grupo_cliente"
+			            },
+			            "Name": {
+			              "Role": "grupo_cliente.grupo_cliente"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "grupo_cliente"
+			            },
+			            "Object": {
+			              "Role": "grupo_cliente.grupo_cliente"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "grupo_cliente_is_named_ID": {
+			      "Binding": {
+			        "ConceptualEntity": "GrupoCliente"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "grupo_cliente": {
+			          "Target": {
+			            "Entity": "grupo_cliente"
+			          }
+			        },
+			        "grupo_cliente.ID": {
+			          "Target": {
+			            "Entity": "grupo_cliente.ID"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Name": {
+			            "Subject": {
+			              "Role": "grupo_cliente"
+			            },
+			            "Name": {
+			              "Role": "grupo_cliente.ID"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "grupo_cliente"
+			            },
+			            "Object": {
+			              "Role": "grupo_cliente.ID"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_is_is_leaf": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.is_leaf": {
+			          "Target": {
+			            "Entity": "rl.is_leaf"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "DynamicAdjective": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Adjective": {
+			              "Role": "rl.is_leaf"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.is_leaf"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "grupo_cliente_has_cliente": {
+			      "Binding": {
+			        "ConceptualEntity": "GrupoCliente"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "grupo_cliente": {
+			          "Target": {
+			            "Entity": "grupo_cliente"
+			          }
+			        },
+			        "grupo_cliente.cliente": {
+			          "Target": {
+			            "Entity": "grupo_cliente.cliente"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "grupo_cliente"
+			            },
+			            "Object": {
+			              "Role": "grupo_cliente.cliente"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "grupo_cliente_has_ID_grupo": {
+			      "Binding": {
+			        "ConceptualEntity": "GrupoCliente"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "grupo_cliente": {
+			          "Target": {
+			            "Entity": "grupo_cliente"
+			          }
+			        },
+			        "grupo_cliente.ID_grupo": {
+			          "Target": {
+			            "Entity": "grupo_cliente.ID_grupo"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "grupo_cliente"
+			            },
+			            "Object": {
+			              "Role": "grupo_cliente.ID_grupo"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "grupo_cliente_has_entity_type_ID": {
+			      "Binding": {
+			        "ConceptualEntity": "GrupoCliente"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "grupo_cliente": {
+			          "Target": {
+			            "Entity": "grupo_cliente"
+			          }
+			        },
+			        "grupo_cliente.entity_type_ID": {
+			          "Target": {
+			            "Entity": "grupo_cliente.entity_type_ID"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "grupo_cliente"
+			            },
+			            "Object": {
+			              "Role": "grupo_cliente.entity_type_ID"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "grupo_cliente_has_external_code": {
+			      "Binding": {
+			        "ConceptualEntity": "GrupoCliente"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "grupo_cliente": {
+			          "Target": {
+			            "Entity": "grupo_cliente"
+			          }
+			        },
+			        "grupo_cliente.external_code": {
+			          "Target": {
+			            "Entity": "grupo_cliente.external_code"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "grupo_cliente"
+			            },
+			            "Object": {
+			              "Role": "grupo_cliente.external_code"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_medida": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.medida": {
+			          "Target": {
+			            "Entity": "medida.medida"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.medida"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_has_date": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario": {
+			          "Target": {
+			            "Entity": "calendario"
+			          }
+			        },
+			        "calendario.date": {
+			          "Target": {
+			            "Entity": "calendario.date"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario"
+			            },
+			            "Object": {
+			              "Role": "calendario.date"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_has_ano": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario": {
+			          "Target": {
+			            "Entity": "calendario"
+			          }
+			        },
+			        "calendario.ano": {
+			          "Target": {
+			            "Entity": "calendario.ano"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario"
+			            },
+			            "Object": {
+			              "Role": "calendario.ano"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_has_dia": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario": {
+			          "Target": {
+			            "Entity": "calendario"
+			          }
+			        },
+			        "calendario.dia": {
+			          "Target": {
+			            "Entity": "calendario.dia"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario"
+			            },
+			            "Object": {
+			              "Role": "calendario.dia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_has_me": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario": {
+			          "Target": {
+			            "Entity": "calendario"
+			          }
+			        },
+			        "calendario.me": {
+			          "Target": {
+			            "Entity": "calendario.me"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario"
+			            },
+			            "Object": {
+			              "Role": "calendario.me"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_has_mes_no": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario": {
+			          "Target": {
+			            "Entity": "calendario"
+			          }
+			        },
+			        "calendario.mes_no": {
+			          "Target": {
+			            "Entity": "calendario.mes_no"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario"
+			            },
+			            "Object": {
+			              "Role": "calendario.mes_no"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_has_trimestre": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario": {
+			          "Target": {
+			            "Entity": "calendario"
+			          }
+			        },
+			        "calendario.trimestre": {
+			          "Target": {
+			            "Entity": "calendario.trimestre"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario"
+			            },
+			            "Object": {
+			              "Role": "calendario.trimestre"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_perdido": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.perdido": {
+			          "Target": {
+			            "Entity": "medida.perdido"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.perdido"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_sum_lost": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.sum_lost": {
+			          "Target": {
+			            "Entity": "medida.sum_lost"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.sum_lost"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_LY_YTD_atual_month": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_LY_YTD_atual_month": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_LY_YTD_atual_month"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_LY_YTD_atual_month"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_ganho": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.ganho": {
+			          "Target": {
+			            "Entity": "medida.ganho"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.ganho"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_YTD_atual_month": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_YTD_atual_month": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_YTD_atual_month"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_YTD_atual_month"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_percent_var_keep": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.percent_var_keep": {
+			          "Target": {
+			            "Entity": "medida.percent_var_keep"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.percent_var_keep"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_AY": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_AY": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_AY"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_AY"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_perdido_final": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.perdido_final": {
+			          "Target": {
+			            "Entity": "medida.perdido_final"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.perdido_final"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_perdido_color": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.perdido_color": {
+			          "Target": {
+			            "Entity": "medida.perdido_color"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.perdido_color"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_ganho_color_executivo": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.ganho_color_executivo": {
+			          "Target": {
+			            "Entity": "medida.ganho_color_executivo"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.ganho_color_executivo"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_ganho_color": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.ganho_color": {
+			          "Target": {
+			            "Entity": "medida.ganho_color"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.ganho_color"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_ganho_final": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.ganho_final": {
+			          "Target": {
+			            "Entity": "medida.ganho_final"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.ganho_final"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_ganho_final_executivo": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.ganho_final_executivo": {
+			          "Target": {
+			            "Entity": "medida.ganho_final_executivo"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.ganho_final_executivo"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_perdido_color_executivo": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.perdido_color_executivo": {
+			          "Target": {
+			            "Entity": "medida.perdido_color_executivo"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.perdido_color_executivo"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_perdido_final_executivo": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.perdido_final_executivo": {
+			          "Target": {
+			            "Entity": "medida.perdido_final_executivo"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.perdido_final_executivo"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_perdido": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_perdido": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_perdido"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_perdido"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_perdido_LY": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_perdido_LY": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_perdido_LY"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_perdido_LY"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_calendario_as_filter": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.calendario_as_filter": {
+			          "Target": {
+			            "Entity": "medida.calendario_as_filter"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.calendario_as_filter"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_carteira": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_carteira": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_carteira"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_carteira"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_node_key": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.node_key": {
+			          "Target": {
+			            "Entity": "rl.node_key"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.node_key"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_first_parent_key": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.first_parent_key": {
+			          "Target": {
+			            "Entity": "rl.first_parent_key"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.first_parent_key"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_path": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.path": {
+			          "Target": {
+			            "Entity": "rl.path"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.path"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_first_name": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.first_name": {
+			          "Target": {
+			            "Entity": "rl.first_name"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.first_name"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_hierarchy_depth": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.hierarchy_depth": {
+			          "Target": {
+			            "Entity": "rl.hierarchy_depth"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.hierarchy_depth"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_level_1": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.level_1": {
+			          "Target": {
+			            "Entity": "rl.level_1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.level_1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_level_2": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.level_2": {
+			          "Target": {
+			            "Entity": "rl.level_2"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.level_2"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_level_3": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.level_3": {
+			          "Target": {
+			            "Entity": "rl.level_3"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.level_3"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_level_4": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.level_4": {
+			          "Target": {
+			            "Entity": "rl.level_4"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.level_4"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_level_5": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.level_5": {
+			          "Target": {
+			            "Entity": "rl.level_5"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.level_5"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_level_6": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.level_6": {
+			          "Target": {
+			            "Entity": "rl.level_6"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.level_6"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "rl_has_endless_loop": {
+			      "Binding": {
+			        "ConceptualEntity": "RLS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "rl": {
+			          "Target": {
+			            "Entity": "rl"
+			          }
+			        },
+			        "rl.endless_loop": {
+			          "Target": {
+			            "Entity": "rl.endless_loop"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "rl"
+			            },
+			            "Object": {
+			              "Role": "rl.endless_loop"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_carteira_LY": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_carteira_LY": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_carteira_LY"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_carteira_LY"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_carteira_": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_carteira_": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_carteira_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_carteira_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_carteira_final": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_carteira_final": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_carteira_final"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_carteira_final"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "medida_has_val_exibido_carteira_final_LY": {
+			      "Binding": {
+			        "ConceptualEntity": "@Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.val_exibido_carteira_final_LY": {
+			          "Target": {
+			            "Entity": "medida.val_exibido_carteira_final_LY"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.val_exibido_carteira_final_LY"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_date_has_variation_date_hierarchy": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario.date": {
+			          "Target": {
+			            "Entity": "calendario.date"
+			          }
+			        },
+			        "calendario.date.variation.date_hierarchy": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario.date"
+			            },
+			            "Object": {
+			              "Role": "calendario.date.variation.date_hierarchy"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_date_variation_date_hierarchy_has_year": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario.date.variation.date_hierarchy": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy"
+			          }
+			        },
+			        "calendario.date.variation.date_hierarchy.year": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy.year"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario.date.variation.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "calendario.date.variation.date_hierarchy.year"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_date_variation_date_hierarchy_has_quarter": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario.date.variation.date_hierarchy": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy"
+			          }
+			        },
+			        "calendario.date.variation.date_hierarchy.quarter": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy.quarter"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario.date.variation.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "calendario.date.variation.date_hierarchy.quarter"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_date_variation_date_hierarchy_has_month": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario.date.variation.date_hierarchy": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy"
+			          }
+			        },
+			        "calendario.date.variation.date_hierarchy.month": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy.month"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario.date.variation.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "calendario.date.variation.date_hierarchy.month"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    },
+			    "calendario_date_variation_date_hierarchy_has_day": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendario"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendario.date.variation.date_hierarchy": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy"
+			          }
+			        },
+			        "calendario.date.variation.date_hierarchy.day": {
+			          "Target": {
+			            "Entity": "calendario.date.variation.date_hierarchy.day"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendario.date.variation.date_hierarchy"
+			            },
+			            "Object": {
+			              "Role": "calendario.date.variation.date_hierarchy.day"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

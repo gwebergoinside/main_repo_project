@@ -1,0 +1,25 @@
+table Programas_Opt_Lead
+	lineageTag: cfa57bc6-a1a2-49cd-8012-4a0d27f91b4b
+
+	column DynamicsOpportunityID
+		lineageTag: b9895fad-ec31-4d09-811c-13ff4dddcc6a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Programas_OPT[DynamicsOpportunityID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Title
+		lineageTag: a2bec327-7955-46d7-817a-e1900c64cb1e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Programas_OPT[Title]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Programas_Opt_Lead-8a40feac-75bb-4cc7-b9be-3a9de0912d9f = calculated
+		mode: import
+		source = Programas_OPT
+
+	annotation PBI_Id = b1686f274cd740bd93829a598a53ab06
+
