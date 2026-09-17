@@ -14,5 +14,5 @@ table 'logo header'
 		queryGroup: Config
 		source = "SBT" meta [IsParameterQuery=true, ExpressionIdentifier=#"lista de imagem", Type="Text", IsParameterQueryRequired=true]
 
-	annotation PBI_ResultType = Text
+	annotation PBI_ResultType = Exception
 

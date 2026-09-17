@@ -1,0 +1,56 @@
+table GrupoAgencia
+	lineageTag: 742cb6ec-692f-40ca-8f81-2ba4175763a6
+
+	column GrupoAgencia
+		dataType: string
+		lineageTag: 0142fa10-ef1f-477b-81a2-3448c7d80352
+		summarizeBy: none
+		sourceColumn: GrupoAgencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agencia
+		dataType: string
+		lineageTag: 7a041042-e124-4d2d-9663-90e30a7e681d
+		summarizeBy: none
+		sourceColumn: Agencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaCodigo
+		dataType: string
+		lineageTag: 0358c369-3196-496b-8c67-514eed10b407
+		summarizeBy: none
+		sourceColumn: AgenciaCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrupoAgenciaCodigo
+		dataType: string
+		lineageTag: e969f7ab-67d6-41d3-8f66-0ec45c308bbd
+		summarizeBy: none
+		sourceColumn: GrupoAgenciaCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo_Agencia
+		dataType: string
+		lineageTag: c712dd38-0cd5-4716-940a-1fa602f96c84
+		summarizeBy: none
+		sourceColumn: Grupo_Agencia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition GrupoAgencia-9ed82b92-d56c-481e-9c8b-39c29ea39b08 = m
+		mode: import
+		queryGroup: CORE
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    union1.Agencia,#(lf)    union1.GrupoAgencia,#(lf)    union1.AgenciaCodigo,#(lf)    union1.GrupoAgenciaCodigo,#(lf)    union1.GrupoAgencia + ' (' + union1.GrupoAgenciaCodigo + ')' AS Grupo_Agencia#(lf)From#(lf)    ((Select#(lf)         cl.Name As Agencia,#(lf)         g.Name As GrupoAgencia,#(lf)         cl.ExternalCode As AgenciaCodigo,#(lf)         g.ExternalCode As GrupoAgenciaCodigo#(lf)     From#(lf)         Entity cl Inner Join#(lf)         Entity g On cl.ExternalCode = g.ExternalCode#(lf)                 And cl.ParentID Is Null Inner Join#(lf)         EntityEntityType On g.ID = EntityEntityType.EntityID#(lf)     Where#(lf)         EntityEntityType.EntityTypeID = 2)#(lf)     Union#(lf)     (Select#(lf)         cl.Name As Agencia,#(lf)         g.Name As GrupoAgencia,#(lf)         cl.ExternalCode As AgenciaCodigo,#(lf)         g.ExternalCode As GrupoAgenciaCodigo#(lf)     From#(lf)         Entity cl Inner Join#(lf)         Entity g On cl.ParentID = g.ID Inner Join#(lf)         EntityEntityType On g.ID = EntityEntityType.EntityID#(lf)     Where#(lf)         EntityEntityType.EntityTypeID = 2)) As union1"]),
+				    #"Uppercased Text" = Table.TransformColumns(Source,{{"AgenciaCodigo", Text.Upper, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Uppercased Text", {"AgenciaCodigo"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_ResultType = Table
+

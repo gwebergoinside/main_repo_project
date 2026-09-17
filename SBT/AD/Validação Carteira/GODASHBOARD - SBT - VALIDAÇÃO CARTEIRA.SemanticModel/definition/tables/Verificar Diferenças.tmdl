@@ -1,0 +1,153 @@
+table 'Verificar Diferenças'
+	lineageTag: 6ee8d14b-b9c5-47c7-ac70-0dd1cb7ee55f
+
+	calculationGroup
+
+		calculationItem OK =
+				
+				var _grouped_client = GROUPBY(
+				        ValoresFinal
+				        , GrupoCliente[ClienteCodigo]
+				        , Calendario[Ano]
+				        , Calendario[Mes]
+				        , ValoresFinal[Tipo]
+				        , "Carteira",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "Carteira", ValoresFinal[Valor], 0 )
+				            )
+				        , "SCTV",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "SCTV", ValoresFinal[Valor], 0 )
+				            )
+				    )
+				
+				var _grouped_agency = GROUPBY(
+				        ValoresFinal
+				        , GrupoCliente[ClienteCodigo]
+				        , GrupoAgencia[AgenciaCodigo]
+				        , Calendario[Ano]
+				        , Calendario[Mes]
+				        , ValoresFinal[Tipo]
+				        , "Carteira",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "Carteira", ValoresFinal[Valor], 0 )
+				            )
+				        , "SCTV",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "SCTV", ValoresFinal[Valor], 0 )
+				            )
+				    )
+				
+				var _grouped_emp = GROUPBY(
+				        ValoresFinal
+				        , GrupoCliente[ClienteCodigo]
+				        , GrupoAgencia[AgenciaCodigo]
+				        , Emp_Venda[ExternalCode]
+				        , Calendario[Ano]
+				        , Calendario[Mes]
+				        , ValoresFinal[Tipo]
+				        , "Carteira",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "Carteira", ValoresFinal[Valor], 0 )
+				            )
+				        , "SCTV",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "SCTV", ValoresFinal[Valor], 0 )
+				            )
+				    )
+				RETURN
+				    SWITCH( TRUE(),
+				        ABS( SUMX( _grouped_client, [Carteira] - [SCTV] ) ) < 0.01, SELECTEDMEASURE(),
+				        ABS( SUMX( _grouped_agency, [Carteira] - [SCTV] ) ) < 0.01, SELECTEDMEASURE(),
+				        ABS( SUMX( _grouped_emp, [Carteira] - [SCTV] ) ) < 0.01, SELECTEDMEASURE(),
+				        BLANK() )
+
+		calculationItem Verificar =
+				
+				var _grouped_client = GROUPBY(
+				        ValoresFinal
+				        , GrupoCliente[ClienteCodigo]
+				        , Calendario[Ano]
+				        , Calendario[Mes]
+				        , ValoresFinal[Tipo]
+				        , "Carteira",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "Carteira", ValoresFinal[Valor], 0 )
+				            )
+				        , "SCTV",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "SCTV", ValoresFinal[Valor], 0 )
+				            )
+				    )
+				
+				var _grouped_agency = GROUPBY(
+				        ValoresFinal
+				        , GrupoCliente[ClienteCodigo]
+				        , GrupoAgencia[AgenciaCodigo]
+				        , Calendario[Ano]
+				        , Calendario[Mes]
+				        , ValoresFinal[Tipo]
+				        , "Carteira",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "Carteira", ValoresFinal[Valor], 0 )
+				            )
+				        , "SCTV",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "SCTV", ValoresFinal[Valor], 0 )
+				            )
+				    )
+				
+				var _grouped_emp = GROUPBY(
+				        ValoresFinal
+				        , GrupoCliente[ClienteCodigo]
+				        , GrupoAgencia[AgenciaCodigo]
+				        , Emp_Venda[ExternalCode]
+				        , Calendario[Ano]
+				        , Calendario[Mes]
+				        , ValoresFinal[Tipo]
+				        , "Carteira",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "Carteira", ValoresFinal[Valor], 0 )
+				            )
+				        , "SCTV",
+				            SUMX(
+				                CURRENTGROUP(),
+				                IF( ValoresFinal[Tipo] = "SCTV", ValoresFinal[Valor], 0 )
+				            )
+				    )
+				RETURN
+				    SWITCH( TRUE(),
+				        ABS( SUMX( _grouped_client, [Carteira] - [SCTV] ) ) < 0.01, BLANK(),
+				        ABS( SUMX( _grouped_agency, [Carteira] - [SCTV] ) ) < 0.01, BLANK(),
+				        ABS( SUMX( _grouped_emp, [Carteira] - [SCTV] ) ) < 0.01, BLANK(),
+				        SELECTEDMEASURE() )
+
+	column 'Segmentar Diferenças'
+		dataType: string
+		lineageTag: 1ff2f2e9-e728-47b2-9f13-13945365e76c
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 13950510-78e4-47ae-8968-afa53cc473c8
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

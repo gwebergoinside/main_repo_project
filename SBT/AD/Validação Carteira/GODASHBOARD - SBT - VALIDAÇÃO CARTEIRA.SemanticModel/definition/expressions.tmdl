@@ -1,0 +1,60 @@
+expression @CRMOrgUrl = "https://sbtcomercialprd.crm2.dynamics.com" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6a2bded9-4e6d-44cb-9f9a-102fd54095c4
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+/// Enter the Server of the GMedia
+expression Org = "sbt-gonext-prd-stg-rds-ms-saeast-01.c6upqumvij3c.sa-east-1.rds.amazonaws.com" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text", List = {}]
+	lineageTag: baaff107-69bc-486c-910c-d54e8f691d16
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression BD = "GONEXTAD20" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6bc91e25-5b27-4069-9bf7-db000d1c644a
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression VendaImportada =
+		let
+		    Source = Sql.Database(Org, BD, [Query="Select#(lf)    R2.Cod_Empresa,#(lf)    --R2.Cod_Agencia,#(lf)    --R2.Cod_Cliente,#(lf)    R2.Competencia,#(lf)    R2.Cod_Contato,#(lf)    --R2.Cod_Empresa_Faturamento,#(lf)    R2.Numero_Negociacao#(lf)From#(lf)    "&BDExternal&".SCTV.R0002 R2#(lf)Where#(lf)    R2.Competencia >= 201601 And#(lf)    R2.Cod_Nucleo Not In ('n10', 'novon', 'vale') And#(lf)    R2.Indica_Mes_Anterior = 0 And#(lf)    R2.Cod_Empresa_Faturamento <> '054' And#(lf)    Exists(Select#(lf)         0#(lf)     From#(lf)         Company E#(lf)     Where#(lf)         E.ExternalCode = R2.Cod_Empresa_Faturamento And#(lf)         E.Affiliation = 'FILIADO') And#(lf)    Exists(Select#(lf)         0#(lf)     From#(lf)         Company E#(lf)     Where#(lf)         E.ExternalCode = R2.Cod_Empresa And#(lf)         E.Affiliation <> 'FILIADO')#(lf)Group By#(lf)    R2.Cod_Empresa,#(lf)    R2.Competencia,#(lf)    R2.Cod_Contato,#(lf)    R2.Numero_Negociacao"]),
+		    #"Added Custom" = Table.AddColumn(Source, "Cod_Contato_Importada", each "VEIMPR")
+		in
+		    #"Added Custom"
+	lineageTag: f251825f-ea21-4f98-a3d8-d7206e2f753c
+	queryGroup: CORE
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression Link = "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=" meta [IsParameterQuery=true, List={"https://sbtcomercialqa.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=", "https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id="}, DefaultValue="https://sbtcomercialprd.crm2.dynamics.com/main.aspx?appid=f7060254-47c1-4b9b-b81b-b54579c522cd&forceUCI=1&pagetype=entityrecord&etn=go_opportunity&id=", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 76ea3167-eb07-4a77-ba49-0cb09fcfddf1
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression YearUpdateVeiculacao = "0" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d9357d3a-d578-4c8a-a682-bbf1d88fd405
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression BDExternal = "GONEXTADExternal" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: e81f78c8-1d64-490f-bbd9-81cd2f5c2d88
+	queryGroup: Config
+
+	annotation PBI_ResultType = Text
+
+expression YearDateUpdate = "7" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 3093ec85-adc5-48ec-9297-c9ac2bda5e58
+	queryGroup: Config
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,131 @@
+table ValoresFinal
+	lineageTag: 98bf7304-f450-4a46-b2dd-a74f84065464
+
+	column Cod_Cliente
+		lineageTag: 841d1634-add1-4e2b-bf69-cfd6dc15b9fd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Cod_Cliente]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Agencia
+		lineageTag: 10bb9604-19a7-454e-8ce2-f915d5f411fd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Cod_Agencia]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Executivo
+		lineageTag: 1bf49947-e639-4a99-b84c-b802da71b7df
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Cod_Executivo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Emp
+		lineageTag: 2232cd68-b9ce-42de-a223-cd4c2ae90d0c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Cod_Emp]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		lineageTag: 948d95e8-6448-4429-befa-ed53b15f555b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tipo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		lineageTag: 03c91448-228c-415c-9da9-a33f1b6c4c91
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Valor]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Data
+		formatString: General Date
+		lineageTag: 012d1011-c045-4440-80d3-8e4c814a6dca
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Data]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Negociacao
+		dataType: int64
+		lineageTag: 1cb9b92f-9772-456f-ab33-ef24eaa9e8cc
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Negociacao]
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Ano
+		formatString: 0
+		lineageTag: 1b4d5fe8-7eaa-4024-8088-c6495a87693c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ano]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes
+		formatString: 0
+		lineageTag: 35fab6f9-3ec5-4ea4-904a-4bc473171d25
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Mes]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ValoresFinal-6ae0aa66-207b-4a32-bbc0-83bc98756551 = calculated
+		mode: import
+		source = ```
+				
+				VAR _1 = 
+				    SELECTCOLUMNS(
+				        LY
+				        ,"Cod_Cliente",LY[Cod_Cliente]
+				        ,"Cod_Agencia",LY[Cod_Agencia]
+				        ,"Cod_Executivo",LY[Cod_Executivo]
+				        ,"Cod_Emp",LY[Cod_Emp]
+				        ,"Valor", LY[Amount]
+				        ,"Data", LY[Data]
+				        ,"Ano", YEAR( LY[Data] )
+				        ,"Mes", MONTH( LY[Data] )
+				        ,"Tipo", "Carteira"
+				        ,"Negociacao", BLANK()
+				    )
+				VAR _2 = 
+				    SELECTCOLUMNS(
+				        R0002
+				        ,"Cod_Cliente",R0002[Cod_Cliente]
+				        ,"Cod_Agencia",R0002[Cod_Agencia]
+				        ,"Cod_Executivo",R0002[Cod_Executivo]
+				        ,"Cod_Emp",R0002[Cod_Empresa]
+				        ,"Valor", R0002[Vlr_Gerencial_BAV]+R0002[Vlr_Repasse_Varejo]
+				        ,"Data", R0002[Data]
+				        ,"Ano", YEAR( R0002[Data] )
+				        ,"Mes", MONTH( R0002[Data] )
+				        ,"Tipo", "SCTV"
+				        ,"Negociacao", R0002[Numero_Negociacao]
+				    )
+				RETURN
+				UNION(_1,_2)
+				```
+
+	annotation PBI_Id = 90ec8e58ed4447fc98cfc55b1bd2ce98
+

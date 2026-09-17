@@ -2152,21 +2152,6 @@ table @Medidas
 		displayFolder: Ganho e Perdido Anunciante
 		lineageTag: a5dbddb4-c338-4f2d-8ff3-ffb80a428a97
 
-	measure 'Snapshot Atual' =
-			
-			// Substitui o parâmetro SnapShot, apagado do modelo.
-			// O código sai dos próprios dados: única fonte é o IN (...) do SQL do ForecastSnapshot.
-			CALCULATE ( MAX ( ForecastSnapshot[Snapshotcode] ), ALL ( ForecastSnapshot ) )
-		displayFolder: Forecast SnapShot
-		lineageTag: 7c41d0ae-35b2-4f9d-9a16-2e6b08c3d114
-
-	measure 'Snapshot Anterior' =
-			
-			// Substitui o parâmetro SnapShotAnterior, apagado do modelo.
-			CALCULATE ( MIN ( ForecastSnapshot[Snapshotcode] ), ALL ( ForecastSnapshot ) )
-		displayFolder: Forecast SnapShot
-		lineageTag: 1f58b6c2-90d3-4e77-8b45-63a0c1e2f985
-
 	measure 'Forecast SnapShot' =
 			
 			VAR _Snapshot = [Snapshot Atual]
@@ -2868,6 +2853,21 @@ table @Medidas
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: Ganho e Perdido Anunciante
 		lineageTag: 1f65d9c5-2cb0-4f84-9428-df0017404ba8
+
+	measure 'Snapshot Atual' =
+			
+			// Substitui o parâmetro SnapShot, apagado do modelo.
+			// O código sai dos próprios dados: única fonte é o IN (...) do SQL do ForecastSnapshot.
+			CALCULATE ( MAX ( ForecastSnapshot[Snapshotcode] ), ALL ( ForecastSnapshot ) )
+		displayFolder: Forecast SnapShot
+		lineageTag: 7c41d0ae-35b2-4f9d-9a16-2e6b08c3d114
+
+	measure 'Snapshot Anterior' =
+			
+			// Substitui o parâmetro SnapShotAnterior, apagado do modelo.
+			CALCULATE ( MIN ( ForecastSnapshot[Snapshotcode] ), ALL ( ForecastSnapshot ) )
+		displayFolder: Forecast SnapShot
+		lineageTag: 1f58b6c2-90d3-4e77-8b45-63a0c1e2f985
 
 	partition @Medidas-9386f809-3ffe-4053-9ad4-6bfdacaa9619 = m
 		mode: import

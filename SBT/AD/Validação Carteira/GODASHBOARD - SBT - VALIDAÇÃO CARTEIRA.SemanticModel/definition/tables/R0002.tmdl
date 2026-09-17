@@ -1,0 +1,312 @@
+table R0002
+	isHidden
+	lineageTag: 684be20c-5e5f-4b39-8688-b46b36f4adb7
+
+	column Cod_Empresa
+		dataType: string
+		isHidden
+		lineageTag: b16bb43c-2366-4944-8d81-47f4852369c2
+		summarizeBy: none
+		sourceColumn: Cod_Empresa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Agencia
+		dataType: string
+		isHidden
+		lineageTag: 4aff18b6-855e-4259-acbb-bd4bbd8f6c77
+		summarizeBy: none
+		sourceColumn: Cod_Agencia
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Cliente
+		dataType: string
+		isHidden
+		lineageTag: 84bb0a29-a9d4-4282-b945-524a9f2d0dda
+		summarizeBy: none
+		sourceColumn: Cod_Cliente
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Nucleo
+		dataType: string
+		isHidden
+		lineageTag: 2d4a9326-5444-4919-aef2-45bf5ddc3de4
+		summarizeBy: none
+		sourceColumn: Cod_Nucleo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Competencia
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a658f83c-ea3d-4394-8336-2b043664d72e
+		summarizeBy: sum
+		sourceColumn: Competencia
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: a1a21b4a-9eeb-4d36-8a42-9d7cfc8c9d1a
+		summarizeBy: none
+		sourceColumn: Data
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sequencia_Mr
+		dataType: string
+		isHidden
+		lineageTag: 919f2561-3510-4aac-8237-e8986bcc0873
+		summarizeBy: none
+		sourceColumn: Sequencia_Mr
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Numero_Negociacao
+		dataType: double
+		isHidden
+		lineageTag: 80ffc8dd-1e44-4797-b9f4-2bfac8d70c51
+		summarizeBy: sum
+		sourceColumn: Numero_Negociacao
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Vlr_Gerencial_BAV
+		dataType: double
+		isHidden
+		lineageTag: 4767905c-9b4b-4a06-a54e-87acaf3dd9b0
+		summarizeBy: sum
+		sourceColumn: Vlr_Gerencial_BAV
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'CodEmp Faturamento'
+		dataType: string
+		isHidden
+		lineageTag: 7bd52aa5-fb5b-4ad9-897b-fc32ce15586b
+		summarizeBy: none
+		sourceColumn: CodEmp Faturamento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vlr_Repasse_Varejo
+		dataType: double
+		isHidden
+		lineageTag: 459a587a-20bf-4d78-9b7b-8314ff0e4b14
+		summarizeBy: sum
+		sourceColumn: Vlr_Repasse_Varejo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Vlr_Exibido
+		dataType: double
+		isHidden
+		lineageTag: 7a67e91f-cd48-43e1-b265-131670fb8046
+		summarizeBy: sum
+		sourceColumn: Vlr_Exibido
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SaleTypeExternalCode
+		dataType: string
+		isHidden
+		lineageTag: ca55badb-48c2-473c-8aa3-e37b860a0a17
+		summarizeBy: none
+		sourceColumn: SaleTypeExternalCode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MediaTypeExternalCode
+		dataType: string
+		isHidden
+		lineageTag: d9be6e1a-2076-4624-a129-66237271b4b3
+		summarizeBy: none
+		sourceColumn: MediaTypeExternalCode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelDisplay
+		dataType: string
+		isHidden
+		lineageTag: 06a2fd4a-0e57-4b87-b9f7-57b4f6373853
+		summarizeBy: none
+		sourceColumn: ChannelDisplay
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Venda Importada' =
+			
+			SWITCH( TRUE(),
+			    LEFT(R0002[CodEmp Faturamento],3) = "054" && R0002[Affiliation] = "AFILIADO", "VENDA IMPORTADA NACIONAL",
+			    R0002[Cod_Executivo] = "VEIMPR", "VENDA IMPORTADA REGIONAL"
+			)
+		isHidden
+		lineageTag: 08610258-833a-4694-a266-e9b59e0bba3e
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Affiliation
+		dataType: string
+		isHidden
+		lineageTag: d54b06b9-77ef-4da5-8112-179b57c804ba
+		summarizeBy: none
+		sourceColumn: Affiliation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MotivoAjusteManual
+		dataType: string
+		isHidden
+		lineageTag: 98140beb-8fbc-40f1-994d-54e68bfa70f1
+		summarizeBy: none
+		sourceColumn: MotivoAjusteManual
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Executivo
+		dataType: string
+		isHidden
+		lineageTag: 10c8a8fb-5250-4006-a33d-c3ea36288309
+		summarizeBy: none
+		sourceColumn: Cod_Executivo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Tipo_Comercial
+		dataType: string
+		lineageTag: 59ce64c5-f335-4380-b93e-c8f2882b86e4
+		summarizeBy: none
+		sourceColumn: Cod_Tipo_Comercial
+
+		annotation SummarizationSetBy = Automatic
+
+	partition R0002-5b2f1cdd-8bce-4385-9d08-626abdf75db3 = m
+		mode: import
+		queryGroup: CORE
+		source = ```
+				let
+				    SQL = "Select
+				            R.Cod_Empresa,
+				            R.Cod_Tipo_Comercial,
+				            R.Numero_Mr,
+				            R.Sequencia_Mr,
+				            R.Cod_Empresa_Faturamento As [CodEmp Faturamento],
+				            R.Cod_Agencia,
+				            R.Cod_Cliente,
+				            R.Cod_Contato,
+				            R.Cod_Nucleo,
+				            R.Competencia,
+				            Cast(Convert(VARCHAR,Left(R.Competencia, 4)) + '-' + Convert(VARCHAR,Right(R.Competencia, 2)) + '-' +
+				            Convert(VARCHAR,1) As DATETIME) As Data,
+				            R.Numero_Negociacao,
+				            Sum(R.Vlr_Gerencial_BAV) As Vlr_Gerencial_BAV,
+				            R.SaleTypeExternalCode,
+				            R.MediaTypeExternalCode,
+				            Sum(R.Vlr_Repasse_Varejo) As Vlr_Repasse_Varejo,
+				            Sum(R.Vlr_Bruto) As Vlr_Exibido,
+				            ch.ExternalCode + ' - ' + ch.Name As ChannelDisplay,
+				            cp.Affiliation,
+				            R.MotivoAjusteManual
+				        From
+				            GONEXTADExternal.SCTV.R0002_Detalhe R With(NoLock) 
+				    --	Left Join GONEXTADExternal.SCTV.Contrato c With(NoLock) On c.Cod_Empresa = R.Cod_Empresa
+				    --            And c.Numero_Mr = R.Numero_Mr
+				    --            And c.Sequencia_Mr = R.Sequencia_Mr 
+				        Left Join Company cp With(NoLock) On cp.ExternalCode = R.Cod_Empresa
+				        Left Join Company cpfat With(NoLock) On cpfat.ExternalCode = R.Cod_Empresa_Faturamento
+				        Left Join Channel ch With(NoLock) On ch.ExternalCode = R.Cod_Veiculo
+				        Where
+				            Left(R.Competencia,4) >= year(getdate()) - " & YearDateUpdate & "
+				            And Not (cp.Affiliation = 'AFILIADO' And cpfat.Affiliation = 'AFILIADO')
+				        Group By
+				            R.Cod_Empresa,
+				            R.Cod_Tipo_Comercial,
+				            R.Numero_Mr,
+				            R.Sequencia_Mr,
+				            R.Cod_Empresa_Faturamento,
+				            R.Cod_Agencia,
+				            R.Cod_Cliente,
+				            R.Cod_Contato,
+				            R.Cod_Nucleo,
+				            R.Competencia,
+				            Cast(Convert(VARCHAR,Left(R.Competencia, 4)) + '-' + Convert(VARCHAR,Right(R.Competencia, 2)) + '-' +
+				            Convert(VARCHAR,1) As DATETIME),
+				            R.Numero_Negociacao,
+				            R.SaleTypeExternalCode,
+				            R.MediaTypeExternalCode,
+				            ch.ExternalCode + ' - ' + ch.Name,
+				            cp.Affiliation,
+				            R.MotivoAjusteManual",
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Numero_Mr", type text}, {"Sequencia_Mr", type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"Cod_Agencia", Text.Trim, type text}, {"Cod_Cliente", Text.Trim, type text}, {"Cod_Contato", Text.Trim, type text}, {"MediaTypeExternalCode", Text.Trim, type text}, {"SaleTypeExternalCode", Text.Trim, type text}}),
+				    #"Uppercased Text" = Table.TransformColumns(#"Trimmed Text",{{"Cod_Agencia", Text.Upper, type text}, {"Cod_Cliente", Text.Upper, type text}, {"Cod_Contato", Text.Upper, type text}, {"Cod_Nucleo", Text.Upper, type text}}),
+				    #"Merged Queries3" = Table.NestedJoin(#"Uppercased Text", {"Cod_Empresa", "Competencia", "Numero_Negociacao"}, VendaImportada, {"Cod_Empresa", "Competencia", "Numero_Negociacao"}, "VendaImportada", JoinKind.LeftOuter),
+				    #"Expanded VendaImportada" = Table.ExpandTableColumn(#"Merged Queries3", "VendaImportada", {"Cod_Contato_Importada"}, {"Cod_Contato.1"}),
+				    #"Added Custom" = Table.AddColumn(#"Expanded VendaImportada", "Cod_ContatoFinal", each if [MotivoAjusteManual] = null then [Cod_Contato.1] else [Cod_Contato]),
+				    Custom6 = Table.AddColumn(#"Added Custom" , "Cod_Contato.2", each if [Cod_ContatoFinal] <> null then [Cod_ContatoFinal] else [Cod_Contato]),
+				    #"Removed Columns" = Table.RemoveColumns(Custom6,{"Cod_Contato", "Cod_Contato.1", "Cod_ContatoFinal", "Numero_Mr"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{"Cod_Contato.2", "Cod_Contato"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Renamed Columns",{"Cod_Contato", "Cod_Executivo"})
+				in
+				    #"Renamed Columns1"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,235 @@
+table PosicaoCarteira
+	isHidden
+	lineageTag: 0826d2be-e49c-4cdd-a5f3-0992427f950c
+
+	column Cliente
+		dataType: string
+		isHidden
+		lineageTag: 6f077ac4-fb7e-420d-b0d0-1d89613cf93f
+		summarizeBy: none
+		sourceColumn: Cliente
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienteCodigo
+		dataType: string
+		isHidden
+		lineageTag: e76c7a8c-ce0c-44bd-a795-ab4281e9baa7
+		summarizeBy: none
+		sourceColumn: ClienteCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agencia
+		dataType: string
+		isHidden
+		lineageTag: 7c34370c-eacd-4d6d-a238-da44aa0bd22a
+		summarizeBy: none
+		sourceColumn: Agencia
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaCodigo
+		dataType: string
+		isHidden
+		lineageTag: a4d1335c-3541-43e3-b1f0-8374fe9e591e
+		summarizeBy: none
+		sourceColumn: AgenciaCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Executivo
+		dataType: string
+		isHidden
+		lineageTag: 91f08da8-727e-4592-8b56-70f854568eb8
+		summarizeBy: none
+		sourceColumn: Executivo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExecutivoCodigo
+		dataType: string
+		isHidden
+		lineageTag: 1c3d767a-188e-45b9-880e-fb30ae30022e
+		summarizeBy: none
+		sourceColumn: ExecutivoCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: dateTime
+		isHidden
+		formatString: dd/mm/yyyy
+		lineageTag: 6555fbb3-b3f3-4dd6-87b5-150ca2a1f4b3
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column DataFim
+		dataType: dateTime
+		isHidden
+		formatString: dd/mm/yyyy
+		lineageTag: cfb8f0d9-74aa-49fe-a3dd-11750ab00c47
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column EmpVendaCodigo
+		dataType: string
+		isHidden
+		lineageTag: 855f2cd0-0ac6-4bc7-a2bf-6e98dc26d110
+		summarizeBy: none
+		sourceColumn: EmpVendaCodigo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmpresaVenda
+		dataType: string
+		isHidden
+		lineageTag: 812c900c-b797-4d93-8a2c-d9aee7a1c762
+		summarizeBy: none
+		sourceColumn: EmpresaVenda
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmpVenda
+		dataType: string
+		isHidden
+		lineageTag: ab80f248-f0a0-4702-8069-8a0f6081cb12
+		summarizeBy: none
+		sourceColumn: EmpVenda
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChaveTooltip = PosicaoCarteira[ExecutivoCodigo]&"-"&PosicaoCarteira[ClienteCodigo]
+		isHidden
+		lineageTag: a23c8314-28e8-42fd-aeae-a5f8e6fa182f
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientesDiretos = IF.EAGER( PosicaoCarteira[Cliente] = PosicaoCarteira[Agencia], "CLIENTES DIRETOS", "COM AGÊNCIAS" )
+		isHidden
+		lineageTag: 56a27702-1f69-471b-bbfb-e382d3219d57
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado = IF( PosicaoCarteira[DataFim] >= TODAY(), "Ativa", "Inativa" )
+		isHidden
+		lineageTag: 5e31df94-9c26-4202-b78e-17bab14c14dc
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c3eab4fc-e00b-420d-a09e-9c7222274a36
+		summarizeBy: none
+		sourceColumn: ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Fim' =
+			
+			IF( year(PosicaoCarteira[DataFim]) = 2099, BLANK(), PosicaoCarteira[DataFim] )
+		formatString: dd/mm/yyyy
+		lineageTag: 98ffd3b3-9235-45e7-a159-4e885477e52f
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column NextID
+		dataType: int64
+		formatString: 0
+		lineageTag: c49494be-655a-4729-8def-884b33d1e0f1
+		summarizeBy: count
+		sourceColumn: NextID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PosicaoCarteira-fddb36b0-92bc-41ca-89e1-ea614118b435 = m
+		mode: import
+		queryGroup: Carteira
+		source =
+				let
+				    SQL = "Select
+				        [User].Name Executivo,
+				        [User].ExternalCode ExecutivoCodigo,
+				        ENTITYCLIENT.Name Cliente,
+				        ENTITYCLIENT.ExternalCode ClienteCodigo,
+				        ENTITYAGENCY.Name Agencia,
+				        ENTITYAGENCY.ExternalCode AgenciaCodigo,
+				        CASE CustomerPortfolio.EndDate
+				            WHEN NULL THEN '31-12-2099'
+				            ELSE CAST(CustomerPortfolio.EndDate AS DATE) END AS DataFim,
+				        -- FORMAT(CustomerPortfolio.BeginDate, 'dd-MM-yyyy') As DataInicio,
+				        CAST(CustomerPortfolio.BeginDate AS DATE) As DataInicio,
+				        Company.ExternalCode As EmpVendaCodigo,
+				        Company.Name As EmpVenda,
+				        Concat(Company.ExternalCode, ' - ', Company.Name) As EmpresaVenda,
+				        CustomerPortfolio.NextID,
+				        CustomerPortfolio.ID
+				    From CustomerPortfolio
+				    Left Join [User]
+				        On [User].ID = CustomerPortfolio.UserID
+				    Left Join Entity ENTITYAGENCY
+				        On ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID
+				    Left Join Entity ENTITYCLIENT
+				        On ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID
+				    Inner Join Company
+				        On CustomerPortfolio.CompanyID = Company.ID",
+				    Source = Sql.Database(Org, BD, [Query = SQL])
+				    // Custom3 = Table.ReplaceValue(Source,null,"31-12-2099",Replacer.ReplaceValue,{"DataFim"}),
+				    // #"Changed Type" = Table.TransformColumnTypes(Source, {{"DataInicio", type date}, {"DataFim", type date}})
+				in
+				    Source
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

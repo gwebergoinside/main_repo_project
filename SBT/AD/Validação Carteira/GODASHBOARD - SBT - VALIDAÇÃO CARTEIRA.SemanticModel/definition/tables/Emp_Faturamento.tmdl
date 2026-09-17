@@ -1,0 +1,32 @@
+table Emp_Faturamento
+	lineageTag: e02b371c-1d64-4147-9268-668814b5c40b
+
+	column ExternalCode
+		lineageTag: bda31c3d-edb4-41e8-b25a-06e9c459254c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Emp_Venda[ExternalCode]
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		lineageTag: 71659fd8-972c-45e7-aa8a-0c0ac5ac970c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Emp_Venda[name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Empresa
+		lineageTag: 309ad39d-956c-4e83-abff-09cbdedcf94e
+		summarizeBy: none
+		sourceColumn: Emp_Venda[Empresa Venda]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Emp_Faturamento-c5f710bd-0f19-431a-9579-63bdc847cafc = calculated
+		mode: import
+		source = 'Emp_Venda'
+
+	annotation PBI_Id = d29b5846202941999379b5a5dcc89d9b
+

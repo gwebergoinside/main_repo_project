@@ -1,0 +1,39 @@
+table Emp_Venda
+	lineageTag: 4fe87e0c-666a-4989-b26f-e76258094ba1
+
+	column ExternalCode
+		dataType: string
+		lineageTag: 9674092f-97e4-49c0-b012-0f215323478f
+		summarizeBy: none
+		sourceColumn: ExternalCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 9f28cd0d-f898-45f5-a833-d67eaff1e215
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Empresa Venda'
+		dataType: string
+		lineageTag: 39e11944-ab8f-4169-a3b8-b90cbed524a1
+		summarizeBy: none
+		sourceColumn: Empresa Venda
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Emp_Venda-d2814883-52e2-4318-a79b-37fb21c448b3 = m
+		mode: import
+		queryGroup: CORE
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)ExternalCode, name from company"]),
+				    #"Inserted Merged Column" = Table.AddColumn(Source, "Empresa Venda", each Text.Combine({[ExternalCode], " - ", [name]}), type text)
+				in
+				    #"Inserted Merged Column"
+
+	annotation PBI_ResultType = Table
+

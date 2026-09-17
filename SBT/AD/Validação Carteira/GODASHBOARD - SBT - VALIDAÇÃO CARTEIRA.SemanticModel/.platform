@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "GODASHBOARD - SBT - VALIDAÇÃO CARTEIRA"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "eb80aafe-4599-4de2-b600-e3320a6335d4"
+  }
+}

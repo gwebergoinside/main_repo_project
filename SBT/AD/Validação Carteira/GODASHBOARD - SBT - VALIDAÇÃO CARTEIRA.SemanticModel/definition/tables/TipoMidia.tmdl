@@ -1,0 +1,58 @@
+table TipoMidia
+	lineageTag: a1ed728a-2b4b-45d3-a46c-97747d893d35
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: cd32f759-5e4b-4df2-8906-39ab87d0d6b1
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column BusinessUnitID
+		dataType: int64
+		formatString: 0
+		lineageTag: 21474c8a-6413-4f1f-b848-b8e483274044
+		summarizeBy: count
+		sourceColumn: BusinessUnitID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCode
+		dataType: string
+		lineageTag: 530a16eb-128f-438f-bdd5-53158495f5c1
+		summarizeBy: none
+		sourceColumn: ExternalCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoMidia
+		dataType: string
+		lineageTag: 76ec7d22-5839-4a68-b378-02842804cba0
+		summarizeBy: none
+		sourceColumn: TipoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoMidia-c6435eba-39c9-4870-9b1f-71e4c66cfcff = m
+		mode: import
+		queryGroup: Carteira
+		source =
+				let
+				    SQL = "SELECT
+				            ID,
+				            BusinessUnitID,
+				            UPPER(ExternalCode) AS ExternalCode,
+				            Name AS TipoMidia
+				        FROM ForecastMediaType",
+				    Source = Sql.Database(Org, BD, [Query = SQL])
+				    // #"Uppercased Text" = Table.TransformColumns(Source, {{"ExternalCode", Text.Upper, type text}}),
+				    // #"Renamed Columns" = Table.RenameColumns(#"Uppercased Text",{{"Name", "TipoMidia"}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

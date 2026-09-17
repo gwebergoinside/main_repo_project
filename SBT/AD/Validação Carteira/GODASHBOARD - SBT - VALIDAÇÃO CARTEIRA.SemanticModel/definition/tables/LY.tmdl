@@ -1,0 +1,170 @@
+table LY
+	lineageTag: 2119a278-8db8-40b2-9536-84a7a74234e8
+
+	column Cod_Cliente
+		dataType: string
+		lineageTag: 9d997424-51c8-46bd-ac0b-64d37c70c497
+		summarizeBy: none
+		sourceColumn: Cod_Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Agencia
+		dataType: string
+		lineageTag: 801924c1-238a-4882-a3dc-049d124f48e5
+		summarizeBy: none
+		sourceColumn: Cod_Agencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Emp
+		dataType: string
+		lineageTag: d048bbc3-7d5d-4b06-b554-11e7627327f3
+		summarizeBy: none
+		sourceColumn: Cod_Emp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cod_Executivo
+		dataType: string
+		lineageTag: 374bfc8a-7db2-4f79-b3e9-595da292779d
+		summarizeBy: none
+		sourceColumn: Cod_Executivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoVenda
+		dataType: string
+		lineageTag: e4cb4c4d-7ab7-4079-b95f-2c55bd4835e8
+		summarizeBy: none
+		sourceColumn: TipoVenda
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoMidia
+		dataType: string
+		lineageTag: d7b2f65c-1c0a-4381-8eb2-92d7519f67a9
+		summarizeBy: none
+		sourceColumn: TipoMidia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: string
+		lineageTag: 6a8e9609-18e2-4a6a-8ae3-cc96714d0f7a
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 5fea63d0-5ea6-4d3d-bb44-e8871edd84ba
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		lineageTag: c6af3e1e-a709-45dc-b079-01523b67cbda
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NextID
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b62e9e4-b967-420f-943d-ac999ba6841f
+		summarizeBy: count
+		sourceColumn: NextID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerPortfolioID
+		dataType: int64
+		formatString: 0
+		lineageTag: 98cf3db3-cf67-4bef-870b-b29f6abf7f18
+		summarizeBy: count
+		sourceColumn: CustomerPortfolioID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ac05324f-e885-4cec-ac25-3e41e7bd7d8f
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column chaveT
+		dataType: string
+		lineageTag: 42343220-0131-4916-ae6b-1895927814be
+		summarizeBy: none
+		sourceColumn: chaveT
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LY-bb3bc924-53bb-415b-abe8-ad07e99c704d = m
+		mode: import
+		queryGroup: Carteira
+		source =
+				let
+				    SQL = "Select
+				            c.ExternalCode As Cod_Cliente,
+				            a.ExternalCode As Cod_Agencia,
+				            emp.ExternalCode As Cod_Emp,
+				            e.ExternalCode As Cod_Executivo,
+				            sa.ExternalCode As TipoVenda,
+				            me.ExternalCode As TipoMidia,
+				            dp.Year,
+				            dp.Month,
+				            dp.Amount,
+				            cp.NextID,
+				            dp.CustomerPortfolioID
+				        From CustomerPortfolioLastYearAmount dp
+				        Left Join Entity c
+				            On c.ID = dp.EntityClientID
+				        Left Join Entity a
+				            On a.ID = dp.EntityAgencyID
+				        Left Join Company emp
+				            On emp.ID = dp.CompanyID
+				        Left Join [User] e
+				            On e.ID = dp.UserID
+				        Left Join ForecastMediaType me
+				            On me.ID = dp.ForecastMediaTypeId
+				        Left Join ForecastSaleType sa
+				            On sa.ID = dp.ForecastSaleTypeId
+				        Inner Join CustomerPortfolio cp
+				            On cp.ID = dp.CustomerPortfolioID
+				        Where NextID is null
+				            And dp.Year >= Year( Getdate() ) - " & YearDateUpdate & "
+				            And Not exists (
+				                Select 1
+				                From CustomerPortfolio X
+				                Where
+				                    X.EntityClientid = cp.EntityClientid AND
+				                    X.EntityAgencyid = cp.EntityAgencyid AND
+				                    X.Userid = cp.Userid AND
+				                    X.CompanyId = cp.CompanyId and X.Id > cp.Id
+				                )",
+				    Source = Sql.Database(Org, BD, [Query = SQL]),
+				    #"Uppercased Text" = Table.TransformColumns(Source,{{"TipoVenda", Text.Upper, type text}, {"TipoMidia", Text.Upper, type text}}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Uppercased Text", "Data", each Text.Combine({"1-", Text.From([Month], "pt-PT"), "-", Text.From([Year], "pt-PT")}), type text),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted Merged Column",{{"Data", type date}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Changed Type",{{"Year", type text}, {"Month", type text}}),
+				    Custom1 = Table.AddColumn(#"Changed Type1", "chaveT", each [Cod_Cliente]&"-"&[Cod_Agencia]&"-"&[Cod_Emp]&"-"&[Cod_Executivo]&"-"&[TipoVenda]&"-"&[TipoMidia]&"-"&[Year]&"-"&[Month])
+				in
+				    Custom1
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

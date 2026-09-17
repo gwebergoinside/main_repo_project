@@ -1,0 +1,76 @@
+table Carteira
+	isHidden
+	lineageTag: 590132bf-f41f-4a11-89fa-7a3839c29815
+
+	column Cliente
+		dataType: string
+		lineageTag: 807ae63d-8c2f-4a60-80ab-b8dfaa208073
+		summarizeBy: none
+		sourceColumn: Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClienteCodigo
+		dataType: string
+		lineageTag: 89e135fe-dec0-48b8-897e-678d7a65b075
+		summarizeBy: none
+		sourceColumn: ClienteCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agencia
+		dataType: string
+		lineageTag: 1ed30e49-f8ec-4b5e-b2c5-80a99d9ac333
+		summarizeBy: none
+		sourceColumn: Agencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgenciaCodigo
+		dataType: string
+		lineageTag: ab15cca2-aed1-4f66-b06b-fa4d3be29880
+		summarizeBy: none
+		sourceColumn: AgenciaCodigo
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataInicio
+		dataType: string
+		lineageTag: 52d74988-e08e-44c5-bc94-7bbea828b5f4
+		summarizeBy: none
+		sourceColumn: DataInicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column DataFim
+		dataType: string
+		lineageTag: 760abf1d-abad-49fe-8e28-9472eacda4ef
+		summarizeBy: none
+		sourceColumn: DataFim
+
+		annotation SummarizationSetBy = Automatic
+
+	column chaveclienteagencia
+		dataType: string
+		lineageTag: 28b7e881-6ac4-4dbe-abaa-85bf71a122e4
+		summarizeBy: none
+		sourceColumn: chaveclienteagencia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Carteira-de3e425c-d19b-4a40-9d91-adc6e9ff3127 = m
+		mode: import
+		queryGroup: Carteira
+		source =
+				let
+				    Source = Sql.Database(Org, BD, [Query="Select#(lf)    [User].Name Executivo,#(lf)    [User].ExternalCode ExecutivoCodigo,#(lf)    ENTITYCLIENT.Name Cliente,#(lf)    ENTITYCLIENT.ExternalCode ClienteCodigo,#(lf)    ENTITYAGENCY.Name Agencia,#(lf)    ENTITYAGENCY.ExternalCode AgenciaCodigo,#(lf)    Format(CustomerPortfolio.EndDate, 'dd-MM-yyyy') As DataFim,#(lf)    Format(CustomerPortfolio.BeginDate, 'dd-MM-yyyy') As DataInicio#(lf)From#(lf)    CustomerPortfolio Left Join#(lf)    [User] On [User].ID = CustomerPortfolio.UserID Left Join#(lf)    Entity ENTITYAGENCY On ENTITYAGENCY.ID = CustomerPortfolio.EntityAgencyID Left Join#(lf)    Entity ENTITYCLIENT On ENTITYCLIENT.ID = CustomerPortfolio.EntityClientID"]),
+				    #"Grouped Rows" = Table.Group(Source, {"Cliente", "ClienteCodigo", "Agencia", "AgenciaCodigo"}, {{"DataInicio", each List.Min([DataInicio]), type nullable text}, {"DataFim", each List.Max([DataFim]), type nullable text}}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Grouped Rows", "chaveclienteagencia", each Text.Combine({[ClienteCodigo], "-", [AgenciaCodigo]}), type text),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Inserted Merged Column",null,"31-12-2099",Replacer.ReplaceValue,{"DataFim"})
+				in
+				    #"Replaced Value1"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navegação
+

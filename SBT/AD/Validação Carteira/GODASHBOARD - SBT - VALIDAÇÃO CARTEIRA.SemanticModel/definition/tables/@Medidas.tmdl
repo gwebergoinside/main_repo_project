@@ -1,0 +1,208 @@
+table @Medidas
+	lineageTag: f208a06d-6edf-426b-b2be-c7b5f9a95eb7
+
+	measure 'Val Exibido' =
+			--CALCULATE( SUM( Contrato[Vlr_Exibido] ), FILTER( R0002, NOT ISBLANK(R0002[Competencia]) ) )
+			CALCULATE( SUM( R0002[Vlr_Exibido] ) )
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Val Exibido
+		lineageTag: 93345e5a-3d27-4461-b22f-31254b4350af
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Val Exibido LY' = CALCULATE( [Val Exibido], SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		displayFolder: Val Exibido
+		lineageTag: 799a3a97-5f05-4730-aebd-f66d8f383da0
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Val Liquido' = CALCULATE( SUM( R0002[Vlr_Gerencial_BAV] ) + SUM( R0002[Vlr_Repasse_Varejo] ) )
+		displayFolder: Val Bruto e Liquido
+		lineageTag: 6a032fdd-ee3d-4d9c-a200-3b5965eea0bc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Liquido LY' = CALCULATE( [Val Liquido], SAMEPERIODLASTYEAR( Calendario[Date] ) )
+		displayFolder: Val Bruto e Liquido
+		lineageTag: 7ac37ff5-9ae5-45d0-a331-79d49165ab60
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Exibido YTD Atual Month Tooltip' =
+			
+			IF.EAGER ( ISFILTERED(Calendario[Mes]), CALCULATE([Val Exibido], DATESYTD(Calendario[Date])), CALCULATE( [Val Exibido], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		displayFolder: Val Exibido
+		lineageTag: 355f376d-2f0f-4bff-90ed-8a4a87ccdb70
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Exibido LY YTD Atual Month Tooltip' =
+			
+			IF.EAGER ( ISFILTERED(Calendario[Mes]), CALCULATE([Val Exibido LY] , DATESYTD(Calendario[Date])), CALCULATE( [Val Exibido LY] , FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		displayFolder: Val Exibido
+		lineageTag: edc2699c-8c17-4c21-889e-3cf5437f105f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Liquido LY YTD Atual Month Tooltip' =
+			
+			IF.EAGER ( ISFILTERED(Calendario[Mes]), CALCULATE([Val Liquido LY] , DATESYTD(Calendario[Date])), CALCULATE( [Val Liquido LY] , FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		displayFolder: Val Exibido
+		lineageTag: 02d4c706-af72-49dc-a508-89e547be5cef
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Val Liquido YTD Atual Month Tooltip' =
+			
+			IF.EAGER ( ISFILTERED(Calendario[Mes]), CALCULATE([Val Liquido], DATESYTD(Calendario[Date])), CALCULATE( [Val Liquido], FILTER( ALL(Calendario[Date]),
+			         MONTH(Calendario[Date])<=MONTH(NOW()) && YEAR(Calendario[Date])=YEAR(MAX(Calendario[Date])) ) ) )
+		displayFolder: Val Exibido
+		lineageTag: b998e774-bfde-4e70-9e7c-a866e6bc8f6e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Titulo =
+			
+			SWITCH (
+			    [Selected TituloParameter],
+			    1, SELECTEDVALUE(Titulos[Parameter]),
+			    2, SELECTEDVALUE(Titulos[Parameter]),
+			    3, SELECTEDVALUE(Titulos[Parameter]),
+			    4, SELECTEDVALUE(Titulos[Parameter]),
+			    5, SELECTEDVALUE(Titulos[Parameter]),
+			    6, SELECTEDVALUE(Titulos[Parameter]),
+			    7, SELECTEDVALUE(Titulos[Parameter]),
+			    8, SELECTEDVALUE(Titulos[Parameter]),
+			    9, SELECTEDVALUE(Titulos[Parameter]),
+			    10, SELECTEDVALUE(Titulos[Parameter]),
+			    11, SELECTEDVALUE(Titulos[Parameter])
+			    , "GESTOR DE CONTA"
+			)
+		displayFolder: Outros
+		lineageTag: cf319a67-ddfc-4700-854e-5e795cf4b4bf
+
+	measure 'Val Liquido DeParaLY' = SUM( LY[Amount] )
+		displayFolder: Val Bruto e Liquido
+		lineageTag: 28faa2fc-91d5-43e8-bf19-8d704c319c43
+
+	measure RLS = ```
+			
+			// DEFAULT
+			    // IF.EAGER( 
+			    //     USERPRINCIPALNAME() in VALUES(DashboardUserPermission[Email])
+			    //     ,"crmadmin@gruposilviosantos.onmicrosoft.com"
+			    //     ,USERPRINCIPALNAME()
+			    // )
+			// GMediaAD
+			    "crmadmin@gruposilviosantos.onmicrosoft.com"
+			// Kotait    
+			    // "mkotait@sbt.com.br"
+			// GMediaAD
+			    // "cbf29051-a44f-473c-867e-2ca74d377b88"
+			// alessandra nogueira gama
+			    // "1e5eab-a46b-44b4-87f9-d27c0ad43db7"  
+			// Juliana
+			    // "bfd86487-a7fd-45f2-b8da-a0451b4a9e89"
+			// OLD
+			    // IF.EAGER( SELECTEDVALUE( RLSFILTER[PortalsAzureID] ) = BLANK() || SELECTEDVALUE( RLSFILTER[positionid] ) = BLANK(), "nao-tem-permissoes", SELECTEDVALUE( RLSFILTER[PortalsAzureID] ) )
+			```
+		displayFolder: Outros
+		lineageTag: 47f3ecca-e93d-4036-90f8-84d129b272ee
+
+	measure ValorSCTV = CALCULATE( SUM( ValoresFinal[Valor] ), ValoresFinal[Tipo] = "SCTV" )
+		displayFolder: Val Bruto e Liquido
+		lineageTag: 41f9284e-19ca-4053-95f1-618cbdf4b946
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ValorCarteira = CALCULATE( SUM( ValoresFinal[Valor] ), ValoresFinal[Tipo] = "Carteira" )
+		displayFolder: Val Bruto e Liquido
+		lineageTag: b6ba9146-927b-4429-a760-596afa4a7bf2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ValorDiferenca = ```
+			
+			VAR _1 = [ValorSCTV] - [ValorCarteira]
+			RETURN
+			IF.EAGER( 
+			    ROUND( _1, 2 ) = 0, BLANK()
+			    , _1
+			)
+			```
+		displayFolder: Val Bruto e Liquido
+		lineageTag: 59110aee-51bb-42d9-9ae6-ee531686c386
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ValidaDiferenca = IF.EAGER( [ValorDiferenca] <> 0, "Diferenças", "OK" )
+		displayFolder: Val Bruto e Liquido
+		lineageTag: 28ae085d-8c89-4606-8ba5-fd9eea077d8d
+
+	measure Dif =
+			
+			VAR _1 =
+			SWITCH(
+			    TRUE()
+			    ,ISINSCOPE( Executivos[Executivo] ), BLANK()
+			    ,ISINSCOPE( ValoresFinal[Negociacao] ), BLANK()
+			    ,ISINSCOPE( Emp_Venda[ExternalCode] ), BLANK()
+			    ,ISINSCOPE( Executivos[ExecutivoCodigo] ), BLANK()
+			    ,ISINSCOPE( GrupoAgencia[AgenciaCodigo] ), BLANK()
+			    ,ISINSCOPE( GrupoCliente[ClienteCodigo] ), [ValorDiferenca]
+			    ,BLANK()
+			)
+			RETURN
+			var _a=CALCULATE([ValorDiferenca],ALLEXCEPT(ValoresFinal,ValoresFinal[Cod_Cliente], ValoresFinal[Ano], ValoresFinal[Mes] ))
+			var _b=[ValorDiferenca]
+			return IF( NOT ISBLANK( _a ) ,_b, BLANK() )
+		lineageTag: 0b887773-3c24-49ea-bb42-84cd00a2210f
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Dif1 = ```
+			
+			var _a=CALCULATE([ValorDiferenca],ALLEXCEPT(Calendario,Calendario[Date]))
+			var _b=[ValorDiferenca]
+			return 
+			IF( NOT ISBLANK( _a ) ,_b, BLANK() )
+			```
+		lineageTag: e3d8d740-fb7c-4434-8ca1-feba26cc712f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ValorDiferencaCard = ```
+			
+			VAR _1 = [ValorSCTV] - [ValorCarteira]
+			RETURN
+			IF.EAGER( 
+			    ROUND( _1, 2 ) = 0, 0
+			    , _1
+			)
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: dc73671b-25ce-4803-8b8b-8a9b88bea30e
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	partition @Medidas-9386f809-3ffe-4053-9ad4-6bfdacaa9619 = m
+		mode: import
+		queryGroup: Config
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Medidas = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Medidas", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Medidas"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

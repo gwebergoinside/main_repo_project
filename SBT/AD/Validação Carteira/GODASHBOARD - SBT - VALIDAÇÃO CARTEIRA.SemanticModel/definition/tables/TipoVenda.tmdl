@@ -1,0 +1,58 @@
+table TipoVenda
+	lineageTag: 5df4b9c6-45c0-4991-9d60-31a539265ea7
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: dd6c951b-6fca-4c2a-9865-7a8f5a866f7f
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column BusinessUnitID
+		dataType: int64
+		formatString: 0
+		lineageTag: 2820bca7-905c-4fa7-b096-89976b4810ed
+		summarizeBy: count
+		sourceColumn: BusinessUnitID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCode
+		dataType: string
+		lineageTag: d9ea67ca-760a-4b32-9c83-b62244360e10
+		summarizeBy: none
+		sourceColumn: ExternalCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoVenda
+		dataType: string
+		lineageTag: 20cca9c2-f8f0-4d17-8148-fbcdea157b2c
+		summarizeBy: none
+		sourceColumn: TipoVenda
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TipoVenda-f8f4997c-94c0-4825-bdde-312e6728f28b = m
+		mode: import
+		queryGroup: Carteira
+		source =
+				let
+				    SQL = "SELECT
+				            ID,
+				            BusinessUnitID,
+				            UPPER(ExternalCode) AS ExternalCode,
+				            Name AS TipoVenda
+				        FROM ForecastSaleType",
+				    Source = Sql.Database(Org, BD, [Query = SQL])
+				    // #"Uppercased Text" = Table.TransformColumns(Source, {{"ExternalCode", Text.Upper, type text}}),
+				    // #"Renamed Columns" = Table.RenameColumns(#"Uppercased Text",{{"Name", "TipoVenda"}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

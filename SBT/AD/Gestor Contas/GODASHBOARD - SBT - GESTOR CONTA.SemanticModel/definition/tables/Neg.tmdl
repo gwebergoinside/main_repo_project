@@ -542,11 +542,11 @@ table Neg
 				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Data Aprovação", type date}}),
 				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type1", "Data de Aprovação", each if [Data Aprovação] > [createdon] then [createdon] else [Data Aprovação]),
 				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Conditional Column", "Data Integração", "Data De Integração"),
-				    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data De Integração", type date}, {"Data de Aprovação", type date}})
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Duplicated Column",{{"Data De Integração", type date}, {"Data de Aprovação", type date}, {"First_Createdon", type datetime}})
 				in
 				    #"Changed Type2"
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_NavigationStepName = Navegação
 

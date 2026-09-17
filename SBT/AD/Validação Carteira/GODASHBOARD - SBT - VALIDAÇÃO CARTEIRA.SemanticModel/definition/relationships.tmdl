@@ -1,0 +1,108 @@
+relationship 4f6280b8-cc15-48bc-b87a-9f70edff1c1b
+	fromColumn: R0002.MediaTypeExternalCode
+	toColumn: TipoMidia.ExternalCode
+
+relationship c8b57bda-204a-4a5c-a3e2-390388ad26c5
+	fromColumn: R0002.SaleTypeExternalCode
+	toColumn: TipoVenda.ExternalCode
+
+relationship 737eaf0e-4b70-4761-9cf1-fc24743b9f58
+	fromColumn: LY.TipoVenda
+	toColumn: TipoVenda.ExternalCode
+
+relationship ceeb717c-7c10-4b59-861a-791b65e91829
+	fromColumn: LY.TipoMidia
+	toColumn: TipoMidia.ExternalCode
+
+relationship f70d7134-fe61-4ea3-a23d-c3185649fda1
+	isActive: false
+	fromColumn: Carteira.AgenciaCodigo
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship 3f063b2f-4c54-45f1-8d6e-ec9b2ddad256
+	fromColumn: R0002.Cod_Cliente
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 8b2911e7-966e-4ce6-b054-1a3410c741eb
+	fromColumn: R0002.Cod_Agencia
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+	annotation PBI_IsFromSource = FS
+
+relationship 8efc5d17-b577-4b6b-a626-f37135472388
+	fromColumn: R0002.Cod_Empresa
+	toColumn: Emp_Venda.ExternalCode
+
+relationship 48b3dd00-95dd-4c27-8fbd-6e445fbf789d
+	fromColumn: R0002.Data
+	toColumn: Calendario.Date
+
+relationship cfd1daf5-41f8-453a-801d-a6532424481e
+	fromColumn: LY.Data
+	toColumn: Calendario.Date
+
+relationship 55a611a9-5b15-46cc-886c-fac3f62c4077
+	fromColumn: R0002.Cod_Executivo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship 9b1263d3-b713-4897-b288-f0efaf38aada
+	fromColumn: R0002.'CodEmp Faturamento'
+	toColumn: Emp_Faturamento.ExternalCode
+
+relationship e264a678-1ff1-4481-8e84-d0ff9b73d448
+	fromColumn: LY.Cod_Agencia
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship 78a5f186-6568-46bc-a0aa-2e7d7f733607
+	fromColumn: LY.Cod_Cliente
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 862da2eb-4687-401c-907c-dc340ecbecee
+	fromColumn: LY.Cod_Emp
+	toColumn: Emp_Venda.ExternalCode
+
+relationship 775a5712-d744-493f-b396-9b906b85add5
+	fromColumn: LY.Cod_Executivo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship 38ccbcfd-abc6-4bee-a032-ebb7aabaa199
+	fromColumn: PosicaoCarteira.ClienteCodigo
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship dca7f2f4-1179-4ba3-954d-18c9fd88dd6b
+	fromColumn: PosicaoCarteira.EmpVendaCodigo
+	toColumn: Emp_Venda.ExternalCode
+
+relationship a518b7f3-4eaa-4084-a8f2-5094f79dace6
+	fromColumn: PosicaoCarteira.AgenciaCodigo
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship bcb6bdc4-ff3a-4841-89f1-447e4ba7c32b
+	fromColumn: PosicaoCarteira.ExecutivoCodigo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship 4e6e7a3a-5343-4bdf-a47f-cf263d22143e
+	crossFilteringBehavior: bothDirections
+	fromColumn: NextID.NextID
+	toColumn: PosicaoCarteira.ID
+
+relationship 79244104-2d57-4667-8c16-021c13fc8be4
+	fromColumn: ValoresFinal.Cod_Cliente
+	toColumn: GrupoCliente.ClienteCodigo
+
+relationship 9f058eb7-91ad-440a-95db-4f7e3473ade1
+	fromColumn: ValoresFinal.Cod_Agencia
+	toColumn: GrupoAgencia.AgenciaCodigo
+
+relationship adf7f970-aa5f-422f-a8d9-1fcab5b5b001
+	fromColumn: ValoresFinal.Cod_Executivo
+	toColumn: Executivos.ExecutivoCodigo
+
+relationship 92246129-e7a5-4c42-b091-10e98368a10c
+	fromColumn: ValoresFinal.Cod_Emp
+	toColumn: Emp_Venda.ExternalCode
+
+relationship aedf38f3-fb40-4e06-967a-759755b0be05
+	fromColumn: ValoresFinal.Data
+	toColumn: Calendario.Date
+
