@@ -283,6 +283,8 @@ cultureInfo es-ES
 					caption: Estado
 				column ds_package
 					caption: Paquete Comercial
+				column cd_type
+					caption: Tipo Código
 			table pbi_vw_targets
 				caption: Objetivos
 				column cd_variant

@@ -283,6 +283,8 @@ cultureInfo pt-BR
 					caption: Status
 				column ds_package
 					caption: Pacote Comercial
+				column cd_type
+					caption: Tipo Código
 			table pbi_vw_targets
 				caption: Alvos
 				column cd_variant

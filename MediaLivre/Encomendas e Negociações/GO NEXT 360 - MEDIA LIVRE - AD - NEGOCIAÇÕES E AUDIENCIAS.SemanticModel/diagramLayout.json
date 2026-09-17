@@ -961,7 +961,7 @@
       "ordinal": 6,
       "scrollPosition": {
         "x": 0,
-        "y": 11.333333015441895
+        "y": 0
       },
       "nodes": [
         {
@@ -1070,7 +1070,7 @@
         }
       ],
       "name": "Ambição",
-      "zoomValue": 100,
+      "zoomValue": 66.053030832803572,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

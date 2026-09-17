@@ -50,6 +50,14 @@ table pbi_dim_packages
 
 		annotation SummarizationSetBy = Automatic
 
+	column cd_type
+		dataType: string
+		lineageTag: 2f71dcbd-7df9-4053-851a-563a48872346
+		summarizeBy: none
+		sourceColumn: cd_type
+
+		annotation SummarizationSetBy = Automatic
+
 	partition pbi_dim_packages = m
 		mode: import
 		source =
@@ -66,7 +74,7 @@ table pbi_dim_packages
 
 	annotation PBI_NavigationStepName = Navegação
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_IsMQueryFoldable = True
 

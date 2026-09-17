@@ -1,0 +1,30 @@
+createOrReplace
+
+	table tp_agencies
+		lineageTag: 5e99f9e1-ac27-4414-863f-d24f74934c32
+
+		calculationGroup
+			precedence: 1
+
+			calculationItem 'Ordem de Publicidade' = SELECTEDMEASURE()
+
+			calculationItem 'Última Agência' = CALCULATE( SELECTEDMEASURE() , CROSSFILTER( pbi_dim_campaigns[cd_account_agency], pbi_dim_accounts_agency[cd_account], NONE ) , USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] ))
+
+		column ds_agency_relationship
+			dataType: string
+			lineageTag: 282918dc-e5e0-4791-a58c-b5007d2b5819
+			summarizeBy: none
+			sourceColumn: Name
+			sortByColumn: Ordinal
+
+			annotation SummarizationSetBy = Automatic
+
+		column Ordinal
+			dataType: int64
+			formatString: 0
+			lineageTag: 64cfbc3a-d0fc-4814-a598-bb96622ae295
+			summarizeBy: sum
+			sourceColumn: Ordinal
+
+			annotation SummarizationSetBy = Automatic
+

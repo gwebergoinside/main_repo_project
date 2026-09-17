@@ -6,7 +6,7 @@ table tp_agencies
 
 		calculationItem 'Ordem de Publicidade' = SELECTEDMEASURE()
 
-		calculationItem 'Última Agência' = CALCULATE( SELECTEDMEASURE(), TREATAS( VALUES( pbi_dim_accounts_agency[cd_account] ), pbi_dim_accounts_client[cd_account_agency] ), REMOVEFILTERS( pbi_dim_accounts_agency ) )
+		calculationItem 'Última Agência' = CALCULATE( SELECTEDMEASURE() , CROSSFILTER( pbi_dim_campaigns[cd_account_agency], pbi_dim_accounts_agency[cd_account], NONE ) , USERELATIONSHIP( pbi_dim_accounts_client[cd_account_agency], pbi_dim_accounts_agency[cd_account] ))
 
 	column ds_agency_relationship
 		dataType: string

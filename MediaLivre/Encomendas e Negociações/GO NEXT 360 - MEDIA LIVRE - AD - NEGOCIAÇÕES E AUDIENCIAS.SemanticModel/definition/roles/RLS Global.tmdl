@@ -83,3 +83,5 @@ role 'RLS Global'
 
 	tablePermission ~Medidas = NOT ISEMPTY ( FILTER ( ALL ( pbi_tb_rls_all ), pbi_tb_rls_all[ds_email] = USERPRINCIPALNAME () || pbi_tb_rls_all[ds_email_2] = USERPRINCIPALNAME () ) )
 
+	annotation PBI_Id = abadeebccb8a4e2db8be24e4ee00b981
+

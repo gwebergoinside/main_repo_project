@@ -283,6 +283,8 @@ cultureInfo en-GB
 					caption: Status
 				column ds_package
 					caption: Package Group
+				column cd_type
+					caption: Type Code
 			table pbi_vw_targets
 				caption: Targets
 				column cd_variant

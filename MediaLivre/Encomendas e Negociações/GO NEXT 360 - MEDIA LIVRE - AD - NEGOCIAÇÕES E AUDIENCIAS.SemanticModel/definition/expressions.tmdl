@@ -1,7 +1,7 @@
 expression BD = "GMediaAD" meta [IsParameterQuery=true, List={}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 7ef836ac-eeeb-4db0-a191-22008c154987
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Text
 
 	annotation PBI_NavigationStepName = Navegação
 
